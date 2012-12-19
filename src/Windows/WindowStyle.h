@@ -1,15 +1,19 @@
-#include <string>
-#include "../Images/Color.h"
+//        JATTA        //
+// by Joshua Brookover //
 
-using std::string;
+#pragma once
+#include "../Images/Color.h"
+#include "../External/Defines.h"
 
 namespace Jatta
 {
     struct WindowStyle
     {
-        string title;
+        std::string title;
         Color backgroundColor;
         unsigned int width;
         unsigned int height;
     };
 }
+
+#include "../External/Undefines.h"

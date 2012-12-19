@@ -1,4 +1,8 @@
+//        JATTA        //
+// by Joshua Brookover //
+
 #pragma once
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -11,3 +15,5 @@ namespace Jatta
         Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     };
 }
+
+#include "../External/Undefines.h"

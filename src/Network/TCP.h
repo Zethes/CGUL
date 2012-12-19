@@ -1,6 +1,8 @@
-#pragma once
+//        JATTA        //
+// by Joshua Brookover //
 
-#include <string>
+#pragma once
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -13,3 +15,5 @@ namespace Jatta
         void connect(const std::string& ip, unsigned short port);
     };
 };
+
+#include "../External/Undefines.h"

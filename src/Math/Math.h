@@ -1,4 +1,8 @@
+//        JATTA        //
+// by Joshua Brookover //
+
 #pragma once
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -16,3 +20,5 @@ namespace Jatta
         float max(float a, float b);
     }
 }
+
+#include "../External/Undefines.h"

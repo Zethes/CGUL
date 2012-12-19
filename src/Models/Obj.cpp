@@ -1,10 +1,8 @@
 #include "Obj.h"
+#include "Group.h"
 #include "../File/File.h"
 #include "../Math/Math.h"
 #include "../Math/Float4.h"
-#include <sstream>
-
-#include <iostream> // TODO: remove iostream
 
 void Jatta::Obj::cleanLine(std::string* line)
 {

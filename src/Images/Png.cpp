@@ -2,8 +2,8 @@
 
 #include "../File/File.h"
 
+#include "Color.h"
 #include <png.h>
-#include <iostream>
 #include <stdlib.h>
 
 #define PNGSIGSIZE 8

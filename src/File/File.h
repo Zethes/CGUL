@@ -1,6 +1,8 @@
+//        JATTA        //
+// by Joshua Brookover //
+
 #pragma once
-#include <string>
-#include <vector>
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -12,3 +14,5 @@ namespace Jatta
         bool getData(const std::string& fileName, char* buffer, unsigned int size);
     }
 }
+
+#include "../External/Undefines.h"

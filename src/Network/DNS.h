@@ -1,7 +1,8 @@
-#pragma once
+//        JATTA        //
+// by Joshua Brookover //
 
-#include <string>
-#include <vector>
+#pragma once
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -21,3 +22,5 @@ namespace Jatta
         static std::vector<std::string> lookup(const std::string& host, Filter filter = Filter::ANY);
     };
 }
+
+#include "../External/Undefines.h"

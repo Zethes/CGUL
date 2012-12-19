@@ -1,17 +1,18 @@
-#pragma once
+//        JATTA        //
+// by Joshua Brookover //
 
-#include "../JattaDefines.h"
-#include <string>
+#pragma once
+#include "../External/Defines.h"
 
 namespace Jatta
 {
     class Ttf
     {
-        _JATTA_FT_FACE(face);
+        _JATTA_FT_FACE face;
     public:
         Ttf(const std::string& fileName);
         void load();
     };
 }
 
-#include "../JattaUndefines.h"
+#include "../External/Undefines.h"

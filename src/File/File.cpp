@@ -1,5 +1,4 @@
 #include "File.h"
-#include <fstream>
 
 bool Jatta::File::getText(const std::string& fileName, std::string* result)
 {

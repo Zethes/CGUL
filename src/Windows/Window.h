@@ -1,10 +1,10 @@
+//        JATTA        //
+// by Joshua Brookover //
+
 #pragma once
-
-#include "../JattaDefines.h"
-
-#include "WindowStyle.h"
 #include "Input.h"
-#include <memory>
+#include "WindowStyle.h"
+#include "../External/Defines.h"
 
 namespace Jatta
 {
@@ -40,4 +40,4 @@ namespace Jatta
     };
 }
 
-#include "../JattaUndefines.h"
+#include "../External/Undefines.h"

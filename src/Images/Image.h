@@ -1,9 +1,13 @@
+//        JATTA        //
+// by Joshua Brookover //
+
 #pragma once
-#include "Color.h"
-#include <string>
+#include "../External/Defines.h"
 
 namespace Jatta
 {
+    struct Color;
+    
     struct Image
     {
     protected:
@@ -19,3 +23,5 @@ namespace Jatta
         unsigned int getHeight();
     };
 }
+
+#include "../External/Undefines.h"
