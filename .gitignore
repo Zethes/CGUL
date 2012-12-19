@@ -1,0 +1,6 @@
+dep/
+include/
+lib/
+obj/
+
+*.sublime-workspace

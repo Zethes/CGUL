@@ -1,0 +1,36 @@
+ZETHES_INCLUDE=$(ZETHES_PATH)/include
+ZETHES_LIB=$(ZETHES_PATH)/lib
+
+CPP_FILES:=$(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)
+H_FILES:=$(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h)
+OBJ_FILES:=$(CPP_FILES:src/%.cpp=obj/%.o)
+DEP_FILES:=$(CPP_FILES:.cpp=.d) $(MM_FILES:.mm=.dd)
+DEP_FILES:=$(addprefix dep/,$(DEP_FILES:src/%=%))
+INCLUDE_FILES:=$(H_FILES:src/%=include/%.force)
+COMPILE_SETTINGS=-DJATTA_INCLUDES
+
+lib/libjatta.a: $(OBJ_FILES) $(INCLUDE_FILES)
+	@mkdir -p lib
+	ar rcs lib/libjatta.a $(OBJ_FILES)
+
+-include $(DEP_FILES)
+
+include/%.force:
+	@mkdir -p $(dir $(@:%.force=%))
+	@cp src/$* $(@:%.force=%)
+
+obj/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	@mkdir -p dep/$(dir $*)
+	g++ -g -c src/$*.cpp -o $@ -std=gnu++11 -I$(ZETHES_INCLUDE) -DGLEW_NO_GLU -DGLEW_STATIC -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x501 $(COMPILE_SETTINGS)
+	@g++ -MM src/$*.cpp  -std=gnu++11 -I$(ZETHES_INCLUDE) -DGLEW_NO_GLU -DGLEW_STATIC -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x501 $(COMPILE_SETTINGS) > dep/$*.d.tmp
+	@sed -e 's|.*:|obj/$*.o:|' < dep/$*.d.tmp > dep/$*.d
+	@sed -e 's/.*://' -e 's/\\$$//' < dep/$*.d.tmp | \
+	  sed -e 's/^ *//' -e 's/$$/:/' >> dep/$*.d
+	@rm -f dep/$*.d.tmp
+
+clean:
+	rm -rf include
+	rm -rf lib
+	rm -rf obj
+	rm -rf dep
