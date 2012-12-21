@@ -57,4 +57,3 @@
 #  endif
 #  define _JATTA_FT_FACE ::FT_Face
 #endif
-

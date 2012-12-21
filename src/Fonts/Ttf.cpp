@@ -1,21 +1,32 @@
 #include "Ttf.h"
+#include "../Images/Color.h"
+#include <string.h>
 
 #include <iostream> // TODO: remove iostream
 
-FT_Library __jatta_ttf_library;
+static FT_Library __jatta_ttf_library;
 
 void __jatta_ttf_initialize()
 {
-    FT_Error error = FT_Init_FreeType(&__jatta_ttf_library);
-    if (error)
+    static bool initialized = false;
+    if (!initialized)
     {
-        std::cout << "Could not initialize FreeType" << std::endl;
+        FT_Error error = FT_Init_FreeType(&__jatta_ttf_library);
+        if (error)
+        {
+            std::cout << "Could not initialize FreeType" << std::endl;
+        }
+        initialized = true;
     }
 }
 
-Jatta::Ttf::Ttf(const std::string& fileName)
+Jatta::Ttf::Ttf()
 {
-    FT_Face face;
+    __jatta_ttf_initialize();
+}
+
+void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
+{
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
     if (error == FT_Err_Unknown_File_Format)
     {
@@ -27,11 +38,86 @@ Jatta::Ttf::Ttf(const std::string& fileName)
         // @TODO error checking
         std::cout << "Failed to load font." << std::endl;
     }
-    error = FT_Set_Char_Size(face, 50 * 18, 0, 100, 0);
+    error = FT_Set_Char_Size(face, 50 * size, 0, 100, 0);
     if (error)
     {
         // @TODO error checking
         std::cout << "Failed to set character size." << std::endl;
     }
     std::cout << FT_Get_X11_Font_Format(face) << std::endl;
+    this->size = size;
+}
+
+Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
+{
+    // create the texture buffer
+    unsigned char* data = new unsigned char[1024 * 1024 * 4];
+    Color* buffer = (Color*)data;
+    memset(buffer, 0, 1024 * 1024 * sizeof(Color));
+
+    // set the position of the font
+    FT_Vector pen;
+    pen.x = 0;
+    pen.y = 0;
+
+    // set our transform matrix (to the identity matrix)
+    FT_Matrix matrix;
+    matrix.xx = (FT_Fixed)(1 * 0x10000L);
+    matrix.xy = (FT_Fixed)(0 * 0x10000L);
+    matrix.yx = (FT_Fixed)(0 * 0x10000L);
+    matrix.yy = (FT_Fixed)(1 * 0x10000L);
+
+    // render each character
+    unsigned int width = 0, height = 0;
+    for (unsigned int n = 0; n < text.length(); n++)
+    {
+        // transform the font character
+        FT_Set_Transform(face, &matrix, &pen);
+
+        // load glyph image into the slot
+        FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
+        if (error)
+        {
+            continue; // @TODO ignore errors?
+        }
+
+        // now, draw to our surface
+        FT_Int i, j, p, q;
+        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
+        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
+        if (x_max > width)
+        {
+            width = x_max;
+        }
+        if (y_max > height)
+        {
+            height = y_max;
+        }
+        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        {
+            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
+            {
+                if (i < 0 || j < 0 || i >= 1024 || j >= 1024)
+                    continue;
+
+                buffer[j * 1024 + i].a |= face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p];
+            }
+        }
+
+        // increment pen position
+        pen.x += face->glyph->advance.x;
+        pen.y += face->glyph->advance.y;
+    }
+
+    for (unsigned int i = 0; i < 1024 * 1024; i++)
+    {
+        unsigned char occ = 255 - buffer[i].a;
+        int blurg = i % 1024;
+        buffer[i] = Color::makeHSV((unsigned int)((blurg / 1024.0f) * 360.0f), 255, occ);
+        //buffer[i].b = 255 - buffer[i].a;
+        //buffer[i].r = buffer[i].g = buffer[i].b;
+        buffer[i].a = 255;
+    }
+
+    return std::move(Image((Color*)data, 1024, 1024));
 }

@@ -2,6 +2,7 @@
 // by Joshua Brookover //
 
 #pragma once
+#include "../Images/Image.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -9,9 +10,12 @@ namespace Jatta
     class Ttf
     {
         _JATTA_FT_FACE face;
+        unsigned int size;
     public:
-        Ttf(const std::string& fileName);
-        void load();
+        Ttf();
+        void load(const std::string& fileName, unsigned int size);
+
+        Image&& blurg(const std::string& text);
     };
 }
 

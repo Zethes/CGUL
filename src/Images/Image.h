@@ -13,7 +13,14 @@ namespace Jatta
     protected:
         Color* colors;
         unsigned int width, height;
+
+        Image();
     public:
+        Image(Color* colors, unsigned int width, unsigned int height);
+        Image(const Image& copy);
+        Image(Image&& move);
+        ~Image();
+
         static bool isPng(const std::string& fileName);
 
         virtual bool load(const std::string& fileName);
