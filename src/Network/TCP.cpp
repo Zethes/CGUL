@@ -1,3 +1,5 @@
+#if 0
+
 #include "TCP.h"
 #include <WinSock2.h>
 
@@ -12,3 +14,5 @@ void Jatta::SocketTCP::connect(const std::string& ip, unsigned short port)
 {
 
 }
+
+#endif

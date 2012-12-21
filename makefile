@@ -9,6 +9,23 @@ DEP_FILES:=$(addprefix dep/,$(DEP_FILES:src/%=%))
 INCLUDE_FILES:=$(H_FILES:src/%=include/%.force)
 COMPILE_SETTINGS=-DJATTA_INCLUDES
 
+UNAME:=$(shell uname -s)
+
+# linux #
+ifeq ($(UNAME),Linux)
+	COMPILE_SETTINGS:=$(COMPILE_SETTINGS) -DLINUX
+endif
+
+# mac os x #
+ifeq ($(UNAME),Darwin)
+	COMPILE_SETTINGS:=$(COMPILE_SETTINGS) -DMACOS
+endif
+
+# windows / mingw #
+ifeq ($(UNAME:MINGW%=MINGW),MINGW)
+	COMPILE_SETTINGS:=$(COMPILE_SETTINGS) -DWINDOWS
+endif
+
 lib/libjatta.a: $(OBJ_FILES) $(INCLUDE_FILES)
 	@mkdir -p lib
 	ar rcs lib/libjatta.a $(OBJ_FILES)

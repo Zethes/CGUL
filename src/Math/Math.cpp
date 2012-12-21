@@ -1,4 +1,4 @@
-#include "math.h"
+#include "Math.h"
 #include <cmath>
 
 float Jatta::Math::cos(float x)

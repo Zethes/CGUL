@@ -1,3 +1,5 @@
+#if 0
+
 #include <WinSock2.h>
 
 bool __jatta_network_initiated = false;
@@ -23,3 +25,5 @@ void __jatta_network_clean()
         __jatta_network_initiated = false;
     }
 }
+
+#endif

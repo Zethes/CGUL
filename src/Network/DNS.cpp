@@ -1,3 +1,5 @@
+#if 0
+
 #include "DNS.h"
 
 #include <WinSock2.h>
@@ -101,3 +103,5 @@ std::vector<std::string> Jatta::DNS::lookup(const std::string& host, Filter filt
     //return std::move(list);
     return list;
 }
+
+#endif

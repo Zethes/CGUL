@@ -3,6 +3,7 @@
 
 #include <iostream> // TODO: remove iostream
 
+#ifdef WINDOWS
 LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LONG_PTR ptr = GetWindowLongPtr(handle, GWLP_USERDATA);
@@ -31,9 +32,26 @@ LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARA
     }
     return DefWindowProc(handle, message, wParam, lParam);
 }
+#endif
+
+#ifdef LINUX
+bool Jatta::Window::initialized = false;
+
+static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
+{
+    // TODO: something?
+}
+#endif
 
 Jatta::Window::Window() : input(new Input(this))
 {
+#   ifdef LINUX
+    if (!initialized)
+    {
+        XSetErrorHandler(__jatta_windows_error_handler);
+        initialized = true;
+    }
+#   endif
 }
 
 Jatta::Window::~Window()
@@ -41,10 +59,24 @@ Jatta::Window::~Window()
     close();
 }
 
-HWND Jatta::Window::getHandle()
+#ifdef WINDOWS
+HWND Jatta::Window::_getHandle()
 {
     return handle;
 }
+#endif
+
+#ifdef LINUX
+Display* Jatta::Window::_getDisplay()
+{
+    return display;
+}
+
+::Window Jatta::Window::_getHandle()
+{
+    return handle;
+}
+#endif
 
 std::shared_ptr<Jatta::Input> Jatta::Window::getInput()
 {
@@ -53,6 +85,7 @@ std::shared_ptr<Jatta::Input> Jatta::Window::getInput()
 
 void Jatta::Window::create(const WindowStyle& style)
 {
+#   ifdef WINDOWS
     // Generate a unique class name for this window
     static int windowCounter = 0;
     strcpy(className, "JATTA_");
@@ -94,46 +127,108 @@ void Jatta::Window::create(const WindowStyle& style)
     SetWindowLongPtr(handle, GWLP_USERDATA, (LONG_PTR)this);
 
     ShowWindow(handle, SW_SHOW);
+#   endif
+
+#   ifdef LINUX
+    std::cout << (int)style.backgroundColor.r << ", " << (int)style.backgroundColor.g << ", " << (int)style.backgroundColor.b << std::endl;
+    this->display = XOpenDisplay(nullptr);
+    int screen = DefaultScreen(this->display);
+    Visual* visual = DefaultVisual(this->display, screen);
+    int depth = DefaultDepth(this->display, screen);
+    XSetWindowAttributes attributes;
+    attributes.background_pixel = style.backgroundColor.b | (style.backgroundColor.g << 8) | (style.backgroundColor.r << 16);//XWhitePixel(display, screen);
+    attributes.border_pixel = XBlackPixel(this->display, screen);
+    attributes.override_redirect = 0;
+    this->handle = XCreateWindow(this->display, XRootWindow(this->display, screen), 200, 200, style.width, style.height, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
+    Atom wmDelete = XInternAtom(display, "WM_DELETE_WINDOW", true);
+    XSetWMProtocols(this->display, this->handle, &wmDelete, 1);
+    XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | KeyPressMask);
+    XMapWindow(this->display, this->handle);
+    XFlush(this->display);
+#   endif
 }
 
 void Jatta::Window::close()
 {
+#   ifdef WINDOWS
     if (IsWindow(handle))
     {
         DestroyWindow(handle);
     }
     handle = 0;
+#   endif
+
+#   ifdef LINUX
+    if (isOpen())
+    {
+        XDestroyWindow(display, handle);
+        XCloseDisplay(display);
+    }
+    handle = 0;
+    display = nullptr;
+#   endif
 }
 
 void Jatta::Window::update()
 {
+#   ifdef WINDOWS
     MSG Msg;
     while (PeekMessage(&Msg, handle, 0, 0, PM_REMOVE) > 0)
     {
         TranslateMessage(&Msg);
         DispatchMessage(&Msg);
     }
+#   endif
+
+#   ifdef LINUX
+    if (display && handle)
+    {
+        while (XPending(display))
+        {
+            XEvent event;
+            XNextEvent(display, &event);
+            switch (event.type)
+            {
+                case 33:
+                    XDestroyWindow(display, handle);
+                case DestroyNotify:
+                    close();
+                    return;
+            }
+        }
+    }
+#   endif
 }
 
 bool Jatta::Window::isOpen()
 {
+#   ifdef WINDOWS
     return IsWindow(handle);
+#   endif
+
+#   ifdef LINUX
+    return display && handle;
+#   endif
 }
 
 unsigned int Jatta::Window::getWidth()
 {
+#   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRect(&rect, style, false);
     int borders = -rect.left + rect.right;
     GetWindowRect(handle, &rect);
     return rect.right - rect.left - borders;
+#   endif
 }
 
 unsigned int Jatta::Window::getHeight()
 {
+#   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRect(&rect, style, false);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
     return rect.bottom - rect.top - borders;
+#   endif
 }
