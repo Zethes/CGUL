@@ -26,7 +26,8 @@ namespace Jatta
         bool loadPng(const std::string& fileName);
         bool savePng(const std::string& fileName);
 
-        const unsigned char* getData();
+        unsigned char* getData();
+        const unsigned char* getData() const;
         unsigned int getWidth();
         unsigned int getHeight();
     };

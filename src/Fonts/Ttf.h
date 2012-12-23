@@ -16,6 +16,7 @@ namespace Jatta
         void load(const std::string& fileName, unsigned int size);
 
         Image&& blurg(const std::string& text);
+        Image&& blurg(const std::string& text, const Color& color);
     };
 }
 

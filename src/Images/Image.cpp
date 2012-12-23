@@ -38,7 +38,12 @@ Jatta::Image::~Image()
     //delete[] colors;
 }
 
-const unsigned char* Jatta::Image::getData()
+unsigned char* Jatta::Image::getData()
+{
+    return (unsigned char*)colors;
+}
+
+const unsigned char* Jatta::Image::getData() const
 {
     return (const unsigned char*)colors;
 }

@@ -165,3 +165,17 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
 
     return std::move(Image((Color*)data, 512, 512));
 }
+
+Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color)
+{
+    Image img = blurg(text);
+    unsigned int size = img.getWidth() * img.getHeight();
+    Color* data = (Color*)img.getData();
+    for (unsigned int i = 0; i < size; i++)
+    {
+        data[i].r = color.r;
+        data[i].g = color.g;
+        data[i].b = color.b;
+    }
+    return std::move(img);
+}
