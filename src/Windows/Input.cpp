@@ -277,7 +277,7 @@ bool* Jatta::Input::getKeyData()
 unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
 {
 #   ifdef WINDOWS
-    return keyl
+    return key;
 #   endif
 
 #   ifdef LINUX
