@@ -14,8 +14,8 @@ namespace Jatta
         Color* colors;
         unsigned int width, height;
 
-        Image();
     public:
+        Image();
         Image(Color* colors, unsigned int width, unsigned int height);
         Image(const Image& copy);
         Image(Image&& move);
@@ -23,7 +23,8 @@ namespace Jatta
 
         static bool isPng(const std::string& fileName);
 
-        virtual bool load(const std::string& fileName);
+        bool loadPng(const std::string& fileName);
+        bool savePng(const std::string& fileName);
 
         const unsigned char* getData();
         unsigned int getWidth();

@@ -38,14 +38,6 @@ Jatta::Image::~Image()
     //delete[] colors;
 }
 
-bool Jatta::Image::isPng(const std::string& fileName)
-{
-}
-
-bool Jatta::Image::load(const std::string& fileName)
-{
-}
-
 const unsigned char* Jatta::Image::getData()
 {
     return (const unsigned char*)colors;

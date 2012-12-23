@@ -1,4 +1,4 @@
-#include "Png.h"
+#include "Image.h"
 
 #include "../File/File.h"
 
@@ -15,7 +15,7 @@ static void pngReadData(png_structp pngPointer, png_bytep data, png_size_t lengt
     *fileData += length;
 }
 
-bool Jatta::Png::isValid(const char* buffer, unsigned int length)
+/*bool Jatta::Png::isValid(const char* buffer, unsigned int length)
 {
     return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
 }
@@ -30,19 +30,19 @@ bool Jatta::Png::isValid(const std::string& fileName)
     bool valid = isValid(buffer, size); 
     delete[] buffer;
     return valid;
-}
+}*/
 
-bool Jatta::Png::load(const std::string& fileName)
+bool Jatta::Image::loadPng(const std::string& fileName)
 {
     unsigned int size;
     File::getFileSize(fileName, &size);
     char* buffer = new char[size];
     File::getData(fileName, buffer, size);
 
-    if (!isValid(buffer, size))
-    {
-        return false;
-    }
+    //if (!isValid(buffer, size))
+    //{
+        //return false;
+    //}
 
     //Here we create the png read struct. The 3 NULL's at the end can be used
     //for your own custom error handling functions, but we'll just use the default.
@@ -160,4 +160,9 @@ bool Jatta::Png::load(const std::string& fileName)
 
     std::cout << "[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (" << PNG_COLOR_TYPE_RGBA << ") (is " << png_get_color_type(pngPtr, infoPtr) << ")" << std::endl;
     return false;
+}
+
+bool Jatta::Image::savePng(const std::string& fileName)
+{
+    // do STUFF
 }

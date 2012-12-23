@@ -50,16 +50,6 @@ void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
 
 Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
 {
-    // create the texture buffer
-    unsigned char* data = new unsigned char[1024 * 1024 * 4];
-    Color* buffer = (Color*)data;
-    memset(buffer, 0, 1024 * 1024 * sizeof(Color));
-
-    // set the position of the font
-    FT_Vector pen;
-    pen.x = 0;
-    pen.y = 0;
-
     // set our transform matrix (to the identity matrix)
     FT_Matrix matrix;
     matrix.xx = (FT_Fixed)(1 * 0x10000L);
@@ -67,8 +57,13 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
     matrix.yx = (FT_Fixed)(0 * 0x10000L);
     matrix.yy = (FT_Fixed)(1 * 0x10000L);
 
+    // set the position of the font
+    FT_Vector pen;
+    pen.x = 0;
+    pen.y = 0;
+
     // render each character
-    unsigned int width = 0, height = 0;
+    unsigned int buffWidth = 0, buffHeight = 0;
     for (unsigned int n = 0; n < text.length(); n++)
     {
         // transform the font character
@@ -85,22 +80,26 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
         FT_Int i, j, p, q;
         FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
         FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
-        if (x_max > width)
-        {
-            width = x_max;
-        }
-        if (y_max > height)
-        {
-            height = y_max;
-        }
         for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
         {
             for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
             {
-                if (i < 0 || j < 0 || i >= 1024 || j >= 1024)
-                    continue;
-
-                buffer[j * 1024 + i].a |= face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p];
+                if (i > buffWidth)
+                {
+                    buffWidth = i;
+                }
+                if (x_max > buffWidth)
+                {
+                    buffWidth = x_max;
+                }
+                if (j > buffHeight)
+                {
+                    buffHeight = j;
+                }
+                if (y_max > buffHeight)
+                {
+                    buffHeight = y_max;
+                }
             }
         }
 
@@ -109,15 +108,60 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
         pen.y += face->glyph->advance.y;
     }
 
-    for (unsigned int i = 0; i < 1024 * 1024; i++)
+    // reset pen
+    pen.x = 0;
+    pen.y = 0;
+
+    // create the texture buffer
+    unsigned char* data = new unsigned char[buffWidth * buffHeight * sizeof(Color)];
+    Color* buffer = (Color*)data;
+    memset(buffer, 0, buffWidth * buffHeight * sizeof(Color));
+
+    for (unsigned int n = 0; n < text.length(); n++)
+    {
+        // transform the font character
+        FT_Set_Transform(face, &matrix, &pen);
+
+        // load glyph image into the slot
+        FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
+        if (error)
+        {
+            continue; // @TODO ignore errors?
+        }
+
+        // now, draw to our surface
+        FT_Int i, j, p, q;
+        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
+        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
+        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        {
+            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
+            {
+                buffer[j * buffWidth + i].a |= face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p];
+            }
+        }
+
+        // increment pen position
+        pen.x += face->glyph->advance.x;
+        pen.y += face->glyph->advance.y;
+    }
+
+    /*for (unsigned int i = 0; i < 512 * 512; i++)
     {
         unsigned char occ = 255 - buffer[i].a;
-        int blurg = i % 1024;
-        buffer[i] = Color::makeHSV((unsigned int)((blurg / 1024.0f) * 360.0f), 255, occ);
+        int blurg = i % 512;
+        buffer[i] = Color::makeHSV((unsigned int)((blurg / 512.0f) * 360.0f), 255, occ);
         //buffer[i].b = 255 - buffer[i].a;
         //buffer[i].r = buffer[i].g = buffer[i].b;
         buffer[i].a = 255;
-    }
+    }*/
 
-    return std::move(Image((Color*)data, 1024, 1024));
+    Color* asdf = new Color[4];
+    asdf[0] = Color(255, 0, 0);
+    asdf[1] = Color(0, 255, 0);
+    asdf[2] = Color(0, 0, 255);
+    asdf[3] = Color(255, 255, 0);
+    return std::move(Image((Color*)data, buffWidth, buffHeight));
+
+    return std::move(Image((Color*)data, 512, 512));
 }
