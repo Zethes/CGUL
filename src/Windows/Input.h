@@ -18,6 +18,7 @@ namespace Jatta
         Input(Window* window);
 
         bool* getKeyData();
+        unsigned char getKeyFromLayout(unsigned char key);
     public:
         bool isKeyDown(unsigned char key);
         bool isKeyPressed(unsigned char key);

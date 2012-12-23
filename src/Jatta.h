@@ -16,6 +16,7 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <memory>
 #include <sstream>
 #include <string>
