@@ -27,7 +27,7 @@ bool Jatta::Png::isValid(const std::string& fileName)
     File::getFileSize(fileName, &size);
     char* buffer = new char[size];
     File::getData(fileName, buffer, size);
-    bool valid = isValid(buffer, size); 
+    bool valid = isValid(buffer, size);
     delete[] buffer;
     return valid;
 }*/
@@ -116,7 +116,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
         row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(pngPtr,infoPtr));
     }
 
-    delete[] buffer;
+    //delete[] buffer;
 
     png_read_image(pngPtr, row_pointers);
 
