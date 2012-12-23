@@ -142,7 +142,7 @@ void Jatta::Window::create(const WindowStyle& style)
     this->handle = XCreateWindow(this->display, XRootWindow(this->display, screen), 200, 200, style.width, style.height, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
     Atom wmDelete = XInternAtom(display, "WM_DELETE_WINDOW", true);
     XSetWMProtocols(this->display, this->handle, &wmDelete, 1);
-    XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | KeyPressMask);
+    XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
     XMapWindow(this->display, this->handle);
     XFlush(this->display);
 #   endif
@@ -194,6 +194,25 @@ void Jatta::Window::update()
                 case DestroyNotify:
                     close();
                     return;
+                case KeyPress:
+                    getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = true;
+                    break;
+                case KeyRelease:
+                    bool released = true;
+                    if (XEventsQueued(display, QueuedAfterReading))
+                    {
+                        XEvent nextEvent;
+                        XPeekEvent(display, &nextEvent);
+                        if (nextEvent.type == KeyPress && nextEvent.xkey.time == event.xkey.time && nextEvent.xkey.keycode == event.xkey.keycode)
+                        {
+                            released = false;
+                        }
+                    }
+                    if (released)
+                    {
+                        getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = false;
+                    }
+                    break;
             }
         }
     }
@@ -220,6 +239,12 @@ unsigned int Jatta::Window::getWidth()
     GetWindowRect(handle, &rect);
     return rect.right - rect.left - borders;
 #   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return attributes.width;
+#   endif
 }
 
 unsigned int Jatta::Window::getHeight()
@@ -230,5 +255,11 @@ unsigned int Jatta::Window::getHeight()
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
     return rect.bottom - rect.top - borders;
+#   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return attributes.height;
 #   endif
 }
