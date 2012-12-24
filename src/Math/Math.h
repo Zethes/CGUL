@@ -20,6 +20,8 @@ namespace Jatta
         float max(float a, float b);
 
         float floor(float x);
+
+        float mod(float x, float div);
     }
 }
 

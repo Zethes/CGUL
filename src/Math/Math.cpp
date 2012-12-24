@@ -35,3 +35,8 @@ float Jatta::Math::floor(float x)
 {
     return std::floor(x);
 }
+
+float Jatta::Math::mod(float x, float div)
+{
+    return x - Math::floor(x / 360.0f) * 360.0f;
+}
