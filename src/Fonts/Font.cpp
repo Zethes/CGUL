@@ -1,4 +1,4 @@
-#include "Ttf.h"
+#include "Font.h"
 #include <string.h>
 
 #include <iostream> // TODO: remove iostream
@@ -19,14 +19,14 @@ void __jatta_ttf_initialize()
     }
 }
 
-Jatta::Ttf::Ttf()
+Jatta::Font::Font()
 {
     __jatta_ttf_initialize();
 }
 
-void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
+void Jatta::Font::load(const std::string& fileName)
 {
-    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
+    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
     if (error == FT_Err_Unknown_File_Format)
     {
         // @TODO error checking
@@ -37,15 +37,34 @@ void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
         // @TODO error checking
         std::cout << "Failed to load font." << std::endl;
     }
+    std::cout << FT_Get_X11_Font_Format(this->face) << std::endl;
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
-    FT_Set_Pixel_Sizes(face, 0, size);
+}
+
+void Jatta::Font::setSize(unsigned int size)
+{
+    FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
     if (error)
     {
         // @TODO error checking
         std::cout << "Failed to set character size." << std::endl;
     }
-    std::cout << FT_Get_X11_Font_Format(face) << std::endl;
     this->size = size;
+}
+
+unsigned int Jatta::Font::getSize()
+{
+    return this->size;
+}
+
+void Jatta::Font::setColor(const Color& color)
+{
+    this->color = color;
+}
+
+Jatta::Color Jatta::Font::getColor()
+{
+    return this->color;
 }
 
 /*Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
@@ -151,7 +170,7 @@ void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
     return std::move(Image((Color*)data, 512, 512));
 }*/
 
-Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bool beginningSpacer)
+Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginningSpacer)
 {
     bool kerning = true;
 
@@ -171,11 +190,8 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
     {
         FT_Set_Transform(face, &matrix, &pen);
         FT_ULong utf8Character = 0;
-        std::cout << text[n] << ": ";
-        //std::cout << (unsigned char)(text[n]) & 0xFC << std::endl;
         if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
         {
-            std::cout << "31" << std::endl;
             utf8Character |= (text[n++] & 0x01) << 30;
             utf8Character |= (text[n++] & 0x3F) << 24;
             utf8Character |= (text[n++] & 0x3F) << 18;
@@ -185,7 +201,6 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
         {
-            std::cout << "26" << std::endl;
             utf8Character |= (text[n++] & 0x03) << 24;
             utf8Character |= (text[n++] & 0x3F) << 18;
             utf8Character |= (text[n++] & 0x3F) << 12;
@@ -194,7 +209,6 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
         {
-            std::cout << "21" << std::endl;
             utf8Character |= (text[n++] & 0x07) << 18;
             utf8Character |= (text[n++] & 0x3F) << 12;
             utf8Character |= (text[n++] & 0x3F) << 6;
@@ -202,20 +216,17 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
         {
-            std::cout << "16" << std::endl;
             utf8Character |= (text[n++] & 0x0F) << 12;
             utf8Character |= (text[n++] & 0x3F) << 6;
             utf8Character |= (text[n++] & 0x3F) << 0;
         }
         else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
         {
-            std::cout << "11" << std::endl;
             utf8Character |= (text[n++] & 0x1F) << 6;
             utf8Character |= (text[n++] & 0x3F) << 0;
         }
         else
         {
-            std::cout << "7" << std::endl;
             utf8Character |= (text[n++] & 0x7F) << 0;
         }
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
@@ -267,7 +278,6 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         FT_ULong utf8Character = 0;
         if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
         {
-            std::cout << "31" << std::endl;
             utf8Character |= (text[n++] & 0x01) << 30;
             utf8Character |= (text[n++] & 0x3F) << 24;
             utf8Character |= (text[n++] & 0x3F) << 18;
@@ -277,7 +287,6 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
         {
-            std::cout << "26" << std::endl;
             utf8Character |= (text[n++] & 0x03) << 24;
             utf8Character |= (text[n++] & 0x3F) << 18;
             utf8Character |= (text[n++] & 0x3F) << 12;
@@ -286,7 +295,6 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
         {
-            std::cout << "21" << std::endl;
             utf8Character |= (text[n++] & 0x07) << 18;
             utf8Character |= (text[n++] & 0x3F) << 12;
             utf8Character |= (text[n++] & 0x3F) << 6;
@@ -294,20 +302,17 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         }
         else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
         {
-            std::cout << "16" << std::endl;
             utf8Character |= (text[n++] & 0x0F) << 12;
             utf8Character |= (text[n++] & 0x3F) << 6;
             utf8Character |= (text[n++] & 0x3F) << 0;
         }
         else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
         {
-            std::cout << "11" << std::endl;
             utf8Character |= (text[n++] & 0x1F) << 6;
             utf8Character |= (text[n++] & 0x3F) << 0;
         }
         else
         {
-            std::cout << "7" << std::endl;
             utf8Character |= (text[n++] & 0x7F) << 0;
         }
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
@@ -331,9 +336,9 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bo
         {
             for (q = 0; q < face->glyph->bitmap.rows; q++)
             {
-                buffer[(q + startY) * bufferWidth + i].r = color.r;
-                buffer[(q + startY) * bufferWidth + i].g = color.g;
-                buffer[(q + startY) * bufferWidth + i].b = color.b;
+                buffer[(q + startY) * bufferWidth + i].r = this->color.r;
+                buffer[(q + startY) * bufferWidth + i].g = this->color.g;
+                buffer[(q + startY) * bufferWidth + i].b = this->color.b;
                 buffer[(q + startY) * bufferWidth + i].a |= (FT_Int)(face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p] * (color.a / 255.0f));
             }
         }
