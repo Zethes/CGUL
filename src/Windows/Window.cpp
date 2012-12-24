@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <cstdio>
+#include <sstream>
 
 #include <iostream> // TODO: remove iostream
 
@@ -87,9 +88,11 @@ void Jatta::Window::create(const WindowStyle& style)
 {
 #   ifdef WINDOWS
     // Generate a unique class name for this window
+    std::wostringstream ss;
     static int windowCounter = 0;
     strcpy(className, "JATTA_");
     sprintf(className + 6, "%d", windowCounter++);
+    ss << className;
 
     // Create the window class
     WNDCLASSEX wc;
@@ -103,7 +106,7 @@ void Jatta::Window::create(const WindowStyle& style)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b));
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = className;
+    wc.lpszClassName = ss.str().c_str();
     wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
 
     // Register the window class
@@ -113,11 +116,21 @@ void Jatta::Window::create(const WindowStyle& style)
     }
 
     this->style = WS_OVERLAPPEDWINDOW;
+    if (!style.resizable)
+    {
+        this->style &= ~WS_MAXIMIZEBOX;
+        this->style &= ~WS_THICKFRAME;
+    }
 
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, className, style.title.c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, style.title.c_str(), -1, 0, 0);
+    wchar_t* buffer = new wchar_t[size];
+    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, style.title.c_str(), style.title.length(), buffer, size);
+    buffer[size - 1] = 0;
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, ss.str().c_str(), buffer, this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    delete buffer;
 
     if (handle == NULL)
     {
@@ -234,7 +247,7 @@ unsigned int Jatta::Window::getWidth()
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRect(&rect, style, false);
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
     int borders = -rect.left + rect.right;
     GetWindowRect(handle, &rect);
     return rect.right - rect.left - borders;
@@ -251,7 +264,7 @@ unsigned int Jatta::Window::getHeight()
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRect(&rect, style, false);
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
     return rect.bottom - rect.top - borders;

@@ -18,6 +18,8 @@
 
 #if defined(JATTA_INCLUDES)
 #  ifdef WINDOWS
+#    define UNICODE
+#    define _UNICODE
 #    include <Windows.h>
 #  endif
 #  ifdef LINUX
