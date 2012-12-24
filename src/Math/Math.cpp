@@ -30,3 +30,8 @@ float Jatta::Math::max(float a, float b)
 {
     return (a > b ? a : b);
 }
+
+float Jatta::Math::floor(float x)
+{
+    return std::floor(x);
+}

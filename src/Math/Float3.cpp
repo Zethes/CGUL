@@ -95,6 +95,7 @@ Jatta::Float3& Jatta::Float3::operator*=(float operand)
     this->x *= operand;
     this->y *= operand;
     this->z *= operand;
+    return *this;
 }
 
 float Jatta::Float3::getMagnitude() const

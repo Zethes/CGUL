@@ -26,6 +26,23 @@ Jatta::Float2::Float2(float x, float y)
     this->y = y;
 }
 
+Jatta::Float2 Jatta::Float2::operator+(const Float2& operand) const
+{
+    return Float2(x + operand.x, y + operand.y);
+}
+
+Jatta::Float2 Jatta::Float2::operator*(float operand) const
+{
+    return Float2(this->x * operand, this->y * operand);
+}
+
+Jatta::Float2& Jatta::Float2::operator*=(float operand)
+{
+    this->x *= operand;
+    this->y *= operand;
+    return *this;
+}
+
 void Jatta::Float2::normalize()
 {
     float inverseMagnitude = 1.0f / getMagnitude();
