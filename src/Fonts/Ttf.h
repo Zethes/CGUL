@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../Images/Image.h"
+#include "../Images/Color.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -15,8 +16,7 @@ namespace Jatta
         Ttf();
         void load(const std::string& fileName, unsigned int size);
 
-        Image&& blurg(const std::string& text);
-        Image&& blurg(const std::string& text, const Color& color);
+        Image&& blurg(const std::string& text, const Color& color = Color(0, 0, 0), bool beginningSpacer = false);
     };
 }
 

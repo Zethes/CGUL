@@ -1,5 +1,4 @@
 #include "Ttf.h"
-#include "../Images/Color.h"
 #include <string.h>
 
 #include <iostream> // TODO: remove iostream
@@ -152,100 +151,190 @@ void Jatta::Ttf::load(const std::string& fileName, unsigned int size)
     return std::move(Image((Color*)data, 512, 512));
 }*/
 
-Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
+Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color, bool beginningSpacer)
 {
+    bool kerning = true;
+
     // set our transform matrix (to the identity matrix)
     FT_Matrix matrix;
     matrix.xx = (FT_Fixed)(1 * 0x10000L);
     matrix.xy = (FT_Fixed)(0 * 0x10000L);
     matrix.yx = (FT_Fixed)(0 * 0x10000L);
     matrix.yy = (FT_Fixed)(1 * 0x10000L);
-
-    // set the position of the font
     FT_Vector pen;
     pen.x = 0;
     pen.y = 0;
+    FT_Int bufferWidth = 0, bufferHeight = 0;
 
-    // render each character
-    unsigned int buffWidth = 0, buffHeight = 0;
-    for (unsigned int n = 0; n < text.length(); n++)
+    FT_Int maxDown = 0;
+    for (unsigned int n = 0; n < text.length();)
     {
-        // transform the font character
         FT_Set_Transform(face, &matrix, &pen);
-
-        // load glyph image into the slot
-        FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
+        FT_ULong utf8Character = 0;
+        std::cout << text[n] << ": ";
+        //std::cout << (unsigned char)(text[n]) & 0xFC << std::endl;
+        if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
+        {
+            std::cout << "31" << std::endl;
+            utf8Character |= (text[n++] & 0x01) << 30;
+            utf8Character |= (text[n++] & 0x3F) << 24;
+            utf8Character |= (text[n++] & 0x3F) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
+        {
+            std::cout << "26" << std::endl;
+            utf8Character |= (text[n++] & 0x03) << 24;
+            utf8Character |= (text[n++] & 0x3F) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
+        {
+            std::cout << "21" << std::endl;
+            utf8Character |= (text[n++] & 0x07) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
+        {
+            std::cout << "16" << std::endl;
+            utf8Character |= (text[n++] & 0x0F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
+        {
+            std::cout << "11" << std::endl;
+            utf8Character |= (text[n++] & 0x1F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else
+        {
+            std::cout << "7" << std::endl;
+            utf8Character |= (text[n++] & 0x7F) << 0;
+        }
+        FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
-            continue; // @TODO ignore errors?
+            continue; // TODO: ignore errors?
         }
-
-        // now, draw to our surface
-        FT_Int i, j, p, q;
-        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
-        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        FT_Int height = face->glyph->bitmap.rows;
+        if (height > bufferHeight)
         {
-            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
-            {
-                if (i > buffWidth)
-                {
-                    buffWidth = i;
-                }
-                if (x_max > buffWidth)
-                {
-                    buffWidth = x_max;
-                }
-                if (j > buffHeight)
-                {
-                    buffHeight = j;
-                }
-                if (y_max > buffHeight)
-                {
-                    buffHeight = y_max;
-                }
-            }
+            bufferHeight = height;
         }
-
-        // increment pen position
+        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top) - 1;
+        if (down > maxDown)
+        {
+            maxDown = down;
+        }
+        if (n == 0 && !beginningSpacer)
+        {
+            face->glyph->bitmap_left = 1;
+        }
+        if (face->glyph->bitmap_left + face->glyph->bitmap.width > bufferWidth)
+        {
+            bufferWidth = face->glyph->bitmap_left + face->glyph->bitmap.width;
+        }
         pen.x += face->glyph->advance.x;
         pen.y += face->glyph->advance.y;
     }
+    bufferHeight += maxDown;
 
-    // reset pen
     pen.x = 0;
     pen.y = 0;
 
     // create the texture buffer
-    unsigned char* data = new unsigned char[buffWidth * buffHeight * sizeof(Color)];
+    unsigned char* data = new unsigned char[bufferWidth * bufferHeight * sizeof(Color)];
     Color* buffer = (Color*)data;
-    memset(buffer, 0, buffWidth * buffHeight * sizeof(Color));
+    memset(buffer, 0, bufferWidth * bufferHeight * sizeof(Color));
 
-    for (unsigned int n = 0; n < text.length(); n++)
+    for (unsigned int n = 0; n < text.length();)
     {
-        pen.x = 0;
-        pen.y = 0;
+        //pen.x = 0;
+        //pen.y = 0;
 
         // transform the font character
         FT_Set_Transform(face, &matrix, &pen);
 
         // load glyph image into the slot
         //FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
-        FT_Error error = FT_Load_Char(face, 12353, FT_LOAD_RENDER);
+        FT_ULong utf8Character = 0;
+        if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
+        {
+            std::cout << "31" << std::endl;
+            utf8Character |= (text[n++] & 0x01) << 30;
+            utf8Character |= (text[n++] & 0x3F) << 24;
+            utf8Character |= (text[n++] & 0x3F) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
+        {
+            std::cout << "26" << std::endl;
+            utf8Character |= (text[n++] & 0x03) << 24;
+            utf8Character |= (text[n++] & 0x3F) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
+        {
+            std::cout << "21" << std::endl;
+            utf8Character |= (text[n++] & 0x07) << 18;
+            utf8Character |= (text[n++] & 0x3F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
+        {
+            std::cout << "16" << std::endl;
+            utf8Character |= (text[n++] & 0x0F) << 12;
+            utf8Character |= (text[n++] & 0x3F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
+        {
+            std::cout << "11" << std::endl;
+            utf8Character |= (text[n++] & 0x1F) << 6;
+            utf8Character |= (text[n++] & 0x3F) << 0;
+        }
+        else
+        {
+            std::cout << "7" << std::endl;
+            utf8Character |= (text[n++] & 0x7F) << 0;
+        }
+        FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
-            continue; // @TODO ignore errors?
+            continue; // TODO: ignore errors?
+        }
+
+        if (n == 0 && !beginningSpacer)
+        {
+            face->glyph->bitmap_left = 1;
         }
 
         // now, draw to our surface
-        FT_Int i, j, p, q;
+        FT_Int i, p, q;
         FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
+        FT_Int y_max = face->glyph->bitmap_top + face->glyph->bitmap.rows;
+        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top) - 1;
+        FT_Int startY = (((bufferHeight - maxDown) - face->glyph->bitmap.rows) + down);
         for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
         {
-            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
+            for (q = 0; q < face->glyph->bitmap.rows; q++)
             {
-                buffer[j * buffWidth + i].a |= face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p];
+                buffer[(q + startY) * bufferWidth + i].r = color.r;
+                buffer[(q + startY) * bufferWidth + i].g = color.g;
+                buffer[(q + startY) * bufferWidth + i].b = color.b;
+                buffer[(q + startY) * bufferWidth + i].a |= (FT_Int)(face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p] * (color.a / 255.0f));
             }
         }
 
@@ -254,23 +343,5 @@ Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
         pen.y += face->glyph->advance.y;
     }
 
-    return std::move(Image((Color*)data, buffWidth, buffHeight));
-}
-
-Jatta::Image&& Jatta::Ttf::blurg(const std::string& text, const Color& color)
-{
-    Image img = blurg(text);
-    unsigned int size = img.getWidth() * img.getHeight();
-    Color* data = (Color*)img.getData();
-    for (unsigned int i = 0; i < size; i++)
-    {
-        /*data[i].r = color.r;
-        data[i].g = color.g;
-        data[i].b = color.b;*/
-        data[i].r = data[i].a;
-        data[i].g = data[i].a;
-        data[i].b = data[i].a;
-        data[i].a = 255;
-    }
-    return std::move(img);
+    return std::move(Image((Color*)data, bufferWidth, bufferHeight));
 }
