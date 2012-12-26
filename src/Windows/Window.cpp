@@ -2,8 +2,6 @@
 #include <cstdio>
 #include <sstream>
 
-#include <iostream> // TODO: remove iostream
-
 #ifdef WINDOWS
 LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -125,12 +123,7 @@ void Jatta::Window::create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, style.title.c_str(), -1, 0, 0);
-    wchar_t* buffer = new wchar_t[size];
-    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, style.title.c_str(), style.title.length(), buffer, size);
-    buffer[size - 1] = 0;
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, ss.str().c_str(), buffer, this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
-    delete buffer;
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, ss.str().c_str(), style.title._toWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
     if (handle == NULL)
     {
@@ -232,7 +225,7 @@ void Jatta::Window::update()
 #   endif
 }
 
-bool Jatta::Window::isOpen()
+bool Jatta::Window::isOpen() const
 {
 #   ifdef WINDOWS
     return IsWindow(handle);
@@ -243,7 +236,7 @@ bool Jatta::Window::isOpen()
 #   endif
 }
 
-unsigned int Jatta::Window::getWidth()
+unsigned int Jatta::Window::getWidth() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -260,7 +253,7 @@ unsigned int Jatta::Window::getWidth()
 #   endif
 }
 
-unsigned int Jatta::Window::getHeight()
+unsigned int Jatta::Window::getHeight() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -274,5 +267,22 @@ unsigned int Jatta::Window::getHeight()
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
     return attributes.height;
+#   endif
+}
+
+Jatta::Float2 Jatta::Window::getSize() const
+{
+    #   ifdef WINDOWS
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    int borders = -rect.top + rect.bottom;
+    GetWindowRect(handle, &rect);
+    return Float2(rect.right - rect.left - borders, rect.bottom - rect.top - borders);
+#   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return Float2(attributes.height, attributes.width);
 #   endif
 }

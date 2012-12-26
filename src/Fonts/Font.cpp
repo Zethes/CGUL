@@ -1,8 +1,6 @@
 #include "Font.h"
 #include <string.h>
 
-#include <iostream> // TODO: remove iostream
-
 static FT_Library __jatta_ttf_library;
 
 void __jatta_ttf_initialize()
@@ -13,7 +11,7 @@ void __jatta_ttf_initialize()
         FT_Error error = FT_Init_FreeType(&__jatta_ttf_library);
         if (error)
         {
-            std::cout << "Could not initialize FreeType" << std::endl;
+            _JATTA_DEBUG_LN("Could not initialize FreeType");
         }
         initialized = true;
     }
@@ -26,28 +24,33 @@ Jatta::Font::Font()
 
 void Jatta::Font::load(const std::string& fileName)
 {
-    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
+    FT_Face face;
+    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
     if (error == FT_Err_Unknown_File_Format)
     {
         // @TODO error checking
-        std::cout << "Font is an unknown format." << std::endl;
+        _JATTA_DEBUG_LN("Font is an unknown format.");
     }
     else if (error)
     {
         // @TODO error checking
-        std::cout << "Failed to load font." << std::endl;
+        _JATTA_DEBUG_LN("Failed to load font.");
     }
-    std::cout << FT_Get_X11_Font_Format(this->face) << std::endl;
+    faces.push_back(face);
+    _JATTA_DEBUG_LN(FT_Get_X11_Font_Format(face));
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
 }
 
 void Jatta::Font::setSize(unsigned int size)
 {
-    FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
-    if (error)
+    for (auto f = faces.begin(); f != faces.end(); f++)
     {
-        // @TODO error checking
-        std::cout << "Failed to set character size." << std::endl;
+        FT_Error error = FT_Set_Pixel_Sizes(*f, 0, size);
+        if (error)
+        {
+            // @TODO error checking
+            _JATTA_DEBUG_LN("Failed to set character size.");
+        }
     }
     this->size = size;
 }
@@ -67,7 +70,7 @@ Jatta::Color Jatta::Font::getColor()
     return this->color;
 }
 
-/*Jatta::Image&& Jatta::Ttf::blurg(const std::string& text)
+/*Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
 {
     // set our transform matrix (to the identity matrix)
     FT_Matrix matrix;
@@ -83,13 +86,15 @@ Jatta::Color Jatta::Font::getColor()
 
     // render each character
     unsigned int buffWidth = 0, buffHeight = 0;
-    for (unsigned int n = 0; n < text.length(); n++)
+    for (Jatta::Size n = 0; n < text.getSize();)
     {
         // transform the font character
-        FT_Set_Transform(face, &matrix, &pen);
+        FT_Set_Transform(faces[0], &matrix, &pen);
 
         // load glyph image into the slot
-        FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
+        UInt32 utf8Character;
+        n += text.getCodePoint(n, &utf8Character);
+        FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
         if (error)
         {
             continue; // @TODO ignore errors?
@@ -97,11 +102,11 @@ Jatta::Color Jatta::Font::getColor()
 
         // now, draw to our surface
         FT_Int i, j, p, q;
-        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
-        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        FT_Int x_max = faces[0]->glyph->bitmap_left + faces[0]->glyph->bitmap.width;
+        FT_Int y_max = size - faces[0]->glyph->bitmap_top + faces[0]->glyph->bitmap.rows;
+        for (i = faces[0]->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
         {
-            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
+            for (j = size - faces[0]->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
             {
                 if (i > buffWidth)
                 {
@@ -123,8 +128,8 @@ Jatta::Color Jatta::Font::getColor()
         }
 
         // increment pen position
-        pen.x += face->glyph->advance.x;
-        pen.y += face->glyph->advance.y;
+        pen.x += faces[0]->glyph->advance.x;
+        pen.y += faces[0]->glyph->advance.y;
     }
 
     // reset pen
@@ -136,13 +141,15 @@ Jatta::Color Jatta::Font::getColor()
     Color* buffer = (Color*)data;
     memset(buffer, 0, buffWidth * buffHeight * sizeof(Color));
 
-    for (unsigned int n = 0; n < text.length(); n++)
+    for (Jatta::Size n = 0; n < text.getSize();)
     {
         // transform the font character
-        FT_Set_Transform(face, &matrix, &pen);
+        FT_Set_Transform(faces[0], &matrix, &pen);
 
         // load glyph image into the slot
-        FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
+        UInt32 utf8Character;
+        n += text.getCodePoint(n, &utf8Character);
+        FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
         if (error)
         {
             continue; // @TODO ignore errors?
@@ -150,19 +157,19 @@ Jatta::Color Jatta::Font::getColor()
 
         // now, draw to our surface
         FT_Int i, j, p, q;
-        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        FT_Int y_max = size - face->glyph->bitmap_top + face->glyph->bitmap.rows;
-        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        FT_Int x_max = faces[0]->glyph->bitmap_left + faces[0]->glyph->bitmap.width;
+        FT_Int y_max = size - faces[0]->glyph->bitmap_top + faces[0]->glyph->bitmap.rows;
+        for (i = faces[0]->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
         {
-            for (j = size - face->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
+            for (j = size - faces[0]->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
             {
-                buffer[j * buffWidth + i].a |= face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p];
+                buffer[j * buffWidth + i].a |= faces[0]->glyph->bitmap.buffer[q * faces[0]->glyph->bitmap.width + p];
             }
         }
 
         // increment pen position
-        pen.x += face->glyph->advance.x;
-        pen.y += face->glyph->advance.y;
+        pen.x += faces[0]->glyph->advance.x;
+        pen.y += faces[0]->glyph->advance.y;
     }
 
     return std::move(Image((Color*)data, buffWidth, buffHeight));
@@ -170,7 +177,7 @@ Jatta::Color Jatta::Font::getColor()
     return std::move(Image((Color*)data, 512, 512));
 }*/
 
-Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginningSpacer)
+Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
 {
     bool kerning = true;
 
@@ -186,49 +193,21 @@ Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginning
     FT_Int bufferWidth = 0, bufferHeight = 0;
 
     FT_Int maxDown = 0;
-    for (unsigned int n = 0; n < text.length();)
+    for (Jatta::Size i = 0; i < text.getSize();)
     {
+        _JATTA_DEBUG_LN("FT_ULong: " << sizeof(FT_ULong));
+        UInt32 utf8Character;
+        i += text.getCodePoint(i, &utf8Character);
+        FT_Face face;
+        for (auto f = faces.begin(); f != faces.end(); f++)
+        {
+            face = *f;
+            if (FT_Get_Char_Index(face, utf8Character) != 0)
+            {
+                break;
+            }
+        }
         FT_Set_Transform(face, &matrix, &pen);
-        FT_ULong utf8Character = 0;
-        if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
-        {
-            utf8Character |= (text[n++] & 0x01) << 30;
-            utf8Character |= (text[n++] & 0x3F) << 24;
-            utf8Character |= (text[n++] & 0x3F) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
-        {
-            utf8Character |= (text[n++] & 0x03) << 24;
-            utf8Character |= (text[n++] & 0x3F) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
-        {
-            utf8Character |= (text[n++] & 0x07) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
-        {
-            utf8Character |= (text[n++] & 0x0F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
-        {
-            utf8Character |= (text[n++] & 0x1F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else
-        {
-            utf8Character |= (text[n++] & 0x7F) << 0;
-        }
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
@@ -239,12 +218,12 @@ Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginning
         {
             bufferHeight = height;
         }
-        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top) - 1;
+        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top);
         if (down > maxDown)
         {
             maxDown = down;
         }
-        if (n == 0 && !beginningSpacer)
+        if (i == 0 && !beginningSpacer)
         {
             face->glyph->bitmap_left = 1;
         }
@@ -265,81 +244,51 @@ Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginning
     Color* buffer = (Color*)data;
     memset(buffer, 0, bufferWidth * bufferHeight * sizeof(Color));
 
-    for (unsigned int n = 0; n < text.length();)
+    for (Jatta::Size i = 0; i < text.getSize();)
     {
         //pen.x = 0;
         //pen.y = 0;
 
-        // transform the font character
-        FT_Set_Transform(face, &matrix, &pen);
-
         // load glyph image into the slot
         //FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
-        FT_ULong utf8Character = 0;
-        if (((unsigned char)(text[n]) & 0xFC) == 0xFC)
+        UInt32 utf8Character;
+        i += text.getCodePoint(i, &utf8Character);
+        _JATTA_DEBUG_LN(std::hex << utf8Character << std::dec);
+        FT_Face face;
+        for (auto f = faces.begin(); f != faces.end(); f++)
         {
-            utf8Character |= (text[n++] & 0x01) << 30;
-            utf8Character |= (text[n++] & 0x3F) << 24;
-            utf8Character |= (text[n++] & 0x3F) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
+            face = *f;
+            if (FT_Get_Char_Index(face, utf8Character) != 0)
+            {
+                break;
+            }
         }
-        else if (((unsigned char)(text[n]) & 0xF8) == 0xF8)
-        {
-            utf8Character |= (text[n++] & 0x03) << 24;
-            utf8Character |= (text[n++] & 0x3F) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xF0) == 0xF0)
-        {
-            utf8Character |= (text[n++] & 0x07) << 18;
-            utf8Character |= (text[n++] & 0x3F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xE0) == 0xE0)
-        {
-            utf8Character |= (text[n++] & 0x0F) << 12;
-            utf8Character |= (text[n++] & 0x3F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else if (((unsigned char)(text[n]) & 0xC0) == 0xC0)
-        {
-            utf8Character |= (text[n++] & 0x1F) << 6;
-            utf8Character |= (text[n++] & 0x3F) << 0;
-        }
-        else
-        {
-            utf8Character |= (text[n++] & 0x7F) << 0;
-        }
+        FT_Set_Transform(face, &matrix, &pen);
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
             continue; // TODO: ignore errors?
         }
 
-        if (n == 0 && !beginningSpacer)
+        if (i == 0 && !beginningSpacer)
         {
             face->glyph->bitmap_left = 1;
         }
 
         // now, draw to our surface
-        FT_Int i, p, q;
+        FT_Int n, p, q;
         FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
         FT_Int y_max = face->glyph->bitmap_top + face->glyph->bitmap.rows;
-        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top) - 1;
+        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top);
         FT_Int startY = (((bufferHeight - maxDown) - face->glyph->bitmap.rows) + down);
-        for (i = face->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
+        for (n = face->glyph->bitmap_left, p = 0; n < x_max; n++, p++)
         {
             for (q = 0; q < face->glyph->bitmap.rows; q++)
             {
-                buffer[(q + startY) * bufferWidth + i].r = this->color.r;
-                buffer[(q + startY) * bufferWidth + i].g = this->color.g;
-                buffer[(q + startY) * bufferWidth + i].b = this->color.b;
-                buffer[(q + startY) * bufferWidth + i].a |= (FT_Int)(face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p] * (color.a / 255.0f));
+                buffer[(q + startY) * bufferWidth + n].r = this->color.r;
+                buffer[(q + startY) * bufferWidth + n].g = this->color.g;
+                buffer[(q + startY) * bufferWidth + n].b = this->color.b;
+                buffer[(q + startY) * bufferWidth + n].a |= (FT_Int)(face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p] * (color.a / 255.0f));
             }
         }
 
@@ -347,6 +296,5 @@ Jatta::Image&& Jatta::Font::generateText(const std::string& text, bool beginning
         pen.x += face->glyph->advance.x;
         pen.y += face->glyph->advance.y;
     }
-
-    return std::move(Image((Color*)data, bufferWidth, bufferHeight));
+    return Image((Color*)data, bufferWidth, bufferHeight - 1);
 }

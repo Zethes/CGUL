@@ -2,6 +2,7 @@
 // by Joshua Brookover //
 
 #pragma once
+#include "../Utility/String.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
@@ -10,7 +11,7 @@ namespace Jatta
 {
     class Font
     {
-        _JATTA_FT_FACE face;
+        std::vector<_JATTA_FT_FACE> faces;
         unsigned int size;
         Color color;
     public:
@@ -23,7 +24,7 @@ namespace Jatta
         void setColor(const Color& color);
         Color getColor();
 
-        Image&& generateText(const std::string& text, bool beginningSpacer = false);
+        Image generateText(const Jatta::String& text, bool beginningSpacer = false);
     };
 }
 

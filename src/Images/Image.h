@@ -13,7 +13,6 @@ namespace Jatta
     protected:
         Color* colors;
         unsigned int width, height;
-
     public:
         Image();
         Image(Color* colors, unsigned int width, unsigned int height);
@@ -28,8 +27,8 @@ namespace Jatta
 
         unsigned char* getData();
         const unsigned char* getData() const;
-        unsigned int getWidth();
-        unsigned int getHeight();
+        unsigned int getWidth() const;
+        unsigned int getHeight() const;
     };
 }
 

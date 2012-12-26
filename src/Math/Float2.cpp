@@ -28,7 +28,24 @@ Jatta::Float2::Float2(float x, float y)
 
 Jatta::Float2 Jatta::Float2::operator+(const Float2& operand) const
 {
-    return Float2(x + operand.x, y + operand.y);
+    return Float2(this->x + operand.x, this->y + operand.y);
+}
+
+Jatta::Float2& Jatta::Float2::operator+=(const Float2& operand)
+{
+    this->x += operand.x;
+    this->y += operand.y;
+}
+
+Jatta::Float2 Jatta::Float2::operator-(const Float2& operand) const
+{
+    return Float2(this->x - operand.x, this->y - operand.y);
+}
+
+Jatta::Float2& Jatta::Float2::operator-=(const Float2& operand)
+{
+    this->x -= operand.x;
+    this->y -= operand.y;
 }
 
 Jatta::Float2 Jatta::Float2::operator*(float operand) const

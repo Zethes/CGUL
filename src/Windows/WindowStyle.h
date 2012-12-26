@@ -2,6 +2,7 @@
 // by Joshua Brookover //
 
 #pragma once
+#include "../Utility/String.h"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
 
@@ -9,7 +10,7 @@ namespace Jatta
 {
     struct WindowStyle
     {
-        std::string title;
+        String title;
         Color backgroundColor;
         unsigned int width;
         unsigned int height;

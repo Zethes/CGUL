@@ -4,6 +4,7 @@
 #pragma once
 #include "Input.h"
 #include "WindowStyle.h"
+#include "../Math/Float2.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -49,10 +50,11 @@ namespace Jatta
 
         void update();
 
-        bool isOpen();
+        bool isOpen() const;
 
-        unsigned int getWidth();
-        unsigned int getHeight();
+        unsigned int getWidth() const;
+        unsigned int getHeight() const;
+        Float2 getSize() const;
     };
 }
 

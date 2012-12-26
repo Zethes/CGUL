@@ -26,6 +26,7 @@
 #    include <X11/Xlib.h>
 #    include <GL/glxew.h>
 #  endif
+#  include <GL/glew.h>
 #  include <ft2build.h>
 #  include <freetype/freetype.h>
 #  include <freetype/ftxf86.h>

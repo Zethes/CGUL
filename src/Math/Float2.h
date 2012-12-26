@@ -16,6 +16,9 @@ namespace Jatta
         Float2(float x, float y);
 
         Float2 operator+(const Float2& operand) const;
+        Float2& operator+=(const Float2& operand);
+        Float2 operator-(const Float2& operand) const;
+        Float2& operator-=(const Float2& operand);
         Float2 operator*(float operand) const;
         Float2& operator*=(float operand);
 

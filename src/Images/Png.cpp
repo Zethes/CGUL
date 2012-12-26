@@ -49,7 +49,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     //if the function fails, NULL is returned. Always check the return values!
     png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pngPtr) {
-        std::cerr << "ERROR: Couldn't initialize png read struct" << std::endl;
+        _JATTA_DEBUG_LN("ERROR: Couldn't initialize png read struct");
         return false; //Do your own error recovery/handling here
     }
 
@@ -57,7 +57,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     //Note that this time, if this function fails, we have to clean up the read struct!
     png_infop infoPtr = png_create_info_struct(pngPtr);
     if (!infoPtr) {
-        std::cerr << "ERROR: Couldn't initialize png info struct" << std::endl;
+        _JATTA_DEBUG_LN("ERROR: Couldn't initialize png info struct");
         png_destroy_read_struct(&pngPtr, (png_infopp)0, (png_infopp)0);
         return false; //Do your own error recovery/handling here
     }
@@ -73,7 +73,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
         if (rowPtrs != NULL) delete [] rowPtrs;
         if (data != NULL) delete [] data;
 
-        std::cout << "ERROR: An error occured while reading the PNG file\n";
+        _JATTA_DEBUG_LN("ERROR: An error occured while reading the PNG file\n");
 
         //Make sure you return here. libPNG will jump to here if something
         //goes wrong, and if you continue with your normal code, you might
@@ -105,10 +105,10 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     width = imgWidth;
     height = imgHeight;
 
-    std::cout << imgWidth << "x" << imgHeight << std::endl;
-    std::cout << "Bit Depth: " << bitdepth << std::endl;
-    std::cout << "Channels: " << channels << std::endl;
-    std::cout << "Color Type: " << color_type << std::endl;
+    _JATTA_DEBUG_LN(imgWidth << "x" << imgHeight);
+    _JATTA_DEBUG_LN("Bit Depth: " << bitdepth);
+    _JATTA_DEBUG_LN("Channels: " << channels);
+    _JATTA_DEBUG_LN("Color Type: " << color_type);
 
     png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * imgHeight);
     for (int y = 0; y < imgHeight; y++)
@@ -158,7 +158,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
         return true;
     }
 
-    std::cout << "[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (" << PNG_COLOR_TYPE_RGBA << ") (is " << png_get_color_type(pngPtr, infoPtr) << ")" << std::endl;
+    _JATTA_DEBUG_LN("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (" << PNG_COLOR_TYPE_RGBA << ") (is " << png_get_color_type(pngPtr, infoPtr) << ")");
     return false;
 }
 

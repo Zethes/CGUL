@@ -6,8 +6,8 @@ H_FILES:=$(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h)
 OBJ_FILES:=$(CPP_FILES:src/%.cpp=obj/%.o)
 DEP_FILES:=$(CPP_FILES:.cpp=.d) $(MM_FILES:.mm=.dd)
 DEP_FILES:=$(addprefix dep/,$(DEP_FILES:src/%=%))
-INCLUDE_FILES:=$(H_FILES:src/%=include/%.force)
-COMPILE_SETTINGS=-DJATTA_INCLUDES
+INCLUDE_FILES:=$(H_FILES:src/%=include/Jatta/%.force)
+COMPILE_SETTINGS=-DJATTA_INCLUDES -DJATTA_DEBUG
 
 UNAME:=$(shell uname -s)
 
@@ -32,7 +32,7 @@ lib/libjatta.a: $(OBJ_FILES) $(INCLUDE_FILES)
 
 -include $(DEP_FILES)
 
-include/%.force:
+include/Jatta/%.force:
 	@mkdir -p $(dir $(@:%.force=%))
 	@cp src/$* $(@:%.force=%)
 
@@ -47,7 +47,7 @@ obj/%.o: src/%.cpp
 	@rm -f dep/$*.d.tmp
 
 clean:
-	rm -rf include
+	rm -rf include/Jatta
 	rm -rf lib
 	rm -rf obj
 	rm -rf dep

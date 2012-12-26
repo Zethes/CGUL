@@ -38,7 +38,7 @@ bool Jatta::Obj::getParameters(const std::string& parameters)//, std::vector<std
     {
         if (i == parameters.size() || !isdigit(parameters[i]))
         {
-            std::cout << number << std::endl;
+            _JATTA_DEBUG_LN(number);
             number = "";
             continue;
         }
@@ -130,7 +130,7 @@ bool Jatta::Obj::load(const std::string& fileName)
         }
     }
 
-    std::cout << "GROUPS: " << groups.size() << std::endl;
+    _JATTA_DEBUG_LN("GROUPS: " << groups.size());
 
     return true;
 }
