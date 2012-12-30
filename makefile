@@ -1,3 +1,5 @@
+UNAME:=$(shell uname -s)
+
 # linux #
 ifeq ($(UNAME),Linux)
 	CMAKE_GENERATOR:="Unix Makefiles"
