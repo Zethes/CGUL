@@ -1,4 +1,4 @@
-#include "../Jatta.h"
+#include "Once.h"
 
 #ifdef WINDOWS
 #  define _JATTA_HWND void*

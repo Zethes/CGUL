@@ -1,6 +1,8 @@
 #include "SubMesh.h"
 #include <cstring>
 
+#include <iostream>
+
 Jatta::SubMesh::SubMesh(Type type, unsigned int vertexCount)
 {
     this->type = type;

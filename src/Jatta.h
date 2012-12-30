@@ -1,65 +1,36 @@
 #pragma once
 
-// Operating System Detection
-#if !defined(WINDOWS) and !defined(LINUX) and !defined(MACOS)
-#  if defined(_WIN32)
-#    define WINDOWS
-#  elif defined(__APPLE__)
-#    define MACOS
-#  elif defined(unix)
-#    define LINUX
-#  else
-#    error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
-#  endif
-#endif
+#include "Jatta/File/File.h"
 
-// Jatta Type Defines
-#define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
-namespace Jatta
-{
-    TYPE(float, Float32, 4);
-    TYPE(double, Float64, 8);
+#include "Jatta/Fonts/Font.h"
 
-    TYPE(char, SInt8, 1);
-    TYPE(unsigned char, UInt8, 1);
-    TYPE(short, SInt16, 2);
-    TYPE(unsigned short, UInt16, 2);
-    TYPE(int, SInt32, 4);
-    TYPE(unsigned int, UInt32, 4);
-    TYPE(long long, SInt64, 8);
-    TYPE(unsigned long long, UInt64, 8);
+#include "Jatta/Graphics/Graphics.h"
+#include "Jatta/Graphics/Mesh.h"
+#include "Jatta/Graphics/Primitives.h"
+#include "Jatta/Graphics/Shader.h"
+#include "Jatta/Graphics/SubMesh.h"
+#include "Jatta/Graphics/Texture.h"
 
-    TYPE(bool, Boolean, 1);
+#include "Jatta/Images/Color.h"
+#include "Jatta/Images/Image.h"
 
-    TYPE(SInt8, UTF8Char, 1);
-    TYPE(SInt16, UTF16Char, 2);
-    TYPE(SInt32, UTF32Char, 4);
+#include "Jatta/Math/Float2.h"
+#include "Jatta/Math/Float3.h"
+#include "Jatta/Math/Float4.h"
+#include "Jatta/Math/Math.h"
+#include "Jatta/Math/Matrix.h"
+#include "Jatta/Math/Random.h"
 
-    TYPE(UInt8, Byte, 1);
-    TYPE(SInt8, SignedByte, 1);
+#include "Jatta/Models/Group.h"
+#include "Jatta/Models/Model.h"
+#include "Jatta/Models/Obj.h"
+#include "Jatta/Models/VertexBuffer.h"
 
-    TYPE(long, Size, sizeof(void*));
-}
-#undef TYPE
+#include "Jatta/Network/DNS.h"
+#include "Jatta/Network/TCP.h"
 
-// Standard Template Library Includes
-#include <array>
-#include <forward_list>
-#include <fstream>
-#include <list>
-#include <memory>
-#include <sstream>
-#include <string>
-#include <vector>
+#include "Jatta/Utility/Ptr.h"
 
-// Debugging Outputs
-#ifdef JATTA_INCLUDES
-#  ifdef JATTA_DEBUG
-#    include <iostream>
-#    define _JATTA_DEBUG_LN(x) std::cout << "JATTA_DEBUG (" __FILE__ ":" << __LINE__ << ")" << std::endl << x << std::endl;
-#    define _JATTA_DEBUG(x) std::cout << x;
-#  else
-#    define _JATTA_DEBUG_LN(x)
-#    define _JATTA_DEBUG(x)
-#  endif
-#endif
+#include "Jatta/Windows/Input.h"
+#include "Jatta/Windows/Window.h"
+#include "Jatta/Windows/WindowStyle.h"

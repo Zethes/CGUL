@@ -42,7 +42,7 @@ static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 }
 #endif
 
-Jatta::Window::Window() : input(new Input(this))
+Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
@@ -77,9 +77,9 @@ Display* Jatta::Window::_getDisplay()
 }
 #endif
 
-std::shared_ptr<Jatta::Input> Jatta::Window::getInput()
+Jatta::Input* Jatta::Window::getInput()
 {
-    return input;
+    return &input;
 }
 
 void Jatta::Window::create(const WindowStyle& style)

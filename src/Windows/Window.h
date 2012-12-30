@@ -27,7 +27,7 @@ namespace Jatta
         static bool initialized;
 #       endif
 
-        std::shared_ptr<Input> input;
+        Input input;
     public:
         Window();
         Window(const Window& copy) = delete;
@@ -43,7 +43,7 @@ namespace Jatta
         _JATTA_WINDOW _getHandle();
 #       endif
 
-        std::shared_ptr<Input> getInput();
+        Input* getInput();
 
         void create(const WindowStyle& style);
         void close();

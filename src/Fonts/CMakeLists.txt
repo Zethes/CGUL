@@ -1,0 +1,9 @@
+set(DIR ${CMAKE_CURRENT_LIST_DIR}/)
+
+set(JATTA_SOURCE
+    ${JATTA_SOURCE}
+    ${DIR}Font.cpp
+    PARENT_SCOPE
+)
+
+INSTALL(FILES Font.h DESTINATION include/Jatta/Fonts/)

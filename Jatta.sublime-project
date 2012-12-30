@@ -2,7 +2,9 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": ".",
+            "folder_exclude_patterns": ["lib", "include"],
+            "file_exclude_patterns": ["*.sublime-workspace"]
 		}
 	]
 }
