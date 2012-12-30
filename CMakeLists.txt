@@ -12,6 +12,6 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-add_subdirectory(src)
+set(TOP_LEVEL ${CMAKE_CURRENT_SOURCE_DIR})
 
-#file(COPY src/*.h DESTINATION ${CMAKE_CURRENT_LIST_DIR}/include)
+add_subdirectory(src)
