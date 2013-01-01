@@ -10,21 +10,21 @@ namespace Jatta
     {
         float x, y;
 
-        Float2();
-        Float2(const Float2& copy);
-        Float2(float value);
-        Float2(float x, float y);
+        _JATTA_EXPORT Float2();
+        _JATTA_EXPORT Float2(const Float2& copy);
+        _JATTA_EXPORT Float2(float value);
+        _JATTA_EXPORT Float2(float x, float y);
 
-        Float2 operator+(const Float2& operand) const;
-        Float2& operator+=(const Float2& operand);
-        Float2 operator-(const Float2& operand) const;
-        Float2& operator-=(const Float2& operand);
-        Float2 operator*(float operand) const;
-        Float2& operator*=(float operand);
+        _JATTA_EXPORT Float2 operator+(const Float2& operand) const;
+        _JATTA_EXPORT Float2& operator+=(const Float2& operand);
+        _JATTA_EXPORT Float2 operator-(const Float2& operand) const;
+        _JATTA_EXPORT Float2& operator-=(const Float2& operand);
+        _JATTA_EXPORT Float2 operator*(float operand) const;
+        _JATTA_EXPORT Float2& operator*=(float operand);
 
-        void normalize();
+        _JATTA_EXPORT void normalize();
 
-        float getMagnitude();
+        _JATTA_EXPORT float getMagnitude();
     };
 }
 

@@ -15,16 +15,16 @@ namespace Jatta
         unsigned int size;
         Color color;
     public:
-        Font();
-        void load(const std::string& fileName);
+        _JATTA_EXPORT Font();
+        _JATTA_EXPORT void load(const std::string& fileName);
 
-        void setSize(unsigned int size);
-        unsigned int getSize();
+        _JATTA_EXPORT void setSize(unsigned int size);
+        _JATTA_EXPORT unsigned int getSize();
 
-        void setColor(const Color& color);
-        Color getColor();
+        _JATTA_EXPORT void setColor(const Color& color);
+        _JATTA_EXPORT Color getColor();
 
-        Image generateText(const Jatta::String& text, bool beginningSpacer = false);
+        _JATTA_EXPORT Image generateText(const Jatta::String& text, bool beginningSpacer = false);
     };
 }
 

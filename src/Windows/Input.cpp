@@ -263,18 +263,18 @@ static unsigned char keyLayout[256] =
 };
 #endif
 
-Jatta::Input::Input(Window* window)
+_JATTA_EXPORT Jatta::Input::Input(Window* window)
 {
     this->window = window;
     memset(this->keyData, 0, 256);
 }
 
-bool* Jatta::Input::getKeyData()
+_JATTA_EXPORT bool* Jatta::Input::getKeyData()
 {
     return this->keyData;
 }
 
-unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
+_JATTA_EXPORT unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
 {
 #   ifdef WINDOWS
     return key;
@@ -285,15 +285,17 @@ unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
 #   endif
 }
 
-bool Jatta::Input::isKeyDown(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::isKeyDown(unsigned char key)
 {
     return this->keyData[key];
 }
 
-bool Jatta::Input::isKeyPressed(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::isKeyPressed(unsigned char key)
 {
+    return false;
 }
 
-bool Jatta::Input::isKeyReleased(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::isKeyReleased(unsigned char key)
 {
+    return false;
 }

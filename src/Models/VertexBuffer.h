@@ -6,7 +6,7 @@
 
 struct VertexBuffer
 {
-    enum class Type
+    enum Type
     {
         POSITION, TEXCOORD, NORMAL, COLOR
     } type;

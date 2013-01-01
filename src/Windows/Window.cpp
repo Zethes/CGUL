@@ -2,6 +2,10 @@
 #include <cstdio>
 #include <sstream>
 
+// Disable Warning C4355: 'this' : used in base member initializer list
+// How we're using 'this' will not cause any undefined behavior
+#pragma warning( disable : 4355 )
+
 #ifdef WINDOWS
 LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -42,7 +46,17 @@ static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 }
 #endif
 
-Jatta::Window::Window() : input(this)
+_JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
+{
+    /* deleted */
+}
+
+_JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
+{
+    /* deleted */
+}
+
+_JATTA_EXPORT  Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
@@ -53,36 +67,36 @@ Jatta::Window::Window() : input(this)
 #   endif
 }
 
-Jatta::Window::~Window()
+_JATTA_EXPORT Jatta::Window::~Window()
 {
     close();
 }
 
 #ifdef WINDOWS
-HWND Jatta::Window::_getHandle()
+_JATTA_EXPORT HWND Jatta::Window::_getHandle()
 {
     return handle;
 }
 #endif
 
 #ifdef LINUX
-Display* Jatta::Window::_getDisplay()
+_JATTA_EXPORT Display* Jatta::Window::_getDisplay()
 {
     return display;
 }
 
-::Window Jatta::Window::_getHandle()
+_JATTA_EXPORT ::Window Jatta::Window::_getHandle()
 {
     return handle;
 }
 #endif
 
-Jatta::Input* Jatta::Window::getInput()
+_JATTA_EXPORT Jatta::Input* Jatta::Window::getInput()
 {
     return &input;
 }
 
-void Jatta::Window::create(const WindowStyle& style)
+_JATTA_EXPORT void Jatta::Window::create(const WindowStyle& style)
 {
 #   ifdef WINDOWS
     // Generate a unique class name for this window
@@ -104,13 +118,14 @@ void Jatta::Window::create(const WindowStyle& style)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b));
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = ss.str().c_str();
+    wc.lpszClassName = new wchar_t[ss.str().length() + 1];
+    memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
     wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
 
     // Register the window class
     if (!RegisterClassEx(&wc))
     {
-        // TODO: throw exception
+        throw std::runtime_error("Failed to register the window class.");
     }
 
     this->style = WS_OVERLAPPEDWINDOW;
@@ -123,11 +138,11 @@ void Jatta::Window::create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, ss.str().c_str(), style.title._toWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._toWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
     if (handle == NULL)
     {
-        // TODO: throw exception
+        throw std::runtime_error("Failed to create the window!");
     }
 
     SetWindowLongPtr(handle, GWLP_USERDATA, (LONG_PTR)this);
@@ -154,7 +169,7 @@ void Jatta::Window::create(const WindowStyle& style)
 #   endif
 }
 
-void Jatta::Window::close()
+_JATTA_EXPORT void Jatta::Window::close()
 {
 #   ifdef WINDOWS
     if (IsWindow(handle))
@@ -175,7 +190,7 @@ void Jatta::Window::close()
 #   endif
 }
 
-void Jatta::Window::update()
+_JATTA_EXPORT void Jatta::Window::update()
 {
 #   ifdef WINDOWS
     MSG Msg;
@@ -225,10 +240,10 @@ void Jatta::Window::update()
 #   endif
 }
 
-bool Jatta::Window::isOpen() const
+_JATTA_EXPORT bool Jatta::Window::isOpen() const
 {
 #   ifdef WINDOWS
-    return IsWindow(handle);
+    return IsWindow(handle) == TRUE;
 #   endif
 
 #   ifdef LINUX
@@ -236,7 +251,7 @@ bool Jatta::Window::isOpen() const
 #   endif
 }
 
-unsigned int Jatta::Window::getWidth() const
+_JATTA_EXPORT unsigned int Jatta::Window::getWidth() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -253,7 +268,7 @@ unsigned int Jatta::Window::getWidth() const
 #   endif
 }
 
-unsigned int Jatta::Window::getHeight() const
+_JATTA_EXPORT unsigned int Jatta::Window::getHeight() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -270,14 +285,14 @@ unsigned int Jatta::Window::getHeight() const
 #   endif
 }
 
-Jatta::Float2 Jatta::Window::getSize() const
+_JATTA_EXPORT Jatta::Float2 Jatta::Window::getSize() const
 {
     #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
-    return Float2(rect.right - rect.left - borders, rect.bottom - rect.top - borders);
+    return Float2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
 #   endif
 
 #   ifdef LINUX

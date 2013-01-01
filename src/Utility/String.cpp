@@ -1,47 +1,42 @@
 #include "String.h"
 
-Jatta::String operator "" _jatta(const char* literal_string, unsigned int length)
-{
-    return Jatta::String(literal_string);
-}
-
-Jatta::String::String() : data()
+_JATTA_EXPORT Jatta::String::String() : data()
 {
 }
 
-Jatta::String::String(const String& copy) : data(copy.data)
+_JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 {
 }
 
-Jatta::String::String(String&& move) : data(std::move(move.data))
+_JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 {
 }
 
-Jatta::String::String(const char* data) : data(data)
+_JATTA_EXPORT Jatta::String::String(const char* data) : data(data)
 {
 }
 
-Jatta::String::String(const std::string& data) : data(data)
+_JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
 {
 }
 
-Jatta::String& Jatta::String::operator=(const String& operand)
+_JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
 {
     this->data = operand.data;
     return *this;
 }
 
-bool Jatta::String::operator<(const String& operand) const
+_JATTA_EXPORT bool Jatta::String::operator<(const String& operand) const
 {
     return this->data < operand.data;
 }
 
-Jatta::Size Jatta::String::getSize() const
+_JATTA_EXPORT Jatta::Size Jatta::String::getSize() const
 {
     return data.length();
 }
 
-Jatta::Size Jatta::String::getLength() const
+_JATTA_EXPORT Jatta::Size Jatta::String::getLength() const
 {
     Size len = 0;
     const char* str = this->data.c_str();
@@ -55,12 +50,12 @@ Jatta::Size Jatta::String::getLength() const
     return len;
 }
 
-Jatta::Byte Jatta::String::getByte(Size position) const
+_JATTA_EXPORT Jatta::Byte Jatta::String::getByte(Size position) const
 {
     return (Byte)data.at(position);
 }
 
-Jatta::Size Jatta::String::getCodePoint(Size start, UInt32* codePoint) const
+_JATTA_EXPORT Jatta::Size Jatta::String::getCodePoint(Size start, UInt32* codePoint) const
 {
     *codePoint = 0;
     if (((Byte)(data[start]) & 0xFC) == 0xFC)
@@ -108,7 +103,7 @@ Jatta::Size Jatta::String::getCodePoint(Size start, UInt32* codePoint) const
 }
 
 #ifdef WINDOWS
-std::wstring Jatta::String::_toWideString() const
+_JATTA_EXPORT std::wstring Jatta::String::_toWideString() const
 {
     int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), -1, 0, 0);
     wchar_t* buffer = new wchar_t[size];

@@ -9,7 +9,7 @@ namespace Jatta
     class Mesh
     {
     public:
-        Mesh();
+        //_JATTA_EXPORT Mesh();
     };
 }
 

@@ -10,14 +10,14 @@ namespace Jatta
     {
         float x, y, z, w;
 
-        Float4();
-        Float4(const Float4& copy);
-        Float4(float value);
-        Float4(float x, float y, float z, float w);
+        _JATTA_EXPORT Float4();
+        _JATTA_EXPORT Float4(const Float4& copy);
+        _JATTA_EXPORT Float4(float value);
+        _JATTA_EXPORT Float4(float x, float y, float z, float w);
 
-        void normalize();
+        _JATTA_EXPORT void normalize();
 
-        float getMagnitude();
+        _JATTA_EXPORT float getMagnitude();
     };
 }
 

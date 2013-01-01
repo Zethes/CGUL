@@ -2,17 +2,17 @@
 
 Jatta::RenderTarget::Viewport Jatta::RenderTarget::viewport;
 
-Jatta::RenderTarget::RenderTarget()
+_JATTA_EXPORT Jatta::RenderTarget::RenderTarget()
 {
     textures = nullptr;
 }
 
-Jatta::RenderTarget::~RenderTarget()
+_JATTA_EXPORT Jatta::RenderTarget::~RenderTarget()
 {
     delete[] textures;
 }
 
-void Jatta::RenderTarget::create(UInt32 width, UInt32 height, UInt32 textures)
+_JATTA_EXPORT void Jatta::RenderTarget::create(UInt32 width, UInt32 height, UInt32 textures)
 {
     this->width = width;
     this->height = height;
@@ -37,10 +37,10 @@ void Jatta::RenderTarget::create(UInt32 width, UInt32 height, UInt32 textures)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Jatta::RenderTarget::begin()
+_JATTA_EXPORT void Jatta::RenderTarget::begin()
 {
 }
 
-void Jatta::RenderTarget::end()
+_JATTA_EXPORT void Jatta::RenderTarget::end()
 {
 }

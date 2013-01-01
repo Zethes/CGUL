@@ -8,5 +8,5 @@ set(JATTA_SOURCE
     PARENT_SCOPE
 )
 
-INSTALL(FILES Dns.h DESTINATION include/Jatta/Network/)
+INSTALL(FILES DNS.h DESTINATION include/Jatta/Network/)
 INSTALL(FILES TCP.h DESTINATION include/Jatta/Network/)

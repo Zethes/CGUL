@@ -28,33 +28,34 @@ namespace Jatta
 #       endif
 
         Input input;
+
+        _JATTA_EXPORT Window(const Window& copy);
+        _JATTA_EXPORT Window(Window&& move);
     public:
-        Window();
-        Window(const Window& copy) = delete;
-        Window(Window&& move) = delete;
-        ~Window();
+        _JATTA_EXPORT  Window();
+        _JATTA_EXPORT ~Window();
 
 #       ifdef WINDOWS
-        _JATTA_HWND _getHandle();
+        _JATTA_EXPORT _JATTA_HWND _getHandle();
 #       endif
 
 #       ifdef LINUX
-        _JATTA_DISPLAY _getDisplay();
-        _JATTA_WINDOW _getHandle();
+        _JATTA_EXPORT _JATTA_DISPLAY _getDisplay();
+        _JATTA_EXPORT _JATTA_WINDOW _getHandle();
 #       endif
 
-        Input* getInput();
+        _JATTA_EXPORT Input* getInput();
 
-        void create(const WindowStyle& style);
-        void close();
+        _JATTA_EXPORT void create(const WindowStyle& style);
+        _JATTA_EXPORT void close();
 
-        void update();
+        _JATTA_EXPORT void update();
 
-        bool isOpen() const;
+        _JATTA_EXPORT bool isOpen() const;
 
-        unsigned int getWidth() const;
-        unsigned int getHeight() const;
-        Float2 getSize() const;
+        _JATTA_EXPORT unsigned int getWidth() const;
+        _JATTA_EXPORT unsigned int getHeight() const;
+        _JATTA_EXPORT Float2 getSize() const;
     };
 }
 

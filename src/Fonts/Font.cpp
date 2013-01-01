@@ -1,9 +1,10 @@
+#ifdef JATTA_FONTS
 #include "Font.h"
 #include <string.h>
 
 static FT_Library __jatta_ttf_library;
 
-void __jatta_ttf_initialize()
+_JATTA_EXPORT void __jatta_ttf_initialize()
 {
     static bool initialized = false;
     if (!initialized)
@@ -17,12 +18,12 @@ void __jatta_ttf_initialize()
     }
 }
 
-Jatta::Font::Font()
+_JATTA_EXPORT Jatta::Font::Font()
 {
     __jatta_ttf_initialize();
 }
 
-void Jatta::Font::load(const std::string& fileName)
+_JATTA_EXPORT void Jatta::Font::load(const std::string& fileName)
 {
     FT_Face face;
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
@@ -41,7 +42,7 @@ void Jatta::Font::load(const std::string& fileName)
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
 }
 
-void Jatta::Font::setSize(unsigned int size)
+_JATTA_EXPORT void Jatta::Font::setSize(unsigned int size)
 {
     for (auto f = faces.begin(); f != faces.end(); f++)
     {
@@ -55,17 +56,17 @@ void Jatta::Font::setSize(unsigned int size)
     this->size = size;
 }
 
-unsigned int Jatta::Font::getSize()
+_JATTA_EXPORT unsigned int Jatta::Font::getSize()
 {
     return this->size;
 }
 
-void Jatta::Font::setColor(const Color& color)
+_JATTA_EXPORT void Jatta::Font::setColor(const Color& color)
 {
     this->color = color;
 }
 
-Jatta::Color Jatta::Font::getColor()
+_JATTA_EXPORT Jatta::Color Jatta::Font::getColor()
 {
     return this->color;
 }
@@ -177,7 +178,7 @@ Jatta::Color Jatta::Font::getColor()
     return std::move(Image((Color*)data, 512, 512));
 }*/
 
-Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
+_JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
 {
     bool kerning = true;
 
@@ -298,3 +299,4 @@ Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginning
     }
     return Image((Color*)data, bufferWidth, bufferHeight - 1);
 }
+#endif

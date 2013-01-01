@@ -32,7 +32,7 @@ bool Jatta::Png::isValid(const std::string& fileName)
     return valid;
 }*/
 
-bool Jatta::Image::loadPng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::loadPng(const std::string& fileName)
 {
     unsigned int size;
     File::getFileSize(fileName, &size);
@@ -111,7 +111,7 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     _JATTA_DEBUG_LN("Color Type: " << color_type);
 
     png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * imgHeight);
-    for (int y = 0; y < imgHeight; y++)
+    for (unsigned int y = 0; y < imgHeight; y++)
     {
         row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(pngPtr,infoPtr));
     }
@@ -124,10 +124,10 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     {
         colors = (Color*)new char[imgHeight * imgWidth * sizeof(Color)];
 
-        for (int y=0; y<imgHeight; y++)
+        for (unsigned int y = 0; y < imgHeight; y++)
         {
             png_byte* row = row_pointers[y];
-            for (int x=0; x<imgWidth; x++)
+            for (unsigned int x = 0; x < imgWidth; x++)
             {
                 png_byte* ptr = &(row[x*3]);
                 colors[x + y * imgWidth].r = ptr[0];
@@ -143,10 +143,10 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     {
         colors = (Color*)new char[imgHeight * imgWidth * sizeof(Color)];
 
-        for (int y=0; y<imgHeight; y++)
+        for (unsigned int y = 0; y < imgHeight; y++)
         {
             png_byte* row = row_pointers[y];
-            for (int x=0; x<imgWidth; x++)
+            for (unsigned int x = 0; x < imgWidth; x++)
             {
                 png_byte* ptr = &(row[x*4]);
                 colors[x + y * imgWidth].r = ptr[0];
@@ -162,7 +162,8 @@ bool Jatta::Image::loadPng(const std::string& fileName)
     return false;
 }
 
-bool Jatta::Image::savePng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::savePng(const std::string& fileName)
 {
-    // do STUFF
+    // TODO: STUFF
+    return true;
 }

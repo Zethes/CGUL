@@ -2,11 +2,11 @@
 
 #include <GL/glew.h>
 
-Jatta::Texture::Texture()
+_JATTA_EXPORT Jatta::Texture::Texture()
 {
 }
 
-void Jatta::Texture::create(const Jatta::Image& image)
+_JATTA_EXPORT void Jatta::Texture::create(const Jatta::Image& image)
 {
     _JATTA_DEBUG_LN(image.getWidth() << ", " << image.getHeight());
     glGenTextures(1, &this->texture);
@@ -23,22 +23,22 @@ void Jatta::Texture::create(const Jatta::Image& image)
     _JATTA_DEBUG_LN(image.getWidth() << ", " << image.getHeight());
 }
 
-unsigned int Jatta::Texture::getTexture() const
+_JATTA_EXPORT unsigned int Jatta::Texture::getTexture() const
 {
     return this->texture;
 }
 
-unsigned int Jatta::Texture::getWidth() const
+_JATTA_EXPORT unsigned int Jatta::Texture::getWidth() const
 {
     return width;
 }
 
-unsigned int Jatta::Texture::getHeight() const
+_JATTA_EXPORT unsigned int Jatta::Texture::getHeight() const
 {
     return height;
 }
 
-Jatta::Float2 Jatta::Texture::getSize() const
+_JATTA_EXPORT Jatta::Float2 Jatta::Texture::getSize() const
 {
     return Jatta::Float2((float)width, (float)height);
 }

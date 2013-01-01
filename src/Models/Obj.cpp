@@ -4,7 +4,7 @@
 #include "../Math/Math.h"
 #include "../Math/Float4.h"
 
-void Jatta::Obj::cleanLine(std::string* line)
+_JATTA_EXPORT void Jatta::Obj::cleanLine(std::string* line)
 {
     size_t find;
     while ((find = line->find("  ")) != std::string::npos)
@@ -21,7 +21,7 @@ void Jatta::Obj::cleanLine(std::string* line)
     }
 }
 
-bool Jatta::Obj::getParameters(const std::string& parameters, float* data, unsigned int* size)
+_JATTA_EXPORT bool Jatta::Obj::getParameters(const std::string& parameters, float* data, unsigned int* size)
 {
     std::istringstream ss;
     ss.str(parameters);
@@ -29,9 +29,10 @@ bool Jatta::Obj::getParameters(const std::string& parameters, float* data, unsig
     {
         ss >> data[*size];
     }
+    return true; // TODO: check for errors
 }
 
-bool Jatta::Obj::getParameters(const std::string& parameters)//, std::vector<std::pair<float*, unsigned int>>* data)
+_JATTA_EXPORT bool Jatta::Obj::getParameters(const std::string& parameters)//, std::vector<std::pair<float*, unsigned int>>* data)
 {
     std::string number = "";
     for (unsigned int i = 0; i <= parameters.size(); i++)
@@ -44,13 +45,14 @@ bool Jatta::Obj::getParameters(const std::string& parameters)//, std::vector<std
         }
         number += parameters[i];
     }
+    return true; // TODO: check for errors
 }
 
-Jatta::Obj::Obj()
+_JATTA_EXPORT Jatta::Obj::Obj()
 {
 }
 
-bool Jatta::Obj::load(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Obj::load(const std::string& fileName)
 {
     std::vector<std::string> file;
     if (!File::getLines(fileName, &file))

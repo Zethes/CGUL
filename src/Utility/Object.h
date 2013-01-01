@@ -9,11 +9,13 @@ namespace Jatta
     class Object
     {
     public:
-        static void setAllocator(void* (*func)(Jatta::Size));
-        static void setDestructor(void (*func)(void*));
+        _JATTA_EXPORT static void setAllocator(void* (*func)(Jatta::Size));
+        _JATTA_EXPORT static void setDestructor(void (*func)(void*));
 
-        static void* allocate(Jatta::Size size);
-        static void destruct(void* address);
+        _JATTA_EXPORT static void* allocate(Jatta::Size size);
+        _JATTA_EXPORT static void destruct(void* address);
+
+        _JATTA_EXPORT virtual void dispose();
     };
 }
 

@@ -1,6 +1,6 @@
 #include "Color.h"
 
-Jatta::Color Jatta::Color::makeHSV(unsigned int hue, unsigned char saturation, unsigned char value)
+_JATTA_EXPORT Jatta::Color Jatta::Color::makeHSV(unsigned int hue, unsigned char saturation, unsigned char value)
 {
     Color ret;
 
@@ -55,8 +55,7 @@ Jatta::Color Jatta::Color::makeHSV(unsigned int hue, unsigned char saturation, u
     return ret;
 }
 
-
-Jatta::Color::Color()
+_JATTA_EXPORT Jatta::Color::Color()
 {
     this->r = 0;
     this->g = 0;
@@ -64,7 +63,7 @@ Jatta::Color::Color()
     this->a = 255;
 }
 
-Jatta::Color::Color(const Color& copy)
+_JATTA_EXPORT Jatta::Color::Color(const Color& copy)
 {
     this->r = copy.r;
     this->g = copy.g;
@@ -72,7 +71,7 @@ Jatta::Color::Color(const Color& copy)
     this->a = copy.a;
 }
 
-Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b)
+_JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b)
 {
     this->r = r;
     this->g = g;
@@ -80,7 +79,7 @@ Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b)
     this->a = 255;
 }
 
-Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+_JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     this->r = r;
     this->g = g;

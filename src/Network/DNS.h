@@ -19,7 +19,7 @@ namespace Jatta
         DNS();
         ~DNS();
 
-        static std::vector<std::string> lookup(const std::string& host, Filter filter = Filter::ANY);
+        _JATTA_EXPORT static std::vector<std::string> lookup(const std::string& host, Filter filter = Filter::ANY);
     };
 }
 

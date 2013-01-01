@@ -10,18 +10,18 @@ namespace Jatta
     {
         const float pi = 3.14159f;
 
-        float cos(float x);
-        float sin(float x);
-        float tan(float x);
+        _JATTA_EXPORT float cos(float x);
+        _JATTA_EXPORT float sin(float x);
+        _JATTA_EXPORT float tan(float x);
 
-        float degToRad(float deg);
+        _JATTA_EXPORT float degToRad(float deg);
 
-        float min(float a, float b);
-        float max(float a, float b);
+        _JATTA_EXPORT float min(float a, float b);
+        _JATTA_EXPORT float max(float a, float b);
 
-        float floor(float x);
+        _JATTA_EXPORT float floor(float x);
 
-        float mod(float x, float div);
+        _JATTA_EXPORT float mod(float x, float div);
     }
 }
 

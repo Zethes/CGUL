@@ -2,7 +2,7 @@
 #include <ctime>
 #include <cmath>
 
-float Jatta::Random::uniformDist(float a, float b, float u)
+_JATTA_EXPORT float Jatta::Random::uniformDist(float a, float b, float u)
 {
     if (u < 0)
     {
@@ -15,34 +15,34 @@ float Jatta::Random::uniformDist(float a, float b, float u)
     return u * (b - a) + a;
 }
 
-float Jatta::Random::exponentialDist(float beta, float u)
+_JATTA_EXPORT float Jatta::Random::exponentialDist(float beta, float u)
 {
     if (u < 0)
     {
         u = 0;
     }
-    if (u >= .99999)
+    if (u >= .99999f)
     {
-        u = .99999;
+        u = .99999f;
     }
     //return  -beta * std::log(u);
     return beta * std::log(-1 / (u - 1));
 }
 
-float Jatta::Random::weibullDist(float a, float b, float c, float u)
+_JATTA_EXPORT float Jatta::Random::weibullDist(float a, float b, float c, float u)
 {
     if (u < 0)
     {
         u = 0;
     }
-    if (u >= .99999)
+    if (u >= .99999f)
     {
-        u = .99999;
+        u = .99999f;
     }
     return b * std::pow(std::log(-1 / (u - 1)), 1 / c) + a;
 }
 
-float Jatta::Random::triangularDist(float xmin, float xmax, float c, float u)
+_JATTA_EXPORT float Jatta::Random::triangularDist(float xmin, float xmax, float c, float u)
 {
     if (u < 0)
     {
@@ -62,12 +62,12 @@ float Jatta::Random::triangularDist(float xmin, float xmax, float c, float u)
     }
 }
 
-float Jatta::Random::normal(float mean, float variance, float x)
+_JATTA_EXPORT float Jatta::Random::normal(float mean, float variance, float x)
 {
-    return (1 / std::sqrt(2 * 3.14159 * variance)) * std::exp(-(std::pow(x - mean, 2) / (2 * variance)));
+    return (1 / (float)std::sqrt(2 * 3.14159 * variance)) * std::exp(-(std::pow(x - mean, 2) / (2 * variance)));
 }
 
-Jatta::Random::Random()
+_JATTA_EXPORT Jatta::Random::Random()
 {
     this->seed = (unsigned int)std::time(0);
     this->multiplier = 16807;
@@ -75,7 +75,7 @@ Jatta::Random::Random()
     this->modulus = 2147483647;
 }
 
-Jatta::Random::Random(unsigned int seed)
+_JATTA_EXPORT Jatta::Random::Random(unsigned int seed)
 {
     this->seed = seed;
     this->multiplier = 16807;
@@ -83,7 +83,7 @@ Jatta::Random::Random(unsigned int seed)
     this->modulus = 2147483647;
 }
 
-Jatta::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus)
+_JATTA_EXPORT Jatta::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus)
 {
     this->seed = seed;
     this->multiplier = multiplier;
@@ -91,33 +91,33 @@ Jatta::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int a
     this->modulus = modulus;
 }
 
-unsigned int Jatta::Random::getInteger()
+_JATTA_EXPORT unsigned int Jatta::Random::getInteger()
 {
     seed = (multiplier * seed + addition) % modulus;
     return seed;
 }
 
-float Jatta::Random::getDecimal()
+_JATTA_EXPORT float Jatta::Random::getDecimal()
 {
     return getInteger() / float(modulus);
 }
 
-float Jatta::Random::getUniform(float a, float b)
+_JATTA_EXPORT float Jatta::Random::getUniform(float a, float b)
 {
     return getDecimal() * (b - a) + a;
 }
 
-float Jatta::Random::getExponential(float beta)
+_JATTA_EXPORT float Jatta::Random::getExponential(float beta)
 {
     return exponentialDist(beta, getDecimal());
 }
 
-float Jatta::Random::getWeibull(float a, float b, float c)
+_JATTA_EXPORT float Jatta::Random::getWeibull(float a, float b, float c)
 {
     return weibullDist(a, b, c, getDecimal());
 }
 
-float Jatta::Random::getNormal(float mean, float variance)
+_JATTA_EXPORT float Jatta::Random::getNormal(float mean, float variance)
 {
     float x;
     float u;
@@ -126,6 +126,6 @@ float Jatta::Random::getNormal(float mean, float variance)
         x = Random::exponentialDist(1, getDecimal());
         u = getDecimal();
     }
-    while (u < Random::normal(0, .2, x) / (2 * Random::exponentialDist(1, x)));
-    return Random::normal(0, .2, x);
+    while (u < Random::normal(0, .2f, x) / (2 * Random::exponentialDist(1, x)));
+    return Random::normal(0, .2f, x);
 }

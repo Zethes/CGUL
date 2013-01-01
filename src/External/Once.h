@@ -1,16 +1,20 @@
 #pragma once
 
 // Operating System Detection
-#if !defined(WINDOWS) and !defined(LINUX) and !defined(MACOS)
+#if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
 #  if defined(_WIN32)
 #    define WINDOWS
 #  elif defined(__APPLE__)
 #    define MACOS
-#  elif defined(unix)
+#  elif defined(__GNUC__)
 #    define LINUX
 #  else
 #    error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
 #  endif
+#endif
+
+#ifdef _MSC_VER
+#  define MSVC
 #endif
 
 // Jatta Type Defines
@@ -62,4 +66,15 @@ namespace Jatta
 #    define _JATTA_DEBUG_LN(x)
 #    define _JATTA_DEBUG(x)
 #  endif
+#endif
+
+// DLL Exports
+#ifdef MSVC
+#  ifdef JATTA_BUILD
+#    define _JATTA_EXPORT __declspec(dllexport) 
+#  else
+#    define _JATTA_EXPORT __declspec(dllimport)
+#  endif
+#else
+#  define _JATTA_EXPORT
 #endif

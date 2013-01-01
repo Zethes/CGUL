@@ -1,20 +1,17 @@
 #include "SubMesh.h"
 #include <cstring>
 
-#include <iostream>
-
-Jatta::SubMesh::SubMesh(Type type, unsigned int vertexCount)
+_JATTA_EXPORT Jatta::SubMesh::SubMesh(Type type, unsigned int vertexCount)
 {
     this->type = type;
 
-    std::cout << "glGenVertexArrays: " << (void*)glGenVertexArrays << std::endl;
     glGenVertexArrays(1, &this->vertexArray);
     this->vertexCount = vertexCount;
 
     indices = nullptr;
 }
 
-void Jatta::SubMesh::addBuffer(Jatta::Float2* buffer, unsigned int index)
+_JATTA_EXPORT void Jatta::SubMesh::addBuffer(Jatta::Float2* buffer, unsigned int index)
 {
     // bind the mesh so that we can modify it
     glBindVertexArray(this->vertexArray);
@@ -39,7 +36,7 @@ void Jatta::SubMesh::addBuffer(Jatta::Float2* buffer, unsigned int index)
     glBindVertexArray(0);
 }
 
-void Jatta::SubMesh::addBuffer(Jatta::Float3* buffer, unsigned int index)
+_JATTA_EXPORT void Jatta::SubMesh::addBuffer(Jatta::Float3* buffer, unsigned int index)
 {
     // bind the mesh so that we can modify it
     glBindVertexArray(this->vertexArray);
@@ -64,7 +61,7 @@ void Jatta::SubMesh::addBuffer(Jatta::Float3* buffer, unsigned int index)
     glBindVertexArray(0);
 }
 
-void Jatta::SubMesh::addBuffer(Jatta::Float4* buffer, unsigned int index)
+_JATTA_EXPORT void Jatta::SubMesh::addBuffer(Jatta::Float4* buffer, unsigned int index)
 {
     // bind the mesh so that we can modify it
     glBindVertexArray(this->vertexArray);
@@ -89,7 +86,7 @@ void Jatta::SubMesh::addBuffer(Jatta::Float4* buffer, unsigned int index)
     glBindVertexArray(0);
 }
 
-void Jatta::SubMesh::setIndexBuffer(unsigned int* buffer, unsigned int size)
+_JATTA_EXPORT void Jatta::SubMesh::setIndexBuffer(unsigned int* buffer, unsigned int size)
 {
     if (buffer == nullptr)
     {
@@ -104,7 +101,7 @@ void Jatta::SubMesh::setIndexBuffer(unsigned int* buffer, unsigned int size)
     this->indexCount = size;
 }
 
-void Jatta::SubMesh::draw()
+_JATTA_EXPORT void Jatta::SubMesh::draw()
 {
     // draw this sh!te
     glBindVertexArray(this->vertexArray);

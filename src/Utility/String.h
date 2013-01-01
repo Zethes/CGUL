@@ -10,32 +10,30 @@ namespace Jatta
     {
         std::string data;
     public:
-        String();
-        String(const String& copy);
-        String(String&& move);
-        String(const char* data);
-        String(const std::string& data);
+        _JATTA_EXPORT String();
+        _JATTA_EXPORT String(const String& copy);
+        _JATTA_EXPORT String(String&& move);
+        _JATTA_EXPORT String(const char* data);
+        _JATTA_EXPORT String(const std::string& data);
 
-        String& operator=(const String& operand);
+        _JATTA_EXPORT String& operator=(const String& operand);
         template <typename T> String operator+(const T& value) const;
         template <typename T> String operator+(const T&& value) const;
         template <typename T> String& operator+=(const T& value);
         template <typename T> String& operator+=(const T&& value);
-        bool operator<(const String& operand) const;
+        _JATTA_EXPORT bool operator<(const String& operand) const;
 
-        Size getSize() const;
-        Size getLength() const;
+        _JATTA_EXPORT Size getSize() const;
+        _JATTA_EXPORT Size getLength() const;
 
-        Byte getByte(Size position) const;
-        Size getCodePoint(Size start, UInt32* codePoint) const;
+        _JATTA_EXPORT Byte getByte(Size position) const;
+        _JATTA_EXPORT Size getCodePoint(Size start, UInt32* codePoint) const;
 
 #       ifdef WINDOWS
-        std::wstring _toWideString() const;
+        _JATTA_EXPORT std::wstring _toWideString() const;
 #       endif
     };
 }
-
-Jatta::String operator "" _jatta(const char* literal_string, unsigned int length);
 
 template <typename T> Jatta::String Jatta::String::operator+(const T& value) const
 {

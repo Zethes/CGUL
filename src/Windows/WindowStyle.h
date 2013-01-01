@@ -16,9 +16,9 @@ namespace Jatta
         unsigned int height;
         bool resizable;
 
-        WindowStyle();
-        WindowStyle(const WindowStyle& style);
-        WindowStyle(const std::string& title, Color backgroundColor, unsigned int width, unsigned int height, bool resizable);
+        _JATTA_EXPORT WindowStyle();
+        _JATTA_EXPORT WindowStyle(const WindowStyle& style);
+        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, unsigned int width, unsigned int height, bool resizable);
     };
 }
 

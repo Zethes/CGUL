@@ -14,16 +14,16 @@ namespace Jatta
         UInt32 width;
         UInt32 height;
     public:
-        Texture();
+        _JATTA_EXPORT Texture();
         
-        void create(const Jatta::Image& image);
+        _JATTA_EXPORT void create(const Jatta::Image& image);
 
-        UInt32 getTexture() const;
+        _JATTA_EXPORT UInt32 getTexture() const;
 
-        UInt32 getWidth() const;
-        UInt32 getHeight() const;
+        _JATTA_EXPORT UInt32 getWidth() const;
+        _JATTA_EXPORT UInt32 getHeight() const;
 
-        Float2 getSize() const;
+        _JATTA_EXPORT Float2 getSize() const;
     };
 }
 

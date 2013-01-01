@@ -1,6 +1,6 @@
 #include "File.h"
 
-bool Jatta::File::getText(const std::string& fileName, std::string* result)
+_JATTA_EXPORT bool Jatta::File::getText(const std::string& fileName, std::string* result)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in);
@@ -19,7 +19,7 @@ bool Jatta::File::getText(const std::string& fileName, std::string* result)
     return true;
 }
 
-bool Jatta::File::getLines(const std::string& fileName, std::vector<std::string>* vector)
+_JATTA_EXPORT bool Jatta::File::getLines(const std::string& fileName, std::vector<std::string>* vector)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in);
@@ -37,19 +37,19 @@ bool Jatta::File::getLines(const std::string& fileName, std::vector<std::string>
     return true;
 }
 
-bool Jatta::File::getFileSize(const std::string& fileName, unsigned int* fileSize)
+_JATTA_EXPORT bool Jatta::File::getFileSize(const std::string& fileName, unsigned int* fileSize)
 {
-    unsigned int begin, end;
+    std::streamoff begin, end;
     std::ifstream myfile(fileName);
     begin = myfile.tellg();
     myfile.seekg(0, std::ios::end);
     end = myfile.tellg();
     myfile.close();
-    *fileSize = (end - begin);
+    *fileSize = (unsigned int)(end - begin);
     return true;
 }
 
-bool Jatta::File::getData(const std::string& fileName, char* buffer, unsigned int size)
+_JATTA_EXPORT bool Jatta::File::getData(const std::string& fileName, char* buffer, unsigned int size)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in | std::ios::binary);

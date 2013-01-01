@@ -13,22 +13,22 @@ static void defaultDestructor(void* address)
 static void* (*allocator)(Jatta::Size) = defaultAllocator;
 static void (*destructor)(void*) = defaultDestructor;
 
-void Jatta::Object::setAllocator(void* (*func)(Size))
+_JATTA_EXPORT void Jatta::Object::setAllocator(void* (*func)(Size))
 {
     ::allocator = func;
 }
 
-void Jatta::Object::setDestructor(void (*func)(void*))
+_JATTA_EXPORT void Jatta::Object::setDestructor(void (*func)(void*))
 {
     ::destructor = func;
 }
 
-void* Jatta::Object::allocate(Jatta::Size size)
+_JATTA_EXPORT void* Jatta::Object::allocate(Jatta::Size size)
 {
     return ::allocator(size);
 }
 
-void Jatta::Object::destruct(void* address)
+_JATTA_EXPORT void Jatta::Object::destruct(void* address)
 {
     ::destructor(address);
 }

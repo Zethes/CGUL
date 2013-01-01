@@ -1,6 +1,6 @@
 #include "WindowStyle.h"
 
-Jatta::WindowStyle::WindowStyle()
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle()
 {
     this->title = "";
     this->backgroundColor = Color(255, 255, 255);
@@ -9,7 +9,7 @@ Jatta::WindowStyle::WindowStyle()
     this->resizable = true;
 }
 
-Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
 {
     this->title = style.title;
     this->backgroundColor = style.backgroundColor;
@@ -18,7 +18,7 @@ Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
     this->resizable = style.resizable;
 }
 
-Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, unsigned int width, unsigned int height, bool resizable)
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, unsigned int width, unsigned int height, bool resizable)
 {
     this->title = title;
     this->backgroundColor = backgroundColor;

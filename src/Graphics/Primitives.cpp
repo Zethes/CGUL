@@ -3,8 +3,6 @@
 #include <GL/glew.h>
 #include "../Math/Float4.h"
 
-#include <iostream> // TODO: remove iostream
-
 static unsigned int line2DVertexArray;
 static Jatta::Float2 line2DVertex[2] = {Jatta::Float2(0, 0), Jatta::Float2(0, 0)};
 static Jatta::Float4 line2DColor[2] = {Jatta::Float4(0, 0, 0, 0), Jatta::Float4(0, 0, 0, 0)};
@@ -19,7 +17,6 @@ static void setup()
     static bool done = false;
     if (!done)
     {
-        std::cout << "Initializing 2D lines." << std::endl;
         glGenVertexArrays(1, &line2DVertexArray);
         glBindVertexArray(line2DVertexArray);
         glGenBuffers(2, line2DObject);
@@ -34,7 +31,6 @@ static void setup()
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
-        std::cout << "Initializing 2D triangles." << std::endl;
         glGenVertexArrays(1, &triangle2DVertexArray);
         glBindVertexArray(triangle2DVertexArray);
         glGenBuffers(2, triangle2DObject);
@@ -53,7 +49,7 @@ static void setup()
     }
 }
 
-void Jatta::Primitives::drawLine(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2)
+_JATTA_EXPORT void Jatta::Primitives::drawLine(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2)
 {
     setup();
     glBindVertexArray(line2DVertexArray);
@@ -70,12 +66,12 @@ void Jatta::Primitives::drawLine(Jatta::Float2 position1, Jatta::Color color1, J
     glBindVertexArray(0);
 }
 
-void Jatta::Primitives::drawLine(Jatta::Float3 position1, Jatta::Color color1, Jatta::Float3 position2, Jatta::Color color2)
+_JATTA_EXPORT void Jatta::Primitives::drawLine(Jatta::Float3 position1, Jatta::Color color1, Jatta::Float3 position2, Jatta::Color color2)
 {
     setup();
 }
 
-void Jatta::Primitives::drawTriangle(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2, Jatta::Float2 position3, Jatta::Color color3)
+_JATTA_EXPORT void Jatta::Primitives::drawTriangle(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2, Jatta::Float2 position3, Jatta::Color color3)
 {
     setup();
     glBindVertexArray(triangle2DVertexArray);

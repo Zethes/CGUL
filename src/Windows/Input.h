@@ -15,14 +15,14 @@ namespace Jatta
         Window* window;
         bool keyData[256];
 
-        Input(Window* window);
+        _JATTA_EXPORT Input(Window* window);
 
-        bool* getKeyData();
-        unsigned char getKeyFromLayout(unsigned char key);
+        _JATTA_EXPORT bool* getKeyData();
+        _JATTA_EXPORT unsigned char getKeyFromLayout(unsigned char key);
     public:
-        bool isKeyDown(unsigned char key);
-        bool isKeyPressed(unsigned char key);
-        bool isKeyReleased(unsigned char key);
+        _JATTA_EXPORT bool isKeyDown(unsigned char key);
+        _JATTA_EXPORT bool isKeyPressed(unsigned char key);
+        _JATTA_EXPORT bool isKeyReleased(unsigned char key);
     };
 }
 

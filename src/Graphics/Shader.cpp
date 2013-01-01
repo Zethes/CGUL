@@ -10,17 +10,27 @@
 #include "../Images/Color.h"
 #include "Texture.h"
 
-Jatta::Shader::Shader()
+_JATTA_EXPORT Jatta::Shader::Shader(const Shader& copy)
+{
+    /* Deleted */
+}
+
+_JATTA_EXPORT Jatta::Shader::Shader(Shader&& move)
+{
+    /* Deleted */
+}
+
+_JATTA_EXPORT Jatta::Shader::Shader()
 {
     this->vertexID = this->fragmentID = this->shaderID = 0;
 }
 
-Jatta::Shader::~Shader()
+_JATTA_EXPORT Jatta::Shader::~Shader()
 {
 
 }
 
-void Jatta::Shader::load(const std::string& vertex, const std::string& fragment)
+_JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::string& fragment)
 {
     // Create the vertex and fragment shaders
     _JATTA_DEBUG_LN("Creating shaders...");
@@ -131,57 +141,57 @@ void Jatta::Shader::load(const std::string& vertex, const std::string& fragment)
     _JATTA_DEBUG_LN("Done loading shader.");
 }
 
-void Jatta::Shader::unload()
+_JATTA_EXPORT void Jatta::Shader::unload()
 {
     // TODO: Jatta::Shader::unload()
 }
 
-void Jatta::Shader::begin()
+_JATTA_EXPORT void Jatta::Shader::begin()
 {
     glUseProgram(shaderID);
 }
 
-void Jatta::Shader::end()
+_JATTA_EXPORT void Jatta::Shader::end()
 {
     glUseProgram(0);
 }
 
-void Jatta::Shader::setBoolean(const std::string& name, bool value)
+_JATTA_EXPORT void Jatta::Shader::setBoolean(const std::string& name, bool value)
 {
     glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
 }
 
-void Jatta::Shader::setFloat(const std::string& name, float value)
+_JATTA_EXPORT void Jatta::Shader::setFloat(const std::string& name, float value)
 {
     glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
 }
 
-void Jatta::Shader::setFloat2(const std::string& name, const Jatta::Float2& value)
+_JATTA_EXPORT void Jatta::Shader::setFloat2(const std::string& name, const Jatta::Float2& value)
 {
     glUniform2f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y);
 }
 
-void Jatta::Shader::setFloat3(const std::string& name, const Jatta::Float3& value)
+_JATTA_EXPORT void Jatta::Shader::setFloat3(const std::string& name, const Jatta::Float3& value)
 {
     glUniform3f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y, value.z);
 }
 
-void Jatta::Shader::setFloat4(const std::string& name, const Jatta::Float4& value)
+_JATTA_EXPORT void Jatta::Shader::setFloat4(const std::string& name, const Jatta::Float4& value)
 {
     glUniform4f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y, value.z, value.w);
 }
 
-void Jatta::Shader::setColor(const std::string& name, const Jatta::Color& color)
+_JATTA_EXPORT void Jatta::Shader::setColor(const std::string& name, const Jatta::Color& color)
 {
     glUniform4f(glGetUniformLocation(shaderID, name.c_str()), color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 }
 
-void Jatta::Shader::setMatrix(const std::string& name, const Jatta::Matrix& matrix)
+_JATTA_EXPORT void Jatta::Shader::setMatrix(const std::string& name, const Jatta::Matrix& matrix)
 {
     glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, matrix.getData());
 }
 
-void Jatta::Shader::setTexture(const std::string& name, const Texture& texture)
+_JATTA_EXPORT void Jatta::Shader::setTexture(const std::string& name, const Texture& texture)
 {
     int id = 0;
     int myTexture = glGetUniformLocation(shaderID, name.c_str());
@@ -190,7 +200,7 @@ void Jatta::Shader::setTexture(const std::string& name, const Texture& texture)
     glBindTexture(GL_TEXTURE_2D, texture.getTexture());
 }
 
-void Jatta::Shader::bindAttribute(unsigned int index, const std::string& name)
+_JATTA_EXPORT void Jatta::Shader::bindAttribute(unsigned int index, const std::string& name)
 {
     glBindAttribLocation(shaderID, index, name.c_str());
     glLinkProgram(shaderID); // @TODO make shaders not call this every time

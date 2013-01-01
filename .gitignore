@@ -3,5 +3,6 @@ include/Jatta/
 lib/
 obj/
 build/
+vsbuild/
 
 *.sublime-workspace

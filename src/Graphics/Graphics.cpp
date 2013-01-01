@@ -9,12 +9,12 @@
 
 Jatta::Graphics* Jatta::Graphics::current = nullptr;
 
-Jatta::Graphics* Jatta::Graphics::getCurrent()
+_JATTA_EXPORT Jatta::Graphics* Jatta::Graphics::getCurrent()
 {
     return current;
 }
 
-Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
+_JATTA_EXPORT Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
 {
     this->window = window;
 
@@ -126,17 +126,17 @@ Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
     }
 }
 
-Jatta::Graphics::~Graphics()
+_JATTA_EXPORT Jatta::Graphics::~Graphics()
 {
     // TODO: delete graphics stuff
 }
 
-std::shared_ptr<Jatta::Window> Jatta::Graphics::getWindow()
+_JATTA_EXPORT std::shared_ptr<Jatta::Window> Jatta::Graphics::getWindow()
 {
     return window;
 }
 
-void Jatta::Graphics::makeCurrent()
+_JATTA_EXPORT void Jatta::Graphics::makeCurrent()
 {
 #   ifdef WINDOWS
     if (!wglMakeCurrent(deviceContext, renderContext))
@@ -148,7 +148,7 @@ void Jatta::Graphics::makeCurrent()
     current = this;
 }
 
-void Jatta::Graphics::clear(const Jatta::Color& color)
+_JATTA_EXPORT void Jatta::Graphics::clear(const Jatta::Color& color)
 {
     if (getCurrent() != this)
     {
@@ -159,7 +159,7 @@ void Jatta::Graphics::clear(const Jatta::Color& color)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Jatta::Graphics::present()
+_JATTA_EXPORT void Jatta::Graphics::present()
 {
     if (getCurrent() != this)
     {
@@ -175,7 +175,7 @@ void Jatta::Graphics::present()
 #   endif
 }
 
-void Jatta::Graphics::setViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+_JATTA_EXPORT void Jatta::Graphics::setViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
 {
     if (getCurrent() != this)
     {

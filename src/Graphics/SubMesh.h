@@ -12,7 +12,7 @@ namespace Jatta
     class SubMesh
     {
     public:
-        enum class Type
+        enum Type
         {
             POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN, QUADS, QUAD_STRIP, POLYGON
         };
@@ -25,15 +25,15 @@ namespace Jatta
 
         std::forward_list<UInt32> vertexBuffers;
     public:
-        SubMesh(Type type, UInt32 vertexCount);
+        _JATTA_EXPORT SubMesh(Type type, UInt32 vertexCount);
 
-        void addBuffer(Jatta::Float2* buffer, UInt32 index);
-        void addBuffer(Jatta::Float3* buffer, UInt32 index);
-        void addBuffer(Jatta::Float4* buffer, UInt32 index);
+        _JATTA_EXPORT void addBuffer(Jatta::Float2* buffer, UInt32 index);
+        _JATTA_EXPORT void addBuffer(Jatta::Float3* buffer, UInt32 index);
+        _JATTA_EXPORT void addBuffer(Jatta::Float4* buffer, UInt32 index);
 
-        void setIndexBuffer(UInt32* buffer, UInt32 size);
+        _JATTA_EXPORT void setIndexBuffer(UInt32* buffer, UInt32 size);
 
-        void draw();
+        _JATTA_EXPORT void draw();
     };
 }
 

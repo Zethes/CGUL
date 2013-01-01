@@ -10,9 +10,9 @@ namespace Jatta
     {
         int socket;
 
-        SocketTCP();
+        _JATTA_EXPORT SocketTCP();
 
-        void connect(const std::string& ip, unsigned short port);
+        _JATTA_EXPORT void connect(const std::string& ip, unsigned short port);
     };
 };
 

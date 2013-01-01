@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Jatta::Float4::Float4()
+_JATTA_EXPORT Jatta::Float4::Float4()
 {
     this->x = 0;
     this->y = 0;
@@ -10,7 +10,7 @@ Jatta::Float4::Float4()
     this->w = 0;
 }
 
-Jatta::Float4::Float4(const Float4& copy)
+_JATTA_EXPORT Jatta::Float4::Float4(const Float4& copy)
 {
     this->x = copy.x;
     this->y = copy.y;
@@ -18,7 +18,7 @@ Jatta::Float4::Float4(const Float4& copy)
     this->w = copy.w;
 }
 
-Jatta::Float4::Float4(float value)
+_JATTA_EXPORT Jatta::Float4::Float4(float value)
 {
     this->x = value;
     this->y = value;
@@ -26,7 +26,7 @@ Jatta::Float4::Float4(float value)
     this->w = value;
 }
 
-Jatta::Float4::Float4(float x, float y, float z, float w)
+_JATTA_EXPORT Jatta::Float4::Float4(float x, float y, float z, float w)
 {
     this->x = x;
     this->y = y;
@@ -34,7 +34,7 @@ Jatta::Float4::Float4(float x, float y, float z, float w)
     this->w = w;
 }
 
-void Jatta::Float4::normalize()
+_JATTA_EXPORT void Jatta::Float4::normalize()
 {
     float inverseMagnitude = 1.0f / getMagnitude();
     x *= inverseMagnitude;
@@ -43,7 +43,7 @@ void Jatta::Float4::normalize()
     w *= inverseMagnitude;
 }
 
-float Jatta::Float4::getMagnitude()
+_JATTA_EXPORT float Jatta::Float4::getMagnitude()
 {
     return std::sqrt(x * x + y * y + z * z + w * w);
 }
