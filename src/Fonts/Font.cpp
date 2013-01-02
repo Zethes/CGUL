@@ -25,8 +25,7 @@ _JATTA_EXPORT Jatta::Font::Font()
 
 _JATTA_EXPORT void Jatta::Font::load(const std::string& fileName)
 {
-    FT_Face face;
-    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
+    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
     if (error == FT_Err_Unknown_File_Format)
     {
         // @TODO error checking
@@ -37,21 +36,17 @@ _JATTA_EXPORT void Jatta::Font::load(const std::string& fileName)
         // @TODO error checking
         _JATTA_DEBUG_LN("Failed to load font.");
     }
-    faces.push_back(face);
     _JATTA_DEBUG_LN(FT_Get_X11_Font_Format(face));
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
 }
 
 _JATTA_EXPORT void Jatta::Font::setSize(unsigned int size)
 {
-    for (auto f = faces.begin(); f != faces.end(); f++)
+    FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
+    if (error)
     {
-        FT_Error error = FT_Set_Pixel_Sizes(*f, 0, size);
-        if (error)
-        {
-            // @TODO error checking
-            _JATTA_DEBUG_LN("Failed to set character size.");
-        }
+        // @TODO error checking
+        _JATTA_DEBUG_LN("Failed to set character size.");
     }
     this->size = size;
 }
@@ -196,19 +191,9 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
     FT_Int maxDown = 0;
     for (Jatta::Size i = 0; i < text.getSize();)
     {
-        _JATTA_DEBUG_LN("FT_ULong: " << sizeof(FT_ULong));
         UInt32 utf8Character;
         i += text.getCodePoint(i, &utf8Character);
-        FT_Face face;
-        for (auto f = faces.begin(); f != faces.end(); f++)
-        {
-            face = *f;
-            if (FT_Get_Char_Index(face, utf8Character) != 0)
-            {
-                break;
-            }
-        }
-        FT_Set_Transform(face, &matrix, &pen);
+        FT_Set_Transform(this->face, &matrix, &pen);
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
@@ -255,17 +240,8 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
         UInt32 utf8Character;
         i += text.getCodePoint(i, &utf8Character);
         _JATTA_DEBUG_LN(std::hex << utf8Character << std::dec);
-        FT_Face face;
-        for (auto f = faces.begin(); f != faces.end(); f++)
-        {
-            face = *f;
-            if (FT_Get_Char_Index(face, utf8Character) != 0)
-            {
-                break;
-            }
-        }
         FT_Set_Transform(face, &matrix, &pen);
-        FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
+        FT_Error error = FT_Load_Char(this->face, utf8Character, FT_LOAD_RENDER);
         if (error)
         {
             continue; // TODO: ignore errors?
@@ -298,5 +274,20 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
         pen.y += face->glyph->advance.y;
     }
     return Image((Color*)data, bufferWidth, bufferHeight - 1);
+}
+
+_JATTA_EXPORT Jatta::UInt64 Jatta::Font::getCharacterIndex(UInt64 characterCode)
+{
+    return FT_Get_Char_Index(this->face, characterCode);
+}
+
+_JATTA_EXPORT Jatta::Glyph Jatta::Font::getGlyph(UInt64 index)
+{
+    Glyph glyph;
+    FT_Load_Glyph(this->face, index, FT_LOAD_RENDER);
+    glyph.width = this->face->glyph->bitmap.width;
+    glyph.height = this->face->glyph->bitmap.rows;
+    memcpy(glyph.data, this->face->glyph->bitmap.buffer, this->face->glyph->bitmap.width * this->face->glyph->bitmap.rows);
+    return glyph;
 }
 #endif

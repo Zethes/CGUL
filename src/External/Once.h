@@ -13,10 +13,6 @@
 #  endif
 #endif
 
-#ifdef _MSC_VER
-#  define MSVC
-#endif
-
 // Jatta Type Defines
 #define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
 namespace Jatta

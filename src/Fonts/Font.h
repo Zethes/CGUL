@@ -5,13 +5,14 @@
 #include "../Utility/String.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
+#include "Glyph.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
     class Font
     {
-        std::vector<_JATTA_FT_FACE> faces;
+        _JATTA_FT_FACE face;
         unsigned int size;
         Color color;
     public:
@@ -25,6 +26,9 @@ namespace Jatta
         _JATTA_EXPORT Color getColor();
 
         _JATTA_EXPORT Image generateText(const Jatta::String& text, bool beginningSpacer = false);
+
+        _JATTA_EXPORT UInt64 getCharacterIndex(Jatta::UInt64 characterCode);
+        _JATTA_EXPORT Glyph getGlyph(UInt64 index);
     };
 }
 
