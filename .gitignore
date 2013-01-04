@@ -4,5 +4,7 @@ lib/
 obj/
 build/
 vsbuild/
+html/
+latex/
 
 *.sublime-workspace

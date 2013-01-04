@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #pragma once
 
 // Operating System Detection
@@ -15,40 +20,77 @@
 
 // Jatta Type Defines
 #define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
+/** @brief General utility library.
+ */
 namespace Jatta
 {
+    /** @brief A 32 bit (4 bytes) floating point number.
+     */
     TYPE(float, Float32, 4);
+
+    /** @brief A 64 bit (8 bytes) floating point number.
+     */
     TYPE(double, Float64, 8);
 
+    /** @brief An 8 bit (1 byte) signed integer number.
+     */
     TYPE(char, SInt8, 1);
+
+    /** @brief An 8 bit (1 byte) unsigned integer number.
+     */
     TYPE(unsigned char, UInt8, 1);
+
+    /** @brief A 16 bit (2 bytes) signed integer number.
+     */
     TYPE(short, SInt16, 2);
+
+    /** @brief A 16 bit (2 bytes) unsigned integer number.
+     */
     TYPE(unsigned short, UInt16, 2);
+
+    /** @brief A 32 bit (4 bytes) signed integer number.
+     */
     TYPE(int, SInt32, 4);
+
+    /** @brief A 32 bit (4 bytes) unsigned integer number.
+     */
     TYPE(unsigned int, UInt32, 4);
+
+    /** @brief A 64 bit (8 bytes) signed integer number.
+     */
     TYPE(long long, SInt64, 8);
+
+    /** @brief A 64 bit (8 bytes) unsigned integer number.
+     */
     TYPE(unsigned long long, UInt64, 8);
 
+    /** @brief A 8 bit (1 byte) boolean value (true or false).
+     */
     TYPE(bool, Boolean, 1);
 
-    TYPE(SInt8, UTF8Char, 1);
-    TYPE(SInt16, UTF16Char, 2);
-    TYPE(SInt32, UTF32Char, 4);
-
+    /** @brief Alias for UInt8, an unsigned byte.
+     */
     TYPE(UInt8, Byte, 1);
+
+    /** @brief Alias for SInt8, a signed byte.
+     */
     TYPE(SInt8, SignedByte, 1);
 
-    TYPE(long, Size, sizeof(void*));
+    /** @brief A system-dependent sized integer capable of holding addresses in memory.
+     */
+    TYPE(unsigned long, Size, sizeof(void*));
 }
 #undef TYPE
 
 // Standard Template Library Includes
 #include <array>
+#include <cctype>
 #include <forward_list>
 #include <fstream>
 #include <list>
 #include <memory>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 

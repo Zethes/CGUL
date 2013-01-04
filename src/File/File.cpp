@@ -1,6 +1,6 @@
 #include "File.h"
 
-_JATTA_EXPORT bool Jatta::File::getText(const std::string& fileName, std::string* result)
+_JATTA_EXPORT bool Jatta::File::GetText(const std::string& fileName, std::string* result)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in);
@@ -19,7 +19,7 @@ _JATTA_EXPORT bool Jatta::File::getText(const std::string& fileName, std::string
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::getLines(const std::string& fileName, std::vector<std::string>* vector)
+_JATTA_EXPORT bool Jatta::File::GetLines(const std::string& fileName, std::vector<std::string>* vector)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in);
@@ -37,7 +37,25 @@ _JATTA_EXPORT bool Jatta::File::getLines(const std::string& fileName, std::vecto
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::getFileSize(const std::string& fileName, unsigned int* fileSize)
+_JATTA_EXPORT bool Jatta::File::GetLines(const std::string& fileName, std::vector<String>* vector)
+{
+	std::ifstream file;
+	file.open(fileName.c_str(), std::ios::in);
+	if (!file.is_open())
+	{
+		return false;
+	}
+	std::string line;
+	while (!file.eof())
+	{
+		getline(file, line);
+		vector->push_back(String(std::move(line)));
+	}
+	file.close();
+	return true;
+}
+
+_JATTA_EXPORT bool Jatta::File::GetFileSize(const std::string& fileName, UInt32* fileSize)
 {
     std::streamoff begin, end;
     std::ifstream myfile(fileName);
@@ -49,7 +67,7 @@ _JATTA_EXPORT bool Jatta::File::getFileSize(const std::string& fileName, unsigne
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::getData(const std::string& fileName, char* buffer, unsigned int size)
+_JATTA_EXPORT bool Jatta::File::GetData(const std::string& fileName, Byte* buffer, UInt32 size)
 {
     std::ifstream file;
     file.open(fileName.c_str(), std::ios::in | std::ios::binary);
@@ -57,7 +75,7 @@ _JATTA_EXPORT bool Jatta::File::getData(const std::string& fileName, char* buffe
     {
         return false;
     }
-    file.read(buffer, size);
+    file.read((char*)buffer, size);
     file.close();
     return true;
 }

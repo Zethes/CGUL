@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Input.h"
 #include <cstring>
 
@@ -269,12 +274,12 @@ _JATTA_EXPORT Jatta::Input::Input(Window* window)
     memset(this->keyData, 0, 256);
 }
 
-_JATTA_EXPORT bool* Jatta::Input::getKeyData()
+_JATTA_EXPORT bool* Jatta::Input::GetKeyData()
 {
     return this->keyData;
 }
 
-_JATTA_EXPORT unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
+_JATTA_EXPORT unsigned char Jatta::Input::GetKeyFromLayout(unsigned char key)
 {
 #   ifdef WINDOWS
     return key;
@@ -285,17 +290,17 @@ _JATTA_EXPORT unsigned char Jatta::Input::getKeyFromLayout(unsigned char key)
 #   endif
 }
 
-_JATTA_EXPORT bool Jatta::Input::isKeyDown(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::IsKeyDown(unsigned char key)
 {
     return this->keyData[key];
 }
 
-_JATTA_EXPORT bool Jatta::Input::isKeyPressed(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::IsKeyPressed(unsigned char key)
 {
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Input::isKeyReleased(unsigned char key)
+_JATTA_EXPORT bool Jatta::Input::IsKeyReleased(unsigned char key)
 {
     return false;
 }

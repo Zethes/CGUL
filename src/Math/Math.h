@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -8,20 +10,26 @@ namespace Jatta
 {
     namespace Math
     {
-        const float pi = 3.14159f;
+        const Float32 pi = 3.14159f;
 
-        _JATTA_EXPORT float cos(float x);
-        _JATTA_EXPORT float sin(float x);
-        _JATTA_EXPORT float tan(float x);
+        _JATTA_EXPORT Float32 Abs(Float32 x);
 
-        _JATTA_EXPORT float degToRad(float deg);
+        _JATTA_EXPORT Float32 Cos(Float32 x);
+        _JATTA_EXPORT Float32 Sin(Float32 x);
+        _JATTA_EXPORT Float32 Tan(Float32 x);
 
-        _JATTA_EXPORT float min(float a, float b);
-        _JATTA_EXPORT float max(float a, float b);
+        _JATTA_EXPORT Float32 DegToRad(Float32 deg);
 
-        _JATTA_EXPORT float floor(float x);
+        _JATTA_EXPORT Float32 Min(Float32 a, Float32 b);
+        _JATTA_EXPORT Float32 Max(Float32 a, Float32 b);
 
-        _JATTA_EXPORT float mod(float x, float div);
+        _JATTA_EXPORT Float32 Floor(Float32 x);
+
+        _JATTA_EXPORT Float32 Mod(Float32 x, Float32 div);
+
+        _JATTA_EXPORT Float32 Sqrt(Float32 x);
+
+        _JATTA_EXPORT bool InEpsilon(Float32 value, Float32 compare, Float32 epsilon);
     }
 }
 

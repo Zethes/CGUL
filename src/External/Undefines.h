@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #ifdef WINDOWS
 #  undef _JATTA_HWND
 #  undef _JATTA_DWORD

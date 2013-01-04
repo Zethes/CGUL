@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -8,7 +10,7 @@ namespace Jatta
 {
     struct Color
     {
-        _JATTA_EXPORT static Color makeHSV(unsigned int hue, unsigned char saturation, unsigned char value);
+        _JATTA_EXPORT static Color MakeHSV(unsigned int hue, unsigned char saturation, unsigned char value);
 
         unsigned char r, g, b, a;
 

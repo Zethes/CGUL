@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../Math/Float2.h"
@@ -11,9 +13,9 @@ namespace Jatta
 {
     namespace Primitives
     {
-        _JATTA_EXPORT void drawLine(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2);
-        _JATTA_EXPORT void drawLine(Jatta::Float3 position1, Jatta::Color color1, Jatta::Float3 position2, Jatta::Color color2);
-        _JATTA_EXPORT void drawTriangle(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2, Jatta::Float2 position3, Jatta::Color color3);
+        _JATTA_EXPORT void DrawLine(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2);
+        _JATTA_EXPORT void DrawLine(Jatta::Float3 position1, Jatta::Color color1, Jatta::Float3 position2, Jatta::Color color2);
+        _JATTA_EXPORT void DrawTriangle(Jatta::Float2 position1, Jatta::Color color1, Jatta::Float2 position2, Jatta::Color color2, Jatta::Float2 position3, Jatta::Color color3);
     };
 }
 

@@ -1,9 +1,13 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Image.h"
 #include "Color.h"
 
 _JATTA_EXPORT Jatta::Image::Image()
 {
-    _JATTA_DEBUG_LN("Image, Default");
     this->colors = nullptr;
     this->width = 0;
     this->height = 0;
@@ -11,7 +15,6 @@ _JATTA_EXPORT Jatta::Image::Image()
 
 _JATTA_EXPORT Jatta::Image::Image(Color* colors, unsigned int width, unsigned int height)
 {
-    _JATTA_DEBUG_LN("Image, Parameterized " << width << ", " << height);
     this->colors = colors;
     this->width = width;
     this->height = height;
@@ -19,7 +22,6 @@ _JATTA_EXPORT Jatta::Image::Image(Color* colors, unsigned int width, unsigned in
 
 _JATTA_EXPORT Jatta::Image::Image(const Image& copy)
 {
-    _JATTA_DEBUG_LN("Image, Copy");
     this->width = copy.width;
     this->height = copy.height;
     this->colors = (Color*)new char[this->width * this->height * 4];
@@ -28,7 +30,6 @@ _JATTA_EXPORT Jatta::Image::Image(const Image& copy)
 
 _JATTA_EXPORT Jatta::Image::Image(Image&& move)
 {
-    _JATTA_DEBUG_LN("Image, Move");
     this->width = move.width;
     this->height = move.height;
     this->colors = move.colors;
@@ -42,22 +43,48 @@ _JATTA_EXPORT Jatta::Image::~Image()
     //delete[] colors;
 }
 
-_JATTA_EXPORT unsigned char* Jatta::Image::getData()
+_JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
+{
+	this->width = copy.width;
+	this->height = copy.height;
+	this->colors = (Color*)new char[this->width * this->height * 4];
+	memcpy(this->colors, copy.colors, this->width * this->height * 4);
+	return *this;
+}
+
+_JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
+{
+	this->width = move.width;
+	this->height = move.height;
+	this->colors = move.colors;
+	move.width = 0;
+	move.height = 0;
+	move.colors = nullptr;
+	return *this;
+}
+
+_JATTA_EXPORT unsigned char* Jatta::Image::GetData()
 {
     return (unsigned char*)colors;
 }
 
-_JATTA_EXPORT const unsigned char* Jatta::Image::getData() const
+_JATTA_EXPORT const unsigned char* Jatta::Image::GetData() const
 {
     return (const unsigned char*)colors;
 }
 
-_JATTA_EXPORT unsigned int Jatta::Image::getWidth() const
+_JATTA_EXPORT unsigned int Jatta::Image::GetWidth() const
 {
     return width;
 }
 
-_JATTA_EXPORT unsigned int Jatta::Image::getHeight() const
+_JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
 {
     return height;
+}
+
+_JATTA_EXPORT void Jatta::Image::Free()
+{
+	delete[] colors;
+	colors = nullptr;
 }

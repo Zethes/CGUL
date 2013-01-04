@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Image.h"
 
 #include "../File/File.h"
@@ -8,7 +13,7 @@
 
 #define PNGSIGSIZE 8
 
-static void pngReadData(png_structp pngPointer, png_bytep data, png_size_t length)
+static void PngReadData(png_structp pngPointer, png_bytep data, png_size_t length)
 {
     char** fileData = (char**)png_get_io_ptr(pngPointer);
     memcpy(data, *fileData, length);
@@ -32,12 +37,12 @@ bool Jatta::Png::isValid(const std::string& fileName)
     return valid;
 }*/
 
-_JATTA_EXPORT bool Jatta::Image::loadPng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::LoadPng(const std::string& fileName)
 {
     unsigned int size;
-    File::getFileSize(fileName, &size);
-    char* buffer = new char[size];
-    File::getData(fileName, buffer, size);
+    File::GetFileSize(fileName, &size);
+    Byte* buffer = new Byte[size];
+    File::GetData(fileName, buffer, size);
 
     //if (!isValid(buffer, size))
     //{
@@ -82,7 +87,7 @@ _JATTA_EXPORT bool Jatta::Image::loadPng(const std::string& fileName)
     }
 
     buffer += 8;
-    png_set_read_fn(pngPtr, (png_voidp)&buffer, pngReadData);
+    png_set_read_fn(pngPtr, (png_voidp)&buffer, PngReadData);
 
     //Set the amount signature bytes we've already read:
     //We've defined PNGSIGSIZE as 8;
@@ -105,10 +110,10 @@ _JATTA_EXPORT bool Jatta::Image::loadPng(const std::string& fileName)
     width = imgWidth;
     height = imgHeight;
 
-    _JATTA_DEBUG_LN(imgWidth << "x" << imgHeight);
+    /*_JATTA_DEBUG_LN(imgWidth << "x" << imgHeight);
     _JATTA_DEBUG_LN("Bit Depth: " << bitdepth);
     _JATTA_DEBUG_LN("Channels: " << channels);
-    _JATTA_DEBUG_LN("Color Type: " << color_type);
+    _JATTA_DEBUG_LN("Color Type: " << color_type);*/
 
     png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * imgHeight);
     for (unsigned int y = 0; y < imgHeight; y++)
@@ -162,7 +167,7 @@ _JATTA_EXPORT bool Jatta::Image::loadPng(const std::string& fileName)
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::savePng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::SavePng(const std::string& fileName)
 {
     // TODO: STUFF
     return true;

@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Shader.h"
 #include "../File/File.h"
 #include <GL/glew.h>
@@ -30,29 +35,29 @@ _JATTA_EXPORT Jatta::Shader::~Shader()
 
 }
 
-_JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::string& fragment)
+_JATTA_EXPORT void Jatta::Shader::Load(const std::string& vertex, const std::string& fragment)
 {
     // Create the vertex and fragment shaders
-    _JATTA_DEBUG_LN("Creating shaders...");
-    _JATTA_DEBUG_LN((void*)glCreateShader);
     vertexID = glCreateShader(GL_VERTEX_SHADER);
     fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
 
-    _JATTA_DEBUG_LN("Reading file...");
     std::string vertexFile, fragmentFile;
-    if (!Jatta::File::getText(vertex, &vertexFile))
+    if (!Jatta::File::GetText(vertex, &vertexFile))
     {
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
-        _JATTA_DEBUG_LN("Failed to load vertex shader.");
+        std::ostringstream ss;
+        ss << "Failed to load vertex shader: " << vertex;
+        throw std::runtime_error(ss.str().c_str());
         return;
     }
-    if (!Jatta::File::getText(fragment, &fragmentFile))
+    if (!Jatta::File::GetText(fragment, &fragmentFile))
     {
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
-        _JATTA_DEBUG_LN("Failed to load fragment shader.");
-        return;
+        std::ostringstream ss;
+		ss << "Failed to load fragment shader: " << fragment;
+		throw std::runtime_error(ss.str().c_str());
     }
 
     const char* vertexString = vertexFile.c_str();
@@ -63,7 +68,6 @@ _JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::str
     char buffer[1024];
     GLsizei length = 0;
 
-    _JATTA_DEBUG_LN("Compiling vertex shader...");
     glShaderSource(vertexID, 1, &vertexString, nullptr);
     glCompileShader(vertexID);
 
@@ -71,15 +75,13 @@ _JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::str
     if (!testShader)
     {
         glGetShaderInfoLog(vertexID, 1024, &length, buffer);
-        std::stringstream ss(std::stringstream::out | std::stringstream::in);
-        ss << "Error compiling " << vertex << ":\n" << buffer;
-        glDeleteShader(vertexID);
-        glDeleteShader(fragmentID);
-        _JATTA_DEBUG_LN(ss.str());
-        return;
+		std::ostringstream ss;
+		ss << "Error compiling " << vertex << ":\n" << buffer;
+		glDeleteShader(vertexID);
+		glDeleteShader(fragmentID);
+        throw std::runtime_error(ss.str().c_str());
     }
 
-    _JATTA_DEBUG_LN("Compiling fragment shader...");
     glShaderSource(fragmentID, 1, &fragmentString, nullptr);
     glCompileShader(fragmentID);
 
@@ -90,20 +92,16 @@ _JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::str
         std::stringstream ss(std::stringstream::out | std::stringstream::in);
         ss << "Error compiling " << fragment << ":\n" << buffer;
         glDeleteShader(vertexID);
-        glDeleteShader(fragmentID);
-        _JATTA_DEBUG_LN(ss.str());
-        return;
+		glDeleteShader(fragmentID);
+        throw std::runtime_error(ss.str().c_str());
     }
 
-    _JATTA_DEBUG_LN("Creating shader program...");
     shaderID = glCreateProgram();
     glAttachShader(shaderID, vertexID);
     glAttachShader(shaderID, fragmentID);
 
-    _JATTA_DEBUG_LN("Linking shader...");
     glLinkProgram(shaderID);
 
-    _JATTA_DEBUG_LN("Cleaning up...");
     glDeleteShader(vertexID);
     glDeleteShader(fragmentID);
 
@@ -116,12 +114,9 @@ _JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::str
         glDeleteProgram(shaderID);
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
-        // TODO: error checking
-        _JATTA_DEBUG_LN(ss.str());
-        return;
+        throw std::runtime_error(ss.str().c_str());
     }
 
-    _JATTA_DEBUG_LN("Validating shader program...");
     glValidateProgram(shaderID);
 
     glGetProgramiv(shaderID, GL_VALIDATE_STATUS, &testShader);
@@ -134,74 +129,82 @@ _JATTA_EXPORT void Jatta::Shader::load(const std::string& vertex, const std::str
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
         // TODO: error checking
-        _JATTA_DEBUG_LN(ss.str());
-        return;
+        throw std::runtime_error(ss.str().c_str());
     }
 
-    _JATTA_DEBUG_LN("Done loading shader.");
+    //_JATTA_DEBUG_LN("Done loading shader.");
 }
 
-_JATTA_EXPORT void Jatta::Shader::unload()
+_JATTA_EXPORT void Jatta::Shader::Unload()
 {
     // TODO: Jatta::Shader::unload()
 }
 
-_JATTA_EXPORT void Jatta::Shader::begin()
+_JATTA_EXPORT void Jatta::Shader::Begin()
 {
     glUseProgram(shaderID);
 }
 
-_JATTA_EXPORT void Jatta::Shader::end()
+_JATTA_EXPORT void Jatta::Shader::End()
 {
     glUseProgram(0);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setBoolean(const std::string& name, bool value)
+_JATTA_EXPORT void Jatta::Shader::SetBoolean(const std::string& name, bool value)
 {
     glUniform1i(glGetUniformLocation(shaderID, name.c_str()), value);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setFloat(const std::string& name, float value)
+_JATTA_EXPORT void Jatta::Shader::SetFloat(const std::string& name, float value)
 {
     glUniform1f(glGetUniformLocation(shaderID, name.c_str()), value);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setFloat2(const std::string& name, const Jatta::Float2& value)
+_JATTA_EXPORT void Jatta::Shader::SetFloat2(const std::string& name, const Jatta::Float2& value)
 {
     glUniform2f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setFloat3(const std::string& name, const Jatta::Float3& value)
+_JATTA_EXPORT void Jatta::Shader::SetFloat3(const std::string& name, const Jatta::Float3& value)
 {
     glUniform3f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y, value.z);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setFloat4(const std::string& name, const Jatta::Float4& value)
+_JATTA_EXPORT void Jatta::Shader::SetFloat4(const std::string& name, const Jatta::Float4& value)
 {
     glUniform4f(glGetUniformLocation(shaderID, name.c_str()), value.x, value.y, value.z, value.w);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setColor(const std::string& name, const Jatta::Color& color)
+_JATTA_EXPORT void Jatta::Shader::SetColor(const std::string& name, const Jatta::Color& color)
 {
     glUniform4f(glGetUniformLocation(shaderID, name.c_str()), color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 }
 
-_JATTA_EXPORT void Jatta::Shader::setMatrix(const std::string& name, const Jatta::Matrix& matrix)
+_JATTA_EXPORT void Jatta::Shader::SetMatrix(const std::string& name, const Jatta::Matrix& matrix)
 {
-    glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, matrix.getData());
+    glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, matrix.GetData());
 }
 
-_JATTA_EXPORT void Jatta::Shader::setTexture(const std::string& name, const Texture& texture)
+_JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const Texture& texture)
 {
     int id = 0;
     int myTexture = glGetUniformLocation(shaderID, name.c_str());
     glUniform1i(myTexture, id);
     glActiveTexture(GL_TEXTURE0 + id);
-    glBindTexture(GL_TEXTURE_2D, texture.getTexture());
+    glBindTexture(GL_TEXTURE_2D, texture.GetTexture());
 }
 
-_JATTA_EXPORT void Jatta::Shader::bindAttribute(unsigned int index, const std::string& name)
+_JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const RenderTarget& texture)
+{
+	int id = 0;
+	int myTexture = glGetUniformLocation(shaderID, name.c_str());
+	glUniform1i(myTexture, id);
+	glActiveTexture(GL_TEXTURE0 + id);
+	glBindTexture(GL_TEXTURE_2D, texture.GetTexture(0));
+}
+
+_JATTA_EXPORT void Jatta::Shader::BindAttribute(unsigned int index, const std::string& name)
 {
     glBindAttribLocation(shaderID, index, name.c_str());
-    glLinkProgram(shaderID); // @TODO make shaders not call this every time
+    glLinkProgram(shaderID); // TODO: make shaders not call this every time
 }

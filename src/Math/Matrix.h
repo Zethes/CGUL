@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -19,18 +21,18 @@ namespace Jatta
     public:
         _JATTA_EXPORT static const Matrix identity;
 
-        _JATTA_EXPORT static Matrix makeRotation(float angle);
-        _JATTA_EXPORT static Matrix makeRotationX(float angle);
-        _JATTA_EXPORT static Matrix makeRotationY(float angle);
-        _JATTA_EXPORT static Matrix makeRotationZ(float angle);
-        _JATTA_EXPORT static Matrix makeScaling(Float2 scale);
-        _JATTA_EXPORT static Matrix makeScaling(Float3 scale);
-        _JATTA_EXPORT static Matrix makeTranslation(Float2 translation);
-        _JATTA_EXPORT static Matrix makeTranslation(Float3 translation);
+        _JATTA_EXPORT static Matrix MakeRotation(float angle);
+        _JATTA_EXPORT static Matrix MakeRotationX(float angle);
+        _JATTA_EXPORT static Matrix MakeRotationY(float angle);
+        _JATTA_EXPORT static Matrix MakeRotationZ(float angle);
+        _JATTA_EXPORT static Matrix MakeScaling(Float2 scale);
+        _JATTA_EXPORT static Matrix MakeScaling(Float3 scale);
+        _JATTA_EXPORT static Matrix MakeTranslation(Float2 translation);
+        _JATTA_EXPORT static Matrix MakeTranslation(Float3 translation);
 
-        _JATTA_EXPORT static Matrix makePerspective(float fovY, float aspectRatio, float zNear, float zFar);
-        _JATTA_EXPORT static Matrix makeLookAt(const Float3& eye, const Float3& at, const Float3& up);
-        _JATTA_EXPORT static Matrix makeOrtho(int right, int top, int left, int bottom);
+        _JATTA_EXPORT static Matrix MakePerspective(float fovY, float aspectRatio, float zNear, float zFar);
+        _JATTA_EXPORT static Matrix MakeLookAt(const Float3& eye, const Float3& at, const Float3& up);
+        _JATTA_EXPORT static Matrix MakeOrtho(int right, int top, int left, int bottom);
 
         _JATTA_EXPORT Matrix();
         _JATTA_EXPORT Matrix(const Matrix& copy);
@@ -43,9 +45,9 @@ namespace Jatta
         _JATTA_EXPORT Matrix& operator=(const Matrix& operand);
         _JATTA_EXPORT Matrix operator*(const Matrix& operand) const;
 
-        _JATTA_EXPORT float* getData() const;
+        _JATTA_EXPORT float* GetData() const;
 
-        _JATTA_EXPORT void debug() const;
+        _JATTA_EXPORT void Debug() const;
     };
 }
 

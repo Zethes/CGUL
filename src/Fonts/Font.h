@@ -1,11 +1,13 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../Utility/String.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
-#include "Glyph.h"
+//#include "Glyph.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -17,18 +19,18 @@ namespace Jatta
         Color color;
     public:
         _JATTA_EXPORT Font();
-        _JATTA_EXPORT void load(const std::string& fileName);
+        _JATTA_EXPORT void Load(const std::string& fileName);
 
-        _JATTA_EXPORT void setSize(unsigned int size);
-        _JATTA_EXPORT unsigned int getSize();
+        _JATTA_EXPORT void SetSize(UInt32 size);
+        _JATTA_EXPORT unsigned int GetSize();
 
-        _JATTA_EXPORT void setColor(const Color& color);
-        _JATTA_EXPORT Color getColor();
+        _JATTA_EXPORT void SetColor(const Color& color);
+        _JATTA_EXPORT Color GetColor();
 
-        _JATTA_EXPORT Image generateText(const Jatta::String& text, bool beginningSpacer = false);
+        _JATTA_EXPORT Image GenerateText(const Jatta::String& text, Boolean beginningSpacer = false);
 
-        _JATTA_EXPORT UInt64 getCharacterIndex(Jatta::UInt64 characterCode);
-        _JATTA_EXPORT Glyph getGlyph(UInt64 index);
+        _JATTA_EXPORT UInt64 GetCharacterIndex(UInt64 characterCode);
+        //_JATTA_EXPORT Glyph getGlyph(UInt64 index);
     };
 }
 

@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -10,19 +12,19 @@ namespace Jatta
 
     class Input
     {
-        friend Window;
+        friend class Window;
 
         Window* window;
         bool keyData[256];
 
         _JATTA_EXPORT Input(Window* window);
 
-        _JATTA_EXPORT bool* getKeyData();
-        _JATTA_EXPORT unsigned char getKeyFromLayout(unsigned char key);
+        _JATTA_EXPORT bool* GetKeyData();
+        _JATTA_EXPORT unsigned char GetKeyFromLayout(unsigned char key);
     public:
-        _JATTA_EXPORT bool isKeyDown(unsigned char key);
-        _JATTA_EXPORT bool isKeyPressed(unsigned char key);
-        _JATTA_EXPORT bool isKeyReleased(unsigned char key);
+        _JATTA_EXPORT bool IsKeyDown(unsigned char key);
+        _JATTA_EXPORT bool IsKeyPressed(unsigned char key);
+        _JATTA_EXPORT bool IsKeyReleased(unsigned char key);
     };
 }
 

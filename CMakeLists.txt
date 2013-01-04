@@ -1,12 +1,12 @@
+# Jatta - General Utility Library
+# Copyright (c) 2012-2013, Joshua Brookover
+# All rights reserved.
+
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT(Jatta)
 
 SET(CMAKE_COLOR_MAKEFILE off)
-
-# The version number.
-SET(JATTA_VERSION_MAJOR 0)
-SET(JATTA_VERSION_MINOR 2)
 
 SET(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 

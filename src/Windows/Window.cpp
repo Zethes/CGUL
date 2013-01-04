@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Window.h"
 #include <cstdio>
 #include <sstream>
@@ -7,7 +12,7 @@
 #pragma warning( disable : 4355 )
 
 #ifdef WINDOWS
-LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LONG_PTR ptr = GetWindowLongPtr(handle, GWLP_USERDATA);
     Window* window = (Window*)ptr;
@@ -20,14 +25,14 @@ LRESULT CALLBACK Jatta::Window::windowProcedure(HWND handle, UINT message, WPARA
         case WM_CLOSE:
         if (window != 0)
         {
-            window->close();
+            window->Close();
         }
         return 0;
         case WM_KEYDOWN:
-        window->getInput()->getKeyData()[wParam] = true;
+        window->GetInput()->GetKeyData()[wParam] = true;
         return 0;
         case WM_KEYUP:
-        window->getInput()->getKeyData()[wParam] = false;
+        window->GetInput()->GetKeyData()[wParam] = false;
         return 0;
         case WM_DESTROY:
         PostQuitMessage(0);
@@ -69,34 +74,34 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 
 _JATTA_EXPORT Jatta::Window::~Window()
 {
-    close();
+    Close();
 }
 
 #ifdef WINDOWS
-_JATTA_EXPORT HWND Jatta::Window::_getHandle()
+_JATTA_EXPORT HWND Jatta::Window::_GetHandle()
 {
     return handle;
 }
 #endif
 
 #ifdef LINUX
-_JATTA_EXPORT Display* Jatta::Window::_getDisplay()
+_JATTA_EXPORT Display* Jatta::Window::_GetDisplay()
 {
     return display;
 }
 
-_JATTA_EXPORT ::Window Jatta::Window::_getHandle()
+_JATTA_EXPORT ::Window Jatta::Window::_GetHandle()
 {
     return handle;
 }
 #endif
 
-_JATTA_EXPORT Jatta::Input* Jatta::Window::getInput()
+_JATTA_EXPORT Jatta::Input* Jatta::Window::GetInput()
 {
     return &input;
 }
 
-_JATTA_EXPORT void Jatta::Window::create(const WindowStyle& style)
+_JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 {
 #   ifdef WINDOWS
     // Generate a unique class name for this window
@@ -110,7 +115,7 @@ _JATTA_EXPORT void Jatta::Window::create(const WindowStyle& style)
     WNDCLASSEX wc;
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = 0;
-    wc.lpfnWndProc = windowProcedure;
+    wc.lpfnWndProc = WindowProcedure;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.hInstance = GetModuleHandle(nullptr);
@@ -138,7 +143,7 @@ _JATTA_EXPORT void Jatta::Window::create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._toWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
     if (handle == NULL)
     {
@@ -169,7 +174,7 @@ _JATTA_EXPORT void Jatta::Window::create(const WindowStyle& style)
 #   endif
 }
 
-_JATTA_EXPORT void Jatta::Window::close()
+_JATTA_EXPORT void Jatta::Window::Close()
 {
 #   ifdef WINDOWS
     if (IsWindow(handle))
@@ -190,7 +195,7 @@ _JATTA_EXPORT void Jatta::Window::close()
 #   endif
 }
 
-_JATTA_EXPORT void Jatta::Window::update()
+_JATTA_EXPORT void Jatta::Window::Update()
 {
 #   ifdef WINDOWS
     MSG Msg;
@@ -240,7 +245,18 @@ _JATTA_EXPORT void Jatta::Window::update()
 #   endif
 }
 
-_JATTA_EXPORT bool Jatta::Window::isOpen() const
+_JATTA_EXPORT void Jatta::Window::SetTitle(String title)
+{
+#   ifdef WINDOWS
+	SetWindowText(handle, title._ToWideString().c_str());
+#   endif
+
+#   ifdef LINUX
+    //TODO: Set Title for linux.
+#   endif
+}
+
+_JATTA_EXPORT bool Jatta::Window::IsOpen() const
 {
 #   ifdef WINDOWS
     return IsWindow(handle) == TRUE;
@@ -251,7 +267,7 @@ _JATTA_EXPORT bool Jatta::Window::isOpen() const
 #   endif
 }
 
-_JATTA_EXPORT unsigned int Jatta::Window::getWidth() const
+_JATTA_EXPORT unsigned int Jatta::Window::GetWidth() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -268,7 +284,7 @@ _JATTA_EXPORT unsigned int Jatta::Window::getWidth() const
 #   endif
 }
 
-_JATTA_EXPORT unsigned int Jatta::Window::getHeight() const
+_JATTA_EXPORT unsigned int Jatta::Window::GetHeight() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
@@ -285,7 +301,7 @@ _JATTA_EXPORT unsigned int Jatta::Window::getHeight() const
 #   endif
 }
 
-_JATTA_EXPORT Jatta::Float2 Jatta::Window::getSize() const
+_JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 {
     #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};

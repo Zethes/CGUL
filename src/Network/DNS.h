@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -19,7 +21,7 @@ namespace Jatta
         DNS();
         ~DNS();
 
-        _JATTA_EXPORT static std::vector<std::string> lookup(const std::string& host, Filter filter = Filter::ANY);
+        _JATTA_EXPORT static std::vector<std::string> Lookup(const std::string& host, Filter filter = Filter::ANY);
     };
 }
 

@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Matrix.h"
 #include "Math.h"
 #include "Float2.h"
@@ -5,39 +10,39 @@
 
 _JATTA_EXPORT const Jatta::Matrix Jatta::Matrix::identity(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeRotation(float angle)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(float angle)
 {
-    return Matrix(Math::cos(angle),  Math::sin(angle), 0, 0,
-                  -Math::sin(angle), Math::cos(angle), 0, 0,
+    return Matrix(Math::Cos(angle),  Math::Sin(angle), 0, 0,
+                  -Math::Sin(angle), Math::Cos(angle), 0, 0,
                   0,                0,                 1, 0,
                   0,                0,                 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeRotationX(float angle)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationX(float angle)
 {
     return Matrix(1, 0,          0,           0,
-                  0, Math::cos(angle),  Math::sin(angle), 0,
-                  0, -Math::sin(angle), Math::cos(angle), 0,
+                  0, Math::Cos(angle),  Math::Sin(angle), 0,
+                  0, -Math::Sin(angle), Math::Cos(angle), 0,
                   0, 0,                0,                 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeRotationY(float angle)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationY(float angle)
 {
-    return Matrix(Math::cos(angle), 0, -Math::sin(angle), 0,
+    return Matrix(Math::Cos(angle), 0, -Math::Sin(angle), 0,
                   0,                1, 0,                 0,
-                  Math::sin(angle), 0, Math::cos(angle),  0,
+                  Math::Sin(angle), 0, Math::Cos(angle),  0,
                   0,                0, 0,                 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeRotationZ(float angle)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationZ(float angle)
 {
-    return Matrix(Math::cos(angle),  Math::sin(angle), 0, 0,
-                  -Math::sin(angle), Math::cos(angle), 0, 0,
+    return Matrix(Math::Cos(angle),  Math::Sin(angle), 0, 0,
+                  -Math::Sin(angle), Math::Cos(angle), 0, 0,
                   0,                0,                 1, 0,
                   0,                0,                 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeScaling(Float2 scale)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float2 scale)
 {
     return Matrix(scale.x, 0,       0, 0,
                   0,       scale.y, 0, 0,
@@ -45,7 +50,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeScaling(Float2 scale)
                   0,       0,       0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeScaling(Float3 scale)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float3 scale)
 {
     return Matrix(scale.x, 0,       0,       0,
                   0,       scale.y, 0,       0,
@@ -53,7 +58,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeScaling(Float3 scale)
                   0,       0,       0,       1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeTranslation(Float2 translation)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Float2 translation)
 {
     return Matrix(1,             0,             0, 0,
                   0,             1,             0, 0,
@@ -61,7 +66,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeTranslation(Float2 translation)
                   translation.x, translation.y, 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeTranslation(Float3 translation)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Float3 translation)
 {
     return Matrix(1,             0,             0,             0,
                   0,             1,             0,             0,
@@ -69,9 +74,9 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeTranslation(Float3 translation)
                   translation.x, translation.y, translation.z, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makePerspective(float fovY, float aspectRatio, float zNear, float zFar)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakePerspective(float fovY, float aspectRatio, float zNear, float zFar)
 {
-    float yScale = 1.0f / Math::tan(Math::degToRad(fovY / 2.0f));
+    float yScale = 1.0f / Math::Tan(Math::DegToRad(fovY / 2.0f));
     float xScale = yScale / aspectRatio;
     return Matrix(xScale, 0,      0,                              0,
                   0,      yScale, 0,                              0,
@@ -79,21 +84,21 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makePerspective(float fovY, float asp
                   0,      0,      -zNear * zFar / (zFar - zNear), 0);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeLookAt(const Float3& eye, const Float3& at, const Float3& up)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Float3& eye, const Float3& at, const Float3& up)
 {
-    Float3 zAxis = Float3::normalized(eye - at); // forward
-    Float3 xAxis = Float3::normalized(Float3::crossProduct(up, zAxis)); // right
-    Float3 yAxis = Float3::crossProduct(xAxis, zAxis); // up
+    Float3 zAxis = Float3::Normalized(eye - at); // forward
+    Float3 xAxis = Float3::Normalized(Float3::CrossProduct(up, zAxis)); // right
+    Float3 yAxis = Float3::CrossProduct(xAxis, zAxis); // up
     zAxis *= -1;
     yAxis *= -1;
 
     return Matrix(xAxis.x,                          yAxis.x,                          zAxis.x,                         0,
                   xAxis.y,                          yAxis.y,                          zAxis.y,                         0,
                   xAxis.z,                          yAxis.z,                          zAxis.z,                         0,
-                  -Float3::dotProduct(xAxis, eye),  -Float3::dotProduct(yAxis, eye),  -Float3::dotProduct(zAxis, eye), 1);
+                  -Float3::DotProduct(xAxis, eye),  -Float3::DotProduct(yAxis, eye),  -Float3::DotProduct(zAxis, eye), 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::makeOrtho(int right, int top, int left, int bottom)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int right, int top, int left, int bottom)
 {
   Float3 t((left + right) / (float)(left - right), (top + bottom) / (float)(top - bottom), 0);
 
@@ -268,7 +273,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(const Matrix& operand) cons
                   this->m[3][0] * operand.m[0][3] + this->m[3][1] * operand.m[1][3] + this->m[3][2] * operand.m[2][3] + this->m[3][3] * operand.m[3][3]);
 }
 
-_JATTA_EXPORT float* Jatta::Matrix::getData() const
+_JATTA_EXPORT float* Jatta::Matrix::GetData() const
 {
     return (float*)m;
 }

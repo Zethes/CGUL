@@ -1,5 +1,8 @@
-//        JATTA        //
-// by Joshua Brookover //
+#if 0
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "Model.h"
@@ -9,14 +12,15 @@ namespace Jatta
 {
     class Obj : public Model
     {
-        _JATTA_EXPORT static void cleanLine(std::string* line);
-        _JATTA_EXPORT static bool getParameters(const std::string& parameters, float* data, unsigned int* size);
-        _JATTA_EXPORT static bool getParameters(const std::string& parameters);//, std::vector<std::pair<float*, unsigned int>>* data);
+        _JATTA_EXPORT static void CleanLine(std::string* line);
+        _JATTA_EXPORT static bool GetParameters(const std::string& parameters, float* data, unsigned int* size);
+        _JATTA_EXPORT static bool GetParameters(const std::string& parameters);//, std::vector<std::pair<float*, unsigned int>>* data);
     public:
         _JATTA_EXPORT Obj();
 
-        _JATTA_EXPORT bool load(const std::string& fileName);
+        _JATTA_EXPORT bool Load(const std::string& fileName);
     };
 }
 
 #include "../External/Undefines.h"
+#endif

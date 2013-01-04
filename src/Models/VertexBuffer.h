@@ -1,17 +1,21 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
 
-struct VertexBuffer
+namespace Jatta
 {
-    enum Type
-    {
-        POSITION, TEXCOORD, NORMAL, COLOR
-    } type;
-    unsigned int size;
-    float* buffer;
-};
+	struct VertexBuffer
+	{
+		UInt32 index;
+		UInt32 size;
+		void* buffer;
+
+		VertexBuffer();
+	};
+}
 
 #include "../External/Undefines.h"

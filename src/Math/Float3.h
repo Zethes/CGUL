@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -10,9 +12,9 @@ namespace Jatta
     {
         float x, y, z;
 
-        _JATTA_EXPORT static float dotProduct(const Float3& valueA, const Float3& valueB);
-        _JATTA_EXPORT static Float3 crossProduct(const Float3& valueA, const Float3& valueB);
-        _JATTA_EXPORT static Float3 normalized(const Float3& value);
+        _JATTA_EXPORT static float DotProduct(const Float3& valueA, const Float3& valueB);
+        _JATTA_EXPORT static Float3 CrossProduct(const Float3& valueA, const Float3& valueB);
+        _JATTA_EXPORT static Float3 Normalized(const Float3& value);
 
         _JATTA_EXPORT Float3();
         _JATTA_EXPORT Float3(const Float3& copy);
@@ -27,9 +29,9 @@ namespace Jatta
         _JATTA_EXPORT Float3 operator*(float operand) const;
         _JATTA_EXPORT Float3& operator*=(float operand);
 
-        _JATTA_EXPORT void normalize();
+        _JATTA_EXPORT void Normalize();
 
-        _JATTA_EXPORT float getMagnitude() const;
+        _JATTA_EXPORT float GetMagnitude() const;
     };
 }
 

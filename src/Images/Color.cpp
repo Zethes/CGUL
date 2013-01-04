@@ -1,6 +1,11 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Color.h"
 
-_JATTA_EXPORT Jatta::Color Jatta::Color::makeHSV(unsigned int hue, unsigned char saturation, unsigned char value)
+_JATTA_EXPORT Jatta::Color Jatta::Color::MakeHSV(unsigned int hue, unsigned char saturation, unsigned char value)
 {
     Color ret;
 

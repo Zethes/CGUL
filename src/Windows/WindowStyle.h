@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../Utility/String.h"
@@ -12,13 +14,13 @@ namespace Jatta
     {
         String title;
         Color backgroundColor;
-        unsigned int width;
-        unsigned int height;
-        bool resizable;
+        UInt32 width;
+        UInt32 height;
+        Boolean resizable;
 
         _JATTA_EXPORT WindowStyle();
         _JATTA_EXPORT WindowStyle(const WindowStyle& style);
-        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, unsigned int width, unsigned int height, bool resizable);
+        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
     };
 }
 

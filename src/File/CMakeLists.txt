@@ -1,13 +1,6 @@
-#set(DIR ${CMAKE_CURRENT_LIST_DIR}/)
-
-#set(JATTA_SOURCE
-    #${JATTA_SOURCE}
-    #${DIR}File.cpp
-    #${DIR}File.h
-    #PARENT_SCOPE
-#)
-
-#INSTALL(FILES File.h DESTINATION include/Jatta/File/)
+# Jatta - General Utility Library
+# Copyright (c) 2012-2013, Joshua Brookover
+# All rights reserved.
 
 ADD_GROUP("Files")
 ADD_SOURCE(File.cpp)

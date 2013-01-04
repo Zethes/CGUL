@@ -1,4 +1,8 @@
 #if 0
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #include "DNS.h"
 
@@ -38,7 +42,7 @@ Jatta::DNS::~DNS()
 {
 }
 
-std::vector<std::string> Jatta::DNS::lookup(const std::string& host, Filter filter)
+std::vector<std::string> Jatta::DNS::Lookup(const std::string& host, Filter filter)
 {
     __jatta_network_initiate();
 

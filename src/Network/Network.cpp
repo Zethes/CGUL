@@ -1,5 +1,9 @@
 #if 0
-
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+ 
 #include <WinSock2.h>
 
 bool __jatta_network_initiated = false;

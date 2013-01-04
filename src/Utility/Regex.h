@@ -4,18 +4,21 @@
  */
 
 #pragma once
+#include "String.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
-    class SocketTCP
+    class Regex
     {
-        int socket;
+        String expression;
+    public:
+        Regex();
+        Regex(String expression);
 
-        _JATTA_EXPORT SocketTCP();
-
-        _JATTA_EXPORT void Connect(const std::string& ip, unsigned short port);
+        void SetExpression(String expression);
+        String GetExpression();
     };
-};
+}
 
 #include "../External/Undefines.h"

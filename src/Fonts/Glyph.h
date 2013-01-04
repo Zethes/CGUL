@@ -1,7 +1,9 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
-#pragma once
+/*#pragma once
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -14,4 +16,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.h"*/

@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #ifdef JATTA_FONTS
 #include "Font.h"
 #include <string.h>
@@ -23,7 +28,7 @@ _JATTA_EXPORT Jatta::Font::Font()
     __jatta_ttf_initialize();
 }
 
-_JATTA_EXPORT void Jatta::Font::load(const std::string& fileName)
+_JATTA_EXPORT void Jatta::Font::Load(const std::string& fileName)
 {
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
     if (error == FT_Err_Unknown_File_Format)
@@ -40,7 +45,7 @@ _JATTA_EXPORT void Jatta::Font::load(const std::string& fileName)
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
 }
 
-_JATTA_EXPORT void Jatta::Font::setSize(unsigned int size)
+_JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
 {
     FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
     if (error)
@@ -51,17 +56,17 @@ _JATTA_EXPORT void Jatta::Font::setSize(unsigned int size)
     this->size = size;
 }
 
-_JATTA_EXPORT unsigned int Jatta::Font::getSize()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Font::GetSize()
 {
     return this->size;
 }
 
-_JATTA_EXPORT void Jatta::Font::setColor(const Color& color)
+_JATTA_EXPORT void Jatta::Font::SetColor(const Color& color)
 {
     this->color = color;
 }
 
-_JATTA_EXPORT Jatta::Color Jatta::Font::getColor()
+_JATTA_EXPORT Jatta::Color Jatta::Font::GetColor()
 {
     return this->color;
 }
@@ -81,7 +86,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Font::getColor()
     pen.y = 0;
 
     // render each character
-    unsigned int buffWidth = 0, buffHeight = 0;
+    UInt32 buffWidth = 0, buffHeight = 0;
     for (Jatta::Size n = 0; n < text.getSize();)
     {
         // transform the font character
@@ -173,7 +178,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Font::getColor()
     return std::move(Image((Color*)data, 512, 512));
 }*/
 
-_JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
+_JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean beginningSpacer)
 {
     bool kerning = true;
 
@@ -189,10 +194,10 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
     FT_Int bufferWidth = 0, bufferHeight = 0;
 
     FT_Int maxDown = 0;
-    for (Jatta::Size i = 0; i < text.getSize();)
+    for (Jatta::Size i = 0; i < text.GetSize();)
     {
         UInt32 utf8Character;
-        i += text.getCodePoint(i, &utf8Character);
+        i += text.GetCodePoint(i, &utf8Character);
         FT_Set_Transform(this->face, &matrix, &pen);
         FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
         if (error)
@@ -230,7 +235,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
     Color* buffer = (Color*)data;
     memset(buffer, 0, bufferWidth * bufferHeight * sizeof(Color));
 
-    for (Jatta::Size i = 0; i < text.getSize();)
+    for (Jatta::Size i = 0; i < text.GetSize();)
     {
         //pen.x = 0;
         //pen.y = 0;
@@ -238,7 +243,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
         // load glyph image into the slot
         //FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
         UInt32 utf8Character;
-        i += text.getCodePoint(i, &utf8Character);
+        i += text.GetCodePoint(i, &utf8Character);
         _JATTA_DEBUG_LN(std::hex << utf8Character << std::dec);
         FT_Set_Transform(face, &matrix, &pen);
         FT_Error error = FT_Load_Char(this->face, utf8Character, FT_LOAD_RENDER);
@@ -276,12 +281,12 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::generateText(const Jatta::String& text, 
     return Image((Color*)data, bufferWidth, bufferHeight - 1);
 }
 
-_JATTA_EXPORT Jatta::UInt64 Jatta::Font::getCharacterIndex(UInt64 characterCode)
+_JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt64 characterCode)
 {
-    return FT_Get_Char_Index(this->face, characterCode);
+    return FT_Get_Char_Index(this->face, (FT_ULong)characterCode);
 }
 
-_JATTA_EXPORT Jatta::Glyph Jatta::Font::getGlyph(UInt64 index)
+/*_JATTA_EXPORT Jatta::Glyph Jatta::Font::getGlyph(UInt64 index)
 {
     Glyph glyph;
     FT_Load_Glyph(this->face, index, FT_LOAD_RENDER);
@@ -289,5 +294,5 @@ _JATTA_EXPORT Jatta::Glyph Jatta::Font::getGlyph(UInt64 index)
     glyph.height = this->face->glyph->bitmap.rows;
     memcpy(glyph.data, this->face->glyph->bitmap.buffer, this->face->glyph->bitmap.width * this->face->glyph->bitmap.rows);
     return glyph;
-}
+}*/
 #endif

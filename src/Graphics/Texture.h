@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../Images/Image.h"
@@ -16,14 +18,14 @@ namespace Jatta
     public:
         _JATTA_EXPORT Texture();
         
-        _JATTA_EXPORT void create(const Jatta::Image& image);
+        _JATTA_EXPORT void Create(const Jatta::Image& image);
 
-        _JATTA_EXPORT UInt32 getTexture() const;
+        _JATTA_EXPORT UInt32 GetTexture() const;
 
-        _JATTA_EXPORT UInt32 getWidth() const;
-        _JATTA_EXPORT UInt32 getHeight() const;
+        _JATTA_EXPORT UInt32 GetWidth() const;
+        _JATTA_EXPORT UInt32 GetHeight() const;
 
-        _JATTA_EXPORT Float2 getSize() const;
+        _JATTA_EXPORT Float2 GetSize() const;
     };
 }
 

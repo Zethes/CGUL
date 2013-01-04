@@ -1,7 +1,10 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
+#include "RenderTarget.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -27,26 +30,27 @@ namespace Jatta
         _JATTA_EXPORT Shader();
         _JATTA_EXPORT ~Shader();
 
-        _JATTA_EXPORT void load(const std::string& vertex, const std::string& fragment);
-        _JATTA_EXPORT void unload();
+        _JATTA_EXPORT void Load(const std::string& vertex, const std::string& fragment);
+        _JATTA_EXPORT void Unload();
 
-        _JATTA_EXPORT void begin();
-        _JATTA_EXPORT void end();
+        _JATTA_EXPORT void Begin();
+        _JATTA_EXPORT void End();
 
-        _JATTA_EXPORT void setBoolean(const std::string& name, bool value);
-        _JATTA_EXPORT void setFloat(const std::string& name, float value);
-        _JATTA_EXPORT void setFloat2(const std::string& name, const Jatta::Float2& value);
-        _JATTA_EXPORT void setFloat3(const std::string& name, const Jatta::Float3& value);
-        _JATTA_EXPORT void setFloat4(const std::string& name, const Jatta::Float4& value);
-        _JATTA_EXPORT void setColor(const std::string& name, const Jatta::Color& color);
-        _JATTA_EXPORT void setMatrix(const std::string& name, const Jatta::Matrix& matrix);
-        _JATTA_EXPORT void setTexture(const std::string& name, const Texture& texture);
+        _JATTA_EXPORT void SetBoolean(const std::string& name, bool value);
+        _JATTA_EXPORT void SetFloat(const std::string& name, float value);
+        _JATTA_EXPORT void SetFloat2(const std::string& name, const Jatta::Float2& value);
+        _JATTA_EXPORT void SetFloat3(const std::string& name, const Jatta::Float3& value);
+        _JATTA_EXPORT void SetFloat4(const std::string& name, const Jatta::Float4& value);
+        _JATTA_EXPORT void SetColor(const std::string& name, const Jatta::Color& color);
+        _JATTA_EXPORT void SetMatrix(const std::string& name, const Jatta::Matrix& matrix);
+        _JATTA_EXPORT void SetTexture(const std::string& name, const Texture& texture);
+        _JATTA_EXPORT void SetTexture(const std::string& name, const RenderTarget& texture);
         //void setTexture(const std::string& name, Texture texture);
         //void setTexture(const std::string& name, CubeMap* texture);
         //void setTexture(const std::string& name, CubeMap texture);
         //void setArray(const std::string& name, Vector4* vectors, UInt size);
 
-        _JATTA_EXPORT void bindAttribute(unsigned int index, const std::string& name);
+        _JATTA_EXPORT void BindAttribute(unsigned int index, const std::string& name);
     };
 }
 

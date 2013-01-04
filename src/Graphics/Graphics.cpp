@@ -1,3 +1,8 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Graphics.h"
 
 #include <GL/glew.h>
@@ -9,12 +14,12 @@
 
 Jatta::Graphics* Jatta::Graphics::current = nullptr;
 
-_JATTA_EXPORT Jatta::Graphics* Jatta::Graphics::getCurrent()
+_JATTA_EXPORT Jatta::Graphics* Jatta::Graphics::GetCurrent()
 {
     return current;
 }
 
-_JATTA_EXPORT Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
+_JATTA_EXPORT Jatta::Graphics::Graphics(Window* window)
 {
     this->window = window;
 
@@ -48,7 +53,7 @@ _JATTA_EXPORT Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
     pfd.dwDamageMask = 0;
 
     // get the device handle for the window
-    deviceContext = GetDC(window->_getHandle());
+    deviceContext = GetDC(window->_GetHandle());
     if (!deviceContext)
     {
         // @TODO error handling
@@ -115,7 +120,7 @@ _JATTA_EXPORT Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
 
     if (current == nullptr)
     {
-        makeCurrent();
+        MakeCurrent();
 
         GLenum glewResult = glewInit();
         if (glewResult != GLEW_OK)
@@ -124,6 +129,21 @@ _JATTA_EXPORT Jatta::Graphics::Graphics(std::shared_ptr<Jatta::Window> window)
         }
         _JATTA_DEBUG_LN("Glew initiated!");
     }
+
+    glShadeModel(GL_SMOOTH);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearDepth(1.0f);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glDrawBuffer(GL_FRONT_AND_BACK);
+	glReadBuffer(GL_FRONT_AND_BACK);
+	glEnable(GL_ALPHA_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
 }
 
 _JATTA_EXPORT Jatta::Graphics::~Graphics()
@@ -131,12 +151,12 @@ _JATTA_EXPORT Jatta::Graphics::~Graphics()
     // TODO: delete graphics stuff
 }
 
-_JATTA_EXPORT std::shared_ptr<Jatta::Window> Jatta::Graphics::getWindow()
+_JATTA_EXPORT Jatta::Window* Jatta::Graphics::GetWindow()
 {
     return window;
 }
 
-_JATTA_EXPORT void Jatta::Graphics::makeCurrent()
+_JATTA_EXPORT void Jatta::Graphics::MakeCurrent()
 {
 #   ifdef WINDOWS
     if (!wglMakeCurrent(deviceContext, renderContext))
@@ -148,9 +168,9 @@ _JATTA_EXPORT void Jatta::Graphics::makeCurrent()
     current = this;
 }
 
-_JATTA_EXPORT void Jatta::Graphics::clear(const Jatta::Color& color)
+_JATTA_EXPORT void Jatta::Graphics::Clear(const Jatta::Color& color)
 {
-    if (getCurrent() != this)
+    if (GetCurrent() != this)
     {
         throw std::runtime_error("Graphics device not current");
     }
@@ -159,9 +179,9 @@ _JATTA_EXPORT void Jatta::Graphics::clear(const Jatta::Color& color)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-_JATTA_EXPORT void Jatta::Graphics::present()
+_JATTA_EXPORT void Jatta::Graphics::Present()
 {
-    if (getCurrent() != this)
+    if (GetCurrent() != this)
     {
         throw std::runtime_error("Graphics device not current");
     }
@@ -175,12 +195,22 @@ _JATTA_EXPORT void Jatta::Graphics::present()
 #   endif
 }
 
-_JATTA_EXPORT void Jatta::Graphics::setViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+_JATTA_EXPORT void Jatta::Graphics::SetViewPort(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
 {
-    if (getCurrent() != this)
+    if (GetCurrent() != this)
     {
         throw std::runtime_error("Graphics device not current");
     }
 
     glViewport(x, y, width, height);
+}
+
+_JATTA_EXPORT void Jatta::Graphics::EnableDepthTest()
+{
+	glEnable(GL_DEPTH_TEST);
+}
+
+_JATTA_EXPORT void Jatta::Graphics::DisableDepthTest()
+{
+	glDisable(GL_DEPTH_TEST);
 }

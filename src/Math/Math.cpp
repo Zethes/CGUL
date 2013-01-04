@@ -1,42 +1,61 @@
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
+
 #include "Math.h"
 #include <cmath>
 
-_JATTA_EXPORT float Jatta::Math::cos(float x)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Abs(Float32 x)
+{
+    return std::abs(x);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Cos(Float32 x)
 {
     return std::cos(x);
 }
 
-_JATTA_EXPORT float Jatta::Math::sin(float x)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sin(Float32 x)
 {
     return std::sin(x);
 }
 
-_JATTA_EXPORT float Jatta::Math::tan(float x)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Tan(Float32 x)
 {
     return std::tan(x);
 }
 
-_JATTA_EXPORT float Jatta::Math::degToRad(float deg)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
 {
     return deg / 180.0f * pi;
 }
 
-_JATTA_EXPORT float Jatta::Math::min(float a, float b)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
 {
     return (a < b ? a : b);
 }
 
-_JATTA_EXPORT float Jatta::Math::max(float a, float b)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 {
     return (a > b ? a : b);
 }
 
-_JATTA_EXPORT float Jatta::Math::floor(float x)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)
 {
     return std::floor(x);
 }
 
-_JATTA_EXPORT float Jatta::Math::mod(float x, float div)
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
 {
-    return x - Math::floor(x / 360.0f) * 360.0f;
+    return x - Math::Floor(x / 360.0f) * 360.0f;
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
+{
+}
+
+_JATTA_EXPORT bool Jatta::Math::InEpsilon(Float32 value, Float32 compare, Float32 epsilon)
+{
+    return (Math::Abs(value - compare) <= epsilon);
 }

@@ -1,5 +1,7 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
 #include "../External/Defines.h"
@@ -8,16 +10,30 @@ namespace Jatta
 {
     struct Float4
     {
-        float x, y, z, w;
+    	union
+    	{
+            struct
+            {
+                float x, y, z, w;
+            };
+            float m[4];
+        };
 
         _JATTA_EXPORT Float4();
         _JATTA_EXPORT Float4(const Float4& copy);
         _JATTA_EXPORT Float4(float value);
         _JATTA_EXPORT Float4(float x, float y, float z, float w);
 
-        _JATTA_EXPORT void normalize();
+        float& operator[](UInt32 index);
+        friend std::ostream& operator<<(std::ostream& stream, const Float4& vector)
+		{
+			stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
+			return stream;
+		}
 
-        _JATTA_EXPORT float getMagnitude();
+        _JATTA_EXPORT void Normalize();
+
+        _JATTA_EXPORT float GetMagnitude();
     };
 }
 

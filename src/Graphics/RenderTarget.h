@@ -1,7 +1,10 @@
-//        JATTA        //
-// by Joshua Brookover //
+/* Jatta - General Utility Library
+ * Copyright (c) 2012-2013, Joshua Brookover
+ * All rights reserved.
+ */
 
 #pragma once
+#include "../Images/Color.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -15,6 +18,7 @@ namespace Jatta
                 SInt32 x, y;
                 SInt32 width, height;
             };
+            SInt32 vp[4];
         };
         static Viewport viewport;
 
@@ -22,18 +26,19 @@ namespace Jatta
         UInt32* textures;
 
         UInt32 frameBuffer;
+        UInt32 renderBuffer;
 
         UInt32 width, height;
     public:
         _JATTA_EXPORT RenderTarget();
         _JATTA_EXPORT ~RenderTarget();
 
-        _JATTA_EXPORT void create(UInt32 width, UInt32 height, UInt32 textures);
+        _JATTA_EXPORT void Create(UInt32 width, UInt32 height, UInt32 textures);
 
-        _JATTA_EXPORT void begin();
-        _JATTA_EXPORT void end();
+        _JATTA_EXPORT void Begin();
+        _JATTA_EXPORT void End();
 
-        _JATTA_EXPORT UInt32 getTexture(UInt32 index);
+        _JATTA_EXPORT UInt32 GetTexture(UInt32 index) const;
     };
 }
 
