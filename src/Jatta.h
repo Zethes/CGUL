@@ -5,7 +5,7 @@
 |                               /   /                                                |
 |                              (__ /                                                 |
 |                                                                                    |
-|  Copyright (c) 2012, Joshua Brookover                                              |
+|  Copyright (c) 2012-2013, Joshua Brookover                                         |
 |  All rights reserved.                                                              |
 |                                                                                    |
 |  Redistribution and use in source and binary forms, with or without modification,  |
@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "Jatta/Files/File.h"
+#include "Jatta/File/File.h"
 
 #include "Jatta/Fonts/Font.h"
 
@@ -155,6 +155,72 @@
 
 /** @page building Building Jatta
  *  Hello world.
+ */
+
+/** @page developing Developing Jatta
+ *  This page is dedicated to Jatta developers looking to import the source code into their project.
+ *  Since Jatta uses CMake, it is recommended that developers also use CMake.  All of the code on
+ *  this page is CMake-related and aims to explain the process of importing Jatta's CMakeLists.txt
+ *  properly.
+ *
+ *  @section importing_jatta Importing Jatta
+ *  Jatta breaks up the CMakeLists.txt into three categories: project level, source level and
+ *  source-directory level.  The project level CMake list should not be used if importing Jatta into
+ *  another project.  This level is only used if building Jatta on its own.  The CMake list
+ *  developers should import is the source level list.  The source-directory level lists are loaded
+ *  from the source level list.
+ *
+ *  Here is an example CMake for importing Jatta:
+ *  @code
+ *  CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+ *
+ *  PROJECT(MyProject)
+ *
+ *  SET(JATTA_LIB_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+ *  SET(JATTA_DLL_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+ *
+ *  ADD_SUBDIRECTORY(/dir/to/Jatta/src "${CMAKE_CURRENT_BINARY_DIR}/Jatta")
+ *  @endcode
+ *  In this example the LIB and DLL will both be exported to ${CMAKE_CURRENT_SOURCE_DIR}.  You can
+ *  specify any directory you wish for Jatta to be exported into.  By default, it gets exported in
+ *  its build directory under /bin for the shared library and under /lib for the library.  It is
+ *  also possible to change where in the build directory that Jatta is exported by changing the
+ *  second argument in ADD_SUBDIRECTORY().  Do note that once the directory to Jatta is specified
+ *  the /src directory should be tagged on the end to capture Jatta's source directory instead of
+ *  its root directory.
+ *
+ *  At this point, Jatta will build whenever your project is built.  Any modifications made to the
+ *  source will come into effect.  One more step needs to be done so that the Jatta directories are
+ *  included properly.  It is recommended that you setup a variable, such as JATTA_DIRECTORY, to
+ *  initially include the Jatta subdirectory.
+ *  @code
+ *  CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+ *
+ *  PROJECT(MyProject)
+ *
+ *  SET(JATTA_LIB_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+ *  SET(JATTA_DLL_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+ *  SET(JATTA_DIRECTORY /dir/to/Jatta)
+ *
+ *  ADD_SUBDIRECTORY(${JATTA_DIRECTORY}/src "${CMAKE_CURRENT_BINARY_DIR}/Jatta")
+ *  @endcode
+ *
+ *  Later, when your main executable is defined, you will want to add the Jatta source directory to
+ *  the includes of your project so that you can include <Jatta.h>:
+ *  @code
+ *  ADD_EXECUTABLE(MyProject ${SOURCE_FILES})
+ *  INCLUDE_DIRECTORIES(${JATTA_DIRECTORY}/src)
+ *  TARGET_LINK_LIBRARIES(MyProject Jatta)
+ *  @endcode
+ *
+ *  Some optional flags can be defined to customize how Jatta is built.
+ *  @code
+ *  SET(JATTA_NO_FONTS ON) # Disables font support (removes freetype)
+ *
+ *  SET(JATTA_NO_GRAPHICS ON) # Disables OpenGL (removes glew and opengl)
+ *
+ *  SET(JATTA_NO_NETWORK ON) # Disables networking (removes winsock / bsd sockets)
+ *  @endcode
  */
 
 /** @page graphics Graphics & Windows

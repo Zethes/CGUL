@@ -3,8 +3,12 @@
 	[
 		{
 			"path": ".",
-            "folder_exclude_patterns": ["lib", "include"],
+            "folder_exclude_patterns": ["lib", "include", "build", "dep", "html", "latex", "vsbuild"],
             "file_exclude_patterns": ["*.sublime-workspace"]
 		}
-	]
+	],
+    "settings":
+    {
+        "rulers": [100]
+    }
 }
