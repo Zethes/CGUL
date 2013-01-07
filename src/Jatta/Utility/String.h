@@ -63,6 +63,9 @@ namespace Jatta
         _JATTA_EXPORT void ToLower();
         _JATTA_EXPORT void ToUpper();
 
+        template <typename T> bool Is() const;
+        template <typename T> T To() const;
+
 #       ifdef WINDOWS
         _JATTA_EXPORT std::wstring _ToWideString() const;
 #       endif
@@ -117,6 +120,38 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T&& operand
     ss << operand;
     data += ss.str();
     return *this;
+}
+
+/** @brief Checks if the string can be converted to the given data type.
+ *  @returns True if the string can be converted, false otherwise.
+ */
+template <typename T> bool Jatta::String::Is() const
+{
+	std::istringstream test;
+	test.str(data);
+	if (!test.good())
+	{
+		return false;
+	}
+	T x;
+	test >> x;
+	if (test.fail() || test.good())
+	{
+		return false;
+	}
+	return true;
+}
+
+/** @brief Converts the string to the given data type.
+ *  @returns The string as the given type.
+ */
+template <typename T> T Jatta::String::To() const
+{
+	std::istringstream convert;
+	convert.str(data);
+	T x;
+	convert >> x;
+	return x;
 }
 
 #include "../External/Undefines.h"

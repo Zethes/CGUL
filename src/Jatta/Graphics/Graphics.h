@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -50,6 +50,8 @@ namespace Jatta
 
         _JATTA_EXPORT void EnableDepthTest();
         _JATTA_EXPORT void DisableDepthTest();
+        _JATTA_EXPORT void EnableCulling();
+        _JATTA_EXPORT void DisableCulling();
     };
 }
 

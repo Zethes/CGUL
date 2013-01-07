@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -97,24 +97,33 @@ _JATTA_EXPORT Jatta::Mesh::Mesh()
 	meshes.clear();
 }
 
+#include <fstream> // TODO: remove fstream
 _JATTA_EXPORT void Jatta::Mesh::Create(const Model& model)
 {
+	std::ofstream file;
+	file.open("test.txt");
 	for (UInt32 i = 0; i < model.GetGroupCount(); i++)
 	{
 		Group group = model.GetGroup(i);
+		file << group.name << std::endl;
 		SubMesh* mesh = new SubMesh();
-		mesh->Setup(SubMesh::Type::TRIANGLES, 36);
-		for (UInt32 i = 0; i < 16; i++)
+		mesh->Setup(SubMesh::Type::TRIANGLES, group.vertexCount);
+		for (UInt32 j = 0; j < 16; j++)
 		{
-			VertexBuffer buffer = group.GetBuffer(i);
+			VertexBuffer buffer = group.GetBuffer(j);
 			if (buffer.index != -1)
 			{
-				//std::cout << i << std::endl;
+				file << "---" << j << "---" << std::endl;
+				for (UInt32 k = 0; k < group.vertexCount * 3; k++)
+				{
+					file << ((float*)buffer.buffer)[k] << std::endl;
+				}
 				mesh->AddBuffer((float*)buffer.buffer, buffer.size, buffer.index);
 			}
 		}
 		AddMesh(mesh);
 	}
+	file.close();
 }
 
 _JATTA_EXPORT void Jatta::Mesh::AddMesh(SubMesh*mesh)

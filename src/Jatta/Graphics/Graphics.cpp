@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -145,14 +145,15 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glEnable(GL_DEPTH_TEST);
-    //glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
     glDrawBuffer(GL_FRONT_AND_BACK);
     glReadBuffer(GL_FRONT_AND_BACK);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_CUBE_MAP);
     glCullFace(GL_BACK);
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 }
 
 _JATTA_EXPORT Jatta::Window* Jatta::Graphics::GetWindow()
@@ -217,4 +218,13 @@ _JATTA_EXPORT void Jatta::Graphics::EnableDepthTest()
 _JATTA_EXPORT void Jatta::Graphics::DisableDepthTest()
 {
 	glDisable(GL_DEPTH_TEST);
+}
+
+_JATTA_EXPORT void Jatta::Graphics::EnableCulling()
+{
+	glEnable(GL_CULL_FACE);
+}
+_JATTA_EXPORT void Jatta::Graphics::DisableCulling()
+{
+	glDisable(GL_CULL_FACE);
 }

@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -19,6 +19,7 @@ namespace Jatta
         _JATTA_EXPORT Texture();
         
         _JATTA_EXPORT void Create(const Jatta::Image& image);
+        _JATTA_EXPORT void CreateCubeMap(const Jatta::Image& negX, const Jatta::Image& posX, const Jatta::Image& negY, const Jatta::Image& posY, const Jatta::Image& negZ, const Jatta::Image& posZ);
 
         _JATTA_EXPORT UInt32 GetTexture() const;
 

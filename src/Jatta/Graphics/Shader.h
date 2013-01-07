@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -22,7 +22,8 @@ namespace Jatta
     
     class Shader
     {
-        unsigned int vertexID, fragmentID, shaderID;
+        unsigned int vertexID, fragmentID, shaderID, textureID;
+        std::map<std::string, int> textures;
 
         _JATTA_EXPORT Shader(const Shader& copy);
         _JATTA_EXPORT Shader(Shader&& move);
@@ -50,6 +51,7 @@ namespace Jatta
         //void setTexture(const std::string& name, CubeMap texture);
         //void setArray(const std::string& name, Vector4* vectors, UInt size);
 
+        _JATTA_EXPORT void BindTextureAttributes(const char* , const char* );
         _JATTA_EXPORT void BindAttribute(unsigned int index, const std::string& name);
     };
 }

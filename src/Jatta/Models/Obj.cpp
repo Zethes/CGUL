@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -14,17 +14,23 @@
 
 namespace
 {
+	struct ObjGroup
+    {
+    	Jatta::String name;
+    	std::vector<Jatta::String> faces;
+    };
     struct ObjData
     {
-        std::vector<Jatta::Float4> positions;
-        std::vector<Jatta::Float4> texCoords;
-        std::vector<Jatta::Float4> normals;
-        Jatta::Byte positionsSize = 0;
-        Jatta::Byte texCoordsSize = 0;
-        Jatta::Byte normalsSize = 0;
-        Jatta::Float4 position;
-        Jatta::Float4 texCoord;
-        Jatta::Float4 normal;
+        Jatta::Float32* positions;
+        Jatta::Byte positionSize;
+        Jatta::UInt32 positionCount;
+        Jatta::Float32* texCoords;
+        Jatta::Byte texCoordSize;
+        Jatta::UInt32 texCoordCount;
+        Jatta::Float32* normals;
+        Jatta::Byte normalSize;
+        Jatta::UInt32 normalCount;
+        std::vector<ObjGroup> groups;
     };
 }
 
@@ -106,17 +112,21 @@ static void Parse(ObjData* data, const Jatta::String& fileName)
     {
         it->Trim();
         std::vector<Jatta::String> explode = it->Explode(" ", 1);
+        if (explode.size() < 2)
+        {
+        	continue;
+        }
         explode[1].TrimStart();
-        if (explode[0] == "#" || explode[0] == "")
+        if (explode[0] == "#")
         {
             continue;
         }
         else if (explode[0] == "v")
         {
-            Jatta::UInt32 size = explode[1].Count(" ");
+            Jatta::UInt32 size = explode[1].Count(" ") + 1;
             if (size < 2 || size > 4)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Invalid position.");
             }
             if (positionSize == 0)
             {
@@ -124,16 +134,16 @@ static void Parse(ObjData* data, const Jatta::String& fileName)
             }
             else if (positionSize != size)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Inconsistent position size.");
             }
             positionStrings.push_back(explode[1]);
         }
         else if (explode[0] == "vt")
         {
-            Jatta::UInt32 size = explode[1].Count(" ");
+            Jatta::UInt32 size = explode[1].Count(" ") + 1;
             if (size < 2 || size > 3)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Invalid texture coordinate.");
             }
             if (texCoordSize == 0)
             {
@@ -141,16 +151,16 @@ static void Parse(ObjData* data, const Jatta::String& fileName)
             }
             else if (texCoordSize != size)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Inconsistent texture coordinate size.");
             }
             texCoordStrings.push_back(explode[1]);
         }
         else if (explode[0] == "vn")
         {
-            Jatta::UInt32 size = explode[1].Count(" ");
+            Jatta::UInt32 size = explode[1].Count(" ") + 1;
             if (size != 3)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Invalid normal.");
             }
             if (normalSize == 0)
             {
@@ -158,17 +168,37 @@ static void Parse(ObjData* data, const Jatta::String& fileName)
             }
             else if (normalSize != size)
             {
-                throw std::runtime_error("Invalid OBJ.");
+                throw std::runtime_error("Invalid OBJ. Inconsistent normal size.");
             }
             normalStrings.push_back(explode[1]);
         }
         else if (explode[0] == "g")
         {
-            groupStrings.push_back(explode[1]);
+        	ObjGroup group;
+        	group.name = explode[1];
+            data->groups.push_back(group);
         }
         else if (explode[0] == "f")
         {
-            // TODO: .obj f
+        	if (data->groups.empty())
+        	{
+        		ObjGroup group;
+				group.name = "";
+				data->groups.push_back(group);
+        	}
+            data->groups.back().faces.push_back(explode[1]);
+        }
+        else if (explode[0] == "mtllib")
+        {
+        	// TODO: .obj mtllib
+        }
+        else if (explode[0] == "usemtl")
+        {
+        	// TODO: .obj usemtl
+        }
+        else if (explode[0] == "s")
+        {
+        	// TODO: .obj s
         }
         else
         {
@@ -177,6 +207,195 @@ static void Parse(ObjData* data, const Jatta::String& fileName)
             throw std::runtime_error(ss.str().c_str());
         }
     }
+
+    data->positions = nullptr;
+    data->texCoords = nullptr;
+    data->normals = nullptr;
+    if (positionSize != 0)
+    {
+    	data->positions = new Jatta::Float32[positionStrings.size() * positionSize];
+    	Jatta::UInt32 index = 0;
+    	for (auto it = positionStrings.begin(); it != positionStrings.end(); it++)
+    	{
+    		std::vector<Jatta::String> explode = it->Explode(" ");
+    		for (auto j = explode.begin(); j != explode.end(); j++)
+    		{
+    			data->positions[index++] = j->To<Jatta::Float32>();
+    		}
+    	}
+    	data->positionSize = positionSize;
+    	data->positionCount = positionStrings.size();
+    }
+    if (texCoordSize != 0)
+    {
+    	data->texCoords = new Jatta::Float32[texCoordStrings.size() * texCoordSize];
+    	Jatta::UInt32 index = 0;
+    	for (auto it = texCoordStrings.begin(); it != texCoordStrings.end(); it++)
+		{
+			std::vector<Jatta::String> explode = it->Explode(" ");
+			for (auto j = explode.begin(); j != explode.end(); j++)
+			{
+				data->texCoords[index++] = j->To<Jatta::Float32>();
+			}
+		}
+    	data->texCoordSize = texCoordSize;
+    	data->texCoordCount = texCoordStrings.size();
+    }
+    if (normalSize != 0)
+	{
+		data->normals = new Jatta::Float32[normalStrings.size() * normalSize];
+		Jatta::UInt32 index = 0;
+		for (auto it = normalStrings.begin(); it != normalStrings.end(); it++)
+		{
+			std::vector<Jatta::String> explode = it->Explode(" ");
+			for (auto j = explode.begin(); j != explode.end(); j++)
+			{
+				data->normals[index++] = j->To<Jatta::Float32>();
+			}
+		}
+		data->normalSize = normalSize;
+		data->normalCount = normalStrings.size();
+	}
+}
+
+static std::vector<Jatta::Group> CreateGroups(ObjData* data)
+{
+	std::vector<Jatta::Group> groups;
+	for (auto i = data->groups.begin(); i != data->groups.end(); i++)
+	{
+		Jatta::Group group;
+		group.name = i->name;
+		group.vertexCount = i->faces.size() * 3;
+		int faceSize = 0;
+		bool first = true;
+		bool hasTexCoord, faceHasTexCoord;
+		bool hasNormal, faceHasNormal;
+		Jatta::Float32* positions = new Jatta::Float32[i->faces.size() * data->positionSize * 3];
+		unsigned int positionPos = 0;
+		Jatta::Float32* texCoords = new Jatta::Float32[i->faces.size() * data->texCoordSize * 3];
+		unsigned int texCoordPos = 0;
+		Jatta::Float32* normals = new Jatta::Float32[i->faces.size() * data->normalSize * 3];
+		unsigned int normalPos = 0;
+		for (auto j = i->faces.begin(); j != i->faces.end(); j++)
+		{
+			std::vector<Jatta::String> faces = j->Explode(" ");
+			// TODO: intelligently check which buffers need to be created
+			Jatta::Byte size = faces.size();
+			if (size < 3 || size > 4)
+			{
+				throw std::runtime_error("Invalid OBJ.  Incorrect face size.");
+			}
+			if (faceSize == 0)
+			{
+				faceSize = size;
+			}
+			else if (faceSize != size)
+			{
+				throw std::runtime_error("Invalid OBJ.  Inconsistent face size.");
+			}
+			for (auto k = faces.begin(); k != faces.end(); k++)
+			{
+				std::vector<Jatta::String> faceData = k->Explode("/");
+				if (!faceData[0].Is<Jatta::UInt32>())
+				{
+					throw std::runtime_error("Invalid OBJ.  No position data.");
+				}
+				faceHasTexCoord = false;
+				faceHasNormal = false;
+				if (faceData.size() == 3)
+				{
+					if (faceData[1].Is<Jatta::UInt32>())
+					{
+						faceHasTexCoord = true;
+					}
+					if (faceData[2].Is<Jatta::UInt32>())
+					{
+						faceHasNormal = true;
+					}
+				}
+				else if (faceData.size() == 2)
+				{
+					if (faceData[1].Is<Jatta::UInt32>())
+					{
+						faceHasTexCoord = true;
+					}
+				}
+				else if (faceData.size() != 1)
+				{
+					throw std::runtime_error("Invalid OBJ.  Invalid face data.");
+				}
+				if (first)
+				{
+					hasTexCoord = faceHasTexCoord;
+					hasNormal = faceHasNormal;
+					first = false;
+				}
+				else
+				{
+					if (hasTexCoord != faceHasTexCoord)
+					{
+						throw std::runtime_error("Invalid OBJ.  Invalid face texture coordinates.");
+					}
+					if (hasNormal != faceHasNormal)
+					{
+						throw std::runtime_error("Invalid OBJ.  Invalid face normals.");
+					}
+				}
+				Jatta::UInt32 positionIndex = faceData[0].To<Jatta::UInt32>() - 1;
+				for (Jatta::UInt32 l = 0; l < data->positionSize; l++)
+				{
+					positions[positionPos++] = data->positions[data->positionSize * positionIndex + l];
+				}
+				Jatta::UInt32 texCoordIndex;
+				Jatta::UInt32 normalIndex;
+				if (hasTexCoord)
+				{
+					texCoordIndex = faceData[1].To<Jatta::UInt32>() - 1;
+					for (Jatta::UInt32 l = 0; l < data->texCoordSize; l++)
+					{
+						texCoords[texCoordPos++] = data->texCoords[data->texCoordSize * texCoordIndex + l];
+					}
+				}
+				if (hasNormal)
+				{
+					normalIndex = faceData[2].To<Jatta::UInt32>() - 1;
+					for (Jatta::UInt32 l = 0; l < data->normalSize; l++)
+					{
+						normals[normalPos++] = data->normals[data->normalSize * normalIndex + l];
+					}
+				}
+				//std::cout << pos++ << std::endl;
+				//pos++;
+			}
+			//pos++;
+		}
+
+		Jatta::VertexBuffer positionBuffer;
+		positionBuffer.index = Jatta::Graphics::position1;
+		positionBuffer.buffer = positions;
+		positionBuffer.size = data->positionSize;
+		group.AddBuffer(positionBuffer);
+
+		if (hasTexCoord)
+		{
+			Jatta::VertexBuffer texCoordBuffer;
+			texCoordBuffer.index = Jatta::Graphics::texCoord1;
+			texCoordBuffer.buffer = texCoords;
+			texCoordBuffer.size = data->texCoordSize;
+			group.AddBuffer(texCoordBuffer);
+		}
+
+		if (hasNormal)
+		{
+			Jatta::VertexBuffer normalBuffer;
+			normalBuffer.index = Jatta::Graphics::normal1;
+			normalBuffer.buffer = normals;
+			normalBuffer.size = data->normalSize;
+			group.AddBuffer(normalBuffer);
+		}
+		groups.push_back(group);
+	}
+	return groups;
 }
 
 #include <string.h>
@@ -188,6 +407,77 @@ _JATTA_EXPORT void Jatta::Model::LoadObj(const String& fileName)
 
 
     Parse(data, fileName);
+    std::vector<Group> groups = CreateGroups(data);
+
+    for (auto i = groups.begin(); i != groups.end(); i++)
+    {
+    	if (i->vertexCount != 0)
+    	{
+    		AddGroup(*i);
+    	}
+    }
+
+    /*static Float3 boxPositions[] = { Float3(1, -1, -1), Float3(1, 1, -1), Float3(1, -1, 1),
+							  Float3(1, 1, 1), Float3(1, -1, 1), Float3(1, 1, -1),
+							  Float3(-1, -1, -1), Float3(-1, -1, 1), Float3(-1, 1, -1),
+							  Float3(-1, 1, 1), Float3(-1, 1, -1), Float3(-1, -1, 1),
+							  Float3(-1, -1, 1), Float3(1, -1, 1), Float3(-1, 1, 1),
+							  Float3(1, 1, 1), Float3(-1, 1, 1), Float3(1, -1, 1),
+							  Float3(-1, -1, -1), Float3(-1, 1, -1), Float3(1, -1, -1),
+							  Float3(1, 1, -1), Float3(1, -1, -1), Float3(-1, 1, -1),
+							  Float3(-1, -1, -1), Float3(1, -1, -1), Float3(-1, -1, 1),
+							  Float3(1, -1, 1), Float3(-1, -1, 1), Float3(1, -1, -1),
+							  Float3(-1, 1, -1), Float3(-1, 1, 1), Float3(1, 1, -1),
+							  Float3(1, 1, 1), Float3(1, 1, -1), Float3(-1, 1, 1) };
+	static Float2 boxTexCoords[] = { Float2(1, 1), Float2(1, 0), Float2(0, 1),
+							  Float2(0, 0), Float2(0, 1), Float2(1, 0),
+							  Float2(1, 1), Float2(0, 1), Float2(1, 0),
+							  Float2(0, 0), Float2(1, 0), Float2(0, 1),
+							  Float2(1, 1), Float2(1, 0), Float2(0, 1),
+							  Float2(0, 0), Float2(0, 1), Float2(1, 0),
+							  Float2(1, 1), Float2(0, 1), Float2(1, 0),
+							  Float2(0, 0), Float2(1, 0), Float2(0, 1),
+							  Float2(1, 1), Float2(1, 0), Float2(0, 1),
+							  Float2(0, 0), Float2(0, 1), Float2(1, 0),
+							  Float2(1, 1), Float2(0, 1), Float2(1, 0),
+							  Float2(0, 0), Float2(1, 0), Float2(0, 1) };
+
+	VertexBuffer positionBuffer;
+	positionBuffer.index = Graphics::position1;
+	positionBuffer.buffer = boxPositions;
+	positionBuffer.size = 3;
+
+	VertexBuffer texCoordBuffer;
+	texCoordBuffer.index = Graphics::texCoord1;
+	texCoordBuffer.buffer = boxTexCoords;
+	texCoordBuffer.size = 2;
+
+	//Setup(36);
+	Group blurga;
+	blurga.vertexCount = 36;
+	blurga.name = "blurga";
+	blurga.AddBuffer(positionBuffer);
+	blurga.AddBuffer(texCoordBuffer);
+	AddGroup(blurga);*/
+
+    /*for (auto i = data->groups.begin(); i != data->groups.end(); i++)
+    {
+    	Group group;
+    	group.name = i->name;
+    	Jatta::VertexBuffer positionBuffer;
+    	positionBuffer.index = Jatta::Graphics::position1;
+    	positionBuffer.buffer = (void*)positions;
+    	positionBuffer.size = 3;
+    }
+
+	VertexBuffer texCoordBuffer;
+	texCoordBuffer.index = Graphics::texCoord1;
+	texCoordBuffer.buffer = boxTexCoords;
+	texCoordBuffer.size = 2;
+
+	Setup(36);
+	AddBuffer(positionBuffer);
+	AddBuffer(texCoordBuffer);*/
 /*
 	
 

@@ -1,5 +1,5 @@
 # Jatta - General Utility Library
-# Copyright (c) 2012-2013, Joshua Brookover
+# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
 if(NOT JATTA_NO_GRAPHICS)
@@ -19,4 +19,6 @@ if(NOT JATTA_NO_GRAPHICS)
     ADD_HEADER(SubMesh.h include/Jatta/Graphics/)
     ADD_SOURCE(Texture.cpp)
     ADD_HEADER(Texture.h include/Jatta/Graphics/)
+    ADD_SOURCE(Terrain.cpp)
+    ADD_HEADER(Terrain.h include/Jatta/Graphics/)
 ENDIF()

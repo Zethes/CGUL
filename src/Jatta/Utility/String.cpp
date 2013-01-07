@@ -127,7 +127,7 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
  *      String str;
  *      UInt32 codePoint;
  *      Size i = 0;
- *      str = "猫がかわいいです";
+ *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
  *      while (i < str.GetSize())
  *      {
  *          i += str.GetCodePoint(i, &codePoint);
@@ -325,17 +325,17 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *  {
  *      String str;
  *
- *      str = "猫がかわいいです";
+ *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
  *      str = str.SubString(3, 3);
  *      std::cout << str << std::endl;
  *      
- *      // outputs: わいい
+ *      // outputs: ã‚�ã�„ã�„
  *
- *      str = "猫がかわいいです";
+ *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
  *      str = str.SubString(3, 3, true);
  *      std::cout << str << std::endl;
  *
- *      // outputs: が
+ *      // outputs: ã�Œ
  *  }
  *  @endcode
  */
@@ -453,7 +453,6 @@ _JATTA_EXPORT void Jatta::String::TrimEnd()
     data = data.substr(0, data.length() - trimEnd);
 }
 
-#include <iostream>
 _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& delimiter, UInt32 limit) const
 {
 	std::vector<Jatta::String> result;

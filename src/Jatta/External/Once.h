@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -88,6 +88,7 @@ namespace Jatta
 #include <forward_list>
 #include <fstream>
 #include <list>
+#include <map>
 #include <memory>
 #include <sstream>
 #include <stdexcept>

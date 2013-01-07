@@ -5,7 +5,7 @@
 |                               /   /                                                |
 |                              (__ /                                                 |
 |                                                                                    |
-|  Copyright (c) 2012-2013, Joshua Brookover                                         |
+|  Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall and Amber Thrall                        |
 |  All rights reserved.                                                              |
 |                                                                                    |
 |  Redistribution and use in source and binary forms, with or without modification,  |
@@ -42,6 +42,7 @@
 #include "Jatta/Graphics/RenderTarget.h"
 #include "Jatta/Graphics/Shader.h"
 #include "Jatta/Graphics/SubMesh.h"
+#include "Jatta/Graphics/Terrain.h"
 #include "Jatta/Graphics/Texture.h"
 
 #include "Jatta/Images/Color.h"
@@ -102,7 +103,7 @@
  *  except Jatta's, which is found in the BSD 2-Clause License.
  *
  *  @section bsd License
- *  Copyright (C) 2012-2013, Joshua Brookover@n
+ *  Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall@n
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without modification, are permitted

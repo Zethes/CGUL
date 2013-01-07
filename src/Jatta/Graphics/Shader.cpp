@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -27,7 +27,7 @@ _JATTA_EXPORT Jatta::Shader::Shader(Shader&& move)
 
 _JATTA_EXPORT Jatta::Shader::Shader()
 {
-    this->vertexID = this->fragmentID = this->shaderID = 0;
+    this->vertexID = this->fragmentID = this->shaderID = this->textureID = 0;
 }
 
 _JATTA_EXPORT Jatta::Shader::~Shader()
@@ -188,6 +188,17 @@ _JATTA_EXPORT void Jatta::Shader::SetMatrix(const std::string& name, const Jatta
 _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const Texture& texture)
 {
     int id = 0;
+    std::map<std::string,int>::iterator it = textures.find(name);
+    if (it != textures.end())
+    {
+    	id = it->second;
+    }
+    else
+    {
+    	id = textureID++;
+    	textures.insert(std::make_pair(name,id));
+    }
+
     int myTexture = glGetUniformLocation(shaderID, name.c_str());
     glUniform1i(myTexture, id);
     glActiveTexture(GL_TEXTURE0 + id);
@@ -197,10 +208,33 @@ _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const Text
 _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const RenderTarget& texture)
 {
 	int id = 0;
+	std::map<std::string,int>::iterator it = textures.find(name);
+	if (it != textures.end())
+	{
+		id = it->second;
+	}
+	else
+	{
+		id = textureID++;
+		textures.insert(std::make_pair(name,id));
+	}
+
 	int myTexture = glGetUniformLocation(shaderID, name.c_str());
 	glUniform1i(myTexture, id);
 	glActiveTexture(GL_TEXTURE0 + id);
 	glBindTexture(GL_TEXTURE_2D, texture.GetTexture(0));
+}
+
+_JATTA_EXPORT void Jatta::Shader::BindTextureAttributes(const char* texCoords, const char* vertPosition)
+{
+	for (unsigned int i = 0; i < 13; i++)
+	{
+		Jatta::String str = "texColor";
+		str += (int)i;
+		BindAttribute(i, str.GetData());
+	}
+	BindAttribute(14, texCoords);
+	BindAttribute(15, vertPosition);
 }
 
 _JATTA_EXPORT void Jatta::Shader::BindAttribute(unsigned int index, const std::string& name)

@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -7,6 +7,7 @@
 #include "SubMesh.h"
 #include "Graphics.h"
 #include "../Models/Model.h"
+#include "../Images/Image.h"
 #include "../External/Defines.h"
 
 namespace Jatta
