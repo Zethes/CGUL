@@ -225,7 +225,11 @@
  *
  *  SET(JATTA_NO_GRAPHICS ON) # Disables OpenGL (removes glew and opengl)
  *
+ *  SET(JATTA_NO_JPEG ON) # Disables jpeg (removes libjpeg)
+ *
  *  SET(JATTA_NO_NETWORK ON) # Disables networking (removes winsock / bsd sockets)
+ *
+ *  SET(JATTA_NO_PNG ON) # Disables png (removes libpng and zlib)
  *  @endcode
  */
 
