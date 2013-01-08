@@ -95,7 +95,8 @@
  */
 
 /** @page downloads Downloads
- *  No downloads yet~
+ *  Visit our Github page:@n
+ *  https://github.com/JoshuaBrookover/Jatta
  */
 
 /** @page license License
@@ -159,7 +160,7 @@
  */
 
 /** @page building Building Jatta
- *  Hello world.
+ *  Good luck.
  */
 
 /** @page developing Developing Jatta
