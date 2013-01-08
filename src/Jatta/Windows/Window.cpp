@@ -61,12 +61,69 @@ _JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
     /* deleted */
 }
 
+_JATTA_EXPORT void Jatta::Window::Update()
+{
+#   ifdef WINDOWS
+    MSG Msg;
+    while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE) > 0)
+    {
+        TranslateMessage(&Msg);
+        DispatchMessage(&Msg);
+    }
+#   endif
+
+#   ifdef LINUX
+    if (display && handle)
+    {
+        auto it = windowMap.find(handle);
+        if (it == windowMap.end())
+        {
+            break;
+        }
+        Window* window = it->second;
+        while (XPending(display))
+        {
+            XEvent event;
+            XNextEvent(display, &event);
+            switch (event.type)
+            {
+                case 33:
+                    XDestroyWindow(display, handle);
+                case DestroyNotify:
+                    close();
+                    return;
+                case KeyPress:
+                    window->getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = true;
+                    break;
+                case KeyRelease:
+                    bool released = true;
+                    if (XEventsQueued(display, QueuedAfterReading))
+                    {
+                        XEvent nextEvent;
+                        XPeekEvent(display, &nextEvent);
+                        if (nextEvent.type == KeyPress && nextEvent.xkey.time == event.xkey.time && nextEvent.xkey.keycode == event.xkey.keycode)
+                        {
+                            released = false;
+                        }
+                    }
+                    if (released)
+                    {
+                        window->getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = false;
+                    }
+                    break;
+            }
+        }
+    }
+#   endif
+}
+
 _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
+        display = XOpenDisplay(nullptr);
         initialized = true;
     }
 #   endif
@@ -192,56 +249,6 @@ _JATTA_EXPORT void Jatta::Window::Close()
     }
     handle = 0;
     display = nullptr;
-#   endif
-}
-
-_JATTA_EXPORT void Jatta::Window::Update()
-{
-#   ifdef WINDOWS
-    MSG Msg;
-    while (PeekMessage(&Msg, handle, 0, 0, PM_REMOVE) > 0)
-    {
-        TranslateMessage(&Msg);
-        DispatchMessage(&Msg);
-    }
-#   endif
-
-#   ifdef LINUX
-    if (display && handle)
-    {
-        while (XPending(display))
-        {
-            XEvent event;
-            XNextEvent(display, &event);
-            switch (event.type)
-            {
-                case 33:
-                    XDestroyWindow(display, handle);
-                case DestroyNotify:
-                    close();
-                    return;
-                case KeyPress:
-                    getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = true;
-                    break;
-                case KeyRelease:
-                    bool released = true;
-                    if (XEventsQueued(display, QueuedAfterReading))
-                    {
-                        XEvent nextEvent;
-                        XPeekEvent(display, &nextEvent);
-                        if (nextEvent.type == KeyPress && nextEvent.xkey.time == event.xkey.time && nextEvent.xkey.keycode == event.xkey.keycode)
-                        {
-                            released = false;
-                        }
-                    }
-                    if (released)
-                    {
-                        getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = false;
-                    }
-                    break;
-            }
-        }
-    }
 #   endif
 }
 
