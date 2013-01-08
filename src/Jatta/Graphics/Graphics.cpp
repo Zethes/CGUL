@@ -85,7 +85,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
 
 #   ifdef LINUX
     XWindowAttributes attributes;
-    XGetWindowAttributes(window->_getDisplay(), window->_getHandle(), &attributes);
+    XGetWindowAttributes(window->_GetDisplay(), window->_GetHandle(), &attributes);
     /*attributes->visual = blah blah;
     // also create a new GL context for rendering
     GLint attribs[] = { GLX_CONTEXT_MAJOR_VERSION_ARB, 3, GLX_CONTEXT_MINOR_VERSION_ARB, 0, 0 };
@@ -97,7 +97,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     int glxMajorVersion = 0;
     int glxMinorVersion = 0;
     // Get Version info
-    glXQueryVersion(window->_getDisplay(), &glxMajorVersion, &glxMinorVersion);
+    glXQueryVersion(window->_GetDisplay(), &glxMajorVersion, &glxMinorVersion);
     if(glxMajorVersion == 1 && glxMinorVersion < 2)
     {
         // @TODO error handling
@@ -123,8 +123,8 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     info.bits_per_rgb = 0;
 
     // also create a new GL context for rendering
-    this->context = glXCreateContext(window->_getDisplay(), &info, 0, true);
-    glXMakeCurrent(window->_getDisplay(), window->_getHandle(), this->context);
+    this->context = glXCreateContext(window->_GetDisplay(), &info, 0, true);
+    glXMakeCurrent(window->_GetDisplay(), window->_GetHandle(), this->context);
 #   endif
 
     if (current == nullptr)
@@ -200,7 +200,7 @@ _JATTA_EXPORT void Jatta::Graphics::Present()
 #   endif
 
 #   ifdef LINUX
-    glXSwapBuffers(window->_getDisplay(), window->_getHandle());
+    glXSwapBuffers(window->_GetDisplay(), window->_GetHandle());
 #   endif
 }
 
