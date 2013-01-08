@@ -64,6 +64,10 @@
 #include "Jatta/Network/DNS.h"
 #include "Jatta/Network/TCP.h"
 
+#include "Jatta/OpenGL/OpenGL.h"
+#include "Jatta/OpenGL/Program.h"
+#include "Jatta/OpenGL/Shader.h"
+
 #include "Jatta/Utility/Object.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"

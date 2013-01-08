@@ -19,6 +19,25 @@ _JATTA_EXPORT bool Jatta::File::GetText(const std::string& fileName, std::string
     return true;
 }
 
+_JATTA_EXPORT bool Jatta::File::GetText(const String& fileName, String* result)
+{
+    std::ifstream file;
+    file.open(fileName.GetData().c_str(), std::ios::in);
+    if (!file.is_open())
+    {
+        return false;
+    }
+    std::string line;
+    while (!file.eof())
+    {
+        getline(file, line);
+        *result += line + "\n";
+    }
+    *result = result->SubString(0, result->GetSize() - 1, true);
+    file.close();
+    return true;
+}
+
 _JATTA_EXPORT bool Jatta::File::GetLines(const std::string& fileName, std::vector<std::string>* vector)
 {
     std::ifstream file;

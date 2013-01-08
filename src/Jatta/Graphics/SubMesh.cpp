@@ -138,8 +138,8 @@ _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(Jatta::Color* buffer, UInt32 index)
 	    glBindBuffer(GL_ARRAY_BUFFER, object);
 
 	    // set the data of this buffer
-	    float colors[this->vertexCount * 4];
-	    for ()
+	    //float colors[this->vertexCount * 4];
+	    //for ()
 	    glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * 4) * sizeof(GLubyte), (GLubyte*)buffer, GL_STATIC_DRAW);
 
 	    // setup the attribute pointer to whatever was passed in
