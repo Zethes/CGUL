@@ -58,7 +58,7 @@ namespace Jatta
         _JATTA_EXPORT void Trim();
         _JATTA_EXPORT void TrimStart();
         _JATTA_EXPORT void TrimEnd();
-        _JATTA_EXPORT std::vector<String> Explode(const String& delimiter, UInt32 limit = none) const;
+        _JATTA_EXPORT std::vector<String> Explode(const String& delimiter, Size limit = none) const;
 
         _JATTA_EXPORT void ToLower();
         _JATTA_EXPORT void ToUpper();

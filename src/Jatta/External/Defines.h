@@ -26,16 +26,22 @@
 #    define UNICODE
 #    define _UNICODE
 #    include <Windows.h>
+#    include <GL/glew.h>
 #  endif
 #  ifdef LINUX
 #    include <X11/Xlib.h>
 #    include <GL/glxew.h>
+#    include <GL/glew.h>
 #  endif
-#  include <GL/glew.h>
+#  ifdef MACOS
+#    import <OpenGL/GL.h>
+#    define glGenVertexArrays(x, y) glGenVertexArraysAPPLE(x, y)
+#    define glBindVertexArray(x) glBindVertexArrayAPPLE(x)
+#  endif
 #  include <ft2build.h>
 #  include <freetype/freetype.h>
 #  include <freetype/ftxf86.h>
-#  define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
+#  define CHECK(x, y) //static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #  ifdef WINDOWS
      CHECK(::HWND, _JATTA_HWND);
      CHECK(::DWORD, _JATTA_DWORD);

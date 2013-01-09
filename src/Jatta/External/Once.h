@@ -5,6 +5,18 @@
 
 #pragma once
 
+namespace std
+{
+    template <typename T> const T& move(const T& value)
+    {
+        return value;
+    }
+    template <typename T> T& move(T& value)
+    {
+        return value;
+    }
+}
+
 // Operating System Detection
 #if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
 #  if defined(_WIN32)
@@ -19,7 +31,7 @@
 #endif
 
 // Jatta Type Defines
-#define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
+#define TYPE(oldType, newType, size) typedef oldType newType //static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
 /** @brief General utility library.
  */
 namespace Jatta
@@ -83,9 +95,10 @@ namespace Jatta
 #undef TYPE
 
 // Standard Template Library Includes
-#include <array>
+#include <iostream>
+//#include <array>
 #include <cctype>
-#include <forward_list>
+//#include <forward_list>
 #include <fstream>
 #include <list>
 #include <map>
@@ -93,6 +106,7 @@ namespace Jatta
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 // Debugging Outputs

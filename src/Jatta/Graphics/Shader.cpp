@@ -5,7 +5,6 @@
 
 #include "Shader.h"
 #include "../File/File.h"
-#include <GL/glew.h>
 #include <sstream>
 
 #include "../Math/Float2.h"

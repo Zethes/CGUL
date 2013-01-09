@@ -51,6 +51,10 @@ static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 }
 #endif
 
+#if MACOS
+
+#endif
+
 _JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
 {
     /* deleted */

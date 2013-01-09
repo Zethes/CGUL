@@ -5,7 +5,6 @@
 
 #include "Primitives.h"
 #include "Graphics.h"
-#include <GL/glew.h>
 #include "../Math/Float4.h"
 
 static Jatta::UInt32 line2DVertexArray;

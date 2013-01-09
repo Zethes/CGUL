@@ -453,7 +453,7 @@ _JATTA_EXPORT void Jatta::String::TrimEnd()
     data = data.substr(0, data.length() - trimEnd);
 }
 
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& delimiter, UInt32 limit) const
+_JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& delimiter, Size limit) const
 {
 	std::vector<Jatta::String> result;
 	Size find = 0;

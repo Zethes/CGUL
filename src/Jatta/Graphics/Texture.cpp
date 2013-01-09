@@ -5,8 +5,6 @@
 
 #include "Texture.h"
 
-#include <GL/glew.h>
-
 _JATTA_EXPORT Jatta::Texture::Texture()
 {
 }

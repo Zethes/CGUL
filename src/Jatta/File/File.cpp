@@ -77,7 +77,7 @@ _JATTA_EXPORT bool Jatta::File::GetLines(const String& fileName, std::vector<Str
 _JATTA_EXPORT bool Jatta::File::GetFileSize(const std::string& fileName, UInt32* fileSize)
 {
     std::streamoff begin, end;
-    std::ifstream myfile(fileName);
+    std::ifstream myfile(fileName.c_str());
     begin = myfile.tellg();
     myfile.seekg(0, std::ios::end);
     end = myfile.tellg();

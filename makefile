@@ -3,11 +3,21 @@ UNAME:=$(shell uname -s)
 # linux #
 ifeq ($(UNAME),Linux)
 	CMAKE_GENERATOR:="Unix Makefiles"
+	CC=gcc
+	CXX=g++
+endif
+
+ifeq ($(UNAME),Darwin)
+	CMAKE_GENERATOR:="Unix Makefiles"
+	CC=clang
+	CXX=clang++
 endif
 
 # windows / mingw #
 ifeq ($(UNAME:MINGW%=MINGW),MINGW)
 	CMAKE_GENERATOR:="MSYS Makefiles"
+	CC=gcc
+	CXX=g++
 endif
 
 all: build/Makefile
@@ -18,7 +28,7 @@ install: build/Makefile
 
 build/Makefile:
 	mkdir -p build
-	cd build; cmake -G $(CMAKE_GENERATOR) .. -DCMAKE_INSTALL_PREFIX=$(CURDIR)
+	cd build; CXX=$(CXX) cmake -G $(CMAKE_GENERATOR) .. -DCMAKE_INSTALL_PREFIX=$(CURDIR)
 
 clean:
 	rm -rf build
