@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (c) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -23,10 +23,11 @@ namespace Jatta
 #       endif
 
 #       ifdef LINUX
-        _JATTA_DISPLAY display;
+        static std::map<_JATTA_WINDOW, Window*> windowMap;
+        static _JATTA_DISPLAY display;
         _JATTA_WINDOW handle;
 
-        static bool initialized;
+        static Boolean initialized;
 #       endif
 
         Input input;
@@ -34,6 +35,8 @@ namespace Jatta
         _JATTA_EXPORT Window(const Window& copy);
         _JATTA_EXPORT Window(Window&& move);
     public:
+        _JATTA_EXPORT static void Update();
+
         _JATTA_EXPORT Window();
         _JATTA_EXPORT ~Window();
 
@@ -51,14 +54,12 @@ namespace Jatta
         _JATTA_EXPORT void Create(const WindowStyle& style);
         _JATTA_EXPORT void Close();
 
-        _JATTA_EXPORT void Update();
-
         _JATTA_EXPORT void SetTitle(String title);
 
-        _JATTA_EXPORT bool IsOpen() const;
+        _JATTA_EXPORT Boolean IsOpen() const;
 
-        _JATTA_EXPORT unsigned int GetWidth() const;
-        _JATTA_EXPORT unsigned int GetHeight() const;
+        _JATTA_EXPORT UInt32 GetWidth() const;
+        _JATTA_EXPORT UInt32 GetHeight() const;
         _JATTA_EXPORT Float2 GetSize() const;
     };
 }

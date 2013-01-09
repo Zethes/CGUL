@@ -1,5 +1,5 @@
 /* Jatta - General Utility Library
- * Copyright (c) 2012-2013, Joshua Brookover
+ * Copyright (c) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -43,6 +43,8 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
 #endif
 
 #ifdef LINUX
+std::map<Window, Jatta::Window*> Jatta::Window::windowMap;
+Display* Jatta::Window::display;
 bool Jatta::Window::initialized = false;
 
 static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
@@ -51,8 +53,238 @@ static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 }
 #endif
 
-#if MACOS
+#ifdef MACOS
+// Define the customized OpenGL view
+@interface OpenGLView : NSOpenGLView
+{
+    // Create the timer capable of keeping up with delta time
+    NSTimer* pTimer;
+}
+@end
 
+// Define the cocoa application delegate
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+{
+    // The main application window
+    NSWindow* window;
+
+    // The customized OpenGL view
+    OpenGLView* glView;
+
+    // The window's default content
+    id content;
+}
+@end
+
+@implementation OpenGLView
+
+    + (NSOpenGLPixelFormat*) defaultPixelFormat
+    {
+        // Set up the OpenGL view's attributes
+        NSOpenGLPixelFormatAttribute attributes[] =
+        {
+            NSOpenGLPFAWindow,
+            NSOpenGLPFADoubleBuffer,
+            NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)24,
+            (NSOpenGLPixelFormatAttribute)nil
+        };
+
+        // Create our pixel format using the above attributes
+        return [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
+    }
+
+    - (void) idle: (NSTimer*)pTimer
+    {
+        static double lastTime = CFAbsoluteTimeGetCurrent();
+        double time = CFAbsoluteTimeGetCurrent();
+        float dt = float(time - lastTime);
+        lastTime = time;
+        //app->update(dt);
+        glClearColor(255, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        [[self openGLContext] flushBuffer];
+
+        /*if (!*running)
+        {
+            [[self window] close];
+        }*/
+    }
+
+    - (void) prepareOpenGL
+    {
+        // Set up the idle function call
+        pTimer = [NSTimer timerWithTimeInterval:(1.0 / 60.0) target:self selector: @selector(idle:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop]addTimer: pTimer forMode: NSDefaultRunLoopMode];
+
+        // Initialize the application
+        //app->initialize();
+    }
+
+@end
+
+@implementation AppDelegate : NSObject
+
+    - (id)init
+    {
+        // Initialize the base application and make sure it's not nil
+        if (self = [super init])
+        {
+            // Define the size of the window
+            NSRect frame = NSMakeRect(200, 200, 800, 600);
+
+            // Define the style masks to be a titled window with close, max and min
+            NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask/* | NSResizableWindowMask*/;
+
+            // Adjust the window's sized based on the style mask
+            NSRect rect = [NSWindow contentRectForFrameRect: frame styleMask: styleMask];
+
+            // Create the window based on the above specifications
+            window =  [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
+
+            // Set the background color to black
+            [window setBackgroundColor: [NSColor colorWithCalibratedRed: 0.0 green: 0.0 blue: 0.0 alpha: 1.0]];
+
+            // Set the title of the window
+            [window setTitle: @""];
+
+            // Make this object the delegate for the window
+            [window setDelegate: self];
+
+            // Create an OpenGL view for the window
+            glView = [[OpenGLView alloc] init];
+
+            // Get the default content of the window
+            content = [window contentView];
+
+            // Set the content of the window to the OpenGL view we created
+            [window setContentView: glView];
+
+            // (TEMPORARILY) Make the window above all other windows
+            [window setLevel: NSFloatingWindowLevel];
+
+            // Set the application's window's data to the Cocoa window
+            //appWindow->setData(window);
+        }
+        return self;
+    }
+
+    - (void)applicationWillFinishLaunching: (NSNotification*)notification
+    {
+        // Set the window front and foremost
+        [window makeKeyAndOrderFront: self];
+    }
+
+    - (void)windowWillClose: (NSNotification*)aNotification
+    {
+        if (window != nil)
+        {
+            // Uninitialize the application
+            //app->uninitialize();
+
+            // Release the window
+            [window release];
+            window = nil;
+
+            // Terminate the application when the window closes
+            [NSApp terminate: self];
+        }
+    }
+
+    - (void)windowDidResize: (NSNotification*)aNotification
+    {
+        // Set the view back to the original view temporarily
+        [window setContentView: content];
+
+        // Display the blank black window
+        [window display];
+
+        // Switch back to the OpenGL view once resizing is finished
+        [window setContentView: glView];
+    }
+
+    - (void)dealloc
+    {
+        // Release the window and dealloc the super class
+        [window release];
+        [super dealloc];
+    }
+@end
+
+int MyApplicationMain(int argc, const char **argv);
+
+@interface MyApplication : NSApplication
+{
+    bool shouldKeepRunning;
+}
+
+- (void)run;
+- (void)terminate:(id)sender;
+
+@end
+
+int MyApplicationMain(int argc, const char **argv)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    Class principalClass =
+        NSClassFromString([infoDictionary objectForKey:@"NSPrincipalClass"]);
+    NSApplication *applicationObject = [principalClass sharedApplication];
+
+    NSString *mainNibName = [infoDictionary objectForKey:@"NSMainNibFile"];
+    NSNib *mainNib = [[NSNib alloc] initWithNibNamed:mainNibName bundle:[NSBundle mainBundle]];
+    [mainNib instantiateNibWithOwner:applicationObject topLevelObjects:nil];
+
+    if ([applicationObject respondsToSelector:@selector(run)])
+    {
+        [applicationObject
+            performSelectorOnMainThread:@selector(run)
+            withObject:nil
+            waitUntilDone:YES];
+    }
+    
+    [mainNib release];
+    [pool release];
+    
+    return 0;
+}
+
+@implementation MyApplication
+
+- (void)run
+{
+//  [self finishLaunching];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:NSApplicationWillFinishLaunchingNotification
+        object:NSApp];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:NSApplicationDidFinishLaunchingNotification
+        object:NSApp];
+    
+    shouldKeepRunning = YES;
+}
+
+-(bool) update
+{
+    NSEvent *event =
+        [self
+            nextEventMatchingMask:NSAnyEventMask
+            untilDate:nil
+            inMode:NSDefaultRunLoopMode
+            dequeue:YES];
+    
+    NSLog(@"Hello world");
+    [self sendEvent:event];
+    [self updateWindows];
+    return shouldKeepRunning;
+}
+
+- (void)terminate:(id)sender
+{
+    shouldKeepRunning = NO;
+}
+
+@end
 #endif
 
 _JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
@@ -65,12 +297,70 @@ _JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
     /* deleted */
 }
 
+_JATTA_EXPORT void Jatta::Window::Update()
+{
+#   ifdef WINDOWS
+    MSG Msg;
+    while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE) > 0)
+    {
+        TranslateMessage(&Msg);
+        DispatchMessage(&Msg);
+    }
+#   endif
+
+#   ifdef LINUX
+    if (display)
+    {
+        while (XPending(display))
+        {
+            XEvent event;
+            XNextEvent(display, &event);
+            ::Window handle = event.xany.window;
+            auto it = windowMap.find(handle);
+            if (it == windowMap.end())
+            {
+                break;
+            }
+            Window* window = it->second;
+            switch (event.type)
+            {
+                case 33:
+                    XDestroyWindow(display, handle);
+                case DestroyNotify:
+                    window->Close();
+                    return;
+                case KeyPress:
+                    window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = true;
+                    break;
+                case KeyRelease:
+                    bool released = true;
+                    if (XEventsQueued(display, QueuedAfterReading))
+                    {
+                        XEvent nextEvent;
+                        XPeekEvent(display, &nextEvent);
+                        if (nextEvent.type == KeyPress && nextEvent.xkey.time == event.xkey.time && nextEvent.xkey.keycode == event.xkey.keycode)
+                        {
+                            released = false;
+                        }
+                    }
+                    if (released)
+                    {
+                        window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = false;
+                    }
+                    break;
+            }
+        }
+    }
+#   endif
+}
+
 _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
+        display = XOpenDisplay(nullptr);
         initialized = true;
     }
 #   endif
@@ -147,7 +437,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModule   Handle(nullptr), NULL);
 
     if (handle == NULL)
     {
@@ -160,8 +450,6 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 #   endif
 
 #   ifdef LINUX
-    std::cout << (int)style.backgroundColor.r << ", " << (int)style.backgroundColor.g << ", " << (int)style.backgroundColor.b << std::endl;
-    this->display = XOpenDisplay(nullptr);
     int screen = DefaultScreen(this->display);
     Visual* visual = DefaultVisual(this->display, screen);
     int depth = DefaultDepth(this->display, screen);
@@ -175,6 +463,34 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
     XMapWindow(this->display, this->handle);
     XFlush(this->display);
+    windowMap.insert(std::make_pair(this->handle, this));
+#   endif
+
+#   ifdef MACOS
+    // Create an autorelease pool
+    // There won't be many things in it from start to finish (since most everything is C++ side),
+    // but it's still here for those few things that should be autoreleased!
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    // Create the Cocoa application
+    MyApplication* application = [MyApplication sharedApplication];
+
+    // Create our delegate as defined earlier in this file!
+    AppDelegate* appDelegate = [[[AppDelegate alloc] init] autorelease];
+
+    // Set the application delegate and run the application
+    [application setDelegate: appDelegate];
+
+    [application run];
+
+    while (true)
+    {
+        std::cout << "asdf" << std::endl;
+        [application update];
+    }
+
+    // Free anything we've autoreleased on the Obj-C side
+    [pool drain];
 #   endif
 }
 
@@ -189,63 +505,13 @@ _JATTA_EXPORT void Jatta::Window::Close()
 #   endif
 
 #   ifdef LINUX
-    if (isOpen())
+    if (IsOpen())
     {
         XDestroyWindow(display, handle);
         XCloseDisplay(display);
     }
     handle = 0;
     display = nullptr;
-#   endif
-}
-
-_JATTA_EXPORT void Jatta::Window::Update()
-{
-#   ifdef WINDOWS
-    MSG Msg;
-    while (PeekMessage(&Msg, handle, 0, 0, PM_REMOVE) > 0)
-    {
-        TranslateMessage(&Msg);
-        DispatchMessage(&Msg);
-    }
-#   endif
-
-#   ifdef LINUX
-    if (display && handle)
-    {
-        while (XPending(display))
-        {
-            XEvent event;
-            XNextEvent(display, &event);
-            switch (event.type)
-            {
-                case 33:
-                    XDestroyWindow(display, handle);
-                case DestroyNotify:
-                    close();
-                    return;
-                case KeyPress:
-                    getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = true;
-                    break;
-                case KeyRelease:
-                    bool released = true;
-                    if (XEventsQueued(display, QueuedAfterReading))
-                    {
-                        XEvent nextEvent;
-                        XPeekEvent(display, &nextEvent);
-                        if (nextEvent.type == KeyPress && nextEvent.xkey.time == event.xkey.time && nextEvent.xkey.keycode == event.xkey.keycode)
-                        {
-                            released = false;
-                        }
-                    }
-                    if (released)
-                    {
-                        getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = false;
-                    }
-                    break;
-            }
-        }
-    }
 #   endif
 }
 

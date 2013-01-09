@@ -80,7 +80,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
 
 #   ifdef LINUX
     XWindowAttributes attributes;
-    XGetWindowAttributes(window->_getDisplay(), window->_getHandle(), &attributes);
+    XGetWindowAttributes(window->_GetDisplay(), window->_GetHandle(), &attributes);
     /*attributes->visual = blah blah;
     // also create a new GL context for rendering
     GLint attribs[] = { GLX_CONTEXT_MAJOR_VERSION_ARB, 3, GLX_CONTEXT_MINOR_VERSION_ARB, 0, 0 };
@@ -92,7 +92,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     int glxMajorVersion = 0;
     int glxMinorVersion = 0;
     // Get Version info
-    glXQueryVersion(window->_getDisplay(), &glxMajorVersion, &glxMinorVersion);
+    glXQueryVersion(window->_GetDisplay(), &glxMajorVersion, &glxMinorVersion);
     if(glxMajorVersion == 1 && glxMinorVersion < 2)
     {
         // @TODO error handling
@@ -118,8 +118,8 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     info.bits_per_rgb = 0;
 
     // also create a new GL context for rendering
-    this->context = glXCreateContext(window->_getDisplay(), &info, 0, true);
-    glXMakeCurrent(window->_getDisplay(), window->_getHandle(), this->context);
+    this->context = glXCreateContext(window->_GetDisplay(), &info, 0, true);
+    glXMakeCurrent(window->_GetDisplay(), window->_GetHandle(), this->context);
 #   endif
 
     if (current == nullptr)
@@ -144,8 +144,9 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    glDrawBuffer(GL_FRONT_AND_BACK);
-    glReadBuffer(GL_FRONT_AND_BACK);
+    // Um... linux doesn't like these
+    //glDrawBuffer(GL_FRONT_AND_BACK);
+    //glReadBuffer(GL_FRONT_AND_BACK);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_CUBE_MAP);
@@ -197,7 +198,7 @@ _JATTA_EXPORT void Jatta::Graphics::Present()
 #   endif
 
 #   ifdef LINUX
-    glXSwapBuffers(window->_getDisplay(), window->_getHandle());
+    glXSwapBuffers(window->_GetDisplay(), window->_GetHandle());
 #   endif
 }
 
@@ -213,7 +214,7 @@ _JATTA_EXPORT void Jatta::Graphics::SetViewPort(unsigned int x, unsigned int y, 
 
 _JATTA_EXPORT void Jatta::Graphics::EnableDepthTest()
 {
-	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 _JATTA_EXPORT void Jatta::Graphics::DisableDepthTest()

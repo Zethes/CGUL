@@ -5,7 +5,7 @@
 |                               /   /                                                |
 |                              (__ /                                                 |
 |                                                                                    |
-|  Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall and Amber Thrall                        |
+|  Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall                        |
 |  All rights reserved.                                                              |
 |                                                                                    |
 |  Redistribution and use in source and binary forms, with or without modification,  |
@@ -225,7 +225,11 @@
  *
  *  SET(JATTA_NO_GRAPHICS ON) # Disables OpenGL (removes glew and opengl)
  *
+ *  SET(JATTA_NO_JPEG ON) # Disables jpeg (removes libjpeg)
+ *
  *  SET(JATTA_NO_NETWORK ON) # Disables networking (removes winsock / bsd sockets)
+ *
+ *  SET(JATTA_NO_PNG ON) # Disables png (removes libpng and zlib)
  *  @endcode
  */
 

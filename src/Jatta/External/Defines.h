@@ -34,6 +34,7 @@
 #    include <GL/glew.h>
 #  endif
 #  ifdef MACOS
+#    import <Cocoa/Cocoa.h>
 #    import <OpenGL/GL.h>
 #    define glGenVertexArrays(x, y) glGenVertexArraysAPPLE(x, y)
 #    define glBindVertexArray(x) glBindVertexArrayAPPLE(x)
