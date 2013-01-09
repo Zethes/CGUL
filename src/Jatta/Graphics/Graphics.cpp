@@ -147,8 +147,9 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    glDrawBuffer(GL_FRONT_AND_BACK);
-    glReadBuffer(GL_FRONT_AND_BACK);
+    // Um... linux doesn't like these
+    //glDrawBuffer(GL_FRONT_AND_BACK);
+    //glReadBuffer(GL_FRONT_AND_BACK);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_CUBE_MAP);
@@ -216,7 +217,7 @@ _JATTA_EXPORT void Jatta::Graphics::SetViewPort(unsigned int x, unsigned int y, 
 
 _JATTA_EXPORT void Jatta::Graphics::EnableDepthTest()
 {
-	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 _JATTA_EXPORT void Jatta::Graphics::DisableDepthTest()

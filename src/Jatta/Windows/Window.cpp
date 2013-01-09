@@ -43,6 +43,8 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
 #endif
 
 #ifdef LINUX
+std::map<Window, Jatta::Window*> Jatta::Window::windowMap;
+Display* Jatta::Window::display;
 bool Jatta::Window::initialized = false;
 
 static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
@@ -73,27 +75,28 @@ _JATTA_EXPORT void Jatta::Window::Update()
 #   endif
 
 #   ifdef LINUX
-    if (display && handle)
+    if (display)
     {
-        auto it = windowMap.find(handle);
-        if (it == windowMap.end())
-        {
-            break;
-        }
-        Window* window = it->second;
         while (XPending(display))
         {
             XEvent event;
             XNextEvent(display, &event);
+            ::Window handle = event.xany.window;
+            auto it = windowMap.find(handle);
+            if (it == windowMap.end())
+            {
+                break;
+            }
+            Window* window = it->second;
             switch (event.type)
             {
                 case 33:
                     XDestroyWindow(display, handle);
                 case DestroyNotify:
-                    close();
+                    window->Close();
                     return;
                 case KeyPress:
-                    window->getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = true;
+                    window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = true;
                     break;
                 case KeyRelease:
                     bool released = true;
@@ -108,7 +111,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     }
                     if (released)
                     {
-                        window->getInput()->getKeyData()[getInput()->getKeyFromLayout(event.xkey.keycode)] = false;
+                        window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = false;
                     }
                     break;
             }
@@ -213,8 +216,6 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 #   endif
 
 #   ifdef LINUX
-    std::cout << (int)style.backgroundColor.r << ", " << (int)style.backgroundColor.g << ", " << (int)style.backgroundColor.b << std::endl;
-    this->display = XOpenDisplay(nullptr);
     int screen = DefaultScreen(this->display);
     Visual* visual = DefaultVisual(this->display, screen);
     int depth = DefaultDepth(this->display, screen);
@@ -228,6 +229,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
     XMapWindow(this->display, this->handle);
     XFlush(this->display);
+    windowMap.insert(std::make_pair(this->handle, this));
 #   endif
 }
 
@@ -242,7 +244,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
 #   endif
 
 #   ifdef LINUX
-    if (isOpen())
+    if (IsOpen())
     {
         XDestroyWindow(display, handle);
         XCloseDisplay(display);
