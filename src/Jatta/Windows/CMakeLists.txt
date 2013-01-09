@@ -1,6 +1,10 @@
 # Jatta - General Utility Library
-# Copyright (c) 2012-2013, Joshua Brookover and Amber Thrall
+# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
+
+IF(APPLE)
+    ADD_SUBDIRECTORY(MacOS)
+ENDIF()
 
 ADD_GROUP("Windows")
 ADD_OTHER(CMakeLists.txt)

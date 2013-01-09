@@ -5,6 +5,8 @@
 
 #pragma once
 
+// Clang doesn't support this...
+#ifdef MACOS
 namespace std
 {
     template <typename T> const T& move(const T& value)
@@ -16,6 +18,7 @@ namespace std
         return value;
     }
 }
+#endif
 
 // Operating System Detection
 #if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
