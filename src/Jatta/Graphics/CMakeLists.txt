@@ -3,6 +3,10 @@
 # All rights reserved.
 
 if(NOT JATTA_NO_GRAPHICS)
+    IF(APPLE)
+        ADD_SUBDIRECTORY(MacOS)
+    ENDIF()
+
     ADD_GROUP("Graphics")
     ADD_OTHER(CMakeLists.txt)
     ADD_SOURCE(Graphics.cpp)

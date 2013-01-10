@@ -5,6 +5,19 @@
 
 #pragma once
 
+// Operating System Detection
+#if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
+#  if defined(_WIN32)
+#    define WINDOWS
+#  elif defined(__APPLE__)
+#    define MACOS
+#  elif defined(__GNUC__)
+#    define LINUX
+#  else
+#    error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
+#  endif
+#endif
+
 // Clang doesn't support this...
 #ifdef MACOS
 namespace std
@@ -18,19 +31,6 @@ namespace std
         return value;
     }
 }
-#endif
-
-// Operating System Detection
-#if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
-#  if defined(_WIN32)
-#    define WINDOWS
-#  elif defined(__APPLE__)
-#    define MACOS
-#  elif defined(__GNUC__)
-#    define LINUX
-#  else
-#    error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
-#  endif
 #endif
 
 // Jatta Type Defines

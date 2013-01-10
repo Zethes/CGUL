@@ -7,23 +7,30 @@
 #ifdef JATTA_INCLUDES
 
 #pragma once
-#include "../External/Defines.h"
+#include "../../Graphics/MacOS/OpenGLView.h"
+#include "../../External/Defines.h"
 
 // Define the cocoa application delegate
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+@interface WindowDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     // The main application window
     NSWindow* window;
 
     // The customized OpenGL view
-    OpenGLView* glView;
+    OpenGLView* view;
 
     // The window's default content
     id content;
+
+    int windowOpen;
 }
+
+- (int)IsOpen;
+- (void)SetContent: (OpenGLView*)content;
+
 @end
 
-#include "../External/Undefines.h"
+#include "../../External/Undefines.h"
 
 #endif
 #endif

@@ -4,6 +4,9 @@
  */
 
 #pragma once
+#ifdef JATTA_INCLUDES
+#   import "MacOS/OpenGLView.h"
+#endif
 #include "../Windows/Window.h"
 #include "../External/Defines.h"
 
@@ -15,16 +18,22 @@ namespace Jatta
 
         Window* window;
 
-    #   ifdef WINDOWS
+#       ifdef WINDOWS
         _JATTA_PIXELFORMATDESCRIPTOR pfd;
         _JATTA_HDC deviceContext;
         UInt32 pixelFormat;
         _JATTA_HGLRC renderContext;
-    #   endif
+#       endif
 
-    #   ifdef LINUX
+#       ifdef LINUX
         _JATTA_GLXCONTEXT context;
-    #   endif
+#       endif
+
+#       if defined(MACOS) && defined(__OBJC__)
+        OpenGLView* view;
+#       else
+        void* view;
+#       endif
     public:
         _JATTA_EXPORT static const UInt32 position1 =  0, position2 =  1, position3 =  2, position4 =  3;
         _JATTA_EXPORT static const UInt32 color1    =  4, color2    =  5, color3    =  6, color4    =  7;

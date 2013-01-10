@@ -122,6 +122,17 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     glXMakeCurrent(window->_GetDisplay(), window->_GetHandle(), this->context);
 #   endif
 
+#   ifdef MACOS
+    view = [[OpenGLView alloc] init];
+
+    // Get the default content of the window
+    //id content = [window contentView];
+
+    // Set the content of the window to the OpenGL view we created
+    //[window setContentView: view];
+    [window->_GetHandle() SetContent: view];
+#   endif
+
     if (current == nullptr)
     {
         MakeCurrent();
@@ -172,6 +183,12 @@ _JATTA_EXPORT void Jatta::Graphics::MakeCurrent()
     }
 #   endif
 
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    [view MakeCurrent];
+    [pool drain];
+#   endif
+
     current = this;
 }
 
@@ -199,6 +216,12 @@ _JATTA_EXPORT void Jatta::Graphics::Present()
 
 #   ifdef LINUX
     glXSwapBuffers(window->_GetDisplay(), window->_GetHandle());
+#   endif
+
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    [view SwapBuffers];
+    [pool drain];
 #   endif
 }
 
