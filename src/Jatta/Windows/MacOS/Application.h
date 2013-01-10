@@ -7,7 +7,7 @@
 #ifdef JATTA_INCLUDES
 
 #pragma once
-#include "../External/Defines.h"
+#include "../../External/Defines.h"
 
 @interface Application : NSApplication
 {
@@ -19,7 +19,7 @@
 
 @end
 
-#include "../External/Undefines.h"
+#include "../../External/Undefines.h"
 
 #endif
 #endif

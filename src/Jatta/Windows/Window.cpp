@@ -9,8 +9,6 @@
 
 #ifdef MACOS
 #   import "MacOS/Application.h"
-#   import "MacOS/Delegate.h"
-#   import "MacOS/OpenGLView.h"
 #endif
 
 // Disable Warning C4355: 'this' : used in base member initializer list
@@ -124,6 +122,15 @@ _JATTA_EXPORT void Jatta::Window::Update()
         }
     }
 #   endif
+
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
+    [[Application sharedApplication] update];
+
+    // Free anything we've autoreleased on the Obj-C side
+    [pool drain];
+#   endif
 }
 
 _JATTA_EXPORT  Jatta::Window::Window() : input(this)
@@ -135,6 +142,10 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
         display = XOpenDisplay(nullptr);
         initialized = true;
     }
+#   endif
+
+#   ifdef MacOS
+    window = nil;
 #   endif
 }
 
@@ -157,6 +168,13 @@ _JATTA_EXPORT Display* Jatta::Window::_GetDisplay()
 }
 
 _JATTA_EXPORT ::Window Jatta::Window::_GetHandle()
+{
+    return handle;
+}
+#endif
+
+#ifdef MACOS
+WindowDelegate* Jatta::Window::_GetHandle()
 {
     return handle;
 }
@@ -245,21 +263,22 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     // Create the Cocoa application
-    MyApplication* application = [MyApplication sharedApplication];
+    [[Application sharedApplication] run];
+
+    handle = [[WindowDelegate alloc] init: style];
 
     // Create our delegate as defined earlier in this file!
-    AppDelegate* appDelegate = [[[AppDelegate alloc] init] autorelease];
+    //AppDelegate* appDelegate = [[[AppDelegate alloc] init] autorelease];
 
     // Set the application delegate and run the application
-    [application setDelegate: appDelegate];
+    //[application setDelegate: appDelegate];
 
-    [application run];
+    //[application run];
 
-    while (true)
+    /*while (true)
     {
-        std::cout << "asdf" << std::endl;
-        [application update];
-    }
+        [[Application sharedApplication] update];
+    }*/
 
     // Free anything we've autoreleased on the Obj-C side
     [pool drain];
@@ -306,6 +325,17 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 
 #   ifdef LINUX
     return display && handle;
+#   endif
+
+#   ifdef MACOS
+    if (handle == nil)
+    {
+        return false;
+    }
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    bool result = [handle IsOpen] == 1;
+    [pool drain];
+    return result;
 #   endif
 }
 

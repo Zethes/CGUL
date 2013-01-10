@@ -5,15 +5,21 @@
 
 #ifndef DOXYGEN
 
-#import "Delegate.h"
+#import "WindowDelegate.h"
+#include "../WindowStyle.h"
 
- @implementation AppDelegate : NSObject
+ // leaving this here for future reference:
+ // http://stackoverflow.com/questions/4312338/how-to-use-the-object-property-of-nsnotificationcenter   
 
-    - (id)init
+ @implementation WindowDelegate : NSObject
+
+    - (id)init: (Jatta::WindowStyle)style
     {
         // Initialize the base application and make sure it's not nil
         if (self = [super init])
         {
+            windowOpen = 1;
+
             // Define the size of the window
             NSRect frame = NSMakeRect(200, 200, 800, 600);
 
@@ -27,64 +33,62 @@
             window =  [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
 
             // Set the background color to black
-            [window setBackgroundColor: [NSColor colorWithCalibratedRed: 0.0 green: 0.0 blue: 0.0 alpha: 1.0]];
+            [window setBackgroundColor: [NSColor colorWithCalibratedRed: style.backgroundColor.r / 255.0 green: style.backgroundColor.g / 255.0 blue: style.backgroundColor.b / 255.0 alpha: 1.0]];
 
             // Set the title of the window
-            [window setTitle: @""];
+            NSString* str = [NSString stringWithCString:style.title.GetData().c_str() encoding:[NSString defaultCStringEncoding]];
+            [window setTitle:str];
+            [str release];
 
             // Make this object the delegate for the window
             [window setDelegate: self];
 
             // Create an OpenGL view for the window
-            glView = [[OpenGLView alloc] init];
+            //view = [[OpenGLView alloc] init];
 
             // Get the default content of the window
-            content = [window contentView];
+            //id content = [window contentView];
 
             // Set the content of the window to the OpenGL view we created
-            [window setContentView: glView];
+            //[window setContentView: view];
 
             // (TEMPORARILY) Make the window above all other windows
             [window setLevel: NSFloatingWindowLevel];
 
-            // Set the application's window's data to the Cocoa window
-            //appWindow->setData(window);
+            [window makeKeyAndOrderFront: self];
         }
-        return self;
-    }
 
-    - (void)applicationWillFinishLaunching: (NSNotification*)notification
-    {
-        // Set the window front and foremost
-        [window makeKeyAndOrderFront: self];
+        return self;
     }
 
     - (void)windowWillClose: (NSNotification*)aNotification
     {
-        if (window != nil)
+        NSLog(@"Sup");
+        windowOpen = 0;
+        /*if (window != nil)
         {
             // Uninitialize the application
             //app->uninitialize();
 
             // Release the window
-            [window release];
-            window = nil;
+            //[window release];
+            //window = nil;
 
             // Terminate the application when the window closes
-            [NSApp terminate: self];
-        }
+            //[NSApp terminate: self];
+        }*/
     }
 
     - (void)windowDidResize: (NSNotification*)aNotification
     {
         // Set the view back to the original view temporarily
-        [window setContentView: content];
+        //[window setContentView: content];
 
         // Display the blank black window
-        [window display];
+        //[window display];
 
         // Switch back to the OpenGL view once resizing is finished
-        [window setContentView: glView];
+        //[window setContentView: glView];
     }
 
     - (void)dealloc
@@ -92,6 +96,16 @@
         // Release the window and dealloc the super class
         [window release];
         [super dealloc];
+    }
+
+    - (int)IsOpen
+    {
+        return windowOpen;
+    }
+
+    - (void)SetContent: (OpenGLView*)content
+    {
+        [window setContentView: content];
     }
 @end
 

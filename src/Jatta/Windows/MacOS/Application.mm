@@ -7,7 +7,7 @@
 
 #import "Application.h"
 
-@implementation MyApplication
+@implementation Application
 
 - (void)run
 {

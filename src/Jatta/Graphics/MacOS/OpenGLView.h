@@ -7,16 +7,20 @@
 #ifdef JATTA_INCLUDES
 
 #pragma once
-#include "../External/Defines.h"
+#include "../../External/Defines.h"
 
 @interface OpenGLView : NSOpenGLView
 {
     // Create the timer capable of keeping up with delta time
     NSTimer* pTimer;
 }
+
+- (void)MakeCurrent;
+- (void)SwapBuffers;
+
 @end
 
-#include "../External/Undefines.h"
+#include "../../External/Undefines.h"
 
 #endif
 #endif
