@@ -43,6 +43,11 @@ namespace Jatta
         _JATTA_EXPORT Float2& operator*=(Float32 operand);
         _JATTA_EXPORT Float2 operator/(Float32 operand) const;
         _JATTA_EXPORT Float2& operator/=(Float32 operand);
+        friend std::ostream& operator<<(std::ostream& stream, const Float2& vector)
+        {
+            stream << "[" << vector.x << ", " << vector.y << "]";
+            return stream;
+        }
 
         _JATTA_EXPORT void Set(Float32 value);
         _JATTA_EXPORT void Set(Float32 x, Float32 y);

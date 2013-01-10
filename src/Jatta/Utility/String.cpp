@@ -492,6 +492,14 @@ _JATTA_EXPORT void Jatta::String::ToUpper()
 	}
 }
 
+/** @brief Removes all whitespace from within a string.
+ *  @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
+ */
+_JATTA_EXPORT void Jatta::String::RemoveWhitespace()
+{
+    data.erase(std::remove_if(data.begin(), data.end(), (int(*)(int))std::isspace), data.end());
+}
+
 #ifdef WINDOWS
 _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
 {

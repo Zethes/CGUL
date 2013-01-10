@@ -8,7 +8,7 @@
 #ifdef WINDOWS
 #  define _JATTA_HWND void*
 #  define _JATTA_DWORD long
-#  define _JATTA_PIXELFORMATDESCRIPTOR std::array<char, 40>
+#  define _JATTA_PIXELFORMATDESCRIPTOR Jatta::_JATTA_PIXELFORMATDESCRIPTOR
 #  define _JATTA_HDC int
 #  define _JATTA_HGLRC int
 #endif

@@ -33,6 +33,16 @@ namespace std
 #  endif
 #endif
 
+#ifdef WINDOWS
+namespace Jatta
+{
+    struct _JATTA_PIXELFORMATDESCRIPTOR
+    {
+        char padding[40];
+    };
+}
+#endif
+
 // Jatta Type Defines
 #define TYPE(oldType, newType, size) typedef oldType newType //static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
 /** @brief General utility library.
@@ -98,7 +108,7 @@ namespace Jatta
 #undef TYPE
 
 // Standard Template Library Includes
-#include <iostream>
+#include <algorithm>
 //#include <array>
 #include <cctype>
 //#include <forward_list>

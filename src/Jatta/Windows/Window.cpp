@@ -209,7 +209,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModule   Handle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
     if (handle == NULL)
     {

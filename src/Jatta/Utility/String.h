@@ -63,6 +63,8 @@ namespace Jatta
         _JATTA_EXPORT void ToLower();
         _JATTA_EXPORT void ToUpper();
 
+        _JATTA_EXPORT void RemoveWhitespace();
+
         template <typename T> bool Is() const;
         template <typename T> T To() const;
 

@@ -28,6 +28,11 @@ namespace Jatta
         _JATTA_EXPORT Float3& operator-=(const Float3& operand);
         _JATTA_EXPORT Float3 operator*(float operand) const;
         _JATTA_EXPORT Float3& operator*=(float operand);
+        friend std::ostream& operator<<(std::ostream& stream, const Float3& vector)
+        {
+            stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << "]";
+            return stream;
+        }
 
         _JATTA_EXPORT void Normalize();
 

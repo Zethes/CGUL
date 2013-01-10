@@ -1,10 +1,9 @@
 dep/
-include/Jatta/
-lib/
 obj/
 build/
 vsbuild/
 html/
 latex/
+examples/*/build/
 
 *.sublime-workspace
