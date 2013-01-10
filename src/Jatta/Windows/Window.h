@@ -7,7 +7,7 @@
 #include "Input.h"
 #include "WindowStyle.h"
 #include "../Math/Float2.h"
-#ifdef JATTA_INCLUDES
+#ifdef JATTA_BUILD
 #include "MacOS/WindowDelegate.h"
 #endif
 #include "../External/Defines.h"
@@ -35,7 +35,7 @@ namespace Jatta
 
 #       if defined(MACOS) && defined(__OBJC__)
         WindowDelegate* handle;
-#       else
+#       elif defined(MACOS)
         void* handle;
 #       endif
 

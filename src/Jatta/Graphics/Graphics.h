@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#ifdef JATTA_INCLUDES
+#if defined(JATTA_BUILDS) && defined(MACOS)
 #   import "MacOS/OpenGLView.h"
 #endif
 #include "../Windows/Window.h"
@@ -31,7 +31,7 @@ namespace Jatta
 
 #       if defined(MACOS) && defined(__OBJC__)
         OpenGLView* view;
-#       else
+#       elif defined(MACOS)
         void* view;
 #       endif
     public:
