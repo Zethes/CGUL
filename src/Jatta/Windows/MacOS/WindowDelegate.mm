@@ -98,6 +98,11 @@
         [super dealloc];
     }
 
+    - (NSWindow*) Window
+    {
+        return window;
+    }
+
     - (int)IsOpen
     {
         return windowOpen;

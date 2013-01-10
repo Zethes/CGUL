@@ -354,6 +354,11 @@ _JATTA_EXPORT unsigned int Jatta::Window::GetWidth() const
     XGetWindowAttributes(display, handle, &attributes);
     return attributes.width;
 #   endif
+
+#   ifdef MACOS
+    // possible alternative: [handle frame] and contentRectForFrameRect
+    return [[[handle Window] contentView] frame].size.width;
+#   endif
 }
 
 _JATTA_EXPORT unsigned int Jatta::Window::GetHeight() const
@@ -371,6 +376,10 @@ _JATTA_EXPORT unsigned int Jatta::Window::GetHeight() const
     XGetWindowAttributes(display, handle, &attributes);
     return attributes.height;
 #   endif
+
+#   ifdef MACOS
+    return [[[handle Window] contentView] frame].size.height;
+#   endif
 }
 
 _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
@@ -387,5 +396,9 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
     return Float2(attributes.height, attributes.width);
+#   endif
+
+#   ifdef MACOS
+    return Float2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
 }
