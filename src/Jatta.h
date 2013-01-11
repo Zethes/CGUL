@@ -64,6 +64,7 @@
 #include "Jatta/Network/DNS.h"
 #include "Jatta/Network/TCP.h"
 
+#include "Jatta/OpenGL/Context.h"
 #include "Jatta/OpenGL/OpenGL.h"
 #include "Jatta/OpenGL/Program.h"
 #include "Jatta/OpenGL/Shader.h"
@@ -160,7 +161,57 @@
  */
 
 /** @page building Building Jatta
- *  Good luck.
+ *  Jatta uses <a href="http://www.cmake.org/">CMake</a> for its build process.  If you are familiar
+ *  with CMake, then you probably already know the process.  We try to keep it as standard as
+ *  possible with common CMake practices.
+ *
+ *  @section generating_build_files Generating Build Files
+ *  CMake itself does not allow you to build Jatta.  Instead, CMake generates the files necessary to
+ *  use other common build solutions.  Although CMake supports a huge selection of generators, only
+ *  a few of them are supported by Jatta.  One main focus in Jatta is to use the latest and greatest
+ *  C++ techniques.  This includes new features introduced in
+ *  <a href="http://en.wikipedia.org/wiki/C%2B%2B11">C++11</a>.  Older compilers do not support
+ *  these new features, so it is unlikely that you will be able to build Jatta unless you are using
+ *  modern compilers.  We officially support:
+ *  <ul>
+ *  <li>Unix Makefiles</li>
+ *  <li>MSYS Makefiles</li>
+ *  <li>Visual Studio 10</li>
+ *  </ul>
+ *
+ *  A few CMake generators may be supported but have not been tested.  We hope to add official
+ *  support for these later, but cannot guarentee they work.  Here is a list of generators we hope
+ *  to support very soon:
+ *  <ul>
+ *  <li>Visual Studio 11</li>
+ *  <li>Xcode</li>
+ *  </ul>
+ *
+ *  In order to generate the files necessary to build Jatta, you must install CMake at:@n
+ *  http://www.cmake.org/
+ *
+ *  To ensure that CMake installed properly, open a new terminal and type:@n
+ *  <pre>cmake</pre>
+ *  A usage menu and a list of generators should show up.
+ *
+ *  Now that you have CMake installed, you need to pick a location to generate the files.  Both out
+ *  of directory building and in-directory building is supported.  By this we mean you can generate
+ *  the files in the root directory of Jatta, or elsewhere.  We recommend creating a directory
+ *  inside the root Jatta directory called @em build.  If you do so, you can run the following
+ *  command from within the @em build directory to generate the files:@n
+ *  <pre>cmake -G "GENERATOR" ..</pre>
+ *  Replace @b GENERATOR with the generator of your choice.
+ *
+ *  To generate the files from anywhere on your computer, simple replace the @em .. with the
+ *  directory where you downloaded Jatta.  Be sure to run the command from the folder where you wish
+ *  the files to be generated.  CMake will always generate the files in the current directory.
+ *  <pre>cmake -G "GENERATOR" /dir/to/Jatta</pre>
+ *
+ *  @section building_library Building the Library
+ *  Once the files have been generated, you can build Jatta using standard conventions.  For
+ *  example, if you built using Visual Studio 10, simply open the .sln file and build the project.
+ *  If using Makefiles, then type "make."
+ *  @todo Create a list of optional cmake options to customize Jatta build.
  */
 
 /** @page developing Developing Jatta
@@ -259,7 +310,7 @@
  *      // Begin the update loop
  *      while (window.IsOpen())
  *      {
- *          window.Update();
+ *          Jatta::Window::Update();
  *      }
  *  }
  *  @endcode

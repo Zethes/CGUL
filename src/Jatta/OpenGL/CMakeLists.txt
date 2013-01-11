@@ -5,6 +5,8 @@
 if(NOT JATTA_NO_GRAPHICS)
     ADD_GROUP("OpenGL")
     ADD_OTHER(CMakeLists.txt)
+    ADD_SOURCE(Context.cpp)
+    ADD_HEADER(Context.h include/Jatta/OpenGL/)
     ADD_SOURCE(OpenGL.cpp)
     ADD_HEADER(OpenGL.h include/Jatta/OpenGL/)
     ADD_SOURCE(Program.cpp)

@@ -5,6 +5,7 @@
 
 #pragma once
 #include "../Utility/String.h"
+#include "OpenGL.h"
 #include "../External/Defines.h"
 
 /* OpenGL is an experimental namespace in Jatta! */
@@ -16,26 +17,21 @@ namespace Jatta
         {
             UInt32 shader;
         public:
-            enum Type
-            {
-                VERTEX = 0x8b31, TESS_CONTROL = 0x8e88, TESS_EVALUATION = 0x8e87, GEOMETRY = 0x8dd9, FRAGMENT = 0x8b30
-            };
+            _JATTA_EXPORT Shader();
+            _JATTA_EXPORT ~Shader();
 
-            Shader();
-            ~Shader();
+            _JATTA_EXPORT void Create(Enum type);
+            _JATTA_EXPORT void Delete();
+            _JATTA_EXPORT UInt32 GetID() const;
 
-            void Create(Type type);
-            void Delete();
-            UInt32 GetID() const;
+            _JATTA_EXPORT void Source(const String& source);
+            _JATTA_EXPORT void Compile();
 
-            void Source(const String& source);
-            void Compile();
-
-            Type GetShaderType();
-            Boolean GetDeleteStatus();
-            Boolean GetCompileStatus();
-            String GetInfoLog();
-            String GetSource();
+            _JATTA_EXPORT Enum GetShaderType();
+            _JATTA_EXPORT Boolean GetDeleteStatus();
+            _JATTA_EXPORT Boolean GetCompileStatus();
+            _JATTA_EXPORT String GetInfoLog();
+            _JATTA_EXPORT String GetSource();
         };
     }
 }
