@@ -11,6 +11,8 @@
 
 namespace Jatta
 {
+    /** @brief A simple file utility.
+     */
     namespace File
     {
         _JATTA_EXPORT bool GetText(const std::string& fileName, std::string* result);
