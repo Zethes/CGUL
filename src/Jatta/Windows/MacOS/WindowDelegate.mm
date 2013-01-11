@@ -53,7 +53,7 @@
             //[window setContentView: view];
 
             // (TEMPORARILY) Make the window above all other windows
-            [window setLevel: NSFloatingWindowLevel];
+            //[window setLevel: NSFloatingWindowLevel];
 
             [window makeKeyAndOrderFront: self];
         }

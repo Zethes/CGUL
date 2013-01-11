@@ -8,7 +8,7 @@
 #include "WindowStyle.h"
 #include "../Math/Float2.h"
 #ifdef JATTA_BUILD
-#include "MacOS/WindowDelegate.h"
+#   include "MacOS/WindowDelegate.h"
 #endif
 #include "../External/Defines.h"
 

@@ -384,7 +384,7 @@ _JATTA_EXPORT unsigned int Jatta::Window::GetHeight() const
 
 _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 {
-    #   ifdef WINDOWS
+#   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
