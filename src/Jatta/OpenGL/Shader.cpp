@@ -40,9 +40,10 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Shader::GetID() const
 
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Source(const Jatta::String& source)
 {
-    const char* characters = &(source.GetData()[0]);
+    const char* characters = source.GetData().c_str();
     const GLchar** data = &characters;
-    glShaderSource((GLuint)shader, (GLsizei)1, data, nullptr);
+    GLint count = (GLint)source.GetSize();
+    glShaderSource((GLuint)shader, (GLsizei)1, data, &count);
     GLCHECK("Failed to set shader source.");
 }
 

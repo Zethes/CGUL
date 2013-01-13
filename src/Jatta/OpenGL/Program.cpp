@@ -69,6 +69,12 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Link()
     GLCHECK("Failed to link program.");
 }
 
+_JATTA_EXPORT void Jatta::OpenGL::Program::Validate()
+{
+    glValidateProgram(program);
+    GLCHECK("Failed to validate program.");
+}
+
 _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Program::GetDeleteStatus()
 {
     GLint status;

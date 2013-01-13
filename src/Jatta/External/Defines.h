@@ -20,6 +20,8 @@
 #endif
 
 #define _JATTA_FT_FACE void*
+#define _JATTA_AISCENE void*
+#define _JATTA_AIMESH void*
 
 #if defined(JATTA_INCLUDES)
 #  ifdef WINDOWS
@@ -38,10 +40,14 @@
 #    import <OpenGL/GL.h>
 #    define glGenVertexArrays(x, y) glGenVertexArraysAPPLE(x, y)
 #    define glBindVertexArray(x) glBindVertexArrayAPPLE(x)
+#    define glDeleteVertexArrays(x, y) glDeleteVertexArraysAPPLE(x, y)
 #  endif
 #  include <ft2build.h>
 #  include <freetype/freetype.h>
 #  include <freetype/ftxf86.h>
+#  include <assimp/cimport.h>
+#  include <assimp/scene.h>
+#  include <assimp/postprocess.h>
 #  define CHECK(x, y) //static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #  ifdef WINDOWS
      CHECK(::HWND, _JATTA_HWND);
@@ -56,6 +62,8 @@
      CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #  endif
    CHECK(::FT_Face, _JATTA_FT_FACE);
+   CHECK(::aiScene*, _JATTA_AISCENE);
+   CHECK(::aiMesh*, _JATTA_AIMESH);
 #  undef CHECK
 #  include "Undefines.h"
 #  ifdef WINDOWS
@@ -71,4 +79,6 @@
 #    define _JATTA_GLXCONTEXT ::GLXContext
 #  endif
 #  define _JATTA_FT_FACE ::FT_Face
+#  define _JATTA_AISCENE ::aiScene*
+#  define _JATTA_AIMESH ::aiMesh*
 #endif

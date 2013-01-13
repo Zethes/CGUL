@@ -32,7 +32,7 @@ _JATTA_EXPORT void Jatta::Group::Free()
 
 _JATTA_EXPORT void Jatta::Group::AddBuffer(VertexBuffer buffer)
 {
-	if (buffer.index < 0 || buffer.index >= 16)
+	if (buffer.index >= 16)
 	{
 		throw std::runtime_error("VertexBuffer index is out of bounds (must be 0-15).");
 	}

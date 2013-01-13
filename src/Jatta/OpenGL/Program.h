@@ -32,6 +32,7 @@ namespace Jatta
             _JATTA_EXPORT void BindAttribLocation(UInt32 index, const String& name);
 
             _JATTA_EXPORT void Link();
+            _JATTA_EXPORT void Validate();
 
             _JATTA_EXPORT Boolean GetDeleteStatus();
             _JATTA_EXPORT Boolean GetLinkStatus();

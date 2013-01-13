@@ -32,6 +32,10 @@
 
 #pragma once
 
+#include "Jatta/Assimp/Assimp.h"
+#include "Jatta/Assimp/Mesh.h"
+#include "Jatta/Assimp/Scene.h"
+
 #include "Jatta/File/File.h"
 
 #include "Jatta/Fonts/Font.h"

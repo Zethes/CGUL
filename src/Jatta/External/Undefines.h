@@ -18,3 +18,5 @@
 #endif
 
 #undef _JATTA_FT_FACE
+#undef _JATTA_AISCENE
+#undef _JATTA_AIMESH

@@ -1,0 +1,21 @@
+{
+    "folders":
+    [
+        {
+            "name": "3D World",
+            "path": ".",
+            "folder_exclude_patterns": ["CMakeFiles", "Jatta"],
+            "file_exclude_patterns": ["3dworld", "*.sublime-workspace", "cmake_install.cmake", "CMakeCache.txt", "Makefile"]
+        },
+        {
+            "name": "Jatta",
+            "path": "../../",
+            "folder_exclude_patterns": ["lib", "include", "build", "dep", "html", "latex", "vsbuild"],
+            "file_exclude_patterns": ["*.sublime-workspace"]
+        }
+    ],
+    "settings":
+    {
+        "rulers": [100]
+    }
+}

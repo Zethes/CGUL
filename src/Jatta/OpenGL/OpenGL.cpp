@@ -21,7 +21,16 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
     std::cout << std::hex;
-    std::cout << GL_COLOR_BUFFER_BIT << std::endl;
-    std::cout << GL_DEPTH_BUFFER_BIT << std::endl;
-    std::cout << GL_STENCIL_BUFFER_BIT << std::endl;
+    std::cout << GL_ARRAY_BUFFER << std::endl;
+    std::cout << GL_ATOMIC_COUNTER_BUFFER << std::endl;
+    std::cout << GL_COPY_READ_BUFFER << std::endl;
+    std::cout << GL_COPY_WRITE_BUFFER << std::endl;
+    std::cout << GL_DRAW_INDIRECT_BUFFER << std::endl;
+    std::cout << GL_ELEMENT_ARRAY_BUFFER << std::endl;
+    std::cout << GL_PIXEL_PACK_BUFFER << std::endl;
+    std::cout << GL_PIXEL_UNPACK_BUFFER << std::endl;
+    std::cout << GL_SHADER_STORAGE_BUFFER << std::endl;
+    std::cout << GL_TEXTURE_BUFFER << std::endl;
+    std::cout << GL_TRANSFORM_FEEDBACK_BUFFER << std::endl;
+    std::cout << GL_UNIFORM_BUFFER << std::endl;
 }
