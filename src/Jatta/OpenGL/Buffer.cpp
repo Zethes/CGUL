@@ -26,4 +26,5 @@ _JATTA_EXPORT void Jatta::OpenGL::Buffer::Delete()
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Buffer::GetID()
 {
+    return buffer;
 }

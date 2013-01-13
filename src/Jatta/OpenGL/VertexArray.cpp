@@ -24,7 +24,7 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Delete()
     GLCHECK("Failed to delete vertex array.");
 }
 
-_JATTA_EXPORT UInt32 Jatta::OpenGL::VertexArray::GetID()
+_JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::VertexArray::GetID()
 {
     return vertexArray;
 }

@@ -6,9 +6,11 @@ int main()
 {
     try
     {
-        Assimp::Test::DoStuff();
-        Assimp::Scene test;
-        test.Import("chair.DAE", Assimp::PROCESS_CALC_TANGENT_SPACE | Assimp::PROCESS_TRIANGULATE | Assimp::PROCESS_JOIN_IDENTICAL_VERTICES | Assimp::PROCESS_SORT_BY_PTYPE);
+        //Assimp::Test::DoStuff();
+        //Assimp::Scene test;
+        //test.Import("chair.DAE", Assimp::PROCESS_CALC_TANGENT_SPACE | Assimp::PROCESS_TRIANGULATE | Assimp::PROCESS_JOIN_IDENTICAL_VERTICES | Assimp::PROCESS_SORT_BY_PTYPE);
+
+        OpenGL::Test();
 
         WindowStyle style;
         style.title = "Jatta Window";

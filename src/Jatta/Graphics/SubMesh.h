@@ -28,7 +28,7 @@ namespace Jatta
     public:
         _JATTA_EXPORT SubMesh();
 
-        void Setup(Type type, UInt32 vertexCount);
+        _JATTA_EXPORT void Setup(Type type, UInt32 vertexCount);
 
         _JATTA_EXPORT void AddBuffer(Float32* buffer, Byte count, UInt32 index);
         _JATTA_EXPORT void AddBuffer(Jatta::Float2* buffer, UInt32 index);

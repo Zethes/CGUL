@@ -56,6 +56,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Compile()
 _JATTA_EXPORT Jatta::OpenGL::Enum Jatta::OpenGL::Shader::GetShaderType()
 {
     // TODO: this
+    return 0;
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Shader::GetDeleteStatus()
