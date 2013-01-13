@@ -5,5 +5,9 @@ vsbuild/
 html/
 latex/
 examples/*/build/
+examples/*/CMakeFiles/
+examples/*/Jatta/
+examples/*/cmake_install.cmake
+examples/*/CMakeCache.txt
 
 *.sublime-workspace

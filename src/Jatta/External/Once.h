@@ -7,15 +7,15 @@
 
 // Operating System Detection
 #if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
-#  if defined(_WIN32)
-#    define WINDOWS
-#  elif defined(__APPLE__)
-#    define MACOS
-#  elif defined(__GNUC__)
-#    define LINUX
-#  else
-#    error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
-#  endif
+#   if defined(_WIN32)
+#       define WINDOWS
+#   elif defined(__APPLE__)
+#       define MACOS
+#   elif defined(__GNUC__)
+#       define LINUX
+#   else
+#       error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
+#   endif
 #endif
 
 #ifdef WINDOWS
@@ -124,23 +124,23 @@ namespace Jatta
 
 // Debugging Outputs
 #ifdef JATTA_INCLUDES
-#  ifdef JATTA_DEBUG
-#    include <iostream>
-#    define _JATTA_DEBUG_LN(x) std::cout << "JATTA_DEBUG (" __FILE__ ":" << __LINE__ << ")" << std::endl << x << std::endl;
-#    define _JATTA_DEBUG(x) std::cout << x;
-#  else
-#    define _JATTA_DEBUG_LN(x)
-#    define _JATTA_DEBUG(x)
-#  endif
+#   ifdef JATTA_DEBUG
+#       include <iostream>
+#       define _JATTA_DEBUG_LN(x) std::cout << "JATTA_DEBUG (" __FILE__ ":" << __LINE__ << ")" << std::endl << x << std::endl;
+#       define _JATTA_DEBUG(x) std::cout << x;
+#   else
+#       define _JATTA_DEBUG_LN(x)
+#       define _JATTA_DEBUG(x)
+#   endif
 #endif
 
 // DLL Exports
 #ifdef MSVC
-#  ifdef JATTA_BUILD
-#    define _JATTA_EXPORT __declspec(dllexport) 
-#  else
-#    define _JATTA_EXPORT __declspec(dllimport)
-#  endif
+#   ifdef JATTA_BUILD
+#       define _JATTA_EXPORT __declspec(dllexport) 
+#   else
+#       define _JATTA_EXPORT __declspec(dllimport)
+#   endif
 #else
-#  define _JATTA_EXPORT
+#   define _JATTA_EXPORT
 #endif
