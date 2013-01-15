@@ -26,8 +26,8 @@ int main()
         context.Create(&window);
 
         OpenGL::Shader vertexShader, fragmentShader;
-        vertexShader.Create(OpenGL::VERTEX_SHADER);
-        fragmentShader.Create(OpenGL::FRAGMENT_SHADER);
+        vertexShader.Create(OpenGL::GL::VERTEX_SHADER);
+        fragmentShader.Create(OpenGL::GL::FRAGMENT_SHADER);
 
         String vertexSource, fragmentSource;
         if (!File::GetText("screen.vert", &vertexSource))
@@ -63,6 +63,8 @@ int main()
         program.Create();
         program.AttachShader(vertexShader);
         program.AttachShader(fragmentShader);
+        program.BindAttribLocation(OpenGL::POSITION1, "vertPosition");
+        program.BindAttribLocation(OpenGL::TEXCOORD1, "vertTexCoord");
         
         program.Link();
         if (!program.GetLinkStatus())
@@ -80,10 +82,10 @@ int main()
             //return 0;
         }
 
-        /*Shader shader;
-        shader.Load("screen.vert", "screen.frag");
-        shader.BindAttribute(Graphics::position1, "vertPosition");
-        shader.BindAttribute(Graphics::texCoord1, "vertTexCoord");*/
+        Shader shaderOld;
+        shaderOld.Load("screen.vert", "screen.frag");
+        shaderOld.BindAttribute(Graphics::position1, "vertPosition");
+        shaderOld.BindAttribute(Graphics::texCoord1, "vertTexCoord");
 
         Float2 boxPositions[] = { Float2(0, 0), Float2(0, 1), Float2(1, 1), Float2(1, 0) };
         Float2 boxTexCoords[] = { Float2(0, 0), Float2(0, 1), Float2(1, 1), Float2(1, 0) };
@@ -92,25 +94,75 @@ int main()
         mesh.AddBuffer(boxPositions, Graphics::position1);
         mesh.AddBuffer(boxTexCoords, Graphics::texCoord1);
 
+        OpenGL::VertexArray vertexArray;
+        vertexArray.Create();
+        vertexArray.Bind();
+
+        OpenGL::Buffer positionBuffer, texCoordBuffer;
+
+        positionBuffer.Create(OpenGL::GL::ARRAY_BUFFER);
+        positionBuffer.Bind();
+        positionBuffer.Data(4 * 2 * sizeof(Float32), boxPositions, OpenGL::GL::STATIC_DRAW);
+        vertexArray.AttribPointer(OpenGL::POSITION1, 2, OpenGL::GL::FLOAT, false, 0, 0);
+        vertexArray.EnableAttribArray(OpenGL::POSITION1);
+
+        texCoordBuffer.Create(OpenGL::GL::ARRAY_BUFFER);
+        texCoordBuffer.Bind();
+        texCoordBuffer.Data(4 * 2 * sizeof(Float32), boxTexCoords, OpenGL::GL::STATIC_DRAW);
+        vertexArray.AttribPointer(OpenGL::TEXCOORD1, 2, OpenGL::GL::FLOAT, false, 0, 0);
+        vertexArray.EnableAttribArray(OpenGL::TEXCOORD1);
+
+        vertexArray.Unbind();
+
         Image image;
         image.LoadPng("sky.png");
-        Texture texture;
-        texture.Create(image);
+        /*Texture texture;
+        texture.Create(image);*/
+
+        OpenGL::Texture texture;
+        texture.Create(OpenGL::GL::TEXTURE_2D);
+        texture.Bind();
+        texture.SetTextureWrapS(OpenGL::GL::REPEAT);
+        texture.SetTextureWrapT(OpenGL::GL::REPEAT);
+        texture.SetMinFilter(OpenGL::GL::LINEAR);
+        texture.SetMagFilter(OpenGL::GL::LINEAR);
+        texture.Image2D(0, OpenGL::GL::RGBA, image.GetWidth(), image.GetHeight(), 0, OpenGL::GL::RGBA, OpenGL::GL::UNSIGNED_BYTE, image.GetData());
 
         context.Viewport(0, 0, 640, 480);
-        context.ClearColor(Colors::red);
+        context.ClearColor(Colors::blue);
 
         while (window.IsOpen())
         {
             Window::Update();
 
-            context.Clear(OpenGL::COLOR_BUFFER_BIT | OpenGL::DEPTH_BUFFER_BIT);
+            context.Clear(OpenGL::GL::COLOR_BUFFER_BIT | OpenGL::GL::DEPTH_BUFFER_BIT);
+
+            //shaderOld.Begin();
+            //shaderOld.SetMatrix("orthoMatrix", Matrix::MakeOrtho(0, 0, 1, 1));
+            //shaderOld.SetMatrix("modelMatrix", Matrix::identity);
+            //shaderOld.SetTexture("texture", texture);
+            //mesh.Draw();
+            //vertexArray.Bind();
+            //vertexArray.DrawArrays(OpenGL::QUADS, 0, 4);
+            //vertexArray.Unbind();
+            //shaderOld.End();
+
+            /*vertexArray.Bind();
+            vertexArray.DrawArrays(OpenGL::QUADS, 0, 1);
+            vertexArray.Unbind();
+
+            mesh.Draw();*/
 
             program.Bind();
-            //shader.SetMatrix("orthoMatrix", Matrix::MakeOrtho(0, 0, 1, 1));
-            //shader.SetMatrix("modelMatrix", Matrix::identity);
-            //shader.SetTexture("texture", texture);
-            //mesh.Draw();
+            program.UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 0, 1, 1));
+            program.UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::identity);
+            program.Uniform1i(program.GetUniformLocation("texture"), 0);
+            //shaderOld.SetTexture("texture", texture);
+            texture.Active(0);
+            texture.Bind();
+            vertexArray.Bind();
+            vertexArray.DrawArrays(OpenGL::GL::QUADS, 0, 4);
+            vertexArray.Unbind();
             program.Unbind();
 
             context.SwapBuffers();

@@ -5,6 +5,10 @@
 
 #pragma once
 #include "Shader.h"
+#include "../Math/Float2.h"
+#include "../Math/Float3.h"
+#include "../Math/Float4.h"
+#include "../Math/Matrix.h"
 #include "../External/Defines.h"
 
 /* OpenGL is an experimental namespace in Jatta! */
@@ -45,6 +49,66 @@ namespace Jatta
             // TODO: GL_ACTIVE_UNIFORM_MAX_LENGTH
 
             _JATTA_EXPORT SInt32 GetUniformLocation(const String& name);
+
+            _JATTA_EXPORT void Uniform1f(SInt32 location, Float32 value0);
+            _JATTA_EXPORT void Uniform2f(SInt32 location, Float32 value0, Float32 value1);
+            _JATTA_EXPORT void Uniform2f(SInt32 location, Float2 value);
+            _JATTA_EXPORT void Uniform3f(SInt32 location, Float32 value0, Float32 value1, Float32 value2);
+            _JATTA_EXPORT void Uniform3f(SInt32 location, Float3 value);
+            _JATTA_EXPORT void Uniform4f(SInt32 location, Float32 value0, Float32 value1, Float32 value2, Float32 value3);
+            _JATTA_EXPORT void Uniform4f(SInt32 location, Float4 value);
+
+            _JATTA_EXPORT void Uniform1i(SInt32 location, SInt32 value0);
+            _JATTA_EXPORT void Uniform2i(SInt32 location, SInt32 value0, SInt32 value1);
+            _JATTA_EXPORT void Uniform3i(SInt32 location, SInt32 value0, SInt32 value1, SInt32 value2);
+            _JATTA_EXPORT void Uniform4i(SInt32 location, SInt32 value0, SInt32 value1, SInt32 value2, SInt32 value3);
+
+            _JATTA_EXPORT void Uniform1ui(UInt32 location, UInt32 value0);
+            _JATTA_EXPORT void Uniform2ui(UInt32 location, UInt32 value0, UInt32 value1);
+            _JATTA_EXPORT void Uniform3ui(UInt32 location, UInt32 value0, UInt32 value1, UInt32 value2);
+            _JATTA_EXPORT void Uniform4ui(UInt32 location, UInt32 value0, UInt32 value1, UInt32 value2, UInt32 value3);
+
+            _JATTA_EXPORT void Uniform1fv(SInt32 location, Size count, const Float32* value);
+            _JATTA_EXPORT void Uniform2fv(SInt32 location, Size count, const Float32* value);
+            _JATTA_EXPORT void Uniform2fv(SInt32 location, Size count, const Float2* value);
+            _JATTA_EXPORT void Uniform3fv(SInt32 location, Size count, const Float32* value);
+            _JATTA_EXPORT void Uniform3fv(SInt32 location, Size count, const Float3* value);
+            _JATTA_EXPORT void Uniform4fv(SInt32 location, Size count, const Float32* value);
+            _JATTA_EXPORT void Uniform4fv(SInt32 location, Size count, const Float4* value);
+
+            _JATTA_EXPORT void Uniform1iv(SInt32 location, Size count, const SInt32* value);
+            _JATTA_EXPORT void Uniform2iv(SInt32 location, Size count, const SInt32* value);
+            _JATTA_EXPORT void Uniform3iv(SInt32 location, Size count, const SInt32* value);
+            _JATTA_EXPORT void Uniform4iv(SInt32 location, Size count, const SInt32* value);
+
+            _JATTA_EXPORT void Uniform1uiv(SInt32 location, Size count, const UInt32* value);
+            _JATTA_EXPORT void Uniform2uiv(SInt32 location, Size count, const UInt32* value);
+            _JATTA_EXPORT void Uniform3uiv(SInt32 location, Size count, const UInt32* value);
+            _JATTA_EXPORT void Uniform4uiv(SInt32 location, Size count, const UInt32* value);
+
+            _JATTA_EXPORT void UniformMatrix2f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4f(SInt32 location, Boolean transpose, const Matrix& value);
+            _JATTA_EXPORT void UniformMatrix2x3f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3x2f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix2x4f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4x2f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3x4f(SInt32 location, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4x3f(SInt32 location, Boolean transpose, const Float32* value);
+
+            _JATTA_EXPORT void UniformMatrix2fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4fv(SInt32 location, Size count, Boolean transpose, const Matrix* value);
+            _JATTA_EXPORT void UniformMatrix2x3fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3x2fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix2x4fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4x2fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix3x4fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+            _JATTA_EXPORT void UniformMatrix4x3fv(SInt32 location, Size count, Boolean transpose, const Float32* value);
+
+            _JATTA_EXPORT void ActiveTexture(SInt32 range);
         };
     }
 }

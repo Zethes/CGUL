@@ -14,10 +14,6 @@ _JATTA_EXPORT Jatta::OpenGL::Shader::Shader()
 
 _JATTA_EXPORT Jatta::OpenGL::Shader::~Shader()
 {
-    if (shader != 0)
-    {
-        glDeleteShader((GLuint)shader);
-    }
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
