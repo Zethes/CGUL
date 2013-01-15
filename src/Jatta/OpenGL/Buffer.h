@@ -15,15 +15,18 @@ namespace Jatta
         class Buffer
         {
             UInt32 buffer;
+            Enum type;
         public:
             _JATTA_EXPORT Buffer();
 
-            _JATTA_EXPORT void Create();
+            _JATTA_EXPORT void Create(Enum type);
             _JATTA_EXPORT void Delete();
             _JATTA_EXPORT UInt32 GetID();
 
-            _JATTA_EXPORT void Bind(Enum target);
-            _JATTA_EXPORT void Unbind(Enum target);
+            _JATTA_EXPORT void Bind();
+            _JATTA_EXPORT void Unbind();
+
+            _JATTA_EXPORT void Data(Size size, void* data, Enum usage);
         };
     }
 }
