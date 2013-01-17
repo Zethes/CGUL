@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #pragma once
 #include "../External/Defines.h"
 
@@ -142,3 +143,4 @@ namespace Jatta
     }
 }
 #include "../External/Undefines.h"
+#endif

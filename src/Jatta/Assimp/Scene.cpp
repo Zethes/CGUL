@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_ASSIMP
 #include "Scene.h"
 #include "Mesh.h"
 #include <iostream> // TODO: remove iostream
@@ -87,3 +88,5 @@ _JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index)
 {
     return Mesh(scene->mMeshes[index]);
 }
+
+#endif

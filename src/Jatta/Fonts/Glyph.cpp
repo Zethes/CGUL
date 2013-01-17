@@ -3,6 +3,10 @@
  * All rights reserved.
  */
 
-/*_JATTA_EXPORT Glyph::Glyph()
+/*#ifndef JATTA_NO_FONTS
+
+_JATTA_EXPORT Glyph::Glyph()
 {
-}*/
+}
+
+#endif*/

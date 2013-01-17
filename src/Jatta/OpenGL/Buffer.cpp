@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "Buffer.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -48,3 +49,5 @@ _JATTA_EXPORT void Jatta::OpenGL::Buffer::Data(Size size, void* data, Enum usage
     glBufferData(GL_ARRAY_BUFFER, size, data, usage);
     GLCHECK("Failed to set buffer data.");
 }
+
+#endif

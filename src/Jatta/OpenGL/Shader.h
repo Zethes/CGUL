@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #pragma once
 #include "../Utility/String.h"
 #include "OpenGL.h"
@@ -35,4 +36,6 @@ namespace Jatta
         };
     }
 }
+
 #include "../External/Undefines.h"
+#endif

@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #pragma once
 #include "Shader.h"
 #include "../Math/Float2.h"
@@ -112,4 +113,6 @@ namespace Jatta
         };
     }
 }
+
 #include "../External/Undefines.h"
+#endif

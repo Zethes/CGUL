@@ -4,6 +4,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_NETWORK
 #include "TCP.h"
 #include <WinSock2.h>
 
@@ -19,4 +20,5 @@ void Jatta::SocketTCP::Connect(const std::string& ip, unsigned short port)
 
 }
 
+#endif
 #endif

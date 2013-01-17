@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_ASSIMP
 #include "Assimp.h"
 #include <iostream>
 
@@ -39,3 +40,5 @@ _JATTA_EXPORT void Jatta::Assimp::Test::DoStuff()
     OUTPUT(aiProcess_SplitByBoneCount);
     OUTPUT(aiProcess_Debone);*/
 }
+
+#endif

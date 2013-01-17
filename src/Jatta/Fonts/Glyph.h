@@ -3,7 +3,8 @@
  * All rights reserved.
  */
 
-/*#pragma once
+/*#ifndef JATTA_NO_FONTS
+#pragma once
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -16,4 +17,5 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"*/
+#include "../External/Undefines.h"
+#endif*/

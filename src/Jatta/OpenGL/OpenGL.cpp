@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "OpenGL.h"
 
 /** @brief Clears out OpenGL errors.
@@ -21,16 +22,19 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
     std::cout << std::hex;
-    std::cout << GL_ARRAY_BUFFER << std::endl;
-    std::cout << GL_ATOMIC_COUNTER_BUFFER << std::endl;
-    std::cout << GL_COPY_READ_BUFFER << std::endl;
-    std::cout << GL_COPY_WRITE_BUFFER << std::endl;
-    std::cout << GL_DRAW_INDIRECT_BUFFER << std::endl;
-    std::cout << GL_ELEMENT_ARRAY_BUFFER << std::endl;
-    std::cout << GL_PIXEL_PACK_BUFFER << std::endl;
-    std::cout << GL_PIXEL_UNPACK_BUFFER << std::endl;
-    std::cout << GL_SHADER_STORAGE_BUFFER << std::endl;
-    std::cout << GL_TEXTURE_BUFFER << std::endl;
-    std::cout << GL_TRANSFORM_FEEDBACK_BUFFER << std::endl;
-    std::cout << GL_UNIFORM_BUFFER << std::endl;
+    /*std::cout << "GL_TEXTURE_2D = 0x" << GL_TEXTURE_2D << std::endl;
+    std::cout << "GL_PROXY_TEXTURE_2D = 0x" << GL_PROXY_TEXTURE_2D << std::endl;
+    std::cout << "GL_TEXTURE_1D_ARRAY = 0x" << GL_TEXTURE_1D_ARRAY << std::endl;
+    std::cout << "GL_PROXY_TEXTURE_1D_ARRAY = 0x" << GL_PROXY_TEXTURE_1D_ARRAY << std::endl;
+    std::cout << "GL_TEXTURE_RECTANGLE = 0x" << GL_TEXTURE_RECTANGLE << std::endl;
+    std::cout << "GL_PROXY_TEXTURE_RECTANGLE = 0x" << GL_PROXY_TEXTURE_RECTANGLE << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x" << GL_TEXTURE_CUBE_MAP_POSITIVE_X << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_NEGATIVE_X = 0x" << GL_TEXTURE_CUBE_MAP_NEGATIVE_X << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_POSITIVE_Y = 0x" << GL_TEXTURE_CUBE_MAP_POSITIVE_Y << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x" << GL_TEXTURE_CUBE_MAP_NEGATIVE_Y << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_POSITIVE_Z = 0x" << GL_TEXTURE_CUBE_MAP_POSITIVE_Z << std::endl;
+    std::cout << "GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x" << GL_TEXTURE_CUBE_MAP_NEGATIVE_Z << std::endl;
+    std::cout << "GL_PROXY_TEXTURE_CUBE_MAP = 0x" << GL_PROXY_TEXTURE_CUBE_MAP << std::endl;*/
 }
+
+#endif

@@ -4,6 +4,7 @@
  * All rights reserved.
  */
  
+#ifndef JATTA_NO_NETWORK
 #include <WinSock2.h>
 
 bool __jatta_network_initiated = false;
@@ -30,4 +31,5 @@ void __jatta_network_clean()
     }
 }
 
+#endif
 #endif

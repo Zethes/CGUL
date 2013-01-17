@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "Program.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -368,3 +369,5 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::UniformMatrix4x3fv(SInt32 location, S
 {
     glUniformMatrix4x3fv(location, count, transpose, value);
 }
+
+#endif

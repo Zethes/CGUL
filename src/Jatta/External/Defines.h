@@ -28,32 +28,32 @@
 #       define UNICODE
 #       define _UNICODE
 #       include <Windows.h>
-#       ifdef JATTA_GRAPHICS
+#       ifndef JATTA_NO_GRAPHICS
 #           include <GL/glew.h>
 #       endif
 #   endif
 #   ifdef LINUX
 #       include <X11/Xlib.h>
-#       ifdef JATTA_GRAPHICS
+#       ifndef JATTA_NO_GRAPHICS
 #           include <GL/glxew.h>
 #           include <GL/glew.h>
 #       endif
 #   endif
 #   ifdef MACOS
 #       import <Cocoa/Cocoa.h>
-#       ifdef JATTA_GRAPHICS
+#       ifndef JATTA_NO_GRAPHICS
 #           import <OpenGL/GL.h>
 #           define glGenVertexArrays(x, y) glGenVertexArraysAPPLE(x, y)
 #           define glBindVertexArray(x) glBindVertexArrayAPPLE(x)
 #           define glDeleteVertexArrays(x, y) glDeleteVertexArraysAPPLE(x, y)
 #       endif
 #   endif
-#   ifdef JATTA_FONTS
+#   ifndef JATTA_NO_FONTS
 #       include <ft2build.h>
 #       include <freetype/freetype.h>
 #       include <freetype/ftxf86.h>
 #   endif
-#   ifdef JATTA_ASSIMP
+#   ifndef JATTA_NO_ASSIMP
 #       include <assimp/cimport.h>
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
@@ -86,14 +86,14 @@
 #    ifdef LINUX
 #       define _JATTA_DISPLAY ::Display*
 #       define _JATTA_WINDOW ::Window
-#       ifdef JATTA_GRAPHICS
+#       ifndef JATTA_NO_GRAPHICS
 #           define _JATTA_GLXCONTEXT ::GLXContext
 #       endif
 #   endif
-#   ifdef JATTA_FONTS
+#   ifndef JATTA_NO_FONTS
 #       define _JATTA_FT_FACE ::FT_Face
 #   endif
-#   ifdef JATTA_ASSIMP
+#   ifndef JATTA_NO_ASSIMP
 #       define _JATTA_AISCENE ::aiScene*
 #       define _JATTA_AIMESH ::aiMesh*
 #   endif

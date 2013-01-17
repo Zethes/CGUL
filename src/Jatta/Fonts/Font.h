@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_FONTS
 #pragma once
 #include "../Utility/String.h"
 #include "../Images/Image.h"
@@ -35,3 +36,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
+#endif

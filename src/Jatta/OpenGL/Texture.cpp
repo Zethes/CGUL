@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "Texture.h"
 
  #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -90,3 +91,5 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::Image2D(SInt32 level, SInt32 internal
     glTexImage2D(this->type, level, internalFormat, width, height, border, format, type, data);
     GLCHECK("Failed to set texture 2D image.");
 }
+
+#endif

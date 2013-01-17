@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "Context.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -42,3 +43,5 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
 {
     graphics.Present();
 }
+
+#endif

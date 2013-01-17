@@ -85,6 +85,7 @@
 #include "Jatta/Windows/Window.h"
 #include "Jatta/Windows/WindowStyle.h"
 
+#ifndef JATTA_DOXYGEN
 /** @mainpage Jatta
  *
  *  @section intro Introduction
@@ -279,6 +280,8 @@
  *
  *  Some optional flags can be defined to customize how Jatta is built.
  *  @code
+ *  SET(JATTA_NO_ASSIMP ON) # Disables asset importer (removes assimp)
+ *
  *  SET(JATTA_NO_FONTS ON) # Disables font support (removes freetype)
  *
  *  SET(JATTA_NO_GRAPHICS ON) # Disables OpenGL (removes glew and opengl)
@@ -328,3 +331,4 @@
  *  @subsection subsection2 The second subsection
  *  More text.
 */
+#endif

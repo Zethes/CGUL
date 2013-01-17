@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_NETWORK
 #pragma once
 #include "../External/Defines.h"
 
@@ -19,3 +20,4 @@ namespace Jatta
 };
 
 #include "../External/Undefines.h"
+#endif

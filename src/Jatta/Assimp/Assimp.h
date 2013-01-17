@@ -1,8 +1,9 @@
-/* Jatta - General Utility Library
+    /* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_ASSIMP
 #pragma once
 #include "../Utility/String.h"
 #include "../External/Defines.h"
@@ -52,3 +53,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
+#endif

@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "Shader.h"
 
  #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -98,3 +99,5 @@ _JATTA_EXPORT Jatta::String Jatta::OpenGL::Shader::GetSource()
     delete[] buffer;
     return source;
 }
+
+#endif

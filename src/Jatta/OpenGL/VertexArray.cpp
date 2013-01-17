@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_OPENGL
 #include "VertexArray.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -70,3 +71,5 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawElements(Enum mode, Size coun
     glDrawElements(mode, count, type, indices);
     GLCHECK("Failed to draw elements.");
 }
+
+#endif
