@@ -8,6 +8,7 @@
 #include "../Math/Float3.h"
 #include "../Math/Float4.h"
 #include "../Images/Color.h"
+#include "Texture.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -25,6 +26,8 @@ namespace Jatta
         Type type;
         UInt32* indices;
         UInt32 indexCount;
+        Boolean hasTexture;
+        Texture texture;
     public:
         _JATTA_EXPORT SubMesh();
 
@@ -37,6 +40,10 @@ namespace Jatta
         _JATTA_EXPORT void AddBuffer(Jatta::Color* buffer, UInt32 index);
 
         _JATTA_EXPORT void SetIndexBuffer(UInt32* buffer, UInt32 size);
+        _JATTA_EXPORT void SetTexture(const Texture& texture);
+
+        _JATTA_EXPORT Boolean HasTexture();
+        _JATTA_EXPORT Texture GetTexture();
 
         _JATTA_EXPORT void Draw();
     };

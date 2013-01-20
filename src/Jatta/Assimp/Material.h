@@ -1,0 +1,29 @@
+/* Jatta - General Utility Library
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+ * All rights reserved.
+ */
+
+#ifndef JATTA_NO_ASSIMP
+#pragma once
+#include "../Assimp/Assimp.h"
+#include "../External/Defines.h"
+
+/* Assimp is an experimental namespace in Jatta! */
+namespace Jatta
+{
+    namespace Assimp
+    {
+        class Material
+        {
+            _JATTA_AIMATERIAL material;
+        public:
+            _JATTA_EXPORT Material(_JATTA_AIMATERIAL material);
+
+            _JATTA_EXPORT UInt32 GetTextureCount(Enum type);
+            _JATTA_EXPORT Jatta::String GetTexturePath(Enum type, UInt32 index);
+        };
+    }
+}
+
+#include "../External/Undefines.h"
+#endif

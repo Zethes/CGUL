@@ -18,6 +18,8 @@ void Jatta::SubMesh::Setup(Type type, UInt32 vertexCount)
 	this->vertexCount = vertexCount;
 
 	indices = nullptr;
+
+	hasTexture = false;
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(float* buffer, Byte count, UInt32 index)
@@ -138,12 +140,10 @@ _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(Jatta::Color* buffer, UInt32 index)
 	    glBindBuffer(GL_ARRAY_BUFFER, object);
 
 	    // set the data of this buffer
-	    //float colors[this->vertexCount * 4];
-	    //for ()
 	    glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * 4) * sizeof(GLubyte), (GLubyte*)buffer, GL_STATIC_DRAW);
 
 	    // setup the attribute pointer to whatever was passed in
-	    glVertexAttribPointer(index, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	    glVertexAttribPointer(index, 4, GL_UNSIGNED_BYTE, GL_FALSE, 0, 0);
 
 	    // set the attribute index
 	    glEnableVertexAttribArray(index);
@@ -165,6 +165,22 @@ _JATTA_EXPORT void Jatta::SubMesh::SetIndexBuffer(unsigned int* buffer, unsigned
         memcpy(this->indices, buffer, size * sizeof(unsigned int));
     }
     this->indexCount = size;
+}
+
+_JATTA_EXPORT void Jatta::SubMesh::SetTexture(const Texture& texture)
+{
+	this->texture = texture;
+	hasTexture = true;
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::SubMesh::HasTexture()
+{
+	return hasTexture;
+}
+
+_JATTA_EXPORT Jatta::Texture Jatta::SubMesh::GetTexture()
+{
+	return texture;
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::Draw()

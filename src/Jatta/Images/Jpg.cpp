@@ -12,13 +12,18 @@
 #include <jpeglib.h>
 #include <stdlib.h>
 
-_JATTA_EXPORT bool Jatta::Image::LoadJpg(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsJpg(const Jatta::String& fileName)
+{
+	return false;
+}
+
+_JATTA_EXPORT bool Jatta::Image::LoadJpg(const Jatta::String& fileName)
 {
 	//TODO: Loading JPGs
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::SaveJpg(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::SaveJpg(const Jatta::String& fileName)
 {
     // TODO: Saving JPGS
     return false;

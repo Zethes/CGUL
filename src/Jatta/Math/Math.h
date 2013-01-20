@@ -18,7 +18,12 @@ namespace Jatta
         _JATTA_EXPORT Float32 Sin(Float32 x);
         _JATTA_EXPORT Float32 Tan(Float32 x);
 
+        _JATTA_EXPORT Float32 ACos(Float32 x);
+        _JATTA_EXPORT Float32 ASin(Float32 x);
+        _JATTA_EXPORT Float32 ATan(Float32 x);
+
         _JATTA_EXPORT Float32 DegToRad(Float32 deg);
+        _JATTA_EXPORT Float32 RadToDeg(Float32 rad);
 
         _JATTA_EXPORT Float32 Min(Float32 a, Float32 b);
         _JATTA_EXPORT Float32 Max(Float32 a, Float32 b);

@@ -22,6 +22,8 @@
 #define _JATTA_FT_FACE void*
 #define _JATTA_AISCENE void*
 #define _JATTA_AIMESH void*
+#define _JATTA_AITEXTURE void*
+#define _JATTA_AIMATERIAL void*
 
 #if defined(JATTA_INCLUDES)
 #   ifdef WINDOWS
@@ -74,6 +76,8 @@
       CHECK(::FT_Face, _JATTA_FT_FACE);
       CHECK(::aiScene*, _JATTA_AISCENE);
       CHECK(::aiMesh*, _JATTA_AIMESH);
+      CHECK(::aiTexture*, _JATTA_AITEXTURE);
+      CHECK(::aiTexture*, _JATTA_AIMATERIAL);
 #   undef CHECK
 #   include "Undefines.h"
 #   ifdef WINDOWS
@@ -96,5 +100,7 @@
 #   ifndef JATTA_NO_ASSIMP
 #       define _JATTA_AISCENE ::aiScene*
 #       define _JATTA_AIMESH ::aiMesh*
+#       define _JATTA_AITEXTURE ::aiTexture*
+#       define _JATTA_AIMATERIAL ::aiMaterial*
 #   endif
 #endif

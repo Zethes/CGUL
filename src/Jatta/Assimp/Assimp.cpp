@@ -39,6 +39,20 @@ _JATTA_EXPORT void Jatta::Assimp::Test::DoStuff()
     OUTPUT(aiProcess_FlipWindingOrder);
     OUTPUT(aiProcess_SplitByBoneCount);
     OUTPUT(aiProcess_Debone);*/
+
+	OUTPUT(aiTextureType_NONE);
+	OUTPUT(aiTextureType_DIFFUSE);
+	OUTPUT(aiTextureType_SPECULAR);
+	OUTPUT(aiTextureType_AMBIENT);
+	OUTPUT(aiTextureType_EMISSIVE);
+	OUTPUT(aiTextureType_HEIGHT);
+	OUTPUT(aiTextureType_NORMALS);
+	OUTPUT(aiTextureType_SHININESS);
+	OUTPUT(aiTextureType_OPACITY);
+	OUTPUT(aiTextureType_DISPLACEMENT);
+	OUTPUT(aiTextureType_LIGHTMAP);
+	OUTPUT(aiTextureType_REFLECTION);
+	OUTPUT(aiTextureType_UNKNOWN);
 }
 
 #endif

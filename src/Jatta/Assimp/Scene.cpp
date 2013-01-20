@@ -5,7 +5,9 @@
 
 #ifndef JATTA_NO_ASSIMP
 #include "Scene.h"
+#include "Material.h"
 #include "Mesh.h"
+#include "Texture.h"
 #include <iostream> // TODO: remove iostream
 
 /** @brief Just a test.
@@ -24,69 +26,79 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 f
     }
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasAnimations()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasAnimations() const
 {
     return scene->HasAnimations();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasCameras()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasCameras() const
 {
     return scene->HasCameras();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasLights()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasLights() const
 {
     return scene->HasLights();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMaterials()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMaterials() const
 {
     return scene->HasMaterials();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMeshes()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMeshes() const
 {
     return scene->HasMeshes();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasTextures()
+_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasTextures() const
 {
     return scene->HasTextures();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetAnimationCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetAnimationCount() const
 {
     return scene->mNumAnimations;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetCameraCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetCameraCount() const
 {
     return scene->mNumCameras;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetLightCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetLightCount() const
 {
     return scene->mNumLights;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMaterialCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMaterialCount() const
 {
     return scene->mNumMaterials;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMeshCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMeshCount() const
 {
     return scene->mNumMeshes;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount()
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount() const
 {
     return scene->mNumTextures;
 }
 
-_JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index)
+_JATTA_EXPORT Jatta::Assimp::Material Jatta::Assimp::Scene::GetMaterial(UInt32 index) const
+{
+	return Material(scene->mMaterials[index]);
+}
+
+_JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index) const
 {
     return Mesh(scene->mMeshes[index]);
+}
+
+_JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 index) const
+{
+	return Texture(scene->mTextures[index]);
 }
 
 #endif

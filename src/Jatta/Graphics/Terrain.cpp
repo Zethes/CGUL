@@ -17,7 +17,7 @@ _JATTA_EXPORT Jatta::Terrain::Terrain(float heightScale, float blockScale)
 	bScale = blockScale;
 }
 
-_JATTA_EXPORT bool Jatta::Terrain::LoadHeightmap(Image* hmap)
+_JATTA_EXPORT bool Jatta::Terrain::LoadHeightmap(Image* hmap, Float2 textureSize)
 {
 	Color* data = (Color*)hmap->GetData();
 
@@ -37,8 +37,8 @@ _JATTA_EXPORT bool Jatta::Terrain::LoadHeightmap(Image* hmap)
 			unsigned int index = (j*width)+i;
 			float heightValue = data[index].r;
 
-			float u = (i/(float)(width-1));
-			float v = (j/(float)(height-1));
+			float u = (i/(float)(textureSize.x));
+			float v = (j/(float)(textureSize.y));
 
 			float x = (u*terrainWidth) - terrainWidth/2;
 			float y = heightValue * hScale;

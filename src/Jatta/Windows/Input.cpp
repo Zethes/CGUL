@@ -4,6 +4,7 @@
  */
 
 #include "Input.h"
+#include "Window.h"
 #include <cstring>
 
 #ifdef LINUX
@@ -274,9 +275,30 @@ _JATTA_EXPORT Jatta::Input::Input(Window* window)
     memset(this->keyData, 0, 256);
 }
 
-_JATTA_EXPORT bool* Jatta::Input::GetKeyData()
+_JATTA_EXPORT Jatta::InputState* Jatta::Input::GetKeyData()
 {
     return this->keyData;
+}
+
+_JATTA_EXPORT Jatta::InputState* Jatta::Input::GetMouseData()
+{
+    return this->mouseData;
+}
+
+_JATTA_EXPORT void Jatta::Input::AnalyzeKeyData()
+{
+	for (unsigned int i = 0; i < 255; i++)
+	{
+		this->keyData[i].Analyze();
+	}
+}
+
+_JATTA_EXPORT void Jatta::Input::AnalyzeMouseData()
+{
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		this->mouseData[i].Analyze();
+	}
 }
 
 _JATTA_EXPORT unsigned char Jatta::Input::GetKeyFromLayout(unsigned char key)
@@ -290,17 +312,31 @@ _JATTA_EXPORT unsigned char Jatta::Input::GetKeyFromLayout(unsigned char key)
 #   endif
 }
 
-_JATTA_EXPORT bool Jatta::Input::IsKeyDown(unsigned char key)
+_JATTA_EXPORT Jatta::InputState Jatta::Input::GetKeyState(unsigned char key)
 {
     return this->keyData[key];
 }
 
-_JATTA_EXPORT bool Jatta::Input::IsKeyPressed(unsigned char key)
+_JATTA_EXPORT Jatta::InputState Jatta::Input::GetButtonState(unsigned char button)
 {
-    return false;
+    return this->mouseData[button];
 }
 
-_JATTA_EXPORT bool Jatta::Input::IsKeyReleased(unsigned char key)
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Input::GetMousePosition()
 {
-    return false;
+	return mousePos;
+	//TODO: Linux
+}
+
+_JATTA_EXPORT void Jatta::Input::SetMousePosition(Float2 pos)
+{
+#ifdef WINDOWS
+	POINT p;
+	p.x = pos.x;
+	p.y = pos.y;
+	ClientToScreen(this->window->_GetHandle(),&p);
+	SetCursorPos(p.x,p.y);
+#endif
+	//TODO: Linux
 }

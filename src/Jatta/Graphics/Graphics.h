@@ -61,6 +61,8 @@ namespace Jatta
         _JATTA_EXPORT void DisableDepthTest();
         _JATTA_EXPORT void EnableCulling();
         _JATTA_EXPORT void DisableCulling();
+        _JATTA_EXPORT void EnableScissoring(int x, int y, int w, int h);
+        _JATTA_EXPORT void DisableScissoring();
     };
 }
 

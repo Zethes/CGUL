@@ -14,7 +14,9 @@ namespace Jatta
 {
     namespace Assimp
     {
+    	class Material;
         class Mesh;
+        class Texture;
 
         class Scene
         {
@@ -24,21 +26,23 @@ namespace Jatta
 
             _JATTA_EXPORT void Import(const String& fileName, Enum flags);
 
-            _JATTA_EXPORT Boolean HasAnimations();
-            _JATTA_EXPORT Boolean HasCameras();
-            _JATTA_EXPORT Boolean HasLights();
-            _JATTA_EXPORT Boolean HasMaterials();
-            _JATTA_EXPORT Boolean HasMeshes();
-            _JATTA_EXPORT Boolean HasTextures();
+            _JATTA_EXPORT Boolean HasAnimations() const;
+            _JATTA_EXPORT Boolean HasCameras() const;
+            _JATTA_EXPORT Boolean HasLights() const;
+            _JATTA_EXPORT Boolean HasMaterials() const;
+            _JATTA_EXPORT Boolean HasMeshes() const;
+            _JATTA_EXPORT Boolean HasTextures() const;
 
-            _JATTA_EXPORT UInt32 GetAnimationCount();
-            _JATTA_EXPORT UInt32 GetCameraCount();
-            _JATTA_EXPORT UInt32 GetLightCount();
-            _JATTA_EXPORT UInt32 GetMaterialCount();
-            _JATTA_EXPORT UInt32 GetMeshCount();
-            _JATTA_EXPORT UInt32 GetTextureCount();
+            _JATTA_EXPORT UInt32 GetAnimationCount() const;
+            _JATTA_EXPORT UInt32 GetCameraCount() const;
+            _JATTA_EXPORT UInt32 GetLightCount() const;
+            _JATTA_EXPORT UInt32 GetMaterialCount() const;
+            _JATTA_EXPORT UInt32 GetMeshCount() const;
+            _JATTA_EXPORT UInt32 GetTextureCount() const;
 
-            _JATTA_EXPORT Mesh GetMesh(UInt32 index);
+            _JATTA_EXPORT Material GetMaterial(UInt32 index) const;
+            _JATTA_EXPORT Mesh GetMesh(UInt32 index) const;
+            _JATTA_EXPORT Texture GetTexture(UInt32 index) const;
         };
     }
 }

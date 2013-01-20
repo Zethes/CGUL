@@ -33,8 +33,10 @@
 #pragma once
 
 #include "Jatta/Assimp/Assimp.h"
+#include "Jatta/Assimp/Material.h"
 #include "Jatta/Assimp/Mesh.h"
 #include "Jatta/Assimp/Scene.h"
+#include "Jatta/Assimp/Texture.h"
 
 #include "Jatta/File/File.h"
 
@@ -82,6 +84,8 @@
 #include "Jatta/Utility/Timer.h"
 
 #include "Jatta/Windows/Input.h"
+#include "Jatta/Windows/Inputs.h"
+#include "Jatta/Windows/InputState.h"
 #include "Jatta/Windows/Window.h"
 #include "Jatta/Windows/WindowStyle.h"
 

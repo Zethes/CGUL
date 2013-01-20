@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include "../Utility/String.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -25,14 +26,20 @@ namespace Jatta
         _JATTA_EXPORT Jatta::Image& operator=(const Image& copy);
         _JATTA_EXPORT Jatta::Image& operator=(Image&& move);
 
-        _JATTA_EXPORT static bool IsPng(const std::string& fileName);
-        _JATTA_EXPORT static bool IsJpg(const std::string& fileName);
+        _JATTA_EXPORT bool Load(const Jatta::String& fileName);
 
-        _JATTA_EXPORT bool LoadPng(const std::string& fileName);
-        _JATTA_EXPORT bool SavePng(const std::string& fileName);
+        _JATTA_EXPORT static bool IsBmp(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsPng(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsJpg(const Jatta::String& fileName);
 
-        _JATTA_EXPORT bool LoadJpg(const std::string& fileName);
-        _JATTA_EXPORT bool SaveJpg(const std::string& fileName);
+        _JATTA_EXPORT bool LoadPng(const Jatta::String& fileName);
+        _JATTA_EXPORT bool SavePng(const Jatta::String& fileName);
+
+        _JATTA_EXPORT bool LoadJpg(const Jatta::String& fileName);
+        _JATTA_EXPORT bool SaveJpg(const Jatta::String& fileName);
+
+        _JATTA_EXPORT bool LoadBmp(const Jatta::String& fileName);
+        _JATTA_EXPORT bool SaveBmp(const Jatta::String& fileName, int bpp = 24, int hRes = 2835, int vRes = 2835);
 
         _JATTA_EXPORT unsigned char* GetData();
         _JATTA_EXPORT const unsigned char* GetData() const;

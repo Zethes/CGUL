@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "WindowStyle.h"
 #include "../Math/Float2.h"
+#include "../Math/Float4.h"
 #ifdef JATTA_BUILD
 #   include "MacOS/WindowDelegate.h"
 #endif
@@ -67,13 +68,17 @@ namespace Jatta
         _JATTA_EXPORT void Create(const WindowStyle& style);
         _JATTA_EXPORT void Close();
 
+        _JATTA_EXPORT void UpdateInput();
+
         _JATTA_EXPORT void SetTitle(String title);
 
         _JATTA_EXPORT Boolean IsOpen() const;
+        _JATTA_EXPORT Boolean IsFocused() const;
 
         _JATTA_EXPORT UInt32 GetWidth() const;
         _JATTA_EXPORT UInt32 GetHeight() const;
         _JATTA_EXPORT Float2 GetSize() const;
+        _JATTA_EXPORT Float4 GetFrameSize() const;
     };
 }
 

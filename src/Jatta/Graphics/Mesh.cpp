@@ -3,6 +3,12 @@
  * All rights reserved.
  */
 
+#ifndef JATTA_NO_ASSIMP
+#include "../Assimp/Material.h"
+#include "../Assimp/Mesh.h"
+#include "../Assimp/Texture.h"
+#endif
+#include "../OpenGL/OpenGL.h"
 #include "Mesh.h"
 
 _JATTA_EXPORT Jatta::Mesh Jatta::Mesh::MakeBox(Float2 size, Color color, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4)
@@ -126,6 +132,44 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Model& model)
 	file.close();
 }
 
+#ifndef JATTA_NO_ASSIMP
+#include <iostream> // TODO: remove iostream
+_JATTA_EXPORT void Jatta::Mesh::Create(const Jatta::Assimp::Scene& scene)
+{
+	std::cout << "There are " << scene.GetMeshCount() << " mesh(es) in the model." << std::endl;
+	for (UInt32 i = 0; i < scene.GetMeshCount(); i++)
+	{
+		Assimp::Mesh submesh = scene.GetMesh(i);
+		SubMesh* mesh = new SubMesh();
+		mesh->Setup(SubMesh::Type::TRIANGLES, scene.GetMesh(i).GetVertexCount());
+		mesh->AddBuffer(submesh.GetPositions(), OpenGL::POSITION1);
+		mesh->AddBuffer(submesh.GetTextureCoords(), OpenGL::TEXCOORD1);
+		Assimp::Material mat = scene.GetMaterial(submesh.GetMaterialIndex());
+		if (mat.GetTextureCount(Assimp::TEXTURE_TYPE_DIFFUSE) != 0)
+		{
+			Image image;
+			image.Load(String("Resources/Images/") + mat.GetTexturePath(Assimp::TEXTURE_TYPE_DIFFUSE, 0));
+			Texture tex;
+			tex.Create(image);
+			mesh->SetTexture(tex);
+		}
+		AddMesh(mesh);
+	}
+
+	std::cout << "There are " << scene.GetMaterialCount() << " materials(s) in the model." << std::endl;
+	for (UInt32 i = 0; i < scene.GetMaterialCount(); i++)
+	{
+		Assimp::Material mat = scene.GetMaterial(i);
+		for (UInt32 j = 0; j < mat.GetTextureCount(Assimp::TEXTURE_TYPE_DIFFUSE); j++)
+		{
+			std::cout << mat.GetTexturePath(Assimp::TEXTURE_TYPE_DIFFUSE, j) << std::endl;
+		}
+	}
+
+	std::cout << "There are " << scene.GetTextureCount() << " textures(s) in the model." << std::endl;
+}
+#endif
+
 _JATTA_EXPORT void Jatta::Mesh::AddMesh(SubMesh*mesh)
 {
 	meshes.push_back(mesh);
@@ -137,4 +181,9 @@ _JATTA_EXPORT void Jatta::Mesh::Draw()
 	{
 		(*i)->Draw();
 	}
+}
+
+const std::vector<Jatta::SubMesh*>& Jatta::Mesh::GetSubMeshes() const
+{
+	return meshes;
 }

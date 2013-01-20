@@ -5,6 +5,7 @@
 
 #pragma once
 #include "RenderTarget.h"
+#include "Graphics.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -44,6 +45,7 @@ namespace Jatta
         _JATTA_EXPORT void SetFloat4(const std::string& name, const Jatta::Float4& value);
         _JATTA_EXPORT void SetColor(const std::string& name, const Jatta::Color& color);
         _JATTA_EXPORT void SetMatrix(const std::string& name, const Jatta::Matrix& matrix);
+        _JATTA_EXPORT void SetTexture(const std::string& name, UInt32 texture);
         _JATTA_EXPORT void SetTexture(const std::string& name, const Texture& texture);
         _JATTA_EXPORT void SetTexture(const std::string& name, const RenderTarget& texture);
         //void setTexture(const std::string& name, Texture texture);

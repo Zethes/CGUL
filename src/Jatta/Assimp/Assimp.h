@@ -22,7 +22,6 @@ namespace Jatta
         };
         typedef UInt32 Enum;
 
-        // TODO: set all these values
         static Enum PROCESS_CALC_TANGENT_SPACE = 0x1;
         static Enum PROCESS_JOIN_IDENTICAL_VERTICES = 0x2;
         static Enum PROCESS_MAKE_LEFT_HANDED = 0x4;
@@ -49,6 +48,20 @@ namespace Jatta
         static Enum PROCESS_FLIP_WINDING_ORDER = 0x1000000;
         static Enum PROCESS_SPLIT_BY_BONE_COUNT = 0x2000000;
         static Enum PROCESS_DEBONE = 0x4000000;
+
+        static Enum TEXTURE_TYPE_NONE = 0x0;
+        static Enum TEXTURE_TYPE_DIFFUSE = 0x1;
+        static Enum TEXTURE_TYPE_SPECULAR = 0x2;
+        static Enum TEXTURE_TYPE_AMBIENT = 0x3;
+        static Enum TEXTURE_TYPE_EMISSIVE = 0x4;
+        static Enum TEXTURE_TYPE_HEIGHT = 0x5;
+        static Enum TEXTURE_TYPE_NORMALS = 0x6;
+        static Enum TEXTURE_TYPE_SHININESS = 0x7;
+        static Enum TEXTURE_TYPE_OPACITY = 0x8;
+        static Enum TEXTURE_TYPE_DISPLACEMENT = 0x9;
+        static Enum TEXTURE_TYPE_LIGHTMAP = 0xa;
+        static Enum TEXTURE_TYPE_REFLECTION = 0xb;
+        static Enum TEXTURE_TYPE_UNKNOWN = 0xc;
     }
 }
 

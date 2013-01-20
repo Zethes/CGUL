@@ -36,6 +36,8 @@ _JATTA_EXPORT Jatta::Shader::~Shader()
 
 _JATTA_EXPORT void Jatta::Shader::Load(const std::string& vertex, const std::string& fragment)
 {
+	glGetError();
+
     // Create the vertex and fragment shaders
     vertexID = glCreateShader(GL_VERTEX_SHADER);
     fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -184,6 +186,26 @@ _JATTA_EXPORT void Jatta::Shader::SetMatrix(const std::string& name, const Jatta
     glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, matrix.GetData());
 }
 
+_JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, UInt32 texture)
+{
+	int id = 0;
+	std::map<std::string,int>::iterator it = textures.find(name);
+	if (it != textures.end())
+	{
+		id = it->second;
+	}
+	else
+	{
+		id = textureID++;
+		textures.insert(std::make_pair(name,id));
+	}
+
+	int myTexture = glGetUniformLocation(shaderID, name.c_str());
+	glUniform1i(myTexture, id);
+	glActiveTexture(GL_TEXTURE0 + id);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, texture);
+}
+
 _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const Texture& texture)
 {
     int id = 0;
@@ -201,7 +223,14 @@ _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const Text
     int myTexture = glGetUniformLocation(shaderID, name.c_str());
     glUniform1i(myTexture, id);
     glActiveTexture(GL_TEXTURE0 + id);
-    glBindTexture(GL_TEXTURE_2D, texture.GetTexture());
+    if (texture.UsesMultisampling())
+    {
+        glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, texture.GetTexture());
+    }
+    else
+    {
+        glBindTexture(GL_TEXTURE_2D, texture.GetTexture());
+    }
 }
 
 _JATTA_EXPORT void Jatta::Shader::SetTexture(const std::string& name, const RenderTarget& texture)

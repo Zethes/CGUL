@@ -31,9 +31,9 @@ namespace Jatta
 
 		float hScale, bScale;
 	public:
-		_JATTA_EXPORT Terrain(float heightScale = 1.0f, float blockScale = 2.0f);
+		_JATTA_EXPORT Terrain(float heightScale = 0.5f, float blockScale = 2.0f);
 
-		_JATTA_EXPORT bool LoadHeightmap(Image* hmap);
+		_JATTA_EXPORT bool LoadHeightmap(Image* hmap, Float2 textureSize);
 		_JATTA_EXPORT void AddTexture(Texture* texture, std::vector<Color>mixmap);
 		_JATTA_EXPORT void Build();
 

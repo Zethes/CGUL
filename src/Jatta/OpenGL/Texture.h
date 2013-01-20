@@ -20,6 +20,7 @@ namespace Jatta
             Enum type;
         public:
             _JATTA_EXPORT Texture();
+            _JATTA_EXPORT Texture(UInt32 texture);
             _JATTA_EXPORT ~Texture();
 
             _JATTA_EXPORT void Create(Enum type);

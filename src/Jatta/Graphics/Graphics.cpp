@@ -253,3 +253,12 @@ _JATTA_EXPORT void Jatta::Graphics::DisableCulling()
 {
 	glDisable(GL_CULL_FACE);
 }
+_JATTA_EXPORT void Jatta::Graphics::EnableScissoring(int x, int y, int w, int h)
+{
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(x, y, w, h);
+}
+_JATTA_EXPORT void Jatta::Graphics::DisableScissoring()
+{
+	glDisable(GL_SCISSOR_TEST);
+}

@@ -4,6 +4,8 @@
  */
 
 #pragma once
+#include "../Math/Float2.h"
+#include "InputState.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -15,16 +17,24 @@ namespace Jatta
         friend class Window;
 
         Window* window;
-        bool keyData[256];
+        InputState keyData[256];
+        Float2 mousePos;
+        InputState mouseData[3];
 
         _JATTA_EXPORT Input(Window* window);
 
-        _JATTA_EXPORT bool* GetKeyData();
+        _JATTA_EXPORT InputState* GetKeyData();
+        _JATTA_EXPORT InputState* GetMouseData();
+        _JATTA_EXPORT void AnalyzeKeyData();
+        _JATTA_EXPORT void AnalyzeMouseData();
         _JATTA_EXPORT unsigned char GetKeyFromLayout(unsigned char key);
     public:
-        _JATTA_EXPORT bool IsKeyDown(unsigned char key);
-        _JATTA_EXPORT bool IsKeyPressed(unsigned char key);
-        _JATTA_EXPORT bool IsKeyReleased(unsigned char key);
+        _JATTA_EXPORT InputState GetKeyState(unsigned char key);
+
+        _JATTA_EXPORT InputState GetButtonState(unsigned char button);
+
+        _JATTA_EXPORT Float2 GetMousePosition();
+        _JATTA_EXPORT void SetMousePosition(Float2 pos);
     };
 }
 

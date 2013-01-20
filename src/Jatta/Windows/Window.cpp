@@ -32,11 +32,33 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
             window->Close();
         }
         return 0;
+        case WM_MOUSEMOVE:
+        window->GetInput()->mousePos.x = LOWORD(lParam);
+        window->GetInput()->mousePos.y = HIWORD(lParam);
+        return 0;
         case WM_KEYDOWN:
-        window->GetInput()->GetKeyData()[wParam] = true;
+        window->GetInput()->GetKeyData()[wParam].down = true;
         return 0;
         case WM_KEYUP:
-        window->GetInput()->GetKeyData()[wParam] = false;
+        window->GetInput()->GetKeyData()[wParam].down = false;
+        return 0;
+        case WM_LBUTTONDOWN:
+        window->GetInput()->GetMouseData()[0].down = true;
+        return 0;
+        case WM_LBUTTONUP:
+        window->GetInput()->GetMouseData()[0].down = false;
+        return 0;
+        case WM_RBUTTONDOWN:
+        window->GetInput()->GetMouseData()[2].down = true;
+        return 0;
+        case WM_RBUTTONUP:
+        window->GetInput()->GetMouseData()[2].down = false;
+        return 0;
+        case WM_MBUTTONDOWN:
+        window->GetInput()->GetMouseData()[1].down = true;
+        return 0;
+        case WM_MBUTTONUP:
+        window->GetInput()->GetMouseData()[1].down = false;
         return 0;
         case WM_DESTROY:
         PostQuitMessage(0);
@@ -227,7 +249,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
     AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, CW_USEDEFAULT, CW_USEDEFAULT, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
     if (handle == NULL)
     {
@@ -306,6 +328,12 @@ _JATTA_EXPORT void Jatta::Window::Close()
 #   endif
 }
 
+_JATTA_EXPORT void Jatta::Window::UpdateInput()
+{
+    this->GetInput()->AnalyzeKeyData();
+    this->GetInput()->AnalyzeMouseData();
+}
+
 _JATTA_EXPORT void Jatta::Window::SetTitle(String title)
 {
 #   ifdef WINDOWS
@@ -336,6 +364,13 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
     bool result = [handle IsOpen] == 1;
     [pool drain];
     return result;
+#   endif
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
+{
+#   ifdef WINDOWS
+	return (handle == GetForegroundWindow());
 #   endif
 }
 
@@ -401,4 +436,16 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 #   ifdef MACOS
     return Float2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
+{
+#   ifdef WINDOWS
+	RECT rect = {0, 0, 0, 0};
+	AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+	GetWindowRect(handle, &rect);
+	return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+#   endif
+
+//TODO: Linux
 }

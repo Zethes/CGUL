@@ -37,12 +37,21 @@ bool Jatta::Png::isValid(const std::string& fileName)
     return valid;
 }*/
 
-_JATTA_EXPORT bool Jatta::Image::LoadPng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsPng(const Jatta::String& fileName)
+{
+	unsigned int size = PNGSIGSIZE;
+	Byte* buffer = new Byte[size];
+	File::GetData(fileName.GetData(), buffer, size);
+
+	return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
+}
+
+_JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)
 {
     unsigned int size;
-    File::GetFileSize(fileName, &size);
+    File::GetFileSize(fileName.GetData(), &size);
     Byte* buffer = new Byte[size];
-    File::GetData(fileName, buffer, size);
+    File::GetData(fileName.GetData(), buffer, size);
 
     //if (!isValid(buffer, size))
     //{
@@ -165,7 +174,7 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const std::string& fileName)
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::SavePng(const std::string& fileName)
+_JATTA_EXPORT bool Jatta::Image::SavePng(const Jatta::String& fileName)
 {
     // TODO: STUFF
     return true;

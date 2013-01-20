@@ -8,6 +8,9 @@
 #include "Graphics.h"
 #include "../Models/Model.h"
 #include "../Images/Image.h"
+#ifndef JATTA_NO_ASSIMP
+#include "../Assimp/Scene.h"
+#endif
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -29,9 +32,14 @@ namespace Jatta
         //_JATTA_EXPORT void operator=(const Mesh& operand); // TODO: this
 
         _JATTA_EXPORT void Create(const Model& model);
+#       ifndef JATTA_NO_ASSIMP
+        _JATTA_EXPORT void Create(const Jatta::Assimp::Scene& scene);
+#       endif
 
         _JATTA_EXPORT void AddMesh(SubMesh*mesh);
         _JATTA_EXPORT void Draw();
+
+        const std::vector<SubMesh*>& GetSubMeshes() const;
     };
 }
 
