@@ -1,13 +1,12 @@
-#version 140
-#extension GL_ARB_explicit_attrib_location : enable
+#version 120
 
 uniform mat4 orthoMatrix;
 uniform mat4 modelMatrix;
 
-layout (location = 0) in vec2 vertPosition;
-in vec2 vertTexCoord;
+varying vec2 vertPosition;
+varying vec2 vertTexCoord;
 
-out vec2 fragTexCoord;
+varying vec2 fragTexCoord;
 
 void main(void)
 {

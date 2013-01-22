@@ -56,18 +56,18 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)
 {
-	std::string ret = (char *)glGetString(name);
+	std::string ret = (const char *)glGetString(name);
 	return ret;
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetStringi(Jatta::OpenGL::Enum name, unsigned int index)
 {
-	std::string ret = (char *)glGetStringi(name, index);
+	std::string ret;// = (const char *)glGetStringi(name, index);
 	return ret;
 }
 
 _JATTA_EXPORT std::vector<Jatta::String> Jatta::OpenGL::GetSupportedExtensions()
 {
-	Jatta::String ret = (char *)glGetString(GL::EXTENSIONS);
+	Jatta::String ret = (const char *)glGetString(GL::EXTENSIONS);
 
 	return ret.Explode(" ");
 }

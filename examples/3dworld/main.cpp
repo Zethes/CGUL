@@ -84,17 +84,8 @@ int main()
         OpenGL::Context context;
         context.Create(&window);
 
-        Shader shaderOld;
-        shaderOld.Load("screen.vert", "screen.frag");
-        shaderOld.BindAttribute(Graphics::position1, "vertPosition");
-        shaderOld.BindAttribute(Graphics::texCoord1, "vertTexCoord");
-
         Float2 boxPositions[] = { Float2(0, 0), Float2(0, 1), Float2(1, 1), Float2(1, 0) };
         Float2 boxTexCoords[] = { Float2(0, 0), Float2(0, 1), Float2(1, 1), Float2(1, 0) };
-        SubMesh mesh;
-        mesh.Setup(SubMesh::Type::QUADS, 4);
-        mesh.AddBuffer(boxPositions, Graphics::position1);
-        mesh.AddBuffer(boxTexCoords, Graphics::texCoord1);
 
         OpenGL::VertexArray vertexArray;
         vertexArray.Create();

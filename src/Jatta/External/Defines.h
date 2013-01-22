@@ -43,13 +43,10 @@
 #       endif
 #   endif
 #   ifdef MACOS
-#       import <Cocoa/Cocoa.h>
 #       ifndef JATTA_NO_GRAPHICS
-#           import <OpenGL/GL.h>
-#           define glGenVertexArrays(x, y) glGenVertexArraysAPPLE(x, y)
-#           define glBindVertexArray(x) glBindVertexArrayAPPLE(x)
-#           define glDeleteVertexArrays(x, y) glDeleteVertexArraysAPPLE(x, y)
+#           include <GL/glew.h>
 #       endif
+#       import <Cocoa/Cocoa.h>
 #   endif
 #   ifndef JATTA_NO_FONTS
 #       include <ft2build.h>

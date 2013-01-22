@@ -15,13 +15,21 @@ _JATTA_EXPORT Jatta::OpenGL::VertexArray::VertexArray()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Create()
 {
+#   ifdef MACOS
+    glGenVertexArraysAPPLE(1, &vertexArray);
+#   else
     glGenVertexArrays(1, &vertexArray);
+#   endif
     GLCHECK("Failed to generate vertex array.");
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Delete()
 {
+#   ifdef MACOS
+    glDeleteVertexArraysAPPLE(1, &vertexArray);
+#   else
     glDeleteVertexArrays(1, &vertexArray);
+#   endif
     GLCHECK("Failed to delete vertex array.");
 }
 
@@ -32,13 +40,21 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::VertexArray::GetID()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
 {
+#   ifdef MACOS
+    glBindVertexArrayAPPLE(vertexArray);
+#   else
     glBindVertexArray(vertexArray);
+#   endif
     GLCHECK("Failed to bind vertex array.");
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Unbind()
 {
+#   ifdef MACOS
+    glBindVertexArrayAPPLE(0);
+#   else
     glBindVertexArray(0);
+#   endif
     GLCHECK("Failed to unbind vertex array.");
 }
 

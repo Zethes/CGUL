@@ -137,14 +137,12 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     {
         MakeCurrent();
 
-#       ifndef MACOS
         GLenum glewResult = glewInit();
         if (glewResult != GLEW_OK)
         {
             throw std::runtime_error("Glew failed");
         }
         _JATTA_DEBUG_LN("Glew initiated!");
-#       endif
     }
 
     glShadeModel(GL_SMOOTH);

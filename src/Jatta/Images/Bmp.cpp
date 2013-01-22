@@ -219,7 +219,7 @@ _JATTA_EXPORT bool Jatta::Image::SaveBmp(const Jatta::String& fileName, int bpp,
 	int fileHeaderSize = fileHeader.getBuffer(fileHeaderBuffer);
 
 	//Write the file.
-	std::ofstream outfile(fileName.GetData(), std::ios::out | std::ios::binary);
+	std::ofstream outfile(fileName.GetData().c_str(), std::ios::out | std::ios::binary);
 	outfile.write(fileHeaderBuffer, fileHeaderSize);
 	outfile.write(dibHeaderBuffer, dibHeaderSize);
 	outfile.write(pixelDataBuffer,pixelDataSize);
