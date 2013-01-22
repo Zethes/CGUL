@@ -33,10 +33,14 @@
 #pragma once
 
 #include "Jatta/Assimp/Assimp.h"
+#include "Jatta/Assimp/Camera.h"
 #include "Jatta/Assimp/Material.h"
 #include "Jatta/Assimp/Mesh.h"
 #include "Jatta/Assimp/Scene.h"
 #include "Jatta/Assimp/Texture.h"
+
+#include "Jatta/Collision/AABB2D.h"
+#include "Jatta/Collision/AABB3D.h"
 
 #include "Jatta/File/File.h"
 
@@ -284,6 +288,10 @@
  *
  *  Some optional flags can be defined to customize how Jatta is built.
  *  @code
+ *  SET(JATTA_STATIC ON) # Creates a static library instead of a shared one
+ *
+ *  SET(JATTA_STATIC_COMBINED ON) # !!EXPERIMENTAL!! Combines all dependencies into the static lib
+ *
  *  SET(JATTA_NO_ASSIMP ON) # Disables asset importer (removes assimp)
  *
  *  SET(JATTA_NO_FONTS ON) # Disables font support (removes freetype)

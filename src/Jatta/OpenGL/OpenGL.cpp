@@ -22,7 +22,7 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
  */
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
-	std::fstream extensionsFile;
+	/*std::fstream extensionsFile;
 	extensionsFile.open("gl.txt", std::fstream::out);
 	std::cout << std::hex;
     //std::cout << "GL_EXTENSIONS = 0x" << GL_EXTENSIONS << std::endl;
@@ -51,7 +51,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
 	for (unsigned int i = 0; i < extensions.size(); i++)
 	{
 		extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
-	}
+	}*/
 }
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)

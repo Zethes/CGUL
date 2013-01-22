@@ -5,6 +5,7 @@
 
 #ifndef JATTA_NO_ASSIMP
 #include "Scene.h"
+#include "Camera.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
@@ -84,6 +85,11 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMeshCount() const
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount() const
 {
     return scene->mNumTextures;
+}
+
+_JATTA_EXPORT Jatta::Assimp::Camera Jatta::Assimp::Scene::GetCamera(UInt32 index) const
+{
+    return Camera(scene->mCameras[index]);
 }
 
 _JATTA_EXPORT Jatta::Assimp::Material Jatta::Assimp::Scene::GetMaterial(UInt32 index) const

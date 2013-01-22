@@ -4,7 +4,7 @@
 
 ADD_GROUP("Utility")
 ADD_OTHER(CMakeLists.txt)
-ADD_SOURCE(Object.cpp)
+#ADD_SOURCE(Object.cpp)
 ADD_HEADER(Object.h include/Jatta/Utility/)
 ADD_SOURCE(Regex.cpp)
 ADD_HEADER(Regex.h include/Jatta/Utility/)

@@ -2,85 +2,87 @@
 #include <iostream>
 using namespace Jatta;
 
+Jatta::OpenGL::Program LoadShader(const String& vertex, const String& fragment)
+{
+    OpenGL::Shader vertexShader, fragmentShader;
+    vertexShader.Create(OpenGL::GL::VERTEX_SHADER);
+    fragmentShader.Create(OpenGL::GL::FRAGMENT_SHADER);
+
+    String vertexSource, fragmentSource;
+    if (!File::GetText(vertex, &vertexSource))
+    {
+        throw std::runtime_error("Failed to load screen.vert.");
+    }
+    if (!File::GetText(fragment, &fragmentSource))
+    {
+        throw std::runtime_error("Failed to load screen.frag.");
+    }
+
+    vertexShader.Source(vertexSource);
+    fragmentShader.Source(fragmentSource);
+
+    vertexShader.Compile();
+    if (!vertexShader.GetCompileStatus())
+    {
+        std::ostringstream ss;
+        ss << "Failed to compile vertex." << std::endl;
+        ss << vertexShader.GetInfoLog() << std::endl;
+        throw std::runtime_error(ss.str().c_str());
+    }
+    fragmentShader.Compile();
+    if (!fragmentShader.GetCompileStatus())
+    {
+        std::ostringstream ss;
+        ss << "Failed to compile fragment." << std::endl;
+        ss << fragmentShader.GetInfoLog() << std::endl;
+        throw std::runtime_error(ss.str().c_str());
+    }
+
+    OpenGL::Program program;
+    program.Create();
+    program.AttachShader(vertexShader);
+    program.AttachShader(fragmentShader);
+    program.BindAttribLocation(OpenGL::POSITION1, "vertPosition");
+    program.BindAttribLocation(OpenGL::TEXCOORD1, "vertTexCoord");
+    
+    program.Link();
+    if (!program.GetLinkStatus())
+    {
+        std::ostringstream ss;
+        ss << "Failed to link program:" << std::endl;
+        ss << program.GetInfoLog() << std::endl;
+        throw std::runtime_error(ss.str().c_str());
+    }
+
+    program.Validate();
+    if (!program.GetValidateStatus())
+    {
+        std::ostringstream ss;
+        ss << "Failed to validate program:" << std::endl;
+        ss << program.GetInfoLog() << std::endl;
+        throw std::runtime_error(ss.str().c_str());
+    }
+
+    return program;
+}
+
 int main()
 {
     try
     {
-        //Assimp::Test::DoStuff();
-        Assimp::Scene test;
-        test.Import("chair.DAE", Assimp::PROCESS_CALC_TANGENT_SPACE | Assimp::PROCESS_TRIANGULATE | Assimp::PROCESS_JOIN_IDENTICAL_VERTICES | Assimp::PROCESS_SORT_BY_PTYPE);
-
-        OpenGL::Test();
-
+        // Create the window
         WindowStyle style;
+        Window window;
         style.title = "Jatta Window";
-        style.width = 640;
-        style.height = 480;
+        style.width = 800;
+        style.height = 600;
         style.backgroundColor = Colors::black;
         style.resizable = true;
-
-        Window window;
         window.Create(style);
 
+        // Create the OpenGL context
         OpenGL::Context context;
         context.Create(&window);
-
-        OpenGL::Shader vertexShader, fragmentShader;
-        vertexShader.Create(OpenGL::GL::VERTEX_SHADER);
-        fragmentShader.Create(OpenGL::GL::FRAGMENT_SHADER);
-
-        String vertexSource, fragmentSource;
-        if (!File::GetText("screen.vert", &vertexSource))
-        {
-            std::cout << "Failed to load screen.vert." << std::endl;
-            return 0;
-        }
-        if (!File::GetText("screen.frag", &fragmentSource))
-        {
-            std::cout << "Failed to load screen.frag." << std::endl;
-            return 0;
-        }
-
-        vertexShader.Source(vertexSource);
-        fragmentShader.Source(fragmentSource);
-
-        vertexShader.Compile();
-        if (!vertexShader.GetCompileStatus())
-        {
-            std::cout << "Failed to compile vertex." << std::endl;
-            std::cout << vertexShader.GetInfoLog() << std::endl;
-            return 0;
-        }
-        fragmentShader.Compile();
-        if (!fragmentShader.GetCompileStatus())
-        {
-            std::cout << "Failed to compile fragment." << std::endl;
-            std::cout << fragmentShader.GetInfoLog() << std::endl;
-            return 0;
-        }
-
-        OpenGL::Program program;
-        program.Create();
-        program.AttachShader(vertexShader);
-        program.AttachShader(fragmentShader);
-        program.BindAttribLocation(OpenGL::POSITION1, "vertPosition");
-        program.BindAttribLocation(OpenGL::TEXCOORD1, "vertTexCoord");
-        
-        program.Link();
-        if (!program.GetLinkStatus())
-        {
-            std::cout << "Failed to link program:" << std::endl;
-            std::cout << program.GetInfoLog() << std::endl;
-            return 0;
-        }
-
-        program.Validate();
-        if (!program.GetValidateStatus())
-        {
-            std::cout << "Failed to validate program:" << std::endl;
-            std::cout << program.GetInfoLog() << std::endl;
-            //return 0;
-        }
 
         Shader shaderOld;
         shaderOld.Load("screen.vert", "screen.frag");
@@ -130,6 +132,8 @@ int main()
 
         context.Viewport(0, 0, 640, 480);
         context.ClearColor(Colors::blue);
+
+        Jatta::OpenGL::Program program = LoadShader("screen.vert", "screen.frag");
 
         while (window.IsOpen())
         {

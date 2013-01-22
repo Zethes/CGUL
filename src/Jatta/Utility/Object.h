@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#if 0
 #pragma once
 #include "../External/Defines.h"
 
@@ -24,3 +25,4 @@ namespace Jatta
 // TODO: inherit each object from this & link STL allocators to allocate function
 
 #include "../External/Undefines.h"
+#endif

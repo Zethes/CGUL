@@ -14,6 +14,7 @@ namespace Jatta
 {
     namespace Assimp
     {
+        class Camera;
     	class Material;
         class Mesh;
         class Texture;
@@ -40,6 +41,7 @@ namespace Jatta
             _JATTA_EXPORT UInt32 GetMeshCount() const;
             _JATTA_EXPORT UInt32 GetTextureCount() const;
 
+            _JATTA_EXPORT Camera GetCamera(UInt32 index) const;
             _JATTA_EXPORT Material GetMaterial(UInt32 index) const;
             _JATTA_EXPORT Mesh GetMesh(UInt32 index) const;
             _JATTA_EXPORT Texture GetTexture(UInt32 index) const;
