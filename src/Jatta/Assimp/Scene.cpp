@@ -94,7 +94,7 @@ _JATTA_EXPORT Jatta::Assimp::Camera Jatta::Assimp::Scene::GetCamera(UInt32 index
 
 _JATTA_EXPORT Jatta::Assimp::Material Jatta::Assimp::Scene::GetMaterial(UInt32 index) const
 {
-	return Material(scene->mMaterials[index]);
+    return Material(scene->mMaterials[index]);
 }
 
 _JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index) const
@@ -104,7 +104,7 @@ _JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index) co
 
 _JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 index) const
 {
-	return Texture(scene->mTextures[index]);
+    return Texture(scene->mTextures[index]);
 }
 
 #endif

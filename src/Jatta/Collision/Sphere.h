@@ -4,17 +4,19 @@
  */
 
 #pragma once
+#include "../Math/Float3.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
-    struct VertexBuffer
+    /** @brief 3D Sphere
+      */
+    struct Sphere
     {
-        UInt32 index;
-        UInt32 size;
-        void* buffer;
-
-        VertexBuffer();
+        Float3 position;
+        Float32 radius;
+        
+        _JATTA_EXPORT Sphere();
     };
 }
 

@@ -7,43 +7,43 @@
 
 _JATTA_EXPORT void Jatta::InputState::Analyze()
 {
-	if (justReleased)
-		justReleased = false;
+    if (justReleased)
+        justReleased = false;
 
-	if (down && hasPressed == false && justReleased == false)
-	{
-		down = false;
-		justPressed = true;
-	}
-	else if (justPressed && hasPressed == false && justReleased == false)
-	{
-		justPressed = false;
-		hasPressed = true;
-		down = true;
-	}
-	else if (down == false && hasPressed == true)
-	{
-		hasPressed = false;
-		justReleased = true;
-	}
+    if (down && hasPressed == false && justReleased == false)
+    {
+        down = false;
+        justPressed = true;
+    }
+    else if (justPressed && hasPressed == false && justReleased == false)
+    {
+        justPressed = false;
+        hasPressed = true;
+        down = true;
+    }
+    else if (down == false && hasPressed == true)
+    {
+        hasPressed = false;
+        justReleased = true;
+    }
 }
 
 _JATTA_EXPORT Jatta::InputState::InputState()
 {
-	down = justReleased = justPressed = hasPressed = false;
+    down = justReleased = justPressed = hasPressed = false;
 }
 
 _JATTA_EXPORT bool Jatta::InputState::IsDown()
 {
-	return down;
+    return down;
 }
 
 _JATTA_EXPORT bool Jatta::InputState::IsReleased()
 {
-	return justReleased;
+    return justReleased;
 }
 
 _JATTA_EXPORT bool Jatta::InputState::IsPressed()
 {
-	return justPressed;
+    return justPressed;
 }

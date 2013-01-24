@@ -12,44 +12,44 @@ _JATTA_EXPORT Jatta::SubMesh::SubMesh()
 
 void Jatta::SubMesh::Setup(Type type, UInt32 vertexCount)
 {
-	this->type = type;
+    this->type = type;
 
-	glGenVertexArrays(1, &this->vertexArray);
-	this->vertexCount = vertexCount;
+    glGenVertexArrays(1, &this->vertexArray);
+    this->vertexCount = vertexCount;
 
-	indices = nullptr;
+    indices = nullptr;
 
-	hasTexture = false;
+    hasTexture = false;
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(float* buffer, Byte count, UInt32 index)
 {
-	if (count < 2 || count > 4)
-	{
-		throw std::runtime_error("AddBuffer count invalid (must be 2-4).");
-	}
+    if (count < 2 || count > 4)
+    {
+        throw std::runtime_error("AddBuffer count invalid (must be 2-4).");
+    }
 
-	// bind the mesh so that we can modify it
-	glBindVertexArray(this->vertexArray);
+    // bind the mesh so that we can modify it
+    glBindVertexArray(this->vertexArray);
 
-	// generate a new vertex buffer
-	unsigned int object;
-	glGenBuffers(1, &object);
+    // generate a new vertex buffer
+    unsigned int object;
+    glGenBuffers(1, &object);
 
-	// bind the vertex buffer
-	glBindBuffer(GL_ARRAY_BUFFER, object);
+    // bind the vertex buffer
+    glBindBuffer(GL_ARRAY_BUFFER, object);
 
-	// set the data of this buffer
-	glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * count) * sizeof(GLfloat), (float*)buffer, GL_STATIC_DRAW);
+    // set the data of this buffer
+    glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * count) * sizeof(GLfloat), (float*)buffer, GL_STATIC_DRAW);
 
-	// setup the attribute pointer to whatever was passed in
-	glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, 0, 0);
+    // setup the attribute pointer to whatever was passed in
+    glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, 0, 0);
 
-	// set the attribute index
-	glEnableVertexAttribArray(index);
+    // set the attribute index
+    glEnableVertexAttribArray(index);
 
-	// we done here, unbind the mesh
-	glBindVertexArray(0);
+    // we done here, unbind the mesh
+    glBindVertexArray(0);
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(Jatta::Float2* buffer, unsigned int index)
@@ -129,27 +129,27 @@ _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(Jatta::Float4* buffer, unsigned int
 
 _JATTA_EXPORT void Jatta::SubMesh::AddBuffer(Jatta::Color* buffer, UInt32 index)
 {
-	// bind the mesh so that we can modify it
-	    glBindVertexArray(this->vertexArray);
+    // bind the mesh so that we can modify it
+        glBindVertexArray(this->vertexArray);
 
-	    // generate a new vertex buffer
-	    unsigned int object;
-	    glGenBuffers(1, &object);
+        // generate a new vertex buffer
+        unsigned int object;
+        glGenBuffers(1, &object);
 
-	    // bind the vertex buffer
-	    glBindBuffer(GL_ARRAY_BUFFER, object);
+        // bind the vertex buffer
+        glBindBuffer(GL_ARRAY_BUFFER, object);
 
-	    // set the data of this buffer
-	    glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * 4) * sizeof(GLubyte), (GLubyte*)buffer, GL_STATIC_DRAW);
+        // set the data of this buffer
+        glBufferData(GL_ARRAY_BUFFER, (this->vertexCount * 4) * sizeof(GLubyte), (GLubyte*)buffer, GL_STATIC_DRAW);
 
-	    // setup the attribute pointer to whatever was passed in
-	    glVertexAttribPointer(index, 4, GL_UNSIGNED_BYTE, GL_FALSE, 0, 0);
+        // setup the attribute pointer to whatever was passed in
+        glVertexAttribPointer(index, 4, GL_UNSIGNED_BYTE, GL_FALSE, 0, 0);
 
-	    // set the attribute index
-	    glEnableVertexAttribArray(index);
+        // set the attribute index
+        glEnableVertexAttribArray(index);
 
-	    // we done here, unbind the mesh
-	    glBindVertexArray(0);
+        // we done here, unbind the mesh
+        glBindVertexArray(0);
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::SetIndexBuffer(unsigned int* buffer, unsigned int size)
@@ -169,18 +169,18 @@ _JATTA_EXPORT void Jatta::SubMesh::SetIndexBuffer(unsigned int* buffer, unsigned
 
 _JATTA_EXPORT void Jatta::SubMesh::SetTexture(const Texture& texture)
 {
-	this->texture = texture;
-	hasTexture = true;
+    this->texture = texture;
+    hasTexture = true;
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::SubMesh::HasTexture()
 {
-	return hasTexture;
+    return hasTexture;
 }
 
 _JATTA_EXPORT Jatta::Texture Jatta::SubMesh::GetTexture()
 {
-	return texture;
+    return texture;
 }
 
 _JATTA_EXPORT void Jatta::SubMesh::Draw()

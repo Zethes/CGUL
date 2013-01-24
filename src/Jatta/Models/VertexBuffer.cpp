@@ -7,7 +7,7 @@
 
 Jatta::VertexBuffer::VertexBuffer()
 {
-	this->index = -1;
-	this->size = 0;
-	this->buffer = nullptr;
+    this->index = -1;
+    this->size = 0;
+    this->buffer = nullptr;
 }

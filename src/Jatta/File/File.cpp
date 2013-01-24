@@ -58,20 +58,20 @@ _JATTA_EXPORT bool Jatta::File::GetLines(const std::string& fileName, std::vecto
 
 _JATTA_EXPORT bool Jatta::File::GetLines(const String& fileName, std::vector<String>* vector)
 {
-	std::ifstream file;
-	file.open(fileName.GetData().c_str(), std::ios::in);
-	if (!file.is_open())
-	{
-		return false;
-	}
-	std::string line;
-	while (!file.eof())
-	{
-		getline(file, line);
-		vector->push_back(String(std::move(line)));
-	}
-	file.close();
-	return true;
+    std::ifstream file;
+    file.open(fileName.GetData().c_str(), std::ios::in);
+    if (!file.is_open())
+    {
+        return false;
+    }
+    std::string line;
+    while (!file.eof())
+    {
+        getline(file, line);
+        vector->push_back(String(std::move(line)));
+    }
+    file.close();
+    return true;
 }
 
 _JATTA_EXPORT bool Jatta::File::GetFileSize(const std::string& fileName, UInt32* fileSize)

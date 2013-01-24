@@ -10,8 +10,8 @@ namespace Jatta
 {
     struct Float4
     {
-    	union
-    	{
+        union
+        {
             struct
             {
                 float x, y, z, w;
@@ -26,10 +26,10 @@ namespace Jatta
 
         float& operator[](UInt32 index);
         friend std::ostream& operator<<(std::ostream& stream, const Float4& vector)
-		{
-			stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
-			return stream;
-		}
+        {
+            stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
+            return stream;
+        }
 
         _JATTA_EXPORT void Normalize();
 

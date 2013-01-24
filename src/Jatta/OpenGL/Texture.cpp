@@ -15,7 +15,7 @@ _JATTA_EXPORT Jatta::OpenGL::Texture::Texture()
 
 _JATTA_EXPORT Jatta::OpenGL::Texture::Texture(UInt32 texture)
 {
-	this->texture = texture;
+    this->texture = texture;
 }
 
 _JATTA_EXPORT Jatta::OpenGL::Texture::~Texture()

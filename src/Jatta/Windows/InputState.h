@@ -8,24 +8,24 @@
 
 namespace Jatta
 {
-	struct InputState
-	{
-		friend class Input;
-		friend class Window;
+    struct InputState
+    {
+        friend class Input;
+        friend class Window;
 
-	private:
-		bool down;
-		bool hasPressed;
-		bool justPressed;
-		bool justReleased;
+    private:
+        bool down;
+        bool hasPressed;
+        bool justPressed;
+        bool justReleased;
 
-		_JATTA_EXPORT void Analyze();
-	public:
-		_JATTA_EXPORT InputState();
-		_JATTA_EXPORT bool IsDown();
-		_JATTA_EXPORT bool IsReleased();
-		_JATTA_EXPORT bool IsPressed();
-	};
+        _JATTA_EXPORT void Analyze();
+    public:
+        _JATTA_EXPORT InputState();
+        _JATTA_EXPORT bool IsDown();
+        _JATTA_EXPORT bool IsReleased();
+        _JATTA_EXPORT bool IsPressed();
+    };
 }
 
 #include "../External/Undefines.h"

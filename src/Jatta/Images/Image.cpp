@@ -45,22 +45,22 @@ _JATTA_EXPORT Jatta::Image::~Image()
 
 _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
 {
-	this->width = copy.width;
-	this->height = copy.height;
-	this->colors = (Color*)new char[this->width * this->height * 4];
-	memcpy(this->colors, copy.colors, this->width * this->height * 4);
-	return *this;
+    this->width = copy.width;
+    this->height = copy.height;
+    this->colors = (Color*)new char[this->width * this->height * 4];
+    memcpy(this->colors, copy.colors, this->width * this->height * 4);
+    return *this;
 }
 
 _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
 {
-	this->width = move.width;
-	this->height = move.height;
-	this->colors = move.colors;
-	move.width = 0;
-	move.height = 0;
-	move.colors = nullptr;
-	return *this;
+    this->width = move.width;
+    this->height = move.height;
+    this->colors = move.colors;
+    move.width = 0;
+    move.height = 0;
+    move.colors = nullptr;
+    return *this;
 }
 
 _JATTA_EXPORT unsigned char* Jatta::Image::GetData()
@@ -85,16 +85,16 @@ _JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
 
 _JATTA_EXPORT void Jatta::Image::Free()
 {
-	delete[] colors;
-	colors = nullptr;
+    delete[] colors;
+    colors = nullptr;
 }
 
 _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
 {
-	if (IsPng(fileName))
-		return LoadPng(fileName);
-	else if (IsJpg(fileName))
-		return LoadJpg(fileName);
-	else
-		return false;
+    if (IsPng(fileName))
+        return LoadPng(fileName);
+    else if (IsJpg(fileName))
+        return LoadJpg(fileName);
+    else
+        return false;
 }

@@ -41,7 +41,7 @@ _JATTA_EXPORT Jatta::Float4::Float4(float x, float y, float z, float w)
 
 float& Jatta::Float4::operator[](UInt32 index)
 {
-	return m[index];
+    return m[index];
 }
 
 _JATTA_EXPORT void Jatta::Float4::Normalize()

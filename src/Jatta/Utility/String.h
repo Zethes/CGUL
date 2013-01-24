@@ -34,9 +34,9 @@ namespace Jatta
         _JATTA_EXPORT bool operator<(const String& operand) const;
         friend std::ostream& operator<<(std::ostream& stream, const String& string)
         {
-        	stream << string.data;
-			return stream;
-		}
+            stream << string.data;
+            return stream;
+        }
 
         _JATTA_EXPORT Size GetSize() const;
         _JATTA_EXPORT Size GetLength() const;
@@ -129,19 +129,19 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T&& operand
  */
 template <typename T> bool Jatta::String::Is() const
 {
-	std::istringstream test;
-	test.str(data);
-	if (!test.good())
-	{
-		return false;
-	}
-	T x;
-	test >> x;
-	if (test.fail() || test.good())
-	{
-		return false;
-	}
-	return true;
+    std::istringstream test;
+    test.str(data);
+    if (!test.good())
+    {
+        return false;
+    }
+    T x;
+    test >> x;
+    if (test.fail() || test.good())
+    {
+        return false;
+    }
+    return true;
 }
 
 /** @brief Converts the string to the given data type.
@@ -149,11 +149,11 @@ template <typename T> bool Jatta::String::Is() const
  */
 template <typename T> T Jatta::String::To() const
 {
-	std::istringstream convert;
-	convert.str(data);
-	T x;
-	convert >> x;
-	return x;
+    std::istringstream convert;
+    convert.str(data);
+    T x;
+    convert >> x;
+    return x;
 }
 
 #include "../External/Undefines.h"

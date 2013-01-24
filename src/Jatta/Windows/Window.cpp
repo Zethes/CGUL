@@ -337,7 +337,7 @@ _JATTA_EXPORT void Jatta::Window::UpdateInput()
 _JATTA_EXPORT void Jatta::Window::SetTitle(String title)
 {
 #   ifdef WINDOWS
-	SetWindowText(handle, title._ToWideString().c_str());
+    SetWindowText(handle, title._ToWideString().c_str());
 #   endif
 
 #   ifdef LINUX
@@ -370,7 +370,7 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 {
 #   ifdef WINDOWS
-	return (handle == GetForegroundWindow());
+    return (handle == GetForegroundWindow());
 #   endif
 }
 
@@ -441,10 +441,10 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 _JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
 {
 #   ifdef WINDOWS
-	RECT rect = {0, 0, 0, 0};
-	AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
-	GetWindowRect(handle, &rect);
-	return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    GetWindowRect(handle, &rect);
+    return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
 //TODO: Linux

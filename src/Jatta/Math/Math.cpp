@@ -28,15 +28,15 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Tan(Float32 x)
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ACos(Float32 x)
 {
-	return std::acos(x);
+    return std::acos(x);
 }
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ASin(Float32 x)
 {
-	return std::asin(x);
+    return std::asin(x);
 }
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan(Float32 x)
 {
-	return std::atan(x);
+    return std::atan(x);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
@@ -46,7 +46,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::RadToDeg(Float32 rad)
 {
-	return rad * (180.0f / pi);
+    return rad * (180.0f / pi);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)

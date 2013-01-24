@@ -22,12 +22,12 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
  */
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
-	/*std::fstream extensionsFile;
-	extensionsFile.open("gl.txt", std::fstream::out);
-	std::cout << std::hex;
+    /*std::fstream extensionsFile;
+    extensionsFile.open("gl.txt", std::fstream::out);
+    std::cout << std::hex;
     //std::cout << "GL_EXTENSIONS = 0x" << GL_EXTENSIONS << std::endl;
-	extensionsFile << "GL_MAJOR_VERSION = 0x" << GL_MAJOR_VERSION << std::endl;
-	extensionsFile << "GL_MINOR_VERSION = 0x" << GL_MINOR_VERSION << std::endl;
+    extensionsFile << "GL_MAJOR_VERSION = 0x" << GL_MAJOR_VERSION << std::endl;
+    extensionsFile << "GL_MINOR_VERSION = 0x" << GL_MINOR_VERSION << std::endl;
     extensionsFile << "GL_VERSION = 0x" << GL_VERSION << std::endl;
     extensionsFile << "GL_SHADING_LANGUAGE_VERSION = 0x" << GL_SHADING_LANGUAGE_VERSION << std::endl;
     extensionsFile << "GL_VENDOR = 0x" << GL_VENDOR << std::endl;
@@ -48,63 +48,63 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
 
     extensionsFile << std::endl << "Supported Extensions: " << std::endl;
     std::vector<String>extensions = OpenGL::GetSupportedExtensions();
-	for (unsigned int i = 0; i < extensions.size(); i++)
-	{
-		extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
-	}*/
+    for (unsigned int i = 0; i < extensions.size(); i++)
+    {
+        extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
+    }*/
 }
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)
 {
-	std::string ret = (const char *)glGetString(name);
-	return ret;
+    std::string ret = (const char *)glGetString(name);
+    return ret;
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetStringi(Jatta::OpenGL::Enum name, unsigned int index)
 {
-	std::string ret;// = (const char *)glGetStringi(name, index);
-	return ret;
+    std::string ret;// = (const char *)glGetStringi(name, index);
+    return ret;
 }
 
 _JATTA_EXPORT std::vector<Jatta::String> Jatta::OpenGL::GetSupportedExtensions()
 {
-	Jatta::String ret = (const char *)glGetString(GL::EXTENSIONS);
+    Jatta::String ret = (const char *)glGetString(GL::EXTENSIONS);
 
-	return ret.Explode(" ");
+    return ret.Explode(" ");
 }
 
 _JATTA_EXPORT int Jatta::OpenGL::GetOpenGLVersionMajor()
 {
-	int v;
-	glGetIntegerv(GL::MAJOR_VERSION, &v);
-	return v;
+    int v;
+    glGetIntegerv(GL::MAJOR_VERSION, &v);
+    return v;
 }
 
 _JATTA_EXPORT int Jatta::OpenGL::GetOpenGLVersionMinor()
 {
-	int v;
-	glGetIntegerv(GL::MINOR_VERSION, &v);
-	return v;
+    int v;
+    glGetIntegerv(GL::MINOR_VERSION, &v);
+    return v;
 }
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetOpenGLVersion()
 {
-	std::string ret = (char *)glGetString(GL::VERSION);
-	return ret;
+    std::string ret = (char *)glGetString(GL::VERSION);
+    return ret;
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetGLSLVersion()
 {
-	std::string ret = (char *)glGetString(GL::GLSL_VERSION);
-	return ret;
+    std::string ret = (char *)glGetString(GL::GLSL_VERSION);
+    return ret;
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetOpenGLVendor()
 {
-	std::string ret = (char *)glGetString(GL::VENDOR);
-	return ret;
+    std::string ret = (char *)glGetString(GL::VENDOR);
+    return ret;
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetOpenGLRenderer()
 {
-	std::string ret = (char *)glGetString(GL::RENDERER);
-	return ret;
+    std::string ret = (char *)glGetString(GL::RENDERER);
+    return ret;
 }
 
 #endif

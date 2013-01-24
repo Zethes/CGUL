@@ -15,14 +15,14 @@ _JATTA_EXPORT Jatta::Assimp::Material::Material(aiMaterial* material)
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Material::GetTextureCount(Enum type)
 {
-	material->GetTextureCount((aiTextureType)type);
+    return material->GetTextureCount((aiTextureType)type);
 }
 
 _JATTA_EXPORT Jatta::String Jatta::Assimp::Material::GetTexturePath(Enum type, UInt32 index)
 {
-	aiString path;
-	material->GetTexture((aiTextureType)type, index, &path);
-	return String(path.C_Str());
+    aiString path;
+    material->GetTexture((aiTextureType)type, index, &path);
+    return String(path.C_Str());
 }
 
 #endif

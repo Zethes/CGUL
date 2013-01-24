@@ -14,12 +14,12 @@
 
 _JATTA_EXPORT bool Jatta::Image::IsJpg(const Jatta::String& fileName)
 {
-	return false;
+    return false;
 }
 
 _JATTA_EXPORT bool Jatta::Image::LoadJpg(const Jatta::String& fileName)
 {
-	//TODO: Loading JPGs
+    //TODO: Loading JPGs
     return false;
 }
 

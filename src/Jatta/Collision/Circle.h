@@ -4,17 +4,19 @@
  */
 
 #pragma once
+#include "../Math/Float2.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
-    struct VertexBuffer
+    /** @brief 2D Circle
+      */
+    struct Circle
     {
-        UInt32 index;
-        UInt32 size;
-        void* buffer;
-
-        VertexBuffer();
+        Float2 position;
+        Float32 radius;
+        
+        _JATTA_EXPORT Circle();
     };
 }
 

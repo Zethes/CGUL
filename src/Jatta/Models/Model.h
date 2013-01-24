@@ -13,7 +13,7 @@ namespace Jatta
     class Model
     {
     protected:
-    	std::vector<Group> groups;
+        std::vector<Group> groups;
     public:
         _JATTA_EXPORT Model();
         _JATTA_EXPORT ~Model();

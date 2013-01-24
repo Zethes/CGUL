@@ -18,14 +18,14 @@ namespace Jatta
     class Mesh
     {
     private:
-    	std::vector<SubMesh*> meshes;
+        std::vector<SubMesh*> meshes;
     public:
-    	_JATTA_EXPORT static Mesh MakeBox(Float2 size, Color color, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4);
-    	_JATTA_EXPORT static Mesh MakeBox(Float2 size, Color color1, Color color2, Color color3, Color color4, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4);
-    	_JATTA_EXPORT static Mesh MakeCube(Float3 size);
-    	_JATTA_EXPORT static Mesh MakeSphere(Float32 radius, UInt32 slices, UInt32 stacks);
-    	_JATTA_EXPORT static Mesh MakeTorus(Float32 innerRadius, Float32 outerRadius, UInt32 nsides, UInt32 rings);
-    	_JATTA_EXPORT static Mesh MakeTeapot(Float3 size, Color color);
+        _JATTA_EXPORT static Mesh MakeBox(Float2 size, Color color, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4);
+        _JATTA_EXPORT static Mesh MakeBox(Float2 size, Color color1, Color color2, Color color3, Color color4, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4);
+        _JATTA_EXPORT static Mesh MakeCube(Float3 size);
+        _JATTA_EXPORT static Mesh MakeSphere(Float32 radius, UInt32 slices, UInt32 stacks);
+        _JATTA_EXPORT static Mesh MakeTorus(Float32 innerRadius, Float32 outerRadius, UInt32 nsides, UInt32 rings);
+        _JATTA_EXPORT static Mesh MakeTeapot(Float3 size, Color color);
 
         _JATTA_EXPORT Mesh();
 

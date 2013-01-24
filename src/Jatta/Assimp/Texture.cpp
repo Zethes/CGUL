@@ -14,9 +14,9 @@ _JATTA_EXPORT Jatta::Assimp::Texture::Texture(aiTexture* texture)
 #include <iostream> // TODO: remove iostream
 _JATTA_EXPORT void Jatta::Assimp::Texture::DoStuff() const
 {
-	std::cout << "texture->mHeight: " << texture->mHeight << std::endl;
-	std::cout << "texture->mWidth: " << texture->mWidth<< std::endl;
-	std::cout << "texture->achFormatHint: " << texture->achFormatHint << std::endl;
+    std::cout << "texture->mHeight: " << texture->mHeight << std::endl;
+    std::cout << "texture->mWidth: " << texture->mWidth<< std::endl;
+    std::cout << "texture->achFormatHint: " << texture->achFormatHint << std::endl;
 }
 
 #endif

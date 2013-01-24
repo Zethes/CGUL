@@ -11,48 +11,48 @@ _JATTA_EXPORT Jatta::Texture::Texture()
 
 _JATTA_EXPORT void Jatta::Texture::Create(const Jatta::Image& image, bool ms)
 {
-	if (OpenGL::GetOpenGLVersionMajor()+(OpenGL::GetOpenGLVersionMinor()/10.0f) >= 3.3f && ms)
-	{
-		multiSampled = true;
-		_JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
-		glGenTextures(1, &this->texture);
-		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, this->texture);
-		glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), GL_FALSE);
-		glTexImage2D(GL_TEXTURE_2D_MULTISAMPLE, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
-		glGenerateMipmap(GL_TEXTURE_2D_MULTISAMPLE);
-		this->width = image.GetWidth();
-		this->height = image.GetHeight();
-		_JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
-	}
-	else
-	{
-		multiSampled = false;
-		_JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
-		glGenTextures(1, &this->texture);
-		glBindTexture(GL_TEXTURE_2D, this->texture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
-		glGenerateMipmap(GL_TEXTURE_2D);
-		this->width = image.GetWidth();
-		this->height = image.GetHeight();
-		_JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
+    if (OpenGL::GetOpenGLVersionMajor()+(OpenGL::GetOpenGLVersionMinor()/10.0f) >= 3.3f && ms)
+    {
+        multiSampled = true;
+        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
+        glGenTextures(1, &this->texture);
+        glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, this->texture);
+        glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), GL_FALSE);
+        glTexImage2D(GL_TEXTURE_2D_MULTISAMPLE, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
+        glGenerateMipmap(GL_TEXTURE_2D_MULTISAMPLE);
+        this->width = image.GetWidth();
+        this->height = image.GetHeight();
+        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
+    }
+    else
+    {
+        multiSampled = false;
+        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
+        glGenTextures(1, &this->texture);
+        glBindTexture(GL_TEXTURE_2D, this->texture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
+        glGenerateMipmap(GL_TEXTURE_2D);
+        this->width = image.GetWidth();
+        this->height = image.GetHeight();
+        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
     }
 }
 
 _JATTA_EXPORT void Jatta::Texture::CreateCubeMap(const Jatta::Image& negX, const Jatta::Image& posX, const Jatta::Image& negY, const Jatta::Image& posY, const Jatta::Image& negZ, const Jatta::Image& posZ)
 {
-	glGenTextures(1, &this->texture);
+    glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_CUBE_MAP, this->texture);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -62,23 +62,23 @@ _JATTA_EXPORT void Jatta::Texture::CreateCubeMap(const Jatta::Image& negX, const
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     GLenum cubes[6] = {
-    		GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-			GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-			GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-			GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-			GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-			GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+            GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+            GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+            GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+            GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+            GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
     };
 
     const Jatta::Image* images[6] = {
-    		&posX, &negX,
-    		&posY, &negY,
-    		&posZ, &negZ
+            &posX, &negX,
+            &posY, &negY,
+            &posZ, &negZ
     };
 
     for (int i = 0; i < 6; i++)
     {
-    	glTexImage2D(cubes[i], 0, GL_RGBA, images[i]->GetWidth(), images[i]->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, images[i]->GetData());
+        glTexImage2D(cubes[i], 0, GL_RGBA, images[i]->GetWidth(), images[i]->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, images[i]->GetData());
     }
     this->width = 0;
     this->height = 0;
@@ -107,5 +107,5 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Texture::GetSize() const
 
 _JATTA_EXPORT bool Jatta::Texture::UsesMultisampling() const
 {
-	return multiSampled;
+    return multiSampled;
 }

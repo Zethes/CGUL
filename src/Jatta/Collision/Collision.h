@@ -9,15 +9,14 @@
 
 namespace Jatta
 {
-    /** @brief 2D Axis Aligned Bounding Box
-      */
-    struct AABB2D
+    /** @brief A collection of collision objects to perform collision detection.
+     */
+    namespace Collision
     {
-        Float2 position;
-        Float2 extents;
-        
-        _JATTA_EXPORT AABB2D();
-    };
+        struct Collision
+        {
+        };
+    }
 }
 
 #include "../External/Undefines.h"

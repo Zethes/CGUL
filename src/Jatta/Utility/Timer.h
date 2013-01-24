@@ -11,12 +11,12 @@ namespace Jatta
     class Timer
     {
     private:
-    	Float32 pcFreq;
-		long startTime;
-		long mSeconds;
-		bool running;
+        Float32 pcFreq;
+        long startTime;
+        long mSeconds;
+        bool running;
     public:
-    	_JATTA_EXPORT Timer();
+        _JATTA_EXPORT Timer();
         _JATTA_EXPORT void Start();
         _JATTA_EXPORT void Stop();
         _JATTA_EXPORT void Reset();

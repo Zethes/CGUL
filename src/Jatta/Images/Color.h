@@ -10,7 +10,7 @@ namespace Jatta
 {
     struct Color
     {
-        _JATTA_EXPORT static Color MakeHSV(unsigned int hue, unsigned char saturation, unsigned char value);
+        _JATTA_EXPORT static Color MakeHSL(unsigned int hue, unsigned char saturation, unsigned char luminance);
 
         unsigned char r, g, b, a;
 

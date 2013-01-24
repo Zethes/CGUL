@@ -15,7 +15,7 @@ namespace Jatta
     namespace Assimp
     {
         class Camera;
-    	class Material;
+        class Material;
         class Mesh;
         class Texture;
 

@@ -9,8 +9,8 @@
 
 namespace Jatta
 {
-    /* @brief 3D Axis Aligned Bounding Box
-     */
+    /** @brief 3D Axis Aligned Bounding Box
+      */
     struct AABB3D
     {
         Float3 position;

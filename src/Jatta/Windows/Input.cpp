@@ -287,18 +287,18 @@ _JATTA_EXPORT Jatta::InputState* Jatta::Input::GetMouseData()
 
 _JATTA_EXPORT void Jatta::Input::AnalyzeKeyData()
 {
-	for (unsigned int i = 0; i < 255; i++)
-	{
-		this->keyData[i].Analyze();
-	}
+    for (unsigned int i = 0; i < 255; i++)
+    {
+        this->keyData[i].Analyze();
+    }
 }
 
 _JATTA_EXPORT void Jatta::Input::AnalyzeMouseData()
 {
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		this->mouseData[i].Analyze();
-	}
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        this->mouseData[i].Analyze();
+    }
 }
 
 _JATTA_EXPORT unsigned char Jatta::Input::GetKeyFromLayout(unsigned char key)
@@ -325,18 +325,18 @@ _JATTA_EXPORT Jatta::InputState Jatta::Input::GetButtonState(unsigned char butto
 
 _JATTA_EXPORT Jatta::Float2 Jatta::Input::GetMousePosition()
 {
-	return mousePos;
-	//TODO: Linux
+    return mousePos;
+    //TODO: Linux
 }
 
 _JATTA_EXPORT void Jatta::Input::SetMousePosition(Float2 pos)
 {
 #ifdef WINDOWS
-	POINT p;
-	p.x = pos.x;
-	p.y = pos.y;
-	ClientToScreen(this->window->_GetHandle(),&p);
-	SetCursorPos(p.x,p.y);
+    POINT p;
+    p.x = pos.x;
+    p.y = pos.y;
+    ClientToScreen(this->window->_GetHandle(),&p);
+    SetCursorPos(p.x,p.y);
 #endif
-	//TODO: Linux
+    //TODO: Linux
 }

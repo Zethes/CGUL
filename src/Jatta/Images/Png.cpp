@@ -37,13 +37,19 @@ bool Jatta::Png::isValid(const std::string& fileName)
     return valid;
 }*/
 
+/** @brief Checks if the given file is a valid Png image.
+ *  @param fileName The file to load.
+ *  @returns True if the file is a valid Png image, false otherwise.
+ *  @details This method checks the magic number inside the Png and nothing more.
+ *  @todo Will this method crash if the file's size is less than PNGSIGSIZE?
+ */
 _JATTA_EXPORT bool Jatta::Image::IsPng(const Jatta::String& fileName)
 {
-	unsigned int size = PNGSIGSIZE;
-	Byte* buffer = new Byte[size];
-	File::GetData(fileName.GetData(), buffer, size);
+    unsigned int size = PNGSIGSIZE;
+    Byte* buffer = new Byte[size];
+    File::GetData(fileName.GetData(), buffer, size);
 
-	return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
+    return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
 }
 
 _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)

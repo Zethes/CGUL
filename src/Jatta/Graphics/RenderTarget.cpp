@@ -40,60 +40,60 @@ _JATTA_EXPORT void Jatta::RenderTarget::Create(UInt32 width, UInt32 height, UInt
     }
 
     glGenRenderbuffers(1, &renderBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBuffer);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-	int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if (status == GL_FRAMEBUFFER_UNDEFINED)
-	{
-		_JATTA_DEBUG_LN("Error: You are using the default framebuffer.\n");
-	}
-	else if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
-	{
-		_JATTA_DEBUG_LN("Error: The framebuffer's attachement points are incomplete.\n");
-	}
-	else if (status == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
-	{
-		_JATTA_DEBUG_LN("Error: The framebuffer's missing a texture attachment.\n");
-	}
-	else if (status != GL_FRAMEBUFFER_COMPLETE)
-	{
-		_JATTA_DEBUG_LN("Error: Unknown error with framebuffer.");
-	}
+    int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (status == GL_FRAMEBUFFER_UNDEFINED)
+    {
+        _JATTA_DEBUG_LN("Error: You are using the default framebuffer.\n");
+    }
+    else if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
+    {
+        _JATTA_DEBUG_LN("Error: The framebuffer's attachement points are incomplete.\n");
+    }
+    else if (status == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
+    {
+        _JATTA_DEBUG_LN("Error: The framebuffer's missing a texture attachment.\n");
+    }
+    else if (status != GL_FRAMEBUFFER_COMPLETE)
+    {
+        _JATTA_DEBUG_LN("Error: Unknown error with framebuffer.");
+    }
 }
 
 _JATTA_EXPORT void Jatta::RenderTarget::Begin()
 {
-	glGetIntegerv(GL_VIEWPORT, viewport.vp);
-	glViewport(0, 0, width, height);
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
+    glGetIntegerv(GL_VIEWPORT, viewport.vp);
+    glViewport(0, 0, width, height);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
 
-	/*if (textureCount > 1)
-	{
-		GLenum* buffers = new GLenum[textureCount];
-		for (unsigned int i = 0; i < textureCount; i++)
-		{
-			buffers[i] = GL_COLOR_ATTACHMENT0 + i;
-		}
-		glDrawBuffers(textureCount, buffers);
-		delete[] buffers;
-	}*/
+    /*if (textureCount > 1)
+    {
+        GLenum* buffers = new GLenum[textureCount];
+        for (unsigned int i = 0; i < textureCount; i++)
+        {
+            buffers[i] = GL_COLOR_ATTACHMENT0 + i;
+        }
+        glDrawBuffers(textureCount, buffers);
+        delete[] buffers;
+    }*/
 }
 
 _JATTA_EXPORT void Jatta::RenderTarget::End()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-	glViewport(viewport.x, viewport.y, viewport.width, viewport.height);
+    glViewport(viewport.x, viewport.y, viewport.width, viewport.height);
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::RenderTarget::GetTexture(UInt32 index) const
 {
-	return textures[index];
+    return textures[index];
 }

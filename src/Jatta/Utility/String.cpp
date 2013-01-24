@@ -57,7 +57,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
  */
 _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
 {
-	return data == operand.data;
+    return data == operand.data;
 }
 
 /** @brief Overloaded != operator.  Checks if the two strings are not equal.
@@ -66,7 +66,7 @@ _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
  */
 _JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
 {
-	return data != operand.data;
+    return data != operand.data;
 }
 
 /** @brief Overloaded < operator.  Checks if this string is lexicographically less than another.
@@ -225,7 +225,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetCodePoint(Size start, UInt32* codePo
  */
 _JATTA_EXPORT std::string Jatta::String::GetData() const
 {
-	return data;
+    return data;
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
@@ -247,26 +247,26 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const String& string, Size offset) const
 {
-	Jatta::Size result = offset;
-	for (auto i = data.begin() + offset; i != data.end(); i++)
-	{
-		auto k = i;
-		bool found = true;
-		for (auto j = string.data.begin(); j != string.data.end() && k != data.end(); j++, k++)
-		{
-			if (*k != *j)
-			{
-				found = false;
-				break;
-			}
-		}
-		if (found)
-		{
-			return result;
-		}
-		result += 1;
-	}
-	return none;
+    Jatta::Size result = offset;
+    for (auto i = data.begin() + offset; i != data.end(); i++)
+    {
+        auto k = i;
+        bool found = true;
+        for (auto j = string.data.begin(); j != string.data.end() && k != data.end(); j++, k++)
+        {
+            if (*k != *j)
+            {
+                found = false;
+                break;
+            }
+        }
+        if (found)
+        {
+            return result;
+        }
+        result += 1;
+    }
+    return none;
 }
 
 _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Size offset) const
@@ -282,26 +282,26 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Si
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const String& string, Size offset) const
 {
-	Jatta::Size result = offset;
-	for (auto i = data.rbegin() + offset; i != data.rend(); i++)
-	{
-		auto k = i;
-		bool found = true;
-		for (auto j = string.data.rbegin(); j != string.data.rend() && k != data.rend(); j++, k++)
-		{
-			if (*k != *j)
-			{
-				found = false;
-				break;
-			}
-		}
-		if (found)
-		{
-			return GetSize() - (result + string.GetSize());
-		}
-		result += 1;
-	}
-	return none;
+    Jatta::Size result = offset;
+    for (auto i = data.rbegin() + offset; i != data.rend(); i++)
+    {
+        auto k = i;
+        bool found = true;
+        for (auto j = string.data.rbegin(); j != string.data.rend() && k != data.rend(); j++, k++)
+        {
+            if (*k != *j)
+            {
+                found = false;
+                break;
+            }
+        }
+        if (found)
+        {
+            return GetSize() - (result + string.GetSize());
+        }
+        result += 1;
+    }
+    return none;
 }
 
 _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Size offset) const
@@ -343,7 +343,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
 {
     if (bytes)
     {
-	   return Jatta::String(data.substr(start, count));
+       return Jatta::String(data.substr(start, count));
     }
     else
     {
@@ -392,11 +392,11 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
  */
 _JATTA_EXPORT void Jatta::String::Trim()
 {
-	unsigned int trimStart = 0;
-	for (auto i = data.begin(); i != data.end() && std::isspace(*i); i++, trimStart++);
-	unsigned int trimEnd = 0;
-	for (auto i = data.rbegin(); i != data.rend() && std::isspace(*i); i++, trimEnd++);
-	data = data.substr(trimStart, data.length() - (trimStart + trimEnd));
+    unsigned int trimStart = 0;
+    for (auto i = data.begin(); i != data.end() && std::isspace(*i); i++, trimStart++);
+    unsigned int trimEnd = 0;
+    for (auto i = data.rbegin(); i != data.rend() && std::isspace(*i); i++, trimEnd++);
+    data = data.substr(trimStart, data.length() - (trimStart + trimEnd));
 }
 
 /** @brief Trims whitespace at the beginning of the string.
@@ -455,41 +455,41 @@ _JATTA_EXPORT void Jatta::String::TrimEnd()
 
 _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& delimiter, Size limit) const
 {
-	std::vector<Jatta::String> result;
-	Size find = 0;
-	Size from = 0;
-	do
-	{
-		if (limit-- == 0)
-		{
-			result.push_back(SubString(from));
-			break;
-		}
-		find = FindFirstOf(delimiter, from);
-		result.push_back(SubString(from, find - from, true));
-		from = find + 1;
-	} while (find != none);
-	return result;
+    std::vector<Jatta::String> result;
+    Size find = 0;
+    Size from = 0;
+    do
+    {
+        if (limit-- == 0)
+        {
+            result.push_back(SubString(from));
+            break;
+        }
+        find = FindFirstOf(delimiter, from);
+        result.push_back(SubString(from, find - from, true));
+        from = find + 1;
+    } while (find != none);
+    return result;
 }
 
 /** @brief Converts the entire string to uppercase letters.
  */
 _JATTA_EXPORT void Jatta::String::ToLower()
 {
-	for (auto it = data.begin(); it != data.end(); it++)
-	{
-		*it = tolower(*it);
-	}
+    for (auto it = data.begin(); it != data.end(); it++)
+    {
+        *it = tolower(*it);
+    }
 }
 
 /** @brief Converts the entire string to lowercase letters.
  */
 _JATTA_EXPORT void Jatta::String::ToUpper()
 {
-	for (auto it = data.begin(); it != data.end(); it++)
-	{
-		*it = toupper(*it);
-	}
+    for (auto it = data.begin(); it != data.end(); it++)
+    {
+        *it = toupper(*it);
+    }
 }
 
 /** @brief Removes all whitespace from within a string.
