@@ -8,6 +8,12 @@
 
  #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
 
+_JATTA_EXPORT void Jatta::OpenGL::Texture::Active(UInt32 active)
+{
+    glActiveTexture(GL_TEXTURE0 + active);
+    GLCHECK("Failed to set active texture.");
+}
+
 _JATTA_EXPORT Jatta::OpenGL::Texture::Texture()
 {
     texture = 0;
@@ -51,12 +57,6 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::Unbind()
 {
     glBindTexture(type, 0);
     GLCHECK("Failed to unbind texture.");
-}
-
-_JATTA_EXPORT void Jatta::OpenGL::Texture::Active(UInt32 active)
-{
-    glActiveTexture(GL_TEXTURE0 + active);
-    GLCHECK("Failed to set active texture.");
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Texture::SetMinFilter(Enum param)

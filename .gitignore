@@ -4,6 +4,7 @@ build/
 vsbuild/
 html/
 latex/
+src_backup/
 examples/*/build/
 examples/*/CMakeFiles/
 examples/*/Jatta/

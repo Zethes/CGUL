@@ -108,8 +108,6 @@ namespace Jatta
             // TODO: GL_ACTIVE_UNIFORM_MAX_LENGTH
 
             _JATTA_EXPORT SInt32 GetUniformLocation(const String& name);
-
-            _JATTA_EXPORT void ActiveTexture(SInt32 range);
         };
     }
 }

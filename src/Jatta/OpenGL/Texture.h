@@ -19,6 +19,8 @@ namespace Jatta
             UInt32 texture;
             Enum type;
         public:
+            _JATTA_EXPORT static void Active(UInt32 active);
+
             _JATTA_EXPORT Texture();
             _JATTA_EXPORT Texture(UInt32 texture);
             _JATTA_EXPORT ~Texture();
@@ -29,8 +31,6 @@ namespace Jatta
 
             _JATTA_EXPORT void Bind();
             _JATTA_EXPORT void Unbind();
-
-            _JATTA_EXPORT void Active(UInt32 active);
 
             // GL_DEPTH_STENCIL_TEXTURE_MODE
             // GL_TEXTURE_BASE_LEVEL

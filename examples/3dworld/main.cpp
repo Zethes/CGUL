@@ -124,7 +124,7 @@ int main()
         context.Viewport(0, 0, 640, 480);
         context.ClearColor(Colors::blue);
 
-        Jatta::OpenGL::Program program = LoadShader("screen.vert", "screen.frag");
+        OpenGL::Program program = LoadShader("screen.vert", "screen.frag");
 
         while (window.IsOpen())
         {
@@ -132,28 +132,11 @@ int main()
 
             context.Clear(OpenGL::GL::COLOR_BUFFER_BIT | OpenGL::GL::DEPTH_BUFFER_BIT);
 
-            //shaderOld.Begin();
-            //shaderOld.SetMatrix("orthoMatrix", Matrix::MakeOrtho(0, 0, 1, 1));
-            //shaderOld.SetMatrix("modelMatrix", Matrix::identity);
-            //shaderOld.SetTexture("texture", texture);
-            //mesh.Draw();
-            //vertexArray.Bind();
-            //vertexArray.DrawArrays(OpenGL::QUADS, 0, 4);
-            //vertexArray.Unbind();
-            //shaderOld.End();
-
-            /*vertexArray.Bind();
-            vertexArray.DrawArrays(OpenGL::QUADS, 0, 1);
-            vertexArray.Unbind();
-
-            mesh.Draw();*/
-
             program.Bind();
-            program.UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 0, 1, 1));
-            program.UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::identity);
-            program.Uniform1i(program.GetUniformLocation("texture"), 0);
-            //shaderOld.SetTexture("texture", texture);
-            texture.Active(0);
+            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 0, 1, 1));
+            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::identity);
+            OpenGL::Program::Uniform1i(program.GetUniformLocation("texture"), 0);
+            OpenGL::Texture::Active(0);
             texture.Bind();
             vertexArray.Bind();
             vertexArray.DrawArrays(OpenGL::GL::QUADS, 0, 4);
