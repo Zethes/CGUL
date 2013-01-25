@@ -417,7 +417,9 @@ _JATTA_EXPORT Jatta::String Jatta::OpenGL::Program::GetInfoLog()
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::OpenGL::Program::GetUniformLocation(const String& name)
 {
-    return glGetUniformLocation(program, name.GetData().c_str());
+    SInt32 location = glGetUniformLocation(program, name.GetData().c_str());
+    GLCHECK("Failed to get uniform location.");
+    return location;
 }
 
 #endif
