@@ -15,6 +15,7 @@ namespace Jatta
      */
     namespace Assimp
     {
+        // TODO: remove this
         class Test
         {
         public:

@@ -14,6 +14,7 @@ namespace Jatta
 {
     namespace Assimp
     {
+        // TODO: finish importing methods from aiMesh
         class Mesh
         {
             _JATTA_AIMESH mesh;

@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+// TODO: find an open-licensed regex lib, relying on c++11 is a bad idea right now
+
 #pragma once
 #include "String.h"
 #include "../External/Defines.h"

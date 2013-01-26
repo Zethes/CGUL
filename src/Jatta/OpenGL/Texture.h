@@ -57,6 +57,8 @@ namespace Jatta
             // glGenerateMipmap(GL_TEXTURE_2D);
 
             _JATTA_EXPORT void Image2D(SInt32 level, SInt32 internalFormat, Size width, Size height, SInt32 border, Enum format, Enum type, void* data);
+
+            // TODO: finish importing opengl texture functions
         };
     }
 }

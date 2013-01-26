@@ -29,6 +29,8 @@ namespace Jatta
             _JATTA_EXPORT void Clear(Enum mask);
 
             _JATTA_EXPORT void SwapBuffers();
+
+            // TODO: finish importing opengl context functions
         };
     }
 }

@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+// TODO: remove this, bad idea
+
 #if 0
 #pragma once
 #include "../External/Defines.h"

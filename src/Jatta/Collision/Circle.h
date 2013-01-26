@@ -9,15 +9,19 @@
 
 namespace Jatta
 {
-    /** @brief 2D Circle
-      */
-    struct Circle
+    namespace Collision
     {
-        Float2 position;
-        Float32 radius;
-        
-        _JATTA_EXPORT Circle();
-    };
+        /** @brief 2D Circle
+         */
+        struct Circle
+        {
+            // TODO: this class
+            Float2 position;
+            Float32 radius;
+            
+            _JATTA_EXPORT Circle();
+        };
+    }
 }
 
 #include "../External/Undefines.h"

@@ -52,6 +52,10 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
     {
         extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
     }*/
+    glBegin(GL_LINES);
+        glVertex2f(0, 0);
+        glVertex2f(1, 1);
+    glEnd();
 }
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)

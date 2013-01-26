@@ -182,6 +182,6 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)
 
 _JATTA_EXPORT bool Jatta::Image::SavePng(const Jatta::String& fileName)
 {
-    // TODO: STUFF
+    // TODO: Saving pngs
     return true;
 }

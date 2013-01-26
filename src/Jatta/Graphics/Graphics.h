@@ -14,6 +14,8 @@ namespace Jatta
 {
     class Graphics
     {
+        // TODO: remove the old Graphics library, it will be replaced by Jatta::OpenGL
+
         static Graphics* current;
 
         Window* window;

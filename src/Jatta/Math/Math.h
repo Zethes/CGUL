@@ -40,6 +40,8 @@ namespace Jatta
         _JATTA_EXPORT Float32 Sqrt(Float32 x);
 
         _JATTA_EXPORT bool InEpsilon(Float32 value, Float32 compare, Float32 epsilon);
+
+        // TODO: add some more frequently used math functions (maybe reference .NET's math lib?)
     }
 }
 

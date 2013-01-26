@@ -9,15 +9,19 @@
 
 namespace Jatta
 {
-    /** @brief 3D Axis Aligned Bounding Box
-      */
-    struct AABB3D
+    namespace Collision
     {
-        Float3 position;
-        Float3 extents;
-        
-        _JATTA_EXPORT AABB3D();
-    };
+        /** @brief 3D Axis Aligned Bounding Box
+         */
+        struct AABB3D
+        {
+            // TODO: this class
+            Float3 position;
+            Float3 extents;
+            
+            _JATTA_EXPORT AABB3D();
+        };
+    }
 }
 
 #include "../External/Undefines.h"

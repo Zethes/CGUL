@@ -15,6 +15,7 @@ namespace Jatta
      */
     namespace File
     {
+        // TODO: make a better file utility library
         _JATTA_EXPORT bool GetText(const std::string& fileName, std::string* result);
         _JATTA_EXPORT bool GetText(const String& fileName, String* result);
         _JATTA_EXPORT bool GetLines(const std::string& fileName, std::vector<std::string>* vector);

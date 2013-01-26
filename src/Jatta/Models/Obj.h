@@ -12,6 +12,8 @@ namespace Jatta
 {
     class Obj : public Model
     {
+        // TODO: remove this, replaced by Assimp
+
         _JATTA_EXPORT static void CleanLine(std::string* line);
         _JATTA_EXPORT static bool GetParameters(const std::string& parameters, float* data, unsigned int* size);
         _JATTA_EXPORT static bool GetParameters(const std::string& parameters);//, std::vector<std::pair<float*, unsigned int>>* data);

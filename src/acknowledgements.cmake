@@ -1,3 +1,6 @@
+# TODO: exclude libraries if they are excluded from the build
+
+
 SET(ACKNOWLEDGEMENTS "This software utilizes the following libraries:")
 
 LIST(APPEND ACKNOWLEDGEMENTS
@@ -6,7 +9,6 @@ Jatta - General Utility Library
 Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall"
 )
 
-IF(NOT JATTA_NO_PNG)
 LIST(APPEND ACKNOWLEDGEMENTS
 "\n
 libpng http://www.libpng.org/ 
@@ -17,7 +19,6 @@ Copyright (C) 1995-1996, Guy Eric Schalnat, Group 42, Inc.
 zlib http://www.zlib.net/ 
 Copyright (C) 1995-2012, Jean-loup Gailly and Mark Adler"
 )
-ENDIF()
 
 LIST(APPEND ACKNOWLEDGEMENTS
 "\n

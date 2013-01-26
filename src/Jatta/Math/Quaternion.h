@@ -35,6 +35,8 @@ namespace Jatta
         void operator*= (const jVector3&);
         void CreateBasis(jVector3*, jVector3*, jVector3*);*/
         void Normalize();
+
+        // TODO: finish the quaternion class, reference DirectX's D3DXQUATERNION
     };
 }
 

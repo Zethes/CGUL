@@ -15,6 +15,8 @@ namespace Jatta
      */
     namespace OpenGL
     {
+        // TODO: add the rest of the OpenGL constants
+
         static const UInt32 POSITION1 =  0;
         static const UInt32 POSITION2 =  1;
         static const UInt32 POSITION3 =  2;

@@ -9,12 +9,15 @@
 
 namespace Jatta
 {
-    /** @brief A collection of collision objects to perform collision detection.
+    /** @brief An experimental collection of collision objects to perform collision detection.
      */
     namespace Collision
     {
+        /** @brief The base class for all collision objects.
+         */
         struct Collision
         {
+            // TODO: this class
         };
     }
 }

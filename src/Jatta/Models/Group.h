@@ -12,6 +12,8 @@ namespace Jatta
 {
     struct Group
     {
+        // TODO: remove this, replaced by Assimp
+        
         String name;
         VertexBuffer buffers[16];
         UInt32 vertexCount;

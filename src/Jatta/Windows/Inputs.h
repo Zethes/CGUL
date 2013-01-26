@@ -15,6 +15,8 @@ namespace Jatta
                 right = 2;
     }
 
+    // TODO: Linux and Mac keys
+
     namespace Keys
     {
         #ifdef WINDOWS

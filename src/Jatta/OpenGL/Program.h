@@ -108,6 +108,8 @@ namespace Jatta
             // TODO: GL_ACTIVE_UNIFORM_MAX_LENGTH
 
             _JATTA_EXPORT SInt32 GetUniformLocation(const String& name);
+
+            // TODO: finish importing opengl program functions
         };
     }
 }

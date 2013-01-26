@@ -28,6 +28,7 @@ namespace Jatta
 }
 #endif
 
+// TODO: clean this up (make a more logical way of determining if std::move exists)
 // Clang doesn't support this...
 #ifdef MACOS
 namespace std
@@ -43,6 +44,7 @@ namespace std
 }
 #endif
 
+// TODO: fix static assert on clang builds
 // Jatta Type Defines
 #define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
 /** @brief General utility library.
@@ -107,6 +109,7 @@ namespace Jatta
 }
 #undef TYPE
 
+// TODO: clean up the standard template library list
 // Standard Template Library Includes
 #include <algorithm>
 //#include <array>

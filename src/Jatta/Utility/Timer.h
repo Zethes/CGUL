@@ -16,6 +16,8 @@ namespace Jatta
         long mSeconds;
         bool running;
     public:
+        // TODO: make this class work on all three platforms
+
         _JATTA_EXPORT Timer();
         _JATTA_EXPORT void Start();
         _JATTA_EXPORT void Stop();

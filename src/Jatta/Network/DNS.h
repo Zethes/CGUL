@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+// TODO: networking
+
 #if 0
 #ifndef JATTA_NO_NETWORK
 #pragma once

@@ -15,6 +15,7 @@ namespace Jatta
 {
     namespace Assimp
     {
+        // TODO: finish importing methods from aiCamera
         class Camera
         {
             _JATTA_AICAMERA camera;

@@ -10,6 +10,8 @@ namespace Jatta
 {
     struct VertexBuffer
     {
+        // TODO: remove this, replaced by Assimp
+        
         UInt32 index;
         UInt32 size;
         void* buffer;

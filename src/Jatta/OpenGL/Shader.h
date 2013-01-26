@@ -33,6 +33,8 @@ namespace Jatta
             _JATTA_EXPORT Boolean GetCompileStatus();
             _JATTA_EXPORT String GetInfoLog();
             _JATTA_EXPORT String GetSource();
+
+            // TODO: finish importing opengl shader functions
         };
     }
 }

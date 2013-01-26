@@ -33,12 +33,12 @@ _JATTA_EXPORT void Jatta::Font::Load(const std::string& fileName)
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
     if (error == FT_Err_Unknown_File_Format)
     {
-        // @TODO error checking
+        // TODO: error checking
         _JATTA_DEBUG_LN("Font is an unknown format.");
     }
     else if (error)
     {
-        // @TODO error checking
+        // TODO: error checking
         _JATTA_DEBUG_LN("Failed to load font.");
     }
     _JATTA_DEBUG_LN(FT_Get_X11_Font_Format(face));
@@ -50,7 +50,7 @@ _JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
     FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
     if (error)
     {
-        // @TODO error checking
+        // TODO: error checking
         _JATTA_DEBUG_LN("Failed to set character size.");
     }
     this->size = size;
@@ -98,7 +98,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Font::GetColor()
         FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
         if (error)
         {
-            continue; // @TODO ignore errors?
+            continue; // TODO: ignore errors?
         }
 
         // now, draw to our surface
@@ -153,7 +153,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Font::GetColor()
         FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
         if (error)
         {
-            continue; // @TODO ignore errors?
+            continue; // TODO: ignore errors?
         }
 
         // now, draw to our surface
@@ -180,6 +180,8 @@ _JATTA_EXPORT Jatta::Color Jatta::Font::GetColor()
 
 _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean beginningSpacer)
 {
+    // TODO: redo this method, it's terrible
+
     bool kerning = true;
 
     // set our transform matrix (to the identity matrix)
@@ -283,6 +285,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean
 
 _JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt64 characterCode)
 {
+    // TODO: return a glyph?
     return FT_Get_Char_Index(this->face, (FT_ULong)characterCode);
 }
 

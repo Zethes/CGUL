@@ -12,6 +12,7 @@ namespace Jatta
 {
     namespace Assimp
     {
+        // TODO: finish importing methods from aiTexture
         class Texture
         {
             _JATTA_AITEXTURE texture;

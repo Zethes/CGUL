@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+// TODO: networking
+
 #ifndef JATTA_NO_NETWORK
 #pragma once
 #include "../External/Defines.h"

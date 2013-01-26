@@ -28,6 +28,8 @@ namespace Jatta
             _JATTA_EXPORT void Unbind();
 
             _JATTA_EXPORT void Data(Size size, void* data, Enum usage);
+
+            // TODO: finish importing opengl buffer functions
         };
     }
 }

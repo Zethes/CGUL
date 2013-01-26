@@ -13,6 +13,7 @@ namespace Jatta
 {
     namespace Assimp
     {
+        // TODO: finish importing methods from aiMaterial
         class Material
         {
             _JATTA_AIMATERIAL material;

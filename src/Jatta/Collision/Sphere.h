@@ -9,15 +9,19 @@
 
 namespace Jatta
 {
-    /** @brief 3D Sphere
-      */
-    struct Sphere
+    namespace Collision
     {
-        Float3 position;
-        Float32 radius;
-        
-        _JATTA_EXPORT Sphere();
-    };
+        /** @brief 3D Sphere
+          */
+        struct Sphere
+        {
+            // TODO: this class
+            Float3 position;
+            Float32 radius;
+            
+            _JATTA_EXPORT Sphere();
+        };
+    }
 }
 
 #include "../External/Undefines.h"

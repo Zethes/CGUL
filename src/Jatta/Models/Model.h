@@ -12,6 +12,8 @@ namespace Jatta
 {
     class Model
     {
+        // TODO: remove this, replaced by Assimp
+        
     protected:
         std::vector<Group> groups;
     public:

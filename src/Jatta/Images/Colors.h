@@ -9,6 +9,7 @@
 
 namespace Jatta
 {
+    // TODO: come up with a better color list, we're missing some important ones here and have far too many useless ones
     namespace Colors
     {
         const Color airForceBlue    ( 93, 138, 168, 255)

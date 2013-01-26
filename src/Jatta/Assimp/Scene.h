@@ -19,6 +19,7 @@ namespace Jatta
         class Mesh;
         class Texture;
 
+        // TODO: finish importing methods from aiScene
         class Scene
         {
             const _JATTA_AISCENE scene;
@@ -41,6 +42,7 @@ namespace Jatta
             _JATTA_EXPORT UInt32 GetMeshCount() const;
             _JATTA_EXPORT UInt32 GetTextureCount() const;
 
+            // TODO: GetLight, GetAnimation
             _JATTA_EXPORT Camera GetCamera(UInt32 index) const;
             _JATTA_EXPORT Material GetMaterial(UInt32 index) const;
             _JATTA_EXPORT Mesh GetMesh(UInt32 index) const;

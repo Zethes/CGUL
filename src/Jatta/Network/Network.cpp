@@ -1,3 +1,5 @@
+// TODO: networking
+
 #if 0
 /* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
