@@ -17,6 +17,8 @@ namespace Jatta
         Color* colors;
         unsigned int width, height;
     public:
+        static const UInt32 UPSIDE_DOWN = 1;
+
         _JATTA_EXPORT Image();
         _JATTA_EXPORT Image(Color* colors, unsigned int width, unsigned int height);
         _JATTA_EXPORT Image(const Image& copy);
@@ -26,19 +28,19 @@ namespace Jatta
         _JATTA_EXPORT Jatta::Image& operator=(const Image& copy);
         _JATTA_EXPORT Jatta::Image& operator=(Image&& move);
 
-        _JATTA_EXPORT bool Load(const Jatta::String& fileName);
+        _JATTA_EXPORT bool Load(const Jatta::String& fileName, UInt32 flags = 0);
 
         _JATTA_EXPORT static bool IsBmp(const Jatta::String& fileName);
         _JATTA_EXPORT static bool IsPng(const Jatta::String& fileName);
         _JATTA_EXPORT static bool IsJpg(const Jatta::String& fileName);
 
-        _JATTA_EXPORT bool LoadPng(const Jatta::String& fileName);
+        _JATTA_EXPORT bool LoadPng(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool SavePng(const Jatta::String& fileName);
 
-        _JATTA_EXPORT bool LoadJpg(const Jatta::String& fileName);
+        _JATTA_EXPORT bool LoadJpg(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool SaveJpg(const Jatta::String& fileName);
 
-        _JATTA_EXPORT bool LoadBmp(const Jatta::String& fileName);
+        _JATTA_EXPORT bool LoadBmp(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool SaveBmp(const Jatta::String& fileName, int bpp = 24, int hRes = 2835, int vRes = 2835);
 
         _JATTA_EXPORT unsigned char* GetData();

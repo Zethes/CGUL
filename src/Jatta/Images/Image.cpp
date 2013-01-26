@@ -89,12 +89,12 @@ _JATTA_EXPORT void Jatta::Image::Free()
     colors = nullptr;
 }
 
-_JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flags)
 {
     if (IsPng(fileName))
-        return LoadPng(fileName);
+        return LoadPng(fileName, flags);
     else if (IsJpg(fileName))
-        return LoadJpg(fileName);
+        return LoadJpg(fileName, flags);
     else
         return false;
 }

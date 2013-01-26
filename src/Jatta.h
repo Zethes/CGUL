@@ -82,6 +82,7 @@
 #include "Jatta/OpenGL/Texture.h"
 #include "Jatta/OpenGL/VertexArray.h"
 
+#include "Jatta/Utility/Encryption/Encryption.h"
 #include "Jatta/Utility/Object.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"

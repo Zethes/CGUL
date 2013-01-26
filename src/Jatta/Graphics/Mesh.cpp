@@ -148,7 +148,7 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Jatta::Assimp::Scene& scene)
         if (mat.GetTextureCount(Assimp::TEXTURE_TYPE_DIFFUSE) != 0)
         {
             Image image;
-            image.Load(String("Resources/Images/") + mat.GetTexturePath(Assimp::TEXTURE_TYPE_DIFFUSE, 0));
+            image.Load(String("Resources/Images/") + mat.GetTexturePath(Assimp::TEXTURE_TYPE_DIFFUSE, 0), Image::UPSIDE_DOWN);
             Texture tex;
             tex.Create(image);
             mesh->SetTexture(tex);

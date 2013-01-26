@@ -170,7 +170,7 @@ _JATTA_EXPORT bool Jatta::Image::IsBmp(const Jatta::String& fileName)
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadBmp(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::LoadBmp(const Jatta::String& fileName, UInt32 flags)
 {
     //TODO: Loading BMPs
     return false;

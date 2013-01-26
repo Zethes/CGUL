@@ -52,7 +52,7 @@ _JATTA_EXPORT bool Jatta::Image::IsPng(const Jatta::String& fileName)
     return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName, UInt32 flags)
 {
     unsigned int size;
     File::GetFileSize(fileName.GetData(), &size);
@@ -147,11 +147,22 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)
             png_byte* row = row_pointers[y];
             for (unsigned int x = 0; x < imgWidth; x++)
             {
-                png_byte* ptr = &(row[x*3]);
-                colors[x + y * imgWidth].r = ptr[0];
-                colors[x + y * imgWidth].g = ptr[1];
-                colors[x + y * imgWidth].b = ptr[2];
-                colors[x + y * imgWidth].a = 255;
+            	if (flags & UPSIDE_DOWN != 0)
+            	{
+            		png_byte* ptr = &(row[x*3]);
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].r = ptr[0];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].g = ptr[1];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].b = ptr[2];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].a = 255;
+            	}
+            	else
+            	{
+            		png_byte* ptr = &(row[x*3]);
+					colors[x + y * imgWidth].r = ptr[0];
+					colors[x + y * imgWidth].g = ptr[1];
+					colors[x + y * imgWidth].b = ptr[2];
+					colors[x + y * imgWidth].a = 255;
+            	}
             }
         }
         return true;
@@ -166,11 +177,21 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName)
             png_byte* row = row_pointers[y];
             for (unsigned int x = 0; x < imgWidth; x++)
             {
-                png_byte* ptr = &(row[x*4]);
-                colors[x + y * imgWidth].r = ptr[0];
-                colors[x + y * imgWidth].g = ptr[1];
-                colors[x + y * imgWidth].b = ptr[2];
-                colors[x + y * imgWidth].a = ptr[3];
+            	png_byte* ptr = &(row[x*4]);
+            	if (flags & UPSIDE_DOWN != 0)
+            	{
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].r = ptr[0];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].g = ptr[1];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].b = ptr[2];
+            		colors[x + ((imgHeight - 1) - y) * imgWidth].a = ptr[3];
+            	}
+            	else
+            	{
+            		colors[x + y * imgWidth].r = ptr[0];
+					colors[x + y * imgWidth].g = ptr[1];
+					colors[x + y * imgWidth].b = ptr[2];
+					colors[x + y * imgWidth].a = ptr[3];
+            	}
             }
         }
         return true;
