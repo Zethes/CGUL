@@ -36,7 +36,7 @@ int main()
         Texture texture;
         texture.Create(image);
 
-	OpenGL::ClearErrors();
+        OpenGL::ClearErrors();
         Float2 linePositions[] = { Float2(0, 0), Float2(1, 1) };
         OpenGL::VertexArray vertexArray;
         vertexArray.Create();

@@ -9,6 +9,17 @@
 #  include <unistd.h>
 #endif
 
+_JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
+{
+#   ifdef WINDOWS
+    ::Sleep(milliseconds);
+#   endif
+
+#   ifdef LINUX
+    usleep(milliseconds * 1000);
+#   endif
+}
+
 _JATTA_EXPORT Jatta::Timer::Timer()
 {
     running = false;
@@ -77,15 +88,4 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedMiliseconds()
     {
         return mSeconds;
     }
-}
-
-_JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
-{
-#   ifdef WINDOWS
-    ::Sleep(milliseconds);
-#   endif
-
-#   ifdef LINUX
-    usleep(milliseconds * 1000);
-#   endif
 }

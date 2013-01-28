@@ -3,32 +3,32 @@
  * All rights reserved.
  */
 
-// TODO: networking
-
-#if 0
 #ifndef JATTA_NO_NETWORK
 #pragma once
+#include "../Utility/String.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
-    class DNS
+    namespace Network
     {
-    public:
-        enum class Filter
+        class DNS
         {
-            IPV4,
-            IPV6,
-            ANY
+        public:
+            enum class Filter
+            {
+                IPV4,
+                IPV6,
+                ANY
+            };
+
+            DNS();
+            ~DNS();
+
+            _JATTA_EXPORT static std::vector<Jatta::String> Lookup(const Jatta::String& host, Filter filter = Filter::ANY);
         };
-
-        DNS();
-        ~DNS();
-
-        _JATTA_EXPORT static std::vector<std::string> Lookup(const std::string& host, Filter filter = Filter::ANY);
-    };
+    }
 }
 
 #include "../External/Undefines.h"
-#endif
 #endif

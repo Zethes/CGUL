@@ -26,10 +26,18 @@
 #define _JATTA_AIMATERIAL void*
 #define _JATTA_AICAMERA void*
 
+#if defined(WINDOWS) && !defined(MSVC)
+#   define _WIN32_WINNT 0x0501
+#endif
+
 #if defined(JATTA_INCLUDES)
 #   ifdef WINDOWS
 #       define UNICODE
 #       define _UNICODE
+#       ifndef JATTA_NO_NETWORK
+#           include <WinSock2.h>
+#           include <Ws2tcpip.h>
+#       endif
 #       include <Windows.h>
 #       ifndef JATTA_NO_GRAPHICS
 #           include <GL/glew.h>

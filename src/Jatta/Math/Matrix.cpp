@@ -98,14 +98,39 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Float3& eye, const F
                   -Float3::DotProduct(xAxis, eye),  -Float3::DotProduct(yAxis, eye),  -Float3::DotProduct(zAxis, eye), 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int right, int top, int left, int bottom)
+/*_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
 {
-  Float3 t((left + right) / (float)(left - right), (top + bottom) / (float)(top - bottom), 0);
+  Float3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
 
-  return Matrix(2.0f / (left - right), 0,                     0,    0,
+  return Matrix(2.0f / (right - left), 0,                     0,    0,
                 0,                     2.0f / (top - bottom), 0,    0,
                 0,                     0,                     -1,   0,
                 -t.x,                  -t.y,                  -t.z, 1);// * Matrix::makeScaling(Vector3(1, -1, 1));
+}*/
+
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
+{
+  /*Float3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
+
+  return Matrix(2.0f / (right - left), 0,                     0,    -t.x,
+                0,                     2.0f / (top - bottom), 0,    -t.y,
+                0,                     0,                     -1,   -t.z,
+                0,                     0,                      0,  1);// * Matrix::makeScaling(Vector3(1, -1, 1));*/
+
+    Matrix ret = identity;
+    /*ret.m[0][0] = Float32(2) / (right - left);
+    ret.m[1][1] = Float32(2) / (top - bottom);
+    ret.m[2][2] = - Float32(2) / (1 - (-1));
+    ret.m[3][0] = - (right + left) / (right - left);
+    ret.m[3][1] = - (top + bottom) / (top - bottom);
+    ret.m[3][2] = - (1 + (-1)) / (1 - (-1));*/
+    ret.m[0][0] = Float32(2) / (right - left);
+    ret.m[1][1] = Float32(2) / (top - bottom);
+    ret.m[2][2] = - Float32(2) / ((1) - (-1));
+    ret.m[3][0] = - (right + left) / (right - left);
+    ret.m[3][1] = - (top + bottom) / (top - bottom);
+    ret.m[3][2] = - ((1) + (-1)) / ((1) - (-1));
+    return ret;
 }
 
 _JATTA_EXPORT Jatta::Matrix::Matrix()

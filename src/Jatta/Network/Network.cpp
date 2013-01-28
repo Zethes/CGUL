@@ -1,13 +1,12 @@
 // TODO: networking
 
-#if 0
 /* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
  
 #ifndef JATTA_NO_NETWORK
-#include <WinSock2.h>
+#include "../External/Defines.h"
 
 bool __jatta_network_initiated = false;
 
@@ -33,5 +32,14 @@ void __jatta_network_clean()
     }
 }
 
-#endif
+namespace Jatta
+{
+    /** @brief An experimental network namespace.
+     */
+    namespace Network
+    {
+    }
+}
+
+#include "../External/Undefines.h"
 #endif

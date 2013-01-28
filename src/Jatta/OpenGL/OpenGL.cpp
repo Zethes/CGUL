@@ -52,9 +52,30 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
     {
         extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
     }*/
-    glBegin(GL_LINES);
-        glVertex2f(0, 0);
-        glVertex2f(1, 1);
+    glBegin(GL_QUADS);
+        /*glTexCoord2f(0, 1); //bottom, left
+        glVertex2f(0, 0); // bottom, left
+
+        glTexCoord2f(1, 1); // bottom, right
+        glVertex2f(1, 0); // bottom,
+
+        glTexCoord2f(1, 0);
+        glVertex2f(1, 1); //top, right
+
+        glTexCoord2f(0, 0);
+        glVertex2f(0, 1); //top, left*/
+
+        glTexCoord2f(0, 0); //bottom, left
+        glVertex2f(0, 0); // bottom, left
+
+        glTexCoord2f(200, 0); // bottom, right
+        glVertex2f(200, 0); // bottom,
+
+        glTexCoord2f(200, 200);
+        glVertex2f(200, 1); //top, right
+
+        glTexCoord2f(0, 200);
+        glVertex2f(0, 200); //top, left
     glEnd();
 }
 

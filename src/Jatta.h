@@ -42,6 +42,9 @@
 #include "Jatta/Collision/AABB2D.h"
 #include "Jatta/Collision/AABB3D.h"
 
+#include "Jatta/Containers/List.h"
+#include "Jatta/Containers/Locale.h"
+
 #include "Jatta/File/File.h"
 
 #include "Jatta/Fonts/Font.h"
@@ -72,7 +75,7 @@
 #include "Jatta/Models/VertexBuffer.h"
 
 #include "Jatta/Network/DNS.h"
-#include "Jatta/Network/TCP.h"
+#include "Jatta/Network/SocketTCP.h"
 
 #include "Jatta/OpenGL/Buffer.h"
 #include "Jatta/OpenGL/Context.h"
@@ -82,7 +85,7 @@
 #include "Jatta/OpenGL/Texture.h"
 #include "Jatta/OpenGL/VertexArray.h"
 
-#include "Jatta/Utility/Encryption/Encryption.h"
+#include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/Object.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"

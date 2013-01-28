@@ -71,76 +71,76 @@ static const Jatta::UInt32 crc_table[256] = {
 
 static void crc32 ( const void * key, int len, unsigned long seed, unsigned long * out )
 {
-	Jatta::UInt8 * buf = (Jatta::UInt8*)key;
-	unsigned long crc = seed ^ 0xffffffffL;
+    Jatta::UInt8 * buf = (Jatta::UInt8*)key;
+    unsigned long crc = seed ^ 0xffffffffL;
 
-	while (len >= 8)
-	{
-		DO8(buf);
-		len -= 8;
-	}
+    while (len >= 8)
+    {
+        DO8(buf);
+        len -= 8;
+    }
 
-	while(len--)
-	{
-		DO1(buf);
-	}
+    while(len--)
+    {
+        DO1(buf);
+    }
 
-	crc ^= 0xffffffffL;
+    crc ^= 0xffffffffL;
 
-	*(unsigned long*)out = crc;
+    *(unsigned long*)out = crc;
 }
 
 static unsigned long crc32_start ( unsigned long seed )
 {
-	Jatta::UInt32 crc = seed ^ 0xffffffffL;
-	return crc;
+    Jatta::UInt32 crc = seed ^ 0xffffffffL;
+    return crc;
 }
 
 static void crc32_add ( unsigned long& crc, const void * key, int len )
 {
-	Jatta::UInt8 * buf = (Jatta::UInt8*)key;
+    Jatta::UInt8 * buf = (Jatta::UInt8*)key;
 
-	while (len >= 8)
-	{
-		DO8(buf);
-		len -= 8;
-	}
+    while (len >= 8)
+    {
+        DO8(buf);
+        len -= 8;
+    }
 
-	while(len--)
-	{
-		DO1(buf);
-	}
+    while(len--)
+    {
+        DO1(buf);
+    }
 }
 
 void crc32_end ( unsigned long& crc )
 {
-	crc ^= 0xffffffffL;
+    crc ^= 0xffffffffL;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 _JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::Data( const void* data, unsigned int length, unsigned long seed)
 {
-	unsigned long ret = 0;
-	crc32(data, length, seed, &ret);
-	return ret;
+    unsigned long ret = 0;
+    crc32(data, length, seed, &ret);
+    return ret;
 }
 _JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::String(Jatta::String in, unsigned long seed)
 {
-	return Data(in.GetData().c_str(), in.GetLength(), seed);
+    return Data(in.GetData().c_str(), in.GetLength(), seed);
 }
 
 _JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::Start(unsigned long seed)
 {
-	return crc32_start(seed);
+    return crc32_start(seed);
 }
 
 _JATTA_EXPORT void Jatta::Encryption::CRC32::Add(unsigned long& crc, const void* data, unsigned int length)
 {
-	crc32_add(crc, data, length);
+    crc32_add(crc, data, length);
 }
 
 _JATTA_EXPORT void Jatta::Encryption::CRC32::End(unsigned long& crc)
 {
-	crc32_end(crc);
+    crc32_end(crc);
 }

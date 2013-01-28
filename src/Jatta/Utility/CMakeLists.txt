@@ -2,10 +2,11 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-ADD_SUBDIRECTORY(Encryption)
-
 ADD_GROUP("Utility")
 ADD_OTHER(CMakeLists.txt)
+ADD_SOURCE(CRC32.cpp)
+ADD_HEADER(Encryption.h include/Jatta/Utility/)
+ADD_SOURCE(MD5.cpp)
 #ADD_SOURCE(Object.cpp)
 ADD_HEADER(Object.h include/Jatta/Utility/)
 ADD_SOURCE(Regex.cpp)

@@ -38,66 +38,66 @@ uint1 digest[16];
 
 static uint4 F(uint4 x, uint4 y, uint4 z)
 {
-	return x&y | ~x&z;
+    return x&y | ~x&z;
 }
 static uint4 G(uint4 x, uint4 y, uint4 z)
 {
-	return x&z | y&~z;
+    return x&z | y&~z;
 }
 static uint4 H(uint4 x, uint4 y, uint4 z)
 {
-	return x^y^z;
+    return x^y^z;
 }
 static uint4 I(uint4 x, uint4 y, uint4 z)
 {
-	return y ^ (x | ~z);
+    return y ^ (x | ~z);
 }
 static uint4 rotate_left(uint4 x, int n)
 {
-	return (x<<n) | (x >> (32-n));
+    return (x<<n) | (x >> (32-n));
 }
 static void FF(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x, uint4 s, uint4 ac)
 {
-	a = rotate_left(a+ F(b,c,d) + x + ac, s) + b;
+    a = rotate_left(a+ F(b,c,d) + x + ac, s) + b;
 }
 static void GG(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x, uint4 s, uint4 ac)
 {
-	a = rotate_left(a + G(b,c,d) + x + ac, s) + b;
+    a = rotate_left(a + G(b,c,d) + x + ac, s) + b;
 }
 static void HH(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x, uint4 s, uint4 ac)
 {
-	a = rotate_left(a + H(b,c,d) + x + ac, s) + b;
+    a = rotate_left(a + H(b,c,d) + x + ac, s) + b;
 }
 static void II(uint4 &a, uint4 b, uint4 c, uint4 d, uint4 x, uint4 s, uint4 ac)
 {
-	a = rotate_left(a + I(b,c,d) + x + ac, s) + b;
+    a = rotate_left(a + I(b,c,d) + x + ac, s) + b;
 }
 
 static void init()
 {
-	finalized = false;
-	count[0] = count[1] = 0;
+    finalized = false;
+    count[0] = count[1] = 0;
 
-	// load magic initialization constants.
-	state[0] = 0x67452301;
-	state[1] = 0xefcdab89;
-	state[2] = 0x98badcfe;
-	state[3] = 0x10325476;
+    // load magic initialization constants.
+    state[0] = 0x67452301;
+    state[1] = 0xefcdab89;
+    state[2] = 0x98badcfe;
+    state[3] = 0x10325476;
 }
 static void decode(uint4 output[], const uint1 input[], size_type len)
 {
-	for (unsigned int i = 0, j = 0; j < len; i++, j += 4)
-		output[i] = ((uint4)input[j]) | (((uint4)input[j+1]) << 8) | (((uint4)input[j+2]) << 16) | (((uint4)input[j+3]) << 24);
+    for (unsigned int i = 0, j = 0; j < len; i++, j += 4)
+        output[i] = ((uint4)input[j]) | (((uint4)input[j+1]) << 8) | (((uint4)input[j+2]) << 16) | (((uint4)input[j+3]) << 24);
 }
 static void encode(uint1 output[], const uint4 input[], size_type len)
 {
-	for (size_type i = 0, j = 0; j < len; i++, j += 4)
-	{
-		output[j] = input[i] & 0xff;
-		output[j+1] = (input[i] >> 8) & 0xff;
-		output[j+2] = (input[i] >> 16) & 0xff;
-		output[j+3] = (input[i] >> 24) & 0xff;
-	}
+    for (size_type i = 0, j = 0; j < len; i++, j += 4)
+    {
+        output[j] = input[i] & 0xff;
+        output[j+1] = (input[i] >> 8) & 0xff;
+        output[j+2] = (input[i] >> 16) & 0xff;
+        output[j+3] = (input[i] >> 24) & 0xff;
+    }
 }
 static void transform(const uint1 block[blocksize]) // apply MD5 algo on a block
 {
@@ -186,90 +186,90 @@ static void transform(const uint1 block[blocksize]) // apply MD5 algo on a block
 }
 static void update(const unsigned char *input, size_type length)
 {
-	// compute number of bytes mod 64
-	size_type index = count[0] / 8 % blocksize;
+    // compute number of bytes mod 64
+    size_type index = count[0] / 8 % blocksize;
 
-	// Update number of bits
-	if ((count[0] += (length << 3)) < (length << 3))
-		count[1]++;
-	count[1] += (length >> 29);
+    // Update number of bits
+    if ((count[0] += (length << 3)) < (length << 3))
+        count[1]++;
+    count[1] += (length >> 29);
 
-	// number of bytes we need to fill in buffer
-	size_type firstpart = 64 - index;
+    // number of bytes we need to fill in buffer
+    size_type firstpart = 64 - index;
 
-	size_type i;
+    size_type i;
 
-	// transform as many times as possible.
-	if (length >= firstpart)
-	{
-		// fill buffer first, transform
-		memcpy(&buffer[index], input, firstpart);
-		transform(buffer);
+    // transform as many times as possible.
+    if (length >= firstpart)
+    {
+        // fill buffer first, transform
+        memcpy(&buffer[index], input, firstpart);
+        transform(buffer);
 
-		// transform chunks of blocksize (64 bytes)
-		for (i = firstpart; i + blocksize <= length; i += blocksize)
-			transform(&input[i]);
+        // transform chunks of blocksize (64 bytes)
+        for (i = firstpart; i + blocksize <= length; i += blocksize)
+            transform(&input[i]);
 
-		index = 0;
-	}
-	else
-		i = 0;
+        index = 0;
+    }
+    else
+        i = 0;
 
-	// buffer remaining input
-	memcpy(&buffer[index], &input[i], length-i);
+    // buffer remaining input
+    memcpy(&buffer[index], &input[i], length-i);
 }
 static void update(const char input[], size_type length)
 {
-	update((const unsigned char*)input, length);
+    update((const unsigned char*)input, length);
 }
 
 // MD5 finalization. Ends an MD5 message-digest operation, writing the
 // the message digest and zeroizing the context.
 static void finalize()
 {
-	static unsigned char padding[64] = {
-	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	};
+    static unsigned char padding[64] = {
+    0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
 
-	if (!finalized)
-	{
-		// Save number of bits
-		unsigned char bits[8];
-		encode(bits, count, 8);
+    if (!finalized)
+    {
+        // Save number of bits
+        unsigned char bits[8];
+        encode(bits, count, 8);
 
-		// pad out to 56 mod 64.
-		size_type index = count[0] / 8 % 64;
-		size_type padLen = (index < 56) ? (56 - index) : (120 - index);
-		update(padding, padLen);
+        // pad out to 56 mod 64.
+        size_type index = count[0] / 8 % 64;
+        size_type padLen = (index < 56) ? (56 - index) : (120 - index);
+        update(padding, padLen);
 
-		// Append length (before padding)
-		update(bits, 8);
+        // Append length (before padding)
+        update(bits, 8);
 
-		// Store state in digest
-		encode(digest, state, 16);
+        // Store state in digest
+        encode(digest, state, 16);
 
-		// Zeroize sensitive information.
-		memset(buffer, 0, sizeof buffer);
-		memset(count, 0, sizeof count);
+        // Zeroize sensitive information.
+        memset(buffer, 0, sizeof buffer);
+        memset(count, 0, sizeof count);
 
-		finalized=true;
-	}
+        finalized=true;
+    }
 }
 
 // return hex representation of digest as string
 std::string hexdigest()
 {
-	if (!finalized)
-		return "";
+    if (!finalized)
+        return "";
 
-	char buf[33];
-	for (int i=0; i<16; i++)
-		sprintf(buf+i*2, "%02x", digest[i]);
-	buf[32]=0;
+    char buf[33];
+    for (int i=0; i<16; i++)
+        sprintf(buf+i*2, "%02x", digest[i]);
+    buf[32]=0;
 
-	return std::string(buf);
+    return std::string(buf);
 }
 
 
@@ -277,13 +277,13 @@ std::string hexdigest()
 
 _JATTA_EXPORT Jatta::String Jatta::Encryption::MD5::Data(const char* data, unsigned int length)
 {
-	init();
-	update(data, length);
-	finalize();
+    init();
+    update(data, length);
+    finalize();
 
-	return hexdigest();
+    return hexdigest();
 }
 _JATTA_EXPORT Jatta::String Jatta::Encryption::MD5::String(Jatta::String in)
 {
-	return Data(in.GetData().c_str(), in.GetLength());
+    return Data(in.GetData().c_str(), in.GetLength());
 }

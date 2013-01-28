@@ -18,6 +18,8 @@ namespace Jatta
     public:
         // TODO: make this class work on all three platforms
 
+        _JATTA_EXPORT static void Sleep(UInt32 milliseconds);
+
         _JATTA_EXPORT Timer();
         _JATTA_EXPORT void Start();
         _JATTA_EXPORT void Stop();
@@ -28,8 +30,6 @@ namespace Jatta
 
         _JATTA_EXPORT UInt32 GetElapsedSeconds();
         _JATTA_EXPORT UInt32 GetElapsedMiliseconds();
-
-        _JATTA_EXPORT void Sleep(UInt32 milliseconds);
     };
 }
 

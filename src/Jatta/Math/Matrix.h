@@ -32,7 +32,7 @@ namespace Jatta
 
         _JATTA_EXPORT static Matrix MakePerspective(Float32 fovY, Float32 aspectRatio, Float32 zNear, Float32 zFar);
         _JATTA_EXPORT static Matrix MakeLookAt(const Float3& eye, const Float3& at, const Float3& up);
-        _JATTA_EXPORT static Matrix MakeOrtho(int right, int top, int left, int bottom);
+        _JATTA_EXPORT static Matrix MakeOrtho(int left, int right, int bottom, int top);
 
         _JATTA_EXPORT Matrix();
         _JATTA_EXPORT Matrix(const Matrix& copy);
