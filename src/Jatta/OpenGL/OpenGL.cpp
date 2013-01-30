@@ -22,7 +22,7 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
  */
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
-    /*std::fstream extensionsFile;
+    std::fstream extensionsFile;
     extensionsFile.open("gl.txt", std::fstream::out);
     std::cout << std::hex;
     //std::cout << "GL_EXTENSIONS = 0x" << GL_EXTENSIONS << std::endl;
@@ -51,32 +51,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Test()
     for (unsigned int i = 0; i < extensions.size(); i++)
     {
         extensionsFile << "\t" << extensions[i].GetData().c_str() << " = 0x" << i << std::endl;
-    }*/
-    glBegin(GL_QUADS);
-        /*glTexCoord2f(0, 1); //bottom, left
-        glVertex2f(0, 0); // bottom, left
-
-        glTexCoord2f(1, 1); // bottom, right
-        glVertex2f(1, 0); // bottom,
-
-        glTexCoord2f(1, 0);
-        glVertex2f(1, 1); //top, right
-
-        glTexCoord2f(0, 0);
-        glVertex2f(0, 1); //top, left*/
-
-        glTexCoord2f(0, 0); //bottom, left
-        glVertex2f(0, 0); // bottom, left
-
-        glTexCoord2f(200, 0); // bottom, right
-        glVertex2f(200, 0); // bottom,
-
-        glTexCoord2f(200, 200);
-        glVertex2f(200, 1); //top, right
-
-        glTexCoord2f(0, 200);
-        glVertex2f(0, 200); //top, left
-    glEnd();
+    }
 }
 
 _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)
@@ -86,7 +61,7 @@ _JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)
 }
 _JATTA_EXPORT std::string Jatta::OpenGL::GetStringi(Jatta::OpenGL::Enum name, unsigned int index)
 {
-    std::string ret;// = (const char *)glGetStringi(name, index);
+    std::string ret = (const char *)glGetStringi(name, index);
     return ret;
 }
 
@@ -95,6 +70,17 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::OpenGL::GetSupportedExtensions()
     Jatta::String ret = (const char *)glGetString(GL::EXTENSIONS);
 
     return ret.Explode(" ");
+}
+
+_JATTA_EXPORT bool Jatta::OpenGL::SupportsExtension(Jatta::String ext)
+{
+    std::vector<String>extensions = OpenGL::GetSupportedExtensions();
+    for (unsigned int i = 0; i < extensions.size(); i++)
+    {
+        if (extensions[i] == ext)
+            return true;
+    }
+    return false;
 }
 
 _JATTA_EXPORT int Jatta::OpenGL::GetOpenGLVersionMajor()

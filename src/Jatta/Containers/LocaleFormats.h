@@ -13,9 +13,9 @@ namespace Jatta
         namespace NumberFormats
         {
             const NumberFormat enUS(".","$");
-            const NumberFormat enEU(",","€");
-            const NumberFormat enUK(".","£");
-            const NumberFormat enJP(".","¥",false,false);
+            const NumberFormat enEU(",","â‚¬")
+            const NumberFormat enUK(".","Â£");
+            const NumberFormat enJP(".","å††",false,false);
         }
 
         namespace DateTimeFormats

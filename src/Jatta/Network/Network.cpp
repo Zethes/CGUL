@@ -12,6 +12,7 @@ bool __jatta_network_initiated = false;
 
 void __jatta_network_initiate()
 {
+#   ifdef WINDOWS
     if (!__jatta_network_initiated)
     {
         WSADATA wsaData;   // if this doesn't work
@@ -21,15 +22,18 @@ void __jatta_network_initiate()
         }
         __jatta_network_initiated = true;
     }
+#   endif
 }
 
 void __jatta_network_clean()
 {
+#   ifdef WINDOWS
     if (__jatta_network_initiated)
     {
         WSACleanup();
         __jatta_network_initiated = false;
     }
+#   endif
 }
 
 namespace Jatta

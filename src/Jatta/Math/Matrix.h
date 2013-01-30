@@ -10,6 +10,7 @@ namespace Jatta
 {
     struct Float2;
     struct Float3;
+    struct Quaternion;
     
     struct Matrix
     {
@@ -25,6 +26,7 @@ namespace Jatta
         _JATTA_EXPORT static Matrix MakeRotationX(Float32 angle);
         _JATTA_EXPORT static Matrix MakeRotationY(Float32 angle);
         _JATTA_EXPORT static Matrix MakeRotationZ(Float32 angle);
+        _JATTA_EXPORT static Matrix MakeRotation(const Quaternion& quaternion);
         _JATTA_EXPORT static Matrix MakeScaling(Float2 scale);
         _JATTA_EXPORT static Matrix MakeScaling(Float3 scale);
         _JATTA_EXPORT static Matrix MakeTranslation(Float2 translation);

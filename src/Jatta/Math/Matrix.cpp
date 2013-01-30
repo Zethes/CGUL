@@ -7,6 +7,7 @@
 #include "Math.h"
 #include "Float2.h"
 #include "Float3.h"
+#include "Quaternion.h"
 
 _JATTA_EXPORT const Jatta::Matrix Jatta::Matrix::identity(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
@@ -40,6 +41,20 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationZ(float angle)
                   -Math::Sin(angle), Math::Cos(angle), 0, 0,
                   0,                0,                 1, 0,
                   0,                0,                 0, 1);
+}
+
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(const Quaternion& quaternion)
+{
+    Matrix ret;
+    ret.m[0][0] = 1-(2*(quaternion.y*quaternion.y)+2*(quaternion.z*quaternion.z)); ret.m[0][1] = 2*(quaternion.x*quaternion.y)+2*(quaternion.z*quaternion.w);
+    ret.m[0][2] = 2*(quaternion.x*quaternion.z)-2*(quaternion.y*quaternion.w);     ret.m[0][3] = 0;
+    ret.m[1][0] = 2*(quaternion.x*quaternion.y)-2*(quaternion.z*quaternion.w);     ret.m[1][1] = 1-(2*(quaternion.x*quaternion.x)+2*(quaternion.z*quaternion.z));
+    ret.m[1][2] = 2*(quaternion.y*quaternion.z)-2*(quaternion.x*quaternion.w);     ret.m[1][3] = 0;
+    ret.m[2][0] = 2*(quaternion.x*quaternion.z)-2*(quaternion.y*quaternion.w);     ret.m[2][1] = 2*(quaternion.y*quaternion.z)-2*(quaternion.x*quaternion.w);
+    ret.m[2][2] = 1-(2*(quaternion.x*quaternion.x)+2*(quaternion.y*quaternion.y)); ret.m[2][3] = 0;
+    ret.m[3][0] = 0;                                                               ret.m[3][1] = 0;
+    ret.m[3][2] = 0;                                                               ret.m[3][3] = 1;
+    return ret;
 }
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float2 scale)

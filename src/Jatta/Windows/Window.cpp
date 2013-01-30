@@ -122,7 +122,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     window->Close();
                     return;
                 case KeyPress:
-                    window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = true;
+                    window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)].down = true;
                     break;
                 case KeyRelease:
                     bool released = true;
@@ -137,7 +137,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     }
                     if (released)
                     {
-                        window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)] = false;
+                        window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)].down = false;
                     }
                     break;
             }

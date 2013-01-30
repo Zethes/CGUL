@@ -307,7 +307,7 @@ Jatta::String Jatta::Network::SocketTCP::GetIP()
     if (true) // ipv4
     {
         char _IP[INET_ADDRSTRLEN];
-        ZeroMemory(_IP, INET_ADDRSTRLEN);
+        memset(_IP, 0, INET_ADDRSTRLEN);
         struct sockaddr_storage _Addr;
         socklen_t _Length = sizeof(_Addr);
         getpeername(sock, (struct sockaddr*)&_Addr, &_Length);
@@ -317,7 +317,7 @@ Jatta::String Jatta::Network::SocketTCP::GetIP()
     else // TODO: ipv6
     {
         char _IP[INET6_ADDRSTRLEN];
-        ZeroMemory(_IP, INET6_ADDRSTRLEN);
+        memset(_IP, 0, INET6_ADDRSTRLEN);
         struct sockaddr_storage _Addr;
         socklen_t _Length = sizeof(_Addr);
         getpeername(sock, (struct sockaddr*)&_Addr, &_Length);

@@ -85,16 +85,23 @@ _JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
 
 _JATTA_EXPORT void Jatta::Image::Free()
 {
-    delete[] colors;
-    colors = nullptr;
+    // TODO: figure out why this crashes in linux
+    //delete[] colors;
+    //colors = nullptr;
 }
 
 _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flags)
 {
+#   ifndef JATTA_NO_PNG
     if (IsPng(fileName))
         return LoadPng(fileName, flags);
+#    else
+    if (false) {}
+#    endif
+#   ifndef JATTA_NO_JPEG
     else if (IsJpg(fileName))
         return LoadJpg(fileName, flags);
+#    endif
     else
         return false;
 }

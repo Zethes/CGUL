@@ -68,6 +68,7 @@
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"
 #include "Jatta/Math/Random.h"
+#include "Jatta/Math/Quaternion.h"
 
 #include "Jatta/Models/Group.h"
 #include "Jatta/Models/Model.h"

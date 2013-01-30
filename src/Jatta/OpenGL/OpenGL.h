@@ -515,6 +515,7 @@ namespace Jatta
         _JATTA_EXPORT std::string GetString(Enum name);
         _JATTA_EXPORT std::string GetStringi(Enum name, unsigned int index);
         _JATTA_EXPORT std::vector<Jatta::String> GetSupportedExtensions();
+        _JATTA_EXPORT bool SupportsExtension(Jatta::String ext);
         _JATTA_EXPORT int GetOpenGLVersionMajor();
         _JATTA_EXPORT int GetOpenGLVersionMinor();
         _JATTA_EXPORT std::string GetOpenGLVersion();

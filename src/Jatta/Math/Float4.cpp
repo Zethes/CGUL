@@ -4,6 +4,7 @@
  */
 
 #include "Float4.h"
+#include "Matrix.h"
 
 #include <cmath>
 
@@ -42,6 +43,14 @@ _JATTA_EXPORT Jatta::Float4::Float4(float x, float y, float z, float w)
 float& Jatta::Float4::operator[](UInt32 index)
 {
     return m[index];
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Float4::operator*(const Matrix& operand) const
+{
+    return Float4(x * operand.m[0][0] + y * operand.m[1][0] + z * operand.m[2][0] + w * operand.m[3][0],
+                  x * operand.m[0][1] + y * operand.m[1][1] + z * operand.m[2][1] + w * operand.m[3][1],
+                  x * operand.m[0][2] + y * operand.m[1][2] + z * operand.m[2][2] + w * operand.m[3][2],
+                  x * operand.m[0][3] + y * operand.m[1][3] + z * operand.m[2][3] + w * operand.m[3][3]);
 }
 
 _JATTA_EXPORT void Jatta::Float4::Normalize()

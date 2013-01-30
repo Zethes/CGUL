@@ -66,6 +66,24 @@
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
 #   endif
+#   if defined(LINUX) | defined(MACOS)
+#       include <arpa/inet.h>
+#       include <errno.h>
+#       include <fcntl.h>
+#       include <netdb.h>
+#       include <netinet/in.h>
+#       include <netinet/tcp.h>
+#       include <signal.h>
+#       include <stdio.h>
+#       include <stdlib.h>
+#       include <string.h>
+#       include <sys/socket.h>
+#       include <sys/types.h>
+#       include <sys/wait.h>
+#       include <unistd.h>
+#       define INVALID_SOCKET ~0
+#       define SOCKET_ERROR -1
+#   endif
 #   define CHECK(x, y) //static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   ifdef WINDOWS
         CHECK(::HWND, _JATTA_HWND);

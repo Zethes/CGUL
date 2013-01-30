@@ -203,7 +203,10 @@ namespace Jatta
                 pa1 = 0xfd, // = pa1 = (fd) = pa1 = key,
                 oem_clear = 0xfe; // = clear = key
         #endif
-        //TODO: Linux
+        #ifdef LINUX
+           const unsigned short shift = 0xffe1,
+                   escape = 0xff1b;
+        #endif
     }
 }
 

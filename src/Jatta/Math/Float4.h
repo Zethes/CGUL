@@ -8,6 +8,8 @@
 
 namespace Jatta
 {
+    struct Matrix;
+
     struct Float4
     {
         union
@@ -24,7 +26,8 @@ namespace Jatta
         _JATTA_EXPORT Float4(float value);
         _JATTA_EXPORT Float4(float x, float y, float z, float w);
 
-        float& operator[](UInt32 index);
+        _JATTA_EXPORT float& operator[](UInt32 index);
+        _JATTA_EXPORT Float4 operator*(const Matrix& operand) const;
         friend std::ostream& operator<<(std::ostream& stream, const Float4& vector)
         {
             stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
