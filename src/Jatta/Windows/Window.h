@@ -70,15 +70,29 @@ namespace Jatta
 
         _JATTA_EXPORT void UpdateInput();
 
-        _JATTA_EXPORT void SetTitle(String title);
+        _JATTA_EXPORT void SetStyle(const WindowStyle& style);
+        _JATTA_EXPORT WindowStyle GetStyle() const;
+
+        _JATTA_EXPORT void SetTitle(const String& title);
+        _JATTA_EXPORT String GetTitle() const;
+
+        _JATTA_EXPORT void SetBackgroundColor(const Color& color);
+        _JATTA_EXPORT Color GetBackgroundColor() const;
+
+        _JATTA_EXPORT void SetWidth(UInt32 width);
+        _JATTA_EXPORT UInt32 GetWidth() const;
+        _JATTA_EXPORT void SetHeight(UInt32 width);
+        _JATTA_EXPORT UInt32 GetHeight() const;
+        _JATTA_EXPORT void SetSize(const Float2& size) const; // TODO: use something other than Float2
+        _JATTA_EXPORT Float2 GetSize() const;
+
+        _JATTA_EXPORT void SetResizable(Boolean resizable);
+        _JATTA_EXPORT Boolean GetResizable() const;
+
+        _JATTA_EXPORT Float4 GetFrameSize() const;
 
         _JATTA_EXPORT Boolean IsOpen() const;
         _JATTA_EXPORT Boolean IsFocused() const;
-
-        _JATTA_EXPORT UInt32 GetWidth() const;
-        _JATTA_EXPORT UInt32 GetHeight() const;
-        _JATTA_EXPORT Float2 GetSize() const;
-        _JATTA_EXPORT Float4 GetFrameSize() const;
     };
 }
 

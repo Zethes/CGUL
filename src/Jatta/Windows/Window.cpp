@@ -207,6 +207,9 @@ _JATTA_EXPORT Jatta::Input* Jatta::Window::GetInput()
     return &input;
 }
 
+/** @brief Creates a window based on the given style.
+ *  @details See the tutorial on @ref create_window.
+ */
 _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 {
 #   ifdef WINDOWS
@@ -276,6 +279,15 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     XMapWindow(this->display, this->handle);
     XFlush(this->display);
     windowMap.insert(std::make_pair(this->handle, this));
+
+    if (!style.resizable)
+    {
+        XSizeHints hints;
+        hints.flags = PMinSize | PMaxSize;
+        hints.min_width = style.width; hints.min_height = style.height;
+        hints.max_width = style.width; hints.max_height = style.height;
+        XSetWMNormalHints(display, handle, &hints);
+    }
 #   endif
 
 #   ifdef MACOS
@@ -334,15 +346,157 @@ _JATTA_EXPORT void Jatta::Window::UpdateInput()
     this->GetInput()->AnalyzeMouseData();
 }
 
-_JATTA_EXPORT void Jatta::Window::SetTitle(String title)
+_JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
+{
+    SetTitle(style.title);
+    SetBackgroundColor(style.backgroundColor);
+    SetWidth(style.width);
+    SetHeight(style.height);
+    SetResizable(style.resizable);
+}
+
+_JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
+{
+    WindowStyle style;
+    style.title = GetTitle();
+    style.backgroundColor = GetBackgroundColor();
+    style.width = GetWidth();
+    style.height = GetHeight();
+    style.resizable = GetResizable();
+}
+
+_JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 {
 #   ifdef WINDOWS
     SetWindowText(handle, title._ToWideString().c_str());
 #   endif
 
 #   ifdef LINUX
-    //TODO: Set Title for linux.
+    XChangeProperty(display, handle, XInternAtom(display, "_NET_WM_NAME", false), XInternAtom(display, "UTF8_STRING", false), 8, PropModeReplace, (unsigned char*)title.GetData().c_str(), title.GetSize());
 #   endif
+
+#   ifdef MACOS
+    //TODO: Set title for mac.
+#   endif
+}
+
+_JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
+{
+    // TODO: Jatta::Window::GetTitle
+    return "";
+}
+
+_JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
+{
+    // TODO: Jatta::Window::SetBackgroundColor
+}
+
+_JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
+{
+    // TODO: Jatta::Window::GetBackgroundColor
+    return Color(0, 0, 0);
+}
+
+_JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
+{
+    // TODO: Jatta::Window::SetWidth
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
+{
+#   ifdef WINDOWS
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    int borders = -rect.left + rect.right;
+    GetWindowRect(handle, &rect);
+    return rect.right - rect.left - borders;
+#   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return attributes.width;
+#   endif
+
+#   ifdef MACOS
+    // possible alternative: [handle frame] and contentRectForFrameRect
+    return [[[handle Window] contentView] frame].size.width;
+#   endif
+}
+
+_JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 width)
+{
+    // TODO: Jatta::Window::SetHeight
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
+{
+#   ifdef WINDOWS
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    int borders = -rect.top + rect.bottom;
+    GetWindowRect(handle, &rect);
+    return rect.bottom - rect.top - borders;
+#   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return attributes.height;
+#   endif
+
+#   ifdef MACOS
+    return [[[handle Window] contentView] frame].size.height;
+#   endif
+}
+
+_JATTA_EXPORT void Jatta::Window::SetSize(const Float2& size) const
+{
+    // TODO: Jatta::Window::SetSize
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
+{
+#   ifdef WINDOWS
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    int borders = -rect.top + rect.bottom;
+    GetWindowRect(handle, &rect);
+    return Float2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
+#   endif
+
+#   ifdef LINUX
+    XWindowAttributes attributes;
+    XGetWindowAttributes(display, handle, &attributes);
+    return Float2(attributes.height, attributes.width);
+#   endif
+
+#   ifdef MACOS
+    return Float2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
+#   endif
+}
+
+_JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
+{
+    // TODO: Jatta::Window::SetResizable
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
+{
+    // TODO: Jatta::Window::GetResizable
+    return false;
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
+{
+#   ifdef WINDOWS
+    RECT rect = {0, 0, 0, 0};
+    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    GetWindowRect(handle, &rect);
+    return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+#   endif
+
+    //TODO: Linux & Mac
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const
@@ -372,80 +526,6 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 #   ifdef WINDOWS
     return (handle == GetForegroundWindow());
 #   endif
-}
 
-_JATTA_EXPORT unsigned int Jatta::Window::GetWidth() const
-{
-#   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
-    int borders = -rect.left + rect.right;
-    GetWindowRect(handle, &rect);
-    return rect.right - rect.left - borders;
-#   endif
-
-#   ifdef LINUX
-    XWindowAttributes attributes;
-    XGetWindowAttributes(display, handle, &attributes);
-    return attributes.width;
-#   endif
-
-#   ifdef MACOS
-    // possible alternative: [handle frame] and contentRectForFrameRect
-    return [[[handle Window] contentView] frame].size.width;
-#   endif
-}
-
-_JATTA_EXPORT unsigned int Jatta::Window::GetHeight() const
-{
-#   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
-    int borders = -rect.top + rect.bottom;
-    GetWindowRect(handle, &rect);
-    return rect.bottom - rect.top - borders;
-#   endif
-
-#   ifdef LINUX
-    XWindowAttributes attributes;
-    XGetWindowAttributes(display, handle, &attributes);
-    return attributes.height;
-#   endif
-
-#   ifdef MACOS
-    return [[[handle Window] contentView] frame].size.height;
-#   endif
-}
-
-_JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
-{
-#   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
-    int borders = -rect.top + rect.bottom;
-    GetWindowRect(handle, &rect);
-    return Float2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
-#   endif
-
-#   ifdef LINUX
-    XWindowAttributes attributes;
-    XGetWindowAttributes(display, handle, &attributes);
-    return Float2(attributes.height, attributes.width);
-#   endif
-
-#   ifdef MACOS
-    return Float2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
-#   endif
-}
-
-_JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
-{
-#   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
-    GetWindowRect(handle, &rect);
-    return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
-#   endif
-
-//TODO: Linux
+    // TODO: linux & mac
 }

@@ -8,7 +8,7 @@
 /** @brief Default constructor.  Loads the window style with presets.
  *  @details Sets up the window style with the following presets:
  *  @code
- *  title = "";
+ *  title = "Jatta Window";
  *  backgroundColor = Color(255, 255, 255);
  *  width = 640;
  *  height = 480;
@@ -17,7 +17,7 @@
  */
 _JATTA_EXPORT Jatta::WindowStyle::WindowStyle()
 {
-    this->title = "";
+    this->title = "Jatta Window";
     this->backgroundColor = Color(255, 255, 255);
     this->width = 640;
     this->height = 480;
