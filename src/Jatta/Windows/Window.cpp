@@ -376,7 +376,11 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 #   endif
 
 #   ifdef MACOS
-    //TODO: Set title for mac.
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    NSString* str = [NSString stringWithCString:style.title.GetData().c_str() encoding:[NSString defaultCStringEncoding]];
+    [[handle Window] setTitle:str];
+    [str release];
+    [pool drain];
 #   endif
 }
 
