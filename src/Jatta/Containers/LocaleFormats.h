@@ -13,7 +13,7 @@ namespace Jatta
         namespace NumberFormats
         {
             const NumberFormat enUS(".","$");
-            const NumberFormat enEU(",","€")
+            const NumberFormat enEU(",","€");
             const NumberFormat enUK(".","£");
             const NumberFormat enJP(".","円",false,false);
         }

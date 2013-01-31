@@ -36,6 +36,8 @@ namespace Jatta
 
         typedef UInt32 Enum;
 
+        /** @brief A namespace of OpenGL constants.
+         */
         namespace GL
         {
             namespace Extensions
@@ -422,6 +424,8 @@ namespace Jatta
             static const Enum TESS_CONTROL_SHADER = 0x8e88;
             static const Enum TESS_EVALUATION_SHADER = 0x8e87;
             static const Enum GEOMETRY_SHADER = 0x8dd9;
+            /** @brief GL_FRAGMENT_SHADER
+             */
             static const Enum FRAGMENT_SHADER = 0x8b30;
 
             static const Enum ARRAY_BUFFER = 0x8892;

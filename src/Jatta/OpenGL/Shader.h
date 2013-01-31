@@ -14,6 +14,9 @@ namespace Jatta
 {
     namespace OpenGL
     {
+        /** @brief Blah.
+         *  @see Jatta::OpenGL::Program
+         */
         class Shader
         {
             UInt32 shader;

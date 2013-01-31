@@ -9,6 +9,8 @@
 	],
     "settings":
     {
-        "rulers": [100]
+        "rulers": [100],
+        "tab_size": 4,
+    	"translate_tabs_to_spaces": true
     }
 }

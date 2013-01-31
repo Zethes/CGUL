@@ -17,12 +17,17 @@ _JATTA_EXPORT Jatta::OpenGL::Shader::~Shader()
 {
 }
 
+/** @brief Equivalent to <a href="http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml">glCreateShader()</a>.
+ *  @param type An enumeration type which can be OpenGL::GL::VERTEX_SHADER, OpenGL::GL::TESS_CONTROL_SHADER, OpenGL::GL::TESS_EVALUATION_SHADER, OpenGL::GL::GEOMETRY_SHADER, or GL::FRAGMENT_SHADER.
+ */
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
 {
     shader = glCreateShader((GLenum)type);
     GLCHECK("Failed to create shader.");
 }
 
+/** @brief Equivalent to <a href="http://www.opengl.org/sdk/docs/man/xhtml/glDeleteShader.xml">glDeleteShader()</a>.
+ */
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Delete()
 {
     glDeleteShader((GLuint)shader);

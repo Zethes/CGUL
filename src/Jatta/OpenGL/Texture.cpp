@@ -63,8 +63,6 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::SetMinFilter(Enum param)
 {
     glTexParameteri(type, GL_TEXTURE_MIN_FILTER, param);
     GLCHECK("Failed to set min filter.");
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Texture::SetMagFilter(Enum param)
@@ -95,6 +93,10 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::Image2D(SInt32 level, SInt32 internal
 {
     glTexImage2D(this->type, level, internalFormat, width, height, border, format, type, data);
     GLCHECK("Failed to set texture 2D image.");
+    // TODO: move these to their own methods
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    GLCHECK("Something borked");
 }
 
 #endif
