@@ -130,6 +130,7 @@ int main()
         style.resizable = false;
         Window window;
         window.Create(style);
+        window.SetTitle("Hello");
 
         // Create the OpenGL context
         OpenGL::Context context;
