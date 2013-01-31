@@ -112,6 +112,10 @@ template<typename T> T& Jatta::List<T>::Front()
 {
     return data.front();
 }
+template<typename T> typename Jatta::List<T>::Iterator Jatta::List<T>::Find(const T& value)
+{
+    return Find(value, Begin());
+}
 template<typename T> typename Jatta::List<T>::Iterator Jatta::List<T>::Find(const T& value, Jatta::List<T>::Iterator offset)
 {
     for (Iterator i = offset; i != End(); i++)

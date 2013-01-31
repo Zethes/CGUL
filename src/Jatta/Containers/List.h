@@ -56,7 +56,8 @@ namespace Jatta
         bool Exists(const T& value);
         const T& Back() const;
         const T& Front() const;
-        Jatta::List<T>::Iterator Find(const T& value, Jatta::List<T>::Iterator offset = Begin());
+        Jatta::List<T>::Iterator Find(const T& value);
+        Jatta::List<T>::Iterator Find(const T& value, Jatta::List<T>::Iterator offset);
         Jatta::List<T>::Iterator FindFirst(const T& value);
         Jatta::List<T>::Iterator FindLast(const T& value);
         Jatta::Size MaxSize() const;
