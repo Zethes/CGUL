@@ -25,7 +25,7 @@
     int windowOpen;
 }
 
-- (NSWindow*) Window;
+- (NSWindow*)Window;
 - (int)IsOpen;
 - (void)SetContent: (OpenGLView*)content;
 

@@ -24,24 +24,26 @@
             NSRect frame = NSMakeRect(200, 200, 800, 600);
 
             // Define the style masks to be a titled window with close, max and min
-            NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask/* | NSResizableWindowMask*/;
+            NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
 
             // Adjust the window's sized based on the style mask
             NSRect rect = [NSWindow contentRectForFrameRect: frame styleMask: styleMask];
 
             // Create the window based on the above specifications
-            window =  [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
+            window = [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
 
             // Set the background color to black
             [window setBackgroundColor: [NSColor colorWithCalibratedRed: style.backgroundColor.r / 255.0 green: style.backgroundColor.g / 255.0 blue: style.backgroundColor.b / 255.0 alpha: 1.0]];
 
             // Set the title of the window
-            NSString* str = [NSString stringWithCString:style.title.GetData().c_str() encoding:[NSString defaultCStringEncoding]];
-            [window setTitle:str];
-            [str release];
+            //NSString* str = [NSString stringWithCString:style.title.GetData().c_str() encoding:[NSString defaultCStringEncoding]];
+            //[window setTitle:str];
+            //[str release];
 
             // Make this object the delegate for the window
             [window setDelegate: self];
+
+            NSLog(@"%p", window);
 
             // Create an OpenGL view for the window
             //view = [[OpenGLView alloc] init];
@@ -54,6 +56,8 @@
 
             // (TEMPORARILY) Make the window above all other windows
             //[window setLevel: NSFloatingWindowLevel];
+
+            view = nil;
 
             [window makeKeyAndOrderFront: self];
         }
@@ -81,14 +85,7 @@
 
     - (void)windowDidResize: (NSNotification*)aNotification
     {
-        // Set the view back to the original view temporarily
-        //[window setContentView: content];
-
-        // Display the blank black window
-        //[window display];
-
-        // Switch back to the OpenGL view once resizing is finished
-        //[window setContentView: glView];
+        [view update];
     }
 
     - (void)dealloc
@@ -98,7 +95,7 @@
         [super dealloc];
     }
 
-    - (NSWindow*) Window
+    - (NSWindow*)Window
     {
         return window;
     }
@@ -111,6 +108,7 @@
     - (void)SetContent: (OpenGLView*)content
     {
         [window setContentView: content];
+        view = content;
     }
 @end
 

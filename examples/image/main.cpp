@@ -130,7 +130,7 @@ int main()
         style.resizable = false;
         Window window;
         window.Create(style);
-        window.SetTitle("Hello");
+        window.SetTitle("こんにちわ");
 
         // Create the OpenGL context
         OpenGL::Context context;
@@ -152,8 +152,6 @@ int main()
         texture.Unbind();
 
         OpenGL::VertexArray box = MakeBox();
-
-        context.Viewport(0, 0, 640, 480);
     
         context.ClearColor(Colors::red);
 
@@ -161,7 +159,8 @@ int main()
         {
             Window::Update();
 
-            context.Clear(OpenGL::GL::COLOR_BUFFER_BIT);
+            context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
+            context.Clear(OpenGL::GL::COLOR_BUFFER_BIT | OpenGL::GL::DEPTH_BUFFER_BIT);
 
             program.Bind();
             OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 1, 1, 0));

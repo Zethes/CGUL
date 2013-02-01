@@ -317,6 +317,8 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     // Free anything we've autoreleased on the Obj-C side
     [pool drain];
 #   endif
+
+    SetStyle(style);
 }
 
 _JATTA_EXPORT void Jatta::Window::Close()
@@ -377,9 +379,8 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 
 #   ifdef MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSString* str = [NSString stringWithCString:style.title.GetData().c_str() encoding:[NSString defaultCStringEncoding]];
+    NSString* str = [NSString stringWithCString:title.GetData().c_str() encoding:NSUTF8StringEncoding];
     [[handle Window] setTitle:str];
-    [str release];
     [pool drain];
 #   endif
 }
