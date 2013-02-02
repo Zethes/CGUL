@@ -29,7 +29,7 @@ ADD_SUBDIRECTORY(Jatta/Utility)
 ADD_SUBDIRECTORY(Jatta/Windows)
 
 # Add the Jatta.h file to the list of source files
-SET(JATTA_SOURCE ${JATTA_SOURCE} ${CMAKE_CURRENT_LIST_DIR}/Jatta.h)
+SET(JATTA_SOURCE ${JATTA_SOURCE} ${CMAKE_CURRENT_SOURCE_DIR}/Jatta.h)
 INSTALL(FILES Jatta.h DESTINATION include/)
 
 INCLUDE(GroupControl.cmake)
