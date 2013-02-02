@@ -3,7 +3,18 @@
  * All rights reserved.
  */
 
+ /** @file Defines.h
+  *  @brief Sets up the build environment for header files.
+  *  @details The goal of this file was to exclude system files which dump defines to the global
+  *  namespace from applications which relied on Jatta.  An example of this is Window's CreateWindow
+  *  function which is commonly defined as either CreateWindowA or CreateWindowW.  Since this same
+  *  define does not exist on Linux or Mac it creates issues only present on Windows.  By excluding
+  *  the inclusion of Windows.h in the final product, OS-specific defines are minimized.
+  */
+
 #include "Once.h"
+
+#ifndef DOXYGEN
 
 #ifdef WINDOWS
 #   define _JATTA_HWND void*
@@ -129,4 +140,6 @@
 #       define _JATTA_AIMATERIAL ::aiMaterial*
 #       define _JATTA_AICAMERA ::aiCamera*
 #   endif
+#endif
+
 #endif

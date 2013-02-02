@@ -3,6 +3,13 @@
  * All rights reserved.
  */
 
+/** @file Undefines.h
+ *  @brief Cleans up defines used in Jatta header files.
+ *  @details Each header file sets up some defines to make including them as clean as possible.
+ *  This file is included at the end of each Jatta header file to remove left-over defines from this
+ *  cleaning process.
+ */
+
 #ifdef WINDOWS
 #  undef _JATTA_HWND
 #  undef _JATTA_DWORD
