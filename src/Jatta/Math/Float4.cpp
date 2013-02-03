@@ -4,6 +4,8 @@
  */
 
 #include "Float4.h"
+#include "Float2.h"
+#include "Float3.h"
 #include "Matrix.h"
 
 #include <cmath>
@@ -51,6 +53,42 @@ _JATTA_EXPORT Jatta::Float4 Jatta::Float4::operator*(const Matrix& operand) cons
                   x * operand.m[0][1] + y * operand.m[1][1] + z * operand.m[2][1] + w * operand.m[3][1],
                   x * operand.m[0][2] + y * operand.m[1][2] + z * operand.m[2][2] + w * operand.m[3][2],
                   x * operand.m[0][3] + y * operand.m[1][3] + z * operand.m[2][3] + w * operand.m[3][3]);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Float4::At(UInt32 index) const
+{
+    return m[index];
+}
+
+_JATTA_EXPORT void Jatta::Float4::Set(Float32 value)
+{
+    this->x = value;
+    this->y = value;
+    this->z = value;
+    this->w = value;
+}
+
+_JATTA_EXPORT void Jatta::Float4::Set(Float32 x, Float32 y, Float32 z, Float32 w)
+{
+    this->x = x;
+    this->y = y;
+    this->z = z;
+    this->w = w;
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float4::Swizzle(UInt32 x, UInt32 y) const
+{
+    return Float2(m[x], m[y]);
+}
+
+_JATTA_EXPORT Jatta::Float3 Jatta::Float4::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+{
+    return Float3(m[x], m[y], m[z]);
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Float4::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+{
+    return Float4(m[x], m[y], m[z], m[w]);
 }
 
 _JATTA_EXPORT void Jatta::Float4::Normalize()

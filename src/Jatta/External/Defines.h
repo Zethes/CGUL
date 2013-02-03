@@ -36,6 +36,11 @@
 #define _JATTA_AITEXTURE void*
 #define _JATTA_AIMATERIAL void*
 #define _JATTA_AICAMERA void*
+#define _JATTA_PASTREAM void*
+#define _JATTA_PASTREAM_CALLBACK_TIMEINFO void*
+#define _JATTA_PASTREAM_CALLBACK_FLAGS unsigned long
+#define _JATTA_PADEVICE_INFO void*
+#define _JATTA_PAHOSTAPI_INFO void*
 
 #if defined(WINDOWS) && !defined(MSVC)
 #   define _WIN32_WINNT 0x0501
@@ -56,6 +61,8 @@
 #   endif
 #   ifdef LINUX
 #       include <X11/Xlib.h>
+#       include <X11/Xlib.h>
+#       include <X11/Xatom.h>
 #       ifndef JATTA_NO_GRAPHICS
 #           include <GL/glxew.h>
 #           include <GL/glew.h>
@@ -77,6 +84,9 @@
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
 #   endif
+#    ifndef JATTA_NO_AUDIO
+#        include <portaudio.h>
+#    endif
 #   if defined(LINUX) | defined(MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>
@@ -95,7 +105,7 @@
 #       define INVALID_SOCKET ~0
 #       define SOCKET_ERROR -1
 #   endif
-#   define CHECK(x, y) //static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
+#   define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   ifdef WINDOWS
         CHECK(::HWND, _JATTA_HWND);
         CHECK(::DWORD, _JATTA_DWORD);
@@ -113,7 +123,10 @@
       CHECK(::aiMesh*, _JATTA_AIMESH);
       CHECK(::aiTexture*, _JATTA_AITEXTURE);
       CHECK(::aiTexture*, _JATTA_AIMATERIAL);
-      CHECK(::aiCamera*, _JATTA_AICAMERA);
+      CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
+      CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
+      CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
+      CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
 #   undef CHECK
 #   include "Undefines.h"
 #   ifdef WINDOWS
@@ -139,6 +152,13 @@
 #       define _JATTA_AITEXTURE ::aiTexture*
 #       define _JATTA_AIMATERIAL ::aiMaterial*
 #       define _JATTA_AICAMERA ::aiCamera*
+#   endif
+#   ifndef JATTA_NO_AUDIO
+#        define _JATTA_PASTREAM ::PaStream*
+#        define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
+#        define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
+#        define _JATTA_PADEVICE_INFO ::PaDeviceInfo*
+#        define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
 #   endif
 #endif
 

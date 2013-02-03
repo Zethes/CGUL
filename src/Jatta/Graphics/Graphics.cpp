@@ -23,7 +23,7 @@ _JATTA_EXPORT Jatta::Graphics::~Graphics()
     // TODO: delete graphics stuff
 }
 
-_JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
+_JATTA_EXPORT void Jatta::Graphics::Create(const Window* window)
 {
     this->window = window;
 
@@ -167,7 +167,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(Window* window)
     glGetError();
 }
 
-_JATTA_EXPORT Jatta::Window* Jatta::Graphics::GetWindow()
+_JATTA_EXPORT const Jatta::Window* Jatta::Graphics::GetWindow()
 {
     return window;
 }

@@ -95,13 +95,13 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flag
 #   ifndef JATTA_NO_PNG
     if (IsPng(fileName))
         return LoadPng(fileName, flags);
-#    else
+#   else
     if (false) {}
-#    endif
+#   endif
 #   ifndef JATTA_NO_JPEG
     else if (IsJpg(fileName))
         return LoadJpg(fileName, flags);
-#    endif
+#   endif
     else
         return false;
 }

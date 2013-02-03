@@ -51,16 +51,16 @@ namespace Jatta
         _JATTA_EXPORT ~Window();
 
 #       ifdef WINDOWS
-        _JATTA_EXPORT _JATTA_HWND _GetHandle();
+        _JATTA_EXPORT _JATTA_HWND _GetHandle() const;
 #       endif
 
 #       ifdef LINUX
-        _JATTA_EXPORT _JATTA_DISPLAY _GetDisplay();
-        _JATTA_EXPORT _JATTA_WINDOW _GetHandle();
+        _JATTA_EXPORT _JATTA_DISPLAY _GetDisplay() const;
+        _JATTA_EXPORT _JATTA_WINDOW _GetHandle() const;
 #       endif
 
 #       if defined(MACOS) && defined(__OBJC__)
-        WindowDelegate* _GetHandle();
+        WindowDelegate* _GetHandle() const;
 #       endif
 
         _JATTA_EXPORT Input* GetInput();

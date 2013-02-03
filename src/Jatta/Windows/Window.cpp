@@ -11,9 +11,11 @@
 #   import "MacOS/Application.h"
 #endif
 
-// Disable Warning C4355: 'this' : used in base member initializer list
-// How we're using 'this' will not cause any undefined behavior
-#pragma warning( disable : 4355 )
+#ifdef MSVC
+    // Disable Warning C4355: 'this' : used in base member initializer list
+    // How we're using 'this' will not cause any undefined behavior
+    #pragma warning( disable : 4355 )
+#endif
 
 #ifdef WINDOWS
 LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
@@ -76,6 +78,7 @@ bool Jatta::Window::initialized = false;
 static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 {
     // TODO: something?
+    return 0;
 }
 #endif
 
@@ -89,6 +92,12 @@ _JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
     /* deleted */
 }
 
+/** @brief Updates all windows in the current application.
+ *  @details The operating system usually handles windows under the same application in bulk.  For
+ *  this reason, it is only necessary to call update once for every window.  It is still important
+ *  to update a window's input manually, however.
+ *  @see UpdateInput
+ */
 _JATTA_EXPORT void Jatta::Window::Update()
 {
 #   ifdef WINDOWS
@@ -177,26 +186,26 @@ _JATTA_EXPORT Jatta::Window::~Window()
 }
 
 #ifdef WINDOWS
-_JATTA_EXPORT HWND Jatta::Window::_GetHandle()
+_JATTA_EXPORT HWND Jatta::Window::_GetHandle() const
 {
     return handle;
 }
 #endif
 
 #ifdef LINUX
-_JATTA_EXPORT Display* Jatta::Window::_GetDisplay()
+_JATTA_EXPORT Display* Jatta::Window::_GetDisplay() const
 {
     return display;
 }
 
-_JATTA_EXPORT ::Window Jatta::Window::_GetHandle()
+_JATTA_EXPORT ::Window Jatta::Window::_GetHandle() const
 {
     return handle;
 }
 #endif
 
 #ifdef MACOS
-WindowDelegate* Jatta::Window::_GetHandle()
+WindowDelegate* Jatta::Window::_GetHandle() const
 {
     return handle;
 }
@@ -321,6 +330,8 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     SetStyle(style);
 }
 
+/** @brief Destroys the window.
+ */
 _JATTA_EXPORT void Jatta::Window::Close()
 {
 #   ifdef WINDOWS
@@ -342,12 +353,33 @@ _JATTA_EXPORT void Jatta::Window::Close()
 #   endif
 }
 
+/** @brief Updates a window's input handler.
+ *  @details This method acts a little bit differently on each operating system.  It is important to
+ *  call this every tick for every window.
+ */
 _JATTA_EXPORT void Jatta::Window::UpdateInput()
 {
+#   ifdef LINUX
+    ::Window root, child;
+    int rootX, rootY, winX, winY;
+    unsigned int mask;
+
+    XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
+    GetInput()->mousePos.x = winX;
+    GetInput()->mousePos.y = winY;
+#   endif
+
     this->GetInput()->AnalyzeKeyData();
     this->GetInput()->AnalyzeMouseData();
 }
 
+/** @brief Updates a window's style.
+ *  @param style The style structure.
+ *  @details This method will reset all elements within the WindowStyle, not only those which have
+ *  changed.  It can be used to "backup" a window at a given state and then reset to it later.
+ *  Alternatively, it is possible to grab the current style with GetStyle and then modify individual
+ *  elements, and pass it back into SetStyle.
+ */
 _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
 {
     SetTitle(style.title);
@@ -357,6 +389,9 @@ _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
     SetResizable(style.resizable);
 }
 
+/** @brief Gets some information about the window.
+ *  @returns A WindowStyle structure.
+ */
 _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
 {
     WindowStyle style;
@@ -532,5 +567,23 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
     return (handle == GetForegroundWindow());
 #   endif
 
-    // TODO: linux & mac
+#   ifdef LINUX
+    Atom netActiveWindow = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
+
+    ::Window activeWindow = None;
+    Atom actualType;
+    int actualFormat;
+    unsigned long items, bytesAfter;
+    unsigned char *propReturn = NULL;
+
+    if (Success == XGetWindowProperty(display, XRootWindow(display, 0), netActiveWindow, 0L, sizeof(Window), False, XA_WINDOW, &actualType, &actualFormat, &items, &bytesAfter, &propReturn) && propReturn)
+    {
+        activeWindow = *(::Window*)propReturn;
+        XFree(propReturn);
+    }
+
+    return activeWindow == handle;
+#   endif
+
+    // TODO: macos
 }

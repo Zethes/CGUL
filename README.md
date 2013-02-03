@@ -18,4 +18,7 @@ Features
 * Simplified networking
 * Object oriented OpenGL wrapper
 * Window system on Windows, MacOS and Linux
+* Utf-8 everywhere
 * A very liberal license
+
+NOTE: Since Jatta is still in developmental stages all features above are only partially implemented!

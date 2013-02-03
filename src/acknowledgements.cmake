@@ -48,6 +48,15 @@ Copyright (C) 2006-2012 assimp team
 All rights reserved."
 )
 
+LIST(APPEND ACKNOWLEDGEMENTS
+"\n
+PortAudio Portable Real-Time Audio Library http://www.portaudio.com/
+Copyright (C) 1999-2011 Ross Bencina, Phil Burk
+
+PulseAudio Implementation for PortAudio https://github.com/bkgood/portaudio-pulseaudio
+Copyright (C) 2011 William 'Bill' Good"
+)
+
 string (REPLACE ";" "" ACKNOWLEDGEMENTS ${ACKNOWLEDGEMENTS})
 
 CONFIGURE_FILE("acknowledgements.txt.in" "acknowledgements.txt")

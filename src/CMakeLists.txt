@@ -2,6 +2,8 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
+INCLUDE(SimpleSource.cmake)
+
 # Store the top level directory
 SET(TOP_LEVEL ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
@@ -10,10 +12,12 @@ IF(NOT JATTA_DEPENDENCY_DIR)
     SET(JATTA_DEPENDENCY_DIR ${TOP_LEVEL}/dep)
 ENDIF()
 
-INCLUDE(SourceControl.cmake)
+# Initialize SimpleSource
+SIMPLESOURCE_INIT(ON JATTA_SOURCE)
 
 # Add the source subdirectories
 ADD_SUBDIRECTORY(Jatta/Assimp)
+ADD_SUBDIRECTORY(Jatta/Audio)
 ADD_SUBDIRECTORY(Jatta/Collision)
 ADD_SUBDIRECTORY(Jatta/Containers)
 ADD_SUBDIRECTORY(Jatta/External)
@@ -31,8 +35,6 @@ ADD_SUBDIRECTORY(Jatta/Windows)
 # Add the Jatta.h file to the list of source files
 SET(JATTA_SOURCE ${JATTA_SOURCE} ${CMAKE_CURRENT_SOURCE_DIR}/Jatta.h)
 INSTALL(FILES Jatta.h DESTINATION include/)
-
-INCLUDE(GroupControl.cmake)
 
 # Set the output directory to the user defined one or the default one
 IF(JATTA_LIB_DIRECTORY)
@@ -71,6 +73,9 @@ SET(CMAKE_CXX_FLAGS "-I${JATTA_DEPENDENCY_DIR}/include ${CMAKE_CXX_FLAGS}")
 
 # Create the Jatta library
 ADD_LIBRARY(Jatta SHARED ${JATTA_SOURCE})
+
+# Finalize SimpleSource
+SIMPLESOURCE_FINISH()
 
 # Find Apple's Carbon and Cocoa libraries
 if(APPLE)
@@ -147,6 +152,21 @@ IF(NOT JATTA_NO_NETWORK)
     ENDIF()
 ELSE()
     SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DJATTA_NO_NETWORK)
+ENDIF()
+
+IF(NOT JATTA_NO_AUDIO)
+    ADD_LIBRARY(portaudio STATIC IMPORTED)
+    SET_TARGET_PROPERTIES(portaudio PROPERTIES IMPORTED_LOCATION ${JATTA_DEPENDENCY_DIR}/lib/libportaudio.a)
+    SET(JATTA_LIBRARIES ${JATTA_LIBRARIES} portaudio)
+    IF(WIN32)
+        SET(JATTA_LIBRARIES ${JATTA_LIBRARIES} Winmm)
+    ELSE()
+        ADD_LIBRARY(asound STATIC IMPORTED)
+        SET_TARGET_PROPERTIES(asound PROPERTIES IMPORTED_LOCATION ${JATTA_DEPENDENCY_DIR}/lib/libasound.a)
+        SET(JATTA_LIBRARIES ${JATTA_LIBRARIES} asound pthread rt)
+    ENDIF()
+ELSE()
+    SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DJATTA_NO_AUDIO)
 ENDIF()
 
 IF(MSVC)

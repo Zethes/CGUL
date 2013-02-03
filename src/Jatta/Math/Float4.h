@@ -8,6 +8,8 @@
 
 namespace Jatta
 {
+    struct Float2;
+    struct Float3;
     struct Matrix;
 
     struct Float4
@@ -16,9 +18,9 @@ namespace Jatta
         {
             struct
             {
-                float x, y, z, w;
+                Float32 x, y, z, w;
             };
-            float m[4];
+            Float32 m[4];
         };
 
         _JATTA_EXPORT Float4();
@@ -33,6 +35,15 @@ namespace Jatta
             stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
             return stream;
         }
+
+        _JATTA_EXPORT Jatta::Float32 At(UInt32 index) const;
+
+        _JATTA_EXPORT void Set(Float32 value);
+        _JATTA_EXPORT void Set(Float32 x, Float32 y, Float32 z, Float32 w);
+
+        _JATTA_EXPORT Float2 Swizzle(UInt32 x, UInt32 y) const;
+        _JATTA_EXPORT Float3 Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
+        _JATTA_EXPORT Float4 Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
 
         _JATTA_EXPORT void Normalize();
 

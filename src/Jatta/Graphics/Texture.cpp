@@ -11,7 +11,7 @@ _JATTA_EXPORT Jatta::Texture::Texture()
 
 _JATTA_EXPORT void Jatta::Texture::Create(const Jatta::Image& image, bool ms)
 {
-    if (OpenGL::GetOpenGLVersionMajor()+(OpenGL::GetOpenGLVersionMinor()/10.0f) >= 3.3f && ms && OpenGL::SupportsExtension("GL_ARB_gpu_shader5"))
+    if (false && OpenGL::GetOpenGLVersionMajor()+(OpenGL::GetOpenGLVersionMinor()/10.0f) >= 3.3f && ms && OpenGL::SupportsExtension("GL_ARB_gpu_shader5"))
     {
         multiSampled = true;
         _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());

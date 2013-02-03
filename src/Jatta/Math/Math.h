@@ -8,6 +8,10 @@
 
 namespace Jatta
 {
+    struct Float2;
+    struct Float3;
+    struct Float4;
+
     /** @brief A namespace containing many common mathematical functions.
      *  @details Some mathematical concepts were ruthlessly stolen from MathGeoLib.  Be sure to
      *  check it out as an awesome standalone math library!
@@ -27,8 +31,16 @@ namespace Jatta
         _JATTA_EXPORT Float32 ASin(Float32 x);
         _JATTA_EXPORT Float32 ATan(Float32 x);
 
+        _JATTA_EXPORT Float32 ATan2(Float32 y, Float32 x);
+
         _JATTA_EXPORT Float32 DegToRad(Float32 deg);
+        _JATTA_EXPORT Float2 DegToRad(const Float2& deg);
+        _JATTA_EXPORT Float3 DegToRad(const Float3& deg);
+        _JATTA_EXPORT Float4 DegToRad(const Float4& deg);
         _JATTA_EXPORT Float32 RadToDeg(Float32 rad);
+        _JATTA_EXPORT Float2 RadToDeg(const Float2& rad);
+        _JATTA_EXPORT Float3 RadToDeg(const Float3& rad);
+        _JATTA_EXPORT Float4 RadToDeg(const Float4& rad);
 
         _JATTA_EXPORT Float32 Min(Float32 a, Float32 b);
         _JATTA_EXPORT Float32 Max(Float32 a, Float32 b);

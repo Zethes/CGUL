@@ -8,15 +8,18 @@
 
 namespace Jatta
 {
+    struct Float3;
+    struct Float4;
+
     struct Float2
     {
         union
         {
             struct
             {
-                float x, y;
+                Float32 x, y;
             };
-            float m[2];
+            Float32 m[2];
         };
 
         _JATTA_EXPORT static const Float2 zero;
@@ -49,13 +52,22 @@ namespace Jatta
             return stream;
         }
 
+        _JATTA_EXPORT Jatta::Float32 At(UInt32 index) const;
+
         _JATTA_EXPORT void Set(Float32 value);
         _JATTA_EXPORT void Set(Float32 x, Float32 y);
+
+        _JATTA_EXPORT Float2 Swizzle(UInt32 x, UInt32 y) const;
+        _JATTA_EXPORT Float3 Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
+        _JATTA_EXPORT Float4 Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
 
         _JATTA_EXPORT void Normalize();
         _JATTA_EXPORT Boolean IsNormalized(Float32 epsilon = 0.00001f) const;
         _JATTA_EXPORT Float32 GetMagnitude() const;
         _JATTA_EXPORT Float32 GetDistance(const Float2& other) const;
+
+        _JATTA_EXPORT void SetAngle(Float32 angle);
+        _JATTA_EXPORT Float32 GetAngle() const;
     };
 }
 

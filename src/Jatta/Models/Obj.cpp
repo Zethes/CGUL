@@ -35,7 +35,7 @@ namespace
 }
 
 #include <iostream>
-static Jatta::Float4 ToVector(const Jatta::String& input, Jatta::Byte* size)
+/*static Jatta::Float4 ToVector(const Jatta::String& input, Jatta::Byte* size)
 {
     Jatta::Float4 data;
     std::istringstream ss;
@@ -45,9 +45,9 @@ static Jatta::Float4 ToVector(const Jatta::String& input, Jatta::Byte* size)
         ss >> data[*size];
     }
     return data; // TODO: check for errors
-}
+}*/
 
-static void CreateGroup(Jatta::Group* group, std::vector<Jatta::String> data, std::vector<Jatta::Float4>& positions, Jatta::Byte positionsSize, std::vector<Jatta::Float4>& texCoords, Jatta::Byte texCoordsSize, std::vector<Jatta::Float4>& normals, Jatta::Byte normalsSize)
+/*static void CreateGroup(Jatta::Group* group, std::vector<Jatta::String> data, std::vector<Jatta::Float4>& positions, Jatta::Byte positionsSize, std::vector<Jatta::Float4>& texCoords, Jatta::Byte texCoordsSize, std::vector<Jatta::Float4>& normals, Jatta::Byte normalsSize)
 {
     group->vertexCount = data.size();
     if (positionsSize != 0)
@@ -89,7 +89,7 @@ static void CreateGroup(Jatta::Group* group, std::vector<Jatta::String> data, st
         buffer.size = normalsSize;
         group->AddBuffer(buffer);
     }
-}
+}*/
 
 static void Parse(ObjData* data, const Jatta::String& fileName)
 {
@@ -268,8 +268,8 @@ static std::vector<Jatta::Group> CreateGroups(ObjData* data)
         group.vertexCount = i->faces.size() * 3;
         int faceSize = 0;
         bool first = true;
-        bool hasTexCoord, faceHasTexCoord;
-        bool hasNormal, faceHasNormal;
+        bool hasTexCoord = false, faceHasTexCoord;
+        bool hasNormal = false, faceHasNormal;
         Jatta::Float32* positions = new Jatta::Float32[i->faces.size() * data->positionSize * 3];
         unsigned int positionPos = 0;
         Jatta::Float32* texCoords = new Jatta::Float32[i->faces.size() * data->texCoordSize * 3];

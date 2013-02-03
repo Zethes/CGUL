@@ -88,7 +88,7 @@ _JATTA_EXPORT void Jatta::Terrain::Build()
 
     //Bind textures.
     int index = 0;
-    for (int i = 0; i < mixmap.size() && index < 13; i++)
+    for (unsigned int i = 0; i < mixmap.size() && index < 13; i++)
     {
         Color*mmap = new Color[width*height];
 
@@ -132,7 +132,7 @@ _JATTA_EXPORT Jatta::Texture* Jatta::Terrain::GetTexture(int id)
 _JATTA_EXPORT void Jatta::Terrain::Draw(Jatta::Shader*shader)
 {
     //Bind textures.
-    for (int i = 0; i < textures.size(); i++)
+    for (unsigned int i = 0; i < textures.size(); i++)
     {
         Jatta::String str = "tex";
         str += (int)i;

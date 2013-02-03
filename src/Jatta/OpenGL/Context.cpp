@@ -12,7 +12,7 @@ _JATTA_EXPORT Jatta::OpenGL::Context::Context()
 {
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
+_JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
 {
     graphics.Create(window);
 }

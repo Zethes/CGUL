@@ -182,7 +182,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean
 {
     // TODO: redo this method, it's terrible
 
-    bool kerning = true;
+    //bool kerning = true; // unused?
 
     // set our transform matrix (to the identity matrix)
     FT_Matrix matrix;
@@ -262,7 +262,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean
         // now, draw to our surface
         FT_Int n, p, q;
         FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        FT_Int y_max = face->glyph->bitmap_top + face->glyph->bitmap.rows;
+        //FT_Int y_max = face->glyph->bitmap_top + face->glyph->bitmap.rows; // unused?
         FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top);
         FT_Int startY = (((bufferHeight - maxDown) - face->glyph->bitmap.rows) + down);
         for (n = face->glyph->bitmap_left, p = 0; n < x_max; n++, p++)

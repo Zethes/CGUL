@@ -27,7 +27,7 @@ namespace Jatta
         UInt32*indexBuffer;
         Float2*textureCoords;
 
-        int width, height;
+        unsigned int width, height;
 
         float hScale, bScale;
     public:

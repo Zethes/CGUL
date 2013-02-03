@@ -20,7 +20,7 @@ namespace Jatta
         public:
             _JATTA_EXPORT Context();
 
-            _JATTA_EXPORT void Create(Window* window);
+            _JATTA_EXPORT void Create(const Window* window);
             _JATTA_EXPORT void MakeCurrent();
 
             _JATTA_EXPORT void Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height);

@@ -331,12 +331,16 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Input::GetMousePosition()
 
 _JATTA_EXPORT void Jatta::Input::SetMousePosition(Float2 pos)
 {
-#ifdef WINDOWS
+#   ifdef WINDOWS
     POINT p;
     p.x = pos.x;
     p.y = pos.y;
     ClientToScreen(this->window->_GetHandle(),&p);
     SetCursorPos(p.x,p.y);
-#endif
-    //TODO: Linux
+#   endif
+
+#   ifdef LINUX
+    XWarpPointer(window->_GetDisplay(), None, window->_GetHandle(), 0, 0, 0, 0, pos.x, pos.y);
+#   endif
+    //TODO: MacOS
 }

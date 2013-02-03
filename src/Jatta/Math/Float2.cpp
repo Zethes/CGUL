@@ -4,6 +4,8 @@
  */
 
 #include "Float2.h"
+#include "Float3.h"
+#include "Float4.h"
 #include "Math.h"
 
 _JATTA_EXPORT const Jatta::Float2 zero(0, 0);
@@ -115,6 +117,11 @@ _JATTA_EXPORT Jatta::Float2& Jatta::Float2::operator/=(Float32 operand)
     return *this;
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Float2::At(UInt32 index) const
+{
+    return m[index];
+}
+
 _JATTA_EXPORT void Jatta::Float2::Set(Float32 value)
 {
     this->x = value;
@@ -125,6 +132,21 @@ _JATTA_EXPORT void Jatta::Float2::Set(Float32 x, Float32 y)
 {
     this->x = x;
     this->y = y;
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float2::Swizzle(UInt32 x, UInt32 y) const
+{
+    return Float2(m[x], m[y]);
+}
+
+_JATTA_EXPORT Jatta::Float3 Jatta::Float2::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+{
+    return Float3(m[x], m[y], m[z]);
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Float2::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+{
+    return Float4(m[x], m[y], m[z], m[w]);
 }
 
 _JATTA_EXPORT void Jatta::Float2::Normalize()
@@ -148,4 +170,16 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetDistance(const Float2& other) con
 {
     // TODO: this
     return 0;
+}
+
+_JATTA_EXPORT void Jatta::Float2::SetAngle(Float32 angle)
+{
+    Float32 magnitude = GetMagnitude();
+    x = Math::Cos(angle) * magnitude;
+    y = Math::Sin(angle) * magnitude;
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetAngle() const
+{
+    return Math::ATan2(y, x);
 }

@@ -4,6 +4,8 @@
  */
 
 #include "Float3.h"
+#include "Float2.h"
+#include "Float4.h"
 
 #include <cmath>
 
@@ -101,6 +103,40 @@ _JATTA_EXPORT Jatta::Float3& Jatta::Float3::operator*=(float operand)
     this->y *= operand;
     this->z *= operand;
     return *this;
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Float3::At(UInt32 index) const
+{
+    return m[index];
+}
+
+_JATTA_EXPORT void Jatta::Float3::Set(Float32 value)
+{
+    this->x = value;
+    this->y = value;
+    this->z = value;
+}
+
+_JATTA_EXPORT void Jatta::Float3::Set(Float32 x, Float32 y, Float32 z)
+{
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float3::Swizzle(UInt32 x, UInt32 y) const
+{
+    return Float2(m[x], m[y]);
+}
+
+_JATTA_EXPORT Jatta::Float3 Jatta::Float3::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+{
+    return Float3(m[x], m[y], m[z]);
+}
+
+_JATTA_EXPORT Jatta::Float4 Jatta::Float3::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+{
+    return Float4(m[x], m[y], m[z], m[w]);
 }
 
 _JATTA_EXPORT float Jatta::Float3::GetMagnitude() const

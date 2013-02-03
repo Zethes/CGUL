@@ -5,6 +5,6 @@
 ADD_GROUP("Containers")
 ADD_OTHER(CMakeLists.txt)
 ADD_HEADER(List.h include/Jatta/Containers)
-ADD_HEADER(List.ipp include/Jatta/Containers)
+ADD_IMPLEMENTATION(List.ipp include/Jatta/Containers)
 ADD_SOURCE(Locale.cpp)
 ADD_HEADER(Locale.h include/Jatta/Containers)

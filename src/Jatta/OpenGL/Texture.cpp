@@ -63,6 +63,10 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::SetMinFilter(Enum param)
 {
     glTexParameteri(type, GL_TEXTURE_MIN_FILTER, param);
     GLCHECK("Failed to set min filter.");
+
+    // TODO: move these to their own methods
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Texture::SetMagFilter(Enum param)

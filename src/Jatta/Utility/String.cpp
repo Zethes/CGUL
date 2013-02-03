@@ -228,6 +228,14 @@ _JATTA_EXPORT std::string Jatta::String::GetData() const
     return data;
 }
 
+/** @brief Accesses the raw character data from the wrapped std::string object.
+ *  @returns A constant character pointer of the data.
+ */
+_JATTA_EXPORT const char* Jatta::String::GetCString() const
+{
+    return data.c_str();
+}
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
 {
     UInt32 count = 0;

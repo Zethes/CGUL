@@ -18,7 +18,7 @@ namespace Jatta
 
         static Graphics* current;
 
-        Window* window;
+        const Window* window;
 
 #       ifdef WINDOWS
         _JATTA_PIXELFORMATDESCRIPTOR pfd;
@@ -47,9 +47,9 @@ namespace Jatta
         _JATTA_EXPORT Graphics();
         _JATTA_EXPORT ~Graphics();
 
-        _JATTA_EXPORT void Create(Window* window);
+        _JATTA_EXPORT void Create(const Window* window);
 
-        _JATTA_EXPORT Window* GetWindow();
+        _JATTA_EXPORT const Window* GetWindow();
 
         _JATTA_EXPORT void MakeCurrent();
 

@@ -117,7 +117,7 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Model& model)
         for (UInt32 j = 0; j < 16; j++)
         {
             VertexBuffer buffer = group.GetBuffer(j);
-            if (buffer.index != -1)
+            if (buffer.index != (UInt32)-1)
             {
                 file << "---" << j << "---" << std::endl;
                 for (UInt32 k = 0; k < group.vertexCount * 3; k++)

@@ -21,7 +21,7 @@ public:
     unsigned char applicationSpecific[4];
     unsigned int bitmapOffset;
 
-    int getBuffer(char*out)
+    int write(char*out)
     {
         char buff[14];
         memcpy(&buff[0], magicNumber, 2);
@@ -62,7 +62,7 @@ public:
     unsigned int iccProfileData;
     unsigned int iccProfileSize;
     unsigned int reserved;
-    int getBuffer(char*out)
+    int write(char*out)
     {
         char*buff = new char[headerSize];
         memcpy(&buff[0], &headerSize, 4);
@@ -98,11 +98,11 @@ public:
 struct _bmp_pixel_data
 {
 public:
-    int w, h;
+    unsigned int w, h;
     unsigned char* colors;
-    int getBuffer(char*out, int bpp, int padding)
+    int write(char*out, int bpp, unsigned int padding)
     {
-        unsigned int rowSize = ((bpp*w+31)/32)*4;
+        //unsigned int rowSize = ((bpp*w+31)/32)*4;
         unsigned int size = w*h*(bpp/8)+padding*h;//rowSize*h;
 
         if (bpp == 32)
@@ -215,14 +215,14 @@ _JATTA_EXPORT bool Jatta::Image::SaveBmp(const Jatta::String& fileName, int bpp,
     char*dibHeaderBuffer = new char[40];
     char*fileHeaderBuffer = new char[14];
     char*pixelDataBuffer = new char[width*height*(bpp/8)+padding*height];
-    int pixelDataSize = pixelData.getBuffer(pixelDataBuffer, bpp, padding);
+    int pixelDataSize = pixelData.write(pixelDataBuffer, bpp, padding);
 
     dibHeader.imageSize = pixelDataSize;
-    int dibHeaderSize = dibHeader.getBuffer(dibHeaderBuffer);
+    int dibHeaderSize = dibHeader.write(dibHeaderBuffer);
 
     fileHeader.sizeOfFile = pixelDataSize + dibHeaderSize + 14;
     fileHeader.bitmapOffset = dibHeaderSize+14;
-    int fileHeaderSize = fileHeader.getBuffer(fileHeaderBuffer);
+    int fileHeaderSize = fileHeader.write(fileHeaderBuffer);
 
     //Write the file.
     std::ofstream outfile(fileName.GetData().c_str(), std::ios::out | std::ios::binary);

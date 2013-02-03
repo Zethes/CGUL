@@ -114,11 +114,11 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName, UInt32 f
     png_uint_32 imgHeight = png_get_image_height(pngPtr, infoPtr);
 
     //bits per CHANNEL! note: not per pixel!
-    png_uint_32 bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
+    //png_uint_32 bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
     //Number of channels
-    png_uint_32 channels   = png_get_channels(pngPtr, infoPtr);
+    //png_uint_32 channels   = png_get_channels(pngPtr, infoPtr);
     //Color type. (RGB, RGBA, Luminance, luminance alpha... palette... etc)
-    png_uint_32 color_type = png_get_color_type(pngPtr, infoPtr);
+    //png_uint_32 color_type = png_get_color_type(pngPtr, infoPtr);
 
     width = imgWidth;
     height = imgHeight;
