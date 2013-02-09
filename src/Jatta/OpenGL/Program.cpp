@@ -338,6 +338,10 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Program::GetID()
 
 _JATTA_EXPORT void Jatta::OpenGL::Program::Bind()
 {
+    if (program == 0)
+    {
+        throw std::runtime_error("Cannot bind invalid program.");
+    }
     glUseProgram(program);
     GLCHECK("Failed to bind program.");
 }

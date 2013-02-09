@@ -159,8 +159,8 @@ _JATTA_EXPORT void Jatta::Graphics::Create(const Window* window)
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_CUBE_MAP);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+    //glCullFace(GL_BACK);
+    //glEnable(GL_CULL_FACE);
 
     // clears out errors... we're not actually checking for any!
     // TODO: check for errors dammit!

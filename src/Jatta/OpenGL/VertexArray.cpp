@@ -40,6 +40,10 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::VertexArray::GetID()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
 {
+    if (vertexArray == 0)
+    {
+        throw std::runtime_error("Cannot bind invalid vertex array.");
+    }
 #   ifdef MACOS
     glBindVertexArrayAPPLE(vertexArray);
 #   else

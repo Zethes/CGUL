@@ -43,6 +43,7 @@ namespace Jatta
 
         _JATTA_EXPORT Byte GetByte(Size position) const;
         _JATTA_EXPORT Size GetCodePoint(Size start, UInt32* codePoint) const;
+        _JATTA_EXPORT Boolean Empty() const;
 
         _JATTA_EXPORT std::string GetData() const;
         _JATTA_EXPORT const char* GetCString() const;

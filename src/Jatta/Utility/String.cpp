@@ -103,6 +103,14 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
     return len;
 }
 
+/** @brief Checks if the string is empty.
+ *  @returns True if the string is empty, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::String::Empty() const
+{
+    return data.empty();
+}
+
 /** @brief Gets an individual byte from the string.
  *  @param position The index of the byte.
  *  @returns The byte in the string.

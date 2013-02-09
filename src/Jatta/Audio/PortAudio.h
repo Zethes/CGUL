@@ -57,7 +57,9 @@ namespace Jatta
                     "Failed to load raw."
             };
         }
+#       ifdef JATTA_BUILD
         static AudioError lastError;
+#       endif
         static std::vector<Device*> outputDevices;
 
         _JATTA_EXPORT AudioError Initilize();

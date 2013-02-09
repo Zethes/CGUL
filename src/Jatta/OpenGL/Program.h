@@ -10,6 +10,7 @@
 #include "../Math/Float3.h"
 #include "../Math/Float4.h"
 #include "../Math/Matrix.h"
+#include "../Images/Color.h"
 #include "../External/Defines.h"
 
 /* OpenGL is an experimental namespace in Jatta! */

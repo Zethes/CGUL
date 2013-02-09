@@ -95,6 +95,7 @@ template<typename T> bool Jatta::List<T>::Empty() const
 template<typename T> bool Jatta::List<T>::Exists(const T& value)
 {
     //TODO: Exists
+    return false;
 }
 template<typename T> const T& Jatta::List<T>::Back() const
 {

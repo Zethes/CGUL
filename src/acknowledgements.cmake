@@ -1,7 +1,6 @@
 # TODO: exclude libraries if they are excluded from the build
 
-
-SET(ACKNOWLEDGEMENTS "This software utilizes the following libraries:")
+SET(JATTA_ACKNOWLEDGEMENTS "This software utilizies the following libraries:!ACKNOWLEDGEMENTS!" CACHE STRING "The outputted acknowledgements string.")
 
 LIST(APPEND ACKNOWLEDGEMENTS
 "\n
@@ -57,6 +56,10 @@ PulseAudio Implementation for PortAudio https://github.com/bkgood/portaudio-puls
 Copyright (C) 2011 William 'Bill' Good"
 )
 
-string (REPLACE ";" "" ACKNOWLEDGEMENTS ${ACKNOWLEDGEMENTS})
+STRING(REPLACE ";" "" ACKNOWLEDGEMENTS ${ACKNOWLEDGEMENTS})
+
+STRING(REPLACE "!ACKNOWLEDGEMENTS!" "${ACKNOWLEDGEMENTS}" ACKNOWLEDGEMENTS ${JATTA_ACKNOWLEDGEMENTS})
+
+STRING(REPLACE "@n" "\n" ACKNOWLEDGEMENTS ${ACKNOWLEDGEMENTS})
 
 CONFIGURE_FILE("acknowledgements.txt.in" "acknowledgements.txt")

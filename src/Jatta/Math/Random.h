@@ -31,7 +31,6 @@ namespace Jatta
         _JATTA_EXPORT float GetUniform(float a, float b);
         _JATTA_EXPORT float GetExponential(float beta);
         _JATTA_EXPORT float GetWeibull(float a, float b, float c);
-        _JATTA_EXPORT float GetNormal(float mean, float variance);
 
         // TODO: clean this up and maybe add functionality
     };

@@ -13,6 +13,11 @@ _JATTA_EXPORT const Jatta::Float2 one(1, 1);
 _JATTA_EXPORT const Jatta::Float2 unitX(1, 0);
 _JATTA_EXPORT const Jatta::Float2 unitY(0, 1);
 
+_JATTA_EXPORT Jatta::Float2 Jatta::Float2::FromAngle(Float32 angle, Float32 magnitude)
+{
+    return Jatta::Float2(Math::Cos(angle) * magnitude, Math::Sin(angle) * magnitude);
+}
+
 _JATTA_EXPORT Jatta::Float2::Float2()
 {
     this->x = 0;

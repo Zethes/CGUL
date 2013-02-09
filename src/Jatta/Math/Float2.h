@@ -27,6 +27,8 @@ namespace Jatta
         _JATTA_EXPORT static const Float2 unitX;
         _JATTA_EXPORT static const Float2 unitY;
 
+        _JATTA_EXPORT static Float2 FromAngle(Float32 angle, Float32 magnitude = 1.0f);
+
         _JATTA_EXPORT Float2();
         _JATTA_EXPORT Float2(const Float2& copy);
         _JATTA_EXPORT Float2(Float32 value);

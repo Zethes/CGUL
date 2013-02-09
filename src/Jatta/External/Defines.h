@@ -84,9 +84,9 @@
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
 #   endif
-#    ifndef JATTA_NO_AUDIO
-#        include <portaudio.h>
-#    endif
+#   ifndef JATTA_NO_AUDIO
+#       include <portaudio.h>
+#   endif
 #   if defined(LINUX) | defined(MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>
@@ -118,15 +118,19 @@
         CHECK(::Window, _JATTA_WINDOW);
         CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #   endif
+#   ifndef JATTA_NO_ASSIMP
       CHECK(::FT_Face, _JATTA_FT_FACE);
       CHECK(::aiScene*, _JATTA_AISCENE);
       CHECK(::aiMesh*, _JATTA_AIMESH);
       CHECK(::aiTexture*, _JATTA_AITEXTURE);
       CHECK(::aiTexture*, _JATTA_AIMATERIAL);
+#   endif
+#   ifndef JATTA_NO_AUDIO
       CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
       CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
       CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
       CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
+#   endif
 #   undef CHECK
 #   include "Undefines.h"
 #   ifdef WINDOWS

@@ -29,4 +29,3 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-

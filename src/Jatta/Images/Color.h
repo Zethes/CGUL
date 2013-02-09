@@ -8,6 +8,8 @@
 
 namespace Jatta
 {
+    struct Float4;
+
     struct Color
     {
         _JATTA_EXPORT static Color MakeHSL(unsigned int hue, unsigned char saturation, unsigned char luminance);
@@ -18,6 +20,8 @@ namespace Jatta
         _JATTA_EXPORT Color(const Color& copy);
         _JATTA_EXPORT Color(unsigned char r, unsigned char g, unsigned char b);
         _JATTA_EXPORT Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
+        Float4 ToFloat4() const;
     };
 }
 

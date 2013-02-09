@@ -121,16 +121,3 @@ _JATTA_EXPORT float Jatta::Random::GetWeibull(float a, float b, float c)
 {
     return WeibullDist(a, b, c, GetDecimal());
 }
-
-_JATTA_EXPORT float Jatta::Random::GetNormal(float mean, float variance)
-{
-    float x;
-    float u;
-    do
-    {
-        x = Random::ExponentialDist(1, GetDecimal());
-        u = GetDecimal();
-    }
-    while (u < Random::Normal(0, .2f, x) / (2 * Random::ExponentialDist(1, x)));
-    return Random::Normal(0, .2f, x);
-}

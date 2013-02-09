@@ -4,6 +4,7 @@
  */
 
 #include "Color.h"
+#include "../Math/Float4.h"
 
 /** @brief Creates a color given a hue, saturation and value.
  *  @param hue Hue value from 0-360.
@@ -96,4 +97,9 @@ _JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned cha
     this->g = g;
     this->b = b;
     this->a = a;
+}
+
+Jatta::Float4 Jatta::Color::ToFloat4() const
+{
+    return Float4(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
 }

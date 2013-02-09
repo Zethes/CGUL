@@ -1,7 +1,7 @@
 ####################################################################################################
 ## SimpleSource.cmake                                                                             ##
 ## by Joshua Brookover                                                                            ##
-## Version 1.1                                                                                    ##
+## Version 1.2                                                                                    ##
 ##                                                                                                ##
 ## PURPOSE                                                                                        ##
 ## To simplify (and prettify!) the process of including source files for C/C++ projects.          ##
@@ -9,6 +9,7 @@
 ## VERSION HISTORY                                                                                ##
 ## Version 1.0 - Initial release.                                                                 ##
 ## Version 1.1 - Added implementation file support.                                               ##
+## Version 1.2 - Fixed silly bugs.                                                                ##
 ##                                                                                                ##
 ## LICENSE                                                                                        ##
 ## Use this file however you want.                                                                ##
@@ -28,6 +29,72 @@
 MACRO(SIMPLESOURCE_INIT INSTALL VARIABLE)
     SET(SIMPLESOURCE_INSTALL ${INSTALL})
     SET(SIMPLESOURCE_VARIABLE ${VARIABLE})
+
+    IF(SIMPLESOURCE_INSTALL)
+        ##
+        # ADD_HEADER_NO_INSTALL
+        # Adds a header file without putting it in the install list.
+        # Params:
+        # FILE - The relative file name.
+        ##
+        MACRO(ADD_HEADER_NO_INSTALL FILE)
+            ADD_SOURCE(${FILE})
+        ENDMACRO()
+
+        ##
+        # ADD_HEADER (installation version)
+        # Adds a header file to the build, as well adds it to the list of files to install.
+        # Params:
+        # FILE         - The relative file name.
+        # INSTALL_PATH - Where to install the file.
+        ##
+        MACRO(ADD_HEADER FILE INSTALL_PATH)
+            ADD_OTHER(${FILE})
+            INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${FILE} DESTINATION ${INSTALL_PATH})
+        ENDMACRO()
+
+        ##
+        # ADD_IMPLEMENTATION_NO_INSTALL
+        # Adds an implementation file without putting it in the install list.
+        # Params:
+        # FILE - The relative file name.
+        ##
+        MACRO(ADD_IMPLEMENTATION_NO_INSTALL FILE)
+            ADD_SOURCE(${FILE})
+        ENDMACRO()
+
+        ##
+        # ADD_IMPLEMENTATION (installation version)
+        # Adds an implementation file to the build, as well adds it to the list of files to install.
+        # Params:
+        # FILE         - The relative file name.
+        # INSTALL_PATH - Where to install the file.
+        ##
+        MACRO(ADD_IMPLEMENTATION FILE INSTALL_PATH)
+            ADD_OTHER(${FILE})
+            INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${FILE} DESTINATION ${INSTALL_PATH})
+        ENDMACRO()
+    ELSE()
+        ##
+        # ADD_HEADER (non-installation version)
+        # Adds a header file.
+        # Params:
+        # FILE - The relative file name.
+        ##
+        MACRO(ADD_HEADER FILE)
+            ADD_OTHER(${FILE})
+        ENDMACRO()
+
+        ##
+        # ADD_IMPLEMENTATION (non-installation version)
+        # Adds an implementation file.
+        # Params:
+        # FILE - The relative file name.
+        ##
+        MACRO(ADD_IMPLEMENTATION FILE)
+            ADD_OTHER(${FILE})
+        ENDMACRO()
+    ENDIF()
 ENDMACRO()
 
 ##
@@ -80,69 +147,3 @@ ENDMACRO()
 MACRO(ADD_SOURCE FILE)
     ADD_OTHER(${FILE})
 ENDMACRO()
-
-IF(SIMPLESOURCE_INSTALL)
-    ##
-    # ADD_HEADER_NO_INSTALL
-    # Adds a header file without putting it in the install list.
-    # Params:
-    # FILE - The relative file name.
-    ##
-    MACRO(ADD_HEADER_NO_INSTALL FILE)
-        ADD_SOURCE(${FILE})
-    ENDMACRO()
-
-    ##
-    # ADD_HEADER (installation version)
-    # Adds a header file to the build, as well adds it to the list of files to install.
-    # Params:
-    # FILE         - The relative file name.
-    # INSTALL_PATH - Where to install the file.
-    ##
-    MACRO(ADD_HEADER FILE INSTALL_PATH)
-        ADD_OTHER(${FILE})
-        INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${FILE} DESTINATION ${INSTALL_PATH})
-    ENDMACRO()
-
-    ##
-    # ADD_IMPLEMENTATION_NO_INSTALL
-    # Adds an implementation file without putting it in the install list.
-    # Params:
-    # FILE - The relative file name.
-    ##
-    MACRO(ADD_IMPLEMENTATION_NO_INSTALL FILE)
-        ADD_SOURCE(${FILE})
-    ENDMACRO()
-
-    ##
-    # ADD_IMPLEMENTATION (installation version)
-    # Adds an implementation file to the build, as well adds it to the list of files to install.
-    # Params:
-    # FILE         - The relative file name.
-    # INSTALL_PATH - Where to install the file.
-    ##
-    MACRO(ADD_IMPLEMENTATION FILE INSTALL_PATH)
-        ADD_OTHER(${FILE})
-        INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${FILE} DESTINATION ${INSTALL_PATH})
-    ENDMACRO()
-ELSE()
-    ##
-    # ADD_HEADER (non-installation version)
-    # Adds a header file.
-    # Params:
-    # FILE - The relative file name.
-    ##
-    MACRO(ADD_HEADER FILE)
-        ADD_OTHER(${FILE})
-    ENDMACRO()
-
-    ##
-    # ADD_IMPLEMENTATION (non-installation version)
-    # Adds an implementation file.
-    # Params:
-    # FILE - The relative file name.
-    ##
-    MACRO(ADD_IMPLEMENTATION FILE)
-        ADD_OTHER(${FILE})
-    ENDMACRO()
-ENDIF()
