@@ -3,7 +3,7 @@
 # All rights reserved.
 
 INCLUDE(SimpleSource.cmake)
-INCLUDE(CompileFlags.cmake)
+#INCLUDE(CompileFlags.cmake)
 
 # Store the top level directory
 SET(TOP_LEVEL ${CMAKE_CURRENT_SOURCE_DIR}/..)
@@ -169,10 +169,8 @@ IF(NOT JATTA_NO_AUDIO)
         SET(JATTA_LIBRARIES ${JATTA_LIBRARIES} asound pthread rt)
     ENDIF()
 ELSE()
-    MESSAGE(STATUS "BLURGA")
     SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DJATTA_NO_AUDIO)
 ENDIF()
-MESSAGE(STATUS "BLURGA")
 
 IF(MSVC)
     ADD_LIBRARY(mingw STATIC IMPORTED)
