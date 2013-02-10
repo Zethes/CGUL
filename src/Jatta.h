@@ -98,6 +98,7 @@
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"
+#include "Jatta/Utility/Thread.h"
 
 #include "Jatta/Windows/Input.h"
 #include "Jatta/Windows/Inputs.h"
