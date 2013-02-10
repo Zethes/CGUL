@@ -99,6 +99,25 @@ _JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned cha
     this->a = a;
 }
 
+Jatta::Boolean Jatta::Color::operator==(const Color& operand)
+{
+    return r == operand.r && b == operand.b && g == operand.g && a == operand.a;
+}
+
+Jatta::Boolean Jatta::Color::operator!=(const Color& operand)
+{
+    return r != operand.r || b != operand.b || g != operand.g || a != operand.a;
+}
+
+Jatta::Color& Jatta::Color::operator=(const Color& operand)
+{
+    this->r = operand.r;
+    this->g = operand.g;
+    this->b = operand.b;
+    this->a = operand.a;
+    return *this;
+}
+
 Jatta::Float4 Jatta::Color::ToFloat4() const
 {
     return Float4(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);

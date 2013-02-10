@@ -21,6 +21,15 @@ namespace Jatta
         _JATTA_EXPORT Color(unsigned char r, unsigned char g, unsigned char b);
         _JATTA_EXPORT Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
+        Boolean operator==(const Color& operand);
+        Boolean operator!=(const Color& operand);
+        Color& operator=(const Color& operand);
+        friend std::ostream& operator<<(std::ostream& stream, const Color& color)
+        {
+            stream << "[" << color.r << ", " << color.g << ", " << color.b << ", " << color.a << "]";
+            return stream;
+        }
+
         Float4 ToFloat4() const;
     };
 }
