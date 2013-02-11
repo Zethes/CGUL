@@ -1,14 +1,34 @@
-dep/
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Compiled Executables
+*.exe
+
+# Folders
+dep*/
 obj/
-build/
-vsbuild/
+*build/
 html/
 latex/
 src_backup/
 examples/*/build/
-examples/*/CMakeFiles/
-examples/*/Jatta/
-examples/*/cmake_install.cmake
-examples/*/CMakeCache.txt
 
+# Sublime Text
 *.sublime-workspace
+
+# Misc Files
+*.directory
+
+# Backup Files
+*~
