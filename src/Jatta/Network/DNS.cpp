@@ -4,7 +4,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_NETWORK
 #include "DNS.h"
 
 #include <WinSock2.h>
@@ -109,5 +108,4 @@ std::vector<std::string> Jatta::DNS::Lookup(const std::string& host, Filter filt
     return list;
 }
 
-#endif
 #endif

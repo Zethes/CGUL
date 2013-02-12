@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #pragma once
+#include <Jatta/Config.h>
 #include "../Assimp/Assimp.h"
 #include "../External/Defines.h"
 
@@ -27,4 +27,3 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#endif

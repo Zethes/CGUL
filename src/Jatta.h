@@ -32,19 +32,21 @@
 
 #pragma once
 
-#include "Jatta/Config.h"
+#ifdef JATTA_USE_ASSIMP
+#   include "Jatta/Assimp/Assimp.h"
+#   include "Jatta/Assimp/Camera.h"
+#   include "Jatta/Assimp/Material.h"
+#   include "Jatta/Assimp/Mesh.h"
+#   include "Jatta/Assimp/Scene.h"
+#   include "Jatta/Assimp/Texture.h"
+#endif
 
-#include "Jatta/Assimp/Assimp.h"
-#include "Jatta/Assimp/Camera.h"
-#include "Jatta/Assimp/Material.h"
-#include "Jatta/Assimp/Mesh.h"
-#include "Jatta/Assimp/Scene.h"
-#include "Jatta/Assimp/Texture.h"
-
-#include "Jatta/Audio/Device.h"
-#include "Jatta/Audio/HostApiInfo.h"
-#include "Jatta/Audio/PortAudio.h"
-#include "Jatta/Audio/Stream.h"
+#ifdef JATTA_USE_AUDIO
+#   include "Jatta/Audio/Device.h"
+#   include "Jatta/Audio/HostApiInfo.h"
+#   include "Jatta/Audio/PortAudio.h"
+#   include "Jatta/Audio/Stream.h"
+#endif
 
 #include "Jatta/Collision/AABB2D.h"
 #include "Jatta/Collision/AABB3D.h"
@@ -54,16 +56,20 @@
 
 #include "Jatta/File/File.h"
 
-#include "Jatta/Fonts/Font.h"
+#ifdef JATTA_USE_FREETYPE
+#   include "Jatta/Fonts/Font.h"
+#endif
 
-#include "Jatta/Graphics/Graphics.h"
-#include "Jatta/Graphics/Mesh.h"
-#include "Jatta/Graphics/Primitives.h"
-#include "Jatta/Graphics/RenderTarget.h"
-#include "Jatta/Graphics/Shader.h"
-#include "Jatta/Graphics/SubMesh.h"
-#include "Jatta/Graphics/Terrain.h"
-#include "Jatta/Graphics/Texture.h"
+#ifdef JATTA_USE_OPENGL
+#   include "Jatta/Graphics/Graphics.h"
+#   include "Jatta/Graphics/Mesh.h"
+#   include "Jatta/Graphics/Primitives.h"
+#   include "Jatta/Graphics/RenderTarget.h"
+#   include "Jatta/Graphics/Shader.h"
+#   include "Jatta/Graphics/SubMesh.h"
+#   include "Jatta/Graphics/Terrain.h"
+#   include "Jatta/Graphics/Texture.h"
+#endif
 
 #include "Jatta/Images/Color.h"
 #include "Jatta/Images/Colors.h"
@@ -82,16 +88,20 @@
 #include "Jatta/Models/Obj.h"
 #include "Jatta/Models/VertexBuffer.h"
 
-#include "Jatta/Network/DNS.h"
-#include "Jatta/Network/SocketTCP.h"
+#ifdef JATTA_USE_NETWORK
+#   include "Jatta/Network/DNS.h"
+#   include "Jatta/Network/SocketTCP.h"
+#endif
 
-#include "Jatta/OpenGL/Buffer.h"
-#include "Jatta/OpenGL/Context.h"
-#include "Jatta/OpenGL/OpenGL.h"
-#include "Jatta/OpenGL/Program.h"
-#include "Jatta/OpenGL/Shader.h"
-#include "Jatta/OpenGL/Texture.h"
-#include "Jatta/OpenGL/VertexArray.h"
+#ifdef JATTA_USE_OPENGL
+#   include "Jatta/OpenGL/Buffer.h"
+#   include "Jatta/OpenGL/Context.h"
+#   include "Jatta/OpenGL/OpenGL.h"
+#   include "Jatta/OpenGL/Program.h"
+#   include "Jatta/OpenGL/Shader.h"
+#   include "Jatta/OpenGL/Texture.h"
+#   include "Jatta/OpenGL/VertexArray.h"
+#endif
 
 #include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/Object.h"

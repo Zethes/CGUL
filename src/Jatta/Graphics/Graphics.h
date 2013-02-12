@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #if defined(JATTA_BUILDS) && defined(MACOS)
 #   import "MacOS/OpenGLView.h"
 #endif

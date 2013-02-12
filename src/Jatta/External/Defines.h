@@ -50,12 +50,12 @@
 #   ifdef WINDOWS
 #       define UNICODE
 #       define _UNICODE
-#       ifndef JATTA_NO_NETWORK
+#       ifdef JATTA_USE_NETWORK
 #           include <WinSock2.h>
 #           include <Ws2tcpip.h>
 #       endif
 #       include <Windows.h>
-#       ifndef JATTA_NO_GRAPHICS
+#       ifdef JATTA_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
 #   endif
@@ -63,28 +63,28 @@
 #       include <X11/Xlib.h>
 #       include <X11/Xlib.h>
 #       include <X11/Xatom.h>
-#       ifndef JATTA_NO_GRAPHICS
+#       ifdef JATTA_USE_OPENGL
 #           include <GL/glxew.h>
 #           include <GL/glew.h>
 #       endif
 #   endif
 #   ifdef MACOS
-#       ifndef JATTA_NO_GRAPHICS
+#       ifdef JATTA_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
 #       import <Cocoa/Cocoa.h>
 #   endif
-#   ifndef JATTA_NO_FONTS
+#   ifdef JATTA_USE_FREETYPE
 #       include <ft2build.h>
 #       include <freetype/freetype.h>
 #       include <freetype/ftxf86.h>
 #   endif
-#   ifndef JATTA_NO_ASSIMP
+#   ifdef JATTA_USE_ASSIMP
 #       include <assimp/cimport.h>
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
 #   endif
-#   ifndef JATTA_NO_AUDIO
+#   ifdef JATTA_USE_AUDIO
 #       include <portaudio.h>
 #   endif
 #   if defined(LINUX) | defined(MACOS)
@@ -118,14 +118,14 @@
         CHECK(::Window, _JATTA_WINDOW);
         CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #   endif
-#   ifndef JATTA_NO_ASSIMP
+#   ifdef JATTA_USE_ASSIMP
       CHECK(::FT_Face, _JATTA_FT_FACE);
       CHECK(::aiScene*, _JATTA_AISCENE);
       CHECK(::aiMesh*, _JATTA_AIMESH);
       CHECK(::aiTexture*, _JATTA_AITEXTURE);
       CHECK(::aiTexture*, _JATTA_AIMATERIAL);
 #   endif
-#   ifndef JATTA_NO_AUDIO
+#   ifdef JATTA_USE_AUDIO
       CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
       CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
       CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
@@ -143,21 +143,21 @@
 #    ifdef LINUX
 #       define _JATTA_DISPLAY ::Display*
 #       define _JATTA_WINDOW ::Window
-#       ifndef JATTA_NO_GRAPHICS
+#       ifdef JATTA_USE_OPENGL
 #           define _JATTA_GLXCONTEXT ::GLXContext
 #       endif
 #   endif
-#   ifndef JATTA_NO_FONTS
+#   ifdef JATTA_USE_FREETYPE
 #       define _JATTA_FT_FACE ::FT_Face
 #   endif
-#   ifndef JATTA_NO_ASSIMP
+#   ifdef JATTA_USE_ASSIMP
 #       define _JATTA_AISCENE ::aiScene*
 #       define _JATTA_AIMESH ::aiMesh*
 #       define _JATTA_AITEXTURE ::aiTexture*
 #       define _JATTA_AIMATERIAL ::aiMaterial*
 #       define _JATTA_AICAMERA ::aiCamera*
 #   endif
-#   ifndef JATTA_NO_AUDIO
+#   ifdef JATTA_USE_AUDIO
 #        define _JATTA_PASTREAM ::PaStream*
 #        define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
 #        define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags

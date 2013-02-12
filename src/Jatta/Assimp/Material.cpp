@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #include "Material.h"
 
 #include <iostream> // TODO: remove iostream
@@ -24,5 +23,3 @@ _JATTA_EXPORT Jatta::String Jatta::Assimp::Material::GetTexturePath(Enum type, U
     material->GetTexture((aiTextureType)type, index, &path);
     return String(path.C_Str());
 }
-
-#endif

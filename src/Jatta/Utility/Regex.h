@@ -6,6 +6,7 @@
 // TODO: find an open-licensed regex lib, relying on c++11 is a bad idea right now
 
 #pragma once
+#include <Jatta/Config.h>
 #include "String.h"
 #include "../External/Defines.h"
 

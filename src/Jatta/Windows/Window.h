@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "Input.h"
 #include "WindowStyle.h"
 #include "../Math/Float2.h"

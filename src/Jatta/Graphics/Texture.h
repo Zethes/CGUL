@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "../Images/Image.h"
 #include "Graphics.h"
 #include "../OpenGL/OpenGL.h"

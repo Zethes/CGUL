@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #include "Texture.h"
 
 _JATTA_EXPORT Jatta::Assimp::Texture::Texture(aiTexture* texture)
@@ -18,5 +17,3 @@ _JATTA_EXPORT void Jatta::Assimp::Texture::DoStuff() const
     std::cout << "texture->mWidth: " << texture->mWidth<< std::endl;
     std::cout << "texture->achFormatHint: " << texture->achFormatHint << std::endl;
 }
-
-#endif

@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_NETWORK
 #pragma once
+#include <Jatta/Config.h>
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -67,4 +67,3 @@ template <typename T> int Jatta::Network::SocketTCP::Receive(T* data)
 }
 
 #include "../External/Undefines.h"
-#endif

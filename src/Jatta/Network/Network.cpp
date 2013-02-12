@@ -4,9 +4,6 @@
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
- 
-#ifndef JATTA_NO_NETWORK
-#include "../External/Defines.h"
 
 bool __jatta_network_initiated = false;
 
@@ -44,6 +41,3 @@ namespace Jatta
     {
     }
 }
-
-#include "../External/Undefines.h"
-#endif

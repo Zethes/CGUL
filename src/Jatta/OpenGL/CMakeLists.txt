@@ -2,7 +2,7 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(NOT JATTA_NO_GRAPHICS)
+if(JATTA_USE_OPENGL)
     ADD_GROUP("OpenGL")
     ADD_SOURCE(Buffer.cpp)
     ADD_HEADER(Buffer.h include/Jatta/OpenGL/)

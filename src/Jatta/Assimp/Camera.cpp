@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #include "Camera.h"
 
 _JATTA_EXPORT Jatta::Assimp::Camera::Camera(aiCamera* camera)
@@ -50,5 +49,3 @@ Jatta::Float32 Jatta::Assimp::Camera::GetFieldOfView()
 {
     return camera->mHorizontalFOV;
 }
-
-#endif

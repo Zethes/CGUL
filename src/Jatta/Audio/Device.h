@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #pragma once
+#include <Jatta/Config.h>
 #include "HostApiInfo.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
@@ -39,4 +39,3 @@ namespace Jatta
     }
 }
 #include "../External/Undefines.h"
-#endif

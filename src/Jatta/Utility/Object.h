@@ -7,6 +7,7 @@
 
 #if 0
 #pragma once
+#include <Jatta/Config.h>
 #include "../External/Defines.h"
 
 namespace Jatta

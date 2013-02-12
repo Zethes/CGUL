@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_OPENGL
 #include "OpenGL.h"
 
 /** @brief Clears out OpenGL errors.
@@ -124,5 +123,3 @@ _JATTA_EXPORT std::string Jatta::OpenGL::GetOpenGLRenderer()
     std::string ret = (char *)glGetString(GL::RENDERER);
     return ret;
 }
-
-#endif

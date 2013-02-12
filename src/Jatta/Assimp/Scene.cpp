@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #include "Scene.h"
 #include "Camera.h"
 #include "Material.h"
@@ -106,5 +105,3 @@ _JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 ind
 {
     return Texture(scene->mTextures[index]);
 }
-
-#endif

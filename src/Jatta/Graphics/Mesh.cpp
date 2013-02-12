@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
+#include "Mesh.h"
+#ifdef JATTA_USE_ASSIMP
 #include "../Assimp/Material.h"
 #include "../Assimp/Mesh.h"
 #include "../Assimp/Texture.h"
 #endif
 #include "../OpenGL/OpenGL.h"
-#include "Mesh.h"
 
 _JATTA_EXPORT Jatta::Mesh Jatta::Mesh::MakeBox(Float2 size, Color color, Float2 uv1, Float2 uv2, Float2 uv3, Float2 uv4)
 {
@@ -132,7 +132,7 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Model& model)
     file.close();
 }
 
-#ifndef JATTA_NO_ASSIMP
+#ifdef JATTA_USE_ASSIMP
 #include <iostream> // TODO: remove iostream
 _JATTA_EXPORT void Jatta::Mesh::Create(const Jatta::Assimp::Scene& scene)
 {

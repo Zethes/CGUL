@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "SubMesh.h"
 #include "Graphics.h"
 #include "../Models/Model.h"

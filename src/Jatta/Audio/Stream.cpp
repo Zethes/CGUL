@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #include "Stream.h"
 #include "../Math/Math.h"
 
@@ -102,5 +101,3 @@ _JATTA_EXPORT void Jatta::Audio::Stream::SetPan(float p)
     p = Math::Min(Math::Max(p, 1), -1);
     pan = p;
 }
-
-#endif

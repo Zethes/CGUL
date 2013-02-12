@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "../Math/Float2.h"
 #include "../Math/Float3.h"
 #include "../Math/Float4.h"

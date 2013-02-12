@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #include "PortAudio.h"
 
 _JATTA_EXPORT Jatta::Audio::AudioError Jatta::Audio::Initilize()
@@ -83,5 +82,3 @@ _JATTA_EXPORT Jatta::String Jatta::Audio::GetErrorText(AudioError errorCode)
     }
     return s;
 }
-
-#endif

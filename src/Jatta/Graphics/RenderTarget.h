@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "../Images/Color.h"
 #include "../External/Defines.h"
 
