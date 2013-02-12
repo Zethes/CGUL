@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_OPENGL
 #include "Program.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
@@ -425,5 +424,3 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::OpenGL::Program::GetUniformLocation(const Str
     GLCHECK("Failed to get uniform location.");
     return location;
 }
-
-#endif

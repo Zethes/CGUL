@@ -2,7 +2,7 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(NOT JATTA_NO_AUDIO)
+if(JATTA_USE_AUDIO)
     ADD_OTHER(CMakeLists.txt)
     ADD_SOURCE(HostApiInfo.cpp)
     ADD_HEADER(HostApiInfo.h include/Jatta/Audio/)

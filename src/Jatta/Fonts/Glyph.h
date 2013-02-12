@@ -5,8 +5,8 @@
 
 // TODO: this class
 
-/*#ifndef JATTA_NO_FONTS
-#pragma once
+/*#pragma once
+#include <Jatta/Config.h>
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -19,5 +19,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
-#endif*/
+#include "../External/Undefines.h"*/

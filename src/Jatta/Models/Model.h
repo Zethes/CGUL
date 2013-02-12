@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "Group.h"
 #include "VertexBuffer.h"
 #include "../External/Defines.h"

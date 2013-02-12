@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #pragma once
+#include <Jatta/Config.h>
 #include "PortAudio.h"
 #include "../External/Defines.h"
 
@@ -43,4 +43,3 @@ namespace Jatta
     }
 }
 #include "../External/Undefines.h"
-#endif

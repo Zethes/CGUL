@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_ASSIMP
 #include "Mesh.h"
 
 _JATTA_EXPORT Jatta::Assimp::Mesh::Mesh(aiMesh* mesh)
@@ -85,5 +84,3 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetMaterialIndex() const
 {
     return mesh->mMaterialIndex;
 }
-
-#endif

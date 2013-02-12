@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #include "Device.h"
 
 _JATTA_EXPORT Jatta::Audio::Device::Device()
@@ -64,5 +63,3 @@ _JATTA_EXPORT Jatta::Audio::HostApiInfo* Jatta::Audio::Device::GetHostApiInfo()
 {
     return &hostApiInfo;
 }
-
-#endif

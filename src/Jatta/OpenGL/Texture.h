@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_OPENGL
 #pragma once
+#include <Jatta/Config.h>
 #include "../Utility/String.h"
 #include "OpenGL.h"
 #include "../External/Defines.h"
@@ -64,4 +64,3 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#endif

@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_FONTS
 #include "Font.h"
 #include <string.h>
 
@@ -298,5 +297,3 @@ _JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt64 characterCode)
     memcpy(glyph.data, this->face->glyph->bitmap.buffer, this->face->glyph->bitmap.width * this->face->glyph->bitmap.rows);
     return glyph;
 }*/
-
-#endif

@@ -2,7 +2,7 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(NOT JATTA_NO_ASSIMP)
+if(JATTA_USE_ASSIMP)
     ADD_GROUP("Assimp")
     ADD_SOURCE(Assimp.cpp)
     ADD_HEADER(Assimp.h include/Jatta/Assimp/)

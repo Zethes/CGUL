@@ -4,6 +4,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "../Math/Float3.h"
 #include "../External/Defines.h"
 

@@ -4,11 +4,12 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "SubMesh.h"
 #include "Graphics.h"
 #include "../Models/Model.h"
 #include "../Images/Image.h"
-#ifndef JATTA_NO_ASSIMP
+#ifdef JATTA_USE_ASSIMP
 #include "../Assimp/Scene.h"
 #endif
 #include "../External/Defines.h"
@@ -32,7 +33,7 @@ namespace Jatta
         //_JATTA_EXPORT void operator=(const Mesh& operand); // TODO: this
 
         _JATTA_EXPORT void Create(const Model& model);
-#       ifndef JATTA_NO_ASSIMP
+#       ifdef JATTA_USE_ASSIMP
         _JATTA_EXPORT void Create(const Jatta::Assimp::Scene& scene);
 #       endif
 

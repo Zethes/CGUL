@@ -208,25 +208,6 @@
  *  INCLUDE_DIRECTORIES(${JATTA_DIRECTORY}/src)
  *  TARGET_LINK_LIBRARIES(MyProject Jatta)
  *  @endcode
- *
- *  Some optional flags can be defined to customize how Jatta is built.
- *  @code
- *  SET(JATTA_STATIC ON) # Creates a static library instead of a shared one
- *
- *  SET(JATTA_STATIC_COMBINED ON) # !!EXPERIMENTAL!! Combines all dependencies into the static lib
- *
- *  SET(JATTA_NO_ASSIMP ON) # Disables asset importer (removes assimp)
- *
- *  SET(JATTA_NO_FONTS ON) # Disables font support (removes freetype)
- *
- *  SET(JATTA_NO_GRAPHICS ON) # Disables OpenGL (removes glew and opengl)
- *
- *  SET(JATTA_NO_JPEG ON) # Disables jpeg (removes libjpeg)
- *
- *  SET(JATTA_NO_NETWORK ON) # Disables networking (removes winsock / bsd sockets)
- *
- *  SET(JATTA_NO_PNG ON) # Disables png (removes libpng and zlib)
- *  @endcode
  */
 
 /** @page graphics Graphics & Windows

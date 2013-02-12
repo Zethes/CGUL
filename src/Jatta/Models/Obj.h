@@ -5,6 +5,7 @@
  */
 
 #pragma once
+#include <Jatta/Config.h>
 #include "Model.h"
 #include "../External/Defines.h"
 

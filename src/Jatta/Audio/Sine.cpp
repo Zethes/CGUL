@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifndef JATTA_NO_AUDIO
 #include "Stream.h"
 #include "../Math/Math.h"
 
@@ -93,4 +92,3 @@ _JATTA_EXPORT Jatta::Audio::AudioError Jatta::Audio::Stream::CreateSineWave()
     err = Pa_SetStreamFinishedCallback(stream, &SineFinishedCallback);
     return err;
 }
-#endif

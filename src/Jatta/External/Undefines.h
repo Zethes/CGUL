@@ -11,27 +11,35 @@
  */
 
 #ifdef WINDOWS
-#  undef _JATTA_HWND
-#  undef _JATTA_DWORD
-#  undef _JATTA_PIXELFORMATDESCRIPTOR
-#  undef _JATTA_HDC
-#  undef _JATTA_HGLRC
+#   undef _JATTA_HWND
+#   undef _JATTA_DWORD
+#   undef _JATTA_PIXELFORMATDESCRIPTOR
+#   undef _JATTA_HDC
+#   undef _JATTA_HGLRC
 #endif
 
 #ifdef LINUX
-#  undef _JATTA_DISPLAY
-#  undef _JATTA_WINDOW
-#  undef _JATTA_GLXCONTEXT
+#   undef _JATTA_DISPLAY
+#   undef _JATTA_WINDOW
+#   undef _JATTA_GLXCONTEXT
 #endif
 
-#undef _JATTA_FT_FACE
-#undef _JATTA_AISCENE
-#undef _JATTA_AIMESH
-#undef _JATTA_AITEXTURE
-#undef _JATTA_AIMATERIAL
-#undef _JATTA_AICAMERA
-#undef _JATTA_PASTREAM
-#undef _JATTA_PASTREAM_CALLBACK_TIMEINFO
-#undef _JATTA_PASTREAM_CALLBACK_FLAGS
-#undef _JATTA_PADEVICE_INFO
-#undef _JATTA_PAHOSTAPI_INFO
+#ifdef JATTA_USE_FREETYPE
+#   undef _JATTA_FT_FACE
+#endif
+
+#ifdef JATTA_USE_ASSIMP
+#   undef _JATTA_AISCENE
+#   undef _JATTA_AIMESH
+#   undef _JATTA_AITEXTURE
+#   undef _JATTA_AIMATERIAL
+#   undef _JATTA_AICAMERA
+#endif
+
+#ifdef JATTA_USE_AUDIO
+#   undef _JATTA_PASTREAM
+#   undef _JATTA_PASTREAM_CALLBACK_TIMEINFO
+#   undef _JATTA_PASTREAM_CALLBACK_FLAGS
+#   undef _JATTA_PADEVICE_INFO
+#   undef _JATTA_PAHOSTAPI_INFO
+#endif
