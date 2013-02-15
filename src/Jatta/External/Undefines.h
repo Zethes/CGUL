@@ -39,6 +39,7 @@
 #	undef _JATTA_AIANIMATION
 #	undef _JATTA_AIMESHANIM
 #	undef _JATTA_AINODEANIM
+#	undef _JATTA_AIFACE
 #endif
 
 #ifdef JATTA_USE_AUDIO
