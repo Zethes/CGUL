@@ -9,3 +9,8 @@ PROJECT(Jatta)
 SET(CMAKE_COLOR_MAKEFILE off)
 
 ADD_SUBDIRECTORY(src)
+
+INCLUDE(src/Scripts/TopLevelCache.cmake)
+IF(JATTA_BUILD_EXAMPLES)
+    ADD_SUBDIRECTORY(examples)
+ENDIF()
