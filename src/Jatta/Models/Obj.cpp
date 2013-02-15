@@ -610,7 +610,6 @@ _JATTA_EXPORT void Jatta::Model::LoadObj(const String& fileName)
         }
         else
         {
-            _JATTA_DEBUG_LN("Unknown OBJ line: " << explode[0] << " with parameters: " << parameters);
         }
     }*/
 
@@ -696,7 +695,6 @@ _JATTA_EXPORT bool Jatta::Obj::GetParameters(const std::string& parameters)//, s
     {
         if (i == parameters.size() || !isdigit(parameters[i]))
         {
-            _JATTA_DEBUG_LN(number);
             number = "";
             continue;
         }
@@ -787,8 +785,6 @@ _JATTA_EXPORT bool Jatta::Obj::Load(const std::string& fileName)
             GetParameters(parameters);
         }
     }
-
-    _JATTA_DEBUG_LN("GROUPS: " << groups.size());
 
     return true;
 }
