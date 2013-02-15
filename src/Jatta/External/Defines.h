@@ -53,64 +53,6 @@
 #endif
 
 #if defined(JATTA_INCLUDES)
-#   ifdef WINDOWS
-#       define UNICODE
-#       define _UNICODE
-#       ifdef JATTA_USE_NETWORK
-#           include <WinSock2.h>
-#           include <Ws2tcpip.h>
-#       endif
-#       include <Windows.h>
-#       ifdef JATTA_USE_OPENGL
-#           include <GL/glew.h>
-#       endif
-#   endif
-#   ifdef LINUX
-#       include <X11/Xlib.h>
-#       include <X11/Xlib.h>
-#       include <X11/Xatom.h>
-#       ifdef JATTA_USE_OPENGL
-#           include <GL/glxew.h>
-#           include <GL/glew.h>
-#       endif
-#   endif
-#   ifdef MACOS
-#       ifdef JATTA_USE_OPENGL
-#           include <GL/glew.h>
-#       endif
-#       import <Cocoa/Cocoa.h>
-#   endif
-#   ifdef JATTA_USE_FREETYPE
-#       include <ft2build.h>
-#       include <freetype/freetype.h>
-#       include <freetype/ftxf86.h>
-#   endif
-#   ifdef JATTA_USE_ASSIMP
-#       include <assimp/cimport.h>
-#       include <assimp/scene.h>
-#       include <assimp/postprocess.h>
-#   endif
-#   ifdef JATTA_USE_AUDIO
-#       include <portaudio.h>
-#   endif
-#   if defined(LINUX) | defined(MACOS)
-#       include <arpa/inet.h>
-#       include <errno.h>
-#       include <fcntl.h>
-#       include <netdb.h>
-#       include <netinet/in.h>
-#       include <netinet/tcp.h>
-#       include <signal.h>
-#       include <stdio.h>
-#       include <stdlib.h>
-#       include <string.h>
-#       include <sys/socket.h>
-#       include <sys/types.h>
-#       include <sys/wait.h>
-#       include <unistd.h>
-#       define INVALID_SOCKET ~0
-#       define SOCKET_ERROR -1
-#   endif
 #   define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   ifdef WINDOWS
         CHECK(::HWND, _JATTA_HWND);
