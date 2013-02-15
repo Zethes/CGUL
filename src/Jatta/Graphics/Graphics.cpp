@@ -95,8 +95,7 @@ _JATTA_EXPORT void Jatta::Graphics::Create(const Window* window)
     glXQueryVersion(window->_GetDisplay(), &glxMajorVersion, &glxMinorVersion);
     if(glxMajorVersion == 1 && glxMinorVersion < 2)
     {
-        // @TODO error handling
-        _JATTA_DEBUG_LN("error");
+        // TODO: error handling
     }
 
     /*XSizeHints hints;
@@ -142,7 +141,6 @@ _JATTA_EXPORT void Jatta::Graphics::Create(const Window* window)
         {
             throw std::runtime_error("Glew failed");
         }
-        _JATTA_DEBUG_LN("Glew initiated!");
     }
 
     glShadeModel(GL_SMOOTH);

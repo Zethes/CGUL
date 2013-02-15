@@ -341,7 +341,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *  {
  *      String str;
  *
- *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
+ *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™"; UGH THIS IS WHY WE CANT HAVE NICE THINGS
  *      str = str.SubString(3, 3);
  *      std::cout << str << std::endl;
  *      

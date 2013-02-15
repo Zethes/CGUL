@@ -6,8 +6,6 @@
 #include "Stream.h"
 #include "../Math/Math.h"
 
-#include <iostream>
-
 _JATTA_EXPORT Jatta::Audio::Stream::Stream()
 {
     playing = false;
@@ -39,7 +37,6 @@ _JATTA_EXPORT Jatta::Audio::AudioError Jatta::Audio::Stream::Start()
     PaError err = Pa_StartStream(stream);
     if (err != paNoError)
     {
-        std::cout << GetErrorText(err) << std::endl;
         return err;
     }
     playing = true;
@@ -53,7 +50,6 @@ _JATTA_EXPORT Jatta::Audio::AudioError Jatta::Audio::Stream::Stop()
     PaError err = Pa_StopStream(stream);
     if (err != paNoError)
     {
-        std::cout << GetErrorText(err) << std::endl;
         return err;
     }
     playing = false;
@@ -67,7 +63,6 @@ _JATTA_EXPORT Jatta::Audio::AudioError Jatta::Audio::Stream::Close()
     PaError err = Pa_CloseStream(stream);
     if (err != paNoError)
     {
-        std::cout << GetErrorText(err) << std::endl;
         return err;
     }
     return err;

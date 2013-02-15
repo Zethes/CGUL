@@ -126,18 +126,6 @@ namespace Jatta
 #include <utility>
 #include <vector>
 
-// Debugging Outputs
-#ifdef JATTA_INCLUDES
-#   ifdef JATTA_DEBUG
-#       include <iostream>
-#       define _JATTA_DEBUG_LN(x) std::cout << "JATTA_DEBUG (" __FILE__ ":" << __LINE__ << ")" << std::endl << x << std::endl;
-#       define _JATTA_DEBUG(x) std::cout << x;
-#   else
-#       define _JATTA_DEBUG_LN(x)
-#       define _JATTA_DEBUG(x)
-#   endif
-#endif
-
 // DLL Exports
 #ifdef MSVC
 #   ifdef JATTA_BUILD
