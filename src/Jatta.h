@@ -62,17 +62,6 @@
 #   include "Jatta/Fonts/Font.h"
 #endif
 
-#ifdef JATTA_USE_OPENGL
-#   include "Jatta/Graphics/Graphics.h"
-#   include "Jatta/Graphics/Mesh.h"
-#   include "Jatta/Graphics/Primitives.h"
-#   include "Jatta/Graphics/RenderTarget.h"
-#   include "Jatta/Graphics/Shader.h"
-#   include "Jatta/Graphics/SubMesh.h"
-#   include "Jatta/Graphics/Terrain.h"
-#   include "Jatta/Graphics/Texture.h"
-#endif
-
 #include "Jatta/Images/Color.h"
 #include "Jatta/Images/Colors.h"
 #include "Jatta/Images/Image.h"
@@ -84,11 +73,6 @@
 #include "Jatta/Math/Matrix.h"
 #include "Jatta/Math/Random.h"
 #include "Jatta/Math/Quaternion.h"
-
-#include "Jatta/Models/Group.h"
-#include "Jatta/Models/Model.h"
-#include "Jatta/Models/Obj.h"
-#include "Jatta/Models/VertexBuffer.h"
 
 #ifdef JATTA_USE_NETWORK
 #   include "Jatta/Network/DNS.h"
