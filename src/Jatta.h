@@ -32,6 +32,8 @@
 
 #pragma once
 
+#include <Jatta/Config.h>
+
 #ifdef JATTA_USE_ASSIMP
 #   include "Jatta/Assimp/Assimp.h"
 #   include "Jatta/Assimp/Camera.h"
