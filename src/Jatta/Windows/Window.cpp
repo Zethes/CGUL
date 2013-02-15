@@ -403,6 +403,7 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
     style.width = GetWidth();
     style.height = GetHeight();
     style.resizable = GetResizable();
+    return style;
 }
 
 _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
