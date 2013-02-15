@@ -214,7 +214,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
     }
 
 #   ifdef WINDOWS
-    SwapBuffers(deviceContext);
+    ::SwapBuffers(deviceContext);
 #   endif
 
 #   ifdef LINUX
