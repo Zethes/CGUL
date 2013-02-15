@@ -34,6 +34,8 @@
 #   undef _JATTA_AITEXTURE
 #   undef _JATTA_AIMATERIAL
 #   undef _JATTA_AICAMERA
+#	undef _JATTA_AIBONE
+#	undef _JATTA_AIVERTEXWEIGHT
 #endif
 
 #ifdef JATTA_USE_AUDIO

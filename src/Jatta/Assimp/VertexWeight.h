@@ -22,8 +22,8 @@ namespace Jatta
         public:
             _JATTA_EXPORT VertexWeight(_JATTA_AIVERTEXWEIGHT weight);
 
-			_JATTA_EXPORT Jatta::UInt32 GetVertexId();
-			_JATTA_EXPORT Jatta::Float32 GetWeight();
+            _JATTA_EXPORT Jatta::UInt32 GetVertexId();
+            _JATTA_EXPORT Jatta::Float32 GetWeight();
         };
     }
 }
