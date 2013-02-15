@@ -93,8 +93,6 @@ public:
     }
 };
 
-#include <iostream>
-
 struct _bmp_pixel_data
 {
 public:

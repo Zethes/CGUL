@@ -8,7 +8,6 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
-#include <iostream> // TODO: remove iostream
 
 /** @brief Just a test.
  */

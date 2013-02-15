@@ -34,7 +34,6 @@ namespace
     };
 }
 
-#include <iostream>
 /*static Jatta::Float4 ToVector(const Jatta::String& input, Jatta::Byte* size)
 {
     Jatta::Float4 data;
@@ -364,7 +363,6 @@ static std::vector<Jatta::Group> CreateGroups(ObjData* data)
                         normals[normalPos++] = data->normals[data->normalSize * normalIndex + l];
                     }
                 }
-                //std::cout << pos++ << std::endl;
                 //pos++;
             }
             //pos++;
@@ -742,7 +740,6 @@ _JATTA_EXPORT bool Jatta::Obj::Load(const std::string& fileName)
         std::string parameters = clean.substr(find + 1);
         float vector[4];
         unsigned int vectorSize;
-        //std::cout << type << std::endl;
         if (type == "v")
         {
             GetParameters(parameters, vector, &vectorSize);

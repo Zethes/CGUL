@@ -53,7 +53,7 @@ namespace Jatta
         _JATTA_EXPORT void Debug() const;
 
         // TODO: finish the matrix class, we're missing some important functionality here
-        // TODO: add a cout for matrices
+        // TODO: add an operator<< for matrices
     };
 }
 
