@@ -159,7 +159,7 @@
 #       define _JATTA_AIMATERIAL ::aiMaterial*
 #       define _JATTA_AICAMERA ::aiCamera*
 #       define _JATTA_AIBONE ::aiBone*
-#       define _JATTA_AIVERTEXWEIGHT ::aiVertexWeight
+#       define _JATTA_AIVERTEXWEIGHT ::aiVertexWeight*
 #   endif
 #   ifdef JATTA_USE_AUDIO
 #        define _JATTA_PASTREAM ::PaStream*
