@@ -133,10 +133,8 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Model& model)
 }
 
 #ifdef JATTA_USE_ASSIMP
-#include <iostream> // TODO: remove iostream
 _JATTA_EXPORT void Jatta::Mesh::Create(const Jatta::Assimp::Scene& scene)
 {
-    std::cout << "There are " << scene.GetMeshCount() << " mesh(es) in the model." << std::endl;
     for (UInt32 i = 0; i < scene.GetMeshCount(); i++)
     {
         Assimp::Mesh submesh = scene.GetMesh(i);
@@ -155,18 +153,6 @@ _JATTA_EXPORT void Jatta::Mesh::Create(const Jatta::Assimp::Scene& scene)
         }
         AddMesh(mesh);
     }
-
-    std::cout << "There are " << scene.GetMaterialCount() << " materials(s) in the model." << std::endl;
-    for (UInt32 i = 0; i < scene.GetMaterialCount(); i++)
-    {
-        Assimp::Material mat = scene.GetMaterial(i);
-        for (UInt32 j = 0; j < mat.GetTextureCount(Assimp::TEXTURE_TYPE_DIFFUSE); j++)
-        {
-            std::cout << mat.GetTexturePath(Assimp::TEXTURE_TYPE_DIFFUSE, j) << std::endl;
-        }
-    }
-
-    std::cout << "There are " << scene.GetTextureCount() << " textures(s) in the model." << std::endl;
 }
 #endif
 

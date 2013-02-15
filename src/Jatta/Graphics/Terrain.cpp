@@ -4,7 +4,6 @@
  */
 
 #include "Terrain.h"
-#include <iostream>
 
 _JATTA_EXPORT Jatta::Terrain::Terrain(float heightScale, float blockScale)
 {

@@ -14,7 +14,6 @@ _JATTA_EXPORT void Jatta::Texture::Create(const Jatta::Image& image, bool ms)
     if (false && OpenGL::GetOpenGLVersionMajor()+(OpenGL::GetOpenGLVersionMinor()/10.0f) >= 3.3f && ms && OpenGL::SupportsExtension("GL_ARB_gpu_shader5"))
     {
         multiSampled = true;
-        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
         glGenTextures(1, &this->texture);
         glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, this->texture);
         glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -28,12 +27,10 @@ _JATTA_EXPORT void Jatta::Texture::Create(const Jatta::Image& image, bool ms)
         glGenerateMipmap(GL_TEXTURE_2D_MULTISAMPLE);
         this->width = image.GetWidth();
         this->height = image.GetHeight();
-        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
     }
     else
     {
         multiSampled = false;
-        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
         glGenTextures(1, &this->texture);
         glBindTexture(GL_TEXTURE_2D, this->texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -46,7 +43,6 @@ _JATTA_EXPORT void Jatta::Texture::Create(const Jatta::Image& image, bool ms)
         glGenerateMipmap(GL_TEXTURE_2D);
         this->width = image.GetWidth();
         this->height = image.GetHeight();
-        _JATTA_DEBUG_LN(image.GetWidth() << ", " << image.GetHeight());
     }
 }
 

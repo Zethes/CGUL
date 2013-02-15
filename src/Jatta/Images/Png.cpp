@@ -113,20 +113,8 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName, UInt32 f
     png_uint_32 imgWidth =  png_get_image_width(pngPtr, infoPtr);
     png_uint_32 imgHeight = png_get_image_height(pngPtr, infoPtr);
 
-    //bits per CHANNEL! note: not per pixel!
-    //png_uint_32 bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
-    //Number of channels
-    //png_uint_32 channels   = png_get_channels(pngPtr, infoPtr);
-    //Color type. (RGB, RGBA, Luminance, luminance alpha... palette... etc)
-    //png_uint_32 color_type = png_get_color_type(pngPtr, infoPtr);
-
     width = imgWidth;
     height = imgHeight;
-
-    /*_JATTA_DEBUG_LN(imgWidth << "x" << imgHeight);
-    _JATTA_DEBUG_LN("Bit Depth: " << bitdepth);
-    _JATTA_DEBUG_LN("Channels: " << channels);
-    _JATTA_DEBUG_LN("Color Type: " << color_type);*/
 
     png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * imgHeight);
     for (unsigned int y = 0; y < imgHeight; y++)
@@ -197,7 +185,6 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName, UInt32 f
         return true;
     }
 
-    _JATTA_DEBUG_LN("[process_file] color_type of input file must be PNG_COLOR_TYPE_RGBA (" << PNG_COLOR_TYPE_RGBA << ") (is " << png_get_color_type(pngPtr, infoPtr) << ")");
     return false;
 }
 
