@@ -38,6 +38,9 @@
 #define _JATTA_AICAMERA void*
 #define _JATTA_AIBONE void*
 #define _JATTA_AIVERTEXWEIGHT void*
+#define _JATTA_AIANIMATION void*
+#define _JATTA_AIMESHANIM void*
+#define _JATTA_AINODEANIM void*
 #define _JATTA_PASTREAM void*
 #define _JATTA_PASTREAM_CALLBACK_TIMEINFO void*
 #define _JATTA_PASTREAM_CALLBACK_FLAGS unsigned long
@@ -160,6 +163,9 @@
 #       define _JATTA_AICAMERA ::aiCamera*
 #       define _JATTA_AIBONE ::aiBone*
 #       define _JATTA_AIVERTEXWEIGHT ::aiVertexWeight*
+#       define _JATTA_AIANIMATION ::aiAnimation*
+#       define _JATTA_AIMESHANIM ::aiMeshAnim*
+#       define _JATTA_AINODEANIM ::aiNodeAnim*
 #   endif
 #   ifdef JATTA_USE_AUDIO
 #        define _JATTA_PASTREAM ::PaStream*

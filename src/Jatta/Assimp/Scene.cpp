@@ -8,7 +8,8 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
-
+#include "Animation.h"
+ 
 /** @brief Just a test.
  */
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene()
@@ -103,4 +104,8 @@ _JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index) co
 _JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 index) const
 {
     return Texture(scene->mTextures[index]);
+}
+_JATTA_EXPORT Jatta::Assimp::Animation Jatta::Assimp::Scene::GetAnimation(UInt32 index) const
+{
+    return Animation(scene->mAnimations[index]);
 }
