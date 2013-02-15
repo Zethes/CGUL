@@ -21,7 +21,7 @@ namespace Jatta
             Float32 data[16];
         };
     public:
-        _JATTA_EXPORT static const Matrix identity;
+        _JATTA_EXPORT static Matrix Identity();
 
         _JATTA_EXPORT static Matrix MakeRotation(Float32 angle);
         _JATTA_EXPORT static Matrix MakeRotationX(Float32 angle);
@@ -46,7 +46,17 @@ namespace Jatta
         _JATTA_EXPORT ~Matrix();
 
         _JATTA_EXPORT Matrix& operator=(const Matrix& operand);
+        _JATTA_EXPORT Float32* operator[](UInt32 index);
+        _JATTA_EXPORT const Float32* operator[](UInt32 index) const;
         _JATTA_EXPORT Matrix operator*(const Matrix& operand) const;
+        friend std::ostream& operator<<(std::ostream& stream, const Matrix& matrix)
+        {
+            stream << "[" << matrix.m[0][0] << ", " << matrix.m[1][0] << ", " << matrix.m[2][0] << ", " << matrix.m[3][0] << "]" << std::endl;
+            stream << "|" << matrix.m[0][1] << ", " << matrix.m[1][1] << ", " << matrix.m[2][1] << ", " << matrix.m[3][1] << "|" << std::endl;
+            stream << "|" << matrix.m[0][2] << ", " << matrix.m[1][2] << ", " << matrix.m[2][2] << ", " << matrix.m[3][2] << "|" << std::endl;
+            stream << "[" << matrix.m[0][3] << ", " << matrix.m[1][3] << ", " << matrix.m[2][3] << ", " << matrix.m[3][3] << "]";
+            return stream;
+        }
 
         _JATTA_EXPORT Float32* GetData() const;
 

@@ -9,7 +9,10 @@
 #include "Float3.h"
 #include "Quaternion.h"
 
-_JATTA_EXPORT const Jatta::Matrix Jatta::Matrix::identity(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Identity()
+{
+	return Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+}
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(float angle)
 {
@@ -132,7 +135,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bo
                 0,                     0,                     -1,   -t.z,
                 0,                     0,                      0,  1);// * Matrix::makeScaling(Vector3(1, -1, 1));*/
 
-    Matrix ret = identity;
+    Matrix ret = Identity();
     /*ret.m[0][0] = Float32(2) / (right - left);
     ret.m[1][1] = Float32(2) / (top - bottom);
     ret.m[2][2] = - Float32(2) / (1 - (-1));
@@ -291,6 +294,16 @@ _JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Matrix& operand)
     this->m[3][2] = operand.m[3][2];
     this->m[3][3] = operand.m[3][3];
     return *this;
+}
+
+_JATTA_EXPORT Jatta::Float32* Jatta::Matrix::operator[](UInt32 index)
+{
+    return m[index];
+}
+
+_JATTA_EXPORT const Jatta::Float32* Jatta::Matrix::operator[](UInt32 index) const
+{
+    return m[index];
 }
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(const Matrix& operand) const
