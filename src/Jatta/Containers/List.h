@@ -44,7 +44,7 @@ namespace Jatta
         friend std::ostream& operator<<(std::ostream& stream, const List<T>& list)
         {
             bool first = true;
-            for (ConstIterator i = list.Begin(); i != list.End(); i++)
+            for (Jatta::List<T>::ConstIterator i = list.Begin(); i != list.End(); i++)
             {
                 if (!first) stream << ",";
                 first = false;
@@ -57,10 +57,10 @@ namespace Jatta
         bool Exists(const T& value);
         const T& Back() const;
         const T& Front() const;
-        Jatta::List<T>::Iterator Find(const T& value);
-        Jatta::List<T>::Iterator Find(const T& value, Jatta::List<T>::Iterator offset);
-        Jatta::List<T>::Iterator FindFirst(const T& value);
-        Jatta::List<T>::Iterator FindLast(const T& value);
+        Iterator Find(const T& value);
+        Iterator Find(const T& value, Iterator offset);
+        Iterator FindFirst(const T& value);
+        Iterator FindLast(const T& value);
         Jatta::Size MaxSize() const;
         Jatta::Size Size() const;
         List<Iterator> FindAll(const T& value);
@@ -71,7 +71,7 @@ namespace Jatta
         void AddToFront(const T& value);
         void AddToFront(T&& value);
         void Assign(Jatta::Size count, const T& value);
-        void Assign(Jatta::List<T>::Iterator first, Jatta::List<T>::Iterator last, const T& value);
+        void Assign(Iterator first, Iterator last, const T& value);
         Iterator Begin();
         ConstIterator Begin() const;
         void Clear();
@@ -83,12 +83,12 @@ namespace Jatta
         void Insert(Jatta::Size pos, const T&& value);
         void Pop();
         void PopFront();
-        void Remove(Jatta::List<T>::Iterator pos);
-        void Remove(Jatta::List<T>::ConstIterator pos);
-        void Remove(Jatta::List<T>::Iterator first, Jatta::List<T>::Iterator last);
-        void Remove(Jatta::List<T>::ConstIterator first, Jatta::List<T>::ConstIterator last);
+        void Remove(Iterator pos);
+        void Remove(ConstIterator pos);
+        void Remove(Iterator first, Iterator last);
+        void Remove(ConstIterator first, ConstIterator last);
         void RemoveConsecutiveDuplicates();
-        void Replace(Jatta::List<T>::Iterator pos, const T& value);
+        void Replace(Iterator pos, const T& value);
         void Resize(Jatta::Size count);
         void Resize(Jatta::Size count, const T& value);
         void Reverse();

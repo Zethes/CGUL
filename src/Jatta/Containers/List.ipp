@@ -117,7 +117,7 @@ template<typename T> typename Jatta::List<T>::Iterator Jatta::List<T>::Find(cons
 {
     return Find(value, Begin());
 }
-template<typename T> typename Jatta::List<T>::Iterator Jatta::List<T>::Find(const T& value, Jatta::List<T>::Iterator offset)
+template<typename T> typename Jatta::List<T>::Iterator Jatta::List<T>::Find(const T& value, typename Jatta::List<T>::Iterator offset)
 {
     for (Iterator i = offset; i != End(); i++)
     {
@@ -187,7 +187,7 @@ template<typename T> void Jatta::List<T>::Assign(Jatta::Size count, const T& val
 {
     data.assign(count, value);
 }
-template<typename T> void Jatta::List<T>::Assign(Jatta::List<T>::Iterator first, Jatta::List<T>::Iterator last, const T& value)
+template<typename T> void Jatta::List<T>::Assign(typename Jatta::List<T>::Iterator first, typename Jatta::List<T>::Iterator last, const T& value)
 {
     //TODO: Assign range
 }
@@ -235,19 +235,19 @@ template<typename T> void Jatta::List<T>::PopFront()
 {
     data.pop_front();
 }
-template<typename T> void Jatta::List<T>::Remove(Jatta::List<T>::Iterator pos)
+template<typename T> void Jatta::List<T>::Remove(typename Jatta::List<T>::Iterator pos)
 {
     data.erase(pos);
 }
-template<typename T> void Jatta::List<T>::Remove(Jatta::List<T>::ConstIterator pos)
+template<typename T> void Jatta::List<T>::Remove(typename Jatta::List<T>::ConstIterator pos)
 {
     data.erase(pos);
 }
-template<typename T> void Jatta::List<T>::Remove(Jatta::List<T>::Iterator first, Jatta::List<T>::Iterator last)
+template<typename T> void Jatta::List<T>::Remove(typename Jatta::List<T>::Iterator first, typename Jatta::List<T>::Iterator last)
 {
     data.erase(first, last);
 }
-template<typename T> void Jatta::List<T>::Remove(Jatta::List<T>::ConstIterator first, Jatta::List<T>::ConstIterator last)
+template<typename T> void Jatta::List<T>::Remove(typename Jatta::List<T>::ConstIterator first, typename Jatta::List<T>::ConstIterator last)
 {
     data.erase(first, last);
 }
@@ -255,7 +255,7 @@ template<typename T> void Jatta::List<T>::RemoveConsecutiveDuplicates()
 {
     data.unique();
 }
-template<typename T> void Jatta::List<T>::Replace(Jatta::List<T>::Iterator pos, const T& value)
+template<typename T> void Jatta::List<T>::Replace(typename Jatta::List<T>::Iterator pos, const T& value)
 {
     (*pos) = value;
 }
