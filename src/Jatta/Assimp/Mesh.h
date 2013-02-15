@@ -5,6 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "Bone.h"
 #include "../Math/Float3.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
@@ -17,6 +18,7 @@ namespace Jatta
         // TODO: finish importing methods from aiMesh
         class Mesh
         {
+        private:
             _JATTA_AIMESH mesh;
         public:
             _JATTA_EXPORT Mesh(_JATTA_AIMESH mesh);
@@ -38,6 +40,7 @@ namespace Jatta
 
             _JATTA_EXPORT Float3* GetPositions() const;
             _JATTA_EXPORT Float3* GetTextureCoords() const;
+            _JATTA_EXPORT Bone* GetBones() const;
 
             _JATTA_EXPORT UInt32 GetMaterialIndex() const;
 
