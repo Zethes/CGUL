@@ -5,8 +5,6 @@
 
 #include "Material.h"
 
-#include <iostream> // TODO: remove iostream
-
 _JATTA_EXPORT Jatta::Assimp::Material::Material(aiMaterial* material)
 {
     this->material = material;

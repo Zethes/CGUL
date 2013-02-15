@@ -50,19 +50,19 @@ _JATTA_EXPORT void Jatta::RenderTarget::Create(UInt32 width, UInt32 height, UInt
     int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (status == GL_FRAMEBUFFER_UNDEFINED)
     {
-        _JATTA_DEBUG_LN("Error: You are using the default framebuffer.\n");
+        // TODO: Error: You are using the default framebuffer.
     }
     else if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
     {
-        _JATTA_DEBUG_LN("Error: The framebuffer's attachement points are incomplete.\n");
+        // TODO: Error: The framebuffer's attachement points are incomplete.
     }
     else if (status == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
     {
-        _JATTA_DEBUG_LN("Error: The framebuffer's missing a texture attachment.\n");
+        // TODO: Error: The framebuffer's missing a texture attachment.
     }
     else if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        _JATTA_DEBUG_LN("Error: Unknown error with framebuffer.");
+        // TODO: Error: Unknown error with framebuffer.
     }
 }
 

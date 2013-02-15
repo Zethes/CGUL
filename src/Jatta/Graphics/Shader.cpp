@@ -132,8 +132,6 @@ _JATTA_EXPORT void Jatta::Shader::Load(const std::string& vertex, const std::str
         // TODO: error checking
         throw std::runtime_error(ss.str().c_str());
     }
-
-    //_JATTA_DEBUG_LN("Done loading shader.");
 }
 
 _JATTA_EXPORT void Jatta::Shader::Unload()

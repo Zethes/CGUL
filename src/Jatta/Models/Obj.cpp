@@ -34,7 +34,6 @@ namespace
     };
 }
 
-#include <iostream>
 /*static Jatta::Float4 ToVector(const Jatta::String& input, Jatta::Byte* size)
 {
     Jatta::Float4 data;
@@ -364,7 +363,6 @@ static std::vector<Jatta::Group> CreateGroups(ObjData* data)
                         normals[normalPos++] = data->normals[data->normalSize * normalIndex + l];
                     }
                 }
-                //std::cout << pos++ << std::endl;
                 //pos++;
             }
             //pos++;
@@ -612,7 +610,6 @@ _JATTA_EXPORT void Jatta::Model::LoadObj(const String& fileName)
         }
         else
         {
-            _JATTA_DEBUG_LN("Unknown OBJ line: " << explode[0] << " with parameters: " << parameters);
         }
     }*/
 
@@ -698,7 +695,6 @@ _JATTA_EXPORT bool Jatta::Obj::GetParameters(const std::string& parameters)//, s
     {
         if (i == parameters.size() || !isdigit(parameters[i]))
         {
-            _JATTA_DEBUG_LN(number);
             number = "";
             continue;
         }
@@ -742,7 +738,6 @@ _JATTA_EXPORT bool Jatta::Obj::Load(const std::string& fileName)
         std::string parameters = clean.substr(find + 1);
         float vector[4];
         unsigned int vectorSize;
-        //std::cout << type << std::endl;
         if (type == "v")
         {
             GetParameters(parameters, vector, &vectorSize);
@@ -790,8 +785,6 @@ _JATTA_EXPORT bool Jatta::Obj::Load(const std::string& fileName)
             GetParameters(parameters);
         }
     }
-
-    _JATTA_DEBUG_LN("GROUPS: " << groups.size());
 
     return true;
 }

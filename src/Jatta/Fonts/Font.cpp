@@ -16,7 +16,7 @@ _JATTA_EXPORT void __jatta_ttf_initialize()
         FT_Error error = FT_Init_FreeType(&__jatta_ttf_library);
         if (error)
         {
-            _JATTA_DEBUG_LN("Could not initialize FreeType");
+            // todo: error checking
         }
         initialized = true;
     }
@@ -33,14 +33,11 @@ _JATTA_EXPORT void Jatta::Font::Load(const std::string& fileName)
     if (error == FT_Err_Unknown_File_Format)
     {
         // TODO: error checking
-        _JATTA_DEBUG_LN("Font is an unknown format.");
     }
     else if (error)
     {
         // TODO: error checking
-        _JATTA_DEBUG_LN("Failed to load font.");
     }
-    _JATTA_DEBUG_LN(FT_Get_X11_Font_Format(face));
     //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
 }
 
@@ -50,7 +47,6 @@ _JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
     if (error)
     {
         // TODO: error checking
-        _JATTA_DEBUG_LN("Failed to set character size.");
     }
     this->size = size;
 }
@@ -245,7 +241,6 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean
         //FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
         UInt32 utf8Character;
         i += text.GetCodePoint(i, &utf8Character);
-        _JATTA_DEBUG_LN(std::hex << utf8Character << std::dec);
         FT_Set_Transform(face, &matrix, &pen);
         FT_Error error = FT_Load_Char(this->face, utf8Character, FT_LOAD_RENDER);
         if (error)
