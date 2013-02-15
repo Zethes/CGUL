@@ -15,7 +15,7 @@ namespace Jatta
         class DNS
         {
         public:
-            enum class Filter
+            enum Filter
             {
                 IPV4,
                 IPV6,
