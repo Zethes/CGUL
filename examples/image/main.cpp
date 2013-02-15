@@ -119,6 +119,9 @@ OpenGL::VertexArray MakeBox()
 
 int main()
 {
+    Jatta::Matrix wee;
+    wee[1][2] = 5;
+    std::cout << wee << std::endl;
     try
     {
         // Setup the window
@@ -164,7 +167,7 @@ int main()
 
             program.Bind();
             OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 1, 1, 0));
-            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::identity);
+            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::Identity());
             OpenGL::Program::Uniform1i(program.GetUniformLocation("texture"), 0);
             OpenGL::ClearErrors();
             OpenGL::Texture::Active(0);

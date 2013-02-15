@@ -8,6 +8,8 @@ ENDMACRO()
 
 DEFINE_CACHE(JATTA_STATIC OFF BOOL "Builds a static library.")
 
+DEFINE_CACHE(JATTA_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin" PATH "Where to export the Jatta library.")
+
 GET_FILENAME_COMPONENT(JATTA_DEP "${CMAKE_CURRENT_SOURCE_DIR}/../dep" REALPATH)
 DEFINE_CACHE(JATTA_DEPENDENCY_DIR ${JATTA_DEP} PATH "Specifies the Jatta dependency directory.")
 

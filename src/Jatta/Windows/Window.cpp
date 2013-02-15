@@ -164,17 +164,14 @@ _JATTA_EXPORT void Jatta::Window::Update()
 #   endif
 }
 
-#include <iostream> // TODO: remove iostream
 _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
     {
-        std::cout << "erm hi" << std::endl;
         XSetErrorHandler(__jatta_windows_error_handler);
         display = XOpenDisplay(nullptr);
         initialized = true;
-        std::cout << display << std::endl;
     }
 #   endif
 
@@ -403,6 +400,7 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
     style.width = GetWidth();
     style.height = GetHeight();
     style.resizable = GetResizable();
+    return style;
 }
 
 _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
