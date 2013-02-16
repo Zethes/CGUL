@@ -37,6 +37,8 @@ namespace Jatta
         _JATTA_EXPORT static Matrix MakeLookAt(const Float3& eye, const Float3& at, const Float3& up);
         _JATTA_EXPORT static Matrix MakeOrtho(int left, int right, int bottom, int top);
 
+        _JATTA_EXPORT static Matrix Inverse(const Matrix& matrix);
+
         _JATTA_EXPORT Matrix();
         _JATTA_EXPORT Matrix(const Matrix& copy);
         _JATTA_EXPORT Matrix(Matrix&& move);
@@ -49,6 +51,8 @@ namespace Jatta
         _JATTA_EXPORT Float32* operator[](UInt32 index);
         _JATTA_EXPORT const Float32* operator[](UInt32 index) const;
         _JATTA_EXPORT Matrix operator*(const Matrix& operand) const;
+        _JATTA_EXPORT Matrix& operator*=(Float32 operand);
+        _JATTA_EXPORT Matrix& operator/=(Float32 operand);
         friend std::ostream& operator<<(std::ostream& stream, const Matrix& matrix)
         {
             stream << "[" << matrix.m[0][0] << ", " << matrix.m[1][0] << ", " << matrix.m[2][0] << ", " << matrix.m[3][0] << "]" << std::endl;
@@ -59,6 +63,9 @@ namespace Jatta
         }
 
         _JATTA_EXPORT Float32* GetData() const;
+
+        _JATTA_EXPORT void Invert();
+        _JATTA_EXPORT Float32 GetDeterminant() const;
 
         _JATTA_EXPORT void Debug() const;
 
