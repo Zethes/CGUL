@@ -41,6 +41,11 @@
 #   include "Jatta/Assimp/Mesh.h"
 #   include "Jatta/Assimp/Scene.h"
 #   include "Jatta/Assimp/Texture.h"
+#	include "Jatta/Assimp/Bone.h"
+#	include "Jatta/Assimp/VertexWeight.h"
+#	include "Jatta/Assimp/Animation.h"
+#	include "Jatta/Assimp/MeshAnimation.h"
+#	include "Jatta/Assimp/NodeAnimation.h"
 #endif
 
 #ifdef JATTA_USE_AUDIO

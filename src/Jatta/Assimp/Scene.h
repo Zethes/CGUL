@@ -18,6 +18,7 @@ namespace Jatta
         class Material;
         class Mesh;
         class Texture;
+        class Animation;
 
         // TODO: finish importing methods from aiScene
         class Scene
@@ -47,6 +48,7 @@ namespace Jatta
             _JATTA_EXPORT Material GetMaterial(UInt32 index) const;
             _JATTA_EXPORT Mesh GetMesh(UInt32 index) const;
             _JATTA_EXPORT Texture GetTexture(UInt32 index) const;
+            _JATTA_EXPORT Animation GetAnimation(UInt32 index) const;
         };
     }
 }
