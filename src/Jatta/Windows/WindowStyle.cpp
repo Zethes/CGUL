@@ -13,6 +13,9 @@
  *  width = 640;
  *  height = 480;
  *  resizable = true;
+ *  minimizable = true;
+ *  maximizable = true;
+ *  closeable = true;
  *  @endcode
  */
 _JATTA_EXPORT Jatta::WindowStyle::WindowStyle()
@@ -22,6 +25,9 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle()
     this->width = 640;
     this->height = 480;
     this->resizable = true;
+    this->minimizable = true;
+    this->maximizable = true;
+    this->closeable = true;
 }
 
 /** @brief Copy constructor.
@@ -34,6 +40,9 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
     this->width = style.width;
     this->height = style.height;
     this->resizable = style.resizable;
+    this->minimizable = style.minimizable;
+    this->maximizable = style.maximizable;
+    this->closeable = style.closeable;
 }
 
 /** @brief Parameterized constructor.
@@ -42,12 +51,18 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
  *  @param width The width of the window.
  *  @param height The height of the window.
  *  @param resizable Whether the window is resizable or not.
+ *  @param minimizable Whether the minimize button is enabled or not.
+ *  @param maximizable Whether the maximize button is enabled or not.
+ *  @param closeable Whether the close button is enabled or not.
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable)
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable, Boolean minimizable, Boolean maximizable, Boolean closeable)
 {
     this->title = title;
     this->backgroundColor = backgroundColor;
     this->width = width;
     this->height = height;
     this->resizable = resizable;
+    this->minimizable = minimizable;
+    this->maximizable = maximizable;
+    this->closeable = closeable;
 }

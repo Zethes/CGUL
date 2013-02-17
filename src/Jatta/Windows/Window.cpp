@@ -239,7 +239,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     wc.hInstance = GetModuleHandle(nullptr);
     wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b));
+    wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
     wc.lpszClassName = new wchar_t[ss.str().length() + 1];
     memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
@@ -251,25 +251,26 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
         throw std::runtime_error("Failed to register the window class.");
     }
 
-    this->style = WS_OVERLAPPEDWINDOW;
-    if (!style.resizable)
-    {
-        this->style &= ~WS_MAXIMIZEBOX;
-        this->style &= ~WS_THICKFRAME;
-    }
+    // Setup the window style
+    DWORD windowStyle = WS_TILEDWINDOW;//WS_OVERLAPPEDWINDOW;
 
+    // Adjust the window rectangle to account for border sizes
     RECT windowRect = {0, 0, (long)style.width, (long)style.height};
-    AdjustWindowRectEx(&windowRect, this->style, false, WS_EX_CLIENTEDGE);
+    AdjustWindowRectEx(&windowRect, windowStyle, false, WS_EX_CLIENTEDGE);
 
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), this->style, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    // Create the window
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), windowStyle, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
 
+    // Check for errors
     if (handle == NULL)
     {
         throw std::runtime_error("Failed to create the window!");
     }
 
+    // Set the window's user-data to a pointer to this object
     SetWindowLongPtr(handle, GWLP_USERDATA, (LONG_PTR)this);
 
+    // Present the window onto the screen
     ShowWindow(handle, SW_SHOW);
 #   endif
 
@@ -351,6 +352,8 @@ _JATTA_EXPORT void Jatta::Window::Close()
     handle = 0;
     display = nullptr;
 #   endif
+
+    // TODO: Window::Close on MacOS
 }
 
 /** @brief Updates a window's input handler.
@@ -387,6 +390,9 @@ _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
     SetWidth(style.width);
     SetHeight(style.height);
     SetResizable(style.resizable);
+    SetMinimizable(style.minimizable);
+    SetMaximizable(style.maximizable);
+    SetCloseable(style.closeable);
 }
 
 /** @brief Gets some information about the window.
@@ -400,6 +406,9 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
     style.width = GetWidth();
     style.height = GetHeight();
     style.resizable = GetResizable();
+    style.minimizable = GetMinimizable();
+    style.maximizable = GetMaximizable();
+    style.closeable = GetCloseable();
     return style;
 }
 
@@ -423,7 +432,17 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 
 _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
 {
-    // TODO: Jatta::Window::GetTitle
+#   ifdef WINDOWS
+    int size = GetWindowTextLength(this->handle) + 1;
+    wchar_t* buffer = new wchar_t[size];
+    GetWindowText(this->handle, buffer, size);
+    Jatta::String title;
+    title._FromWideString(buffer);
+    delete[] buffer;
+    return title;
+#   endif
+
+    // TODO: Jatta::Window::GetTitle for MacOS and Linux
     return "";
 }
 
@@ -434,6 +453,13 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
 
 _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 {
+#   ifdef WINDOWS
+    HGDIOBJ brush = (HGDIOBJ)GetClassLongPtr(handle, GCLP_HBRBACKGROUND);
+    LOGBRUSH lb;
+    GetObject(brush, sizeof(LOGBRUSH), &lb);
+    return Color((lb.lbColor & 255), ((lb.lbColor >> 8) & 255), ((lb.lbColor >> 16) & 255), 255);
+#   endif
+
     // TODO: Jatta::Window::GetBackgroundColor
     return Color(0, 0, 0);
 }
@@ -447,7 +473,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.left + rect.right;
     GetWindowRect(handle, &rect);
     return rect.right - rect.left - borders;
@@ -474,7 +500,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
     return rect.bottom - rect.top - borders;
@@ -500,7 +526,7 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
     return Float2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
@@ -519,12 +545,135 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 
 _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 {
-    // TODO: Jatta::Window::SetResizable
+#   ifdef WINDOWS
+    // Capture the current size of the window
+    RECT windowRect = {0, 0, GetWidth(), GetHeight()};
+
+    // Turn on or off the bits for a resizable window
+    LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
+    if (resizable)
+    {
+        style |= WS_THICKFRAME;
+    }
+    else
+    {
+        style &= ~WS_THICKFRAME;
+    }
+
+    // Change the window style
+    SetWindowLongPtr(this->handle, GWL_STYLE, style);
+
+    // Update the window size
+    AdjustWindowRectEx(&windowRect, style, false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+#   endif
+
+    // TODO: Jatta::Window::SetResizable for Linux and MacOS
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 {
-    // TODO: Jatta::Window::GetResizable
+#   ifdef WINDOWS
+    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME);
+#   endif
+
+    // TODO: Jatta::Window::GetResizable for Linux and MacOS
+    return false;
+}
+
+_JATTA_EXPORT void Jatta::Window::SetMinimizable(Boolean minimizable)
+{
+#   ifdef WINDOWS
+    // Turn on or off the bits for a resizable window
+    LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
+    if (minimizable)
+    {
+        style |= WS_MINIMIZEBOX;
+    }
+    else
+    {
+        style &= ~WS_MINIMIZEBOX;
+    }
+
+    // Change the window style
+    SetWindowLongPtr(this->handle, GWL_STYLE, style);
+#   endif
+
+    // TODO: Jatta::Window::SetMinimizable() for Linux and Mac
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetMinimizable() const
+{
+#   ifdef WINDOWS
+    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MINIMIZEBOX);
+#   endif
+
+    // TODO: Jatta::Window::GetMinimizable() for Linux and Mac
+    return false;
+}
+
+_JATTA_EXPORT void Jatta::Window::SetMaximizable(Boolean maximizable)
+{
+    #   ifdef WINDOWS
+    // Turn on or off the bits for a resizable window
+    LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
+    if (maximizable)
+    {
+        style |= WS_MAXIMIZEBOX;
+    }
+    else
+    {
+        style &= ~WS_MAXIMIZEBOX;
+    }
+
+    // Change the window style
+    SetWindowLongPtr(this->handle, GWL_STYLE, style);
+#   endif
+
+    // TODO: Jatta::Window::SetMaximizable() for Linux and Mac
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetMaximizable() const
+{
+#   ifdef WINDOWS
+    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX);
+#   endif
+
+    // TODO: Jatta::Window::GetMaximizable() for Linux and Mac
+    return false;
+}
+
+_JATTA_EXPORT void Jatta::Window::SetCloseable(Boolean closeable)
+{
+#   ifdef WINDOWS
+    // Turn on or off the bits for a resizable window
+    ULONG_PTR style = GetClassLongPtr(this->handle, GCL_STYLE);
+    if (!closeable)
+    {
+        style |= CS_NOCLOSE;
+    }
+    else
+    {
+        style &= ~CS_NOCLOSE;
+    }
+
+    // Change the window style
+    SetClassLongPtr(this->handle, GCL_STYLE, style);
+
+    // Re-show the window
+    //SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+#   endif
+
+    // TODO: Jatta::Window::SetResizable for Linux and MacOS
+}
+
+_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetCloseable() const
+{
+#   ifdef WINDOWS
+    return !(GetClassLongPtr(this->handle, GCL_STYLE) & CS_NOCLOSE);
+#   endif
+
+    // TODO: Jatta::Window::GetResizable for Linux and MacOS
     return false;
 }
 
@@ -532,7 +681,7 @@ _JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
 {
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, this->style, false, WS_EX_CLIENTEDGE);
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     GetWindowRect(handle, &rect);
     return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
