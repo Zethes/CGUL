@@ -102,6 +102,8 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flag
     else if (IsJpg(fileName))
         return LoadJpg(fileName, flags);
 #   endif
+    else if (IsDds(fileName))
+        return LoadDds(fileName, flags);
     else
         return false;
 }
