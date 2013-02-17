@@ -32,6 +32,7 @@ namespace Jatta
 
             _JATTA_EXPORT void DrawArrays(Enum mode, SInt32 first, Size count);
             _JATTA_EXPORT void DrawElements(Enum mode, Size count, Enum type, const void* indices);
+            _JATTA_EXPORT void DrawElementsBaseVertex(Enum mode, Size count, Enum type, void* indices, UInt32 baseVertex);
 
             // TODO: finish importing opengl vertex array functions
         };

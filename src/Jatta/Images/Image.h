@@ -34,6 +34,7 @@ namespace Jatta
         _JATTA_EXPORT static bool IsBmp(const Jatta::String& fileName);
         _JATTA_EXPORT static bool IsPng(const Jatta::String& fileName);
         _JATTA_EXPORT static bool IsJpg(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsDds(const Jatta::String& fileName);
 
         _JATTA_EXPORT bool LoadPng(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool SavePng(const Jatta::String& fileName);
@@ -43,6 +44,9 @@ namespace Jatta
 
         _JATTA_EXPORT bool LoadBmp(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool SaveBmp(const Jatta::String& fileName, int bpp = 24, int hRes = 2835, int vRes = 2835);
+
+        _JATTA_EXPORT bool LoadDds(const Jatta::String& fileName, UInt32 flags);
+        _JATTA_EXPORT bool SaveDds(const Jatta::String& fileName);
 
         _JATTA_EXPORT unsigned char* GetData();
         _JATTA_EXPORT const unsigned char* GetData() const;

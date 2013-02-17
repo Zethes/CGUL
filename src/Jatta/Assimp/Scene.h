@@ -6,6 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "Assimp.h"
+#include "../Math/Matrix.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -42,6 +43,8 @@ namespace Jatta
             _JATTA_EXPORT UInt32 GetMaterialCount() const;
             _JATTA_EXPORT UInt32 GetMeshCount() const;
             _JATTA_EXPORT UInt32 GetTextureCount() const;
+            
+            _JATTA_EXPORT Jatta::Matrix GetSceneTransformation() const;
 
             // TODO: GetLight, GetAnimation
             _JATTA_EXPORT Camera GetCamera(UInt32 index) const;
