@@ -3,6 +3,10 @@
 # All rights reserved.
 
 if(JATTA_USE_OPENGL)
+    IF(APPLE)
+        ADD_SUBDIRECTORY(MacOS)
+    ENDIF()
+
     ADD_GROUP("OpenGL")
     ADD_SOURCE(Buffer.cpp)
     ADD_HEADER(Buffer.h include/Jatta/OpenGL/)
