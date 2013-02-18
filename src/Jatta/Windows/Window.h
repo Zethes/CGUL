@@ -88,12 +88,6 @@ namespace Jatta
 
         _JATTA_EXPORT void SetResizable(Boolean resizable);
         _JATTA_EXPORT Boolean GetResizable() const;
-        _JATTA_EXPORT void SetMinimizable(Boolean minimizable);
-        _JATTA_EXPORT Boolean GetMinimizable() const;
-        _JATTA_EXPORT void SetMaximizable(Boolean maxmimizable);
-        _JATTA_EXPORT Boolean GetMaximizable() const;
-        _JATTA_EXPORT void SetCloseable(Boolean closeable);
-        _JATTA_EXPORT Boolean GetCloseable() const;
 
         _JATTA_EXPORT Float4 GetFrameSize() const;
 

@@ -18,13 +18,10 @@ namespace Jatta
         UInt32 width;
         UInt32 height;
         Boolean resizable;
-        Boolean minimizable;
-        Boolean maximizable;
-        Boolean closeable;
 
         _JATTA_EXPORT WindowStyle();
         _JATTA_EXPORT WindowStyle(const WindowStyle& style);
-        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable, Boolean minimizable, Boolean maximizable, Boolean closeable);
+        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
 
         friend std::ostream& operator<<(std::ostream& stream, const WindowStyle& style)
         {
@@ -32,10 +29,7 @@ namespace Jatta
             stream << "Background Color: " << style.backgroundColor << std::endl;
             stream << "Width:            " << style.width << std::endl;
             stream << "Height:           " << style.height << std::endl;
-            stream << "Resizable:        " << style.resizable << std::endl;
-            stream << "Minimizable:      " << style.minimizable << std::endl;
-            stream << "Maximizable:      " << style.maximizable << std::endl;
-            stream << "Closeable:        " << style.closeable;
+            stream << "Resizable:        " << style.resizable;
             return stream;
         }
     };

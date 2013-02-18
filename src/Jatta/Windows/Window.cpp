@@ -289,15 +289,6 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     XMapWindow(this->display, this->handle);
     XFlush(this->display);
     windowMap.insert(std::make_pair(this->handle, this));
-
-    if (!style.resizable)
-    {
-        XSizeHints hints;
-        hints.flags = PMinSize | PMaxSize;
-        hints.min_width = style.width; hints.min_height = style.height;
-        hints.max_width = style.width; hints.max_height = style.height;
-        XSetWMNormalHints(display, handle, &hints);
-    }
 #   endif
 
 #   ifdef MACOS
@@ -390,9 +381,6 @@ _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
     SetWidth(style.width);
     SetHeight(style.height);
     SetResizable(style.resizable);
-    SetMinimizable(style.minimizable);
-    SetMaximizable(style.maximizable);
-    SetCloseable(style.closeable);
 }
 
 /** @brief Gets some information about the window.
@@ -406,9 +394,6 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
     style.width = GetWidth();
     style.height = GetHeight();
     style.resizable = GetResizable();
-    style.minimizable = GetMinimizable();
-    style.maximizable = GetMaximizable();
-    style.closeable = GetCloseable();
     return style;
 }
 
@@ -440,6 +425,26 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
     title._FromWideString(buffer);
     delete[] buffer;
     return title;
+#   endif
+
+#   ifdef LINUX
+    Atom nameAtom = XInternAtom(display, "_NET_WM_NAME", false);
+    Atom utf8Atom = XInternAtom(display, "UTF8_STRING", false);
+    Atom type;
+    int format;
+    unsigned long nitems, after;
+    unsigned char* data = 0;
+
+    if (Success == XGetWindowProperty(display, this->handle, nameAtom, 0, 65536, false, utf8Atom, &type, &format, &nitems, &after, &data))
+    {
+        if (data)
+        {
+            Jatta::String title((char*)data);
+            XFree(data);
+            return title;
+        }
+    }
+    return "";
 #   endif
 
     // TODO: Jatta::Window::GetTitle for MacOS and Linux
@@ -554,10 +559,12 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
     if (resizable)
     {
         style |= WS_THICKFRAME;
+        style |= WS_MAXIMIZEBOX;
     }
     else
     {
         style &= ~WS_THICKFRAME;
+        style &= ~WS_MAXIMIZEBOX;
     }
 
     // Change the window style
@@ -568,115 +575,34 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
     SetWindowPos(handle, 0, 0, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 #   endif
 
-    // TODO: Jatta::Window::SetResizable for Linux and MacOS
+#   ifdef LINUX
+    XSizeHints hints;
+    hints.flags = PMinSize | PMaxSize;
+    if (resizable)
+    {
+        hints.min_width = 1;       hints.min_height = 1;
+        hints.max_width = INT_MAX; hints.max_height = INT_MAX;
+    }
+    else
+    {
+        hints.min_width = GetWidth(); hints.min_height = GetHeight();
+        hints.max_width = GetWidth(); hints.max_height = GetHeight();
+    }
+    XSetWMNormalHints(display, handle, &hints);
+#   endif
+
+    // TODO: Jatta::Window::SetResizable for MacOS
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 {
 #   ifdef WINDOWS
-    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME);
+    return ((GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME) || (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX));
 #   endif
 
     // TODO: Jatta::Window::GetResizable for Linux and MacOS
     return false;
 }
-
-_JATTA_EXPORT void Jatta::Window::SetMinimizable(Boolean minimizable)
-{
-#   ifdef WINDOWS
-    // Turn on or off the bits for a resizable window
-    LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
-    if (minimizable)
-    {
-        style |= WS_MINIMIZEBOX;
-    }
-    else
-    {
-        style &= ~WS_MINIMIZEBOX;
-    }
-
-    // Change the window style
-    SetWindowLongPtr(this->handle, GWL_STYLE, style);
-#   endif
-
-    // TODO: Jatta::Window::SetMinimizable() for Linux and Mac
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetMinimizable() const
-{
-#   ifdef WINDOWS
-    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MINIMIZEBOX);
-#   endif
-
-    // TODO: Jatta::Window::GetMinimizable() for Linux and Mac
-    return false;
-}
-
-_JATTA_EXPORT void Jatta::Window::SetMaximizable(Boolean maximizable)
-{
-    #   ifdef WINDOWS
-    // Turn on or off the bits for a resizable window
-    LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
-    if (maximizable)
-    {
-        style |= WS_MAXIMIZEBOX;
-    }
-    else
-    {
-        style &= ~WS_MAXIMIZEBOX;
-    }
-
-    // Change the window style
-    SetWindowLongPtr(this->handle, GWL_STYLE, style);
-#   endif
-
-    // TODO: Jatta::Window::SetMaximizable() for Linux and Mac
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetMaximizable() const
-{
-#   ifdef WINDOWS
-    return (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX);
-#   endif
-
-    // TODO: Jatta::Window::GetMaximizable() for Linux and Mac
-    return false;
-}
-
-_JATTA_EXPORT void Jatta::Window::SetCloseable(Boolean closeable)
-{
-#   ifdef WINDOWS
-    // Turn on or off the bits for a resizable window
-    ULONG_PTR style = GetClassLongPtr(this->handle, GCL_STYLE);
-    if (!closeable)
-    {
-        style |= CS_NOCLOSE;
-    }
-    else
-    {
-        style &= ~CS_NOCLOSE;
-    }
-
-    // Change the window style
-    SetClassLongPtr(this->handle, GCL_STYLE, style);
-
-    // Re-show the window
-    //SetWindowPos(handle, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
-#   endif
-
-    // TODO: Jatta::Window::SetResizable for Linux and MacOS
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::Window::GetCloseable() const
-{
-#   ifdef WINDOWS
-    return !(GetClassLongPtr(this->handle, GCL_STYLE) & CS_NOCLOSE);
-#   endif
-
-    // TODO: Jatta::Window::GetResizable for Linux and MacOS
-    return false;
-}
-
 _JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
 {
 #   ifdef WINDOWS
