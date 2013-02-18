@@ -42,6 +42,9 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
  *  @param width The width of the window.
  *  @param height The height of the window.
  *  @param resizable Whether the window is resizable or not.
+ *  @param minimizable Whether the minimize button is enabled or not.
+ *  @param maximizable Whether the maximize button is enabled or not.
+ *  @param closeable Whether the close button is enabled or not.
  */
 _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable)
 {

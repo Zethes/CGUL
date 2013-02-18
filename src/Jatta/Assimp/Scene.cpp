@@ -86,6 +86,15 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount() const
     return scene->mNumTextures;
 }
 
+_JATTA_EXPORT Jatta::Matrix Jatta::Assimp::Scene::GetSceneTransformation() const
+{
+    return Jatta::Matrix(
+        *scene->mRootNode->mTransformation[0], *scene->mRootNode->mTransformation[1], *scene->mRootNode->mTransformation[2], *scene->mRootNode->mTransformation[3], 
+        *scene->mRootNode->mTransformation[4], *scene->mRootNode->mTransformation[5], *scene->mRootNode->mTransformation[6], *scene->mRootNode->mTransformation[7], 
+        *scene->mRootNode->mTransformation[8], *scene->mRootNode->mTransformation[9], *scene->mRootNode->mTransformation[10], *scene->mRootNode->mTransformation[11], 
+        *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
+}
+
 _JATTA_EXPORT Jatta::Assimp::Camera Jatta::Assimp::Scene::GetCamera(UInt32 index) const
 {
     return Camera(scene->mCameras[index]);

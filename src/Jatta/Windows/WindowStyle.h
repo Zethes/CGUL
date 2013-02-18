@@ -22,6 +22,16 @@ namespace Jatta
         _JATTA_EXPORT WindowStyle();
         _JATTA_EXPORT WindowStyle(const WindowStyle& style);
         _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
+
+        friend std::ostream& operator<<(std::ostream& stream, const WindowStyle& style)
+        {
+            stream << "Title:            " << style.title << std::endl;
+            stream << "Background Color: " << style.backgroundColor << std::endl;
+            stream << "Width:            " << style.width << std::endl;
+            stream << "Height:           " << style.height << std::endl;
+            stream << "Resizable:        " << style.resizable;
+            return stream;
+        }
     };
 }
 

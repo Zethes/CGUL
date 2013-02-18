@@ -20,7 +20,6 @@ namespace Jatta
     {
 #       ifdef WINDOWS
         _JATTA_HWND handle;
-        _JATTA_DWORD style;
 
         char className[20];
 

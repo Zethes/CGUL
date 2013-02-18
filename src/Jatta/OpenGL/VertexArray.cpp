@@ -90,3 +90,8 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawElements(Enum mode, Size coun
     glDrawElements(mode, count, type, indices);
     GLCHECK("Failed to draw elements.");
 }
+_JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawElementsBaseVertex(Enum mode, Size count, Enum type, void* indices, UInt32 baseVertex)
+{
+    glDrawElementsBaseVertex(mode, count, type, indices, baseVertex);
+    GLCHECK("Failed to draw elements.");
+}

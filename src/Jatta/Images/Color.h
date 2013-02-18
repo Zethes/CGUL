@@ -27,7 +27,7 @@ namespace Jatta
         _JATTA_EXPORT Color& operator=(const Color& operand);
         friend std::ostream& operator<<(std::ostream& stream, const Color& color)
         {
-            stream << "[" << color.r << ", " << color.g << ", " << color.b << ", " << color.a << "]";
+            stream << "[" << (int)color.r << ", " << (int)color.g << ", " << (int)color.b << ", " << (int)color.a << "]";
             return stream;
         }
 

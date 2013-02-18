@@ -73,6 +73,7 @@ namespace Jatta
 
 #       ifdef WINDOWS
         _JATTA_EXPORT std::wstring _ToWideString() const;
+        _JATTA_EXPORT void _FromWideString(const std::wstring& wideString);
 #       endif
 
         // TODO: add in some more common string functions (maybe reference php's string, C#'s string or std::string?)

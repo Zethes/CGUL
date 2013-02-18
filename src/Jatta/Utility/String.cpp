@@ -521,10 +521,20 @@ _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
 {
     int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), -1, 0, 0);
     wchar_t* buffer = new wchar_t[size];
-    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), data.length(), buffer, size);
+    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), -1, buffer, size);
     buffer[size - 1] = 0;
     std::wstring wideString(buffer);
     delete[] buffer;
     return wideString;
+}
+
+_JATTA_EXPORT void Jatta::String::_FromWideString(const std::wstring& wideString)
+{
+    int size = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wideString.c_str(), -1, 0, 0, nullptr, nullptr);
+    char* buffer = new char[size];
+    WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wideString.c_str(), -1, buffer, size, nullptr, nullptr);
+    buffer[size - 1] = 0;
+    data = buffer;
+    delete[] buffer;
 }
 #endif
