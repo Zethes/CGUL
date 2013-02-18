@@ -178,16 +178,8 @@ void ff_decode_dxt3(const Jatta::UInt8 *s, Jatta::UInt8 *dst, const unsigned int
 }
 
 
-_JATTA_EXPORT bool Jatta::Image::IsDds(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsDds(const char* rawBytes, Jatta::UInt32 size)
 {
-    std::ifstream inFile(fileName.GetData().c_str(), std::ios::in | std::ios::binary);
-
-    int len = 4;
-
-    unsigned char* rawBytes = new unsigned char[len];
-    inFile.read((char*)rawBytes, len);
-    inFile.close();
-
     DdsHeader * header = (DdsHeader*) rawBytes;
 
     if (header->Magic != MAKEFOURCC( 'D', 'D', 'S', ' ' ))
@@ -196,18 +188,8 @@ _JATTA_EXPORT bool Jatta::Image::IsDds(const Jatta::String& fileName)
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadDds(const Jatta::String& fileName, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadDds(const char* rawBytes, Jatta::UInt32 len, UInt32 flags)
 {
-    std::ifstream inFile(fileName.GetData().c_str(), std::ios::in | std::ios::binary);
-
-    inFile.seekg(0, std::ios::end);
-    int len = inFile.tellg();
-    inFile.seekg(0, std::ios::beg);
-
-    unsigned char* rawBytes = new unsigned char[len];
-    inFile.read((char*)rawBytes, len);
-    inFile.close();
-
     DdsHeader * header = (DdsHeader*) rawBytes;
 
     if (header->Magic != MAKEFOURCC( 'D', 'D', 'S', ' ' ))

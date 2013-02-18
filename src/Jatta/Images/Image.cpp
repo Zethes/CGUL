@@ -6,6 +6,8 @@
 #include "Image.h"
 #include "Color.h"
 
+ #include "../File/File.h"
+
 _JATTA_EXPORT Jatta::Image::Image()
 {
     this->colors = nullptr;
@@ -92,18 +94,40 @@ _JATTA_EXPORT void Jatta::Image::Free()
 
 _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flags)
 {
+    unsigned int size;
+    File::GetFileSize(fileName.GetData(), &size);
+    Byte* buffer = new Byte[size];
+    File::GetData(fileName.GetData(), buffer, size);
+
 #   ifdef JATTA_USE_PNG
-    if (IsPng(fileName))
-        return LoadPng(fileName, flags);
+    if (IsPng((const char*)buffer, size))
+        return LoadPng((const char*)buffer, size, flags);
 #   else
     if (false) {}
 #   endif
 #   ifdef JATTA_USE_JPEG
-    else if (IsJpg(fileName))
-        return LoadJpg(fileName, flags);
+    else if (IsJpg((const char*)buffer, size))
+        return LoadJpg((const char*)buffer, size, flags);
 #   endif
-    else if (IsDds(fileName))
-        return LoadDds(fileName, flags);
+    else if (IsDds((const char*)buffer, size))
+        return LoadDds((const char*)buffer, size, flags);
     else
         return false;
+}
+_JATTA_EXPORT bool Jatta::Image::LoadFromMemory(const char* buffer, Jatta::UInt32 size, UInt32 flags)
+{
+    #   ifdef JATTA_USE_PNG
+        if (IsPng(buffer, size))
+            return LoadPng(buffer, size, flags);
+    #   else
+        if (false) {}
+    #   endif
+    #   ifdef JATTA_USE_JPEG
+        else if (IsJpg(buffer, size))
+            return LoadJpg(buffer, size, flags);
+    #   endif
+        else if (IsDds(buffer, size))
+            return LoadDds(buffer, size, flags);
+        else
+            return false;
 }

@@ -157,18 +157,17 @@ public:
 
 #endif // DOXYGEN
 
-_JATTA_EXPORT bool Jatta::Image::IsBmp(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsBmp(const char* buffer, Jatta::UInt32 size)
 {
-    unsigned int size = 2;
-    Byte* buffer = new Byte[size];
-    File::GetData(fileName.GetData(), buffer, size);
+    if (size < 2)
+        return false;
 
     if (buffer[0] == 0x42 && buffer[1] == 0x4D)
         return true;
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadBmp(const Jatta::String& fileName, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadBmp(const char* data, Jatta::UInt32 size, UInt32 flags)
 {
     //TODO: Loading BMPs
     return false;
