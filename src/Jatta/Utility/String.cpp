@@ -6,6 +6,7 @@
 #include "String.h"
 #include "Regex.h"
 #include "../Math/Math.h"
+#include <cstring>
 
 /** @brief Default constructor.  Initializes string to "".
  */
@@ -409,9 +410,9 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
 _JATTA_EXPORT void Jatta::String::Trim()
 {
     unsigned int trimStart = 0;
-    for (auto i = data.begin(); i != data.end() && std::isspace(*i); i++, trimStart++);
+    for (auto i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
     unsigned int trimEnd = 0;
-    for (auto i = data.rbegin(); i != data.rend() && std::isspace(*i); i++, trimEnd++);
+    for (auto i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
     data = data.substr(trimStart, data.length() - (trimStart + trimEnd));
 }
 
@@ -438,7 +439,7 @@ _JATTA_EXPORT void Jatta::String::Trim()
 _JATTA_EXPORT void Jatta::String::TrimStart()
 {
     unsigned int trimStart = 0;
-    for (auto i = data.begin(); i != data.end() && std::isspace(*i); i++, trimStart++);
+    for (auto i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
     data = data.substr(trimStart);
 }
 
@@ -465,7 +466,7 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
 _JATTA_EXPORT void Jatta::String::TrimEnd()
 {
     unsigned int trimEnd = 0;
-    for (auto i = data.rbegin(); i != data.rend() && std::isspace(*i); i++, trimEnd++);
+    for (auto i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
     data = data.substr(0, data.length() - trimEnd);
 }
 
@@ -513,7 +514,7 @@ _JATTA_EXPORT void Jatta::String::ToUpper()
  */
 _JATTA_EXPORT void Jatta::String::RemoveWhitespace()
 {
-    data.erase(std::remove_if(data.begin(), data.end(), (int(*)(int))std::isspace), data.end());
+    data.erase(std::remove_if(data.begin(), data.end(), (int(*)(int))isspace), data.end());
 }
 
 #ifdef WINDOWS

@@ -9,6 +9,7 @@
 #include "../File/File.h"
 #include <fstream>
 #include <cstring>
+#include <cstdint>
 
 #include "Color.h"
 

@@ -3,6 +3,9 @@
  * All rights reserved.
  */
 
+// TODO: add some alternatives to std::thread (pthread and winapi thread)
+#ifdef _CPP_HEADER_THREAD
+
 #include "Thread.h"
 
 static void runThread(Jatta::Thread*ptr)
@@ -32,3 +35,5 @@ _JATTA_EXPORT void Jatta::Thread::Detach()
 {
     thread->detach();
 }
+
+#endif

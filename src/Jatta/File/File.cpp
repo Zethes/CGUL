@@ -10,7 +10,10 @@
 #else
 #   include <unistd.h>
 #endif
-#include <dirent.h>
+
+// Visual Studio doesn't have this file
+// We'll remove it for now until someone musters up enough motivation to repla--ugh i dont want to type anymore
+//#include <dirent.h>
 
 _JATTA_EXPORT bool Jatta::File::GetText(const std::string& fileName, std::string* result)
 {
@@ -115,7 +118,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(std::string dir)
 {
     std::vector<Jatta::String> ret;
 
-    DIR *dp;
+    /*DIR *dp;
     struct dirent *ep;
 
     dp = opendir(dir.c_str());
@@ -130,7 +133,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(std::string dir)
                 ret.push_back(fileName);
         }
         closedir (dp);
-    }
+    }*/
 
     return ret;
 }
@@ -138,7 +141,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(std::string di
 {
     std::vector<Jatta::String> ret;
 
-    DIR *dp;
+    /*DIR *dp;
     struct dirent *ep;
 
     dp = opendir(dir.c_str());
@@ -153,7 +156,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(std::string di
                 ret.push_back(fileName);
         }
         closedir (dp);
-    }
+    }*/
 
     return ret;
 }
