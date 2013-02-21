@@ -48,10 +48,6 @@
 #define _JATTA_PADEVICE_INFO void*
 #define _JATTA_PAHOSTAPI_INFO void*
 
-#if defined(WINDOWS) && !defined(MSVC)
-#   define _WIN32_WINNT 0x0501
-#endif
-
 #if defined(JATTA_INCLUDES)
 #   define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   ifdef WINDOWS

@@ -530,9 +530,9 @@ _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
 
 _JATTA_EXPORT void Jatta::String::_FromWideString(const std::wstring& wideString)
 {
-    int size = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wideString.c_str(), -1, 0, 0, nullptr, nullptr);
+    int size = WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, wideString.c_str(), -1, 0, 0, nullptr, nullptr);
     char* buffer = new char[size];
-    WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wideString.c_str(), -1, buffer, size, nullptr, nullptr);
+    WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, wideString.c_str(), -1, buffer, size, nullptr, nullptr);
     buffer[size - 1] = 0;
     data = buffer;
     delete[] buffer;

@@ -142,10 +142,10 @@ namespace Jatta
 #       define UNICODE
 #       define _UNICODE
 #       ifdef JATTA_USE_NETWORK
-#           include <WinSock2.h>
-#           include <Ws2tcpip.h>
+#           include <winsock2.h>
+#           include <ws2tcpip.h>
 #       endif
-#       include <Windows.h>
+#       include <windows.h>
 #       ifdef JATTA_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
@@ -196,4 +196,8 @@ namespace Jatta
 #       define INVALID_SOCKET ~0
 #       define SOCKET_ERROR -1
 #   endif
+#endif
+
+#if defined(WINDOWS) && !defined(_WIN32_WINNT)
+#   define _WIN32_WINNT 0x0501
 #endif
