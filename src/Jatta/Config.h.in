@@ -6,6 +6,9 @@
 // !!! THIS FILE IS AUTO-GENERATED, DO NOT EDIT !!! //
 
 #pragma once
+
+// == JATTA MODULES == //
+
 #cmakedefine JATTA_USE_ASSIMP
 #cmakedefine JATTA_USE_AUDIO
 #cmakedefine JATTA_USE_FREETYPE
@@ -13,3 +16,5 @@
 #cmakedefine JATTA_USE_NETWORK
 #cmakedefine JATTA_USE_OPENGL
 #cmakedefine JATTA_USE_PNG
+
+@JATTA_CPP_CONFIG@
