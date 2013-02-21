@@ -5,8 +5,6 @@
 
 #include "Image.h"
 
-#include "../File/File.h"
-
 #include "Color.h"
 #include <png.h>
 #include <stdlib.h>
@@ -43,22 +41,13 @@ bool Jatta::Png::isValid(const std::string& fileName)
  *  @details This method checks the magic number inside the Png and nothing more.
  *  @todo Will this method crash if the file's size is less than PNGSIGSIZE?
  */
-_JATTA_EXPORT bool Jatta::Image::IsPng(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsPng(const char* data, Jatta::UInt32 size)
 {
-    unsigned int size = PNGSIGSIZE;
-    Byte* buffer = new Byte[size];
-    File::GetData(fileName.GetData(), buffer, size);
-
-    return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
+    return png_sig_cmp((png_bytep)data, 0, PNGSIGSIZE) == 0;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadPng(const Jatta::String& fileName, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size, UInt32 flags)
 {
-    unsigned int size;
-    File::GetFileSize(fileName.GetData(), &size);
-    Byte* buffer = new Byte[size];
-    File::GetData(fileName.GetData(), buffer, size);
-
     //if (!isValid(buffer, size))
     //{
         //return false;

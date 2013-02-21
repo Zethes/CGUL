@@ -29,6 +29,7 @@ namespace Jatta
             _JATTA_EXPORT Scene();
 
             _JATTA_EXPORT void Import(const String& fileName, Enum flags);
+            _JATTA_EXPORT void ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags);
 
             _JATTA_EXPORT Boolean HasAnimations() const;
             _JATTA_EXPORT Boolean HasCameras() const;

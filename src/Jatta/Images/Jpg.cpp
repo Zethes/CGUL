@@ -12,12 +12,12 @@
 #include <jpeglib.h>
 #include <stdlib.h>
 
-_JATTA_EXPORT bool Jatta::Image::IsJpg(const Jatta::String& fileName)
+_JATTA_EXPORT bool Jatta::Image::IsJpg(const char* data, Jatta::UInt32 size)
 {
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadJpg(const Jatta::String& fileName, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadJpg(const char* data, Jatta::UInt32 size, UInt32 flags)
 {
     //TODO: Loading JPGs
     return false;

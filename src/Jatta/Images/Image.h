@@ -30,30 +30,31 @@ namespace Jatta
         _JATTA_EXPORT Jatta::Image& operator=(Image&& move);
 
         _JATTA_EXPORT bool Load(const Jatta::String& fileName, UInt32 flags = 0);
+        _JATTA_EXPORT bool LoadFromMemory(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
 
-        _JATTA_EXPORT static bool IsBmp(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsBmp(const char* data, Jatta::UInt32 size);
 #       ifdef JATTA_USE_PNG
-        _JATTA_EXPORT static bool IsPng(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsPng(const char* data, Jatta::UInt32 size);
 #       endif
 #       ifdef JATTA_USE_JPEG
-        _JATTA_EXPORT static bool IsJpg(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsJpg(const char* data, Jatta::UInt32 size);
 #       endif
-        _JATTA_EXPORT static bool IsDds(const Jatta::String& fileName);
+        _JATTA_EXPORT static bool IsDds(const char* data, Jatta::UInt32 size);
 
 #       ifdef JATTA_USE_PNG
-        _JATTA_EXPORT bool LoadPng(const Jatta::String& fileName, UInt32 flags = 0);
+        _JATTA_EXPORT bool LoadPng(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
         _JATTA_EXPORT bool SavePng(const Jatta::String& fileName);
 #       endif
 
 #       ifdef JATTA_USE_JPEG
-        _JATTA_EXPORT bool LoadJpg(const Jatta::String& fileName, UInt32 flags = 0);
+        _JATTA_EXPORT bool LoadJpg(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
         _JATTA_EXPORT bool SaveJpg(const Jatta::String& fileName);
 #       endif
 
-        _JATTA_EXPORT bool LoadBmp(const Jatta::String& fileName, UInt32 flags = 0);
+        _JATTA_EXPORT bool LoadBmp(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
         _JATTA_EXPORT bool SaveBmp(const Jatta::String& fileName, int bpp = 24, int hRes = 2835, int vRes = 2835);
 
-        _JATTA_EXPORT bool LoadDds(const Jatta::String& fileName, UInt32 flags);
+        _JATTA_EXPORT bool LoadDds(const char* data, Jatta::UInt32 size, UInt32 flags);
         _JATTA_EXPORT bool SaveDds(const Jatta::String& fileName);
 
         _JATTA_EXPORT unsigned char* GetData();

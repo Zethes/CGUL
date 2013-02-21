@@ -25,6 +25,14 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 f
         throw std::runtime_error(aiGetErrorString());
     }
 }
+ _JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags)
+ {
+    scene = aiImportFileFromMemory(buffer, size, flags, "");
+    if (scene == nullptr)
+    {
+        throw std::runtime_error(aiGetErrorString());
+    }
+ }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasAnimations() const
 {
