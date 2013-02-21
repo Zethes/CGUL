@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-// TODO: add some alternatives to std::thread (pthread and winapi thread)
-#ifdef _CPP_HEADER_THREAD
-
 #include "Thread.h"
+
+// TODO: add some alternatives to std::thread (pthread and winapi thread)
+#ifdef _CPP_STD_THREAD
 
 static void runThread(Jatta::Thread*ptr)
 {

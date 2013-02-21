@@ -79,5 +79,6 @@ CHECK_TEST("enum_class.cpp" "Does C++ have enum class?" CPP_ENUM_CLASS)
 CHECK_TEST("nullptr.cpp" "Does C++ have nullptr?" CPP_NULLPTR)
 CHECK_TEST("static_assert.cpp" "Does C++ have static_assert?" CPP_STATIC_ASSERT)
 CHECK_TEST("std_move.cpp" "Does C++ have std::move?" CPP_STD_MOVE)
+CHECK_TEST("std_thread.cpp" "Does C++ have std::thread?" CPP_STD_THREAD)
 
 SET(JATTA_CPP_CONFIG ${JATTA_CPP_CONFIG} PARENT_SCOPE)

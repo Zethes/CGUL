@@ -3,11 +3,11 @@
  * All rights reserved.
  */
 
-#ifdef _CPP_HEADER_THREAD
-
 #pragma once
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
+
+#ifdef _CPP_STD_THREAD
 
 namespace Jatta
 {
@@ -28,6 +28,6 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
-
 #endif
+
+#include "../External/Undefines.h"
