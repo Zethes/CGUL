@@ -142,7 +142,7 @@ int main()
         OpenGL::Program program = LoadShader("Resources/screen.vert", "Resources/screen.frag");
 
         Image image;
-        image.LoadPng("Resources/sky.png");
+        image.Load("Resources/sky.png");
 
         OpenGL::Texture texture;
         texture.Create(OpenGL::GL::TEXTURE_2D);
