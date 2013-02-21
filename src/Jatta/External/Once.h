@@ -111,20 +111,42 @@ namespace Jatta
 
 // TODO: clean up the standard template library list
 // Standard Template Library Includes
+#ifdef _CPP_HEADER_ALGORITHM
 #include <algorithm>
-//#include <array>
+#endif
+#ifdef _CPP_HEADER_CCTYPE
 #include <cctype>
-//#include <forward_list>
+#endif
+#ifdef _CPP_HEADER_FSTREAM
 #include <fstream>
+#endif
+#ifdef _CPP_HEADER_LIST
 #include <list>
+#endif
+#ifdef _CPP_HEADER_MAP
 #include <map>
+#endif
+#ifdef _CPP_HEADER_MEMORY
 #include <memory>
+#endif
+#ifdef _CPP_HEADER_SSTREAM
 #include <sstream>
+#endif
+#ifdef _CPP_HEADER_STDEXCEPT
 #include <stdexcept>
+#endif
+#ifdef _CPP_HEADER_STRING
 #include <string>
+#endif
+#ifdef _CPP_HEADER_THREAD
 #include <thread>
+#endif
+#ifdef _CPP_HEADER_UTILITY
 #include <utility>
+#endif
+#ifdef _CPP_HEADER_VECTOR
 #include <vector>
+#endif
 
 // DLL Exports
 #ifdef MSVC
