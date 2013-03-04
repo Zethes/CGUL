@@ -7,7 +7,11 @@
 #ifdef JATTA_INCLUDES
 
 #pragma once
-#include "../../Graphics/MacOS/OpenGLView.h"
+#include <Jatta/Config.h>
+#include "../../Windows/WindowStyle.h"
+#include "../../Utility/String.h"
+#include "../../Math/Float2.h"
+#include "../../OpenGL/MacOS/OpenGLView.h"
 #include "../../External/Defines.h"
 
 // Define the cocoa application delegate
@@ -28,6 +32,31 @@
 - (NSWindow*)Window;
 - (int)IsOpen;
 - (void)SetContent: (OpenGLView*)content;
+
+- (void) close;
+
+//- (void) updateInput;
+
+- (void) setTitle:(const Jatta::String&)title;
+- (Jatta::String) getTitle;
+
+- (void) setBackgroundColor: (const Jatta::Color&)color;
+- (Jatta::Color) getBackgroundColor;
+
+- (void) setWidth: (UInt32)width;
+- (Jatta::UInt32) getWidth;
+- (void) setHeight: (UInt32)width;
+- (Jatta::UInt32) getHeight;
+- (void) setSize: (const Jatta::Float2&)size; // TODO: use something other than Float2
+- (Jatta::Float2) getSize;
+
+- (void) setResizable: (Jatta::Boolean)resizable;
+- (Jatta::Boolean) getResizable;
+/*
+- (Jatta::Float4) getFrameSize;
+
+- (Jatta::Boolean) isOpen2;
+- (Jatta::Boolean) isFocused;*/
 
 @end
 

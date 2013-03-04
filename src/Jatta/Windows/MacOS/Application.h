@@ -7,6 +7,7 @@
 #ifdef JATTA_INCLUDES
 
 #pragma once
+#include <Jatta/Config.h>
 #include "../../External/Defines.h"
 
 @interface Application : NSApplication

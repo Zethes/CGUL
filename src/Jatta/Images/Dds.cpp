@@ -9,7 +9,11 @@
 #include "../File/File.h"
 #include <fstream>
 #include <cstring>
+#if defined(_CPP_HEADER_CSTDINT)
 #include <cstdint>
+#elif defined(_CPP_HEADER_STDINT_H)
+#include <stdint.h>
+#endif
 
 #include "Color.h"
 

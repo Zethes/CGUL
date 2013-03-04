@@ -49,7 +49,11 @@
 #define _JATTA_PAHOSTAPI_INFO void*
 
 #if defined(JATTA_INCLUDES)
-#   define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
+#   ifdef _CPP_STATIC_ASSERT
+#       define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
+#   else
+#       define CHECK(x, y)
+#   endif
 #   ifdef WINDOWS
         CHECK(::HWND, _JATTA_HWND);
         CHECK(::DWORD, _JATTA_DWORD);

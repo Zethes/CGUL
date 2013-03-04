@@ -175,14 +175,15 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
     }
 #   endif
 
-#   ifdef MacOS
-    window = nil;
+#   ifdef MACOS
+    handle = [WindowDelegate alloc];
 #   endif
 }
 
 _JATTA_EXPORT Jatta::Window::~Window()
 {
-    Close();
+    //Close();
+    [handle release];
 }
 
 #ifdef WINDOWS
@@ -300,7 +301,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     // Create the Cocoa application
     [[Application sharedApplication] run];
 
-    handle = [[WindowDelegate alloc] init: style];
+    handle = [handle init: style];
 
     // Create our delegate as defined earlier in this file!
     //AppDelegate* appDelegate = [[[AppDelegate alloc] init] autorelease];
@@ -344,6 +345,12 @@ _JATTA_EXPORT void Jatta::Window::Close()
     display = nullptr;
 #   endif
 
+#   ifdef MACOS
+    if (IsOpen())
+    {
+        [handle close];
+    }
+#   endif
     // TODO: Window::Close on MacOS
 }
 
@@ -353,6 +360,11 @@ _JATTA_EXPORT void Jatta::Window::Close()
  */
 _JATTA_EXPORT void Jatta::Window::UpdateInput()
 {
+    if (!IsOpen())
+    {
+        return;
+    }
+
 #   ifdef LINUX
     ::Window root, child;
     int rootX, rootY, winX, winY;
@@ -376,6 +388,11 @@ _JATTA_EXPORT void Jatta::Window::UpdateInput()
  */
 _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
 {
+    if (!IsOpen())
+    {
+        return;
+    }
+
     SetTitle(style.title);
     SetBackgroundColor(style.backgroundColor);
     SetWidth(style.width);
@@ -399,6 +416,11 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
 
 _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 {
+    if (!IsOpen())
+    {
+        return;
+    }
+
 #   ifdef WINDOWS
     SetWindowText(handle, title._ToWideString().c_str());
 #   endif
@@ -408,15 +430,17 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 #   endif
 
 #   ifdef MACOS
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSString* str = [NSString stringWithCString:title.GetData().c_str() encoding:NSUTF8StringEncoding];
-    [[handle Window] setTitle:str];
-    [pool drain];
+    [handle setTitle: title];
 #   endif
 }
 
 _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
 {
+    if (!IsOpen())
+    {
+        return "";
+    }
+
 #   ifdef WINDOWS
     int size = GetWindowTextLength(this->handle) + 1;
     wchar_t* buffer = new wchar_t[size];
@@ -447,17 +471,34 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
     return "";
 #   endif
 
-    // TODO: Jatta::Window::GetTitle for MacOS and Linux
+#   ifdef MACOS
+    return [handle getTitle];
+#   endif
+
     return "";
 }
 
 _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
 {
+    if (!IsOpen())
+    {
+        return;
+    }
+
     // TODO: Jatta::Window::SetBackgroundColor
+
+#   ifdef MACOS
+    [handle setBackgroundColor: color];
+#   endif
 }
 
 _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 {
+    if (!IsOpen())
+    {
+        return Jatta::Color(0, 0, 0, 0);
+    }
+
 #   ifdef WINDOWS
     HGDIOBJ brush = (HGDIOBJ)GetClassLongPtr(handle, GCLP_HBRBACKGROUND);
     LOGBRUSH lb;
@@ -465,6 +506,9 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
     return Color((lb.lbColor & 255), ((lb.lbColor >> 8) & 255), ((lb.lbColor >> 16) & 255), 255);
 #   endif
 
+#   ifdef MACOS
+    return [handle getBackgroundColor];
+#   endif
     // TODO: Jatta::Window::GetBackgroundColor
     return Color(0, 0, 0);
 }
@@ -476,6 +520,11 @@ _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 {
+    if (!IsOpen())
+    {
+        return 0;
+    }
+
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
@@ -491,8 +540,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 #   endif
 
 #   ifdef MACOS
-    // possible alternative: [handle frame] and contentRectForFrameRect
-    return [[[handle Window] contentView] frame].size.width;
+    return [handle getWidth];
 #   endif
 }
 
@@ -503,6 +551,11 @@ _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 width)
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 {
+    if (!IsOpen())
+    {
+        return 0;
+    }
+
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
@@ -518,7 +571,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 #   endif
 
 #   ifdef MACOS
-    return [[[handle Window] contentView] frame].size.height;
+    return [handle getHeight];
 #   endif
 }
 
@@ -529,6 +582,11 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Float2& size) const
 
 _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 {
+    if (!IsOpen())
+    {
+        return Jatta::Float2(0, 0);
+    }
+
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
@@ -550,6 +608,11 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
 
 _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 {
+    if (!IsOpen())
+    {
+        return;
+    }
+
 #   ifdef WINDOWS
     // Capture the current size of the window
     RECT windowRect = {0, 0, GetWidth(), GetHeight()};
@@ -591,20 +654,34 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
     XSetWMNormalHints(display, handle, &hints);
 #   endif
 
-    // TODO: Jatta::Window::SetResizable for MacOS
+#   ifdef MACOS
+    [handle setResizable: resizable];
+#   endif
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 {
+    if (!IsOpen())
+    {
+        return false;
+    }
+
 #   ifdef WINDOWS
     return ((GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME) || (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX));
 #   endif
 
-    // TODO: Jatta::Window::GetResizable for Linux and MacOS
+#   ifdef MACOS
+    return [handle getResizable];
+#   endif
     return false;
 }
 _JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
 {
+    if (!IsOpen())
+    {
+        return Jatta::Float4(0, 0, 0, 0);
+    }
+
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
@@ -639,6 +716,11 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 {
+    if (!IsOpen())
+    {
+        return false;
+    }
+
 #   ifdef WINDOWS
     return (handle == GetForegroundWindow());
 #   endif
