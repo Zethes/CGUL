@@ -16,7 +16,7 @@ namespace Jatta
     /** @brief A namespace containing many common mathematical functions.
      *  @details Some mathematical concepts were ruthlessly stolen from MathGeoLib.  Be sure to
      *  check it out as an awesome standalone math library!
-     *  http://clb.demon.fi/MathGeoLib/reference.html
+     *  http://clb.demon.fi/MathGeoLib/nightly/reference.html
      */
     namespace Math
     {
