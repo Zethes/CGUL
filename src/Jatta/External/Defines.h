@@ -120,10 +120,6 @@
 #   endif
 #endif
 
-#if defined(JATTA_BUILD) && defined(MACOS) && defined(__OBJC__)
-#   define _JATTA_OBJC
-#endif
-
 #ifndef NULL
 #   define NULL 0
 #endif

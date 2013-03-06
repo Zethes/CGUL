@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "OpenGL.h"
- #if defined(JATTA_BUILDS) && defined(MACOS)
+ #if JATTA_BUILD
 #   import "MacOS/OpenGLView.h"
 #endif
 #include "../Windows/Window.h"
@@ -32,7 +32,7 @@ namespace Jatta
             _JATTA_GLXCONTEXT context;
 #           endif
 
-#           if defined(MACOS) && defined(__OBJC__)
+#           if JATTA_BUILD
             OpenGLView* view;
 #           elif defined(MACOS)
             void* view;
