@@ -9,7 +9,7 @@ Features
 
 * <b>Entirely cross-platform (Windows, MacOS and experimental support for Linux)</b>
 * - <i>Windows is mostly supported through MinGW</i>
-* - <i>Only top-of-the-line Clang compilers work on MacOS</i>
+* - <i><del>Only top-of-the-line Clang compilers work on MacOS</del> - works with GCC 4.2.1 (and probably older) now</i>
 * - <i>C++11 features are being "phased out" (read: "used when available") to support older compilers</i>
 * <b>Powerful Assimp library wrapper to load in 3D models and scenes</b>
 * - <i>Work in progress</i>
