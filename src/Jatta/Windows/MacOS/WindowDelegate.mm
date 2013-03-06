@@ -27,7 +27,8 @@
 
             // Adjust the window's sized based on the style mask
             //NSRect rect = [NSWindow contentRectForFrameRect: frame styleMask: styleMask];
-            NSRect rect = [NSWindow frameRectForContentRect: frame styleMask: styleMask];
+            //NSRect rect = [NSWindow frameRectForContentRect: frame styleMask: styleMask];
+            NSRect rect = frame;
 
             // Create the window based on the above specifications
             window = [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
@@ -167,7 +168,8 @@
 
     - (Jatta::UInt32) getWidth
     {
-        NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        NSRect rect = [[window contentView] frame];
         return rect.size.width;
     }
 
@@ -178,7 +180,8 @@
 
     - (Jatta::UInt32) getHeight
     {
-        NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        NSRect rect = [[window contentView] frame];
         return rect.size.height;
     }
 
@@ -188,7 +191,8 @@
 
     - (Jatta::Float2) getSize
     {
-        NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
+        NSRect rect = [[window contentView] frame];
         return Jatta::Float2(rect.size.width, rect.size.height);
     }
 
