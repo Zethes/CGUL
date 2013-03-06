@@ -16,7 +16,7 @@ template<typename T> Jatta::List<T>::List(const List& other)
 {
     data = std::list<T>(other);
 }
-#ifdef _CPP_DOUBLE_REFERENCE
+#ifdef _CPP_MOVE_CONSTRUCTOR
 template<typename T> Jatta::List<T>::List(List&& other)
 {
     data = std::list<T>(other);
