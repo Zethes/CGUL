@@ -14,3 +14,8 @@ INCLUDE(src/Scripts/TopLevelCache.cmake)
 IF(JATTA_BUILD_EXAMPLES)
     ADD_SUBDIRECTORY(examples)
 ENDIF()
+
+#Compile tests with 'make check'
+ADD_CUSTOM_TARGET(check COMMAND ctest)
+ENABLE_TESTING()
+ADD_SUBDIRECTORY(unit_tests)
