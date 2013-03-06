@@ -24,10 +24,12 @@
     OpenGLView* view;
 
     // The window's default content
-    id content;
+    id defaultContent;
 
     int windowOpen;
 }
+
+- (id)init: (Jatta::WindowStyle)style;
 
 - (NSWindow*)Window;
 - (int)IsOpen;

@@ -24,27 +24,43 @@ namespace Jatta
         List(Jatta::Size count);
         List(Jatta::Size count, const T& value);
         List(const List& other);
+#       ifdef _CPP_MOVE_CONSTRUCTOR
         List(List&& other);
+#       endif
         ~List();
 
         List<T>& operator=(const List& other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         List<T>& operator=(List&& other);
+#       endif
         bool operator==(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator==(List&& other);
+#       endif
         bool operator!=(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator!=(List&& other);
+#       endif
         bool operator<=(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator<=(List&& other);
+#       endif
         bool operator<(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator<(List&& other);
+#       endif
         bool operator>=(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator>=(List&& other);
+#       endif
         bool operator>(const List&other);
+#       ifdef _CPP_DOUBLE_REFERENCE
         bool operator>(List&& other);
+#       endif
         friend std::ostream& operator<<(std::ostream& stream, const List<T>& list)
         {
             bool first = true;
-            for (Jatta::List<T>::ConstIterator i = list.Begin(); i != list.End(); i++)
+            for (typename Jatta::List<T>::ConstIterator i = list.Begin(); i != list.End(); i++)
             {
                 if (!first) stream << ",";
                 first = false;
@@ -67,9 +83,13 @@ namespace Jatta
         T& Back();
         T& Front();
         void Add(const T& value);
+#       ifdef _CPP_DOUBLE_REFERENCE
         void Add(T&& value);
+#       endif
         void AddToFront(const T& value);
+#       ifdef _CPP_DOUBLE_REFERENCE
         void AddToFront(T&& value);
+#       endif
         void Assign(Jatta::Size count, const T& value);
         void Assign(Iterator first, Iterator last, const T& value);
         Iterator Begin();
@@ -78,9 +98,13 @@ namespace Jatta
         Iterator End();
         ConstIterator End() const;
         void Insert(Jatta::Size pos, const List<T>& values, Jatta::Size first, Jatta::Size last);
+#       ifdef _CPP_DOUBLE_REFERENCE
         void Insert(Jatta::Size pos, const List<T>&& values, Jatta::Size first, Jatta::Size last);
+#       endif
         void Insert(Jatta::Size pos, const T& value);
+#       ifdef _CPP_DOUBLE_REFERENCE
         void Insert(Jatta::Size pos, const T&& value);
+#       endif
         void Pop();
         void PopFront();
         void Remove(Iterator pos);

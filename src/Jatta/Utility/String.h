@@ -21,7 +21,9 @@ namespace Jatta
 
         _JATTA_EXPORT String();
         _JATTA_EXPORT String(const String& copy);
+#       ifdef _CPP_DOUBLE_REFERENCE
         _JATTA_EXPORT String(String&& move);
+#       endif
         _JATTA_EXPORT String(const char* data);
         _JATTA_EXPORT String(const std::string& data);
 
@@ -29,9 +31,13 @@ namespace Jatta
         _JATTA_EXPORT bool operator==(const String& operand) const;
         _JATTA_EXPORT bool operator!=(const String& operand) const;
         template <typename T> String operator+(const T& operand) const;
+#       ifdef _CPP_DOUBLE_REFERENCE
         template <typename T> String operator+(const T&& operand) const;
+#       endif
         template <typename T> String& operator+=(const T& operand);
+#       ifdef _CPP_DOUBLE_REFERENCE
         template <typename T> String& operator+=(const T&& operand);
+#       endif
         _JATTA_EXPORT bool operator<(const String& operand) const;
         friend std::ostream& operator<<(std::ostream& stream, const String& string)
         {
@@ -92,6 +98,7 @@ template <typename T> Jatta::String Jatta::String::operator+(const T& operand) c
     return data + ss.str();
 }
 
+#ifdef _CPP_DOUBLE_REFERENCE
 /** @brief Overloaded + operator.  Concatenates this string with a value.
  *  @param operand The value to concatenate.
  *  @returns The new string.
@@ -103,6 +110,7 @@ template <typename T> Jatta::String Jatta::String::operator+(const T&& operand) 
     ss << operand;
     return data + ss.str();
 }
+#endif
 
 /** @brief Overloaded += operator.  Concatenates a value onto this string.
  *  @param operand The value to concatenate.
@@ -117,6 +125,7 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T& operand)
     return *this;
 }
 
+#ifdef _CPP_DOUBLE_REFERENCE
 /** @brief Overloaded += operator.  Concatenates a value onto this string.
  *  @param operand The value to concatenate.
  *  @returns A reference to this object.
@@ -129,6 +138,7 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T&& operand
     data += ss.str();
     return *this;
 }
+#endif
 
 /** @brief Checks if the string can be converted to the given data type.
  *  @returns True if the string can be converted, false otherwise.

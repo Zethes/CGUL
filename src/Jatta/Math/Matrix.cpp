@@ -214,6 +214,7 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(const Matrix& copy)
     this->m[3][3] = copy.m[3][3];
 }
 
+#ifdef _CPP_MOVE_CONSTRUCTOR
 _JATTA_EXPORT Jatta::Matrix::Matrix(Matrix&& move)
 {
     this->m[0][0] = move.m[0][0];
@@ -233,6 +234,7 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(Matrix&& move)
     this->m[3][2] = move.m[3][2];
     this->m[3][3] = move.m[3][3];
 }
+#endif
 
 _JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m21, float m22)
 {

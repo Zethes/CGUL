@@ -21,12 +21,14 @@ _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 {
 }
 
+#ifdef _CPP_MOVE_CONSTRUCTOR
 /** @brief Move constructor.
  *  @param move The string to move.
  */
 _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 {
 }
+#endif
 
 /** @brief Parameterized constructor.  Initializes string to the character pointer passed in.
  *  @param data A character pointer to a null-terminated string.
@@ -265,11 +267,11 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
 _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const String& string, Size offset) const
 {
     Jatta::Size result = offset;
-    for (auto i = data.begin() + offset; i != data.end(); i++)
+    for (std::string::const_iterator i = data.begin() + offset; i != data.end(); i++)
     {
-        auto k = i;
+        std::string::const_iterator k = i;
         bool found = true;
-        for (auto j = string.data.begin(); j != string.data.end() && k != data.end(); j++, k++)
+        for (std::string::const_iterator j = string.data.begin(); j != string.data.end() && k != data.end(); j++, k++)
         {
             if (*k != *j)
             {
@@ -300,11 +302,11 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Si
 _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const String& string, Size offset) const
 {
     Jatta::Size result = offset;
-    for (auto i = data.rbegin() + offset; i != data.rend(); i++)
+    for (std::string::const_reverse_iterator i = data.rbegin() + offset; i != data.rend(); i++)
     {
-        auto k = i;
+        std::string::const_reverse_iterator k = i;
         bool found = true;
-        for (auto j = string.data.rbegin(); j != string.data.rend() && k != data.rend(); j++, k++)
+        for (std::string::const_reverse_iterator j = string.data.rbegin(); j != string.data.rend() && k != data.rend(); j++, k++)
         {
             if (*k != *j)
             {
@@ -367,7 +369,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
         Size offset = 0;
         for (Size i = 0; i < start; i++)
         {
-            offset += GetCodePoint(offset, nullptr);
+            offset += GetCodePoint(offset, NULL);
         }
         Size size = 0;
         if (count == none)
@@ -379,7 +381,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
             //count = Math::Min(count, data.length() - offset);
             for (; offset < data.length() && count > 0; count--)
             {
-                Size codePointSize = GetCodePoint(offset,  nullptr);
+                Size codePointSize = GetCodePoint(offset,  NULL);
                 size += codePointSize;
             }
         }
@@ -410,9 +412,9 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
 _JATTA_EXPORT void Jatta::String::Trim()
 {
     unsigned int trimStart = 0;
-    for (auto i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
+    for (std::string::iterator i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
     unsigned int trimEnd = 0;
-    for (auto i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
+    for (std::string::reverse_iterator i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
     data = data.substr(trimStart, data.length() - (trimStart + trimEnd));
 }
 
@@ -439,7 +441,7 @@ _JATTA_EXPORT void Jatta::String::Trim()
 _JATTA_EXPORT void Jatta::String::TrimStart()
 {
     unsigned int trimStart = 0;
-    for (auto i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
+    for (std::string::iterator i = data.begin(); i != data.end() && isspace(*i); i++, trimStart++);
     data = data.substr(trimStart);
 }
 
@@ -466,7 +468,7 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
 _JATTA_EXPORT void Jatta::String::TrimEnd()
 {
     unsigned int trimEnd = 0;
-    for (auto i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
+    for (std::string::reverse_iterator i = data.rbegin(); i != data.rend() && isspace(*i); i++, trimEnd++);
     data = data.substr(0, data.length() - trimEnd);
 }
 
@@ -493,7 +495,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& de
  */
 _JATTA_EXPORT void Jatta::String::ToLower()
 {
-    for (auto it = data.begin(); it != data.end(); it++)
+    for (std::string::iterator it = data.begin(); it != data.end(); it++)
     {
         *it = tolower(*it);
     }
@@ -503,7 +505,7 @@ _JATTA_EXPORT void Jatta::String::ToLower()
  */
 _JATTA_EXPORT void Jatta::String::ToUpper()
 {
-    for (auto it = data.begin(); it != data.end(); it++)
+    for (std::string::iterator it = data.begin(); it != data.end(); it++)
     {
         *it = toupper(*it);
     }

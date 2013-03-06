@@ -70,6 +70,10 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetMiliseconds()
     gettimeofday(&t, NULL);
     return ((t.tv_sec) * 1000 + t.tv_usec / 1000.0) + 0.5f;
 #   endif
+
+#   ifdef MACOS
+    return 0; // probably the same as linux
+#   endif
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedSeconds()

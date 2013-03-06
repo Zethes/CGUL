@@ -9,7 +9,7 @@
 #include "WindowStyle.h"
 #include "../Math/Float2.h"
 #include "../Math/Float4.h"
-#ifdef JATTA_BUILD
+#ifdef _JATTA_OBJC
 #   include "MacOS/WindowDelegate.h"
 #endif
 #include "../External/Defines.h"
@@ -34,7 +34,7 @@ namespace Jatta
         static Boolean initialized;
 #       endif
 
-#       if defined(MACOS) && defined(__OBJC__)
+#       ifdef _JATTA_OBJC
         WindowDelegate* handle;
 #       elif defined(MACOS)
         void* handle;
@@ -43,7 +43,9 @@ namespace Jatta
         Input input;
 
         _JATTA_EXPORT Window(const Window& copy);
+#       ifdef _CPP_MOVE_CONSTRUCTOR
         _JATTA_EXPORT Window(Window&& move);
+#       endif
     public:
         _JATTA_EXPORT static void Update();
 

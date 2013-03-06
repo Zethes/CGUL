@@ -16,6 +16,7 @@
 }
 
 - (void)run;
+- (bool)update;
 - (void)terminate: (id)sender;
 
 @end

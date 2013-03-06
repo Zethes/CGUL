@@ -198,7 +198,7 @@ _JATTA_EXPORT Jatta::String Jatta::Locale::GetWord(String id)
 }
 _JATTA_EXPORT Jatta::String Jatta::Locale::Translation(String word)
 {
-    for (auto i = words.begin(); i != words.end(); i++)
+    for (std::map<String,String>::iterator i = words.begin(); i != words.end(); i++)
     {
         if (i->second == word)
             return i->first;

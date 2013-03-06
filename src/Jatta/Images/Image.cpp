@@ -10,7 +10,7 @@
 
 _JATTA_EXPORT Jatta::Image::Image()
 {
-    this->colors = nullptr;
+    this->colors = NULL;
     this->width = 0;
     this->height = 0;
 }
@@ -30,6 +30,7 @@ _JATTA_EXPORT Jatta::Image::Image(const Image& copy)
     memcpy(this->colors, copy.colors, this->width * this->height * 4);
 }
 
+#ifdef _CPP_MOVE_CONSTRUCTOR
 _JATTA_EXPORT Jatta::Image::Image(Image&& move)
 {
     this->width = move.width;
@@ -39,6 +40,7 @@ _JATTA_EXPORT Jatta::Image::Image(Image&& move)
     move.height = 0;
     move.colors = nullptr;
 }
+#endif
 
 _JATTA_EXPORT Jatta::Image::~Image()
 {
@@ -54,6 +56,7 @@ _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
     return *this;
 }
 
+#ifdef _CPP_DOUBLE_REFERENCE
 _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
 {
     this->width = move.width;
@@ -64,6 +67,7 @@ _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
     move.colors = nullptr;
     return *this;
 }
+#endif
 
 _JATTA_EXPORT unsigned char* Jatta::Image::GetData()
 {

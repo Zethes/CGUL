@@ -28,7 +28,7 @@ static OpenGLView* current = nil;
 
     - (id)init
     {
-        if (self = [super init])
+        if ((self = [super init]))
         {
             if (current == nil)
             {
@@ -42,7 +42,7 @@ static OpenGLView* current = nil;
     {
         static double lastTime = CFAbsoluteTimeGetCurrent();
         double time = CFAbsoluteTimeGetCurrent();
-        float dt = float(time - lastTime);
+        //float dt = float(time - lastTime);
         lastTime = time;
         /*glClearColor(0, 255, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

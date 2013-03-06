@@ -49,3 +49,7 @@
 #   undef _JATTA_PADEVICE_INFO
 #   undef _JATTA_PAHOSTAPI_INFO
 #endif
+
+#ifdef _JATTA_OBJC
+#   undef _JATTA_OBJC
+#endif

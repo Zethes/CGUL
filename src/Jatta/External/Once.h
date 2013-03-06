@@ -46,7 +46,11 @@ namespace std
 
 // TODO: fix static assert on clang builds
 // Jatta Type Defines
-#define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.");
+#ifdef _CPP_STATIC_ASSERT
+#   define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.")
+#else
+#   define TYPE(oldType, newType, size) typedef oldType newType
+#endif
 /** @brief General utility library.
  */
 namespace Jatta

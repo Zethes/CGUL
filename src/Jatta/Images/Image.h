@@ -23,11 +23,15 @@ namespace Jatta
         _JATTA_EXPORT Image();
         _JATTA_EXPORT Image(Color* colors, unsigned int width, unsigned int height);
         _JATTA_EXPORT Image(const Image& copy);
+#       ifdef _CPP_MOVE_CONSTRUCTOR
         _JATTA_EXPORT Image(Image&& move);
+#       endif
         _JATTA_EXPORT ~Image();
 
         _JATTA_EXPORT Jatta::Image& operator=(const Image& copy);
+#       ifdef _CPP_DOUBLE_REFERENCE
         _JATTA_EXPORT Jatta::Image& operator=(Image&& move);
+#       endif
 
         _JATTA_EXPORT bool Load(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool LoadFromMemory(const char* data, Jatta::UInt32 size, UInt32 flags = 0);

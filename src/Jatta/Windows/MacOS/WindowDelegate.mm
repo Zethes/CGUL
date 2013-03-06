@@ -15,7 +15,7 @@
     - (id)init: (Jatta::WindowStyle)style
     {
         // Initialize the base application and make sure it's not nil
-        if (self = [super init])
+        if ((self = [super init]))
         {
             windowOpen = 1;
 
@@ -47,7 +47,7 @@
             //view = [[OpenGLView alloc] init];
 
             // Get the default content of the window
-            //id content = [window contentView];
+            // defaultContent = [window contentView];
 
             // Set the content of the window to the OpenGL view we created
             //[window setContentView: view];

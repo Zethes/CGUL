@@ -87,10 +87,12 @@ _JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
     /* deleted */
 }
 
+#ifdef _CPP_MOVE_CONSTRUCTOR
 _JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
 {
     /* deleted */
 }
+#endif
 
 /** @brief Updates all windows in the current application.
  *  @details The operating system usually handles windows under the same application in bulk.  For
@@ -689,7 +691,10 @@ _JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
     return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
+#   if defined(LINUX) || defined(MACOS)
     //TODO: Linux & Mac
+    return Jatta::Float4(0, 0, 0, 0);
+#   endif
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const
@@ -743,5 +748,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
     return activeWindow == handle;
 #   endif
 
-    // TODO: macos
+#   ifdef MACOS
+    return true; // TODO: macos
+#   endif
 }

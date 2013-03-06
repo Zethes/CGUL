@@ -310,6 +310,10 @@ _JATTA_EXPORT unsigned char Jatta::Input::GetKeyFromLayout(unsigned char key)
 #   ifdef LINUX
     return keyLayout[key];
 #   endif
+
+#   ifdef MACOS
+    return 0;
+#   endif
 }
 
 _JATTA_EXPORT Jatta::InputState Jatta::Input::GetKeyState(unsigned char key)

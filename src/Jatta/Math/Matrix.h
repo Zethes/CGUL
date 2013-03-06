@@ -41,7 +41,9 @@ namespace Jatta
 
         _JATTA_EXPORT Matrix();
         _JATTA_EXPORT Matrix(const Matrix& copy);
+#       ifdef _CPP_MOVE_CONSTRUCTOR
         _JATTA_EXPORT Matrix(Matrix&& move);
+#       endif
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m21, Float32 m22);
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m13, Float32 m21, Float32 m22, Float32 m23, Float32 m31, Float32 m32, Float32 m33);
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m13, Float32 m14, Float32 m21, Float32 m22, Float32 m23, Float32 m24, Float32 m31, Float32 m32, Float32 m33, Float32 m34, Float32 m41, Float32 m42, Float32 m43, Float32 m44);

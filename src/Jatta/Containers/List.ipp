@@ -16,10 +16,12 @@ template<typename T> Jatta::List<T>::List(const List& other)
 {
     data = std::list<T>(other);
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> Jatta::List<T>::List(List&& other)
 {
     data = std::list<T>(other);
 }
+#endif
 template<typename T> Jatta::List<T>::~List()
 {
 }
@@ -29,65 +31,73 @@ template<typename T> Jatta::List<T>& Jatta::List<T>::operator=(const List& other
     data = other;
     return this;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> Jatta::List<T>& Jatta::List<T>::operator=(List&& other)
 {
     data = other;
     return this;
 }
+#endif
 template<typename T> bool Jatta::List<T>::operator==(const List& other)
 {
     return data == other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator==(List&& other)
 {
     return data == other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::operator!=(const List& other)
 {
     return data != other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator!=(List&& other)
 {
     return data != other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::operator<=(const List& other)
 {
     return data <= other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator<=(List&& other)
 {
     return data <= other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::operator>=(const List& other)
 {
     return data >= other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator>=(List&& other)
 {
     return data >= other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::operator<(const List& other)
 {
     return data < other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator<(List&& other)
 {
     return data < other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::operator>(const List& other)
 {
     return data > other;
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> bool Jatta::List<T>::operator>(List&& other)
 {
     return data > other;
 }
-
+#endif
 template<typename T> bool Jatta::List<T>::Empty() const
 {
     return data.empty();
@@ -171,18 +181,22 @@ template<typename T> void Jatta::List<T>::Add(const T& value)
 {
     data.push_back(value);
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> void Jatta::List<T>::Add(T&& value)
 {
     data.push_back(value);
 }
+#endif
 template<typename T> void Jatta::List<T>::AddToFront(const T& value)
 {
     data.push_front(value);
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> void Jatta::List<T>::AddToFront(T&& value)
 {
     data.push_front(value);
 }
+#endif
 template<typename T> void Jatta::List<T>::Assign(Jatta::Size count, const T& value)
 {
     data.assign(count, value);
@@ -215,18 +229,22 @@ template<typename T> void Jatta::List<T>::Insert(Jatta::Size pos, const List<T>&
 {
     //Todo: Insert
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> void Jatta::List<T>::Insert(Jatta::Size pos, const List<T>&& values, Jatta::Size first, Jatta::Size last)
 {
     //Todo: Insert
 }
+#endif
 template<typename T> void Jatta::List<T>::Insert(Jatta::Size pos, const T& value)
 {
     data.insert(pos, value);
 }
+#ifdef _CPP_DOUBLE_REFERENCE
 template<typename T> void Jatta::List<T>::Insert(Jatta::Size pos, const T&& value)
 {
     data.insert(pos, value);
 }
+#endif
 template<typename T> void Jatta::List<T>::Pop()
 {
     data.pop_back();

@@ -112,12 +112,20 @@
 #       define _JATTA_AIFACE ::aiFace*
 #   endif
 #   ifdef JATTA_USE_AUDIO
-#        define _JATTA_PASTREAM ::PaStream*
-#        define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
-#        define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
-#        define _JATTA_PADEVICE_INFO ::PaDeviceInfo*
-#        define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
+#       define _JATTA_PASTREAM ::PaStream*
+#       define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
+#       define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
+#       define _JATTA_PADEVICE_INFO ::PaDeviceInfo*
+#       define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
 #   endif
+#endif
+
+#if defined(JATTA_BUILD) && defined(MACOS) && defined(__OBJC__)
+#   define _JATTA_OBJC
+#endif
+
+#ifndef NULL
+#   define NULL 0
 #endif
 
 #endif

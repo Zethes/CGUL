@@ -130,7 +130,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     [window->_GetHandle() SetContent: view];
 #   endif
 
-    if (currentContext == nullptr)
+    if (currentContext == NULL)
     {
         MakeCurrent();
 
