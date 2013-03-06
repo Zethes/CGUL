@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#ifdef __OBJC__
 #ifdef JATTA_INCLUDES
 
 #pragma once
@@ -64,5 +63,4 @@
 
 #include "../../External/Undefines.h"
 
-#endif
 #endif
