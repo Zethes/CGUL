@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "OpenGL.h"
- #if JATTA_BUILD
+#if defined(JATTA_BUILD) && defined(MACOS)
 #   import "MacOS/OpenGLView.h"
 #endif
 #include "../Windows/Window.h"
@@ -32,7 +32,7 @@ namespace Jatta
             _JATTA_GLXCONTEXT context;
 #           endif
 
-#           if JATTA_BUILD
+#           if defined(JATTA_BUILD) && defined(MACOS)
             OpenGLView* view;
 #           elif defined(MACOS)
             void* view;
@@ -44,6 +44,16 @@ namespace Jatta
 
             _JATTA_EXPORT void Create(const Window* window);
             _JATTA_EXPORT void MakeCurrent();
+
+            _JATTA_EXPORT void Enable(Enum capability);
+            _JATTA_EXPORT void Disable(Enum capability);
+
+            _JATTA_EXPORT void DepthMask(bool enabled);
+            _JATTA_EXPORT void StencilMask(bool enabled);
+            _JATTA_EXPORT void StencilMask(UInt32 mask);
+
+            _JATTA_EXPORT void StencilFunc(Enum func, SInt32 reference, UInt32 mask = ~0);
+            _JATTA_EXPORT void StencilOp(Enum sfail, Enum dpfail, Enum dppass);
 
             _JATTA_EXPORT void Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height);
 

@@ -186,6 +186,37 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
     currentContext = this;
 }
 
+_JATTA_EXPORT void Jatta::OpenGL::Context::Enable(Enum capability)
+{
+    glEnable(capability);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Context::Disable(Enum capability)
+{
+    glDisable(capability);
+}
+
+_JATTA_EXPORT void Jatta::OpenGL::Context::DepthMask(bool enabled)
+{
+    glDepthMask(enabled ? GL_TRUE : GL_FALSE);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Context::StencilMask(bool enabled)
+{
+    glStencilMask(enabled ? GL_TRUE : GL_FALSE);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Context::StencilMask(UInt32 mask)
+{
+    glStencilMask(mask);
+}
+
+_JATTA_EXPORT void Jatta::OpenGL::Context::StencilFunc(Enum func, SInt32 reference, UInt32 mask)
+{
+    glStencilFunc(func, reference, mask);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Context::StencilOp(Enum sfail, Enum dpfail, Enum dppass)
+{
+    glStencilOp(sfail, dpfail, dppass);
+}
+
 _JATTA_EXPORT void Jatta::OpenGL::Context::Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height)
 {
     glViewport((GLint)x, (GLint)y, (GLsizei)width, (GLsizei)height);

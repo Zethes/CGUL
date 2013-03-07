@@ -185,7 +185,9 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 _JATTA_EXPORT Jatta::Window::~Window()
 {
     //Close();
+#   ifdef MACOS
     [handle release];
+#   endif
 }
 
 #ifdef WINDOWS
@@ -207,7 +209,7 @@ _JATTA_EXPORT ::Window Jatta::Window::_GetHandle() const
 }
 #endif
 
-#ifdef MACOS
+#if defined(JATTA_BUILD) && defined(MACOS)
 WindowDelegate* Jatta::Window::_GetHandle() const
 {
     return handle;

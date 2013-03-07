@@ -416,6 +416,27 @@ namespace Jatta
             static const Enum TRIANGLE_STRIP_ADJACENCY = 0xd;
             static const Enum PATCHES = 0xe;
 
+            static const Enum DEPTH_TEST = 0xb71;
+            static const Enum STENCIL_TEST = 0xb90;
+            static const Enum CULL_FACE = 0xb44;
+
+            static const Enum NEVER = 0x200;
+            static const Enum LESS = 0x201;
+            static const Enum LEQUAL = 0x203;
+            static const Enum GREATER = 0x204;
+            static const Enum GEQUAL = 0x206;
+            static const Enum EQUAL = 0x202;
+            static const Enum NOTEQUAL = 0x205;
+            static const Enum ALWAYS = 0x207;
+
+            static const Enum KEEP = 0x1e00;
+            static const Enum ZERO = 0x0;
+            static const Enum INCR = 0x1e02;
+            static const Enum INCR_WRAP = 0x8507;
+            static const Enum DECR = 0x1e03;
+            static const Enum DECR_WRAP = 0x8508;
+            static const Enum INVERT = 0x150a; 
+
             static const Enum COLOR_BUFFER_BIT = 0x4000;
             static const Enum DEPTH_BUFFER_BIT = 0x100;
             static const Enum STENCIL_BUFFER_BIT = 0x400;
