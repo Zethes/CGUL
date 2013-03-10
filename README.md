@@ -12,7 +12,6 @@ Features
 * - <i><del>Only top-of-the-line Clang compilers work on MacOS</del> - works with GCC 4.2.1 (and probably older) now</i>
 * - <i>C++11 features are being "phased out" (read: "used when available") to support older compilers</i>
 * <b>Powerful Assimp library wrapper to load in 3D models and scenes</b>
-* - <i>Work in progress</i>
 * <b>Experimental collision library for 2D and 3D collision detection</b>
 * - <i>Work in progress (more like, not even started)</i>
 * <b>STL-like containers with extended functionality</b>
