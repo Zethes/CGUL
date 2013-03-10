@@ -18,6 +18,14 @@ _JATTA_EXPORT Jatta::Assimp::Scene::Scene()
 {
     scene = nullptr;
 }
+_JATTA_EXPORT Jatta::Assimp::Scene::Scene(::aiScene* scene)
+{
+    this->scene = scene;
+}
+_JATTA_EXPORT Jatta::Assimp::Scene::Scene(const ::aiScene* scene)
+{
+    this->scene = scene;
+}
 
 _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 flags)
 {

@@ -34,9 +34,13 @@ namespace Jatta
 
         class Scene
         {
+            friend class Importer;
+            friend class Exporter;
             const _JATTA_AISCENE scene;
         public:
             _JATTA_EXPORT Scene();
+            _JATTA_EXPORT Scene(_JATTA_AISCENE scene);
+            _JATTA_EXPORT Scene(const _JATTA_AISCENE scene);
 
             _JATTA_EXPORT UInt32 GetFlags() const;
 

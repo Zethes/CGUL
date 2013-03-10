@@ -46,6 +46,17 @@
 #define _JATTA_AINODE void*
 #define _JATTA_AIUVTRANSFORM void*
 #define _JATTA_AIMATERIALPROPERTY void*
+#define _JATTA_AIBASEPROCESS void*
+#define _JATTA_AIBASEIMPORTER void*
+#define _JATTA_AIIOHANDLER void*
+#define _JATTA_AIPROGRESHANDLER void*
+#define _JATTA_AIIMPORTERDESC void*
+#define _JATTA_AIMEMORYINFO void*
+#define _JATTA_AIIMPORTER void*
+#define _JATTA_AIEXPORTER void*
+#define _JATTA_AIEXPORTFORMATDESC void*
+#define _JATTA_AIEXPORTDATABLOB void*
+#define _JATTA_AIEXPORTFORMATENTRY void*
 #define _JATTA_PASTREAM void*
 #define _JATTA_PASTREAM_CALLBACK_TIMEINFO void*
 #define _JATTA_PASTREAM_CALLBACK_FLAGS unsigned long
@@ -118,6 +129,17 @@
 #       define _JATTA_AINODE ::aiNode*
 #       define _JATTA_AIUVTRANSFORM ::aiUVTransform*
 #       define _JATTA_AIMATERIALPROPERTY ::aiMaterialProperty*
+#       define _JATTA_AIBASEPROCESS ::Assimp::BaseProcess*
+#       define _JATTA_AIBASEIMPORTER ::Assimp::BaseImporter*
+#       define _JATTA_AIIOHANDLER ::Assimp::IOSystem*
+#       define _JATTA_AIPROGRESHANDLER ::Assimp::ProgressHandler*
+#       define _JATTA_AIIMPORTERDESC ::aiImporterDesc*
+#       define _JATTA_AIMEMORYINFO ::aiMemoryInfo
+#       define _JATTA_AIIMPORTER ::Assimp::Importer*
+#       define _JATTA_AIEXPORTER ::Assimp::Exporter*
+#       define _JATTA_AIEXPORTFORMATDESC ::aiExportFormatDesc*
+#       define _JATTA_AIEXPORTDATABLOB ::aiExportDataBlob*
+#       define _JATTA_AIEXPORTFORMATENTRY ::Assimp::Exporter::ExportFormatEntry
 #   endif
 #   ifdef JATTA_USE_AUDIO
 #       define _JATTA_PASTREAM ::PaStream*

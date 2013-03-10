@@ -201,6 +201,9 @@ namespace Jatta
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
 #       include <assimp/version.h>
+#       include <assimp/importerdesc.h>
+#       include <assimp/Importer.hpp>
+#       include <assimp/Exporter.hpp>
 #   endif
 #   ifdef JATTA_USE_AUDIO
 #       include <portaudio.h>
