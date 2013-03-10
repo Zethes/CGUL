@@ -37,8 +37,10 @@
 #ifdef JATTA_USE_ASSIMP
 #   include "Jatta/Assimp/Assimp.h"
 #   include "Jatta/Assimp/Camera.h"
+#   include "Jatta/Assimp/Light.h"
 #   include "Jatta/Assimp/Material.h"
 #   include "Jatta/Assimp/Mesh.h"
+#   include "Jatta/Assimp/Node.h"
 #   include "Jatta/Assimp/Scene.h"
 #   include "Jatta/Assimp/Texture.h"
 #	include "Jatta/Assimp/Bone.h"

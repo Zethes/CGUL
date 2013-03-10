@@ -60,9 +60,9 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetFaceCount() const
     return mesh->mNumFaces;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetUVComponentsCount() const
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetUVComponentsCount(UInt32 index) const
 {
-    return mesh->mNumUVComponents[0]; // TODO: input this index
+    return mesh->mNumUVComponents[index];
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetVertexCount() const
@@ -70,9 +70,35 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetVertexCount() const
     return mesh->mNumVertices;
 }
 
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetUVChannelsCount() const
+{
+    return mesh->GetNumUVChannels();
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetColorChannelsCount() const
+{
+    return mesh->GetNumColorChannels();
+}
+
 _JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetPositions() const
 {
     return (Float3*)mesh->mVertices;
+}
+_JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetNormals() const
+{
+    return (Float3*)mesh->mNormals;
+}
+_JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetTangents() const
+{
+    return (Float3*)mesh->mTangents;
+}
+_JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetBitangents() const
+{
+    return (Float3*)mesh->mBitangents;
+}
+_JATTA_EXPORT Jatta::Color* Jatta::Assimp::Mesh::GetColors(UInt32 index) const
+{
+    return (Color*)mesh->mColors[index];
 }
 _JATTA_EXPORT Jatta::Assimp::Bone* Jatta::Assimp::Mesh::GetBones() const
 {
@@ -87,9 +113,9 @@ _JATTA_EXPORT Jatta::Assimp::Face* Jatta::Assimp::Mesh::GetFaces() const
     return faces;
 }
 
-_JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetTextureCoords() const
+_JATTA_EXPORT Jatta::Float3* Jatta::Assimp::Mesh::GetTextureCoords(UInt32 index) const
 {
-    return (Float3*)mesh->mTextureCoords[0];
+    return (Float3*)mesh->mTextureCoords[index];
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetMaterialIndex() const

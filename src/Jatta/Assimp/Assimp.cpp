@@ -5,8 +5,27 @@
 
 #include "Assimp.h"
 
-/** @brief Just a test.
- */
-_JATTA_EXPORT void Jatta::Assimp::Test::DoStuff()
+_JATTA_EXPORT Jatta::String Jatta::Assimp::GetLegalString()
+{  
+    return String(aiGetLegalString());
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMinor()
 {
+    return aiGetVersionMinor();
+} 
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMajor()
+{
+    return aiGetVersionMajor();
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionRevision()
+{
+    return aiGetVersionMajor();
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetCompileFlags()
+{
+    return aiGetCompileFlags();
 }

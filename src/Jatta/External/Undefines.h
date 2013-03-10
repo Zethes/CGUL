@@ -40,6 +40,10 @@
 #	undef _JATTA_AIMESHANIM
 #	undef _JATTA_AINODEANIM
 #	undef _JATTA_AIFACE
+#   undef _JATTA_AILIGHT
+#   undef _JATTA_AINODE
+#   undef _JATTA_AIUVTRANSFORM
+#   undef _JATTA_AIMATERIALPROPERTY
 #endif
 
 #ifdef JATTA_USE_AUDIO

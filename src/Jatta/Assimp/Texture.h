@@ -5,6 +5,8 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "../Images/Image.h"
+ #include "../Images/Color.h"
 #include "../External/Defines.h"
 
 /* Assimp is an experimental namespace in Jatta! */
@@ -12,14 +14,16 @@ namespace Jatta
 {
     namespace Assimp
     {
-        // TODO: finish importing methods from aiTexture
         class Texture
         {
             _JATTA_AITEXTURE texture;
         public:
             _JATTA_EXPORT Texture(_JATTA_AITEXTURE texture);
 
-            _JATTA_EXPORT void DoStuff() const;
+            _JATTA_EXPORT UInt32 GetWidth() const;
+            _JATTA_EXPORT UInt32 GetHeight() const;
+
+            _JATTA_EXPORT Image GetImage() const; 
         };
     }
 }

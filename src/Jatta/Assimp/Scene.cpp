@@ -5,8 +5,10 @@
 
 #include "Scene.h"
 #include "Camera.h"
+#include "Light.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "Node.h"
 #include "Texture.h"
 #include "Animation.h"
  
@@ -103,9 +105,19 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Assimp::Scene::GetSceneTransformation() const
         *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
 }
 
+_JATTA_EXPORT Jatta::Assimp::Node Jatta::Assimp::Scene::GetRootNode() const
+{
+    return Node(scene->mRootNode);
+}
+
 _JATTA_EXPORT Jatta::Assimp::Camera Jatta::Assimp::Scene::GetCamera(UInt32 index) const
 {
     return Camera(scene->mCameras[index]);
+}
+
+_JATTA_EXPORT Jatta::Assimp::Light Jatta::Assimp::Scene::GetLight(UInt32 index) const
+{
+    return Light(scene->mLights[index]);
 }
 
 _JATTA_EXPORT Jatta::Assimp::Material Jatta::Assimp::Scene::GetMaterial(UInt32 index) const

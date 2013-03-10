@@ -8,6 +8,7 @@
 #include "Bone.h"
 #include "Face.h"
 #include "../Math/Float3.h"
+#include "../Images/Color.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -16,7 +17,6 @@ namespace Jatta
 {
     namespace Assimp
     {
-        // TODO: finish importing methods from aiMesh
         class Mesh
         {
         private:
@@ -36,11 +36,17 @@ namespace Jatta
 
             _JATTA_EXPORT UInt32 GetBoneCount() const;
             _JATTA_EXPORT UInt32 GetFaceCount() const;
-            _JATTA_EXPORT UInt32 GetUVComponentsCount() const;
+            _JATTA_EXPORT UInt32 GetUVComponentsCount(UInt32 index) const;
             _JATTA_EXPORT UInt32 GetVertexCount() const;
+            _JATTA_EXPORT UInt32 GetUVChannelsCount() const;
+            _JATTA_EXPORT UInt32 GetColorChannelsCount() const;
 
             _JATTA_EXPORT Float3* GetPositions() const;
-            _JATTA_EXPORT Float3* GetTextureCoords() const;
+            _JATTA_EXPORT Float3* GetNormals() const;
+            _JATTA_EXPORT Float3* GetTangents() const;
+            _JATTA_EXPORT Float3* GetBitangents() const;
+            _JATTA_EXPORT Float3* GetTextureCoords(UInt32 index) const;
+            _JATTA_EXPORT Color* GetColors(UInt32 index) const;
             _JATTA_EXPORT Bone* GetBones() const;
             _JATTA_EXPORT Face* GetFaces() const;
 

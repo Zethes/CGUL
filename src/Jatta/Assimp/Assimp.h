@@ -15,12 +15,6 @@ namespace Jatta
      */
     namespace Assimp
     {
-        // TODO: remove this
-        class Test
-        {
-        public:
-            _JATTA_EXPORT static void DoStuff();
-        };
         typedef UInt32 Enum;
 
         static const Enum PROCESS_CALC_TANGENT_SPACE = 0x1;
@@ -63,6 +57,18 @@ namespace Jatta
         static const Enum TEXTURE_TYPE_LIGHTMAP = 0xa;
         static const Enum TEXTURE_TYPE_REFLECTION = 0xb;
         static const Enum TEXTURE_TYPE_UNKNOWN = 0xc;
+
+        static const Enum CFLAGS_SHARED = 0x1;
+        static const Enum CFLAGS_STLPORT = 0x2;
+        static const Enum CFLAGS_DEBUG = 0x4;
+        static const Enum CFLAGS_NOBOOST = 0x8;
+        static const Enum CFLAGS_SINGLETHREADED = 0x10;
+
+        _JATTA_EXPORT String GetLegalString();
+        _JATTA_EXPORT UInt32 GetVersionMinor();
+        _JATTA_EXPORT UInt32 GetVersionMajor();
+        _JATTA_EXPORT UInt32 GetVersionRevision();
+        _JATTA_EXPORT UInt32 GetCompileFlags();
     }
 }
 
