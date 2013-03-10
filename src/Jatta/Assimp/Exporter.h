@@ -9,37 +9,13 @@
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
     {
         class Scene;
-
-        class ExportFormatDesc
-        {
-            const _JATTA_AIEXPORTFORMATDESC desc;
-        public:
-            _JATTA_EXPORT ExportFormatDesc(const _JATTA_AIEXPORTFORMATDESC desc);
-
-            _JATTA_EXPORT String GetID();
-            _JATTA_EXPORT String GetDescription();
-            _JATTA_EXPORT String GetFileExtension();
-        };
-
-        class ExportBlob
-        {
-            const _JATTA_AIEXPORTDATABLOB blob;
-            ExportBlob* next;
-        public:
-            _JATTA_EXPORT ExportBlob(const _JATTA_AIEXPORTDATABLOB blob);
-
-            _JATTA_EXPORT void* GetData();
-            _JATTA_EXPORT String GetName();
-            _JATTA_EXPORT ExportBlob* GetNext();
-            _JATTA_EXPORT UInt32 GetSize();
-            _JATTA_EXPORT void Free();
-        };
+        class ExportFormatDesc;
+        class ExportBlob;
 
         class Exporter
         {

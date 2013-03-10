@@ -10,7 +10,6 @@
 #include "../Math/Float3.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp

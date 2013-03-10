@@ -11,12 +11,10 @@
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
     {
-        // TODO: finish importing methods from aiMesh
         class Bone
         {
         private:

@@ -6,11 +6,11 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "Assimp.h"
+#include "SceneFlags.h"
 #include "../Math/Matrix.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
@@ -22,15 +22,6 @@ namespace Jatta
         class Node;
         class Texture;
         class Animation;
-
-        enum SceneFlags
-        {
-            INCOMPLETE = 0x1,
-            VALIDATED = 0x2,
-            VALIDATION_WARNING = 0x4,
-            NON_VERBOSE_FORMAT = 0x8,
-            TERRAIN = 0x10
-        };
 
         class Scene
         {

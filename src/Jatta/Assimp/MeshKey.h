@@ -6,6 +6,8 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Math/Float3.h"
+#include "../Math/Matrix.h"
+#include "../Math/Quaternion.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -13,15 +15,10 @@ namespace Jatta
 {
     namespace Assimp
     {
-        class VertexWeight
+        struct MeshKey
         {
-        private:
-            _JATTA_AIVERTEXWEIGHT weight;
-        public:
-            _JATTA_EXPORT VertexWeight(_JATTA_AIVERTEXWEIGHT weight);
-
-            _JATTA_EXPORT Jatta::UInt32 GetVertexId();
-            _JATTA_EXPORT Jatta::Float32 GetWeight();
+            double time;
+            Jatta::UInt32 index;
         };
     }
 }

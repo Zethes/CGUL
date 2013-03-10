@@ -8,10 +8,9 @@
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
-    /** @brief Experimental Assimp wrapper.
+    /** @brief Assimp wrapper.
      */
     namespace Assimp
     {

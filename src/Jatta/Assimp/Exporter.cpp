@@ -5,63 +5,8 @@
 
 #include "Exporter.h"
 #include "Scene.h"
-
-_JATTA_EXPORT Jatta::Assimp::ExportFormatDesc::ExportFormatDesc(const ::aiExportFormatDesc* desc)
-{
-    this->desc = desc;
-}
-
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetID()
-{
-    return String(desc->id);
-}
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetDescription()
-{
-    return String(desc->description);
-}
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetFileExtension()
-{
-    return String(desc->fileExtension);
-}
- 
-///////////////////////////////////////////////////////////////
-
-_JATTA_EXPORT Jatta::Assimp::ExportBlob::ExportBlob(const ::aiExportDataBlob* blob)
-{
-    this->blob = blob;
-    if (this->blob->next == NULL)
-        next = NULL;
-    else
-        next = new ExportBlob(this->blob->next);
-}
-
-_JATTA_EXPORT void* Jatta::Assimp::ExportBlob::GetData()
-{
-    return (void*)blob->data;
-}
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportBlob::GetName()
-{
-    return String(blob->name.C_Str());
-}
-_JATTA_EXPORT Jatta::Assimp::ExportBlob* Jatta::Assimp::ExportBlob::GetNext()
-{
-    return next;
-}
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::ExportBlob::GetSize()
-{
-    return (UInt32)blob->size;
-}
-_JATTA_EXPORT void Jatta::Assimp::ExportBlob::Free()
-{
-    if (next != NULL)
-    {
-        next->Free();
-        delete next;
-        next = NULL;
-    }
-}
-
-///////////////////////////////////////////////////////////////
+#include "ExportFormatDesc.h"
+#include "ExportBlob.h"
 
 _JATTA_EXPORT Jatta::Assimp::Exporter::Exporter()
 {

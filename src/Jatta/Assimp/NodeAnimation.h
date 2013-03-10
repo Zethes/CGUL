@@ -5,40 +5,16 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
-#include "../Math/Matrix.h"
-#include "../Math/Quaternion.h"
 #include "../Utility/String.h"
+#include "QuatKey.h"
+#include "AnimationStates.h"
+#include "VectorKey.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
     {
-        namespace AnimationStates
-        {
-            enum
-            {
-                DEFAULT = 0x0,
-                CONSTANT,
-                LINEAR,
-                REPEAT
-            };
-        }
-
-        struct VectorKey
-        {
-            double time;
-            Jatta::Float3 value;
-        };
-
-        struct QuatKey
-        {
-            double time;
-            Jatta::Quaternion value;
-        };
-
         class NodeAnimation
         {
         private:

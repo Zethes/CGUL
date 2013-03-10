@@ -4,59 +4,8 @@
  */
 
 #include "Material.h"
-
-_JATTA_EXPORT Jatta::Assimp::UVTransform::UVTransform(::aiUVTransform* uvTransform)
-{
-    this->uvTransform = uvTransform;
-}
-
-_JATTA_EXPORT Jatta::Float2 Jatta::Assimp::UVTransform::GetTranslation()
-{
-    return Float2(uvTransform->mTranslation.x, uvTransform->mTranslation.y);
-}
-_JATTA_EXPORT Jatta::Float2 Jatta::Assimp::UVTransform::GetScaling()
-{
-    return Float2(uvTransform->mScaling.x, uvTransform->mScaling.y);
-}
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::UVTransform::GetRotation()
-{
-    return uvTransform->mRotation;
-}
-
-///////////////////////////////////////////////////////////////
-
-_JATTA_EXPORT Jatta::Assimp::MaterialProperty::MaterialProperty(::aiMaterialProperty* matProp)
-{
-    this->matProp = matProp;
-}
-
-_JATTA_EXPORT Jatta::String Jatta::Assimp::MaterialProperty::GetKey()
-{
-    return String(matProp->mKey.data);
-}
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetSemantic()
-{
-    return matProp->mSemantic;
-}
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetIndex()
-{
-    return matProp->mIndex;
-}
-
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetDataLength()
-{
-    return matProp->mDataLength;
-}
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetType()
-{
-    return matProp->mType;
-}
-_JATTA_EXPORT char* Jatta::Assimp::MaterialProperty::GetData()
-{
-    return matProp->mData;
-}
-
-///////////////////////////////////////////////////////////////
+#include "MaterialProperty.h"
+#include "UVTransform.h"
 
 _JATTA_EXPORT Jatta::Assimp::Material::Material(aiMaterial* material)
 {

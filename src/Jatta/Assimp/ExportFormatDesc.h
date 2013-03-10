@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
+#include "Assimp.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -13,15 +13,15 @@ namespace Jatta
 {
     namespace Assimp
     {
-        class VertexWeight
+        class ExportFormatDesc
         {
-        private:
-            _JATTA_AIVERTEXWEIGHT weight;
+            const _JATTA_AIEXPORTFORMATDESC desc;
         public:
-            _JATTA_EXPORT VertexWeight(_JATTA_AIVERTEXWEIGHT weight);
+            _JATTA_EXPORT ExportFormatDesc(const _JATTA_AIEXPORTFORMATDESC desc);
 
-            _JATTA_EXPORT Jatta::UInt32 GetVertexId();
-            _JATTA_EXPORT Jatta::Float32 GetWeight();
+            _JATTA_EXPORT String GetID();
+            _JATTA_EXPORT String GetDescription();
+            _JATTA_EXPORT String GetFileExtension();
         };
     }
 }

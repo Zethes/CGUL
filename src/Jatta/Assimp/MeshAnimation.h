@@ -9,19 +9,13 @@
 #include "../Math/Matrix.h"
 #include "../Math/Quaternion.h"
 #include "../Utility/String.h"
+#include "MeshKey.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
     {
-        struct MeshKey
-        {
-            double time;
-            Jatta::UInt32 index;
-        };
-
         class MeshAnimation
         {
         private:

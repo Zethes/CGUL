@@ -6,11 +6,9 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "Assimp.h"
-#include "../Math/Matrix.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp

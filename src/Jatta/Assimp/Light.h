@@ -5,24 +5,16 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "LightTypes.h"
 #include "../Utility/String.h"
 #include "../Math/Float3.h"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
 
-/* Assimp is an experimental namespace in Jatta! */
 namespace Jatta
 {
     namespace Assimp
     {
-        enum LightTypes
-        {
-            UNDEFINED = 0x0,
-            DIRECTIONAL = 0x1,
-            POINT = 0x2,
-            SPOT = 0x3
-        };
-
         class Light
         {
             const _JATTA_AILIGHT light;
