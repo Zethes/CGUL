@@ -1,3 +1,5 @@
+INCLUDE(../src/Scripts/CreateSymlink.cmake)
+
 IF(MSYS)
     SET(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 ELSEIF(APPLE)
