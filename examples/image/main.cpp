@@ -17,14 +17,14 @@ Jatta::OpenGL::Program LoadShader(const String& vertexFile, const String& fragme
 
     // Load the contents of the files
     String vertexSource, fragmentSource;
-    if (!Jatta::File::GetText(vertexFile, &vertexSource))
+    if (!Jatta::File::ReadText(vertexFile, &vertexSource))
     {
         std::ostringstream ss;
         ss << "Failed to load vertex shader \"" << vertexFile << "\"!";
         throw std::runtime_error(ss.str().c_str());
     }
     vertexShader.Source(vertexSource);
-    if (!Jatta::File::GetText(fragmentFile, &fragmentSource))
+    if (!Jatta::File::ReadText(fragmentFile, &fragmentSource))
     {
         std::ostringstream ss;
         ss << "Failed to load fragment shader \"" << fragmentFile << "\"!";

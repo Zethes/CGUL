@@ -1,11 +1,11 @@
-#include "File.h"
+﻿#include "File.h"
 #include "../Utility/Encryption.h"
 
 #include <sys/stat.h>
 #ifdef WINDOWS
 #   include <direct.h>
 #   ifdef DeleteFile
-#       undef DeletFile
+#       undef DeleteFile
 #   endif
 #else
 #   include <unistd.h>
@@ -15,106 +15,217 @@
 // We'll remove it for now until someone musters up enough motivation to repla--ugh i dont want to type anymore
 //#include <dirent.h>
 
-_JATTA_EXPORT bool Jatta::File::GetText(const std::string& fileName, std::string* result)
+_JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, String string)
 {
-    std::ifstream file;
-    file.open(fileName.c_str(), std::ios::in);
-    if (!file.is_open())
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"w");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "w");
+#   endif
+    if (stream == NULL)
     {
         return false;
     }
-    std::string line;
-    while (!file.eof())
-    {
-        getline(file, line);
-        *result += line + "\n";
-    }
-    *result = result->substr(0, result->length() - 1);
-    file.close();
+
+    char* buffer = new char[string.GetSize()];
+    memcpy(buffer, string.GetCString(), string.GetSize());
+
+    fwrite(buffer, 1, string.GetSize(), stream);
+    fclose(stream);
+
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::GetText(const String& fileName, String* result)
+_JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
 {
-    std::ifstream file;
-    file.open(fileName.GetData().c_str(), std::ios::in);
-    if (!file.is_open())
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
     {
         return false;
     }
-    std::string line;
-    while (!file.eof())
-    {
-        getline(file, line);
-        *result += line + "\n";
-    }
-    *result = result->SubString(0, result->GetSize() - 1, true);
-    file.close();
+
+    fwrite(buffer, 1, size, stream);
+    fclose(stream);
+
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::GetLines(const std::string& fileName, std::vector<std::string>* vector)
+/** @brief Puts the file contents into a string.
+ *  @param fileName The file to read.
+ *  @param result A pointer to the string to append the data to.
+ *  @returns True if the file was successfully read, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadText(const Jatta::String& fileName, Jatta::String* result)
 {
-    std::ifstream file;
-    file.open(fileName.c_str(), std::ios::in);
-    if (!file.is_open())
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
     {
         return false;
     }
-    std::string line;
-    while (!file.eof())
-    {
-        getline(file, line);
-        vector->push_back(line);
-    }
-    file.close();
+    // obtain file size:
+    fseek(stream, 0, SEEK_END);
+    long fileSize = ftell(stream);
+    rewind(stream);
+
+    // allocate memory to contain the whole file:
+    char* buffer = new char[fileSize + 1];
+    buffer[fileSize] = 0;
+
+    // copy the file into the buffer:
+    size_t readResult = fread(buffer, 1, fileSize, stream);
+    buffer[readResult] = 0;
+
+    *result += buffer;
+
+    fclose (stream);
+    delete[] buffer;
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::GetLines(const String& fileName, std::vector<String>* vector)
+/** @brief Reads the contents of the file line-by-line, putting each line into a vector one-by-one.
+ *  @param fileName The file to read.
+ *  @vector A pointer to the vector to append the lines to.
+ *  @returns True if the file was successfully read, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadLines(const String& fileName, std::vector<Jatta::String>* vector)
 {
-    std::ifstream file;
-    file.open(fileName.GetData().c_str(), std::ios::in);
-    if (!file.is_open())
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
     {
         return false;
     }
-    std::string line;
-    while (!file.eof())
+    // obtain file size:
+    fseek (stream, 0, SEEK_END);
+    long fileSize = ftell(stream);
+    rewind(stream);
+
+    // allocate memory to contain the whole file:
+    char* buffer = new char[fileSize + 1];
+
+    // copy the file into the buffer:
+    size_t readResult = fread(buffer, 1, fileSize, stream);
+    buffer[readResult] = '\n';
+
+    char* bufferEnd = buffer + fileSize;
+    char* lineStart = buffer;
+    for (size_t i = 0; i < readResult + 1; i++)
     {
-        getline(file, line);
-        vector->push_back(String(std::move(line)));
+        if (buffer[i] == '\n' || buffer[i] == '\r')
+        {
+            buffer[i++] = 0;
+            vector->push_back(lineStart);
+            while (buffer[i] == '\n' || buffer[i] == '\r')
+            {
+                i++;
+            }
+            lineStart = buffer + i;
+        }
     }
-    file.close();
+
+    fclose (stream);
+    delete[] buffer;
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::File::GetFileSize(const std::string& fileName, UInt32* fileSize)
+/** @brief Reads the file into a byte buffer.
+ *  @param fileName The file to read.
+ *  @param buffer The buffer to copy the bytes into.
+ *  @param size The size of the buffer or the max amount of bytes to read.
+ *  @returns True if the file was successfully read, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
 {
-    std::streamoff begin, end;
-    std::ifstream myfile(fileName.c_str());
-    begin = myfile.tellg();
-    myfile.seekg(0, std::ios::end);
-    end = myfile.tellg();
-    myfile.close();
-    *fileSize = (unsigned int)(end - begin);
-    return true;
-}
-
-_JATTA_EXPORT bool Jatta::File::GetData(const std::string& fileName, Byte* buffer, UInt32 size)
-{
-    std::ifstream file;
-    file.open(fileName.c_str(), std::ios::in | std::ios::binary);
-    if (!file.is_open())
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
     {
         return false;
     }
-    file.read((char*)buffer, size);
-    file.close();
+
+    // copy the file into the buffer:
+    size_t readResult = fread(buffer, 1, size, stream);
+
+    fclose (stream);
     return true;
 }
 
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(std::string dir)
+/** @brief Obtains the size of a file.
+ *  @param fileName The file to get the size of.
+ *  @param fileSize A pointer to an integer to put the size into.
+ *  @returns True if the size was successfully obtained, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileName, UInt32* fileSize)
+{
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
+    {
+        return false;
+    }
+    // obtain file size:
+    fseek(stream, 0, SEEK_END);
+    if (fileSize != NULL)
+    {
+        *fileSize = ftell(stream);
+    }
+    rewind(stream);
+
+    return true;
+}
+
+/** @brief Obtains the size of a file.
+ *  @param fileName The file to get the size of.
+ *  @returns The size of the file, or 0 if the size could not be obtained.
+ *  @note There is a conflict in logic if a file is empty or if it does not exist.  Both cases will
+ *  return 0.  Consider using the other GetFileSize function which returns a boolean value if the
+ *  size was successfully obtained.
+ */
+_JATTA_EXPORT Jatta::UInt32 Jatta::File::GetFileSize(const Jatta::String& fileName)
+{
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"r");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "r");
+#   endif
+    if (stream == NULL)
+    {
+        return 0;
+    }
+    // obtain file size:
+    fseek(stream, 0, SEEK_END);
+    UInt32 fileSize = ftell(stream);
+    rewind(stream);
+
+    return fileSize;
+}
+
+// TODO: File::FindFiles
+_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(Jatta::String dir)
 {
     std::vector<Jatta::String> ret;
 
@@ -137,7 +248,9 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(std::string dir)
 
     return ret;
 }
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(std::string dir)
+
+// TODO: File::FindFolders
+_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(Jatta::String dir)
 {
     std::vector<Jatta::String> ret;
 
@@ -161,47 +274,70 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(std::string di
     return ret;
 }
 
-_JATTA_EXPORT bool Jatta::File::Exists(const std::string& fileName)
+/** @brief Checks if a file exists.
+ *  @param fileName The name of the file to check for.
+ *  @returns True if the file exists, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
 {
+#   ifdef WINDOWS
+    DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
+    return (attributes != INVALID_FILE_ATTRIBUTES);
+#   else
     struct stat fileStat;
-    int err = stat(fileName.c_str(), &fileStat);
+    int err = stat(fileName.GetCString(), &fileStat);
     if (err != 0) return 0;
 
     return fileStat.st_size;
+#   endif
 }
-_JATTA_EXPORT unsigned long long Jatta::File::CRC32(const std::string& fileName)
+
+_JATTA_EXPORT unsigned long long Jatta::File::CRC32(const Jatta::String& fileName)
 {
     Jatta::String str;
-    GetText(fileName, &str);
+    ReadText(fileName, &str);
     return Encryption::CRC32::String(str);
 }
-_JATTA_EXPORT Jatta::String Jatta::File::MD5(const std::string& fileName)
+
+_JATTA_EXPORT Jatta::String Jatta::File::MD5(const Jatta::String& fileName)
 {
     Jatta::String str;
-    GetText(fileName, &str);
+    ReadText(fileName, &str);
     return Encryption::MD5::String(str);
 }
-_JATTA_EXPORT int Jatta::File::Size(const std::string& fileName)
-{
-    struct stat fileStat;
-    int err = stat(fileName.c_str(), &fileStat);
-    if (err != 0) return false;
 
-    return true;
-}
-_JATTA_EXPORT bool Jatta::File::IsFolder(const std::string& fileName)
+/** @brief Checks if the specified filename is a directory.
+ *  @param fileName The filename to check.
+ *  @returns True if the filename is a directory, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName)
 {
+#   ifdef WINDOWS
+    DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
+    if (attributes == INVALID_FILE_ATTRIBUTES)
+    {
+        return false;
+    }
+    return ((attributes & FILE_ATTRIBUTE_DIRECTORY) != 0);
+#   else
     struct stat fileStat;
-    int err = stat(fileName.c_str(), &fileStat);
+    int err = stat(fileName.GetCString(), &fileStat);
     if (err != 0) return 0;
 
     return (fileStat.st_mode & S_IFMT) == S_IFDIR;
+#   endif
 }
-_JATTA_EXPORT bool Jatta::File::IsFile(const std::string& fileName)
+
+/** @brief Checks if the specified filename is a file.
+ *  @param fileName The filename to check.
+ *  @returns True if the filename is a file, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::IsFile(const Jatta::String& fileName)
 {
     return !IsFolder(fileName);
 }
-_JATTA_EXPORT bool Jatta::File::CreateFolder(const std::string& fileName, bool recursive)
+
+_JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& fileName, bool recursive)
 {
     String folderName = fileName;
 
@@ -216,14 +352,13 @@ _JATTA_EXPORT bool Jatta::File::CreateFolder(const std::string& fileName, bool r
     }
 
 #ifdef WINDOWS
-    return 0 == mkdir(folderName.GetData().c_str());
+    return 0 == _wmkdir(folderName._ToWideString().c_str());
 #else
-    return mkdir(folderName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    return 0 == mkdir(folderName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 #endif
-
-    return false;
 }
-_JATTA_EXPORT bool Jatta::File::DeleteFolder(const std::string& fileName, bool recursive)
+
+_JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& fileName, bool recursive)
 {
     if (!IsFolder(fileName))
         return false;
@@ -257,23 +392,51 @@ _JATTA_EXPORT bool Jatta::File::DeleteFolder(const std::string& fileName, bool r
         }
     }
 
-    rmdir(fileName.c_str());
-    return true;
+#   ifdef WINDOWS
+    return 0 == _wrmdir(fileName._ToWideString().c_str());
+#   else
+    return 0 == rmdir(fileName.GetCString());
+#   endif
 }
-_JATTA_EXPORT bool Jatta::File::DeleteFile(const std::string& fileName)
+
+/** @brief Deletes the specified file.
+ *  @param fileName The file to delete.
+ *  @returns True if the file was successfully deleted, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileName)
 {
-    return 0 == unlink(fileName.c_str());
+#   ifdef WINDOWS
+    return ::DeleteFileW(fileName._ToWideString().c_str()) != 0;
+#   else
+    return 0 == unlink(fileName.GetCString());
+#   endif
 }
-_JATTA_EXPORT bool Jatta::File::Copy(const std::string& fileName, const std::string& fileTo)
+
+/** @brief Copies a file from one location to another.
+ *  @param fileName The target file.
+ *  @param fileTo The destination file.
+ *  @returns True if the file was successfully copied, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, const Jatta::String& fileTo)
 {
-    std::ifstream f1( fileName.c_str(), std::fstream::binary );
+#   ifdef WINDOWS
+    return ::CopyFileW(fileName._ToWideString().c_str(), fileTo._ToWideString().c_str(), false) != 0;
+#   else
+    std::ifstream f1( fileName.GetCString(), std::fstream::binary );
     if ( !f1.is_open() ) return false;
-    std::ofstream f2( fileTo.c_str(), std::fstream::trunc|std::fstream::binary );
+    std::ofstream f2( fileTo.GetCString(), std::fstream::trunc|std::fstream::binary );
     if ( !f2.is_open() ) return false;
     f2 << f1.rdbuf();
     return true;
+#   endif
 }
-_JATTA_EXPORT bool Jatta::File::Move(const std::string& fileName, const std::string& fileTo)
+
+/** @brief Moves a file from one location to another.
+ *  @param fileName The target file.
+ *  @param fileTo The destination file.
+ *  @returns True if the file was successfully moved, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::File::Move(const Jatta::String& fileName, const Jatta::String& fileTo)
 {
     bool r = Copy(fileName, fileTo);
     if (r == false)

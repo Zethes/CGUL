@@ -6,7 +6,7 @@ using namespace Jatta;
 int main()
 {
     WindowStyle style;
-    style.title = "Jatta Window";
+    style.title = JSTR("Jatta Window");
     style.width = 640;
     style.height = 480;
     style.backgroundColor = Colors::red;

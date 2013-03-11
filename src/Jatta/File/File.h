@@ -21,27 +21,32 @@ namespace Jatta
     namespace File
     {
         // TODO: make a better file utility library
-        _JATTA_EXPORT bool GetText(const std::string& fileName, std::string* result);
-        _JATTA_EXPORT bool GetText(const String& fileName, String* result);
-        _JATTA_EXPORT bool GetLines(const std::string& fileName, std::vector<std::string>* vector);
-        _JATTA_EXPORT bool GetLines(const String& fileName, std::vector<String>* vector);
-        _JATTA_EXPORT bool GetFileSize(const std::string& fileName, UInt32* fileSize);
-        _JATTA_EXPORT bool GetData(const std::string& fileName, Byte* buffer, UInt32 size);
 
-        _JATTA_EXPORT std::vector<Jatta::String> FindFiles(std::string dir);
-        _JATTA_EXPORT std::vector<Jatta::String> FindFolders(std::string dir);
+        _JATTA_EXPORT Boolean WriteText(const String& fileName, String string);
+        _JATTA_EXPORT Boolean WriteData(const Jatta::String& fileName, Byte* buffer, UInt32 size);
 
-        _JATTA_EXPORT bool Exists(const std::string& fileName);
-        _JATTA_EXPORT unsigned long long CRC32(const std::string& fileName);
-        _JATTA_EXPORT Jatta::String MD5(const std::string& fileName);
-        _JATTA_EXPORT int Size(const std::string& fileName);
-        _JATTA_EXPORT bool IsFolder(const std::string& fileName);
-        _JATTA_EXPORT bool IsFile(const std::string& fileName);
-        _JATTA_EXPORT bool CreateFolder(const std::string& fileName, bool recursive = false);
-        _JATTA_EXPORT bool DeleteFolder(const std::string& fileName, bool recursive = false);
-        _JATTA_EXPORT bool DeleteFile(const std::string& fileName);
-        _JATTA_EXPORT bool Copy(const std::string& fileName, const std::string& fileTo);
-        _JATTA_EXPORT bool Move(const std::string& fileName, const std::string& fileTo);
+        _JATTA_EXPORT Boolean ReadText(const String& fileName, String* result);
+        _JATTA_EXPORT Boolean ReadLines(const String& fileName, std::vector<String>* vector);
+        _JATTA_EXPORT Boolean ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size);
+
+        //_JATTA_EXPORT Boolean Touch(const String& fileName);
+
+        _JATTA_EXPORT Boolean GetFileSize(const Jatta::String& fileName, UInt32* fileSize);
+        _JATTA_EXPORT UInt32 GetFileSize(const Jatta::String& fileName);
+
+        _JATTA_EXPORT std::vector<Jatta::String> FindFiles(Jatta::String dir);
+        _JATTA_EXPORT std::vector<Jatta::String> FindFolders(Jatta::String dir);
+
+        _JATTA_EXPORT Boolean Exists(const Jatta::String& fileName);
+        _JATTA_EXPORT unsigned long long CRC32(const Jatta::String& fileName);
+        _JATTA_EXPORT Jatta::String MD5(const Jatta::String& fileName);
+        _JATTA_EXPORT Boolean IsFolder(const Jatta::String& fileName);
+        _JATTA_EXPORT Boolean IsFile(const Jatta::String& fileName);
+        _JATTA_EXPORT Boolean CreateFolder(const Jatta::String& fileName, bool recursive = false);
+        _JATTA_EXPORT Boolean DeleteFolder(const Jatta::String& fileName, bool recursive = false);
+        _JATTA_EXPORT Boolean DeleteFile(const Jatta::String& fileName);
+        _JATTA_EXPORT Boolean Copy(const Jatta::String& fileName, const Jatta::String& fileTo);
+        _JATTA_EXPORT Boolean Move(const Jatta::String& fileName, const Jatta::String& fileTo);
     }
 }
 

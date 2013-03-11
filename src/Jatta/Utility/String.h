@@ -7,6 +7,16 @@
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
 
+#ifdef _CPP_U8
+#   define JSTR(text) Jatta::String(u8##text)
+#else
+#   ifdef WINDOWS
+#       define JSTR(text) Jatta::String(L##text)
+#   else
+#       define JSTR(text) Jatta::String(text)
+#   endif
+#endif
+
 namespace Jatta
 {
     class Regex;
@@ -21,8 +31,11 @@ namespace Jatta
 
         _JATTA_EXPORT String();
         _JATTA_EXPORT String(const String& copy);
-#       ifdef _CPP_DOUBLE_REFERENCE
+#       ifdef _CPP_MOVE_CONSTRUCTOR
         _JATTA_EXPORT String(String&& move);
+#       endif
+#       ifdef WINDOWS
+        _JATTA_EXPORT String(const std::wstring& wideString);
 #       endif
         _JATTA_EXPORT String(const char* data);
         _JATTA_EXPORT String(const std::string& data);

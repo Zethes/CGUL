@@ -101,7 +101,7 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flag
     unsigned int size;
     File::GetFileSize(fileName.GetData(), &size);
     Byte* buffer = new Byte[size];
-    File::GetData(fileName.GetData(), buffer, size);
+    File::ReadData(fileName.GetData(), buffer, size);
 
 #   ifdef JATTA_USE_PNG
     if (IsPng((const char*)buffer, size))

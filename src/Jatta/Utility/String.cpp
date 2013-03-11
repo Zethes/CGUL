@@ -30,6 +30,13 @@ _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 }
 #endif
 
+#ifdef WINDOWS
+_JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
+{
+    _FromWideString(wideString);
+}
+#endif
+
 /** @brief Parameterized constructor.  Initializes string to the character pointer passed in.
  *  @param data A character pointer to a null-terminated string.
  */
@@ -533,9 +540,9 @@ _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
 
 _JATTA_EXPORT void Jatta::String::_FromWideString(const std::wstring& wideString)
 {
-    int size = WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, wideString.c_str(), -1, 0, 0, nullptr, nullptr);
+    int size = WideCharToMultiByte(CP_UTF8, 0, wideString.c_str(), -1, 0, 0, NULL, NULL);
     char* buffer = new char[size];
-    WideCharToMultiByte(CP_UTF8, WC_COMPOSITECHECK, wideString.c_str(), -1, buffer, size, nullptr, nullptr);
+    WideCharToMultiByte(CP_UTF8, 0, wideString.c_str(), -1, buffer, size, NULL, NULL);
     buffer[size - 1] = 0;
     data = buffer;
     delete[] buffer;

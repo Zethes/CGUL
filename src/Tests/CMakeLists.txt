@@ -141,6 +141,7 @@ CHECK_TEST("static_assert.cpp" "Does C++ have static_assert?" CPP_STATIC_ASSERT)
 CHECK_TEST("std_move.cpp" "Does C++ have std::move?" CPP_STD_MOVE)
 CHECK_TEST("std_thread.cpp" "Does C++ have std::thread?" CPP_STD_THREAD)
 CHECK_TEST("move_constructor.cpp" "Does C++ have move constructors?" CPP_MOVE_CONSTRUCTOR)
+CHECK_TEST("u8.cpp" "Does C++ have u8 strings?" CPP_U8)
 
 SET(JATTA_CPP_CONFIG ${JATTA_CPP_CONFIG} PARENT_SCOPE)
 SET(JATTA_FLAGS ${JATTA_FLAGS} PARENT_SCOPE)
