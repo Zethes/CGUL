@@ -25,8 +25,9 @@ INCLUDE_DIRECTORIES(${JATTA_INCLUDES})
 
 ADD_SUBDIRECTORY(PortAudio)
 
-ADD_TEST(PortAudio/Test_PA_Version ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Version) 
 ADD_TEST(PortAudio/Test_PA_Devices ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Devices) 
+ADD_TEST(PortAudio/Test_PA_Version ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Version) 
+ADD_TEST(PortAudio/Test_PA_Wave ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Wave)
  
 ADD_SUBDIRECTORY(Utility)
 

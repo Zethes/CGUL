@@ -17,10 +17,12 @@ namespace Jatta
         class Device
         {
             const _JATTA_PADEVICE_INFO device;
+            UInt32 index;
         public:
-            _JATTA_EXPORT Device(const _JATTA_PADEVICE_INFO device);
+            _JATTA_EXPORT Device(UInt32 index, const _JATTA_PADEVICE_INFO device);
 
             _JATTA_EXPORT String GetName();
+            _JATTA_EXPORT UInt32 GetIndex();
             _JATTA_EXPORT HostApi GetHostApi();
             _JATTA_EXPORT SInt32 GetMaxInputChannels();
             _JATTA_EXPORT SInt32 GetMaxOutputChannels();

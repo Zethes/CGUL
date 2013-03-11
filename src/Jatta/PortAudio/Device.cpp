@@ -6,14 +6,20 @@
 #include "Device.h"
 #include "HostApi.h"
 
-_JATTA_EXPORT Jatta::PortAudio::Device::Device(const ::PaDeviceInfo* device)
+_JATTA_EXPORT Jatta::PortAudio::Device::Device(UInt32 index, const ::PaDeviceInfo* device)
 {
+    this->index = index;
     this->device = device;
 }
 
 _JATTA_EXPORT Jatta::String Jatta::PortAudio::Device::GetName()
 {
     return String(device->name);
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::PortAudio::Device::GetIndex()
+{
+    return index;
 }
 
 _JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::Device::GetHostApi()

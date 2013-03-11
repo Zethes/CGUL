@@ -43,17 +43,17 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDefaultOutputDeviceIndex()
 
 _JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDefaultInputDevice()
 {
-    return Device(Pa_GetDeviceInfo(Pa_GetDefaultInputDevice()));
+    return Device(Pa_GetDefaultInputDevice(), Pa_GetDeviceInfo(Pa_GetDefaultInputDevice()));
 }
 
 _JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDefaultOutputDevice()
 {
-    return Device(Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice()));
+    return Device(Pa_GetDefaultOutputDevice(), Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice()));
 }
 
 _JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDevice(SInt32 index)
 {
-    return Device(Pa_GetDeviceInfo(index));
+    return Device(index, Pa_GetDeviceInfo(index));
 }
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetHostApiCount()
@@ -74,4 +74,9 @@ _JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetDefaultHostApi()
 _JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetHostApi(SInt32 index)
 {
     return HostApi(Pa_GetHostApiInfo(index));
+}
+
+_JATTA_EXPORT void Jatta::PortAudio::Sleep(UInt32 miliseconds)
+{
+    Pa_Sleep(miliseconds);
 }

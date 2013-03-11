@@ -7,3 +7,6 @@ TARGET_LINK_LIBRARIES(Test_PA_Devices Jatta)
 
 ADD_EXECUTABLE(Test_PA_Version test_Version.cpp)
 TARGET_LINK_LIBRARIES(Test_PA_Version Jatta)
+
+ADD_EXECUTABLE(Test_PA_Wave test_Wave.cpp)
+TARGET_LINK_LIBRARIES(Test_PA_Wave Jatta)

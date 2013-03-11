@@ -107,6 +107,10 @@
 #   include "Jatta/PortAudio/Device.h"
 #   include "Jatta/PortAudio/HostApi.h"
 #   include "Jatta/PortAudio/PortAudio.h"
+#   include "Jatta/PortAudio/SawWave.h"
+#   include "Jatta/PortAudio/SineWave.h"
+#   include "Jatta/PortAudio/Stream.h"
+#   include "Jatta/PortAudio/StreamData.h"
 #endif
 
 #include "Jatta/Utility/Encryption.h"

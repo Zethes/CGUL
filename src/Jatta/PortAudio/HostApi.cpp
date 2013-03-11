@@ -28,10 +28,10 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::HostApi::GetDeviceCount()
 
 _JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::HostApi::GetDefaultInputDevice()
 {
-    return Device(Pa_GetDeviceInfo(host->defaultInputDevice));
+    return Device(host->defaultInputDevice, Pa_GetDeviceInfo(host->defaultInputDevice));
 }
 
 _JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::HostApi::GetDefaultOutputDevice()
 {
-    return Device(Pa_GetDeviceInfo(host->defaultOutputDevice));
+    return Device(host->defaultOutputDevice, Pa_GetDeviceInfo(host->defaultOutputDevice));
 }

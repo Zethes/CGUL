@@ -67,6 +67,8 @@ namespace Jatta
         _JATTA_EXPORT SInt32 GetDefaultHostApiIndex();
         _JATTA_EXPORT HostApi GetDefaultHostApi();
         _JATTA_EXPORT HostApi GetHostApi(SInt32 index);
+
+        _JATTA_EXPORT void Sleep(UInt32 miliseconds);
     }
 }
 #include "../External/Undefines.h"
