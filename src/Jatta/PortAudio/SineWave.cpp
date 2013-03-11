@@ -20,8 +20,8 @@ _JATTA_EXPORT Jatta::PortAudio::SineWave::SineWave(Device device) : Stream()
 
 _JATTA_EXPORT bool Jatta::PortAudio::SineWave::Update(StreamData* data)
 {
-    data->LeftPhase = sine[position];
-    data->RightPhase = sine[position];
+    data->Channels[0] = sine[position];
+    data->Channels[1] = sine[position];
 
     position++;
     while (position >= 199)

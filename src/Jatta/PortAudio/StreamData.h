@@ -16,8 +16,9 @@ namespace Jatta
         struct StreamData
         {
         public:
-            Float32 LeftPhase;
-            Float32 RightPhase;
+            UInt32 NumberOfChannels;
+            Float32*Channels;
+            Float32*InputChannels;
             Stream* StreamPtr;
         };
     }

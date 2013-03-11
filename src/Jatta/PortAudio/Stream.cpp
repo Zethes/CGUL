@@ -14,8 +14,8 @@ static int paCallback(const void* input, void* output, unsigned long fpb, const 
 
     for (i = 0; i < fpb; i++)
     {
-        *out++ = data->LeftPhase;
-        *out++ = data->RightPhase;
+        for (unsigned int j = 0; j < data->NumberOfChannels; j++)
+        { *out++ = data->StreamPtr->GetVolume()*data->Channels[j]; }
 
         if (!data->StreamPtr->Update(data))
         {
@@ -31,8 +31,10 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::OpenStream(Device device)
     if (sampleRate == 0)
     { sampleRate = device.GetDefaultSampleRate(); }
 
-    //return Pa_OpenDefaultStream(&stream, 0, 2, paFloat32, device.GetDefaultSampleRate(),
-    //    paFramesPerBufferUnspecified, paCallback, &data);
+    data.Channels = new Float32[data.NumberOfChannels];
+    for (unsigned int i = 0; i < data.NumberOfChannels; i++)
+    { data.Channels[i] = 0.0f; }
+
     PaStreamParameters outputParameters;
     outputParameters.device = device.GetIndex();
     outputParameters.channelCount = channelCount;
@@ -54,8 +56,9 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::OpenStream(Device device)
 //public:
 _JATTA_EXPORT Jatta::PortAudio::Stream::Stream()
 {
+    volume = 1.0f;
     data.StreamPtr = this;
-    data.LeftPhase = data.RightPhase = 0;
+    data.NumberOfChannels = 2;
 
     sampleRate = 0;
     channelCount = 2;
@@ -81,6 +84,16 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Stop()
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Close()
 {
     return (SInt32)Pa_CloseStream(stream);
+}
+
+_JATTA_EXPORT void Jatta::PortAudio::Stream::SetVolume(Float32 volume)
+{
+    this->volume = volume;
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::PortAudio::Stream::GetVolume()
+{
+    return volume;
 }
 
 _JATTA_EXPORT bool Jatta::PortAudio::Stream::IsStopped()
@@ -126,4 +139,14 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Read(void* buffer, UInt64 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Write(const void* buffer, UInt64 frames)
 {
     return (SInt32)Pa_WriteStream(stream, buffer, frames);
+}
+
+_JATTA_EXPORT Jatta::SInt64 Jatta::PortAudio::Stream::ReadAvailable()
+{
+    return (SInt64)Pa_GetStreamReadAvailable(stream);
+}
+
+_JATTA_EXPORT Jatta::SInt64 Jatta::PortAudio::Stream::WriteAvailable()
+{
+    return (SInt64)Pa_GetStreamReadAvailable(stream);
 }

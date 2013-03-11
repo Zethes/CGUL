@@ -16,6 +16,7 @@ int main()
 
     //Test SawWave.
     Jatta::PortAudio::SawWave sawWave(Jatta::PortAudio::GetDefaultOutputDevice());
+    sawWave.SetVolume(0.25f);
     if ((ret = sawWave.Start()) != Jatta::PortAudio::Errors::NO_ERROR)
     {
         printf("Failed to start sawwave. Error %d.\n", ret);
@@ -35,6 +36,7 @@ int main()
 
     //Test SineWave.
     Jatta::PortAudio::SineWave sineWave(Jatta::PortAudio::GetDefaultOutputDevice());
+    sineWave.SetVolume(0.25f);
     if ((ret = sineWave.Start()) != Jatta::PortAudio::Errors::NO_ERROR)
     {
         printf("Failed to start sineWave. Error %d.\n", ret);

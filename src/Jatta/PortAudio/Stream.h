@@ -16,8 +16,10 @@ namespace Jatta
     {
         class Stream
         {
-            _JATTA_PASTREAM stream;
+        private:
+            Float32 volume;
         protected:
+            _JATTA_PASTREAM stream;
             UInt32 sampleRate;
             UInt32 framesPerBuffer;
             UInt32 channelCount;
@@ -33,6 +35,9 @@ namespace Jatta
             _JATTA_EXPORT SInt32 Stop();
             _JATTA_EXPORT SInt32 Close();
 
+            _JATTA_EXPORT void SetVolume(Float32 volume);
+            _JATTA_EXPORT Float32 GetVolume();
+
             _JATTA_EXPORT bool IsStopped();
             _JATTA_EXPORT bool IsActive();
             _JATTA_EXPORT StreamInfo GetInfo();
@@ -43,6 +48,8 @@ namespace Jatta
 
             _JATTA_EXPORT SInt32 Read(void* buffer, UInt64 frames);
             _JATTA_EXPORT SInt32 Write(const void* buffer, UInt64 frames);
+            _JATTA_EXPORT SInt64 ReadAvailable();
+            _JATTA_EXPORT SInt64 WriteAvailable();
         };
     }
 }
