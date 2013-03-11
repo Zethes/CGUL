@@ -32,7 +32,6 @@ SIMPLESOURCE_INIT(ON JATTA_SOURCE)
 
 # Add the source subdirectories
 ADD_SUBDIRECTORY(Jatta/Assimp)
-ADD_SUBDIRECTORY(Jatta/Audio)
 ADD_SUBDIRECTORY(Jatta/Collision)
 ADD_SUBDIRECTORY(Jatta/Containers)
 ADD_SUBDIRECTORY(Jatta/External)
@@ -42,6 +41,7 @@ ADD_SUBDIRECTORY(Jatta/Images)
 ADD_SUBDIRECTORY(Jatta/Math)
 ADD_SUBDIRECTORY(Jatta/Network)
 ADD_SUBDIRECTORY(Jatta/OpenGL)
+ADD_SUBDIRECTORY(Jatta/PortAudio)
 ADD_SUBDIRECTORY(Jatta/Utility)
 ADD_SUBDIRECTORY(Jatta/Windows)
 
