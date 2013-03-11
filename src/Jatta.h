@@ -64,13 +64,6 @@
 #	include "Jatta/Assimp/VertexWeight.h"
 #endif
 
-#ifdef JATTA_USE_AUDIO
-#   include "Jatta/Audio/Device.h"
-#   include "Jatta/Audio/HostApiInfo.h"
-#   include "Jatta/Audio/PortAudio.h"
-#   include "Jatta/Audio/Stream.h"
-#endif
-
 #include "Jatta/Collision/AABB2D.h"
 #include "Jatta/Collision/AABB3D.h"
 
@@ -108,6 +101,19 @@
 #   include "Jatta/OpenGL/Shader.h"
 #   include "Jatta/OpenGL/Texture.h"
 #   include "Jatta/OpenGL/VertexArray.h"
+#endif
+
+#ifdef JATTA_USE_AUDIO
+#   include "Jatta/PortAudio/Device.h"
+#   include "Jatta/PortAudio/HostApi.h"
+#   include "Jatta/PortAudio/HostError.h"
+#   include "Jatta/PortAudio/InputStream.h"
+#   include "Jatta/PortAudio/PortAudio.h"
+#   include "Jatta/PortAudio/SawWave.h"
+#   include "Jatta/PortAudio/SineWave.h"
+#   include "Jatta/PortAudio/Stream.h"
+#   include "Jatta/PortAudio/StreamData.h"
+#   include "Jatta/PortAudio/StreamInfo.h"
 #endif
 
 #include "Jatta/Utility/Encryption.h"

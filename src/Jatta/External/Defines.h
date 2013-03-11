@@ -63,6 +63,8 @@
 #define _JATTA_PASTREAM_CALLBACK_FLAGS unsigned long
 #define _JATTA_PADEVICE_INFO void*
 #define _JATTA_PAHOSTAPI_INFO void*
+#define _JATTA_PASTREAM_INFO void*
+#define _JATTA_PAHOSTERROR_INFO void*
 
 #if defined(JATTA_INCLUDES)
 #   ifdef _CPP_STATIC_ASSERT
@@ -150,6 +152,8 @@
 #       define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
 #       define _JATTA_PADEVICE_INFO ::PaDeviceInfo*
 #       define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
+#       define _JATTA_PASTREAM_INFO ::PaStreamInfo*
+#       define _JATTA_PAHOSTERROR_INFO ::PaHostErrorInfo*
 #   endif
 #endif
 

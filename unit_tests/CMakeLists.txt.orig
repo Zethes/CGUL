@@ -35,15 +35,22 @@ ENDIF()
 INCLUDE_DIRECTORIES(${JATTA_INCLUDES})
 ADD_SUBDIRECTORY(File)
 ADD_SUBDIRECTORY(Utility)
+>>>>>>> portaudio
 ADD_SUBDIRECTORY(PortAudio)
+=======
 
 ADD_TEST(File/File ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_File_File)
 
 ADD_TEST(Utility/CRC32 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_Utility_CRC32)
 ADD_TEST(Utility/MD5 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_Utility_MD5)
 ADD_TEST(Utility/String ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_Utility_String)
+<<<<<<< HEAD
+ADD_TEST(Utility/Timer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_Utility_Timer)
+=======
 ADD_TEST(Utility/Timer ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_Utility_Timer)
 
+>>>>>>> portaudio
 ADD_TEST(PortAudio/Test_PA_Devices ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Devices) 
 ADD_TEST(PortAudio/Test_PA_Version ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Version) 
 ADD_TEST(PortAudio/Test_PA_Wave ${CMAKE_CURRENT_BINARY_DIR}/../bin/Test_PA_Wave)
+=======
