@@ -32,6 +32,7 @@ Features
 * - <i>Missing a few features on all platforms but mostly functional</i>
 * <b>Utf-8 everywhere</b>
 * - <i>Almost</i>
+* <b>Easy to use PortAudio wrapper</b>
 * <b>A very liberal license</b>
 
 NOTE: Since Jatta is still in developmental stages all features above are only partially implemented!
