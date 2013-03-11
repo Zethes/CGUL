@@ -7,6 +7,8 @@
 #include <cstdio>
 #include <sstream>
 
+#include <limits.h>
+
 #ifdef MACOS
 #   import "MacOS/Application.h"
 #endif
@@ -244,11 +246,14 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     wc.hInstance = GetModuleHandle(nullptr);
     wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
+    //wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
     wc.lpszClassName = new wchar_t[ss.str().length() + 1];
     memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
     wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
+
+    backgroundBrush = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
+    wc.hbrBackground = (HBRUSH)backgroundBrush;
 
     // Register the window class
     if (!RegisterClassEx(&wc))
@@ -490,6 +495,20 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     }
 
     // TODO: Jatta::Window::SetBackgroundColor
+
+#   ifdef WINDOWS
+    if (backgroundBrush)
+    {
+        DeleteObject(backgroundBrush);
+        backgroundBrush = NULL;
+    }
+    backgroundBrush = CreateSolidBrush(RGB(color.r, color.g, color.b));
+    SetClassLongPtr(handle, GCLP_HBRBACKGROUND, (LONG)backgroundBrush);
+
+    // Redraw the window
+    InvalidateRect(handle, NULL, true);
+    UpdateWindow(handle);
+#   endif
 
 #   ifdef MACOS
     [handle setBackgroundColor: color];

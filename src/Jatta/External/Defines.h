@@ -22,6 +22,7 @@
 #   define _JATTA_PIXELFORMATDESCRIPTOR Jatta::_JATTA_PIXELFORMATDESCRIPTOR
 #   define _JATTA_HDC int
 #   define _JATTA_HGLRC int
+#   define _JATTA_HGDIOBJ void*
 #endif
 
 #ifdef LINUX
@@ -75,6 +76,7 @@
         CHECK(::PIXELFORMATDESCRIPTOR, _JATTA_PIXELFORMATDESCRIPTOR);
         CHECK(::HDC, _JATTA_HDC);
         CHECK(::HGLRC, _JATTA_HGLRC);
+        CHECK(::HGDIOBJ, _JATTA_HGDIOBJ);
 #   endif
 #   ifdef LINUX
         CHECK(::Display*, _JATTA_DISPLAY);
@@ -102,6 +104,7 @@
 #       define _JATTA_PIXELFORMATDESCRIPTOR ::PIXELFORMATDESCRIPTOR
 #       define _JATTA_HDC ::HDC
 #       define _JATTA_HGLRC ::HGLRC
+#       define _JATTA_HGDIOBJ ::HGDIOBJ
 #    endif
 #    ifdef LINUX
 #       define _JATTA_DISPLAY ::Display*

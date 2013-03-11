@@ -23,6 +23,8 @@ namespace Jatta
 
         char className[20];
 
+        _JATTA_HGDIOBJ backgroundBrush;
+
         static long __stdcall WindowProcedure(_JATTA_HWND handle, unsigned int message, unsigned int wParam, long int lParam);
 #       endif
 
