@@ -6,6 +6,7 @@
 #include "PortAudio.h"
 #include "Device.h"
 #include "HostApi.h"
+#include "HostError.h"
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Initialize()
 {
@@ -24,6 +25,11 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetVersion()
 _JATTA_EXPORT Jatta::String Jatta::PortAudio::GetVersionText()
 {
     return String(Pa_GetVersionText());
+}
+
+_JATTA_EXPORT Jatta::String Jatta::PortAudio::GetErrorText(SInt32 error)
+{
+    return String(Pa_GetErrorText(error));
 }
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDeviceCount()
@@ -74,6 +80,11 @@ _JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetDefaultHostApi()
 _JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetHostApi(SInt32 index)
 {
     return HostApi(Pa_GetHostApiInfo(index));
+}
+
+_JATTA_EXPORT Jatta::PortAudio::HostError Jatta::PortAudio::GetLastHostError()
+{
+    return HostError(Pa_GetLastHostErrorInfo());
 }
 
 _JATTA_EXPORT void Jatta::PortAudio::Sleep(UInt32 miliseconds)

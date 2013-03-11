@@ -82,3 +82,48 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Close()
 {
     return (SInt32)Pa_CloseStream(stream);
 }
+
+_JATTA_EXPORT bool Jatta::PortAudio::Stream::IsStopped()
+{
+    if (Pa_IsStreamStopped(stream) == 1)
+        return true;
+    return false;
+}
+
+_JATTA_EXPORT bool Jatta::PortAudio::Stream::IsActive()
+{
+    if (Pa_IsStreamActive(stream) == 1)
+        return true;
+    return false;
+}
+
+
+_JATTA_EXPORT Jatta::PortAudio::StreamInfo Jatta::PortAudio::Stream::GetInfo()
+{
+    return StreamInfo(Pa_GetStreamInfo(stream));
+}
+
+_JATTA_EXPORT double Jatta::PortAudio::Stream::GetTime()
+{
+    return (double)Pa_GetStreamTime(stream);
+}
+
+_JATTA_EXPORT double Jatta::PortAudio::Stream::GetCpuLoad()
+{
+    return (double)Pa_GetStreamCpuLoad(stream);
+}
+
+_JATTA_EXPORT Jatta::PortAudio::StreamData* Jatta::PortAudio::Stream::GetData()
+{
+    return &data;
+}
+
+_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Read(void* buffer, UInt64 frames)
+{
+    return (SInt32)Pa_ReadStream(stream, buffer, frames);
+}
+
+_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Write(const void* buffer, UInt64 frames)
+{
+    return (SInt32)Pa_WriteStream(stream, buffer, frames);
+}

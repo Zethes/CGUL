@@ -7,6 +7,7 @@
 #include <Jatta/Config.h>
 #include "StreamData.h"
 #include "Device.h"
+#include "StreamInfo.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -31,6 +32,17 @@ namespace Jatta
             _JATTA_EXPORT SInt32 Start();
             _JATTA_EXPORT SInt32 Stop();
             _JATTA_EXPORT SInt32 Close();
+
+            _JATTA_EXPORT bool IsStopped();
+            _JATTA_EXPORT bool IsActive();
+            _JATTA_EXPORT StreamInfo GetInfo();
+            _JATTA_EXPORT double GetTime();
+            _JATTA_EXPORT double GetCpuLoad();
+
+            _JATTA_EXPORT StreamData* GetData();
+
+            _JATTA_EXPORT SInt32 Read(void* buffer, UInt64 frames);
+            _JATTA_EXPORT SInt32 Write(const void* buffer, UInt64 frames);
         };
     }
 }

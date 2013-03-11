@@ -106,11 +106,13 @@
 #ifdef JATTA_USE_AUDIO
 #   include "Jatta/PortAudio/Device.h"
 #   include "Jatta/PortAudio/HostApi.h"
+#   include "Jatta/PortAudio/HostError.h"
 #   include "Jatta/PortAudio/PortAudio.h"
 #   include "Jatta/PortAudio/SawWave.h"
 #   include "Jatta/PortAudio/SineWave.h"
 #   include "Jatta/PortAudio/Stream.h"
 #   include "Jatta/PortAudio/StreamData.h"
+#   include "Jatta/PortAudio/StreamInfo.h"
 #endif
 
 #include "Jatta/Utility/Encryption.h"

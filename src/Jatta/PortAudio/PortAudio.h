@@ -14,6 +14,7 @@ namespace Jatta
     {
         class Device;
         class HostApi;
+        class HostError;
 
         enum Errors
         {
@@ -55,6 +56,7 @@ namespace Jatta
 
         _JATTA_EXPORT SInt32 GetVersion();
         _JATTA_EXPORT String GetVersionText();
+        _JATTA_EXPORT String GetErrorText(SInt32 error);
 
         _JATTA_EXPORT SInt32 GetDeviceCount();
         _JATTA_EXPORT SInt32 GetDefaultInputDeviceIndex();
@@ -67,6 +69,7 @@ namespace Jatta
         _JATTA_EXPORT SInt32 GetDefaultHostApiIndex();
         _JATTA_EXPORT HostApi GetDefaultHostApi();
         _JATTA_EXPORT HostApi GetHostApi(SInt32 index);
+        _JATTA_EXPORT HostError GetLastHostError();
 
         _JATTA_EXPORT void Sleep(UInt32 miliseconds);
     }
