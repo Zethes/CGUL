@@ -85,7 +85,7 @@ namespace Jatta
 
         _JATTA_EXPORT void SetWidth(UInt32 width);
         _JATTA_EXPORT UInt32 GetWidth() const;
-        _JATTA_EXPORT void SetHeight(UInt32 width);
+        _JATTA_EXPORT void SetHeight(UInt32 height);
         _JATTA_EXPORT UInt32 GetHeight() const;
         _JATTA_EXPORT void SetSize(const Float2& size) const; // TODO: use something other than Float2
         _JATTA_EXPORT Float2 GetSize() const;

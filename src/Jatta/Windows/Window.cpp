@@ -285,20 +285,21 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 #   endif
 
 #   ifdef LINUX
-    int screen = DefaultScreen(this->display);
-    Visual* visual = DefaultVisual(this->display, screen);
-    int depth = DefaultDepth(this->display, screen);
+    int screen = DefaultScreen(display);
+    Visual* visual = DefaultVisual(display, screen);
+    int depth = DefaultDepth(display, screen);
     XSetWindowAttributes attributes;
     attributes.background_pixel = style.backgroundColor.b | (style.backgroundColor.g << 8) | (style.backgroundColor.r << 16);//XWhitePixel(display, screen);
-    attributes.border_pixel = XBlackPixel(this->display, screen);
+    attributes.border_pixel = XBlackPixel(display, screen);
     attributes.override_redirect = 0;
-    this->handle = XCreateWindow(this->display, XRootWindow(this->display, screen), 200, 200, style.width, style.height, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
+    this->handle = XCreateWindow(display, XRootWindow(display, screen), 200, 200, style.width, style.height, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
     Atom wmDelete = XInternAtom(display, "WM_DELETE_WINDOW", true);
-    XSetWMProtocols(this->display, this->handle, &wmDelete, 1);
-    XSelectInput(this->display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
-    XMapWindow(this->display, this->handle);
-    XFlush(this->display);
+    XSetWMProtocols(display, this->handle, &wmDelete, 1);
+    XSelectInput(display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
+    XMapWindow(display, this->handle);
+    XFlush(display);
     windowMap.insert(std::make_pair(this->handle, this));
+
 #   endif
 
 #   ifdef MACOS
@@ -510,6 +511,12 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     UpdateWindow(handle);
 #   endif
 
+#   ifdef LINUX
+    XSetWindowBackground(display, this->handle, color.b | (color.g << 8) | (color.r << 16));
+    XClearWindow(display, this->handle);
+    XFlush(display);
+#   endif
+
 #   ifdef MACOS
     [handle setBackgroundColor: color];
 #   endif
@@ -538,6 +545,21 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
+#   ifdef LINUX
+    if (GetResizable())
+    {
+        XResizeWindow(display, this->handle, width, GetHeight());
+    }
+    else
+    {
+        XSizeHints hints;
+        hints.flags = PMinSize | PMaxSize;
+        hints.min_width = width; hints.min_height = GetHeight();
+        hints.max_width = width; hints.max_height = GetHeight();
+        XSetWMNormalHints(display, this->handle, &hints);
+    }
+#   endif
+
     // TODO: Jatta::Window::SetWidth
 }
 
@@ -567,8 +589,22 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 #   endif
 }
 
-_JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 width)
+_JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
+#   ifdef LINUX
+    if (GetResizable())
+    {
+        XResizeWindow(display, this->handle, GetWidth(), height);
+    }
+    else
+    {
+        XSizeHints hints;
+        hints.flags = PMinSize | PMaxSize;
+        hints.min_width = GetWidth(); hints.min_height = height;
+        hints.max_width = GetWidth(); hints.max_height = height;
+        XSetWMNormalHints(display, this->handle, &hints);
+    }
+#   endif
     // TODO: Jatta::Window::SetHeight
 }
 
@@ -600,6 +636,21 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 
 _JATTA_EXPORT void Jatta::Window::SetSize(const Float2& size) const
 {
+#   ifdef LINUX
+    if (GetResizable())
+    {
+        XResizeWindow(display, this->handle, size.x, size.y);
+    }
+    else
+    {
+        XSizeHints hints;
+        hints.flags = PMinSize | PMaxSize;
+        hints.min_width = size.x; hints.min_height = size.y;
+        hints.max_width = size.x; hints.max_height = size.y;
+        XSetWMNormalHints(display, this->handle, &hints);
+    }
+#   endif
+
     // TODO: Jatta::Window::SetSize
 }
 
@@ -691,6 +742,17 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 
 #   ifdef WINDOWS
     return ((GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME) || (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX));
+#   endif
+
+#   ifdef LINUX
+    XSizeHints hints;
+    long hintsSupplied;
+    XGetWMNormalHints(display, this->handle, &hints, &hintsSupplied);
+    if ((hintsSupplied & PMinSize == 0) || (hintsSupplied & PMaxSize == 0))
+    {
+        return false;
+    }
+    return (hints.min_width != hints.max_width || hints.min_height != hints.max_height);
 #   endif
 
 #   ifdef MACOS

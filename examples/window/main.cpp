@@ -22,11 +22,13 @@ int main()
     {
         Window::Update();
 
-        hue += 0.001f;
+        hue += 1.0f;
         window.SetBackgroundColor(Color::MakeHSL(hue, 255, 255));
         if (hue >= 360)
         {
             hue -= 360;
         }
+
+        Jatta::Timer::Sleep(1);
     }
 }
