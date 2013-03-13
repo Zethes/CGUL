@@ -20,7 +20,7 @@ Features
 * - <i>Needs revamping for Windows and Utf-16</i>
 * <b>Font loading via FreeType</b>
 * - <i>Terribly broken at the moment</i>
-* <b>Simplified image loading/saving</b>
+* <b>Simplified image loading/saving (Bitmap, PNG, Jpeg, and DDS)</b>
 * - <i>Work in progress</i>
 * <b>3D mathematics library</b>
 * - <i>Mostly there, missing operators and other helper functions</i>
