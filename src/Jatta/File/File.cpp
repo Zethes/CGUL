@@ -122,7 +122,6 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadLines(const String& fileName, std:
     size_t readResult = fread(buffer, 1, fileSize, stream);
     buffer[readResult] = '\n';
 
-    char* bufferEnd = buffer + fileSize;
     char* lineStart = buffer;
     for (size_t i = 0; i < readResult + 1; i++)
     {
@@ -163,7 +162,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadData(const Jatta::String& fileName
     }
 
     // copy the file into the buffer:
-    size_t readResult = fread(buffer, 1, size, stream);
+    fread(buffer, 1, size, stream);
 
     fclose (stream);
     return true;

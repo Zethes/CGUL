@@ -38,11 +38,11 @@ uint1 digest[16];
 
 static uint4 F(uint4 x, uint4 y, uint4 z)
 {
-    return x&y | ~x&z;
+    return (x&y) | (~x&z);
 }
 static uint4 G(uint4 x, uint4 y, uint4 z)
 {
-    return x&z | y&~z;
+    return (x&z) | (y&~z);
 }
 static uint4 H(uint4 x, uint4 y, uint4 z)
 {

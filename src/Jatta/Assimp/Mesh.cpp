@@ -132,4 +132,5 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetPrimitiveTypes() const
         return 0x4;
     else if (mesh->mPrimitiveTypes == 0x8)
         return 0x9;
+    return 0;
 }

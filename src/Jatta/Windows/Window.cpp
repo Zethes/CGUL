@@ -748,7 +748,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
     XSizeHints hints;
     long hintsSupplied;
     XGetWMNormalHints(display, this->handle, &hints, &hintsSupplied);
-    if ((hintsSupplied & PMinSize == 0) || (hintsSupplied & PMaxSize == 0))
+    if (((hintsSupplied & PMinSize) == 0) || ((hintsSupplied & PMaxSize) == 0))
     {
         return false;
     }

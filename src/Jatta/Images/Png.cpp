@@ -81,8 +81,6 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size)
     // Store the image size.
     width = (UInt32)png_get_image_width(pngPtr, infoPtr);
     height = (UInt32)png_get_image_height(pngPtr, infoPtr);
-    UInt32 imgWidth = width;
-    UInt32 imgHeight = height;
 
     // Only 8 bit-depth images are supported.
     if (png_get_bit_depth(pngPtr, infoPtr) != 8)
@@ -136,7 +134,7 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size)
             png_read_image(pngPtr, rows);
 
             // Copy over the data into our color.
-            for (int i = 0; i < imageSize; i++)
+            for (UInt32 i = 0; i < imageSize; i++)
             {
                 memcpy(colors + i, data + i * 3, 3);
                 colors[i].a = 255;
@@ -230,7 +228,7 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean 
         data = new char[imageSize * 3];
 
         // Copy over just the RGB values of our color.
-        for (int i = 0; i < imageSize; i++)
+        for (UInt32 i = 0; i < imageSize; i++)
         {
             memcpy(data + i * 3, colors + i, 3);
         }
