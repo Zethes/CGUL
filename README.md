@@ -14,8 +14,6 @@ Features
 * <b>Powerful Assimp library wrapper to load in 3D models and scenes</b>
 * <b>Experimental collision library for 2D and 3D collision detection</b>
 * - <i>Work in progress (more like, not even started)</i>
-* <b>STL-like containers with extended functionality</b>
-* - <i>Possibly going to be tossed</i>
 * <b>File system</b>
 * - <i>Needs revamping for Windows and Utf-16</i>
 * <b>Font loading via FreeType</b>
