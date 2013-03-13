@@ -33,7 +33,6 @@ SIMPLESOURCE_INIT(ON JATTA_SOURCE)
 # Add the source subdirectories
 ADD_SUBDIRECTORY(Jatta/Assimp)
 ADD_SUBDIRECTORY(Jatta/Collision)
-ADD_SUBDIRECTORY(Jatta/Containers)
 ADD_SUBDIRECTORY(Jatta/External)
 ADD_SUBDIRECTORY(Jatta/File)
 ADD_SUBDIRECTORY(Jatta/Fonts)

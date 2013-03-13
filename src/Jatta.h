@@ -67,9 +67,6 @@
 #include "Jatta/Collision/AABB2D.h"
 #include "Jatta/Collision/AABB3D.h"
 
-#include "Jatta/Containers/List.h"
-#include "Jatta/Containers/Locale.h"
-
 #include "Jatta/File/File.h"
 
 #ifdef JATTA_USE_FREETYPE
