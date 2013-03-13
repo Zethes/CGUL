@@ -11,29 +11,12 @@
 
 #define PNGSIGSIZE 8
 
-static void PngReadData(png_structp pngPointer, png_bytep data, png_size_t length)
+static void PngReadData(png_structp pngPtr, png_bytep data, png_size_t length)
 {
-    char** fileData = (char**)png_get_io_ptr(pngPointer);
+    char** fileData = (char**)png_get_io_ptr(pngPtr);
     memcpy(data, *fileData, length);
     *fileData += length;
 }
-
-/*bool Jatta::Png::isValid(const char* buffer, unsigned int length)
-{
-    return png_sig_cmp((png_bytep)buffer, 0, PNGSIGSIZE) == 0;
-}
-
-bool Jatta::Png::isValid(const std::string& fileName)
-{
-    // TODO: clean this up / check for errors
-    unsigned int size;
-    File::getFileSize(fileName, &size);
-    char* buffer = new char[size];
-    File::getData(fileName, buffer, size);
-    bool valid = isValid(buffer, size);
-    delete[] buffer;
-    return valid;
-}*/
 
 /** @brief Checks if the given file is a valid Png image.
  *  @param fileName The file to load.
@@ -46,139 +29,197 @@ _JATTA_EXPORT bool Jatta::Image::IsPng(const char* data, Jatta::UInt32 size)
     return png_sig_cmp((png_bytep)data, 0, PNGSIGSIZE) == 0;
 }
 
+/** @brief Loads a png image.
+ *  @param buffer A png image loaded into memory.
+ *  @param size Size of the buffer.
+ *  @param flags Image flags.
+ *  @note Only supports RGBA and RGB 8 bit-depth images.
+ */
 _JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size, UInt32 flags)
 {
-    //if (!isValid(buffer, size))
-    //{
-        //return false;
-    //}
-
-    //Here we create the png read struct. The 3 NULL's at the end can be used
-    //for your own custom error handling functions, but we'll just use the default.
-    //if the function fails, NULL is returned. Always check the return values!
+    // Create the png read structure to begin reading data.
     png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pngPtr)
     {
         throw std::runtime_error("Couldn't initialize png read struct");
     }
 
-    //Here we create the png info struct.
-    //Note that this time, if this function fails, we have to clean up the read struct!
+    // Create the png info struct.
     png_infop infoPtr = png_create_info_struct(pngPtr);
     if (!infoPtr)
     {
-        png_destroy_read_struct(&pngPtr, (png_infopp)0, (png_infopp)0);
+        png_destroy_read_struct(&pngPtr, NULL, NULL);
         throw std::runtime_error("Couldn't initialize png info struct");
     }
 
-    //Here I've defined 2 pointers up front, so I can use them in error handling.
-    //I will explain these 2 later. Just making sure these get deleted on error.
-    png_bytep* rowPtrs = NULL;
+    // Create some arrays used in loading, to be deleted if things go wrong.
+    png_bytep* rows = NULL;
     char* data = NULL;
 
-    if (setjmp(png_jmpbuf(pngPtr))) {
-        //An error occured, so clean up what we have allocated so far...
-        png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
-        if (rowPtrs != NULL) delete [] rowPtrs;
-        if (data != NULL) delete [] data;
+    // Setup an error handler for libpng errors.  If anything goes wrong, it'll jump into here.
+    if (setjmp(png_jmpbuf(pngPtr)))
+    {
+        // Clean up
+        png_destroy_read_struct(&pngPtr, &infoPtr,NULL);
+        delete[] rows;
+        delete[] data;
 
-        //Make sure you return here. libPNG will jump to here if something
-        //goes wrong, and if you continue with your normal code, you might
-        //End up with an infinite loop.
+        // Throw an error
         throw std::runtime_error("An error occured while reading the PNG file");
     }
 
-    buffer += 8;
-    png_set_read_fn(pngPtr, (png_voidp)&buffer, PngReadData);
-
-    //Set the amount signature bytes we've already read:
-    //We've defined PNGSIGSIZE as 8;
+    // Skip over the png file signature.
+    buffer += PNGSIGSIZE;
     png_set_sig_bytes(pngPtr, PNGSIGSIZE);
 
-    //Now call png_read_info with our pngPtr as image handle, and infoPtr to receive the file info.
+    // Create a specialized read function to allow reading from memory.
+    png_set_read_fn(pngPtr, (png_voidp)&buffer, PngReadData);
+
+    // Read the png's info (size, type, bit depth, etc).
     png_read_info(pngPtr, infoPtr);
 
+    // Store the image size.
+    width = (UInt32)png_get_image_width(pngPtr, infoPtr);
+    height = (UInt32)png_get_image_height(pngPtr, infoPtr);
+    UInt32 imgWidth = width;
+    UInt32 imgHeight = height;
 
-    png_uint_32 imgWidth =  png_get_image_width(pngPtr, infoPtr);
-    png_uint_32 imgHeight = png_get_image_height(pngPtr, infoPtr);
-
-    width = imgWidth;
-    height = imgHeight;
-
-    png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * imgHeight);
-    for (unsigned int y = 0; y < imgHeight; y++)
+    // Only 8 bit-depth images are supported.
+    if (png_get_bit_depth(pngPtr, infoPtr) != 8)
     {
-        row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(pngPtr,infoPtr));
+        throw std::runtime_error("Only 8 bit-depth png images are supported.");
     }
 
-    //delete[] buffer;
+    // Calculate image size.
+    UInt32 imageSize = width * height;
 
-    png_read_image(pngPtr, row_pointers);
-
-    if (png_get_color_type(pngPtr, infoPtr) == PNG_COLOR_TYPE_RGB)
+    // Determine the type of png we're reading.
+    switch (png_get_color_type(pngPtr, infoPtr))
     {
-        colors = (Color*)new char[imgHeight * imgWidth * sizeof(Color)];
-
-        for (unsigned int y = 0; y < imgHeight; y++)
+        // A standard RGBA image, we can read this one-to-one so it's super fast.
+        case PNG_COLOR_TYPE_RGBA:
         {
-            png_byte* row = row_pointers[y];
-            for (unsigned int x = 0; x < imgWidth; x++)
+            // Create the color array.
+            colors = (Color*)new char[imageSize * sizeof(Color)];
+
+            // Create an array of rows needed by libpng.
+            rows = new png_bytep[height];
+            for (UInt32 r = 0; r < height; r++)
             {
-                if (flags & UPSIDE_DOWN != 0)
-                {
-                    png_byte* ptr = &(row[x*3]);
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].r = ptr[0];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].g = ptr[1];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].b = ptr[2];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].a = 255;
-                }
-                else
-                {
-                    png_byte* ptr = &(row[x*3]);
-                    colors[x + y * imgWidth].r = ptr[0];
-                    colors[x + y * imgWidth].g = ptr[1];
-                    colors[x + y * imgWidth].b = ptr[2];
-                    colors[x + y * imgWidth].a = 255;
-                }
+                rows[r] = (png_bytep)(colors + width * r);
             }
+
+            // Read the png into our image.
+            png_read_image(pngPtr, rows);
+
+            // Clean up.
+            delete[] rows;
+            break;
         }
-        return true;
-    }
-
-    if (png_get_color_type(pngPtr, infoPtr) == PNG_COLOR_TYPE_RGBA)
-    {
-        colors = (Color*)new char[imgHeight * imgWidth * sizeof(Color)];
-
-        for (unsigned int y = 0; y < imgHeight; y++)
+        // RGB image, we need to do some memory-moving to account for the alpha value.
+        case PNG_COLOR_TYPE_RGB:
         {
-            png_byte* row = row_pointers[y];
-            for (unsigned int x = 0; x < imgWidth; x++)
+            // Create the color array.
+            colors = (Color*)new char[imageSize * sizeof(Color)];
+
+            // Create a temporary array to store the RGB values.
+            data = new char[imageSize * 3];
+
+            // Create an array of rows needed by libpng.
+            rows = new png_bytep[height];
+            for (UInt32 r = 0; r < height; r++)
             {
-                png_byte* ptr = &(row[x*4]);
-                if (flags & UPSIDE_DOWN != 0)
-                {
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].r = ptr[0];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].g = ptr[1];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].b = ptr[2];
-                    colors[x + ((imgHeight - 1) - y) * imgWidth].a = ptr[3];
-                }
-                else
-                {
-                    colors[x + y * imgWidth].r = ptr[0];
-                    colors[x + y * imgWidth].g = ptr[1];
-                    colors[x + y * imgWidth].b = ptr[2];
-                    colors[x + y * imgWidth].a = ptr[3];
-                }
+                rows[r] = (png_bytep)(data + width * r * 3);
             }
+
+            // Read the png into our image.
+            png_read_image(pngPtr, rows);
+
+            // Copy over the data into our color.
+            for (int i = 0; i < imageSize; i++)
+            {
+                memcpy(colors + i, data + i * 3, 3);
+                colors[i].a = 255;
+            }
+
+            // Clean up.
+            delete[] data;
+            delete[] rows;
+            break;
         }
-        return true;
+        default:
+        {
+            throw std::runtime_error("The png image type is not supported.");
+            break;
+        }
     }
 
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::SavePng(const Jatta::String& fileName)
+/** @brief Saves the current image as a png.
+ *  @param fileName Name of the file to write to.
+ *  @note Saves as a 32bit RGBA image.
+ */
+_JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName)
 {
-    // TODO: Saving pngs
-    return true;
+    // Create the file to write to.
+#   ifdef WINDOWS
+    std::wstring file = fileName._ToWideString();
+    FILE* stream = _wfopen(file.c_str(), L"wb");
+#   else
+    FILE* stream = fopen(fileName.GetCString(), "wb");
+#endif
+    if (!stream)
+    {
+        std::runtime_error("File could not be opened for writing");
+    }
+
+    // Initialize a png struct for writing.
+    png_structp pngPtr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!pngPtr)
+    {
+        std::runtime_error("png_create_write_struct failed");
+    }
+
+    // Create an info struct to setup the png image.
+    png_infop infoPtr = png_create_info_struct(pngPtr);
+    if (!infoPtr)
+    {
+        png_destroy_read_struct(&pngPtr, NULL, NULL);
+        std::runtime_error("png_create_info_struct failed");
+    }
+
+    // Create an array used later, to be deleted if things go wrong.
+    png_bytep* rows = NULL;
+
+    // Setup an error handler for libpng errors.  If anything goes wrong, it'll jump into here.
+    if (setjmp(png_jmpbuf(pngPtr)))
+    {
+        delete[] rows;
+        png_destroy_read_struct(&pngPtr, &infoPtr,NULL);
+        std::runtime_error("Failed to write png image.");
+    }
+
+    // Setup png to use our file stream.
+    png_init_io(pngPtr, stream);
+
+    // Write the png header.
+    png_set_IHDR(pngPtr, infoPtr, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+    png_write_info(pngPtr, infoPtr);
+
+    // Create an array of rows needed by libpng.
+    rows = new png_bytep[height];
+    for (UInt32 r = 0; r < height; r++)
+    {
+        rows[r] = (png_bytep)(colors + width * r);
+    }
+
+    // Write the image data.
+    png_write_image(pngPtr, rows);
+    png_write_end(pngPtr, NULL);
+
+    // Clean up.
+    delete[] rows;
+    fclose(stream);
 }

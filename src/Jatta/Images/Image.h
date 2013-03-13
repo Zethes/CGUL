@@ -33,6 +33,11 @@ namespace Jatta
         _JATTA_EXPORT Jatta::Image& operator=(Image&& move);
 #       endif
 
+        _JATTA_EXPORT bool Create(UInt32 width, UInt32 height);
+        _JATTA_EXPORT bool Create(UInt32 width, UInt32 height, const Color& color);
+
+        _JATTA_EXPORT void Free();
+
         _JATTA_EXPORT bool Load(const Jatta::String& fileName, UInt32 flags = 0);
         _JATTA_EXPORT bool LoadFromMemory(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
 
@@ -47,7 +52,7 @@ namespace Jatta
 
 #       ifdef JATTA_USE_PNG
         _JATTA_EXPORT bool LoadPng(const char* data, Jatta::UInt32 size, UInt32 flags = 0);
-        _JATTA_EXPORT bool SavePng(const Jatta::String& fileName);
+        _JATTA_EXPORT void SavePng(const Jatta::String& fileName);
 #       endif
 
 #       ifdef JATTA_USE_JPEG
@@ -65,8 +70,6 @@ namespace Jatta
         _JATTA_EXPORT const unsigned char* GetData() const;
         _JATTA_EXPORT unsigned int GetWidth() const;
         _JATTA_EXPORT unsigned int GetHeight() const;
-
-        _JATTA_EXPORT void Free();
     };
 }
 

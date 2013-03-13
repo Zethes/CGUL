@@ -44,7 +44,7 @@ _JATTA_EXPORT Jatta::Image::Image(Image&& move)
 
 _JATTA_EXPORT Jatta::Image::~Image()
 {
-    //delete[] colors;
+    delete[] colors;
 }
 
 _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
@@ -89,11 +89,35 @@ _JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
     return height;
 }
 
+_JATTA_EXPORT bool Jatta::Image::Create(UInt32 width, UInt32 height)
+{
+    colors = (Color*)new char[height * width * sizeof(Color)];
+    this->width = width;
+    this->height = height;
+    return true;
+}
+
+_JATTA_EXPORT bool Jatta::Image::Create(UInt32 width, UInt32 height, const Color& color)
+{
+    if (!Create(width, height))
+    {
+        return false;
+    }
+    for (unsigned int y = 0; y < height; y++)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            colors[x + y * width] = color;
+        }
+    }
+    return true;
+}
+
 _JATTA_EXPORT void Jatta::Image::Free()
 {
     // TODO: figure out why this crashes in linux
-    //delete[] colors;
-    //colors = nullptr;
+    delete[] colors;
+    colors = nullptr;
 }
 
 _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flags)
