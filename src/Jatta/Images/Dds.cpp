@@ -193,7 +193,7 @@ _JATTA_EXPORT bool Jatta::Image::IsDds(const char* rawBytes, Jatta::UInt32 size)
     return true;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadDds(const char* rawBytes, Jatta::UInt32 len, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadDds(const char* rawBytes, Jatta::UInt32 len)
 {
     DdsHeader * header = (DdsHeader*) rawBytes;
 

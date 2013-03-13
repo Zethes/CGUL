@@ -167,7 +167,7 @@ _JATTA_EXPORT bool Jatta::Image::IsBmp(const char* buffer, Jatta::UInt32 size)
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadBmp(const char* data, Jatta::UInt32 size, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadBmp(const char* data, Jatta::UInt32 size)
 {
     //TODO: Loading BMPs
     return false;

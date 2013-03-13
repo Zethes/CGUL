@@ -120,7 +120,7 @@ _JATTA_EXPORT void Jatta::Image::Free()
     colors = nullptr;
 }
 
-_JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
 {
     unsigned int size;
     File::GetFileSize(fileName.GetData(), &size);
@@ -129,33 +129,76 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName, UInt32 flag
 
 #   ifdef JATTA_USE_PNG
     if (IsPng((const char*)buffer, size))
-        return LoadPng((const char*)buffer, size, flags);
+        return LoadPng((const char*)buffer, size);
 #   else
     if (false) {}
 #   endif
 #   ifdef JATTA_USE_JPEG
     else if (IsJpg((const char*)buffer, size))
-        return LoadJpg((const char*)buffer, size, flags);
+        return LoadJpg((const char*)buffer, size);
 #   endif
     else if (IsDds((const char*)buffer, size))
-        return LoadDds((const char*)buffer, size, flags);
+        return LoadDds((const char*)buffer, size);
     else
         return false;
 }
-_JATTA_EXPORT bool Jatta::Image::LoadFromMemory(const char* buffer, Jatta::UInt32 size, UInt32 flags)
+
+_JATTA_EXPORT bool Jatta::Image::LoadFromMemory(const char* buffer, Jatta::UInt32 size)
 {
-    #   ifdef JATTA_USE_PNG
-        if (IsPng(buffer, size))
-            return LoadPng(buffer, size, flags);
-    #   else
-        if (false) {}
-    #   endif
-    #   ifdef JATTA_USE_JPEG
-        else if (IsJpg(buffer, size))
-            return LoadJpg(buffer, size, flags);
-    #   endif
-        else if (IsDds(buffer, size))
-            return LoadDds(buffer, size, flags);
-        else
-            return false;
+#   ifdef JATTA_USE_PNG
+    if (IsPng(buffer, size))
+        return LoadPng(buffer, size);
+#   else
+    if (false) {}
+#   endif
+#   ifdef JATTA_USE_JPEG
+    else if (IsJpg(buffer, size))
+        return LoadJpg(buffer, size);
+#   endif
+    else if (IsDds(buffer, size))
+        return LoadDds(buffer, size);
+    else
+        return false;
+}
+
+_JATTA_EXPORT void Jatta::Image::Mirror()
+{
+    for (UInt32 w = 0; w < width / 2; w++)
+    {
+        for (UInt32 h = 0; h < height; h++)
+        {
+            Color swap;
+            swap = colors[w + h * width];
+            colors[w + h * width] = colors[(width - (w + 1)) + h * width];
+            colors[(width - (w + 1)) + h * width] = swap;
+        }
+    }
+}
+
+_JATTA_EXPORT void Jatta::Image::Flip()
+{
+    for (UInt32 h = 0; h < height / 2; h++)
+    {
+        for (UInt32 w = 0; w < width; w++)
+        {
+            Color swap;
+            swap = colors[w + h * width];
+            colors[w + h * width] = colors[w + (height - (h + 1)) * width];
+            colors[w + (height - (h + 1)) * width] = swap;
+        }
+    }
+}
+
+_JATTA_EXPORT void Jatta::Image::MirrorFlip()
+{
+    for (UInt32 h = 0; h < height / 2; h++)
+    {
+        for (UInt32 w = 0; w < width; w++)
+        {
+            Color swap;
+            swap = colors[w + h * width];
+            colors[w + h * width] = colors[(width - (w + 1)) + (height - (h + 1)) * width];
+            colors[(width - (w + 1)) + (height - (h + 1)) * width] = swap;
+        }
+    }
 }

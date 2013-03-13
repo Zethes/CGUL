@@ -35,7 +35,7 @@ _JATTA_EXPORT bool Jatta::Image::IsPng(const char* data, Jatta::UInt32 size)
  *  @param flags Image flags.
  *  @note Only supports RGBA and RGB 8 bit-depth images.
  */
-_JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size)
 {
     // Create the png read structure to begin reading data.
     png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -161,7 +161,7 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size,
  *  @param fileName Name of the file to write to.
  *  @note Saves as a 32bit RGBA image.
  */
-_JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName)
+_JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean alpha)
 {
     // Create the file to write to.
 #   ifdef WINDOWS
@@ -190,13 +190,15 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName)
         std::runtime_error("png_create_info_struct failed");
     }
 
-    // Create an array used later, to be deleted if things go wrong.
+    // Create arrays used later, to be deleted if things go wrong.
     png_bytep* rows = NULL;
+    char* data = NULL;
 
     // Setup an error handler for libpng errors.  If anything goes wrong, it'll jump into here.
     if (setjmp(png_jmpbuf(pngPtr)))
     {
         delete[] rows;
+        delete[] data;
         png_destroy_read_struct(&pngPtr, &infoPtr,NULL);
         std::runtime_error("Failed to write png image.");
     }
@@ -205,15 +207,42 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName)
     png_init_io(pngPtr, stream);
 
     // Write the png header.
-    png_set_IHDR(pngPtr, infoPtr, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+    int colorType = (alpha ? PNG_COLOR_TYPE_RGBA : PNG_COLOR_TYPE_RGB);
+    png_set_IHDR(pngPtr, infoPtr, width, height, 8, colorType, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
     png_write_info(pngPtr, infoPtr);
 
+    // Calculate image size.
+    UInt32 imageSize = width * height;
+
     // Create an array of rows needed by libpng.
-    rows = new png_bytep[height];
-    for (UInt32 r = 0; r < height; r++)
+    if (alpha) // 32bit RGBA
     {
-        rows[r] = (png_bytep)(colors + width * r);
+        // Image is already 32bit RGBA, so it's a one-to-one save
+        rows = new png_bytep[height];
+        for (UInt32 r = 0; r < height; r++)
+        {
+            rows[r] = (png_bytep)(colors + width * r);
+        }
     }
+    else // 24bit RGB
+    {
+        // Create a temporary array to store the RGB values.
+        data = new char[imageSize * 3];
+
+        // Copy over just the RGB values of our color.
+        for (int i = 0; i < imageSize; i++)
+        {
+            memcpy(data + i * 3, colors + i, 3);
+        }
+
+        // Set the rows.
+        rows = new png_bytep[height];
+        for (UInt32 r = 0; r < height; r++)
+        {
+            rows[r] = (png_bytep)(data + width * r * 3);
+        }
+    }
+    
 
     // Write the image data.
     png_write_image(pngPtr, rows);
@@ -221,5 +250,6 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName)
 
     // Clean up.
     delete[] rows;
+    delete[] data;
     fclose(stream);
 }

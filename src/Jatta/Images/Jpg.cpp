@@ -17,7 +17,7 @@ _JATTA_EXPORT bool Jatta::Image::IsJpg(const char* data, Jatta::UInt32 size)
     return false;
 }
 
-_JATTA_EXPORT bool Jatta::Image::LoadJpg(const char* data, Jatta::UInt32 size, UInt32 flags)
+_JATTA_EXPORT bool Jatta::Image::LoadJpg(const char* data, Jatta::UInt32 size)
 {
     //TODO: Loading JPGs
     return false;
