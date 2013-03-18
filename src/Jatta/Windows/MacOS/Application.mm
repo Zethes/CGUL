@@ -9,22 +9,35 @@
 
 @implementation Application
 
+- (id)init
+{
+    if ((self = [super init]))
+    {
+        delegate = [[ApplicationDelegate alloc] init: self];
+        [self setDelegate:delegate];
+    }
+    return self;
+}
+
+- (void)createMenu
+{
+    NSMenu *appleMenu = [[NSMenu alloc] initWithTitle: @"Apple Menu"];
+    [appleMenu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@"q"];
+    NSMenuItem * menuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    NSMenu *mainMenu = [[NSMenu alloc] initWithTitle: @"" ];
+    [menuItem setSubmenu:appleMenu];
+    [mainMenu addItem:menuItem];
+    [self setMainMenu:mainMenu];
+    [self setAppleMenu:appleMenu];
+    [menuItem release];
+    [mainMenu release];
+    [appleMenu release];
+}
+
 - (void)run
 {
-    // I'm not sure what this does
-//  [self finishLaunching];
-
-    // Or this
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:NSApplicationWillFinishLaunchingNotification
-        object:NSApp];
-
-    // Or this
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:NSApplicationDidFinishLaunchingNotification
-        object:NSApp];
-    
-    // OK, I got this one down
+    [self finishLaunching];
+ 
     shouldKeepRunning = YES;
 }
 
@@ -49,6 +62,11 @@
 - (void)terminate: (id)sender
 {
     shouldKeepRunning = NO;
+}
+
+- (bool)keepRunning
+{
+    return shouldKeepRunning == YES;
 }
 
 @end

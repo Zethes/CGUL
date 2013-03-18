@@ -8,6 +8,10 @@ ELSEIF(UNIX)
     SET(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 ENDIF()
 
+IF(APPLE)
+    SET(EXECUTABLE_TYPE MACOSX_BUNDLE)
+ENDIF()
+
 # Set the output directory to the user defined one or the default one
 IF(NOT JATTA_OUTPUT_DIR STREQUAL "")
     SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${JATTA_OUTPUT_DIR})

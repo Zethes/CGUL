@@ -161,6 +161,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
 #   ifdef MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
+    //[[Application sharedApplication] updateWindows];
     [[Application sharedApplication] update];
 
     // Free anything we've autoreleased on the Obj-C side
@@ -795,6 +796,10 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
     {
         return false;
     }
+    if (![[Application sharedApplication] keepRunning])
+    {
+        return false;
+    }
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     bool result = [handle IsOpen] == 1;
     [pool drain];
@@ -832,6 +837,6 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 #   endif
 
 #   ifdef MACOS
-    return true; // TODO: macos
+    return [handle isFocused];
 #   endif
 }

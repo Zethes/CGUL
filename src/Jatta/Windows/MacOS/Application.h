@@ -7,16 +7,23 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "ApplicationDelegate.h"
 #include "../../External/Defines.h"
 
 @interface Application : NSApplication
 {
     bool shouldKeepRunning;
+    bool active;
+
+    ApplicationDelegate* delegate;
 }
 
+- (id)init;
+- (void)createMenu;
 - (void)run;
 - (bool)update;
 - (void)terminate: (id)sender;
+- (bool)keepRunning;
 
 @end
 

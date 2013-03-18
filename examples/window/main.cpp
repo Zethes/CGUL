@@ -22,8 +22,15 @@ int main()
     {
         Window::Update();
 
-        hue += 1.0f;
-        window.SetBackgroundColor(Color::MakeHSL(hue, 255, 255));
+        hue += 0.01f;
+        if (window.IsFocused())
+        {
+            window.SetBackgroundColor(Color::MakeHSL(hue, 255, 255));
+        }
+        else
+        {
+            window.SetBackgroundColor(Color::MakeHSL(hue, 150, 150));
+        }
         if (hue >= 360)
         {
             hue -= 360;

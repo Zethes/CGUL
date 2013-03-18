@@ -6,6 +6,7 @@
 #ifndef DOXYGEN
 
 #import "WindowDelegate.h"
+#import "Application.h"
 
  // leaving this here for future reference:
  // http://stackoverflow.com/questions/4312338/how-to-use-the-object-property-of-nsnotificationcenter   
@@ -226,11 +227,12 @@
 
     - (Jatta::Boolean) IsOpen2
     {
-    }
-
-    - (Jatta::Boolean) IsFocused
-    {
     }*/
+
+    - (Jatta::Boolean) isFocused
+    {
+        return [window isKeyWindow];
+    }
 @end
 
 #endif

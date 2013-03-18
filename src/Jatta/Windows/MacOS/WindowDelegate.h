@@ -56,8 +56,8 @@
 /*
 - (Jatta::Float4) getFrameSize;
 
-- (Jatta::Boolean) isOpen2;
-- (Jatta::Boolean) isFocused;*/
+- (Jatta::Boolean) isOpen2;*/
+- (Jatta::Boolean) isFocused;
 
 @end
 

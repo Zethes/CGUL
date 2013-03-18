@@ -117,7 +117,7 @@ _JATTA_EXPORT void Jatta::Image::Free()
 {
     // TODO: figure out why this crashes in linux
     delete[] colors;
-    colors = nullptr;
+    colors = NULL;
 }
 
 _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
