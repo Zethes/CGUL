@@ -27,268 +27,181 @@ _JATTA_EXPORT Jatta::Font::Font()
     __jatta_ttf_initialize();
 }
 
-_JATTA_EXPORT void Jatta::Font::Load(const std::string& fileName)
+_JATTA_EXPORT Jatta::UInt32 Jatta::Font::Load(const std::string& fileName)
 {
-    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &this->face);
+    ::FT_Face face;
+    FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
     if (error == FT_Err_Unknown_File_Format)
     {
-        // TODO: error checking
+        std::runtime_error("Unknown font file format.");
+        return -1;
     }
     else if (error)
     {
-        // TODO: error checking
+        std::runtime_error("Unknown error with fonts.");
+        return -1;
     }
-    //error = FT_Set_Char_Size(face, 40 * size, 0, 100, 0);
+    
+    faces.push_back(face);
+
+    return faces.size()-1;
+}
+
+_JATTA_EXPORT Jatta::UInt32 Jatta::Font::LoadFromMemory(const unsigned char* data, UInt64 size)
+{
+    ::FT_Face face;
+    FT_Error error = FT_New_Memory_Face(__jatta_ttf_library, data, size, 0, &face);
+    if (error == FT_Err_Unknown_File_Format)
+    {
+        std::runtime_error("Unknown font file format.");
+        return -1;
+    }
+    else if (error)
+    {
+        std::runtime_error("Unknown error with fonts.");
+        return -1;
+    }
+    
+    faces.push_back(face);
+
+    return faces.size()-1;
+}
+
+_JATTA_EXPORT void Jatta::Font::PreloadGlyphs(UInt32 start, UInt32 end)
+{
+    for (unsigned int i = start; i <= end; i++)
+    {
+        glyphCache.insert(std::pair<UInt32, Glyph*>(i, GetGlyph(i)));
+    }
+}
+
+_JATTA_EXPORT void Jatta::Font::ClearCache()
+{
+    for (auto i = glyphCache.begin(); i != glyphCache.end(); i++)
+    {
+        delete i->second;
+    }
+    glyphCache.clear();
 }
 
 _JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
 {
-    FT_Error error = FT_Set_Pixel_Sizes(face, 0, size);
-    if (error)
+    for (unsigned int i = 0; i < faces.size(); i++)
     {
-        // TODO: error checking
+        FT_Error error = FT_Set_Pixel_Sizes(faces[i], 0, size);
+        if (error)
+        {
+            // TODO: error checking
+        }
     }
     this->size = size;
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Font::GetSize()
 {
-    return this->size;
+    return size;
 }
 
-_JATTA_EXPORT void Jatta::Font::SetColor(const Color& color)
+_JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const String& text)
 {
-    this->color = color;
-}
-
-_JATTA_EXPORT Jatta::Color Jatta::Font::GetColor()
-{
-    return this->color;
-}
-
-/*Jatta::Image Jatta::Font::generateText(const Jatta::String& text, bool beginningSpacer)
-{
-    // set our transform matrix (to the identity matrix)
-    FT_Matrix matrix;
-    matrix.xx = (FT_Fixed)(1 * 0x10000L);
-    matrix.xy = (FT_Fixed)(0 * 0x10000L);
-    matrix.yx = (FT_Fixed)(0 * 0x10000L);
-    matrix.yy = (FT_Fixed)(1 * 0x10000L);
-
-    // set the position of the font
-    FT_Vector pen;
-    pen.x = 0;
-    pen.y = 0;
-
-    // render each character
-    UInt32 buffWidth = 0, buffHeight = 0;
-    for (Jatta::Size n = 0; n < text.getSize();)
-    {
-        // transform the font character
-        FT_Set_Transform(faces[0], &matrix, &pen);
-
-        // load glyph image into the slot
-        UInt32 utf8Character;
-        n += text.getCodePoint(n, &utf8Character);
-        FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
-        if (error)
-        {
-            continue; // TODO: ignore errors?
-        }
-
-        // now, draw to our surface
-        FT_Int i, j, p, q;
-        FT_Int x_max = faces[0]->glyph->bitmap_left + faces[0]->glyph->bitmap.width;
-        FT_Int y_max = size - faces[0]->glyph->bitmap_top + faces[0]->glyph->bitmap.rows;
-        for (i = faces[0]->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
-        {
-            for (j = size - faces[0]->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
-            {
-                if (i > buffWidth)
-                {
-                    buffWidth = i;
-                }
-                if (x_max > buffWidth)
-                {
-                    buffWidth = x_max;
-                }
-                if (j > buffHeight)
-                {
-                    buffHeight = j;
-                }
-                if (y_max > buffHeight)
-                {
-                    buffHeight = y_max;
-                }
-            }
-        }
-
-        // increment pen position
-        pen.x += faces[0]->glyph->advance.x;
-        pen.y += faces[0]->glyph->advance.y;
-    }
-
-    // reset pen
-    pen.x = 0;
-    pen.y = 0;
-
-    // create the texture buffer
-    unsigned char* data = new unsigned char[buffWidth * buffHeight * sizeof(Color)];
-    Color* buffer = (Color*)data;
-    memset(buffer, 0, buffWidth * buffHeight * sizeof(Color));
-
-    for (Jatta::Size n = 0; n < text.getSize();)
-    {
-        // transform the font character
-        FT_Set_Transform(faces[0], &matrix, &pen);
-
-        // load glyph image into the slot
-        UInt32 utf8Character;
-        n += text.getCodePoint(n, &utf8Character);
-        FT_Error error = FT_Load_Char(faces[0], utf8Character, FT_LOAD_RENDER);
-        if (error)
-        {
-            continue; // TODO: ignore errors?
-        }
-
-        // now, draw to our surface
-        FT_Int i, j, p, q;
-        FT_Int x_max = faces[0]->glyph->bitmap_left + faces[0]->glyph->bitmap.width;
-        FT_Int y_max = size - faces[0]->glyph->bitmap_top + faces[0]->glyph->bitmap.rows;
-        for (i = faces[0]->glyph->bitmap_left, p = 0; i < x_max; i++, p++)
-        {
-            for (j = size - faces[0]->glyph->bitmap_top, q = 0; j < y_max; j++, q++)
-            {
-                buffer[j * buffWidth + i].a |= faces[0]->glyph->bitmap.buffer[q * faces[0]->glyph->bitmap.width + p];
-            }
-        }
-
-        // increment pen position
-        pen.x += faces[0]->glyph->advance.x;
-        pen.y += faces[0]->glyph->advance.y;
-    }
-
-    return std::move(Image((Color*)data, buffWidth, buffHeight));
-
-    return std::move(Image((Color*)data, 512, 512));
-}*/
-
-_JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(const String& text, Boolean beginningSpacer)
-{
-    // TODO: redo this method, it's terrible
-
-    //bool kerning = true; // unused?
-
-    // set our transform matrix (to the identity matrix)
-    FT_Matrix matrix;
-    matrix.xx = (FT_Fixed)(1 * 0x10000L);
-    matrix.xy = (FT_Fixed)(0 * 0x10000L);
-    matrix.yx = (FT_Fixed)(0 * 0x10000L);
-    matrix.yy = (FT_Fixed)(1 * 0x10000L);
-    FT_Vector pen;
-    pen.x = 0;
-    pen.y = 0;
-    FT_Int bufferWidth = 0, bufferHeight = 0;
-
-    FT_Int maxDown = 0;
+    //Calculate size
+    UInt32 width = 0;
+    UInt32 height = 0;
+    UInt32 maxWidth = 0;
+    UInt32 maxDown = 0;
+    UInt32 yOffset = 0;
     for (Jatta::Size i = 0; i < text.GetSize();)
     {
         UInt32 utf8Character;
         i += text.GetCodePoint(i, &utf8Character);
-        FT_Set_Transform(this->face, &matrix, &pen);
-        FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
-        if (error)
+
+        Glyph* glyph = GetGlyph(utf8Character);
+        if (glyph == NULL)
         {
-            continue; // TODO: ignore errors?
+            glyph = GetGlyph('?');
         }
-        FT_Int height = face->glyph->bitmap.rows;
-        if (height > bufferHeight)
+
+        UInt32 w = 0, h = 0;
+        w = glyph->GetWidth() + glyph->GetAdvance().x + glyph->GetOffset().x;
+        h = glyph->GetHeight() + yOffset;
+        if (h > height)
         {
-            bufferHeight = height;
+            height = h;
         }
-        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top);
+
+        UInt32 down = (glyph->GetHeight() - glyph->GetOffset().y);
         if (down > maxDown)
         {
             maxDown = down;
         }
-        if (i == 0 && !beginningSpacer)
+
+        width += w;
+        if (width > maxWidth)
         {
-            face->glyph->bitmap_left = 1;
+            maxWidth = width;
         }
-        if (face->glyph->bitmap_left + face->glyph->bitmap.width > bufferWidth)
-        {
-            bufferWidth = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        }
-        pen.x += face->glyph->advance.x;
-        pen.y += face->glyph->advance.y;
     }
-    bufferHeight += maxDown;
+    width = maxWidth;
+    height += maxDown;
 
-    pen.x = 0;
-    pen.y = 0;
-
-    // create the texture buffer
-    unsigned char* data = new unsigned char[bufferWidth * bufferHeight * sizeof(Color)];
-    Color* buffer = (Color*)data;
-    memset(buffer, 0, bufferWidth * bufferHeight * sizeof(Color));
-
+    //Generate the image by merging all the data generated by glyphs into one large image.
+    Float2 pen = Float2(0);
+    Color* buffer = (Color*)new char[width*height*sizeof(Color)];
+    memset(buffer, 0, width*height*sizeof(Color));
     for (Jatta::Size i = 0; i < text.GetSize();)
     {
-        //pen.x = 0;
-        //pen.y = 0;
-
-        // load glyph image into the slot
-        //FT_Error error = FT_Load_Char(face, text[n], FT_LOAD_RENDER);
         UInt32 utf8Character;
         i += text.GetCodePoint(i, &utf8Character);
-        FT_Set_Transform(face, &matrix, &pen);
-        FT_Error error = FT_Load_Char(this->face, utf8Character, FT_LOAD_RENDER);
-        if (error)
+
+        Glyph* glyph = GetGlyph(utf8Character);
+        if (glyph == NULL)
         {
-            continue; // TODO: ignore errors?
+            glyph = GetGlyph('?');
         }
 
-        if (i == 0 && !beginningSpacer)
-        {
-            face->glyph->bitmap_left = 1;
-        }
+        UInt32 w = 0, h = 0;
+        w = glyph->GetWidth();
+        h = glyph->GetHeight();
+        Byte* data = glyph->GetData();
 
-        // now, draw to our surface
-        FT_Int n, p, q;
-        FT_Int x_max = face->glyph->bitmap_left + face->glyph->bitmap.width;
-        //FT_Int y_max = face->glyph->bitmap_top + face->glyph->bitmap.rows; // unused?
-        FT_Int down = (face->glyph->bitmap.rows - face->glyph->bitmap_top);
-        FT_Int startY = (((bufferHeight - maxDown) - face->glyph->bitmap.rows) + down);
-        for (n = face->glyph->bitmap_left, p = 0; n < x_max; n++, p++)
+        UInt32 down = glyph->GetHeight() - glyph->GetOffset().y;
+        UInt32 startY = (((height - maxDown) - glyph->GetHeight()) + down) + pen.y;
+
+        for (unsigned int y = 0; y < h; y++)
         {
-            for (q = 0; q < face->glyph->bitmap.rows; q++)
+            for (unsigned int x = 0; x < w; x++)
             {
-                buffer[(q + startY) * bufferWidth + n].r = this->color.r;
-                buffer[(q + startY) * bufferWidth + n].g = this->color.g;
-                buffer[(q + startY) * bufferWidth + n].b = this->color.b;
-                buffer[(q + startY) * bufferWidth + n].a |= (FT_Int)(face->glyph->bitmap.buffer[q * face->glyph->bitmap.width + p] * (color.a / 255.0f));
+                buffer[(y+startY)*width+x+(int)pen.x].r = color.r;
+                buffer[(y+startY)*width+x+(int)pen.x].g = color.g;
+                buffer[(y+startY)*width+x+(int)pen.x].b = color.b;
+                buffer[(y+startY)*width+x+(int)pen.x].a |= (FT_Int)(data[y*w+x] * (color.a / 255.0f));
             }
         }
-
-        // increment pen position
-        pen.x += face->glyph->advance.x;
-        pen.y += face->glyph->advance.y;
+        pen.x += w + glyph->GetAdvance().x + glyph->GetOffset().x;
     }
-    return Image((Color*)data, bufferWidth, bufferHeight - 1);
+
+    return Image((Color*)buffer, width, height);
 }
 
-_JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt64 characterCode)
+_JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt32 face, UInt64 characterCode)
 {
-    // TODO: return a glyph?
-    return FT_Get_Char_Index(this->face, (FT_ULong)characterCode);
+    return FT_Get_Char_Index(this->faces[face], (FT_ULong)characterCode);
 }
-
-/*_JATTA_EXPORT Jatta::Glyph Jatta::Font::getGlyph(UInt64 index)
+_JATTA_EXPORT Jatta::Glyph* Jatta::Font::GetGlyph(UInt32 utf8Character, bool useCache)
 {
-    Glyph glyph;
-    FT_Load_Glyph(this->face, index, FT_LOAD_RENDER);
-    glyph.width = this->face->glyph->bitmap.width;
-    glyph.height = this->face->glyph->bitmap.rows;
-    memcpy(glyph.data, this->face->glyph->bitmap.buffer, this->face->glyph->bitmap.width * this->face->glyph->bitmap.rows);
-    return glyph;
-}*/
+    if (useCache)
+    {
+        std::map<UInt32, Glyph*>::iterator it;
+        it=glyphCache.find(utf8Character);
+        if (it != glyphCache.end())
+        {
+            return it->second;
+        }
+    }
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        if (GetCharacterIndex(i, utf8Character) != 0)
+        { return new Glyph(this->faces[i], utf8Character); }
+    }
+    return NULL;
+}
