@@ -9,10 +9,12 @@
 #include "../Images/Image.h"
 #include "../Images/Color.h"
 #include "Glyph.h"
+#include "FontStyles.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
+
     class Font
     {
         std::vector<_JATTA_FT_FACE> faces;
@@ -28,6 +30,8 @@ namespace Jatta
 
         _JATTA_EXPORT void SetSize(UInt32 size);
         _JATTA_EXPORT unsigned int GetSize();
+
+        _JATTA_EXPORT void SetStyle(UInt32 style);
 
         _JATTA_EXPORT Image GenerateText(Jatta::Color color, const Jatta::String& text);
 

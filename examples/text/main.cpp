@@ -147,6 +147,7 @@ int main()
         { throw std::runtime_error("Failed to load 'Resources/epgyosho.ttf'."); }
         if (font.Load("Resources/LastResort.ttf") == -1)
         { throw std::runtime_error("Failed to load 'Resources/LastResort.ttf'."); }
+        font.SetStyle(FontStyles::OBLIQUE | FontStyles::UNDERLINED);
 
         Image image[22];
         OpenGL::Texture texture[22];
@@ -170,7 +171,8 @@ int main()
         }
 
         font.SetSize(16);
-        image[21] = font.GenerateText(Jatta::Colors::white,"こんにちわ");//"こ\nん\nに\nち\nわ");
+        font.SetStyle(FontStyles::OVERLINED | FontStyles::UNDERLINED);
+        image[21] = font.GenerateText(Jatta::Colors::white,"こんにちわ");
 
         texture[21].Create(OpenGL::GL::TEXTURE_2D);
         texture[21].Bind();

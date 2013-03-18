@@ -195,6 +195,7 @@ namespace Jatta
 #       include <ft2build.h>
 #       include <freetype/freetype.h>
 #       include <freetype/ftxf86.h>
+#       include <freetype/ftglyph.h>
 #   endif
 #   ifdef JATTA_USE_ASSIMP
 #       include <assimp/cimport.h>

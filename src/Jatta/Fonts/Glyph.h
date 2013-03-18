@@ -8,6 +8,7 @@
 #include "../Math/Float2.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
+ #include "FontStyles.h"
 #include "../External/Defines.h"
 
 /*
@@ -65,7 +66,7 @@ namespace Jatta
 
         _JATTA_EXPORT Byte* GetData();
 
-        _JATTA_EXPORT Image GetImage(Color color, UInt32 flags = 0); //Generates RGBA8888 image.
+        _JATTA_EXPORT Image GetImage(Color color, UInt32 styleFlags); //Generates RGBA8888 image.
     };
 }
 

@@ -71,6 +71,8 @@
 
 #ifdef JATTA_USE_FREETYPE
 #   include "Jatta/Fonts/Font.h"
+#   include "Jatta/Fonts/FontStyles.h"
+#   include "Jatta/Fonts/Glyph.h"
 #endif
 
 #include "Jatta/Images/Color.h"

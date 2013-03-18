@@ -102,6 +102,14 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::GetSize()
     return size;
 }
 
+_JATTA_EXPORT void Jatta::Font::SetStyle(UInt32 style)
+{
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        faces[i]->style_flags = style;
+    }
+}
+
 _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const String& text)
 {
     //Calculate size
@@ -118,7 +126,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
         Glyph* glyph = GetGlyph(utf8Character);
         if (glyph == NULL)
         {
-            glyph = GetGlyph('?');
+            glyph = GetGlyph(0);
         }
 
         UInt32 w = 0, h = 0;
@@ -156,7 +164,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
         Glyph* glyph = GetGlyph(utf8Character);
         if (glyph == NULL)
         {
-            glyph = GetGlyph('?');
+            glyph = GetGlyph(0);
         }
 
         UInt32 w = 0, h = 0;
@@ -178,6 +186,38 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
             }
         }
         pen.x += w + glyph->GetAdvance().x + glyph->GetOffset().x;
+    }
+
+    //Apply styling.
+    if (faces[0]->style_flags & FontStyles::UNDERLINED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[(height-1)*width+x].r = color.r;
+            buffer[(height-1)*width+x].g = color.g;
+            buffer[(height-1)*width+x].b = color.b;
+            buffer[(height-1)*width+x].a = color.a;
+        }
+    }
+    if (faces[0]->style_flags & FontStyles::STRIKED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[(height/2)*width+x].r = color.r;
+            buffer[(height/2)*width+x].g = color.g;
+            buffer[(height/2)*width+x].b = color.b;
+            buffer[(height/2)*width+x].a = color.a;
+        }
+    }
+    if (faces[0]->style_flags & FontStyles::OVERLINED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[0*width+x].r = color.r;
+            buffer[0*width+x].g = color.g;
+            buffer[0*width+x].b = color.b;
+            buffer[0*width+x].a = color.a;
+        }
     }
 
     return Image((Color*)buffer, width, height);

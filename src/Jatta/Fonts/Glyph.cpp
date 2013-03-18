@@ -16,6 +16,19 @@ _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
     pen.x = 0;
     pen.y = 0;
 
+    if (face->style_flags & FontStyles::OBLIQUE)
+    {
+        double pi = 3.1415926535;;
+        double rads = pi * 0.0f / 180.0;
+        double skew = pi * 35.0f/ 180.0;
+
+        // set up transform (a rotation here)
+        matrix.xx = (FT_Fixed)( cos(rads)*0x10000L);
+        matrix.xy = (FT_Fixed)( sin(rads + skew)*0x10000L);
+        matrix.yx = (FT_Fixed)( sin(rads)*0x10000L);
+        matrix.yy = (FT_Fixed)( cos(rads)*0x10000L);
+    }
+
     FT_Set_Transform(face, &matrix, &pen);
 
     FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
@@ -59,7 +72,7 @@ _JATTA_EXPORT Jatta::Byte* Jatta::Glyph::GetData()
     return data;
 }
 
-_JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 flags)
+_JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags)
 {
     //TODO: Speed this up.
     Color* buffer = (Color*)new char[width*height*sizeof(Color)];
@@ -75,5 +88,39 @@ _JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 flags)
                 buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
         }
     }
+
+    //Apply styling.
+    if (styleFlags & FontStyles::UNDERLINED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[(height-1)*width+x].r = color.r;
+            buffer[(height-1)*width+x].g = color.g;
+            buffer[(height-1)*width+x].b = color.b;
+            buffer[(height-1)*width+x].a = color.a;
+        }
+    }
+    if (styleFlags & FontStyles::STRIKED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[(height/2)*width+x].r = color.r;
+            buffer[(height/2)*width+x].g = color.g;
+            buffer[(height/2)*width+x].b = color.b;
+            buffer[(height/2)*width+x].a = color.a;
+        }
+    }
+    if (styleFlags & FontStyles::OVERLINED)
+    {
+        for (unsigned int x = 0; x < width; x++)
+        {
+            buffer[0*width+x].r = color.r;
+            buffer[0*width+x].g = color.g;
+            buffer[0*width+x].b = color.b;
+            buffer[0*width+x].a = color.a;
+        }
+    }
+
+
     return Image((Color*)buffer, width, height);
 }
