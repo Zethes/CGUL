@@ -48,16 +48,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationZ(float angle)
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(const Quaternion& quaternion)
 {
-    Matrix ret;
-    ret.m[0][0] = 1-(2*(quaternion.y*quaternion.y)+2*(quaternion.z*quaternion.z)); ret.m[0][1] = 2*(quaternion.x*quaternion.y)+2*(quaternion.z*quaternion.w);
-    ret.m[0][2] = 2*(quaternion.x*quaternion.z)-2*(quaternion.y*quaternion.w);     ret.m[0][3] = 0;
-    ret.m[1][0] = 2*(quaternion.x*quaternion.y)-2*(quaternion.z*quaternion.w);     ret.m[1][1] = 1-(2*(quaternion.x*quaternion.x)+2*(quaternion.z*quaternion.z));
-    ret.m[1][2] = 2*(quaternion.y*quaternion.z)-2*(quaternion.x*quaternion.w);     ret.m[1][3] = 0;
-    ret.m[2][0] = 2*(quaternion.x*quaternion.z)-2*(quaternion.y*quaternion.w);     ret.m[2][1] = 2*(quaternion.y*quaternion.z)-2*(quaternion.x*quaternion.w);
-    ret.m[2][2] = 1-(2*(quaternion.x*quaternion.x)+2*(quaternion.y*quaternion.y)); ret.m[2][3] = 0;
-    ret.m[3][0] = 0;                                                               ret.m[3][1] = 0;
-    ret.m[3][2] = 0;                                                               ret.m[3][3] = 1;
-    return ret;
+    return Matrix(quaternion);
 }
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float2 scale)
@@ -296,6 +287,26 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m13, float m14, 
     this->m[3][3] = m44;
 }
 
+_JATTA_EXPORT Jatta::Matrix::Matrix(const Quaternion& quaternion)
+{
+    this->m[0][0] = 1 - (2 * Math::Sqr(quaternion.y) + 2 * Math::Sqr(quaternion.z));
+    this->m[0][1] = 2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w;
+    this->m[0][2] = 2 * quaternion.x * quaternion.z - 2 * quaternion.y * quaternion.w;
+    this->m[0][3] = 0;
+    this->m[1][0] = 2 * quaternion.x * quaternion.y - 2 * quaternion.z * quaternion.w;
+    this->m[1][1] = 1 - (2 * Math::Sqr(quaternion.x) + 2 * Math::Sqr(quaternion.z));
+    this->m[1][2] = 2 * quaternion.y * quaternion.z + 2 * quaternion.x * quaternion.w;
+    this->m[1][3] = 0;
+    this->m[2][0] = 2 * quaternion.x * quaternion.z + 2 * quaternion.y * quaternion.w;
+    this->m[2][1] = 2 * quaternion.y * quaternion.z - 2 * quaternion.x * quaternion.w;
+    this->m[2][2] = 1 - (2 * Math::Sqr(quaternion.x) + 2 * Math::Sqr(quaternion.y));
+    this->m[2][3] = 0;
+    this->m[3][0] = 0;
+    this->m[3][1] = 0;
+    this->m[3][2] = 0;
+    this->m[3][3] = 1;
+}
+
 _JATTA_EXPORT Jatta::Matrix::~Matrix()
 {
 }
@@ -319,6 +330,11 @@ _JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Matrix& operand)
     this->m[3][2] = operand.m[3][2];
     this->m[3][3] = operand.m[3][3];
     return *this;
+}
+
+_JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Quaternion& operand)
+{
+    return *this = Matrix(operand);
 }
 
 _JATTA_EXPORT Jatta::Float32* Jatta::Matrix::operator[](UInt32 index)

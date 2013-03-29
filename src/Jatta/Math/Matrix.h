@@ -47,9 +47,11 @@ namespace Jatta
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m21, Float32 m22);
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m13, Float32 m21, Float32 m22, Float32 m23, Float32 m31, Float32 m32, Float32 m33);
         _JATTA_EXPORT Matrix(Float32 m11, Float32 m12, Float32 m13, Float32 m14, Float32 m21, Float32 m22, Float32 m23, Float32 m24, Float32 m31, Float32 m32, Float32 m33, Float32 m34, Float32 m41, Float32 m42, Float32 m43, Float32 m44);
+        _JATTA_EXPORT Matrix(const Quaternion& quaternion);
         _JATTA_EXPORT ~Matrix();
 
         _JATTA_EXPORT Matrix& operator=(const Matrix& operand);
+        _JATTA_EXPORT Matrix& operator=(const Quaternion& operand);
         _JATTA_EXPORT Float32* operator[](UInt32 index);
         _JATTA_EXPORT const Float32* operator[](UInt32 index) const;
         _JATTA_EXPORT Matrix operator*(const Matrix& operand) const;

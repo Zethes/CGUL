@@ -107,6 +107,11 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
     return x - Math::Floor(x / 360.0f) * 360.0f;
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
+{
+    return x * x;
+}
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
 {
     return std::sqrt(x);
