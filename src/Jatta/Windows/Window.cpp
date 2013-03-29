@@ -121,7 +121,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
             XEvent event;
             XNextEvent(display, &event);
             ::Window handle = event.xany.window;
-            auto it = windowMap.find(handle);
+            std::map< ::Window, Window* >::iterator it = windowMap.find(handle);
             if (it == windowMap.end())
             {
                 break;
@@ -175,7 +175,7 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
-        display = XOpenDisplay(nullptr);
+        display = XOpenDisplay(NULL);
         initialized = true;
     }
 #   endif
@@ -353,7 +353,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
         XCloseDisplay(display);
     }
     handle = 0;
-    display = nullptr;
+    display = NULL;
 #   endif
 
 #   ifdef MACOS

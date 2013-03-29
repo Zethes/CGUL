@@ -16,7 +16,7 @@
  */
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene()
 {
-    scene = nullptr;
+    scene = NULL;
 }
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene(::aiScene* scene)
 {
@@ -30,7 +30,7 @@ _JATTA_EXPORT Jatta::Assimp::Scene::Scene(const ::aiScene* scene)
 _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 flags)
 {
     scene = aiImportFile(fileName.GetData().c_str(), flags);
-    if (scene == nullptr)
+    if (scene == NULL)
     {
         throw std::runtime_error(aiGetErrorString());
     }
@@ -38,7 +38,7 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 f
  _JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags)
  {
     scene = aiImportFileFromMemory(buffer, size, flags, "");
-    if (scene == nullptr)
+    if (scene == NULL)
     {
         throw std::runtime_error(aiGetErrorString());
     }

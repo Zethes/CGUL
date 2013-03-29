@@ -1,4 +1,4 @@
-/* Jatta - General Utility Library
+    /* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
@@ -49,7 +49,7 @@ namespace Jatta
         _JATTA_EXPORT Float2& operator*=(Float32 operand);
         _JATTA_EXPORT Float2 operator/(Float32 operand) const;
         _JATTA_EXPORT Float2& operator/=(Float32 operand);
-        friend std::ostream& operator<<(std::ostream& stream, const Float2& vector);
+        _JATTA_EXPORT friend std::ostream& operator<<(std::ostream& stream, const Float2& vector);
 
         _JATTA_EXPORT Jatta::Float32 At(UInt32 index) const;
 

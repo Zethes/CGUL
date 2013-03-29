@@ -77,7 +77,7 @@ _JATTA_EXPORT void Jatta::Font::PreloadGlyphs(UInt32 start, UInt32 end)
 
 _JATTA_EXPORT void Jatta::Font::ClearCache()
 {
-    for (auto i = glyphCache.begin(); i != glyphCache.end(); i++)
+    for (std::map<UInt32, Glyph*>::iterator i = glyphCache.begin(); i != glyphCache.end(); i++)
     {
         delete i->second;
     }

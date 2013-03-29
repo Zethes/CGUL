@@ -137,6 +137,7 @@ SET(JATTA_CPP_CONFIG "${JATTA_CPP_CONFIG}\n\n// == SUPPORTED C++ FEATURES == //"
 CHECK_TEST("double_reference.cpp" "Does C++ have double references (&&)?" CPP_DOUBLE_REFERENCE)
 CHECK_TEST("enum_class.cpp" "Does C++ have enum class?" CPP_ENUM_CLASS)
 CHECK_TEST("nullptr.cpp" "Does C++ have nullptr?" CPP_NULLPTR)
+CHECK_TEST("qualified_enum.cpp" "Does C++ have qualified enums?" CPP_QUALIFIED_ENUM)
 CHECK_TEST("static_assert.cpp" "Does C++ have static_assert?" CPP_STATIC_ASSERT)
 CHECK_TEST("std_move.cpp" "Does C++ have std::move?" CPP_STD_MOVE)
 CHECK_TEST("std_thread.cpp" "Does C++ have std::thread?" CPP_STD_THREAD)

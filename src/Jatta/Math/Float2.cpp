@@ -122,7 +122,7 @@ _JATTA_EXPORT Jatta::Float2& Jatta::Float2::operator/=(Float32 operand)
     return *this;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Jatta::Float2& vector)
+_JATTA_EXPORT std::ostream& operator<<(std::ostream& stream, const Jatta::Float2& vector)
 {
     stream << "[" << vector.x << ", " << vector.y << "]";
     return stream;
