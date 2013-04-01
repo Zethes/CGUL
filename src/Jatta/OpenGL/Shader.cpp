@@ -41,7 +41,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Shader::GetID() const
 
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Source(const Jatta::String& source)
 {
-    const char* characters = source.GetData().c_str();
+    const char* characters = source.GetCString();
     const GLchar** data = &characters;
     GLint count = (GLint)source.GetSize();
     glShaderSource((GLuint)shader, (GLsizei)1, data, &count);

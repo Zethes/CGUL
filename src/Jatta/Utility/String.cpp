@@ -61,6 +61,16 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
     return *this;
 }
 
+_JATTA_EXPORT char& Jatta::String::operator[](Size operand)
+{
+    return data[operand];
+}
+
+_JATTA_EXPORT const char Jatta::String::operator[](Size operand) const
+{
+    return data[operand];
+}
+
 /** @brief Overloaded == operator.  Checks if the two strings are equal.
  *  @param operand The other string.
  *  @returns True if they're equal, false otherwise.

@@ -41,6 +41,8 @@ namespace Jatta
         _JATTA_EXPORT String(const std::string& data);
 
         _JATTA_EXPORT String& operator=(const String& operand);
+        _JATTA_EXPORT char& operator[](Size operand);
+        _JATTA_EXPORT const char operator[](Size operand) const;
         _JATTA_EXPORT bool operator==(const String& operand) const;
         _JATTA_EXPORT bool operator!=(const String& operand) const;
         template <typename T> String operator+(const T& operand) const;

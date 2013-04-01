@@ -152,7 +152,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadData(const Jatta::String& fileName
 {
 #   ifdef WINDOWS
     std::wstring file = fileName._ToWideString();
-    FILE* stream = _wfopen(file.c_str(), L"r");
+    FILE* stream = _wfopen(file.c_str(), L"rb");
 #   else
     FILE* stream = fopen(fileName.GetCString(), "r");
 #   endif
