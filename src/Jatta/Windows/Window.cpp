@@ -106,7 +106,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
 {
 #   ifdef WINDOWS
     MSG Msg;
-    while (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE) > 0)
+    while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE) > 0)
     {
         TranslateMessage(&Msg);
         DispatchMessage(&Msg);
@@ -244,14 +244,14 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     wc.lpfnWndProc = WindowProcedure;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hInstance = GetModuleHandle(nullptr);
+    wc.hInstance = GetModuleHandle(NULL);
     wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     //wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
     wc.lpszClassName = new wchar_t[ss.str().length() + 1];
     memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
-    wc.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
+    wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
     backgroundBrush = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.hbrBackground = (HBRUSH)backgroundBrush;
@@ -270,7 +270,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     AdjustWindowRectEx(&windowRect, windowStyle, false, WS_EX_CLIENTEDGE);
 
     // Create the window
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), windowStyle, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(nullptr), NULL);
+    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), windowStyle, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(NULL), NULL);
 
     // Check for errors
     if (handle == NULL)

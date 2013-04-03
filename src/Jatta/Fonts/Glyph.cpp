@@ -4,6 +4,7 @@
  */
 
  #include "Glyph.h"
+ #include "../Math/Math.h"
 
 _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
 {
@@ -23,10 +24,10 @@ _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
         double skew = pi * 35.0f/ 180.0;
 
         // set up transform (a rotation here)
-        matrix.xx = (FT_Fixed)( cos(rads)*0x10000L);
-        matrix.xy = (FT_Fixed)( sin(rads + skew)*0x10000L);
-        matrix.yx = (FT_Fixed)( sin(rads)*0x10000L);
-        matrix.yy = (FT_Fixed)( cos(rads)*0x10000L);
+        matrix.xx = (FT_Fixed)( Math::Cos(rads)*0x10000L);
+        matrix.xy = (FT_Fixed)( Math::Sin(rads + skew)*0x10000L);
+        matrix.yx = (FT_Fixed)( Math::Sin(rads)*0x10000L);
+        matrix.yy = (FT_Fixed)( Math::Cos(rads)*0x10000L);
     }
 
     FT_Set_Transform(face, &matrix, &pen);
