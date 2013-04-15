@@ -7,6 +7,7 @@
 #include <Jatta/Config.h>
 #include "../Utility/String.h"
 #include "../External/Defines.h"
+#undef NO_ERROR
 
 namespace Jatta
 {

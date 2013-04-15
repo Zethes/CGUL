@@ -44,7 +44,9 @@ namespace Jatta
             int Receive(void* data, unsigned int size);
 
             template <typename T> int Send(const T& data);
+#           ifdef _CPP_DOUBLE_REFERENCE
             template <typename T> int Send(const T&& data);
+#           endif
 
             template <typename T> int Receive(T* data);
         };
@@ -56,10 +58,12 @@ template <typename T> int Jatta::Network::SocketTCP::Send(const T& data)
     return send(&data, sizeof(T));
 }
 
+#ifdef _CPP_DOUBLE_REFERENCE
 template <typename T> int Jatta::Network::SocketTCP::Send(const T&& data)
 {
     return send(&data, sizeof(T));
 }
+#endif
 
 template <typename T> int Jatta::Network::SocketTCP::Receive(T* data)
 {
