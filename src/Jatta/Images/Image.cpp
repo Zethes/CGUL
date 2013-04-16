@@ -89,6 +89,11 @@ _JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
     return height;
 }
 
+_JATTA_EXPORT Jatta::Size Jatta::Image::GetSize() const
+{
+    return width * height * sizeof(Color);
+}
+
 _JATTA_EXPORT bool Jatta::Image::Create(UInt32 width, UInt32 height)
 {
     colors = (Color*)new char[height * width * sizeof(Color)];

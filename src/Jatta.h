@@ -95,6 +95,8 @@
 #ifdef JATTA_USE_OPENGL
 #   include "Jatta/OpenGL/Buffer.h"
 #   include "Jatta/OpenGL/Context.h"
+#   include "Jatta/OpenGL/FrameBuffer.h"
+#   include "Jatta/OpenGL/GL.h"
 #   include "Jatta/OpenGL/OpenGL.h"
 #   include "Jatta/OpenGL/Program.h"
 #   include "Jatta/OpenGL/Shader.h"

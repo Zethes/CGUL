@@ -68,6 +68,7 @@ namespace Jatta
         _JATTA_EXPORT const unsigned char* GetData() const;
         _JATTA_EXPORT unsigned int GetWidth() const;
         _JATTA_EXPORT unsigned int GetHeight() const;
+        _JATTA_EXPORT Size GetSize() const;
 
         _JATTA_EXPORT void Mirror();
         _JATTA_EXPORT void Flip();
