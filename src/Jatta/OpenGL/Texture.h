@@ -52,6 +52,13 @@ namespace Jatta
             _JATTA_EXPORT void SetTextureWrapT(Enum param);
             _JATTA_EXPORT void SetTextureWrapR(Enum param);
 
+            _JATTA_EXPORT void Parameteri(Enum param, SInt32 value);
+            _JATTA_EXPORT void Parameterf(Enum param, Float32 value);
+            _JATTA_EXPORT void Parameterfv(Enum param, Float32* value);
+            _JATTA_EXPORT void Parameteriv(Enum param, SInt32* value);
+            _JATTA_EXPORT void ParameterIiv(Enum param, SInt32* value);
+            _JATTA_EXPORT void ParameterIuiv(Enum param, UInt32* value);
+
             // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
             // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
             // glGenerateMipmap(GL_TEXTURE_2D);

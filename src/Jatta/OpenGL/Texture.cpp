@@ -92,6 +92,31 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::SetTextureWrapR(Enum param)
     GLCHECK("Failed to set texture wrap R.");
 }
 
+_JATTA_EXPORT void Jatta::OpenGL::Texture::Parameteri(Enum param, SInt32 value)
+{
+    glTexParameteri(type, param, value);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Texture::Parameterf(Enum param, Float32 value)
+{
+    glTexParameterf(type, param, value);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Texture::Parameterfv(Enum param, Float32* value)
+{
+    glTexParameterfv(type, param, value);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Texture::Parameteriv(Enum param, SInt32* value)
+{
+    glTexParameterIiv(type, param, value);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Texture::ParameterIiv(Enum param, SInt32* value)
+{
+    glTexParameterIiv(type, param, value);
+}
+_JATTA_EXPORT void Jatta::OpenGL::Texture::ParameterIuiv(Enum param, UInt32* value)
+{
+    glTexParameterIuiv(type, param, value);
+}
+
 _JATTA_EXPORT void Jatta::OpenGL::Texture::Image2D(SInt32 level, SInt32 internalFormat, Size width, Size height, SInt32 border, Enum format, Enum type, void* data)
 {
     glTexImage2D(this->type, level, internalFormat, width, height, border, format, type, data);
