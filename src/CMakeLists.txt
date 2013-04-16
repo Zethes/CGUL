@@ -2,6 +2,9 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
+# Setup cache variables
+INCLUDE(Scripts/Cache.cmake)
+
 # Setup compiler settings
 SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DJATTA_INCLUDES -DGLEW_NO_GLU -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DJATTA_BUILD)
 #IF(NOT APPLE AND NOT MSVC)
@@ -20,9 +23,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 # Test C++ for features
 ADD_SUBDIRECTORY(Tests)
 SET(CMAKE_CXX_FLAGS "${JATTA_FLAGS} ${CMAKE_CXX_FLAGS}")
-
-# Setup cache variables
-INCLUDE(Scripts/Cache.cmake)
 
 INCLUDE(Scripts/Modules.cmake)
 

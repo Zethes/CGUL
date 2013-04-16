@@ -196,7 +196,11 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
 
     // Get the address info using the hints.
     addrinfo* result;
+#   ifdef CPP_NULLPTR
     if ((status = getaddrinfo(nullptr, portString, &hints, &result)) != 0)
+#   else
+    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
+#   endif
     {
         throw std::runtime_error("listen failed");
     }
@@ -244,7 +248,11 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     }
 
     // Try to accept an incoming client.
+#   ifdef CPP_NULLPTR
     if ((socket->sock = ::accept(sock, nullptr, nullptr)) == INVALID_SOCKET)
+#   else
+    if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
+#   endif
     {
         #ifdef WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
