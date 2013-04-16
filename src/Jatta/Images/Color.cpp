@@ -4,6 +4,7 @@
  */
 
 #include "Color.h"
+#include "../Math/Float3.h"
 #include "../Math/Float4.h"
 
 /** @brief Creates a color given a hue, saturation and value.
@@ -116,6 +117,11 @@ _JATTA_EXPORT Jatta::Color& Jatta::Color::operator=(const Color& operand)
     this->b = operand.b;
     this->a = operand.a;
     return *this;
+}
+
+_JATTA_EXPORT Jatta::Float3 Jatta::Color::ToFloat3() const
+{
+    return Float3(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
 }
 
 _JATTA_EXPORT Jatta::Float4 Jatta::Color::ToFloat4() const
