@@ -179,8 +179,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetMagnitude() const
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetDistance(const Float2& other) const
 {
-    // TODO: this
-    return 0;
+    return Math::Sqrt(Math::Sqr(other.x - x) + Math::Sqr(other.y - y));
 }
 
 _JATTA_EXPORT void Jatta::Float2::SetAngle(Float32 angle)
