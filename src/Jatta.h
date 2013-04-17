@@ -99,6 +99,7 @@
 #   include "Jatta/OpenGL/GL.h"
 #   include "Jatta/OpenGL/OpenGL.h"
 #   include "Jatta/OpenGL/Program.h"
+#   include "Jatta/OpenGL/RenderBuffer.h"
 #   include "Jatta/OpenGL/Shader.h"
 #   include "Jatta/OpenGL/Texture.h"
 #   include "Jatta/OpenGL/VertexArray.h"

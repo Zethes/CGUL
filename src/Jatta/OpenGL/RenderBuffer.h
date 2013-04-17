@@ -13,17 +13,14 @@ namespace Jatta
 {
     namespace OpenGL
     {
-        class Texture;
-        class RenderBuffer;
-
-        class FrameBuffer
+        class RenderBuffer
         {
-            UInt32 frameBuffer;
+            UInt32 renderBuffer;
             Enum type;
         public:
-            _JATTA_EXPORT FrameBuffer();
-            _JATTA_EXPORT FrameBuffer(UInt32 frameBuffer);
-            _JATTA_EXPORT ~FrameBuffer();
+            _JATTA_EXPORT RenderBuffer();
+            _JATTA_EXPORT RenderBuffer(UInt32 renderBuffer);
+            _JATTA_EXPORT ~RenderBuffer();
 
             _JATTA_EXPORT void Create(Enum type);
             _JATTA_EXPORT void Delete();
@@ -32,8 +29,7 @@ namespace Jatta
             _JATTA_EXPORT void Bind();
             _JATTA_EXPORT void Unbind();
 
-            _JATTA_EXPORT void Texture2D(Enum attachment, Enum textureTarget, Texture texture, SInt32 level);
-            _JATTA_EXPORT void AttachRenderBuffer(Enum attachment, Enum renderBufferTarget, RenderBuffer renderBuffer);
+            _JATTA_EXPORT void Storage(Enum internalFormat, Size width, Size height);
         };
     }
 }

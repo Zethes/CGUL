@@ -672,6 +672,9 @@ namespace Jatta
         /** @brief Equivalent to GL_CLAMP_TO_EDGE.
          */
         static const OpenGL::Enum CLAMP_TO_EDGE               = 0x812f;
+         /** @brief Equivalent to GL_DEPTH_STENCIL_ATTACHMENT.
+         */
+        static const OpenGL::Enum DEPTH_STENCIL_ATTACHMENT    = 0x821a;
         /** @brief Equivalent to GL_MAJOR_VERSION.
          */
         static const OpenGL::Enum MAJOR_VERSION               = 0x821b;
@@ -744,6 +747,9 @@ namespace Jatta
         /** @brief Equivalent to GL_ELEMENT_ARRAY_BUFFER.
          */
         static const OpenGL::Enum ELEMENT_ARRAY_BUFFER        = 0x8893;
+        /** @brief Equivalent to GL_DEPTH24_STENCIL8.
+         */
+        static const OpenGL::Enum DEPTH24_STENCIL8            = 0x88f0;
         /** @brief Equivalent to GL_UNIFORM_BUFFER.
          */
         static const OpenGL::Enum UNIFORM_BUFFER              = 0x8a11;
@@ -792,6 +798,9 @@ namespace Jatta
         /** @brief Equivalent to GL_BGRA.
          */
         static const OpenGL::Enum BGRA                        = 0x80e1;
+        /** @brief Equivalent to GL_RENDERBUFFER.
+         */
+        static const OpenGL::Enum RENDERBUFFER                = 0x8d41;
         /** @brief Equivalent to GL_STREAM_DRAW.
          */
         static const OpenGL::Enum STREAM_DRAW                 = 0x88e0;
