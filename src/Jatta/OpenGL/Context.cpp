@@ -55,21 +55,21 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     deviceContext = GetDC(window->_GetHandle());
     if (!deviceContext)
     {
-        // TODO: error handling
+        throw std::runtime_error("Failed to get device context.");
     }
 
     // set the pixel format
     pixelFormat = ChoosePixelFormat(deviceContext, &pfd);
     if (!SetPixelFormat(deviceContext, pixelFormat, &pfd))
     {
-        // TODO: error handling
+        throw std::runtime_error("Failed to choose pixel format.");
     }
 
     // create opengl render context and make it current
     renderContext = wglCreateContext(deviceContext);
     if (!renderContext)
     {
-        // TODO: error handling
+        throw std::runtime_error("Failed to create render context.");
     }
 #   endif
 

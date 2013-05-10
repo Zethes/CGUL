@@ -187,9 +187,9 @@ _JATTA_EXPORT  Jatta::Window::Window() : input(this)
 
 _JATTA_EXPORT Jatta::Window::~Window()
 {
-    //Close();
+    Close();
 #   ifdef MACOS
-    [handle release];
+    //[handle release];
 #   endif
 }
 
