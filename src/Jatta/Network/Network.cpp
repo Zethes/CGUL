@@ -5,6 +5,9 @@
  * All rights reserved.
  */
 
+#include <Jatta/Config.h>
+#include "../External/Once.h"
+
 bool __jatta_network_initiated = false;
 
 void __jatta_network_initiate()
@@ -12,10 +15,10 @@ void __jatta_network_initiate()
 #   ifdef WINDOWS
     if (!__jatta_network_initiated)
     {
-        WSADATA wsaData;   // if this doesn't work
+        WSADATA wsaData;
         if (WSAStartup(MAKEWORD(1,1), &wsaData) != 0)
         {
-            // TODO: god help us if this doesn't work
+            throw std::runtime_error("WSAStartup() failed!");
         }
         __jatta_network_initiated = true;
     }

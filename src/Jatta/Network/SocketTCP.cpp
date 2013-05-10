@@ -159,6 +159,7 @@ void Jatta::Network::SocketTCP::Connect(const Jatta::String& ip, unsigned short 
  *  @param ipv4 Whether to use the local ipv4 address or not.  Will use an ipv6 address otherwise.
  *  @param backlog How many clients can wait to be accepted.  Defaults to 10.
  */
+#include <iostream> // TODO: remove iostream
 void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
 {
     // For error checking.
@@ -196,13 +197,18 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
 
     // Get the address info using the hints.
     addrinfo* result;
-#   ifdef CPP_NULLPTR
-    if ((status = getaddrinfo(nullptr, portString, &hints, &result)) != 0)
-#   else
     if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
-#   endif
     {
-        throw std::runtime_error("listen failed");
+        std::cout << "Error: " << status << std::endl;
+        std::cout << "EAI_AGAIN = " << EAI_AGAIN << std::endl;
+        std::cout << "EAI_BADFLAGS = " << EAI_BADFLAGS << std::endl;
+        std::cout << "EAI_FAIL = " << EAI_FAIL << std::endl;
+        std::cout << "EAI_FAMILY = " << EAI_FAMILY << std::endl;
+        std::cout << "EAI_MEMORY = " << EAI_MEMORY << std::endl;
+        std::cout << "EAI_NONAME = " << EAI_NONAME << std::endl;
+        std::cout << "EAI_SERVICE = " << EAI_SERVICE << std::endl;
+        std::cout << "EAI_SOCKTYPE = " << EAI_SOCKTYPE << std::endl;
+        throw std::runtime_error("Failed to get address info.");
     }
 
     // Create the socket.
@@ -210,7 +216,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw std::runtime_error("listen failed");
+        throw std::runtime_error("Failed to create socket.");
     }
 
     // Bind the socket to the port.
@@ -218,7 +224,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("listen failed");
+        throw std::runtime_error("Failed to bind socket.");
     }
 
     // Start listening like the champ that we are.
@@ -226,7 +232,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("listen failed");
+        throw std::runtime_error("Failed to listen.");
     }
 
     // Make a non-blocking socket.
@@ -394,6 +400,46 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     {
         Close();
         throw std::runtime_error("receive failed");
+    }
+    else
+    {
+        return amount;
+    }
+}
+
+int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
+{
+    // Check if the socket is valid before we continue.
+    if (sock == INVALID_SOCKET)
+    {
+        throw std::runtime_error("peek failed");
+    }
+
+    // Pizza delivery!
+    int amount;
+    if ((amount = ::recv(sock, (char*)data, size, MSG_PEEK)) == SOCKET_ERROR)
+    {
+        // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
+        // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
+        #ifdef WINDOWS
+        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        #else
+        if (errno == EWOULDBLOCK)
+        #endif
+        {
+            return 0;
+        }
+        else
+        {
+            throw std::runtime_error("peek failed");
+        }
+    }
+
+    // Check if recv returned 0, if so, the remove socket disconnected gracefully.
+    if (amount == 0)
+    {
+        Close();
+        throw std::runtime_error("peek failed");
     }
     else
     {
