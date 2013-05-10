@@ -145,6 +145,12 @@ _JATTA_EXPORT void Jatta::Float2::Set(Float32 x, Float32 y)
     this->y = y;
 }
 
+_JATTA_EXPORT void Jatta::Float2::Clear()
+{
+    this->x = 0;
+    this->y = 0;
+}
+
 _JATTA_EXPORT Jatta::Float2 Jatta::Float2::Swizzle(UInt32 x, UInt32 y) const
 {
     return Float2(m[x], m[y]);
@@ -177,6 +183,11 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetMagnitude() const
     return Math::Sqrt(x * x + y * y);
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetMagnitudeSquared() const
+{
+    return (x * x + y * y);
+}
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetDistance(const Float2& other) const
 {
     return Math::Sqrt(Math::Sqr(other.x - x) + Math::Sqr(other.y - y));
@@ -192,4 +203,37 @@ _JATTA_EXPORT void Jatta::Float2::SetAngle(Float32 angle)
 _JATTA_EXPORT Jatta::Float32 Jatta::Float2::GetAngle() const
 {
     return Math::ATan2(y, x);
+}
+
+_JATTA_EXPORT void Jatta::Float2::Floor()
+{
+    this->x = Math::Floor(this->x);
+    this->y = Math::Floor(this->y);
+}
+
+_JATTA_EXPORT void Jatta::Float2::Round()
+{
+    this->x = Math::Round(this->x);
+    this->y = Math::Round(this->y);
+}
+
+_JATTA_EXPORT void Jatta::Float2::Ceil()
+{
+    this->x = Math::Ceil(this->x);
+    this->y = Math::Ceil(this->y);
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float2::Floored()
+{
+    return Float2(Math::Floor(this->x), Math::Floor(this->y));
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float2::Rounded()
+{
+    return Float2(Math::Round(this->x), Math::Round(this->y));
+}
+
+_JATTA_EXPORT Jatta::Float2 Jatta::Float2::Ceiled()
+{
+    return Float2(Math::Ceil(this->x), Math::Ceil(this->y));
 }

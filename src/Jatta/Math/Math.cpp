@@ -102,6 +102,16 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)
     return std::floor(x);
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Round(Float32 x)
+{
+    return std::floor(x + 0.5f);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
+{
+    return std::ceil(x);
+}
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
 {
     return x - Math::Floor(x / 360.0f) * 360.0f;

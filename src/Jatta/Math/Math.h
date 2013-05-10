@@ -47,6 +47,8 @@ namespace Jatta
         _JATTA_EXPORT Float32 Max(Float32 a, Float32 b);
 
         _JATTA_EXPORT Float32 Floor(Float32 x);
+        _JATTA_EXPORT Float32 Round(Float32 x);
+        _JATTA_EXPORT Float32 Ceil(Float32 x);
 
         _JATTA_EXPORT Float32 Mod(Float32 x, Float32 div);
 
