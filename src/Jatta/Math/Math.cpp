@@ -42,9 +42,37 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan(Float32 x)
     return std::atan(x);
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
+{
+    return std::acosh(x);
+}
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
+{
+    return std::asinh(x);
+}
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
+{
+    return std::atanh(x);
+}
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
 {
     return std::atan2(y, x);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
+{
+    return std::cosh(x);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
+{
+    return std::sinh(x);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
+{
+    return std::tanh(x);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
@@ -87,6 +115,16 @@ _JATTA_EXPORT Jatta::Float4 Jatta::Math::RadToDeg(const Float4& rad)
     return Float4(RadToDeg(rad.x), RadToDeg(rad.y), RadToDeg(rad.z), RadToDeg(rad.w));
 }
 
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ln(Float32 x)
+{
+    return std::log(x);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
+{
+    return std::log(x) / std::log(b); //Change of base: log(x,b) = ln(x)/ln(b)
+}
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
 {
     return (a < b ? a : b);
@@ -95,6 +133,11 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 {
     return (a > b ? a : b);
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
+{
+    return std::ceil(x);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)

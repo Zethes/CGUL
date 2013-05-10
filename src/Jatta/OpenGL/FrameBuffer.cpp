@@ -5,6 +5,7 @@
 
 #include "FrameBuffer.h"
 #include "Texture.h"
+#include "RenderBuffer.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
 
@@ -57,4 +58,10 @@ _JATTA_EXPORT void Jatta::OpenGL::FrameBuffer::Texture2D(Enum attachment, Enum t
 {
     glFramebufferTexture2D(type, attachment, textureTarget, texture.GetID(), level);
     GLCHECK("Failed to attach texture 2D to frame buffer.");
+}
+
+_JATTA_EXPORT void Jatta::OpenGL::FrameBuffer::AttachRenderBuffer(Enum attachment, Enum renderBufferTarget, RenderBuffer renderBuffer)
+{
+    glFramebufferRenderbuffer(type, attachment, renderBufferTarget, renderBuffer.GetID());
+    GLCHECK("Failed to attach render buffer to frame buffer.");
 }
