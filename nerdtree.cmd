@@ -1,1 +1,0 @@
-@gvim -c "NERDTree ."
