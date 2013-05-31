@@ -1,0 +1,16 @@
+# Add source directories
+add_subdirectory(Assimp)
+add_subdirectory(Collision)
+add_subdirectory(External)
+add_subdirectory(File)
+add_subdirectory(Fonts)
+add_subdirectory(Images)
+add_subdirectory(Math)
+add_subdirectory(Network)
+add_subdirectory(OpenGL)
+add_subdirectory(PortAudio)
+add_subdirectory(Utility)
+add_subdirectory(Windows)
+
+set(Jatta_SOURCES ${Jatta_SOURCES} PARENT_SCOPE)
+set(Jatta_INSTALL ${Jatta_INSTALL} PARENT_SCOPE)

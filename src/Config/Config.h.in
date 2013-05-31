@@ -1,0 +1,43 @@
+/* Jatta - General Utility Library
+ * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+ * All rights reserved.
+ */
+
+// !!! THIS FILE IS AUTO-GENERATED, DO NOT EDIT !!! //
+
+#pragma once
+
+#cmakedefine Assimp_FOUND
+#cmakedefine FreeType_FOUND
+#cmakedefine glew_FOUND
+#cmakedefine JPEG_FOUND
+#cmakedefine PNG_FOUND
+#cmakedefine PortAudio_FOUND
+#cmakedefine zlib_FOUND
+
+#cmakedefine Jatta_STATIC
+#cmakedefine Jatta_USE_NETWORK
+#cmakedefine Jatta_USE_OPENGL
+
+#cmakedefine CPP_HEADER_ALGORITHM
+#cmakedefine CPP_HEADER_CCTYPE
+#cmakedefine CPP_HEADER_FSTREAM
+#cmakedefine CPP_HEADER_LIST
+#cmakedefine CPP_HEADER_MAP
+#cmakedefine CPP_HEADER_MEMORY
+#cmakedefine CPP_HEADER_SSTREAM
+#cmakedefine CPP_HEADER_STDEXCEPT
+#cmakedefine CPP_HEADER_STRING
+#cmakedefine CPP_HEADER_THREAD
+#cmakedefine CPP_HEADER_UTILITY
+#cmakedefine CPP_HEADER_VECTOR
+
+#cmakedefine CPP_HEADER_CSTDINT
+#cmakedefine CPP_HEADER_STDINT_H
+
+#cmakedefine CPP_HAS_DOUBLE_REFERENCE
+#cmakedefine CPP_HAS_HYPERBOLIC_ARC
+#cmakedefine CPP_HAS_MOVE_CONSTRUCTOR
+#cmakedefine CPP_HAS_STATIC_ASSERT
+#cmakedefine CPP_HAS_STD_THREAD
+#cmakedefine CPP_HAS_U8

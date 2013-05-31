@@ -89,7 +89,7 @@ _JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
     /* deleted */
 }
 
-#ifdef _CPP_MOVE_CONSTRUCTOR
+#ifdef CPP_HAS_MOVE_CONSTRUCTOR
 _JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
 {
     /* deleted */

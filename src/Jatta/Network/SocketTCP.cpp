@@ -254,11 +254,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     }
 
     // Try to accept an incoming client.
-#   ifdef CPP_NULLPTR
-    if ((socket->sock = ::accept(sock, nullptr, nullptr)) == INVALID_SOCKET)
-#   else
     if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
-#   endif
     {
         #ifdef WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)

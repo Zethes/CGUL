@@ -1,0 +1,35 @@
+# - Config file for the Jatta package
+# It defines the following variables
+#  Jatta_INCLUDE_DIRS                     - include directories for Jatta
+#  Jatta_LIBRARIES                        - libraries to link against
+#  Jatta_MODULES                          - the necessary modules (recommended: use jatta_copy_modules)
+# It defines the following macros
+#  jatta_copy_modules(target destination) - copies required modules (dll/so/dylib) to the given directory
+
+get_filename_component(Jatta_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/../include" ABSOLUTE)
+find_library(Jatta_LIBRARIES Jatta NO_DEFAULT_PATH PATHS "${CMAKE_CURRENT_LIST_DIR}/../lib")
+
+add_library(Jatta STATIC IMPORTED)
+set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_LIBRARIES})
+set(Jatta_LIBRARIES Jatta@SYSTEM_LIBRARIES@)
+
+if(WIN32)
+    set(MODULE_SUFFIX ".dll")
+elseif(APPLE)
+    set(MODULE_SUFFIX ".dylib")
+else()
+    set(MODULE_SUFFIX ".so")
+endif()
+
+set(Jatta_MODULES "")
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../lib/Jatta${MODULE_SUFFIX}")
+    get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/Jatta${MODULE_SUFFIX}" ABSOLUTE)
+elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../lib/libJatta${MODULE_SUFFIX}")
+    get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/libJatta${MODULE_SUFFIX}" ABSOLUTE)
+endif()
+
+function(jatta_copy_modules TARGET DESTINATION)
+    if(NOT Jatta_MODULES STREQUAL "")
+        add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Jatta_MODULES}" "${DESTINATION}" VERBATIM)
+    endif()
+endfunction()

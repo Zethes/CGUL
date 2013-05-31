@@ -7,7 +7,7 @@
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
 
-#ifdef _CPP_STD_THREAD
+#ifdef CPP_HAS_STD_THREAD
 
 namespace Jatta
 {

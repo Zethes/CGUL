@@ -2,18 +2,33 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-ADD_GROUP("Images")
-ADD_OTHER(CMakeLists.txt)
-ADD_SOURCE(Color.cpp)
-ADD_HEADER(Color.h include/Jatta/Images/)
-ADD_HEADER(Colors.h include/Jatta/Images/)
-ADD_SOURCE(Image.cpp)
-ADD_HEADER(Image.h include/Jatta/Images/)
-IF(JATTA_USE_JPEG)
-    ADD_SOURCE(Jpg.cpp)
-ENDIF()
-IF(JATTA_USE_PNG)
-    ADD_SOURCE(Png.cpp)
-ENDIF()
-ADD_SOURCE(Bmp.cpp)
-ADD_SOURCE(Dds.cpp)
+if(JPEG_FOUND)
+    set(Jatta_SOURCES
+        ${Jatta_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/Jpg.cpp
+    )
+endif()
+
+if(PNG_FOUND)
+    set(Jatta_SOURCES
+        ${Jatta_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/Png.cpp
+    )
+endif()
+
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Bmp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dds.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Colors.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Image.h
+    PARENT_SCOPE
+)

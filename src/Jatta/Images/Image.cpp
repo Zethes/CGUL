@@ -30,7 +30,7 @@ _JATTA_EXPORT Jatta::Image::Image(const Image& copy)
     memcpy(this->colors, copy.colors, this->width * this->height * 4);
 }
 
-#ifdef _CPP_MOVE_CONSTRUCTOR
+#ifdef CPP_HAS_MOVE_CONSTRUCTOR
 _JATTA_EXPORT Jatta::Image::Image(Image&& move)
 {
     this->width = move.width;
@@ -56,7 +56,7 @@ _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
     return *this;
 }
 
-#ifdef _CPP_DOUBLE_REFERENCE
+#ifdef CPP_HAS_DOUBLE_REFERENCE
 _JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
 {
     this->width = move.width;
@@ -132,13 +132,13 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
     Byte* buffer = new Byte[size];
     File::ReadData(fileName.GetData(), buffer, size);
 
-#   ifdef JATTA_USE_PNG
+#   ifdef PNG_FOUND
     if (IsPng((const char*)buffer, size))
         return LoadPng((const char*)buffer, size);
 #   else
     if (false) {}
 #   endif
-#   ifdef JATTA_USE_JPEG
+#   ifdef JPEG_FOUND
     else if (IsJpg((const char*)buffer, size))
         return LoadJpg((const char*)buffer, size);
 #   endif
@@ -150,13 +150,13 @@ _JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
 
 _JATTA_EXPORT bool Jatta::Image::LoadFromMemory(const char* buffer, Jatta::UInt32 size)
 {
-#   ifdef JATTA_USE_PNG
+#   ifdef PNG_FOUND
     if (IsPng(buffer, size))
         return LoadPng(buffer, size);
 #   else
     if (false) {}
 #   endif
-#   ifdef JATTA_USE_JPEG
+#   ifdef JPEG_FOUND
     else if (IsJpg(buffer, size))
         return LoadJpg(buffer, size);
 #   endif

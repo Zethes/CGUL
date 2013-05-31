@@ -1,7 +1,10 @@
-SET(MACOSX_BUNDLE_BUNDLE_NAME "Window")
-ADD_EXECUTABLE(Window ${EXECUTABLE_TYPE} main.cpp)
-INCLUDE_DIRECTORIES(${JATTA_INCLUDES})
-TARGET_LINK_LIBRARIES(Window Jatta)
+cmake_minimum_required(VERSION 2.8.7)
+cmake_policy(VERSION 2.8.7)
+project(Window CXX)
 
-CREATE_SYMLINK_COMMAND("${CMAKE_CURRENT_SOURCE_DIR}/../Resources" "${CMAKE_CURRENT_BINARY_DIR}/Resources" LINK_COMMAND)
-ADD_CUSTOM_COMMAND(TARGET Window COMMAND ${LINK_COMMAND})
+find_package(Jatta 0.1.0 REQUIRED)
+
+include_directories(${Jatta_INCLUDE_DIRS})
+add_executable(window main.cpp)
+target_link_libraries(window ${Jatta_LIBRARIES})
+jatta_copy_modules(window ${CMAKE_CURRENT_BINARY_DIR})

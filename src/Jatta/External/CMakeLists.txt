@@ -2,8 +2,15 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-ADD_GROUP("External")
-ADD_OTHER(CMakeLists.txt)
-ADD_HEADER(Defines.h include/Jatta/External)
-ADD_HEADER(Once.h include/Jatta/External)
-ADD_HEADER(Undefines.h include/Jatta/External)
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Defines.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Once.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Undefines.h
+    PARENT_SCOPE
+)

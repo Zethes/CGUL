@@ -34,7 +34,7 @@
 
 #include <Jatta/Config.h>
 
-#ifdef JATTA_USE_ASSIMP
+#ifdef Assimp_FOUND
 #   include "Jatta/Assimp/Animation.h"
 #   include "Jatta/Assimp/AnimationStates.h"
 #   include "Jatta/Assimp/Assimp.h"
@@ -69,7 +69,7 @@
 
 #include "Jatta/File/File.h"
 
-#ifdef JATTA_USE_FREETYPE
+#ifdef FreeType_FOUND
 #   include "Jatta/Fonts/Font.h"
 #   include "Jatta/Fonts/FontStyles.h"
 #   include "Jatta/Fonts/Glyph.h"
@@ -87,12 +87,12 @@
 #include "Jatta/Math/Random.h"
 #include "Jatta/Math/Quaternion.h"
 
-#ifdef JATTA_USE_NETWORK
+#ifdef Jatta_USE_NETWORK
 #   include "Jatta/Network/DNS.h"
 #   include "Jatta/Network/SocketTCP.h"
 #endif
 
-#ifdef JATTA_USE_OPENGL
+#ifdef Jatta_USE_OPENGL
 #   include "Jatta/OpenGL/Buffer.h"
 #   include "Jatta/OpenGL/Context.h"
 #   include "Jatta/OpenGL/FrameBuffer.h"
@@ -105,7 +105,7 @@
 #   include "Jatta/OpenGL/VertexArray.h"
 #endif
 
-#ifdef JATTA_USE_AUDIO
+#ifdef PortAudio_FOUND
 #   include "Jatta/PortAudio/Device.h"
 #   include "Jatta/PortAudio/HostApi.h"
 #   include "Jatta/PortAudio/HostError.h"
@@ -119,7 +119,6 @@
 #endif
 
 #include "Jatta/Utility/Encryption.h"
-#include "Jatta/Utility/Object.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"

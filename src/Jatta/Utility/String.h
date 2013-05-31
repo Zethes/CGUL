@@ -7,13 +7,15 @@
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
 
-#ifdef _CPP_U8
-#   define JSTR(text) Jatta::String(u8##text)
-#else
-#   ifdef WINDOWS
-#       define JSTR(text) Jatta::String(L##text)
+#ifndef JATTA_NO_JSTR
+#   ifdef CPP_HAS_U8
+#       define JSTR(text) Jatta::String(u8##text)
 #   else
-#       define JSTR(text) Jatta::String(text)
+#       ifdef WINDOWS
+#           define JSTR(text) Jatta::String(L##text)
+#       else
+#           define JSTR(text) Jatta::String(text)
+#       endif
 #   endif
 #endif
 
@@ -31,7 +33,7 @@ namespace Jatta
 
         _JATTA_EXPORT String();
         _JATTA_EXPORT String(const String& copy);
-#       ifdef _CPP_MOVE_CONSTRUCTOR
+#       ifdef CPP_HAS_MOVE_CONSTRUCTOR
         _JATTA_EXPORT String(String&& move);
 #       endif
 #       ifdef WINDOWS
@@ -46,11 +48,11 @@ namespace Jatta
         _JATTA_EXPORT bool operator==(const String& operand) const;
         _JATTA_EXPORT bool operator!=(const String& operand) const;
         template <typename T> String operator+(const T& operand) const;
-#       ifdef _CPP_DOUBLE_REFERENCE
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
         template <typename T> String operator+(const T&& operand) const;
 #       endif
         template <typename T> String& operator+=(const T& operand);
-#       ifdef _CPP_DOUBLE_REFERENCE
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
         template <typename T> String& operator+=(const T&& operand);
 #       endif
         _JATTA_EXPORT bool operator<(const String& operand) const;
@@ -113,7 +115,7 @@ template <typename T> Jatta::String Jatta::String::operator+(const T& operand) c
     return data + ss.str();
 }
 
-#ifdef _CPP_DOUBLE_REFERENCE
+#ifdef CPP_HAS_DOUBLE_REFERENCE
 /** @brief Overloaded + operator.  Concatenates this string with a value.
  *  @param operand The value to concatenate.
  *  @returns The new string.
@@ -140,7 +142,7 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T& operand)
     return *this;
 }
 
-#ifdef _CPP_DOUBLE_REFERENCE
+#ifdef CPP_HAS_DOUBLE_REFERENCE
 /** @brief Overloaded += operator.  Concatenates a value onto this string.
  *  @param operand The value to concatenate.
  *  @returns A reference to this object.

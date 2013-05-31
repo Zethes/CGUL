@@ -33,9 +33,11 @@ namespace Jatta
         _JATTA_EXPORT Float32 ASin(Float32 x);
         _JATTA_EXPORT Float32 ATan(Float32 x);
 
+#       ifdef CPP_HAS_HYPERBOLIC
 		_JATTA_EXPORT Float32 ACosh(Float32 x);
         _JATTA_EXPORT Float32 ASinh(Float32 x);
         _JATTA_EXPORT Float32 ATanh(Float32 x);
+#       endif
 
         _JATTA_EXPORT Float32 ATan2(Float32 y, Float32 x);
 
@@ -58,7 +60,6 @@ namespace Jatta
         _JATTA_EXPORT Float32 Min(Float32 a, Float32 b);
         _JATTA_EXPORT Float32 Max(Float32 a, Float32 b);
 
-		_JATTA_EXPORT Float32 Ceil(Float32 x);
         _JATTA_EXPORT Float32 Floor(Float32 x);
         _JATTA_EXPORT Float32 Round(Float32 x);
         _JATTA_EXPORT Float32 Ceil(Float32 x);

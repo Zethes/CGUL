@@ -2,12 +2,21 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if (JATTA_USE_NETWORK)
-    ADD_GROUP("Network")
-    ADD_OTHER(CMakeLists.txt)
-    ADD_SOURCE(DNS.cpp)
-    ADD_HEADER(DNS.h include/Jatta/Network/)
-    ADD_SOURCE(Network.cpp)
-    ADD_SOURCE(SocketTCP.cpp)
-    ADD_HEADER(SocketTCP.h include/Jatta/Network/)
-ENDIF()
+if(NOT Jatta_USE_NETWORK)
+    return()
+endif()
+
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/DNS.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Network.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SocketTCP.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/DNS.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SocketTCP.h
+    PARENT_SCOPE
+)

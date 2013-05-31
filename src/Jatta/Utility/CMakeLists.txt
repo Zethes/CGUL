@@ -2,18 +2,23 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-ADD_GROUP("Utility")
-ADD_OTHER(CMakeLists.txt)
-ADD_SOURCE(CRC32.cpp)
-ADD_HEADER(Encryption.h include/Jatta/Utility/)
-ADD_SOURCE(MD5.cpp)
-#ADD_SOURCE(Object.cpp)
-ADD_HEADER(Object.h include/Jatta/Utility/)
-ADD_SOURCE(Regex.cpp)
-ADD_HEADER(Regex.h include/Jatta/Utility/)
-ADD_SOURCE(String.cpp)
-ADD_HEADER(String.h include/Jatta/Utility/)
-ADD_SOURCE(Timer.cpp)
-ADD_HEADER(Timer.h include/Jatta/Utility/)
-ADD_SOURCE(Thread.cpp)
-ADD_HEADER(Thread.h include/Jatta/Utility/)
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/CRC32.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MD5.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Regex.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/String.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Thread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Regex.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/String.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Thread.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timer.h
+    PARENT_SCOPE
+)

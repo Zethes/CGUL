@@ -2,54 +2,63 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(JATTA_USE_ASSIMP)
-    ADD_GROUP("Assimp")
-    ADD_SOURCE(Animation.cpp)
-    ADD_HEADER(Animation.h include/Jatta/Assimp/)
-    ADD_HEADER(AnimationStates.h include/Jatta/Assimp/)
-    ADD_SOURCE(Assimp.cpp)
-    ADD_HEADER(Assimp.h include/Jatta/Assimp/)
-    ADD_SOURCE(Bone.cpp)
-    ADD_HEADER(Bone.h include/Jatta/Assimp/)
-    ADD_SOURCE(Camera.cpp)
-    ADD_HEADER(Camera.h include/Jatta/Assimp/)
-    ADD_OTHER(CMakeLists.txt)
-    ADD_SOURCE(ExportBlob.cpp)
-    ADD_HEADER(ExportBlob.h include/Jatta/Assimp/)
-    ADD_SOURCE(Exporter.cpp)
-    ADD_HEADER(Exporter.h include/Jatta/Assimp/)
-    ADD_SOURCE(ExportFormatDesc.cpp)
-    ADD_HEADER(ExportFormatDesc.h include/Jatta/Assimp/)
-    ADD_SOURCE(Face.cpp)
-    ADD_HEADER(Face.h include/Jatta/Assimp/)
-    ADD_SOURCE(Importer.cpp)
-    ADD_HEADER(Importer.h include/Jatta/Assimp/)
-    ADD_SOURCE(Light.cpp)
-    ADD_HEADER(Light.h include/Jatta/Assimp/)
-    ADD_HEADER(LightTypes.h include/Jatta/Assimp/)
-    ADD_SOURCE(Material.cpp)
-    ADD_HEADER(Material.h include/Jatta/Assimp/)
-    ADD_HEADER(MaterialEnums.h include/Jatta/Assimp/)
-    ADD_SOURCE(MaterialProperty.cpp)
-    ADD_HEADER(MaterialProperty.h include/Jatta/Assimp/)
-    ADD_SOURCE(Mesh.cpp)
-    ADD_HEADER(Mesh.h include/Jatta/Assimp/)
-    ADD_SOURCE(MeshAnimation.cpp)
-    ADD_HEADER(MeshAnimation.h include/Jatta/Assimp/)
-    ADD_HEADER(MeshKey.h include/Jatta/Assimp/)
-    ADD_SOURCE(Node.cpp)
-    ADD_HEADER(Node.h include/Jatta/Assimp/)
-    ADD_SOURCE(NodeAnimation.cpp)
-    ADD_HEADER(NodeAnimation.h include/Jatta/Assimp/)
-    ADD_HEADER(QuatKey.h include/Jatta/Assimp/)
-    ADD_SOURCE(Scene.cpp)
-    ADD_HEADER(Scene.h include/Jatta/Assimp/)
-    ADD_HEADER(SceneFlags.h include/Jatta/Assimp/)
-    ADD_SOURCE(Texture.cpp)
-    ADD_HEADER(Texture.h include/Jatta/Assimp/)
-    ADD_SOURCE(UVTransform.cpp)
-    ADD_HEADER(UVTransform.h include/Jatta/Assimp/)
-    ADD_HEADER(VectorKey.h include/Jatta/Assimp/)
-    ADD_SOURCE(VertexWeight.cpp)
-    ADD_HEADER(VertexWeight.h include/Jatta/Assimp/)
-ENDIF()
+if(NOT Assimp_FOUND)
+    return()
+endif()
+
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Animation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Assimp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Bone.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportBlob.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportFormatDesc.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exporter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Face.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Importer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Light.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Material.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialProperty.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Mesh.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MeshAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Node.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/NodeAnimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scene.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UVTransform.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexWeight.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Animation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/AnimationStates.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Assimp.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Bone.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Camera.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportBlob.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportFormatDesc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exporter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Face.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Importer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Light.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/LightTypes.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Material.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialEnums.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialProperty.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Mesh.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MeshAnimation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MeshKey.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Node.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/NodeAnimation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/QuatKey.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scene.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SceneFlags.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/UVTransform.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/VectorKey.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexWeight.h
+    PARENT_SCOPE
+)

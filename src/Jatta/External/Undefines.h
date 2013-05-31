@@ -25,11 +25,11 @@
 #   undef _JATTA_GLXCONTEXT
 #endif
 
-#ifdef JATTA_USE_FREETYPE
+#ifdef FreeType_FOUND
 #   undef _JATTA_FT_FACE
 #endif
 
-#ifdef JATTA_USE_ASSIMP
+#ifdef Assimp_FOUND
 #   undef _JATTA_AISCENE
 #   undef _JATTA_AIMESH
 #   undef _JATTA_AITEXTURE
@@ -58,7 +58,7 @@
 #   undef _JATTA_AIEXPORTFORMATENTRY
 #endif
 
-#ifdef JATTA_USE_AUDIO
+#ifdef PortAudio_FOUND
 #   undef _JATTA_PASTREAM
 #   undef _JATTA_PASTREAM_CALLBACK_TIMEINFO
 #   undef _JATTA_PASTREAM_CALLBACK_FLAGS

@@ -46,7 +46,7 @@ namespace std
 
 // TODO: fix static assert on clang builds
 // Jatta Type Defines
-#ifdef _CPP_STATIC_ASSERT
+#ifdef CPP_HAS_STATIC_ASSERT
 #   define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.")
 #else
 #   define TYPE(oldType, newType, size) typedef oldType newType
@@ -115,40 +115,40 @@ namespace Jatta
 
 // TODO: clean up the standard template library list
 // Standard Template Library Includes
-#ifdef _CPP_HEADER_ALGORITHM
+#ifdef CPP_HEADER_ALGORITHM
 #include <algorithm>
 #endif
-#ifdef _CPP_HEADER_CCTYPE
+#ifdef CPP_HEADER_CCTYPE
 #include <cctype>
 #endif
-#ifdef _CPP_HEADER_FSTREAM
+#ifdef CPP_HEADER_FSTREAM
 #include <fstream>
 #endif
-#ifdef _CPP_HEADER_LIST
+#ifdef CPP_HEADER_LIST
 #include <list>
 #endif
-#ifdef _CPP_HEADER_MAP
+#ifdef CPP_HEADER_MAP
 #include <map>
 #endif
-#ifdef _CPP_HEADER_MEMORY
+#ifdef CPP_HEADER_MEMORY
 #include <memory>
 #endif
-#ifdef _CPP_HEADER_SSTREAM
+#ifdef CPP_HEADER_SSTREAM
 #include <sstream>
 #endif
-#ifdef _CPP_HEADER_STDEXCEPT
+#ifdef CPP_HEADER_STDEXCEPT
 #include <stdexcept>
 #endif
-#ifdef _CPP_HEADER_STRING
+#ifdef CPP_HEADER_STRING
 #include <string>
 #endif
-#ifdef _CPP_HEADER_THREAD
+#ifdef CPP_HEADER_THREAD
 #include <thread>
 #endif
-#ifdef _CPP_HEADER_UTILITY
+#ifdef CPP_HEADER_UTILITY
 #include <utility>
 #endif
-#ifdef _CPP_HEADER_VECTOR
+#ifdef CPP_HEADER_VECTOR
 #include <vector>
 #endif
 
@@ -167,38 +167,38 @@ namespace Jatta
 #   ifdef WINDOWS
 #       define UNICODE
 #       define _UNICODE
-#       ifdef JATTA_USE_NETWORK
+#       ifdef Jatta_USE_NETWORK
 #           define _WIN32_WINNT 0x501
 #           include <winsock2.h>
 #           include <ws2tcpip.h>
 #       endif
 #       include <windows.h>
-#       ifdef JATTA_USE_OPENGL
+#       ifdef Jatta_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
 #   endif
 #   ifdef LINUX
 #       include <X11/Xlib.h>
-#       include <X11/Xlib.h>
 #       include <X11/Xatom.h>
-#       ifdef JATTA_USE_OPENGL
+#       include <X11/Xutil.h>
+#       ifdef Jatta_USE_OPENGL
 #           include <GL/glxew.h>
 #           include <GL/glew.h>
 #       endif
 #   endif
 #   ifdef MACOS
-#       ifdef JATTA_USE_OPENGL
+#       ifdef Jatta_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
 #       import <Cocoa/Cocoa.h>
 #   endif
-#   ifdef JATTA_USE_FREETYPE
+#   ifdef FreeType_FOUND
 #       include <ft2build.h>
 #       include <freetype/freetype.h>
 #       include <freetype/ftxf86.h>
 #       include <freetype/ftglyph.h>
 #   endif
-#   ifdef JATTA_USE_ASSIMP
+#   ifdef Assimp_FOUND
 #       include <assimp/cimport.h>
 #       include <assimp/scene.h>
 #       include <assimp/postprocess.h>
@@ -207,7 +207,7 @@ namespace Jatta
 #       include <assimp/Importer.hpp>
 #       include <assimp/Exporter.hpp>
 #   endif
-#   ifdef JATTA_USE_AUDIO
+#   ifdef PortAudio_FOUND
 #       include <portaudio.h>
 #   endif
 #   if defined(LINUX) | defined(MACOS)

@@ -34,3 +34,12 @@ Features
 * <b>A very liberal license</b>
 
 NOTE: Since Jatta is still in developmental stages all features above are only partially implemented!
+
+
+
+
+Ubuntu Packages
+=====
+libx11-dev (for x11 windows)
+libgl1-mesa-dev (for opengl)
+libasound2-dev (for audio)

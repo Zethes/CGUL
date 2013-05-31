@@ -67,7 +67,7 @@
 #define _JATTA_PAHOSTERROR_INFO void*
 
 #if defined(JATTA_INCLUDES)
-#   ifdef _CPP_STATIC_ASSERT
+#   ifdef CPP_HAS_STATIC_ASSERT
 #       define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   else
 #       define CHECK(x, y)
@@ -85,14 +85,14 @@
         CHECK(::Window, _JATTA_WINDOW);
         CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #   endif
-#   ifdef JATTA_USE_ASSIMP
+#   ifdef Assimp_FOUND
       CHECK(::FT_Face, _JATTA_FT_FACE);
       CHECK(::aiScene*, _JATTA_AISCENE);
       CHECK(::aiMesh*, _JATTA_AIMESH);
       CHECK(::aiTexture*, _JATTA_AITEXTURE);
       CHECK(::aiTexture*, _JATTA_AIMATERIAL);
 #   endif
-#   ifdef JATTA_USE_AUDIO
+#   ifdef PortAudio_FOUND
       CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
       CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
       CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
@@ -111,14 +111,14 @@
 #    ifdef LINUX
 #       define _JATTA_DISPLAY ::Display*
 #       define _JATTA_WINDOW ::Window
-#       ifdef JATTA_USE_OPENGL
+#       ifdef Jatta_USE_OPENGL
 #           define _JATTA_GLXCONTEXT ::GLXContext
 #       endif
 #   endif
-#   ifdef JATTA_USE_FREETYPE
+#   ifdef FreeType_FOUND
 #       define _JATTA_FT_FACE ::FT_Face
 #   endif
-#   ifdef JATTA_USE_ASSIMP
+#   ifdef Assimp_FOUND
 #       define _JATTA_AISCENE ::aiScene*
 #       define _JATTA_AIMESH ::aiMesh*
 #       define _JATTA_AITEXTURE ::aiTexture*
@@ -146,7 +146,7 @@
 #       define _JATTA_AIEXPORTDATABLOB ::aiExportDataBlob*
 #       define _JATTA_AIEXPORTFORMATENTRY ::Assimp::Exporter::ExportFormatEntry
 #   endif
-#   ifdef JATTA_USE_AUDIO
+#   ifdef PortAudio_FOUND
 #       define _JATTA_PASTREAM ::PaStream*
 #       define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
 #       define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags

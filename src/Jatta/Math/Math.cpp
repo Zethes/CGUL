@@ -33,27 +33,33 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ACos(Float32 x)
 {
     return std::acos(x);
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ASin(Float32 x)
 {
     return std::asin(x);
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan(Float32 x)
 {
     return std::atan(x);
 }
 
+#ifdef CPP_HAS_HYPERBOLIC
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
 {
     return std::acosh(x);
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
 {
     return std::asinh(x);
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
 {
     return std::atanh(x);
 }
+#endif
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
 {
@@ -133,11 +139,6 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 {
     return (a > b ? a : b);
-}
-
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
-{
-    return std::ceil(x);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)

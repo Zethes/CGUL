@@ -21,7 +21,7 @@ _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 {
 }
 
-#ifdef _CPP_MOVE_CONSTRUCTOR
+#ifdef CPP_HAS_MOVE_CONSTRUCTOR
 /** @brief Move constructor.
  *  @param move The string to move.
  */

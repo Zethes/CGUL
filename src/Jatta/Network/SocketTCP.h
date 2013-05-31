@@ -45,7 +45,7 @@ namespace Jatta
             int Peek(void* data, unsigned int size);
 
             template <typename T> int Send(const T& data);
-#           ifdef _CPP_DOUBLE_REFERENCE
+#           ifdef CPP_HAS_DOUBLE_REFERENCE
             template <typename T> int Send(const T&& data);
 #           endif
 
@@ -61,7 +61,7 @@ template <typename T> int Jatta::Network::SocketTCP::Send(const T& data)
     return Send(&data, sizeof(T));
 }
 
-#ifdef _CPP_DOUBLE_REFERENCE
+#ifdef CPP_HAS_DOUBLE_REFERENCE
 template <typename T> int Jatta::Network::SocketTCP::Send(const T&& data)
 {
     return Send(&data, sizeof(T));

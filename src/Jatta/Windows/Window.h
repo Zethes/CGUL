@@ -45,7 +45,7 @@ namespace Jatta
         Input input;
 
         _JATTA_EXPORT Window(const Window& copy);
-#       ifdef _CPP_MOVE_CONSTRUCTOR
+#       ifdef CPP_HAS_MOVE_CONSTRUCTOR
         _JATTA_EXPORT Window(Window&& move);
 #       endif
     public:

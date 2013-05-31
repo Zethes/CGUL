@@ -2,18 +2,25 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-IF(APPLE)
-    ADD_SUBDIRECTORY(MacOS)
-ENDIF()
+if(APPLE)
+    add_subdirectory(MacOS)
+endif()
 
-ADD_GROUP("Windows")
-ADD_OTHER(CMakeLists.txt)
-ADD_SOURCE(Input.cpp)
-ADD_HEADER(Input.h include/Jatta/Windows/)
-ADD_HEADER(Inputs.h include/Jatta/Windows/)
-ADD_SOURCE(InputState.cpp)
-ADD_HEADER(InputState.h include/Jatta/Windows/)
-ADD_SOURCE(Window.cpp)
-ADD_HEADER(Window.h include/Jatta/Windows/)
-ADD_SOURCE(WindowStyle.cpp)
-ADD_HEADER(WindowStyle.h include/Jatta/Windows/)
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/InputState.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Window.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/WindowStyle.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Input.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/InputState.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Inputs.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Window.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/WindowStyle.h
+    PARENT_SCOPE
+)

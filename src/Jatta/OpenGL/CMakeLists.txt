@@ -2,29 +2,39 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(JATTA_USE_OPENGL)
-    IF(APPLE)
-        ADD_SUBDIRECTORY(MacOS)
-    ENDIF()
+if(NOT Jatta_USE_OPENGL)
+    return()
+endif()
 
-    ADD_GROUP("OpenGL")
-    ADD_SOURCE(Buffer.cpp)
-    ADD_HEADER(Buffer.h include/Jatta/OpenGL/)
-    ADD_OTHER(CMakeLists.txt)
-    ADD_SOURCE(Context.cpp)
-    ADD_HEADER(Context.h include/Jatta/OpenGL/)
-    ADD_SOURCE(FrameBuffer.cpp)
-    ADD_HEADER(FrameBuffer.h include/Jatta/OpenGL/)
-    ADD_SOURCE(OpenGL.cpp)
-    ADD_HEADER(OpenGL.h include/Jatta/OpenGL/)
-    ADD_SOURCE(Program.cpp)
-    ADD_HEADER(Program.h include/Jatta/OpenGL/)
-    ADD_SOURCE(RenderBuffer.cpp)
-    ADD_HEADER(RenderBuffer.h include/Jatta/OpenGL/)
-    ADD_SOURCE(Shader.cpp)
-    ADD_HEADER(Shader.h include/Jatta/OpenGL/)
-    ADD_SOURCE(Texture.cpp)
-    ADD_HEADER(Texture.h include/Jatta/OpenGL/)
-    ADD_SOURCE(VertexArray.cpp)
-    ADD_HEADER(VertexArray.h include/Jatta/OpenGL/)
-ENDIF()
+if(APPLE)
+    add_subdirectory(MacOS)
+endif()
+
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Buffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Context.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FrameBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Program.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RenderBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexArray.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Buffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Context.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/FrameBuffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/GL.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGL.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Program.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/RenderBuffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Shader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexArray.h
+    PARENT_SCOPE
+)

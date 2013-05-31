@@ -1,92 +1,61 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
-# All rights reserved.
+# Generate configuration file
+include(Config/Config.cmake)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Config/Config.h.in ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h)
 
-# Setup cache variables
-INCLUDE(Scripts/Cache.cmake)
-
-# Setup compiler settings
-SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DJATTA_INCLUDES -DGLEW_NO_GLU -DWIN32_LEAN_AND_MEAN -DNOMINMAX -DJATTA_BUILD)
-#IF(NOT APPLE AND NOT MSVC)
-#    SET(CMAKE_CXX_FLAGS "-std=c++0x -MD -Os -s -g -Wall ${CMAKE_CXX_FLAGS}")
-#ENDIF()
-IF(MSVC)
-    SET(CMAKE_CXX_FLAGS "/EHsc ${CMAKE_CXX_FLAGS}")
-    SET(JATTA_DEFINITIONS ${JATTA_DEFINITIONS} -DMSVC)
-ENDIF()
-#IF(APPLE)
-#    SET(CMAKE_CXX_FLAGS "-std=c++0x -ObjC++ -Wall ${CMAKE_CXX_FLAGS}")
-#ENDIF()
-SET(CMAKE_CXX_FLAGS "-I${JATTA_DEPENDENCY_DIR}/include ${CMAKE_CXX_FLAGS}")
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Test C++ for features
-ADD_SUBDIRECTORY(Tests)
-SET(CMAKE_CXX_FLAGS "${JATTA_FLAGS} ${CMAKE_CXX_FLAGS}")
-
-INCLUDE(Scripts/Modules.cmake)
-
-# Initialize SimpleSource
-INCLUDE(Scripts/SimpleSource.cmake)
-SIMPLESOURCE_INIT(ON JATTA_SOURCE)
-
-# Add the source subdirectories
-ADD_SUBDIRECTORY(Jatta/Assimp)
-ADD_SUBDIRECTORY(Jatta/Collision)
-ADD_SUBDIRECTORY(Jatta/External)
-ADD_SUBDIRECTORY(Jatta/File)
-ADD_SUBDIRECTORY(Jatta/Fonts)
-ADD_SUBDIRECTORY(Jatta/Images)
-ADD_SUBDIRECTORY(Jatta/Math)
-ADD_SUBDIRECTORY(Jatta/Network)
-ADD_SUBDIRECTORY(Jatta/OpenGL)
-ADD_SUBDIRECTORY(Jatta/PortAudio)
-ADD_SUBDIRECTORY(Jatta/Utility)
-ADD_SUBDIRECTORY(Jatta/Windows)
-
-# Add the Jatta.h file to the list of source files
-SET(JATTA_SOURCE ${JATTA_SOURCE} Jatta.h)
-INSTALL(FILES Jatta.h DESTINATION include/)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h DESTINATION include/Jatta/)
-
-# Set the output directory to the user defined one or the default one
-IF(NOT JATTA_OUTPUT_DIR STREQUAL "")
-    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${JATTA_OUTPUT_DIR})
-    SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${JATTA_OUTPUT_DIR})
-ENDIF()
-
-# Set the include directories
-SET(JATTA_INCLUDES ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+# Include the source tree
+add_subdirectory(Jatta)
+set(Jatta_INSTALL ${Jatta_INSTALL} ${CMAKE_CURRENT_SOURCE_DIR}/Jatta.h)
 
 # Make all of the files Obj-C++ on Mac
-IF(APPLE AND NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
-    SET(CMAKE_CXX_FLAGS "-ObjC++ ${CMAKE_CXX_FLAGS}")
-ENDIF()
+if(APPLE AND NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
+    set(CMAKE_CXX_FLAGS "-ObjC++ ${CMAKE_CXX_FLAGS}")
+endif()
 
-# Create the Jatta library
-ADD_LIBRARY(Jatta SHARED ${JATTA_SOURCE})
+# Determine dependencies
+include(dependencies.cmake)
 
-# Fix for Xcode
-IF(APPLE AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
-    SET_TARGET_PROPERTIES(Jatta PROPERTIES XCODE_ATTRIBUTE_GCC_INPUT_FILETYPE sourcecode.cpp.objcpp)
-ENDIF()
+# Determine library type
+set(Jatta_LIBRARY_TYPE SHARED)
+if (Jatta_STATIC)
+    set(Jatta_LIBRARY_TYPE STATIC)
+endif()
 
-# Finalize SimpleSource
-SIMPLESOURCE_FINISH()
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${Jatta_DEPENDENCY_INCLUDE_DIRS})
+if(APPLE)
+    include_directories(/Developer/Headers/FlatCarbon)
+endif()
+add_definitions(-DJATTA_BUILD -DJATTA_INCLUDES ${CMAKE_REQUIRED_FLAGS})
+add_library(Jatta ${Jatta_LIBRARY_TYPE} ${Jatta_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h)
 
-INCLUDE(Scripts/Resources.cmake)
+string(REPLACE STRIP ${Jatta_LIBRARIES} Jatta_LIBRARIES)
+string(REPLACE " " ";" LIBRARY_LIST ${Jatta_LIBRARIES})
+message(STATUS "target_link_libraries(Jatta ${LIBRARY_LIST})")
+target_link_libraries(Jatta ${LIBRARY_LIST})
 
-TARGET_LINK_LIBRARIES(Jatta ${JATTA_LIBRARIES})
+# Fix for Xcode to enforce Obj-C++ on all files
+if(APPLE AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
+    set_target_properties(Jatta PROPERTIES XCODE_ATTRIBUTE_GCC_INPUT_FILETYPE sourcecode.cpp.objcpp)
+endif()
 
-ADD_DEFINITIONS(${JATTA_DEFINITIONS})
+# Create the configuration files for importing Jatta
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../JattaConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmake/JattaConfig.cmake" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../JattaConfigVersion.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmake/JattaConfigVersion.cmake" @ONLY)
 
-INSTALL(TARGETS Jatta DESTINATION lib/)
-
-INCLUDE(Scripts/Acknowledgements.cmake)
-
-CONFIGURE_FILE("Jatta/Config.h.in" "Jatta/Config.h")
+# Installation setup
+set(INSTALL_PREFIX "Jatta")
+string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}" DIR_LENGTH)
+math(EXPR DIR_LENGTH "${DIR_LENGTH} + 1")
+foreach(FILE ${Jatta_INSTALL})
+    string(SUBSTRING "${FILE}" ${DIR_LENGTH} -1 INSTALL_FILE)
+    get_filename_component(INSTALL_DIR ${INSTALL_FILE} PATH)
+    install(FILES ${FILE} DESTINATION include/${INSTALL_DIR}/)
+endforeach()
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h DESTINATION include/Jatta/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmake/JattaConfig.cmake DESTINATION cmake/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmake/JattaConfigVersion.cmake DESTINATION cmake/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION .)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/acknowledgements.txt DESTINATION .)
+install(TARGETS Jatta DESTINATION lib/)
+if(DOXYGEN_ENABLE AND EXISTS ${CMAKE_CURRENT_BINARY_DIR}/../html)
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../html DESTINATION doc)
+endif()

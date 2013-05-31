@@ -2,7 +2,14 @@
 # Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-ADD_GROUP("File")
-ADD_OTHER(CMakeLists.txt)
-ADD_SOURCE(File.cpp)
-ADD_HEADER(File.h include/Jatta/File)
+set(Jatta_SOURCES
+    ${Jatta_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
+    PARENT_SCOPE
+)
+
+set(Jatta_INSTALL
+    ${Jatta_INSTALL}
+    ${CMAKE_CURRENT_SOURCE_DIR}/File.h
+    PARENT_SCOPE
+)
