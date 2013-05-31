@@ -1,7 +1,7 @@
 Jatta
 =====
 
-General Utility Library
+General Utility Library<br>
 Learn more at [our website](http://jatta.zethes.com/).
 
 Features
@@ -40,6 +40,6 @@ NOTE: Since Jatta is still in developmental stages all features above are only p
 
 Ubuntu Packages
 =====
-libx11-dev (for x11 windows)
-libgl1-mesa-dev (for opengl)
+libx11-dev (for x11 windows)<br>
+libgl1-mesa-dev (for opengl)<br>
 libasound2-dev (for audio)
