@@ -29,7 +29,6 @@ add_library(Jatta ${Jatta_LIBRARY_TYPE} ${Jatta_SOURCES} ${CMAKE_CURRENT_BINARY_
 
 string(REPLACE STRIP ${Jatta_LIBRARIES} Jatta_LIBRARIES)
 string(REPLACE " " ";" LIBRARY_LIST ${Jatta_LIBRARIES})
-message(STATUS "target_link_libraries(Jatta ${LIBRARY_LIST})")
 target_link_libraries(Jatta ${LIBRARY_LIST})
 
 # Fix for Xcode to enforce Obj-C++ on all files
