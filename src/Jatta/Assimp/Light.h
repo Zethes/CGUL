@@ -7,7 +7,7 @@
 #include <Jatta/Config.h>
 #include "LightTypes.h"
 #include "../Utility/String.h"
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
 
@@ -25,8 +25,8 @@ namespace Jatta
 
             _JATTA_EXPORT UInt32 GetType();
 
-            _JATTA_EXPORT Float3 GetPosition();
-            _JATTA_EXPORT Float3 GetDirection();
+            _JATTA_EXPORT Vector3 GetPosition();
+            _JATTA_EXPORT Vector3 GetDirection();
             _JATTA_EXPORT Float32 GetAngleInnerCone();
             _JATTA_EXPORT Float32 GetAngleOuterCone();
 

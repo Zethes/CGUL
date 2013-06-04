@@ -5,8 +5,8 @@
 
 #include "Matrix.h"
 #include "Math.h"
-#include "Float2.h"
-#include "Float3.h"
+#include "Vector2.h"
+#include "Vector3.h"
 #include "Quaternion.h"
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Identity()
@@ -51,7 +51,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(const Quaternion& quater
     return Matrix(quaternion);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float2 scale)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Vector2 scale)
 {
     return Matrix(scale.x, 0,       0, 0,
                   0,       scale.y, 0, 0,
@@ -59,7 +59,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float2 scale)
                   0,       0,       0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float3 scale)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Vector3 scale)
 {
     return Matrix(scale.x, 0,       0,       0,
                   0,       scale.y, 0,       0,
@@ -67,7 +67,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Float3 scale)
                   0,       0,       0,       1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Float2 translation)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Vector2 translation)
 {
     return Matrix(1,             0,             0, 0,
                   0,             1,             0, 0,
@@ -75,7 +75,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Float2 translation)
                   translation.x, translation.y, 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Float3 translation)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Vector3 translation)
 {
     return Matrix(1,             0,             0,             0,
                   0,             1,             0,             0,
@@ -93,23 +93,23 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakePerspective(float fovY, float asp
                   0,      0,      -zNear * zFar / (zFar - zNear), 0);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Float3& eye, const Float3& at, const Float3& up)
+_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Vector3& eye, const Vector3& at, const Vector3& up)
 {
-    Float3 zAxis = Float3::Normalized(eye - at); // forward
-    Float3 xAxis = Float3::Normalized(Float3::CrossProduct(up, zAxis)); // right
-    Float3 yAxis = Float3::CrossProduct(xAxis, zAxis); // up
+    Vector3 zAxis = Vector3::Normalized(eye - at); // forward
+    Vector3 xAxis = Vector3::Normalized(Vector3::CrossProduct(up, zAxis)); // right
+    Vector3 yAxis = Vector3::CrossProduct(xAxis, zAxis); // up
     zAxis *= -1;
     yAxis *= -1;
 
     return Matrix(xAxis.x,                          yAxis.x,                          zAxis.x,                         0,
                   xAxis.y,                          yAxis.y,                          zAxis.y,                         0,
                   xAxis.z,                          yAxis.z,                          zAxis.z,                         0,
-                  -Float3::DotProduct(xAxis, eye),  -Float3::DotProduct(yAxis, eye),  -Float3::DotProduct(zAxis, eye), 1);
+                  -Vector3::DotProduct(xAxis, eye),  -Vector3::DotProduct(yAxis, eye),  -Vector3::DotProduct(zAxis, eye), 1);
 }
 
 /*_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
 {
-  Float3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
+  Vector3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
 
   return Matrix(2.0f / (right - left), 0,                     0,    0,
                 0,                     2.0f / (top - bottom), 0,    0,
@@ -119,7 +119,7 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Float3& eye, const F
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
 {
-  /*Float3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
+  /*Vector3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
 
   return Matrix(2.0f / (right - left), 0,                     0,    -t.x,
                 0,                     2.0f / (top - bottom), 0,    -t.y,

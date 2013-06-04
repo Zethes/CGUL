@@ -20,13 +20,13 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Light::GetType()
     return light->mType;
 }
 
-_JATTA_EXPORT Jatta::Float3 Jatta::Assimp::Light::GetPosition()
+_JATTA_EXPORT Jatta::Vector3 Jatta::Assimp::Light::GetPosition()
 {
-    return Float3(light->mPosition.x, light->mPosition.y, light->mPosition.z);
+    return Vector3(light->mPosition.x, light->mPosition.y, light->mPosition.z);
 }
-_JATTA_EXPORT Jatta::Float3 Jatta::Assimp::Light::GetDirection()
+_JATTA_EXPORT Jatta::Vector3 Jatta::Assimp::Light::GetDirection()
 {
-    return Float3(light->mDirection.x, light->mDirection.y, light->mDirection.z);
+    return Vector3(light->mDirection.x, light->mDirection.y, light->mDirection.z);
 }
 _JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAngleInnerCone()
 {

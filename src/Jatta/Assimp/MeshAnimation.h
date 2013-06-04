@@ -5,9 +5,9 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
 #include "../Math/Matrix.h"
 #include "../Math/Quaternion.h"
+#include "../Math/Vector3.h"
 #include "../Utility/String.h"
 #include "MeshKey.h"
 #include "../External/Defines.h"

@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -15,7 +15,7 @@ namespace Jatta
         struct VectorKey
         {
             double time;
-            Jatta::Float3 value;
+            Jatta::Vector3 value;
         };
     }
 }

@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float2.h"
+#include "../Math/Vector2.h"
 #include "../Assimp/Assimp.h"
 #include "../External/Defines.h"
 
@@ -19,8 +19,8 @@ namespace Jatta
         public:
             _JATTA_EXPORT UVTransform(_JATTA_AIUVTRANSFORM uvTransform);
 
-            _JATTA_EXPORT Float2 GetTranslation();
-            _JATTA_EXPORT Float2 GetScaling();
+            _JATTA_EXPORT Vector2 GetTranslation();
+            _JATTA_EXPORT Vector2 GetScaling();
             _JATTA_EXPORT Float32 GetRotation();
         };
     }

@@ -9,8 +9,8 @@
 
 namespace Jatta
 {
-    struct Float3;
-    struct Float4;
+    struct Vector3;
+    struct Vector4;
 
     struct Color
     {
@@ -32,8 +32,8 @@ namespace Jatta
             return stream;
         }
 
-        _JATTA_EXPORT Float3 ToFloat3() const;
-        _JATTA_EXPORT Float4 ToFloat4() const;
+        _JATTA_EXPORT Vector3 ToVector3() const;
+        _JATTA_EXPORT Vector4 ToVector4() const;
     };
 }
 

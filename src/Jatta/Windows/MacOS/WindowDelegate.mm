@@ -186,15 +186,15 @@
         return rect.size.height;
     }
 
-    - (void) setSize: (const Jatta::Float2&)size // TODO: use something other than Float2
+    - (void) setSize: (const Jatta::Vector2&)size // TODO: use something other than Vector2
     {
     }
 
-    - (Jatta::Float2) getSize
+    - (Jatta::Vector2) getSize
     {
         //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
         NSRect rect = [[window contentView] frame];
-        return Jatta::Float2(rect.size.width, rect.size.height);
+        return Jatta::Vector2(rect.size.width, rect.size.height);
     }
 
     - (void) setResizable: (Jatta::Boolean)resizable
@@ -221,7 +221,7 @@
         return (styleMask & NSResizableWindowMask) > 0;
     }
 /*
-    - (Jatta::Float4) GetFrameSize
+    - (Jatta::Vector4) GetFrameSize
     {
     }
 

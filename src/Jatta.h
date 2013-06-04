@@ -61,7 +61,7 @@
 #   include "Jatta/Assimp/Texture.h"
 #   include "Jatta/Assimp/UVTransform.h"
 #   include "Jatta/Assimp/VectorKey.h"
-#	include "Jatta/Assimp/VertexWeight.h"
+#   include "Jatta/Assimp/VertexWeight.h"
 #endif
 
 #include "Jatta/Collision/AABB2D.h"
@@ -79,13 +79,13 @@
 #include "Jatta/Images/Colors.h"
 #include "Jatta/Images/Image.h"
 
-#include "Jatta/Math/Float2.h"
-#include "Jatta/Math/Float3.h"
-#include "Jatta/Math/Float4.h"
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"
 #include "Jatta/Math/Random.h"
 #include "Jatta/Math/Quaternion.h"
+#include "Jatta/Math/Vector2.h"
+#include "Jatta/Math/Vector3.h"
+#include "Jatta/Math/Vector4.h"
 
 #ifdef Jatta_USE_NETWORK
 #   include "Jatta/Network/DNS.h"

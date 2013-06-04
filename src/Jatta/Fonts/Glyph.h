@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float2.h"
+#include "../Math/Vector2.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
  #include "FontStyles.h"
@@ -52,8 +52,8 @@ namespace Jatta
         UInt32 character;
         UInt32 width;
         UInt32 height;
-        Float2 offset;
-        Float2 advance;
+        Vector2 offset;
+        Vector2 advance;
         Byte* data;
     public:
         _JATTA_EXPORT Glyph(_JATTA_FT_FACE face, UInt32 utf8Character);
@@ -61,8 +61,8 @@ namespace Jatta
 
         _JATTA_EXPORT UInt32 GetWidth();
         _JATTA_EXPORT UInt32 GetHeight();
-        _JATTA_EXPORT Float2 GetAdvance();
-        _JATTA_EXPORT Float2 GetOffset();
+        _JATTA_EXPORT Vector2 GetAdvance();
+        _JATTA_EXPORT Vector2 GetOffset();
 
         _JATTA_EXPORT Byte* GetData();
 

@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float2.h"
+#include "../Math/Vector2.h"
 #include "../Utility/String.h"
 #include "../Assimp/Assimp.h"
 #include "MaterialEnums.h"

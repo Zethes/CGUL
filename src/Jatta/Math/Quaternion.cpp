@@ -1,7 +1,7 @@
 #include "Quaternion.h"
 #include "Math.h"
-#include "Float2.h"
-#include "Float3.h"
+#include "Vector2.h"
+#include "Vector3.h"
 #include "Matrix.h"
 
 Jatta::Quaternion::Quaternion()
@@ -31,7 +31,7 @@ void Jatta::Quaternion::Normalize()
 {
 }
 
-void Jatta::Quaternion::RotateOnAxis(const Float3& axis, Float32 angle)
+void Jatta::Quaternion::RotateOnAxis(const Vector3& axis, Float32 angle)
 {
     w = Math::Cos(angle / 2.0f);
     x = Math::Sin(angle / 2.0f) * axis.x;

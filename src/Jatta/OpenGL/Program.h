@@ -6,9 +6,9 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "Shader.h"
-#include "../Math/Float2.h"
-#include "../Math/Float3.h"
-#include "../Math/Float4.h"
+#include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
+#include "../Math/Vector4.h"
 #include "../Math/Matrix.h"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
@@ -24,11 +24,11 @@ namespace Jatta
         public:
             _JATTA_EXPORT static void Uniform1f(SInt32 location, Float32 value0);
             _JATTA_EXPORT static void Uniform2f(SInt32 location, Float32 value0, Float32 value1);
-            _JATTA_EXPORT static void Uniform2f(SInt32 location, Float2 value);
+            _JATTA_EXPORT static void Uniform2f(SInt32 location, Vector2 value);
             _JATTA_EXPORT static void Uniform3f(SInt32 location, Float32 value0, Float32 value1, Float32 value2);
-            _JATTA_EXPORT static void Uniform3f(SInt32 location, Float3 value);
+            _JATTA_EXPORT static void Uniform3f(SInt32 location, Vector3 value);
             _JATTA_EXPORT static void Uniform4f(SInt32 location, Float32 value0, Float32 value1, Float32 value2, Float32 value3);
-            _JATTA_EXPORT static void Uniform4f(SInt32 location, Float4 value);
+            _JATTA_EXPORT static void Uniform4f(SInt32 location, Vector4 value);
 
             _JATTA_EXPORT static void Uniform1i(SInt32 location, SInt32 value0);
             _JATTA_EXPORT static void Uniform2i(SInt32 location, SInt32 value0, SInt32 value1);
@@ -42,11 +42,11 @@ namespace Jatta
 
             _JATTA_EXPORT static void Uniform1fv(SInt32 location, Size count, const Float32* value);
             _JATTA_EXPORT static void Uniform2fv(SInt32 location, Size count, const Float32* value);
-            _JATTA_EXPORT static void Uniform2fv(SInt32 location, Size count, const Float2* value);
+            _JATTA_EXPORT static void Uniform2fv(SInt32 location, Size count, const Vector2* value);
             _JATTA_EXPORT static void Uniform3fv(SInt32 location, Size count, const Float32* value);
-            _JATTA_EXPORT static void Uniform3fv(SInt32 location, Size count, const Float3* value);
+            _JATTA_EXPORT static void Uniform3fv(SInt32 location, Size count, const Vector3* value);
             _JATTA_EXPORT static void Uniform4fv(SInt32 location, Size count, const Float32* value);
-            _JATTA_EXPORT static void Uniform4fv(SInt32 location, Size count, const Float4* value);
+            _JATTA_EXPORT static void Uniform4fv(SInt32 location, Size count, const Vector4* value);
 
             _JATTA_EXPORT static void Uniform1iv(SInt32 location, Size count, const SInt32* value);
             _JATTA_EXPORT static void Uniform2iv(SInt32 location, Size count, const SInt32* value);

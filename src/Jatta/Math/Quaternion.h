@@ -9,9 +9,9 @@
 
 namespace Jatta
 {
-    struct Float2;
-    struct Float3;
-    struct Float4;
+    struct Vector2;
+    struct Vector3;
+    struct Vector4;
     struct Matrix;
 
     struct Quaternion
@@ -42,7 +42,7 @@ namespace Jatta
         void CreateBasis(jVector3*, jVector3*, jVector3*);*/
         void Normalize();
 
-        void RotateOnAxis(const Float3& axis, Float32 angle);
+        void RotateOnAxis(const Vector3& axis, Float32 angle);
 
         // TODO: finish the quaternion class, reference DirectX's D3DXQUATERNION
     };

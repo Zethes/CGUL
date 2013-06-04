@@ -635,7 +635,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 #   endif
 }
 
-_JATTA_EXPORT void Jatta::Window::SetSize(const Float2& size) const
+_JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
 #   ifdef LINUX
     if (GetResizable())
@@ -655,11 +655,11 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Float2& size) const
     // TODO: Jatta::Window::SetSize
 }
 
-_JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
+_JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::Float2(0, 0);
+        return Jatta::Vector2(0, 0);
     }
 
 #   ifdef WINDOWS
@@ -667,17 +667,17 @@ _JATTA_EXPORT Jatta::Float2 Jatta::Window::GetSize() const
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
     GetWindowRect(handle, &rect);
-    return Float2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
+    return Vector2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
 #   endif
 
 #   ifdef LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
-    return Float2(attributes.height, attributes.width);
+    return Vector2(attributes.height, attributes.width);
 #   endif
 
 #   ifdef MACOS
-    return Float2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
+    return Vector2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
 }
 
@@ -761,23 +761,23 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 #   endif
     return false;
 }
-_JATTA_EXPORT Jatta::Float4 Jatta::Window::GetFrameSize() const
+_JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::Float4(0, 0, 0, 0);
+        return Jatta::Vector4(0, 0, 0, 0);
     }
 
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     GetWindowRect(handle, &rect);
-    return Float4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+    return Vector4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
 #   if defined(LINUX) || defined(MACOS)
     //TODO: Linux & Mac
-    return Jatta::Float4(0, 0, 0, 0);
+    return Jatta::Vector4(0, 0, 0, 0);
 #   endif
 }
 

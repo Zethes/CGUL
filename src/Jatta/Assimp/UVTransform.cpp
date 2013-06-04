@@ -10,13 +10,13 @@ _JATTA_EXPORT Jatta::Assimp::UVTransform::UVTransform(::aiUVTransform* uvTransfo
     this->uvTransform = uvTransform;
 }
 
-_JATTA_EXPORT Jatta::Float2 Jatta::Assimp::UVTransform::GetTranslation()
+_JATTA_EXPORT Jatta::Vector2 Jatta::Assimp::UVTransform::GetTranslation()
 {
-    return Float2(uvTransform->mTranslation.x, uvTransform->mTranslation.y);
+    return Vector2(uvTransform->mTranslation.x, uvTransform->mTranslation.y);
 }
-_JATTA_EXPORT Jatta::Float2 Jatta::Assimp::UVTransform::GetScaling()
+_JATTA_EXPORT Jatta::Vector2 Jatta::Assimp::UVTransform::GetScaling()
 {
-    return Float2(uvTransform->mScaling.x, uvTransform->mScaling.y);
+    return Vector2(uvTransform->mScaling.x, uvTransform->mScaling.y);
 }
 _JATTA_EXPORT Jatta::Float32 Jatta::Assimp::UVTransform::GetRotation()
 {

@@ -41,8 +41,8 @@ _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
     character = utf8Character;
     width = face->glyph->bitmap.width;
     height = face->glyph->bitmap.rows;
-    advance = Float2(2,0);//Float2(face->glyph->advance.x/64.0, face->glyph->advance.y/64.0);
-    offset = Float2(face->glyph->bitmap_left, face->glyph->bitmap_top);
+    advance = Vector2(2,0);//Vector2(face->glyph->advance.x/64.0, face->glyph->advance.y/64.0);
+    offset = Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top);
     data = (Byte*)new unsigned char[width*height];
     memcpy(data, face->glyph->bitmap.buffer, width*height);
 }
@@ -59,11 +59,11 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Glyph::GetHeight()
 {
     return height;
 }
-_JATTA_EXPORT Jatta::Float2 Jatta::Glyph::GetAdvance()
+_JATTA_EXPORT Jatta::Vector2 Jatta::Glyph::GetAdvance()
 {
     return advance;
 }
-_JATTA_EXPORT Jatta::Float2 Jatta::Glyph::GetOffset()
+_JATTA_EXPORT Jatta::Vector2 Jatta::Glyph::GetOffset()
 {
     return offset;
 }

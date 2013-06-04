@@ -9,11 +9,11 @@
 
 namespace Jatta
 {
-    struct Float2;
-    struct Float3;
+    struct Vector2;
+    struct Vector3;
     struct Matrix;
 
-    struct Float4
+    struct Vector4
     {
         union
         {
@@ -24,14 +24,14 @@ namespace Jatta
             Float32 m[4];
         };
 
-        _JATTA_EXPORT Float4();
-        _JATTA_EXPORT Float4(const Float4& copy);
-        _JATTA_EXPORT Float4(float value);
-        _JATTA_EXPORT Float4(float x, float y, float z, float w);
+        _JATTA_EXPORT Vector4();
+        _JATTA_EXPORT Vector4(const Vector4& copy);
+        _JATTA_EXPORT Vector4(float value);
+        _JATTA_EXPORT Vector4(float x, float y, float z, float w);
 
         _JATTA_EXPORT float& operator[](UInt32 index);
-        _JATTA_EXPORT Float4 operator*(const Matrix& operand) const;
-        friend std::ostream& operator<<(std::ostream& stream, const Float4& vector)
+        _JATTA_EXPORT Vector4 operator*(const Matrix& operand) const;
+        friend std::ostream& operator<<(std::ostream& stream, const Vector4& vector)
         {
             stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
             return stream;
@@ -42,9 +42,9 @@ namespace Jatta
         _JATTA_EXPORT void Set(Float32 value);
         _JATTA_EXPORT void Set(Float32 x, Float32 y, Float32 z, Float32 w);
 
-        _JATTA_EXPORT Float2 Swizzle(UInt32 x, UInt32 y) const;
-        _JATTA_EXPORT Float3 Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
-        _JATTA_EXPORT Float4 Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
+        _JATTA_EXPORT Vector2 Swizzle(UInt32 x, UInt32 y) const;
+        _JATTA_EXPORT Vector3 Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
+        _JATTA_EXPORT Vector4 Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
 
         _JATTA_EXPORT void Normalize();
 

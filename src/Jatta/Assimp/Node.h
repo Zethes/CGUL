@@ -7,7 +7,7 @@
 #include <Jatta/Config.h>
 #include "../Utility/String.h"
 #include "../Math/Matrix.h"
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../External/Defines.h"
 
 namespace Jatta

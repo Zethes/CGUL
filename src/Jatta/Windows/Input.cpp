@@ -327,13 +327,13 @@ _JATTA_EXPORT Jatta::InputState Jatta::Input::GetButtonState(unsigned char butto
 }
 
 
-_JATTA_EXPORT Jatta::Float2 Jatta::Input::GetMousePosition()
+_JATTA_EXPORT Jatta::Vector2 Jatta::Input::GetMousePosition()
 {
     return mousePos;
     //TODO: Linux
 }
 
-_JATTA_EXPORT void Jatta::Input::SetMousePosition(Float2 pos)
+_JATTA_EXPORT void Jatta::Input::SetMousePosition(Vector2 pos)
 {
 #   ifdef WINDOWS
     POINT p;

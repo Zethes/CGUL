@@ -15,19 +15,19 @@ Jatta::String Jatta::Assimp::Camera::GetName()
     return String(camera->mName.C_Str());
 }
 
-Jatta::Float3 Jatta::Assimp::Camera::GetLookAt()
+Jatta::Vector3 Jatta::Assimp::Camera::GetLookAt()
 {
-    return Float3(camera->mLookAt.x, camera->mLookAt.y, camera->mLookAt.z);
+    return Vector3(camera->mLookAt.x, camera->mLookAt.y, camera->mLookAt.z);
 }
 
-Jatta::Float3 Jatta::Assimp::Camera::GetPosition()
+Jatta::Vector3 Jatta::Assimp::Camera::GetPosition()
 {
-    return Float3(camera->mPosition.x, camera->mPosition.y, camera->mPosition.z);
+    return Vector3(camera->mPosition.x, camera->mPosition.y, camera->mPosition.z);
 }
 
-Jatta::Float3 Jatta::Assimp::Camera::GetUp()
+Jatta::Vector3 Jatta::Assimp::Camera::GetUp()
 {
-    return Float3(camera->mUp.x, camera->mUp.y, camera->mUp.z);
+    return Vector3(camera->mUp.x, camera->mUp.y, camera->mUp.z);
 }
 
 Jatta::Float32 Jatta::Assimp::Camera::GetAspectRatio()

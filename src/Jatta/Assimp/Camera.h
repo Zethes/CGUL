@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Utility/String.h"
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../Assimp/Assimp.h"
 #include "../External/Defines.h"
 
@@ -22,9 +22,9 @@ namespace Jatta
 
             String GetName();
 
-            Float3 GetLookAt();
-            Float3 GetPosition();
-            Float3 GetUp();
+            Vector3 GetLookAt();
+            Vector3 GetPosition();
+            Vector3 GetUp();
 
             Float32 GetAspectRatio();
             Float32 GetClipPlaneFar();

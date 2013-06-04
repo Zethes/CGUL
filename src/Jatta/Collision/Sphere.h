@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -17,7 +17,7 @@ namespace Jatta
         struct Sphere
         {
             // TODO: this class
-            Float3 position;
+            Vector3 position;
             Float32 radius;
             
             _JATTA_EXPORT Sphere();

@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float2.h"
+#include "../Math/Vector2.h"
 #include "InputState.h"
 #include "../External/Defines.h"
 
@@ -19,7 +19,7 @@ namespace Jatta
 
         Window* window;
         InputState keyData[256];
-        Float2 mousePos;
+        Vector2 mousePos;
         InputState mouseData[3];
 
         _JATTA_EXPORT Input(Window* window);
@@ -34,8 +34,8 @@ namespace Jatta
 
         _JATTA_EXPORT InputState GetButtonState(unsigned char button);
 
-        _JATTA_EXPORT Float2 GetMousePosition();
-        _JATTA_EXPORT void SetMousePosition(Float2 pos);
+        _JATTA_EXPORT Vector2 GetMousePosition();
+        _JATTA_EXPORT void SetMousePosition(Vector2 pos);
     };
 }
 

@@ -7,8 +7,8 @@
 #include <Jatta/Config.h>
 #include "Input.h"
 #include "WindowStyle.h"
-#include "../Math/Float2.h"
-#include "../Math/Float4.h"
+#include "../Math/Vector2.h"
+#include "../Math/Vector4.h"
 #if defined(JATTA_BUILD) && defined(MACOS)
 #   include "MacOS/WindowDelegate.h"
 #endif
@@ -87,13 +87,13 @@ namespace Jatta
         _JATTA_EXPORT UInt32 GetWidth() const;
         _JATTA_EXPORT void SetHeight(UInt32 height);
         _JATTA_EXPORT UInt32 GetHeight() const;
-        _JATTA_EXPORT void SetSize(const Float2& size) const; // TODO: use something other than Float2
-        _JATTA_EXPORT Float2 GetSize() const;
+        _JATTA_EXPORT void SetSize(const Vector2& size) const; // TODO: use something other than Vector2
+        _JATTA_EXPORT Vector2 GetSize() const;
 
         _JATTA_EXPORT void SetResizable(Boolean resizable);
         _JATTA_EXPORT Boolean GetResizable() const;
 
-        _JATTA_EXPORT Float4 GetFrameSize() const;
+        _JATTA_EXPORT Vector4 GetFrameSize() const;
 
         _JATTA_EXPORT Boolean IsOpen() const;
         _JATTA_EXPORT Boolean IsFocused() const;

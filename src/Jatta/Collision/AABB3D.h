@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float3.h"
+#include "../Math/Vector3.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -17,8 +17,8 @@ namespace Jatta
         struct AABB3D
         {
             // TODO: this class
-            Float3 position;
-            Float3 extents;
+            Vector3 position;
+            Vector3 extents;
             
             _JATTA_EXPORT AABB3D();
         };

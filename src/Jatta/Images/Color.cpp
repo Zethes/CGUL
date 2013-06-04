@@ -4,8 +4,8 @@
  */
 
 #include "Color.h"
-#include "../Math/Float3.h"
-#include "../Math/Float4.h"
+#include "../Math/Vector3.h"
+#include "../Math/Vector4.h"
 
 /** @brief Creates a color given a hue, saturation and value.
  *  @param hue Hue value from 0-360.
@@ -119,12 +119,12 @@ _JATTA_EXPORT Jatta::Color& Jatta::Color::operator=(const Color& operand)
     return *this;
 }
 
-_JATTA_EXPORT Jatta::Float3 Jatta::Color::ToFloat3() const
+_JATTA_EXPORT Jatta::Vector3 Jatta::Color::ToVector3() const
 {
-    return Float3(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
+    return Vector3(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
 }
 
-_JATTA_EXPORT Jatta::Float4 Jatta::Color::ToFloat4() const
+_JATTA_EXPORT Jatta::Vector4 Jatta::Color::ToVector4() const
 {
-    return Float4(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
+    return Vector4(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
 }

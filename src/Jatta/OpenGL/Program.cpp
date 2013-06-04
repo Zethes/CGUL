@@ -19,7 +19,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2f(SInt32 location, Float32 va
     GLCHECK("glUniform2f failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2f(SInt32 location, Float2 value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2f(SInt32 location, Vector2 value)
 {
     glUniform2f(location, value.x, value.y);
     GLCHECK("glUniform2f failed!");
@@ -31,7 +31,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3f(SInt32 location, Float32 va
     GLCHECK("glUniform3f failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3f(SInt32 location, Float3 value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3f(SInt32 location, Vector3 value)
 {
     glUniform3f(location, value.x, value.y, value.z);
     GLCHECK("glUniform3f failed!");
@@ -43,7 +43,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4f(SInt32 location, Float32 va
     GLCHECK("glUniform4f failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4f(SInt32 location, Float4 value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4f(SInt32 location, Vector4 value)
 {
     glUniform4f(location, value.x, value.y, value.z, value.w);
     GLCHECK("glUniform4f failed!");
@@ -109,7 +109,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2fv(SInt32 location, Size coun
     GLCHECK("glUniform2fv failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2fv(SInt32 location, Size count, const Float2* value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform2fv(SInt32 location, Size count, const Vector2* value)
 {
     glUniform2fv(location, count * 2, (float*)value);
     GLCHECK("glUniform2fv failed!");
@@ -121,7 +121,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3fv(SInt32 location, Size coun
     GLCHECK("glUniform3fv failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3fv(SInt32 location, Size count, const Float3* value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform3fv(SInt32 location, Size count, const Vector3* value)
 {
     glUniform3fv(location, count * 3, (float*)value);
     GLCHECK("glUniform3fv failed!");
@@ -133,7 +133,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4fv(SInt32 location, Size coun
     GLCHECK("glUniform4fv failed!");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4fv(SInt32 location, Size count, const Float4* value)
+_JATTA_EXPORT void Jatta::OpenGL::Program::Uniform4fv(SInt32 location, Size count, const Vector4* value)
 {
     glUniform4fv(location, count * 4, (float*)value);
     GLCHECK("glUniform4fv failed!");

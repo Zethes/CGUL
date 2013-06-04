@@ -9,7 +9,7 @@
 #include <Jatta/Config.h>
 #include "../../Windows/WindowStyle.h"
 #include "../../Utility/String.h"
-#include "../../Math/Float2.h"
+#include "../../Math/Vector2.h"
 #include "../../OpenGL/MacOS/OpenGLView.h"
 #include "../../External/Defines.h"
 
@@ -48,13 +48,13 @@
 - (Jatta::UInt32) getWidth;
 - (void) setHeight: (UInt32)width;
 - (Jatta::UInt32) getHeight;
-- (void) setSize: (const Jatta::Float2&)size; // TODO: use something other than Float2
-- (Jatta::Float2) getSize;
+- (void) setSize: (const Jatta::Vector2&)size; // TODO: use something other than Vector2
+- (Jatta::Vector2) getSize;
 
 - (void) setResizable: (Jatta::Boolean)resizable;
 - (Jatta::Boolean) getResizable;
 /*
-- (Jatta::Float4) getFrameSize;
+- (Jatta::Vector4) getFrameSize;
 
 - (Jatta::Boolean) isOpen2;*/
 - (Jatta::Boolean) isFocused;

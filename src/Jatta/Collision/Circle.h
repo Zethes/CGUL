@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Float2.h"
+#include "../Math/Vector2.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -17,7 +17,7 @@ namespace Jatta
         struct Circle
         {
             // TODO: this class
-            Float2 position;
+            Vector2 position;
             Float32 radius;
             
             _JATTA_EXPORT Circle();

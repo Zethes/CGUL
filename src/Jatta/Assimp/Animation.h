@@ -7,8 +7,8 @@
 #include <Jatta/Config.h>
 #include "MeshAnimation.h"
 #include "NodeAnimation.h"
-#include "../Math/Float3.h"
 #include "../Math/Matrix.h"
+#include "../Math/Vector3.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
