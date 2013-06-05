@@ -395,7 +395,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     if (amount == 0)
     {
         Close();
-        throw std::runtime_error("receive failed");
+        return 0;
     }
     else
     {
@@ -435,7 +435,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     if (amount == 0)
     {
         Close();
-        throw std::runtime_error("peek failed");
+        return 0;
     }
     else
     {

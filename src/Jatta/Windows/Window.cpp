@@ -169,7 +169,9 @@ _JATTA_EXPORT void Jatta::Window::Update()
 #   endif
 }
 
-_JATTA_EXPORT  Jatta::Window::Window() : input(this)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+_JATTA_EXPORT Jatta::Window::Window() : input(this)
 {
 #   ifdef LINUX
     if (!initialized)
