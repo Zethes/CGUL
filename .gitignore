@@ -29,6 +29,7 @@ examples/*/build/
 
 # Misc Files
 *.directory
+*.swp
 
 # Backup Files
 *~
