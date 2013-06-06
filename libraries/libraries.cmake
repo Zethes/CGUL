@@ -31,6 +31,7 @@ macro(jatta_find_package LIBRARY)
     # Setup cache
     if(NOT ${${LIBRARY}_SECONDARY})
         set(${LIBRARY}_REQUIRED ON CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
+        set(${LIBRARY}_IGNORE OFF CACHE BOOL "Ignores this library even if it was found.")
     endif()
 
     # Look for the release and debug libraries
@@ -71,6 +72,14 @@ macro(jatta_find_package LIBRARY)
         endif()
     endif()
 
+    # Check the ignore flag
+    if(${${LIBRARY}_IGNORE})
+        if(${${LIBRARY}_FOUND})
+            message(STATUS "Looking for library ${LIBRARY} -- ignored")
+            set(${LIBRARY}_FOUND OFF)
+        endif()
+    endif()
+
     # Check for required library
     if(NOT ${${LIBRARY}_FOUND})
         if(${${LIBRARY}_SECONDARY})
@@ -81,7 +90,11 @@ macro(jatta_find_package LIBRARY)
             endforeach()
         else()
             if(${${LIBRARY}_REQUIRED})
-                message(FATAL_ERROR "Unable to find required library: ${LIBRARY}")
+                if(${${LIBRARY}_IGNORE})
+                    message(FATAL_ERROR "The library ${LIBRARY} was both marked as REQUIRED and IGNORED.\nPlease switch off either ${LIBRARY}_REQUIRED or ${LIBRARY}_IGNORE.")
+                else()
+                    message(FATAL_ERROR "Unable to find required library: ${LIBRARY}")
+                endif()
             endif()
         endif()
     else()

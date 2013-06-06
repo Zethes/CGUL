@@ -119,6 +119,7 @@
 #endif
 
 #include "Jatta/Utility/Encryption.h"
+#include "Jatta/Utility/Hook.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"

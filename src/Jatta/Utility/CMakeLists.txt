@@ -16,6 +16,8 @@ set(Jatta_SOURCES
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Hook.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Hook.ipp
     ${CMAKE_CURRENT_SOURCE_DIR}/Regex.h
     ${CMAKE_CURRENT_SOURCE_DIR}/String.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread.h
