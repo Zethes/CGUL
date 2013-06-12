@@ -1,11 +1,10 @@
 #include <Jatta.h>
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
 
 int main() 
 {
-    printf("Using version (%d) %s.\n", Jatta::PortAudio::GetVersion(), Jatta::PortAudio::GetVersionText().GetCString());
-
     //Test initalize.
     Jatta::SInt32 ret;
     if ((ret = Jatta::PortAudio::Initialize()) != Jatta::PortAudio::Errors::NO_ERROR)
@@ -14,29 +13,25 @@ int main()
         return EXIT_FAILURE; 
     }
 
-    //Test SawWave.
-    Jatta::PortAudio::SawWave sawWave(Jatta::PortAudio::GetDefaultOutputDevice());
-    sawWave.SetVolume(0.25f);
-    if ((ret = sawWave.Start()) != Jatta::PortAudio::Errors::NO_ERROR)
+    //List devices
+    printf("Using version (%d) %s.\n", Jatta::PortAudio::GetVersion(), Jatta::PortAudio::GetVersionText().GetCString());
+    printf("Devices: \n");
+    for (unsigned int i = 0; i < Jatta::PortAudio::GetDeviceCount(); i++)
     {
-        printf("Failed to start sawwave. Error %d.\n", ret);
-        return EXIT_FAILURE; 
+        std::cout << i << ". " << Jatta::PortAudio::GetDevice(i).GetName() << std::endl;
     }
-    Jatta::PortAudio::Sleep(1000);
-    if ((ret = sawWave.Stop()) != Jatta::PortAudio::Errors::NO_ERROR)
-    {
-        printf("Failed to stop sawwave. Error %d.\n", ret);
-        return EXIT_FAILURE; 
-    }
-    if ((ret = sawWave.Close()) != Jatta::PortAudio::Errors::NO_ERROR)
-    {
-        printf("Failed to close sawwave. Error %d.\n", ret);
-        return EXIT_FAILURE; 
-    }
+    std::cout << "Default : " << Jatta::PortAudio::GetDefaultOutputDevice().GetName() << std::endl;
 
     //Test SineWave.
-    Jatta::PortAudio::SineWave sineWave(Jatta::PortAudio::GetDefaultOutputDevice());
-    sineWave.SetVolume(0.25f);
+    Jatta::Float32* sine = new Jatta::Float32[200];
+    for (unsigned int i = 0; i < 200; i++)
+    {
+        sine[i] = (float)Jatta::Math::Sin(((double)i/200.0)*Jatta::Math::pi * 2.0);
+    }
+
+    Jatta::PortAudio::OutputStream sineWave(Jatta::PortAudio::GetDefaultOutputDevice(), sine, 200); //Create mono stream.
+    sineWave.SetLooping(true);
+    //sineWave.SetVolume(0.25f);
     if ((ret = sineWave.Start()) != Jatta::PortAudio::Errors::NO_ERROR)
     {
         printf("Failed to start sineWave. Error %d.\n", ret);

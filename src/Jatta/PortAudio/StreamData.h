@@ -16,8 +16,10 @@ namespace Jatta
         struct StreamData
         {
         public:
+            UInt32 CurrentPosition;
+            UInt32 Length;
             UInt32 NumberOfChannels;
-            Float32*Channels;
+            std::vector<Float32*> OutputChannels;
             Float32*InputChannels;
             Stream* StreamPtr;
         };
