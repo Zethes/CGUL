@@ -518,6 +518,7 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     XSetWindowBackground(display, this->handle, color.b | (color.g << 8) | (color.r << 16));
     XClearWindow(display, this->handle);
     XFlush(display);
+    backgroundColor = color;
 #   endif
 
 #   ifdef MACOS
@@ -539,15 +540,24 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
     return Color((lb.lbColor & 255), ((lb.lbColor >> 8) & 255), ((lb.lbColor >> 16) & 255), 255);
 #   endif
 
+#   ifdef LINUX
+    return backgroundColor;
+#   endif
+
 #   ifdef MACOS
     return [handle getBackgroundColor];
 #   endif
-    // TODO: Jatta::Window::GetBackgroundColor
     return Color(0, 0, 0);
 }
 
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, width, GetHeight()};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -594,6 +604,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, GetWidth(), height};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -639,6 +655,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 
 _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, size.x, size.y};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -665,11 +687,7 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
     }
 
 #   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    int borders = -rect.top + rect.bottom;
-    GetWindowRect(handle, &rect);
-    return Vector2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
+    return Vector2(GetWidth(), GetHeight());
 #   endif
 
 #   ifdef LINUX
@@ -763,6 +781,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 #   endif
     return false;
 }
+
 _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
@@ -773,14 +792,29 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    GetWindowRect(handle, &rect);
-    return Vector4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+    return Vector4((float)-rect.left, (float)-rect.top, (float)rect.right, (float)rect.bottom);
+#   endif
+
+#   ifdef LINUX
+    Atom netFrameExtents = XInternAtom(display, "_NET_FRAME_EXTENTS", False);
+    Atom actualType;
+    int actualFormat;
+    unsigned long items, bytesAfter;
+    long* data = NULL;
+    if (Success == XGetWindowProperty(display, handle, netFrameExtents, 0L, 4, False, AnyPropertyType, &actualType, &actualFormat, &items, &bytesAfter, (unsigned char**)&data) && data)
+    {
+        Vector4 result(data[0], data[2], data[1], data[3]);
+        XFree(data);
+        return result;
+    }
 #   endif
 
 #   if defined(LINUX) || defined(MACOS)
     //TODO: Linux & Mac
     return Jatta::Vector4(0, 0, 0, 0);
 #   endif
+
+    return Vector4(0, 0, 0, 0);
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const

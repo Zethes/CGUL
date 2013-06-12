@@ -7,6 +7,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "MacWindow.h"
 #include "../../Windows/WindowStyle.h"
 #include "../../Utility/String.h"
 #include "../../Math/Vector2.h"
@@ -17,7 +18,7 @@
 @interface WindowDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     // The main application window
-    NSWindow* window;
+    MacWindow* window;
 
     // The customized OpenGL view
     OpenGLView* view;
@@ -30,7 +31,7 @@
 
 - (id)init: (Jatta::WindowStyle)style;
 
-- (NSWindow*)Window;
+- (MacWindow*)Window;
 - (int)IsOpen;
 - (void)SetContent: (OpenGLView*)content;
 
@@ -38,7 +39,7 @@
 
 //- (void) updateInput;
 
-- (void) setTitle:(const Jatta::String&)title;
+- (void) setTitle: (const Jatta::String&)title;
 - (Jatta::String) getTitle;
 
 - (void) setBackgroundColor: (const Jatta::Color&)color;

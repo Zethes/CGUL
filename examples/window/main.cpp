@@ -15,7 +15,16 @@ int main()
     Window window;
     window.Create(style);
 
+    std::cout << "== Style ==" << std::endl;
     std::cout << window.GetStyle() << std::endl;
+    std::cout << std::endl;
+
+    Vector4 frameExtents = window.GetFrameSize();
+    std::cout << "== Frame Extents ==" << std::endl;
+    std::cout << "Left Border:      " << frameExtents.x << std::endl;
+    std::cout << "Top Border:       " << frameExtents.y << std::endl;
+    std::cout << "Right Border:     " << frameExtents.z << std::endl;
+    std::cout << "Bottom Border:    " << frameExtents.w << std::endl;
 
     float hue = 0;
     while (window.IsOpen())

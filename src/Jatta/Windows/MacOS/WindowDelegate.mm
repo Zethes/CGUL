@@ -27,12 +27,12 @@
             NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
 
             // Adjust the window's sized based on the style mask
-            //NSRect rect = [NSWindow contentRectForFrameRect: frame styleMask: styleMask];
-            //NSRect rect = [NSWindow frameRectForContentRect: frame styleMask: styleMask];
+            //NSRect rect = [MacWindow contentRectForFrameRect: frame styleMask: styleMask];
+            //NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
             NSRect rect = frame;
 
             // Create the window based on the above specifications
-            window = [[NSWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
+            window = [[MacWindow alloc] initWithContentRect: rect styleMask: styleMask backing: NSBackingStoreBuffered defer: false];
 
             // Set the background color to black
             //[window setBackgroundColor: [NSColor colorWithCalibratedRed: style.backgroundColor.r / 255.0 green: style.backgroundColor.g / 255.0 blue: style.backgroundColor.b / 255.0 alpha: 1.0]];
@@ -100,7 +100,7 @@
         [pool drain];
     }
 
-    - (NSWindow*)Window
+    - (MacWindow*)Window
     {
         return window;
     }

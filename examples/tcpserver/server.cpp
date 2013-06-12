@@ -41,7 +41,7 @@ int main()
                 // Check if the client is still connected, if not remove it
                 if (!client->IsConnected())
                 {
-                    cout << "-- Client disconnected: " << dummy.GetIP() << endl;
+                    cout << "-- Client disconnected!" << endl;
                     clients.erase(client);
                     break;
                 }

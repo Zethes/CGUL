@@ -108,7 +108,7 @@ if(PortAudio_FOUND)
         find_framework(AudioToolbox)
         find_framework(AudioUnit)
     else()
-        use_library(${ALSA_LINK} ON)
+        use_library(asound ON)
     endif()
 
     list(APPEND ACKNOWLEDGEMENTS

@@ -5,6 +5,6 @@ project(Window CXX)
 find_package(Jatta 0.1.0 REQUIRED)
 
 include_directories(${Jatta_INCLUDE_DIRS})
-add_executable(window main.cpp)
+add_executable(window MACOSX_BUNDLE main.cpp)
 target_link_libraries(window ${Jatta_LIBRARIES})
 jatta_copy_modules(window ${CMAKE_CURRENT_BINARY_DIR})

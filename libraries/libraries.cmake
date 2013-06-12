@@ -192,7 +192,6 @@ if("${SYSTEM_NAME}" STREQUAL "linux")
     jatta_find_package(
         ALSA
         NAMES asound
-        DEBUG asoundd
         PARENTS PortAudio
     )
 endif()
