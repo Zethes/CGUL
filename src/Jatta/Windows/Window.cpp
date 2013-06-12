@@ -518,6 +518,7 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     XSetWindowBackground(display, this->handle, color.b | (color.g << 8) | (color.r << 16));
     XClearWindow(display, this->handle);
     XFlush(display);
+    backgroundColor = color;
 #   endif
 
 #   ifdef MACOS
@@ -539,10 +540,13 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
     return Color((lb.lbColor & 255), ((lb.lbColor >> 8) & 255), ((lb.lbColor >> 16) & 255), 255);
 #   endif
 
+#   ifdef LINUX
+    return backgroundColor;
+#   endif
+
 #   ifdef MACOS
     return [handle getBackgroundColor];
 #   endif
-    // TODO: Jatta::Window::GetBackgroundColor
     return Color(0, 0, 0);
 }
 
@@ -763,6 +767,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 #   endif
     return false;
 }
+
 _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
@@ -777,10 +782,26 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
     return Vector4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
+#   ifdef LINUX
+    Atom netFrameExtents = XInternAtom(display, "_NET_FRAME_EXTENTS", False);
+    Atom actualType;
+    int actualFormat;
+    unsigned long items, bytesAfter;
+    long* data = NULL;
+    if (Success == XGetWindowProperty(display, handle, netFrameExtents, 0L, 4, False, AnyPropertyType, &actualType, &actualFormat, &items, &bytesAfter, (unsigned char**)&data) && data)
+    {
+        Vector4 result(data[0], data[1], data[2], data[3]);
+        XFree(data);
+        return result;
+    }
+#   endif
+
 #   if defined(LINUX) || defined(MACOS)
     //TODO: Linux & Mac
     return Jatta::Vector4(0, 0, 0, 0);
 #   endif
+
+    return Vector4(0, 0, 0, 0);
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const

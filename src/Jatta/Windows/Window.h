@@ -32,6 +32,7 @@ namespace Jatta
         static std::map<_JATTA_WINDOW, Window*> windowMap;
         static _JATTA_DISPLAY display;
         _JATTA_WINDOW handle;
+        Color backgroundColor;
 
         static Boolean initialized;
 #       endif
