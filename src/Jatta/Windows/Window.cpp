@@ -552,6 +552,12 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, width, GetHeight()};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -598,6 +604,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, GetWidth(), height};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -643,6 +655,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 
 _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
+#   ifdef WINDOWS
+    RECT rect = {0, 0, size.x, size.y};
+    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+    SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
+#   endif
+
 #   ifdef LINUX
     if (GetResizable())
     {
@@ -669,11 +687,7 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
     }
 
 #   ifdef WINDOWS
-    RECT rect = {0, 0, 0, 0};
-    AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    int borders = -rect.top + rect.bottom;
-    GetWindowRect(handle, &rect);
-    return Vector2((float)(rect.right - rect.left - borders), (float)(rect.bottom - rect.top - borders));
+    return Vector2(GetWidth(), GetHeight());
 #   endif
 
 #   ifdef LINUX
