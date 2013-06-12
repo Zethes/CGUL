@@ -794,14 +794,12 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
         XFree(data);
         return result;
     }
-#   endif
-
-#   if defined(LINUX) || defined(MACOS)
-    //TODO: Linux & Mac
-    return Jatta::Vector4(0, 0, 0, 0);
-#   endif
-
     return Vector4(0, 0, 0, 0);
+#   endif
+
+#   ifdef MACOS
+    return [handle getFrameSize];
+#   endif
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const

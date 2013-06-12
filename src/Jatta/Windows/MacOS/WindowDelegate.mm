@@ -7,6 +7,7 @@
 
 #import "WindowDelegate.h"
 #import "Application.h"
+#include "../../Math/Vector4.h"
 
  // leaving this here for future reference:
  // http://stackoverflow.com/questions/4312338/how-to-use-the-object-property-of-nsnotificationcenter   
@@ -220,12 +221,21 @@
         [pool drain];
         return (styleMask & NSResizableWindowMask) > 0;
     }
-/*
-    - (Jatta::Vector4) GetFrameSize
+
+    - (Jatta::Vector4) getFrameSize
     {
+        // Define the size of the window
+        NSRect frame = NSMakeRect(0, 0, 0, 0);
+
+        // Define the style masks to be a titled window with close, max and min
+        NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+
+        NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
+
+        return Jatta::Vector4(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
     }
 
-    - (Jatta::Boolean) IsOpen2
+    /*- (Jatta::Boolean) IsOpen2
     {
     }*/
 

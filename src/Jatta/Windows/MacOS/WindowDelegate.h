@@ -54,9 +54,9 @@
 
 - (void) setResizable: (Jatta::Boolean)resizable;
 - (Jatta::Boolean) getResizable;
-/*
-- (Jatta::Vector4) getFrameSize;
 
+- (Jatta::Vector4) getFrameSize;
+/*
 - (Jatta::Boolean) isOpen2;*/
 - (Jatta::Boolean) isFocused;
 
