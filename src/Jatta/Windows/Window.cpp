@@ -778,8 +778,7 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 #   ifdef WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    GetWindowRect(handle, &rect);
-    return Vector4((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom);
+    return Vector4((float)-rect.left, (float)-rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
 #   ifdef LINUX
@@ -790,7 +789,7 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
     long* data = NULL;
     if (Success == XGetWindowProperty(display, handle, netFrameExtents, 0L, 4, False, AnyPropertyType, &actualType, &actualFormat, &items, &bytesAfter, (unsigned char**)&data) && data)
     {
-        Vector4 result(data[0], data[1], data[2], data[3]);
+        Vector4 result(data[0], data[2], data[1], data[3]);
         XFree(data);
         return result;
     }

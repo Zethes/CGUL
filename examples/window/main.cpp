@@ -22,8 +22,8 @@ int main()
     Vector4 frameExtents = window.GetFrameSize();
     std::cout << "== Frame Extents ==" << std::endl;
     std::cout << "Left Border:      " << frameExtents.x << std::endl;
-    std::cout << "Right Border:     " << frameExtents.y << std::endl;
-    std::cout << "Top Border:       " << frameExtents.z << std::endl;
+    std::cout << "Top Border:       " << frameExtents.y << std::endl;
+    std::cout << "Right Border:     " << frameExtents.z << std::endl;
     std::cout << "Bottom Border:    " << frameExtents.w << std::endl;
 
     float hue = 0;
