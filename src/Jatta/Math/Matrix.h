@@ -38,6 +38,7 @@ namespace Jatta
         _JATTA_EXPORT static Matrix MakeOrtho(int left, int right, int bottom, int top);
 
         _JATTA_EXPORT static Matrix Inverse(const Matrix& matrix);
+        _JATTA_EXPORT static Matrix Transpose(const Matrix& matrix);
 
         _JATTA_EXPORT Matrix();
         _JATTA_EXPORT Matrix(const Matrix& copy);
@@ -55,6 +56,7 @@ namespace Jatta
         _JATTA_EXPORT Float32* operator[](UInt32 index);
         _JATTA_EXPORT const Float32* operator[](UInt32 index) const;
         _JATTA_EXPORT Matrix operator*(const Matrix& operand) const;
+        _JATTA_EXPORT Matrix operator*(Float32 operand) const;
         _JATTA_EXPORT Matrix& operator*=(Float32 operand);
         _JATTA_EXPORT Matrix& operator/=(Float32 operand);
         friend std::ostream& operator<<(std::ostream& stream, const Matrix& matrix)
@@ -65,16 +67,43 @@ namespace Jatta
             stream << "[" << matrix.m[0][3] << ", " << matrix.m[1][3] << ", " << matrix.m[2][3] << ", " << matrix.m[3][3] << "]";
             return stream;
         }
+        friend bool operator==(const Matrix& a, const Matrix& b)
+        {
+            return (a.m[0][0] == b.m[0][0] &&
+                    a.m[0][1] == b.m[0][1] &&
+                    a.m[0][2] == b.m[0][2] &&
+                    a.m[0][3] == b.m[0][3] &&
+                    a.m[1][0] == b.m[1][0] &&
+                    a.m[1][1] == b.m[1][1] &&
+                    a.m[1][2] == b.m[1][2] &&
+                    a.m[1][3] == b.m[1][3] &&
+                    a.m[2][0] == b.m[2][0] &&
+                    a.m[2][1] == b.m[2][1] &&
+                    a.m[2][2] == b.m[2][2] &&
+                    a.m[2][3] == b.m[2][3] &&
+                    a.m[3][0] == b.m[3][0] &&
+                    a.m[3][1] == b.m[3][1] &&
+                    a.m[3][2] == b.m[3][2] &&
+                    a.m[3][3] == b.m[3][3]);
+        }
+        friend bool operator!=(const Matrix& a, const Matrix& b)
+        {
+            return !(a == b);
+        }
 
         _JATTA_EXPORT Float32* GetData() const;
 
         _JATTA_EXPORT void Invert();
+        _JATTA_EXPORT void Transpose();
         _JATTA_EXPORT Float32 GetDeterminant() const;
 
         _JATTA_EXPORT void Debug() const;
 
+        _JATTA_EXPORT bool IsReflexive() const;
+        _JATTA_EXPORT bool IsSymmetric() const;
+        _JATTA_EXPORT bool IsAntisymmetric() const;
+
         // TODO: finish the matrix class, we're missing some important functionality here
-        // TODO: add an operator<< for matrices
     };
 }
 

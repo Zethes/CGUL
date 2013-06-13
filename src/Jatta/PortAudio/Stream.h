@@ -16,20 +16,18 @@ namespace Jatta
     {
         class Stream
         {
-        private:
-            Float32 volume;
         protected:
+            Float32 volume;
+            bool loop;
+
             _JATTA_PASTREAM stream;
             UInt32 sampleRate;
             UInt32 framesPerBuffer;
-            UInt32 channelCount;
-            StreamData data;
-            _JATTA_EXPORT virtual SInt32 OpenStream(Device device);
+            StreamData streamData;
+            _JATTA_EXPORT virtual SInt32 OpenStream(Device device) = 0;
         public:
             _JATTA_EXPORT Stream();
             _JATTA_EXPORT ~Stream();
-
-            _JATTA_EXPORT virtual bool Update(StreamData* data) = 0;
 
             _JATTA_EXPORT SInt32 Start();
             _JATTA_EXPORT SInt32 Stop();
@@ -37,6 +35,8 @@ namespace Jatta
 
             _JATTA_EXPORT void SetVolume(Float32 volume);
             _JATTA_EXPORT Float32 GetVolume();
+            _JATTA_EXPORT bool GetLooping();
+            _JATTA_EXPORT void SetLooping(bool loop);
 
             _JATTA_EXPORT bool IsStopped();
             _JATTA_EXPORT bool IsActive();
