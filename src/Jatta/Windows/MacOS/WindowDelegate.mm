@@ -165,7 +165,12 @@
 
     - (void) setWidth: (Jatta::UInt32)width
     {
-        // TODO: mac setWidth
+        NSRect frame = [window frame];
+        frame.size.width = width;
+        frame.size.height = [self getHeight];
+        NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+        NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
+        [window setFrame: rect display: YES animate: NO];
     }
 
     - (Jatta::UInt32) getWidth
@@ -175,9 +180,14 @@
         return rect.size.width;
     }
 
-    - (void) setHeight: (Jatta::UInt32)width
+    - (void) setHeight: (Jatta::UInt32)height
     {
-        // TODO: mac setHeight
+        NSRect frame = [window frame];
+        frame.size.width = [self getWidth];
+        frame.size.height = height;
+        NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+        NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
+        [window setFrame: rect display: YES animate: NO];
     }
 
     - (Jatta::UInt32) getHeight
@@ -189,6 +199,12 @@
 
     - (void) setSize: (const Jatta::Vector2&)size // TODO: use something other than Vector2
     {
+        NSRect frame = [window frame];
+        frame.size.width = size.x;
+        frame.size.height = size.y;
+        NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+        NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
+        [window setFrame: rect display: YES animate: NO];
     }
 
     - (Jatta::Vector2) getSize
