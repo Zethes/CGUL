@@ -115,9 +115,6 @@ if(PortAudio_FOUND)
         "\n\n"
         "PortAudio Portable Real-Time Audio Library http://www.portaudio.com/\n"
         "Copyright (C) 1999-2011 Ross Bencina, Phil Burk\n"
-        "\n"
-        "PulseAudio Implementation for PortAudio https://github.com/bkgood/portaudio-pulseaudio\n"
-        "Copyright (C) 2011 William 'Bill' Good"
     )
 endif()
 
