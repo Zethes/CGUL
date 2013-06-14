@@ -109,6 +109,7 @@
 #   include "Jatta/PortAudio/Device.h"
 #   include "Jatta/PortAudio/HostApi.h"
 #   include "Jatta/PortAudio/HostError.h"
+#   include "Jatta/PortAudio/InputStream.h"
 #   include "Jatta/PortAudio/OutputStream.h"
 #   include "Jatta/PortAudio/PortAudio.h"
 #   include "Jatta/PortAudio/Stream.h"

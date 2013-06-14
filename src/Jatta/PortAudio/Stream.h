@@ -18,6 +18,7 @@ namespace Jatta
         {
         protected:
             Float32 volume;
+            Float32 pitch;
             bool loop;
 
             _JATTA_PASTREAM stream;
@@ -35,6 +36,8 @@ namespace Jatta
 
             _JATTA_EXPORT void SetVolume(Float32 volume);
             _JATTA_EXPORT Float32 GetVolume();
+            _JATTA_EXPORT void SetPitch(Float32 pitch);
+            _JATTA_EXPORT Float32 GetPitch();
             _JATTA_EXPORT bool GetLooping();
             _JATTA_EXPORT void SetLooping(bool loop);
 
@@ -47,7 +50,7 @@ namespace Jatta
             _JATTA_EXPORT StreamData* GetData();
 
             _JATTA_EXPORT SInt32 Read(void* buffer, UInt64 frames);
-            _JATTA_EXPORT SInt32 Write(const void* buffer, UInt64 frames);
+            _JATTA_EXPORT SInt32 Write(Jatta::Float32* buffer, UInt64 frames);
             _JATTA_EXPORT SInt64 ReadAvailable();
             _JATTA_EXPORT SInt64 WriteAvailable();
         };

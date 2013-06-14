@@ -16,17 +16,8 @@ namespace Jatta
         {
         protected:
             _JATTA_EXPORT SInt32 OpenStream(Device device);
-            std::vector<Float32>* inputs;
         public:
-            _JATTA_EXPORT InputStream(Device device);
-
-            _JATTA_EXPORT virtual bool Update(StreamData* data);
-
-            _JATTA_EXPORT Float32 GetLastInput(int channel);
-            _JATTA_EXPORT std::vector<Float32> GetInput(int channel);
-            _JATTA_EXPORT void ClearInput();
-
-            _JATTA_EXPORT void WriteToRaw(const char* filename);
+            _JATTA_EXPORT InputStream(Device device, bool (*callback)(std::vector<Float32*>, Jatta::UInt32, Stream*));
         };
     }
 }

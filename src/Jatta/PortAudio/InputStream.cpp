@@ -6,33 +6,49 @@
 #include "InputStream.h"
 #include <cstdio>
 
-static int paCallback(const void* input, void* output, unsigned long fpb, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags flags, void* udata)
+static int paCallbackInput(const void* inputBuffer, void* output, unsigned long fpb, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags flags, void* udata)
 {
     Jatta::PortAudio::StreamData* data = (Jatta::PortAudio::StreamData*)udata;
     (void) output;
-    unsigned int i;
-    const float *in = (const float*)input;
 
-    for (i = 0; i < fpb; i++)
+    const float *rptr = (const float*)inputBuffer;
+    std::vector<Jatta::Float32*> inputData;
+
+    unsigned int i, j;
+    int ret = paContinue;
+
+    for (i = 0; i < data->NumberOfChannels; i++)
+        inputData.push_back(new Jatta::Float32[fpb]);
+
+    if (inputBuffer == NULL)
     {
-        if (input == NULL)
+        for (i = 0; i < fpb; i++)
         {
-            for (unsigned int j = 0; j < data->NumberOfChannels; j++)
-            { data->InputChannels[j] = 0.0f; }
-        }
-        else
-        {
-            for (unsigned int j = 0; j < data->NumberOfChannels; j++)
-            { data->InputChannels[j] = data->StreamPtr->GetVolume()*(*in++); }
-        }
-
-        if (!data->StreamPtr->Update(data))
-        {
-            return paAbort;
+            for (j = 0; j < data->NumberOfChannels; j++)
+                inputData.at(j)[i] = 0.0f;
         }
     }
+    else
+    {
+        for (i = 0; i < fpb; i++)
+        {
+            for (j = 0; j < data->NumberOfChannels; j++)
+                inputData.at(j)[i] = 1.0f*(*rptr++); //data->StreamPtr->GetVolume()
+        }
+    }
+    data->Length++;
 
-    return paContinue;
+    if (!data->inputCallback(inputData, fpb, data->StreamPtr))
+    {
+        ret = paComplete;
+    }
+
+    //Clean-up
+    /*for (i = 0; i < data->NumberOfChannels; i++)
+        delete[] inputData.at(i);
+    inputData.clear();*/
+
+    return ret;
 }
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device device)
@@ -40,13 +56,9 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device dev
     if (sampleRate == 0)
     { sampleRate = device.GetDefaultSampleRate(); }
 
-    data.InputChannels = new Float32[data.NumberOfChannels];
-    for (unsigned int i = 0; i < data.NumberOfChannels; i++)
-    { data.InputChannels[i] = 0.0f; } 
-
     PaStreamParameters inputParameters;
     inputParameters.device = device.GetIndex();
-    inputParameters.channelCount = channelCount;
+    inputParameters.channelCount = streamData.NumberOfChannels;
     inputParameters.sampleFormat = paFloat32;
     inputParameters.suggestedLatency = device.GetDefaultLowInputLatency();
     inputParameters.hostApiSpecificStreamInfo = NULL;
@@ -58,60 +70,22 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device dev
         sampleRate,
         framesPerBuffer,
         paClipOff,
-        paCallback,
-        &data);
+        paCallbackInput,
+        &streamData);
 }
 
 
-_JATTA_EXPORT Jatta::PortAudio::InputStream::InputStream(Device device) : Stream()
+_JATTA_EXPORT Jatta::PortAudio::InputStream::InputStream(Device device, bool (*callback)(std::vector<Float32*>, Jatta::UInt32, Stream*))
 {
-   OpenStream(device);
+    volume = 1.0f;
+    streamData.StreamPtr = this;
+    streamData.NumberOfChannels = 1;
 
-   inputs = new std::vector<Float32>[channelCount];
-}
+    sampleRate = 0;
+    framesPerBuffer = 512;
 
-_JATTA_EXPORT bool Jatta::PortAudio::InputStream::Update(StreamData* data)
-{
-    for (unsigned int i = 0; i < channelCount; i++)
-    {
-        inputs[i].push_back(data->InputChannels[i]);
-    }
-
-    return true;
-}
-
-_JATTA_EXPORT Jatta::Float32 Jatta::PortAudio::InputStream::GetLastInput(int channel)
-{
-    return inputs[channel].back();
-}
-_JATTA_EXPORT std::vector<Jatta::Float32> Jatta::PortAudio::InputStream::GetInput(int channel)
-{
-    return inputs[channel];
-}
-
-_JATTA_EXPORT void Jatta::PortAudio::InputStream::ClearInput()
-{
-    for (unsigned int i = 0; i < channelCount; i++)
-    {
-        inputs[i].clear();
-    }
-}
-
-_JATTA_EXPORT void Jatta::PortAudio::InputStream::WriteToRaw(const char* filename)
-{
-    FILE *fid;
-    fid = fopen(filename, "wb");
-    if (fid == NULL)
-    {
-        return;
-    }
-    
-    for (unsigned int i = 0; i < inputs[0].size(); i++)
-    {
-        for (unsigned int j = 0; j < channelCount; j++)
-        {
-            fwrite(&inputs[j][i], sizeof(Float32), 1, fid);
-        }
-    }
-    fclose(fid);
+    streamData.CurrentPosition = 0;
+    streamData.Length = 0;
+    streamData.inputCallback = callback;
+    OpenStream(device);
 }

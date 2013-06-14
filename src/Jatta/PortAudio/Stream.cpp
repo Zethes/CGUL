@@ -46,6 +46,16 @@ _JATTA_EXPORT Jatta::Float32 Jatta::PortAudio::Stream::GetVolume()
     return volume;
 }
 
+_JATTA_EXPORT void Jatta::PortAudio::Stream::SetPitch(Float32 pitch)
+{
+    this->pitch = pitch;
+}
+
+_JATTA_EXPORT Jatta::Float32 Jatta::PortAudio::Stream::GetPitch()
+{
+    return pitch;
+}
+
 _JATTA_EXPORT bool Jatta::PortAudio::Stream::GetLooping()
 {
     return loop;
@@ -96,9 +106,9 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Read(void* buffer, UInt64 
     return (SInt32)Pa_ReadStream(stream, buffer, frames);
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Write(const void* buffer, UInt64 frames)
+_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Stream::Write(Jatta::Float32* buffer, UInt64 frames)
 {
-    return (SInt32)Pa_WriteStream(stream, buffer, frames);
+    return (SInt32)Pa_WriteStream(stream, (const void*)buffer, frames);
 }
 
 _JATTA_EXPORT Jatta::SInt64 Jatta::PortAudio::Stream::ReadAvailable()

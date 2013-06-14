@@ -20,8 +20,8 @@ namespace Jatta
             UInt32 Length;
             UInt32 NumberOfChannels;
             std::vector<Float32*> OutputChannels;
-            Float32*InputChannels;
             Stream* StreamPtr;
+            bool (*inputCallback)(std::vector<Float32*>, Jatta::UInt32, Stream*);
         };
     }
 }
