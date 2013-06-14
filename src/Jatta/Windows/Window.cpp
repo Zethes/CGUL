@@ -573,7 +573,11 @@ _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
     }
 #   endif
 
-    // TODO: Jatta::Window::SetWidth
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    [handle setWidth: width];
+    [pool drain];
+#   endif
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
@@ -624,7 +628,12 @@ _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
         XSetWMNormalHints(display, this->handle, &hints);
     }
 #   endif
-    // TODO: Jatta::Window::SetHeight
+    
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    [handle setHeight: height];
+    [pool drain];
+#   endif
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
@@ -676,7 +685,11 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
     }
 #   endif
 
-    // TODO: Jatta::Window::SetSize
+#   ifdef MACOS
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    [handle setSize: size];
+    [pool drain];
+#   endif
 }
 
 _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
@@ -807,14 +820,12 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
         XFree(data);
         return result;
     }
-#   endif
-
-#   if defined(LINUX) || defined(MACOS)
-    //TODO: Linux & Mac
-    return Jatta::Vector4(0, 0, 0, 0);
-#   endif
-
     return Vector4(0, 0, 0, 0);
+#   endif
+
+#   ifdef MACOS
+    return [handle getFrameSize];
+#   endif
 }
 
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const

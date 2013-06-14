@@ -47,16 +47,16 @@
 
 - (void) setWidth: (UInt32)width;
 - (Jatta::UInt32) getWidth;
-- (void) setHeight: (UInt32)width;
+- (void) setHeight: (UInt32)height;
 - (Jatta::UInt32) getHeight;
 - (void) setSize: (const Jatta::Vector2&)size; // TODO: use something other than Vector2
 - (Jatta::Vector2) getSize;
 
 - (void) setResizable: (Jatta::Boolean)resizable;
 - (Jatta::Boolean) getResizable;
-/*
-- (Jatta::Vector4) getFrameSize;
 
+- (Jatta::Vector4) getFrameSize;
+/*
 - (Jatta::Boolean) isOpen2;*/
 - (Jatta::Boolean) isFocused;
 
