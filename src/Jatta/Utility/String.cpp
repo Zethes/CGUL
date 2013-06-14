@@ -8,22 +8,20 @@
 #include "../Math/Math.h"
 #include <cstring>
 
-/** @brief Default constructor.  Initializes string to "".
+/**
  */
 _JATTA_EXPORT Jatta::String::String() : data()
 {
 }
 
-/** @brief Copy constructor.
- *  @param copy The string to copy.
+/** @param copy The string to copy.
  */
 _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 {
 }
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
-/** @brief Move constructor.
- *  @param move The string to move.
+/** @param move The string to move.
  */
 _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 {
@@ -37,22 +35,19 @@ _JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
 }
 #endif
 
-/** @brief Parameterized constructor.  Initializes string to the character pointer passed in.
- *  @param data A character pointer to a null-terminated string.
+/** @param data A character pointer to a null-terminated string.
  */
 _JATTA_EXPORT Jatta::String::String(const char* data) : data(data)
 {
 }
 
-/** @brief Parameterized constructor.  Initializes string to a string passed in.
- *  @param An std::string value.
+/** @param An std::string value.
  */
 _JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
 {
 }
 
-/** @brief Overloaded = operator.  Assigns this string to another string.
- *  @param operand The other string.
+/** @param operand The other string.
  *  @returns A reference to this object.
  */
 _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
@@ -61,18 +56,21 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
     return *this;
 }
 
+/**
+ */
 _JATTA_EXPORT char& Jatta::String::operator[](Size operand)
 {
     return data[operand];
 }
 
+/**
+ */
 _JATTA_EXPORT const char Jatta::String::operator[](Size operand) const
 {
     return data[operand];
 }
 
-/** @brief Overloaded == operator.  Checks if the two strings are equal.
- *  @param operand The other string.
+/** @param operand The other string.
  *  @returns True if they're equal, false otherwise.
  */
 _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
@@ -80,8 +78,7 @@ _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
     return data == operand.data;
 }
 
-/** @brief Overloaded != operator.  Checks if the two strings are not equal.
- *  @param operand The other string.
+/** @param operand The other string.
  *  @returns False if they're equal, true otherwise.
  */
 _JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
@@ -89,8 +86,7 @@ _JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
     return data != operand.data;
 }
 
-/** @brief Overloaded < operator.  Checks if this string is lexicographically less than another.
- *  @param operand The other string.
+/** @param operand The other string.
  *  @returns True if this string is lexicographically less than the other, false otherwise.
  */
 _JATTA_EXPORT bool Jatta::String::operator<(const String& operand) const
@@ -98,16 +94,14 @@ _JATTA_EXPORT bool Jatta::String::operator<(const String& operand) const
     return this->data < operand.data;
 }
 
-/** @brief Gets the size of the string in bytes.
- *  @returns Numbers of bytes.
+/** @returns Numbers of bytes.
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::GetSize() const
 {
     return data.length();
 }
 
-/** @brief Counts the number of code points in the string.
- *  @returns Numbers of code points.
+/** @returns Numbers of code points.
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
 {
@@ -123,16 +117,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
     return len;
 }
 
-/** @brief Checks if the string is empty.
- *  @returns True if the string is empty, false otherwise.
- */
-_JATTA_EXPORT Jatta::Boolean Jatta::String::Empty() const
-{
-    return data.empty();
-}
-
-/** @brief Gets an individual byte from the string.
- *  @param position The index of the byte.
+/** @param position The index of the byte.
  *  @returns The byte in the string.
  */
 _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
@@ -140,8 +125,7 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
     return (Byte)data.at(position);
 }
 
-/** @brief Gets an invidiual code point from the string.
- *  @param start The first byte of the code point.
+/** @param start The first byte of the code point.
  *  @param codePoint A pointer to the UInt32 variable to store the code point.
  *  @details
  *  @b Example
@@ -248,16 +232,22 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetCodePoint(Size start, UInt32* codePo
     }
 }
 
-/** @brief An accessor to the wrapped std::string data.
- *  @returns The std::string variable.
+
+/** @returns True if the string is empty, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::String::Empty() const
+{
+    return data.empty();
+}
+
+/** @returns The std::string variable.
  */
 _JATTA_EXPORT std::string Jatta::String::GetData() const
 {
     return data;
 }
 
-/** @brief Accesses the raw character data from the wrapped std::string object.
- *  @returns A constant character pointer of the data.
+/** @returns A constant character pointer of the data.
  */
 _JATTA_EXPORT const char* Jatta::String::GetCString() const
 {
@@ -276,8 +266,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
     return count;
 }
 
-/** @brief Finds the first occurence of a string.
- *  @param string The string to look for.
+/** @param string The string to look for.
  *  @param offset An offset to start looking for the string.
  *  @returns The index of the first character of the string.
  */
@@ -311,8 +300,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Si
     return none;
 }
 
-/** @brief Finds the last occurence of a string.
- *  @param string The string to look for.
+/** @param string The string to look for.
  *  @param offset A backwards offset to start looking for the string.
  *  @returns The index of the first character of the string.
  */
@@ -346,8 +334,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
     return none;
 }
 
-/** @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
- *  @param start The first character to grab.
+/** @param start The first character to grab.
  *  @param count The number of characters to grab.
  *  @param bytes If true, this method will grab @p count number of bytes. If false, this method will grab @p count number of codepoints.
  *  @details This method does not support backwards counting (supplying a negative start) like php's substr() and others.
@@ -364,7 +351,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™"; UGH THIS IS WHY WE CANT HAVE NICE THINGS
  *      str = str.SubString(3, 3);
  *      std::cout << str << std::endl;
- *      
+ *
  *      // outputs: ã‚�ã�„ã�„
  *
  *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
@@ -406,8 +393,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
     }
 }
 
-/** @brief Trims whitespace at the beginning and end of the string.
- *  @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
+/** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
  *  #include <Jatta.h>
@@ -421,7 +407,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
  *      str = " \t this is a test \t ";
  *      str.Trim();
  *      std::cout << "|" << str << "|" << std::endl;
- *      
+ *
  *      // outputs: |this is a test|
  *  }
  *  @endcode
@@ -435,8 +421,7 @@ _JATTA_EXPORT void Jatta::String::Trim()
     data = data.substr(trimStart, data.length() - (trimStart + trimEnd));
 }
 
-/** @brief Trims whitespace at the beginning of the string.
- *  @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
+/** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
  *  #include <Jatta.h>
@@ -450,7 +435,7 @@ _JATTA_EXPORT void Jatta::String::Trim()
  *      str = " \t this is a test \t ";
  *      str.TrimStart();
  *      std::cout << "|" << str << "|" << std::endl;
- *      
+ *
  *      // outputs: |this is a test      |
  *  }
  *  @endcode
@@ -462,8 +447,7 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
     data = data.substr(trimStart);
 }
 
-/** @brief Trims whitespace at the end of the string.
- *  @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
+/** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
  *  #include <Jatta.h>
@@ -477,7 +461,7 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
  *      str = " \t this is a test \t ";
  *      str.TrimEnd();
  *      std::cout << "|" << str << "|" << std::endl;
- *      
+ *
  *      // outputs: |      this is a test|
  *  }
  *  @endcode
@@ -508,7 +492,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& de
     return result;
 }
 
-/** @brief Converts the entire string to uppercase letters.
+/**
  */
 _JATTA_EXPORT void Jatta::String::ToLower()
 {
@@ -518,7 +502,7 @@ _JATTA_EXPORT void Jatta::String::ToLower()
     }
 }
 
-/** @brief Converts the entire string to lowercase letters.
+/**
  */
 _JATTA_EXPORT void Jatta::String::ToUpper()
 {
@@ -528,8 +512,7 @@ _JATTA_EXPORT void Jatta::String::ToUpper()
     }
 }
 
-/** @brief Removes all whitespace from within a string.
- *  @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
+/** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  */
 _JATTA_EXPORT void Jatta::String::RemoveWhitespace()
 {
