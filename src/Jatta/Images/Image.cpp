@@ -6,7 +6,7 @@
 #include "Image.h"
 #include "Color.h"
 
- #include "../File/File.h"
+ #include "../Utility/File.h"
 
 _JATTA_EXPORT Jatta::Image::Image()
 {

@@ -1,7 +1,6 @@
 # Add source directories
 add_subdirectory(Assimp)
 add_subdirectory(External)
-add_subdirectory(File)
 add_subdirectory(Fonts)
 add_subdirectory(Images)
 add_subdirectory(Math)

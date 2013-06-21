@@ -5,6 +5,7 @@
 set(Jatta_SOURCES
     ${Jatta_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/CRC32.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MD5.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Regex.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/String.cpp
@@ -16,6 +17,7 @@ set(Jatta_SOURCES
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/File.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Hook.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Hook.ipp
     ${CMAKE_CURRENT_SOURCE_DIR}/Regex.h

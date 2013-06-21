@@ -6,7 +6,7 @@
 #include "Image.h"
 
 #include "../Utility/String.h"
-#include "../File/File.h"
+#include "../Utility/File.h"
 #include <fstream>
 #include <cstring>
 #if defined(CPP_HEADER_CSTDINT)
@@ -140,9 +140,9 @@ void dxt1_decode_pixels(const Jatta::UInt8 *s, Jatta::UInt32 *d, unsigned int qs
     colors[2] = rb2 + g2 + a;
 
     pixels = AV_RL32(s+4);
-    for (y=0; y<4; y++) 
+    for (y=0; y<4; y++)
     {
-        for (x=0; x<4; x++) 
+        for (x=0; x<4; x++)
         {
             a        = (alpha & 0x0f) << 28;
             a       += a >> 4;
@@ -218,7 +218,7 @@ _JATTA_EXPORT bool Jatta::Image::LoadDds(const char* rawBytes, Jatta::UInt32 len
         colors[index].a = dest[i+3];
         colors[index].r = dest[i+2];
         colors[index].g = dest[i+1];
-        colors[index].b = dest[i]; 
+        colors[index].b = dest[i];
 
         index++;
     }

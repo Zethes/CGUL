@@ -64,8 +64,6 @@
 #   include "Jatta/Assimp/VertexWeight.h"
 #endif
 
-#include "Jatta/File/File.h"
-
 #ifdef FreeType_FOUND
 #   include "Jatta/Fonts/Font.h"
 #   include "Jatta/Fonts/FontStyles.h"
@@ -115,6 +113,7 @@
 #endif
 
 #include "Jatta/Utility/Encryption.h"
+#include "Jatta/Utility/File.h"
 #include "Jatta/Utility/Hook.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
