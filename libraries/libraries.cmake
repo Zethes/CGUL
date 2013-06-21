@@ -30,7 +30,7 @@ macro(jatta_find_package LIBRARY)
 
     # Setup cache
     if(NOT ${${LIBRARY}_SECONDARY})
-        set(${LIBRARY}_REQUIRED ON CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
+        set(${LIBRARY}_REQUIRED OFF CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
         set(${LIBRARY}_IGNORE OFF CACHE BOOL "Ignores this library even if it was found.")
     endif()
 
