@@ -64,9 +64,6 @@
 #   include "Jatta/Assimp/VertexWeight.h"
 #endif
 
-#include "Jatta/Collision/AABB2D.h"
-#include "Jatta/Collision/AABB3D.h"
-
 #include "Jatta/File/File.h"
 
 #ifdef FreeType_FOUND

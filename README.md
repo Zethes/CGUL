@@ -16,7 +16,6 @@ Features
 - **CMake build system**
   - Supports most CMake generators on all supported platforms
 - **Powerful Assimp library wrapper to load in 3D models and scenes**
-- **Collision library for 2D and 3D collision detection**
 - **File system**
 - **Font loading via FreeType**
 - **Simplified image loading/saving**
