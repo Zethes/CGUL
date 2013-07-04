@@ -48,7 +48,7 @@ int main()
                 // Receive messages from the client
                 else if (client->Receive(buffer, 1024))
                 {
-                    cout << "> " << buffer << endl;
+                    cout << client->GetIP() << "> " << buffer << endl;
                 }
 
                 // Next client

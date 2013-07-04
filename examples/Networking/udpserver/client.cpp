@@ -9,11 +9,11 @@ int main()
     try
     {
         // Create a socket
-        Network::SocketTCP socket;
+        Network::SocketUDP socket;
 
         // Connect to the server
         cout << "-- Connecting..." << endl;
-        socket.Connect("127.0.0.1", 6363);
+        socket.Connect(Network::IPAddress("127.0.0.1"), 6363);
 
         // All went well if we got this far
         cout << "-- Connected!" << endl;
