@@ -5,6 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
+#include "../Network/IPAddress.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -31,14 +32,14 @@ namespace Jatta
             SocketTCP();
             ~SocketTCP();
 
-            void Connect(const Jatta::String& ip, unsigned short port);
+            void Connect(const IPAddress& ip, unsigned short port);
             void Listen(unsigned short port, bool ipv4 = true, int backlog = 10);
             bool Accept(SocketTCP* socket);
             void Close();
 
             bool IsConnected();
 
-            Jatta::String GetIP();
+            IPAddress GetIP();
 
             int Send(const void* data, unsigned int size);
             int Receive(void* data, unsigned int size);

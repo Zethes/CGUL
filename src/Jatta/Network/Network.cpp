@@ -8,33 +8,7 @@
 #include <Jatta/Config.h>
 #include "../External/Once.h"
 
-bool __jatta_network_initiated = false;
-
-void __jatta_network_initiate()
-{
-#   ifdef WINDOWS
-    if (!__jatta_network_initiated)
-    {
-        WSADATA wsaData;
-        if (WSAStartup(MAKEWORD(1,1), &wsaData) != 0)
-        {
-            throw std::runtime_error("WSAStartup() failed!");
-        }
-        __jatta_network_initiated = true;
-    }
-#   endif
-}
-
-void __jatta_network_clean()
-{
-#   ifdef WINDOWS
-    if (__jatta_network_initiated)
-    {
-        WSACleanup();
-        __jatta_network_initiated = false;
-    }
-#   endif
-}
+static bool __jatta_network_initiated = false;
 
 namespace Jatta
 {
@@ -42,5 +16,30 @@ namespace Jatta
      */
     namespace Network
     {
+        void __jatta_network_initiate()
+        {
+        #   ifdef WINDOWS
+            if (!__jatta_network_initiated)
+            {
+                WSADATA wsaData;
+                if (WSAStartup(MAKEWORD(1,1), &wsaData) != 0)
+                {
+                    throw std::runtime_error("WSAStartup() failed!");
+                }
+                __jatta_network_initiated = true;
+            }
+        #   endif
+        }
+
+        void __jatta_network_clean()
+        {
+        #   ifdef WINDOWS
+            if (__jatta_network_initiated)
+            {
+                WSACleanup();
+                __jatta_network_initiated = false;
+            }
+        #   endif
+        }
     }
 }

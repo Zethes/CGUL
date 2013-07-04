@@ -83,8 +83,11 @@
 #include "Jatta/Math/Vector4.h"
 
 #ifdef Jatta_USE_NETWORK
+#   include "Jatta/Network/Adapter.h"
 #   include "Jatta/Network/DNS.h"
+#   include "Jatta/Network/IPAddress.h"
 #   include "Jatta/Network/SocketTCP.h"
+#   include "Jatta/Network/SocketUDP.h"
 #endif
 
 #ifdef Jatta_USE_OPENGL

@@ -9,37 +9,14 @@
 
 #include "SocketTCP.h"
 
-// TODO: clean this up
-void __jatta_network_initiate();
-void __jatta_network_clean();
-
-// TODO: come up with a more permanent place for this
-#if defined(WINDOWS) && !defined(MSVC)
-static const char* inet_ntop(int af, const void *src, char *dst, socklen_t cnt)
+namespace Jatta
 {
-  if (af == AF_INET) {
-    struct sockaddr_in in;
-    memset(&in, 0, sizeof(in));
-    in.sin_family = AF_INET;
-    memcpy(&in.sin_addr, src, sizeof(struct in_addr));
-    getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in), dst, cnt,
-                NULL, 0, NI_NUMERICHOST);
-    return dst;
-  }
-  else if (af == AF_INET6) {
-    struct sockaddr_in6 in;
-    memset(&in, 0, sizeof(in));
-    in.sin6_family = AF_INET6;
-    memcpy(&in.sin6_addr, src, sizeof(struct in_addr6));
-    getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in6), dst, cnt,
-                NULL, 0, NI_NUMERICHOST);
-    return dst;
-  }
-  return NULL;
+    namespace Network
+    {
+        void __jatta_network_initiate();
+        void __jatta_network_clean();
+    }
 }
-#endif
-
-
 
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
@@ -87,8 +64,14 @@ Jatta::Network::SocketTCP::~SocketTCP()
  *  @param ip The IP address to connect to.
  *  @param port The port number.
  */
-void Jatta::Network::SocketTCP::Connect(const Jatta::String& ip, unsigned short port)
+void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
 {
+    // Check that the IP is valid
+    if (!ip.IsValid())
+    {
+        throw std::runtime_error("connect failed");
+    }
+
     // For error checking.
     int status;
 
@@ -97,8 +80,7 @@ void Jatta::Network::SocketTCP::Connect(const Jatta::String& ip, unsigned short 
     memset(&hints, 0, sizeof(addrinfo));
 
     // Check if the IP is an IPv4 or IPv6.
-    bool ipv4 = true;
-    if (ipv4)
+    if (ip.GetType() == IPAddressType::IPV4)
     {
         // Use IPv4.
         hints.ai_family = AF_INET;
@@ -122,7 +104,7 @@ void Jatta::Network::SocketTCP::Connect(const Jatta::String& ip, unsigned short 
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(ip.GetData().c_str(), portString, &hints, &result)) != 0)
+    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
     {
         throw std::runtime_error("connect failed");
     }
@@ -312,27 +294,20 @@ bool Jatta::Network::SocketTCP::IsConnected()
     return true;
 }
 
-Jatta::String Jatta::Network::SocketTCP::GetIP()
+Jatta::Network::IPAddress Jatta::Network::SocketTCP::GetIP()
 {
-    if (true) // ipv4
+    struct sockaddr_storage _Addr;
+    socklen_t _Length = sizeof(_Addr);
+    getpeername(sock, (struct sockaddr*)&_Addr, &_Length);
+    if (_Addr.ss_family == AF_INET) // ipv4
     {
-        char _IP[INET_ADDRSTRLEN];
-        memset(_IP, 0, INET_ADDRSTRLEN);
-        struct sockaddr_storage _Addr;
-        socklen_t _Length = sizeof(_Addr);
-        getpeername(sock, (struct sockaddr*)&_Addr, &_Length);
-        inet_ntop(AF_INET, &((struct sockaddr_in*)&_Addr)->sin_addr, _IP, INET_ADDRSTRLEN);
-        return String(_IP);
+        return IPAddress((UInt32)((struct sockaddr_in*)&_Addr)->sin_addr.s_addr);
     }
-    else // TODO: ipv6
+    else // ipv6
     {
-        char _IP[INET6_ADDRSTRLEN];
-        memset(_IP, 0, INET6_ADDRSTRLEN);
-        struct sockaddr_storage _Addr;
-        socklen_t _Length = sizeof(_Addr);
-        getpeername(sock, (struct sockaddr*)&_Addr, &_Length);
-        inet_ntop(AF_INET6, &((struct sockaddr_in6*)&_Addr)->sin6_addr, _IP, INET6_ADDRSTRLEN);
-        return String(_IP);
+        UInt64 address[2];
+        memcpy(&address, &((struct sockaddr_in6*)&_Addr)->sin6_addr, sizeof(address));
+        return IPAddress(address);
     }
 }
 
