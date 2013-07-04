@@ -155,7 +155,7 @@ namespace Jatta
 // DLL Exports
 #ifdef MSVC
 #   ifdef JATTA_BUILD
-#       define _JATTA_EXPORT __declspec(dllexport) 
+#       define _JATTA_EXPORT __declspec(dllexport)
 #   else
 #       define _JATTA_EXPORT __declspec(dllimport)
 #   endif

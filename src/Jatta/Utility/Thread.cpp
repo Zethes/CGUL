@@ -8,14 +8,14 @@
 // TODO: add some alternatives to std::thread (pthread and winapi thread)
 #ifdef CPP_HAS_STD_THREAD
 
-static void runThread(Jatta::Thread*ptr)
+static void runThread(Jatta::Thread* ptr)
 {
     ptr->Main();
 }
 
 _JATTA_EXPORT Jatta::Thread::Thread()
 {
-    
+
 }
 _JATTA_EXPORT Jatta::Thread::~Thread()
 {
@@ -31,6 +31,7 @@ _JATTA_EXPORT void Jatta::Thread::Join()
 {
     thread->join();
 }
+
 _JATTA_EXPORT void Jatta::Thread::Detach()
 {
     thread->detach();

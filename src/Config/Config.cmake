@@ -2,9 +2,18 @@ include(CheckIncludeFileCXX)
 include(CheckCXXCompilerFlag)
 
 macro(check_feature VARIABLE FILE)
-    try_compile(FEATURE_COMPILES ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Config/${FILE})
+    try_compile(FEATURE_COMPILES ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Config/${FILE}
+        CMAKE_FLAGS "-DCMAKE_CXX_LINK_EXECUTABLE='echo a'" # this line stops cmake from linking on the try_compile call
+        OUTPUT_VARIABLE OUTPUT
+      )
     if(${FEATURE_COMPILES})
         set(${VARIABLE} ON)
+    else()
+        file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+          "Unable to compile config test script ${FILE}!"
+          "The test file ${FILE} failed to compile:"
+          "${OUTPUT}\n\n"
+        )
     endif()
 endmacro()
 
@@ -27,6 +36,7 @@ check_include_file_cxx(stdint.h CPP_HEADER_STDINT_H)
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_HYPERBOLIC_ARC hyperbolic_arc.cpp)
 check_feature(CPP_HAS_MOVE_CONSTRUCTOR move_constructor.cpp)
+check_feature(CPP_HAS_PTHREAD pthread.cpp)
 check_feature(CPP_HAS_STATIC_ASSERT static_assert.cpp)
 check_feature(CPP_HAS_STD_THREAD std_thread.cpp)
 check_feature(CPP_HAS_U8 u8.cpp)

@@ -27,11 +27,13 @@ LIST(APPEND ACKNOWLEDGEMENTS
 # System generic libraries
 if(WIN32)
     use_library(Ws2_32 ON)
+    use_library(Iphlpapi ON)
 elseif(APPLE)
     find_framework(Carbon)
     find_framework(Cocoa)
     find_framework(ApplicationServices)
 else()
+    use_library(X11 ON)
 endif()
 
 # OpenGL
