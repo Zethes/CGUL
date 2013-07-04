@@ -95,6 +95,10 @@
  *  cd Jatta
  *  </code>
  * 
+ *  Jatta uses third-party libraries and those must be handled before we can build.  Luckily for you, we 
+ *  have provided several choices for you to download pre-built libraries on the Download page.  Just download
+ *  the dependency of your choosing and extract the archive into Jatta's directory  (Above the 'src' directory).
+ * 
  *  Jatta's build process is powered by CMake and we recommend you build outside of the source directory.
  *  <code>
  *  mkdir build && cd build
