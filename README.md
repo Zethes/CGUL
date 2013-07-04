@@ -25,6 +25,10 @@ Features
   - DDS
 - **3D mathematics library**
 - **Simplified networking**
+  - TCP Sockets
+  - UDP Sockets
+  - DNS Lookup
+  - Query local network interfaces
 - **Object oriented OpenGL wrapper**
 - **Window system on Windows (WinAPI), MacOS (Cocoa) and Linux (X11)**
 - **Utf-8 everywhere**
