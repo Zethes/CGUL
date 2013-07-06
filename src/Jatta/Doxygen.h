@@ -84,11 +84,55 @@
  */
 
 /** @page howtouse How to Use
- *  Jatta is currently undergoing a lot of development and has no official builds.  Its hard to
- *  write up a doc on how to use it since it changes so often!
- *
- *  Expect official documentation after the first release.
- *
- *  In the mean time, if you are interested please contact Joshua Brookover (josh at jalb dot me).
+ *  Jatta is currently undergoing a lot of development and has no official builds,
+ *  and the following is subject to change and only covers rather broad setup instructions.
+ * 
+ *  <b>Building and installing Jatta</b>
+ * 
+ *  First we need to obtain the latest source code from github (some functionality may be missing)
+ *  <code>
+ *  git clone https://github.com/Zethes/Jatta
+ *  cd Jatta
+ *  </code>
+ * 
+ *  Jatta uses third-party libraries and those must be handled before we can build.  Luckily for you, we 
+ *  have provided several choices for you to download pre-built libraries on the Download page.  Just download
+ *  the dependency of your choosing and extract the archive into Jatta's directory  (Above the 'src' directory).
+ * 
+ *  Jatta's build process is powered by CMake and we recommend you build outside of the source directory.
+ *  <code>
+ *  mkdir build && cd build
+ *  cmake -G <BUILD_TYPE> ..
+ *  make && make install
+ *  </code>
+ * 
+ *  CMake provides an easy way to provide cross-compilation on many machines without having to write individual
+ *  build files.  For more information on what to put in for <BUILD_TYPE> see 
+ *  http://www.cmake.org/Wiki/CMake_Generator_Specific_Information for more information.
+ * 
+ *  <b>Building the examples</b>
+ *  
+ *  <b>YOU MUST HAVE BUILT AND INSTALLED JATTA TO BUILD THE EXAMPLES</b>
+ * 
+ *  At the moment, each example must be built seperately.  These steps are the same for all examples and are very
+ *  similar to building Jatta itself.
+ * 
+ *  Begin by simply navigating to the desired example's directory inside the terminal of your choosing.  
+ *  For this example we'll be using the window example.
+ *  <code>
+ *  git clone https://github.com/Zethes/Jatta
+ *  cd Jatta/examples
+ *  cd Graphics/window
+ *  </code>
+ * 
+ *  Similar to building Jatta, we recommend building outside of the source directory.
+ *  <code>
+ *  mkdir build && cd build
+ *  cmake -G <BUILD_TYPE> ..
+ *  make
+ *  </code>
+ * 
+ *  You should now have an executable file inside your current work directory for the example.
+ * 
 */
 #endif
