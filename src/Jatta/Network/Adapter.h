@@ -13,6 +13,7 @@ namespace Jatta
 {
     namespace Network
     {
+        //! @brief Contains information about a network interface.
         struct Adapter
         {
             String description;
@@ -20,6 +21,7 @@ namespace Jatta
             IPAddress netmask;
         };
 
+        //! @brief Queries all of the system's network adapters and returns them in a vector.
         std::vector<Adapter> GetAdapters();
     }
 }

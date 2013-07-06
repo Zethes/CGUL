@@ -26,20 +26,32 @@ namespace Jatta
             int sock;
             #endif
 
+            //! @brief Makes the socket a non-blocking socket.
             void MakeNonBlocking();
         public:
+            //! @brief Default constructor.
             SocketUDP();
+            //! @brief Destructor.
             ~SocketUDP();
 
+            //! @brief Binds the socket to a specified port.
             void Bind(unsigned short port, bool ipv4 = true);
+            //! @brief Binds the socket to a specified port, and restricts communication to one IP
+            //! address.
             void Connect(const IPAddress& ip, unsigned short port);
+            //! @brief Gracefully closes the connection.
             void Close();
 
+            //! @brief Checks if the socket is currently bound to a port.
             bool IsBound();
+            //! @brief Checks if the socket is connected to a host.
             bool IsConnected();
 
+            //! @brief Sends data over the network.
             int Send(const void* data, unsigned int size);
+            //! @brief Receives data over the network and gets information about the remote host.
             int SendTo(const IPAddress& ip, unsigned short port, const void* data, unsigned int size);
+            //! @brief Receives data over the network.
             int Receive(void* data, unsigned int size);
             int ReceiveFrom(IPAddress* ip, unsigned short* port, void* data, unsigned int size);
             int Peek(void* data, unsigned int size);

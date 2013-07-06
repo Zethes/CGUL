@@ -43,6 +43,11 @@ Jatta::Network::SocketUDP::~SocketUDP()
 {
 }
 
+/** @details Since UDP is connectionless, all that is required for a connection is a port.  To send
+ *  to a specific host use SendTo.  When receiving, use ReceiveFrom.
+ *  @param port The port to receive packets on.
+ *  @param ipv4 True for IPv4, false for IPv6.
+ */
 void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 {
     // For error checking.
@@ -100,7 +105,12 @@ void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
     freeaddrinfo(result);
 }
 
-#include <iostream> // TODO: remove iostream
+/** @details Although UDP is a connectionless protocol, it is still possible to "connect" to a
+ *  single host.  After connecting, use Send and Receive methods instead of SendTo and ReceiveFrom.
+ *  @param ip The host to send all packets to.
+ *  @param port The remote port.
+ *  @todo Isnt it necessary to have a local and remote port?
+ */
 void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
 {
     // For error checking.
@@ -154,6 +164,9 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
     freeaddrinfo(result);
 }
 
+/** @note Because UDP sockets are connectionless, no remote hosts will be notified when this socket
+ *  is closed.
+ */
 void Jatta::Network::SocketUDP::Close()
 {
     #ifdef WINDOWS
@@ -164,20 +177,23 @@ void Jatta::Network::SocketUDP::Close()
     sock = INVALID_SOCKET;
 }
 
+/** @returns True if the socket is bound, false otherwise.
+ */
 bool Jatta::Network::SocketUDP::IsBound()
 {
     // TODO: this method
     return true;
 }
 
+/** @returns True if the socket is connected, false otherwise.
+ */
 bool Jatta::Network::SocketUDP::IsConnected()
 {
     // TODO: this method
     return true;
 }
 
-/** @brief Sends data over the network.
- *  @param data An array of bytes to send over the network.
+/** @param data An array of bytes to send over the network.
  *  @param size The size of the array.
  *  @returns The number of bytes that were sent.
  */
@@ -198,8 +214,7 @@ int Jatta::Network::SocketUDP::Send(const void* data, unsigned int size)
     return amount;
 }
 
-/** @brief Receives data over the network.
- *  @param data The buffer the data will be written into.
+/** @param data The buffer the data will be written into.
  *  @param size The size of the data array.
  *  @returns The number of bytes that were received, or 0 if there was nothing to be received.
  */
@@ -243,6 +258,12 @@ int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
     }
 }
 
+/** @param ip A pointer to an IP address to be filled with the remote host's address.
+ *  @param port A pointer to a port, used to communicate back with the host.
+ *  @param data A void pointer, to be filled with the data sent from the remote host.
+ *  @param size The size of the buffer put into the data parameter.
+ *  @returns The number of bytes that were received, or 0 if there was nothing to be received.
+ */
 int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, void* data, unsigned int size)
 {
     // Check if the socket is valid before we continue.

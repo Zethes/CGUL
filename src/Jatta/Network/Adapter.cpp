@@ -18,6 +18,8 @@
 #   include <unistd.h>
 #endif
 
+/** @returns A vector of network adapters.
+ */
 std::vector<Jatta::Network::Adapter> Jatta::Network::GetAdapters()
 {
     std::vector<Adapter> result;
