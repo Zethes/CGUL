@@ -27,11 +27,12 @@ int main()
     std::cout << "Bottom Border:    " << frameExtents.w << std::endl;
 
     float hue = 0;
+    Timer timer;
     while (window.IsOpen())
     {
         Window::Update();
 
-        hue += 0.01f;
+        hue += timer.GetDeltaTime() * 45;
         if (window.IsFocused())
         {
             window.SetBackgroundColor(Color::MakeHSL(hue, 255, 255));
