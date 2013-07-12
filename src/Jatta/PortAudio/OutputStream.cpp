@@ -22,7 +22,7 @@ static int paCallbackOutput(const void* input, void* output, unsigned long fpb, 
     {
         if (data->CurrentPosition >= data->Length && data->StreamPtr->GetLooping())
             data->CurrentPosition = 0;
-        else if (data->CurrentPosition >= data->Length) 
+        else if (data->CurrentPosition >= data->Length)
             return paAbort;
 
         for (unsigned int j = 0; j < data->NumberOfChannels; j++)
@@ -57,7 +57,6 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::OutputStream::OpenStream(Device de
         &streamData);
 }
 
-//public:
 _JATTA_EXPORT Jatta::PortAudio::OutputStream::OutputStream(Device device)
 {
     volume = 1.0f;
@@ -95,7 +94,7 @@ _JATTA_EXPORT Jatta::PortAudio::OutputStream::OutputStream(Device device, std::v
 {
     volume = 1.0f;
     streamData.StreamPtr = this;
-    if (data.size() > device.GetMaxOutputChannels())
+    if (data.size() > (unsigned int)device.GetMaxOutputChannels())
         streamData.NumberOfChannels = device.GetMaxOutputChannels();
     else
         streamData.NumberOfChannels = data.size();

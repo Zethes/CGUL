@@ -37,7 +37,6 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Device::GetMaxOutputChannels()
     return (SInt32) device->maxOutputChannels;
 }
 
-
 _JATTA_EXPORT double Jatta::PortAudio::Device::GetDefaultLowInputLatency()
 {
     return (double) device->defaultLowInputLatency;
@@ -57,7 +56,6 @@ _JATTA_EXPORT double Jatta::PortAudio::Device::GetDefaultHighOutputLatency()
 {
     return (double) device->defaultHighOutputLatency;
 }
-
 
 _JATTA_EXPORT double Jatta::PortAudio::Device::GetDefaultSampleRate()
 {

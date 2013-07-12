@@ -41,9 +41,11 @@ namespace Jatta
             _JATTA_EXPORT Context* GetCurrent();
 
             _JATTA_EXPORT Context();
+            _JATTA_EXPORT ~Context();
 
             _JATTA_EXPORT void Create(const Window* window);
             _JATTA_EXPORT void MakeCurrent();
+            _JATTA_EXPORT void Destroy();
 
             _JATTA_EXPORT void Enable(Enum capability);
             _JATTA_EXPORT void Disable(Enum capability);

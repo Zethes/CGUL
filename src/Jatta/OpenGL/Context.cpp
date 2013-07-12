@@ -16,11 +16,19 @@ _JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()
 
 _JATTA_EXPORT Jatta::OpenGL::Context::Context()
 {
+#    ifdef LINUX
+     context = NULL;
+#    endif
+}
+
+_JATTA_EXPORT Jatta::OpenGL::Context::~Context()
+{
+    Destroy();
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
 {
-        this->window = window;
+    this->window = window;
 
 #   ifdef WINDOWS
     // setup the pixel format descriptor
@@ -126,7 +134,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     //id content = [window contentView];
 
     // Set the content of the window to the OpenGL view we created
-    //[window setContentView: view];
+    [window setContentView: view];
     [window->_GetHandle() SetContent: view];
 #   endif
 
@@ -184,6 +192,23 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 #   endif
 
     currentContext = this;
+}
+
+_JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
+{
+    // TODO: Context::Destroy
+
+#   ifdef LINUX
+    if (this->context != NULL)
+    {
+        // Release the current context from this thread before deleting it
+        glXMakeCurrent(this->window->_GetDisplay(), None, NULL);
+
+        // Delete the context
+        glXDestroyContext(this->window->_GetDisplay(), this->context);
+        this->context = NULL;
+    }
+#   endif
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Context::Enable(Enum capability)
