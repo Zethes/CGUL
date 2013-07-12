@@ -9,6 +9,7 @@
 
 #include "SocketUDP.h"
 
+#ifndef DOXYGEN
 namespace Jatta
 {
     namespace Network
@@ -17,6 +18,7 @@ namespace Jatta
         void __jatta_network_clean();
     }
 }
+#endif
 
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.

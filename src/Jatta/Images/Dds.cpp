@@ -17,6 +17,7 @@
 
 #include "Color.h"
 
+#ifndef DOXYGEN
 typedef unsigned int u32;
 
 #ifndef MAKEFOURCC
@@ -181,7 +182,7 @@ void ff_decode_dxt3(const Jatta::UInt8 *s, Jatta::UInt8 *dst, const unsigned int
         }
     }
 }
-
+#endif
 
 _JATTA_EXPORT bool Jatta::Image::IsDds(const char* rawBytes, Jatta::UInt32 size)
 {

@@ -11,8 +11,11 @@
 namespace Jatta
 {
     struct Color;
-    
-    struct Image
+
+    /** @brief A container capable of loading and manipulating RGBA images.
+     *  @todo Support other types of images besides just RGBA.
+     */
+    class Image
     {
     protected:
         Color* colors;

@@ -16,6 +16,14 @@
 
 namespace Jatta
 {
+    /** @brief A class capable of creating windows and manipulating them.
+     *  @details Internally this class can work very differently depending on the operating system.
+     *  Direct calls are made to WinAPI on Microsoft Windows, Cocoa on Mac OS X, and X11 on linux
+     *  and other unix platforms.  Each window api is different, and windows behave differently
+     *  depending on the desktop environment.  Note also that certain X11 environments may
+     *  wrongfully ignore essential messages resulting in some features not working -- this is not
+     *  an issue with Jatta, but instead with the environment itself.
+     */
     class Window
     {
 #       ifdef WINDOWS

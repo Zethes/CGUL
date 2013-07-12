@@ -8,7 +8,12 @@
 #include <Jatta/Config.h>
 #include "../External/Once.h"
 
+
+#ifndef DOXYGEN
+#ifdef WINDOWS
 static bool __jatta_network_initiated = false;
+#endif
+#endif
 
 namespace Jatta
 {
@@ -16,6 +21,7 @@ namespace Jatta
      */
     namespace Network
     {
+#       ifndef DOXYGEN
         void __jatta_network_initiate()
         {
         #   ifdef WINDOWS
@@ -41,5 +47,6 @@ namespace Jatta
             }
         #   endif
         }
+#       endif
     }
 }

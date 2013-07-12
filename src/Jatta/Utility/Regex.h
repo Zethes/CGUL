@@ -12,6 +12,9 @@
 
 namespace Jatta
 {
+    /** @brief Regular expressions.
+     *  @todo Grab a library for this class, the C++11 one is largely unsupported.
+     */
     class Regex
     {
         String expression;

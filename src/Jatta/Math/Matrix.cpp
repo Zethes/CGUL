@@ -431,10 +431,10 @@ _JATTA_EXPORT float* Jatta::Matrix::GetData() const
 
 _JATTA_EXPORT bool Jatta::Matrix::IsReflexive() const
 {
-    return (m[0][0] == m[1][1] == m[2][2] == m[3][3]);
+    return (m[0][0] == m[1][1] && m[2][2] == m[3][3] && m[0][0] == m[2][2]);
 }
 _JATTA_EXPORT bool Jatta::Matrix::IsSymmetric() const
-{   
+{
     //A = Transpose(A);
 
     return (*this == Transpose(*this));

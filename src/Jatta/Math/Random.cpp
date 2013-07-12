@@ -96,6 +96,11 @@ _JATTA_EXPORT Jatta::Random::Random(unsigned int seed, unsigned int multiplier, 
     this->modulus = modulus;
 }
 
+_JATTA_EXPORT void Jatta::Random::SetSeed(unsigned int seed)
+{
+    this->seed = seed;
+}
+
 _JATTA_EXPORT unsigned int Jatta::Random::GetInteger()
 {
     seed = (multiplier * seed + addition) % modulus;

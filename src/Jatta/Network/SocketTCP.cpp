@@ -9,6 +9,7 @@
 
 #include "SocketTCP.h"
 
+#ifndef DOXYGEN
 namespace Jatta
 {
     namespace Network
@@ -17,6 +18,7 @@ namespace Jatta
         void __jatta_network_clean();
     }
 }
+#endif
 
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
@@ -141,7 +143,6 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
  *  @param ipv4 Whether to use the local ipv4 address or not.  Will use an ipv6 address otherwise.
  *  @param backlog How many clients can wait to be accepted.  Defaults to 10.
  */
-#include <iostream> // TODO: remove iostream
 void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
 {
     // For error checking.
@@ -181,15 +182,6 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     addrinfo* result;
     if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
     {
-        std::cout << "Error: " << status << std::endl;
-        std::cout << "EAI_AGAIN = " << EAI_AGAIN << std::endl;
-        std::cout << "EAI_BADFLAGS = " << EAI_BADFLAGS << std::endl;
-        std::cout << "EAI_FAIL = " << EAI_FAIL << std::endl;
-        std::cout << "EAI_FAMILY = " << EAI_FAMILY << std::endl;
-        std::cout << "EAI_MEMORY = " << EAI_MEMORY << std::endl;
-        std::cout << "EAI_NONAME = " << EAI_NONAME << std::endl;
-        std::cout << "EAI_SERVICE = " << EAI_SERVICE << std::endl;
-        std::cout << "EAI_SOCKTYPE = " << EAI_SOCKTYPE << std::endl;
         throw std::runtime_error("Failed to get address info.");
     }
 

@@ -11,6 +11,8 @@
 
 namespace Jatta
 {
+    /** @brief Contains customizable attributes for window creation.
+     */
     struct WindowStyle
     {
         String title;

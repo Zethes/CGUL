@@ -12,15 +12,22 @@ namespace Jatta
     struct Vector2;
     struct Vector3;
     struct Quaternion;
-    
+
+    /** @brief A 4v4 matrix.
+     *  @details At the moment the 4x4 matrix is the only matrix supported.  Variable sized
+     *  matrices are not ideal for most applications and other NxN matrices can be mimicked with a
+     *  4x4 matrix by setting the other elements to that of the identity matrix.
+     */
     struct Matrix
     {
         union
         {
+            //! @brief Direct access to a two dimensional array containing the matrix.
             Float32 m[4][4];
+            //! @brief Direct access to the internal values as a single array.
             Float32 data[16];
         };
-    public:
+
         _JATTA_EXPORT static Matrix Identity();
 
         _JATTA_EXPORT static Matrix MakeRotation(Float32 angle);

@@ -14,6 +14,9 @@ namespace Jatta
     struct Vector4;
     struct Matrix;
 
+    /** @brief Quaternion
+     *  @todo Finish this class.
+     */
     struct Quaternion
     {
         union

@@ -43,7 +43,7 @@ check_feature(CPP_HAS_U8 u8.cpp)
 
 jatta_define_feature(Jatta_STATIC "Build a static library." OFF)
 jatta_define_feature(Jatta_USE_NETWORK "Compile with networking features.")
-jatta_define_feature(Jatta_USE_OPENGL "Compile with OpenGL support." glew)
+jatta_define_feature(Jatta_USE_OPENGL "Compile with OpenGL support (requires glew)." glew)
 
 # MinGW
 if (MINGW)

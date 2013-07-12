@@ -9,6 +9,12 @@
 
 namespace Jatta
 {
+    /** @brief A linear congruential generator capable of generating pseudorandom numbers.
+     *  @details This class works similarly to C++'s built in rand() function but provides more
+     *  control (and thus more room for error).  Also included are common probability
+     *  distributions.
+     *  @todo Redo distributions since they are largely untested.
+     */
     class Random
     {
         unsigned int seed;
@@ -25,6 +31,8 @@ namespace Jatta
         _JATTA_EXPORT Random();
         _JATTA_EXPORT Random(unsigned int seed);
         _JATTA_EXPORT Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus);
+
+        _JATTA_EXPORT void SetSeed(unsigned int seed);
 
         _JATTA_EXPORT unsigned int GetInteger();
         _JATTA_EXPORT float GetDecimal();

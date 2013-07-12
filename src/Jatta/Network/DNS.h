@@ -12,6 +12,8 @@ namespace Jatta
 {
     namespace Network
     {
+        /** @brief Utility class used to perform DNS lookups.
+         */
         class DNS
         {
         public:

@@ -13,6 +13,9 @@ namespace Jatta
     struct Vector3;
     struct Matrix;
 
+    /** @brief A four dimensional 32 bit floating point vector.
+     *  @todo Template this to allow 64 bit floating point or integer as well?
+     */
     struct Vector4
     {
         union

@@ -159,8 +159,8 @@ jatta_find_package(
 
 jatta_find_package(
     glew
-    NAMES glew glew32 glew32s
-    DEBUG glewd glew32d glew32sd
+    NAMES glew glew32 glew32s GLEW
+    DEBUG glewd glew32d glew32sd GLEWd
 )
 
 jatta_find_package(
