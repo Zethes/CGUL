@@ -7,26 +7,11 @@
 #  jatta_copy_modules(target destination) - copies required modules (dll/so/dylib) to the given directory
 
 get_filename_component(Jatta_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/../include" ABSOLUTE)
-find_library(Jatta_LIBRARIES Jatta NO_DEFAULT_PATH PATHS "${CMAKE_CURRENT_LIST_DIR}/../lib")
+get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/@Jatta_MODULE_NAME@" ABSOLUTE)
 
 add_library(Jatta STATIC IMPORTED)
-set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_LIBRARIES})
+set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_MODULES})
 set(Jatta_LIBRARIES Jatta@SYSTEM_LIBRARIES@)
-
-if(WIN32)
-    set(MODULE_SUFFIX ".dll")
-elseif(APPLE)
-    set(MODULE_SUFFIX ".dylib")
-else()
-    set(MODULE_SUFFIX ".so")
-endif()
-
-set(Jatta_MODULES "")
-if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../lib/Jatta${MODULE_SUFFIX}")
-    get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/Jatta${MODULE_SUFFIX}" ABSOLUTE)
-elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../lib/libJatta${MODULE_SUFFIX}")
-    get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/libJatta${MODULE_SUFFIX}" ABSOLUTE)
-endif()
 
 function(jatta_copy_modules TARGET DESTINATION)
     if(NOT Jatta_MODULES STREQUAL "")
