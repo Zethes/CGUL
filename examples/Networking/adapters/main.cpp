@@ -6,10 +6,11 @@ using namespace Jatta;
 int main()
 {
     // Get all network adapters
-    std::vector<Network::Adapter> adapters = Network::GetAdapters();
+    Vector<Network::Adapter> adapters;
+    Network::GetAdapters(&adapters);
 
     // Iterate through each network adapter
-    for (std::vector<Network::Adapter>::iterator adapter = adapters.begin(); adapter != adapters.end(); adapter++)
+    for (Vector<Network::Adapter>::iterator adapter = adapters.begin(); adapter != adapters.end(); adapter++)
     {
         // Print out the description of the network interface
         std::cout << adapter->description << std::endl;

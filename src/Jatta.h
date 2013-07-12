@@ -64,6 +64,12 @@
 #   include "Jatta/Assimp/VertexWeight.h"
 #endif
 
+#include "Jatta/Containers/Array.h"
+#include "Jatta/Containers/Container.h"
+#include "Jatta/Containers/FixedList.h"
+#include "Jatta/Containers/List.h"
+#include "Jatta/Containers/Vector.h"
+
 #ifdef FreeType_FOUND
 #   include "Jatta/Fonts/Font.h"
 #   include "Jatta/Fonts/FontStyles.h"
@@ -117,7 +123,6 @@
 
 #include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/File.h"
-#include "Jatta/Utility/Hook.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"

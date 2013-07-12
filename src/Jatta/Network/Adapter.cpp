@@ -18,36 +18,53 @@
 #   include <unistd.h>
 #endif
 
-/** @returns A vector of network adapters.
+/** @brief This method only returns basic information about the network interface.  Specifically
+ *  the local address, netmask and description.  The broadcast address (IPv4 only) and network
+ *  address can be derived from the address and netmask.  See IPAddress::CalculateBroadcast and
+ *  IPAddress::CalculateNetwork.  The description is not meaningful aside from printing out to a
+ *  user and differs from each operating system and network interface.
+ *  @todo finish documenting GetAdapters and fixed windows version
  */
-std::vector<Jatta::Network::Adapter> Jatta::Network::GetAdapters()
+void Jatta::Network::GetAdapters(FixedList<Adapter>* adapters)
 {
     std::vector<Adapter> result;
 
 #   ifdef WINDOWS
+    // TODO: this wont work correctly right now (?)
     PIP_ADAPTER_INFO adapterInfo;
-    PIP_ADAPTER_INFO adapter = NULL;
     ULONG adapterLength = sizeof(IP_ADAPTER_INFO);
 
     // Determine the size of the adapter info struct
     if (GetAdaptersInfo(NULL, &adapterLength) != ERROR_BUFFER_OVERFLOW)
     {
-        return result;
+        return;
     }
 
     // Allocate data to fill
     adapterInfo = (IP_ADAPTER_INFO*)new char[adapterLength];
     if (adapterInfo == NULL)
     {
-        return result;
+        return;
     }
 
     // Get the network adapters
     if (GetAdaptersInfo(adapterInfo, &adapterLength) == NO_ERROR)
     {
+        Size count = 0;
+        for (PIP_ADAPTER_INFO adapter = adapterInfo; adapter != NULL; adapter = adapter->Next)
+        {
+            UInt64 ipInteger[2];
+            IPAddress(adapter->IpAddressList.IpAddress.String).ToUInt128(ipInteger);
+            if (ipInteger[0] != 0 && ipInteger[1] != 0)
+            {
+                count++;
+            }
+        }
+        adapters->SetSize(count);
+
         // Iterate through the linked list
-        adapter = adapterInfo;
-        while (adapter)
+        count = 0;
+        for (PIP_ADAPTER_INFO adapter = adapterInfo; adapter != NULL; adapter = adapter->Next)
         {
             // Fill in the data and add to the list
             Adapter adapterObject;
@@ -60,71 +77,101 @@ std::vector<Jatta::Network::Adapter> Jatta::Network::GetAdapters()
             adapterObject.ip.ToUInt128(ipInteger);
             if (ipInteger[0] != 0 || ipInteger[1] != 0)
             {
-                result.push_back(adapterObject);
+                adapters->Set(count++, adapterObject);
             }
-
-            // Next adapter
-            adapter = adapter->Next;
         }
     }
 
     // Free data
     delete[] (char*)adapterInfo;
 #   else
-    struct ifaddrs *ifaddr, *ifa;
-    int family, s;
-    char address[INET6_ADDRSTRLEN];
+    struct ifaddrs* ifaddr;
 
+    // Query for a linked list of network interfaces
     if (getifaddrs(&ifaddr) == -1)
     {
-        return result;
+        return;
     }
 
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
+    // Iterate through each interface and remove unwanted devices
+    Size count = 0;
+    for (ifaddrs* ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
+    {
+        // Only accept IPv4 or IPv6 interfaces, ignore others
+        if (ifa->ifa_addr == NULL || (ifa->ifa_addr->sa_family != AF_INET && ifa->ifa_addr->sa_family != AF_INET6))
+        {
+            continue;
+        }
+
+        // Ignore local loopback addresses
+        if (ifa->ifa_addr->sa_family == AF_INET)
+        {
+            if (((struct sockaddr_in*)ifa->ifa_addr)->sin_addr.s_addr == 16777343)
+            {
+                continue;
+            }
+        }
+        else
+        {
+            UInt64 addr[2];
+            memcpy(&addr, &((struct sockaddr_in6*)ifa->ifa_addr)->sin6_addr, sizeof(in6_addr));
+            if (addr[0] == 0 && addr[1] == 72057594037927936)
+            {
+                continue;
+            }
+        }
+        count++;
+    }
+    adapters->SetSize(count);
+
+    // Iterate through each interface
+    count = 0;
+    for (ifaddrs* ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
     {
         Adapter adapterObject;
 
-        if (ifa->ifa_addr == NULL)
+        // Only accept IPv4 or IPv6 interfaces, ignore others
+        if (ifa->ifa_addr == NULL || (ifa->ifa_addr->sa_family != AF_INET && ifa->ifa_addr->sa_family != AF_INET6))
         {
             continue;
         }
 
-        if (ifa->ifa_addr->sa_family != AF_INET && ifa->ifa_addr->sa_family != AF_INET6)
+        // Determine if this is IPv4 or IPv6
+        if (ifa->ifa_addr->sa_family == AF_INET)
         {
-            continue;
-        }
-
-        family = ifa->ifa_addr->sa_family;
-
-        if (family == AF_INET)
-        {
+            // Copy over the address and netmask (ipv4)
             UInt32 addr;
             addr = ((struct sockaddr_in*)ifa->ifa_addr)->sin_addr.s_addr;
+            if (addr == 16777343)
+            {
+                continue;
+            }
             adapterObject.ip = IPAddress(addr);
             addr = ((struct sockaddr_in*)ifa->ifa_netmask)->sin_addr.s_addr;
             adapterObject.netmask = IPAddress(addr);
         }
         else
         {
+            // Copy over the address and netmask (ipv6)
             UInt64 addr[2];
             memcpy(&addr, &((struct sockaddr_in6*)ifa->ifa_addr)->sin6_addr, sizeof(in6_addr));
+            if (addr[0] == 0 && addr[1] == 72057594037927936)
+            {
+                continue;
+            }
             adapterObject.ip = IPAddress(addr);
             memcpy(&addr, &((struct sockaddr_in6*)ifa->ifa_netmask)->sin6_addr, sizeof(in6_addr));
             adapterObject.netmask = IPAddress(addr);
         }
 
-        if (adapterObject.ip.ToString() == "127.0.0.1" || adapterObject.ip.ToString() == "::1")
-        {
-            continue;
-        }
-
+        // Get the interface name
         adapterObject.description = ifa->ifa_name;
 
-        result.push_back(adapterObject);
+        // Add the result to the list
+        adapters->Set(count++, adapterObject);
     }
 
+    // Free the linked list of addresses
     freeifaddrs(ifaddr);
 #endif
-
-    return result;
 }
