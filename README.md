@@ -1,8 +1,4 @@
-Jatta
-=====
-
-General Utility Library<br>
-Learn more at [our website](http://jatta.zethes.com/).
+![Jatta](https://raw.github.com/Zethes/Jatta/master/resources/logo.png)
 
 Features
 =====
