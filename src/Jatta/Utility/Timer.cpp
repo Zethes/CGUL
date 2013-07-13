@@ -4,7 +4,7 @@
  */
 
 #include "Timer.h"
-#if defined(LINUX) || defined(MacOS)
+#if defined(LINUX) || defined(MACOS)
 #   include <sys/time.h>
 #   include <unistd.h>
 #endif
