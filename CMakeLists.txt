@@ -18,16 +18,18 @@ endif()
 
 # Version information
 set(Jatta_MAJOR_VERSION 0)
-set(Jatta_MINOR_VERSION 1)
+set(Jatta_MINOR_VERSION 0)
 set(Jatta_PATCH_VERSION 0)
 set(Jatta_VERSION ${Jatta_MAJOR_VERSION}.${Jatta_MINOR_VERSION}.${Jatta_PATCH_VERSION})
-project(${Jatta_OUTPUT_NAME}-${Jatta_VERSION} CXX)
+project(${Jatta_OUTPUT_NAME} CXX)
 
 # Determine system information
 if(MINGW)
     set(SYSTEM_NAME mingw)
+    set(SYSTEM_NAME_UPPER MinGW)
 else()
     string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME)
+    set(SYSTEM_NAME_UPPER ${CMAKE_SYSTEM_NAME})
 endif()
 math(EXPR SYSTEM_BITNESS "${CMAKE_SIZEOF_VOID_P} * 8")
 
@@ -78,7 +80,7 @@ include(libraries/libraries.cmake)
 add_subdirectory(src)
 
 # Add a build step for Doxygen
-include(Doxygen.cmake)
+include(resources/Doxygen.cmake)
 
 # Allow packaging
-include(Package.cmake)
+include(resources/Package.cmake)

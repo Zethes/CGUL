@@ -5,37 +5,43 @@ macro(jatta_find_library VARIABLE)
 endmacro()
 
 macro(jatta_find_package LIBRARY)
-    message(STATUS "Looking for library ${LIBRARY}")
+    if(NOT DEFINED ${LIBRARY}_LIBRARY)
+        message(STATUS "Looking for library ${LIBRARY}")
 
-    # Parse arguments
-    set(TYPE "")
-    set(NAMES "")
-    set(DEBUG "")
-    set(PARENTS "")
-    set(${LIBRARY}_SECONDARY OFF)
-    foreach(ARG ${ARGN})
-        if("${ARG}" STREQUAL "NAMES" OR "${ARG}" STREQUAL "DEBUG" OR "${ARG}" STREQUAL "PARENTS")
-            set(TYPE ${ARG})
-        elseif("${TYPE}" STREQUAL "NAMES")
-            list(APPEND NAMES ${ARG})
-        elseif("${TYPE}" STREQUAL "DEBUG")
-            list(APPEND DEBUG ${ARG})
-        elseif("${TYPE}" STREQUAL "PARENTS")
-            list(APPEND PARENTS ${ARG})
-            set(${LIBRARY}_SECONDARY ON)
-        else()
-            message(FATAL_ERROR "Syntax of jatta_find_package incorrect.")
+        # Parse arguments
+        set(TYPE "")
+        set(NAMES "")
+        set(DEBUG "")
+        set(PARENTS "")
+        set(${LIBRARY}_SECONDARY OFF)
+        foreach(ARG ${ARGN})
+            if("${ARG}" STREQUAL "NAMES" OR "${ARG}" STREQUAL "DEBUG" OR "${ARG}" STREQUAL "PARENTS")
+                set(TYPE ${ARG})
+            elseif("${TYPE}" STREQUAL "NAMES")
+                list(APPEND NAMES ${ARG})
+            elseif("${TYPE}" STREQUAL "DEBUG")
+                list(APPEND DEBUG ${ARG})
+            elseif("${TYPE}" STREQUAL "PARENTS")
+                list(APPEND PARENTS ${ARG})
+                set(${LIBRARY}_SECONDARY ON)
+            else()
+                message(FATAL_ERROR "Syntax of jatta_find_package incorrect.")
+            endif()
+        endforeach()
+
+        # Setup cache
+        if(NOT ${${LIBRARY}_SECONDARY})
+            set(${LIBRARY}_REQUIRED OFF CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
+            set(${LIBRARY}_IGNORE OFF CACHE BOOL "Ignores this library even if it was found.")
         endif()
-    endforeach()
 
-    # Setup cache
-    if(NOT ${${LIBRARY}_SECONDARY})
-        set(${LIBRARY}_REQUIRED OFF CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
-        set(${LIBRARY}_IGNORE OFF CACHE BOOL "Ignores this library even if it was found.")
+        # Look for the release and debug libraries
+        jatta_find_library(${LIBRARY}_LIBRARY ${NAMES})
+    else()
+        set(QUIET ON)
     endif()
 
-    # Look for the release and debug libraries
-    jatta_find_library(${LIBRARY}_LIBRARY ${NAMES})
+    # Check if the library is found
     set(${LIBRARY}_RELEASE_FOUND ON)
     if("${${LIBRARY}_LIBRARY}" STREQUAL "${LIBRARY}_LIBRARY-NOTFOUND")
         set(${LIBRARY}_RELEASE_FOUND OFF)
@@ -48,7 +54,9 @@ macro(jatta_find_package LIBRARY)
     set(${LIBRARY}_FOUND ON)
     if(NOT ${${LIBRARY}_RELEASE_FOUND} AND NOT ${${LIBRARY}_DEBUG_FOUND})
         set(${LIBRARY}_FOUND OFF)
-        message(STATUS "Looking for library ${LIBRARY} -- not found")
+        if(NOT QUIET)
+            message(STATUS "Looking for library ${LIBRARY} -- not found")
+        endif()
     endif()
 
     # Test compatibility
@@ -63,19 +71,23 @@ macro(jatta_find_package LIBRARY)
           OUTPUT_VARIABLE OUTPUT)
         if(NOT ${LIBRARY}_COMPILED)
             set(${LIBRARY}_FOUND OFF)
-            message(STATUS "Looking for library ${LIBRARY} -- incompatible")
-            file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
-                "Unable to compile package test script for ${LIBRARY}!"
-                "The test file ${LIBRARY}.cpp failed to compile:"
-                "${OUTPUT}\n\n"
-            )
+            if(NOT QUIET)
+                message(STATUS "Looking for library ${LIBRARY} -- incompatible")
+                file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+                    "Unable to compile package test script for ${LIBRARY}!"
+                    "The test file ${LIBRARY}.cpp failed to compile:"
+                    "${OUTPUT}\n\n"
+                )
+            endif()
         endif()
     endif()
 
     # Check the ignore flag
     if(${${LIBRARY}_IGNORE})
         if(${${LIBRARY}_FOUND})
-            message(STATUS "Looking for library ${LIBRARY} -- ignored")
+            if(NOT QUIET)
+                message(STATUS "Looking for library ${LIBRARY} -- ignored")
+            endif()
             set(${LIBRARY}_FOUND OFF)
         endif()
     endif()
@@ -99,7 +111,9 @@ macro(jatta_find_package LIBRARY)
         endif()
     else()
         # Import the library
-        message(STATUS "Looking for library ${LIBRARY} -- found")
+        if(NOT QUIET)
+            message(STATUS "Looking for library ${LIBRARY} -- found")
+        endif()
         add_library(${LIBRARY} STATIC IMPORTED)
         if(${${LIBRARY}_RELEASE_FOUND})
             set_target_properties(${LIBRARY} PROPERTIES IMPORTED_LOCATION "${${LIBRARY}_LIBRARY}")
@@ -126,7 +140,7 @@ macro(jatta_find_package LIBRARY)
     endif()
 
     if(${${LIBRARY}_SECONDARY})
-        unset(${LIBRARY}_LIBRARY CACHE)
+        #unset(${LIBRARY}_LIBRARY CACHE)
         unset(${LIBRARY}_DEBUG_LIBRARY CACHE)
     endif()
 endmacro()
