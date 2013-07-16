@@ -41,9 +41,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileNam
 {
 #   ifdef WINDOWS
     std::wstring file = fileName._ToWideString();
-    FILE* stream = _wfopen(file.c_str(), L"r");
+    FILE* stream = _wfopen(file.c_str(), L"w");
 #   else
-    FILE* stream = fopen(fileName.GetCString(), "r");
+    FILE* stream = fopen(fileName.GetCString(), "w");
 #   endif
     if (stream == NULL)
     {
