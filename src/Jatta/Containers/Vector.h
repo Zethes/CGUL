@@ -11,15 +11,24 @@
 
 namespace Jatta
 {
-    template< typename T, typename Allocator = std::allocator< T > > class Vector : public std::vector< T, Allocator >, public List< T >, public FixedList< T >
+    /** @brief A vector functionally equivalent to an std::vector but capable of acting as a
+     *  FixedList.
+     */
+    template< typename T, typename Allocator = std::allocator< T > > class Vector : public std::vector< T, Allocator >, public FixedList< T >
     {
     public:
         // List
-        void Push(T value);
+        void Push(const T& value);
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
+        void Push(const T&& value);
+#       endif
 
         // FixedList
         void SetSize(Size size);
-        void Set(Size index, T value);
+        void Set(Size index, const T& value);
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
+        void Set(Size index, const T&& value);
+#       endif
     };
 }
 

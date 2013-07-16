@@ -51,7 +51,14 @@ template< typename T > void Jatta::Array< T >::SetSize(Size size)
     this->size = size;
 }
 
-template< typename T > void Jatta::Array< T >::Set(Size index, T value)
+template< typename T > void Jatta::Array< T >::Set(Size index, const T& value)
 {
     data[index] = value;
 }
+
+#ifdef CPP_HAS_DOUBLE_REFERENCE
+template< typename T > void Jatta::Array< T >::Set(Size index, const T& value)
+{
+    data[index] = value;
+}
+#endif

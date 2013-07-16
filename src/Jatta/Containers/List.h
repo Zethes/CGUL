@@ -5,15 +5,18 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "Container.h"
+#include "FixedList.h"
 #include "../External/Defines.h"
 
 namespace Jatta
 {
-    template< typename T > class List : public Container< T >
+    template< typename T > class List : public FixedList< T >
     {
     public:
-        virtual void Push(T value) = 0; // TODO: do not pass by value
+        virtual void Push(const T& value) = 0;
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
+        virtual void Push(const T&& value) = 0;
+#       endif
     };
 }
 

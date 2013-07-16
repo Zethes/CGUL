@@ -67,6 +67,7 @@
 #include "Jatta/Containers/Array.h"
 #include "Jatta/Containers/Container.h"
 #include "Jatta/Containers/FixedList.h"
+#include "Jatta/Containers/HashMap.h"
 #include "Jatta/Containers/List.h"
 #include "Jatta/Containers/Vector.h"
 

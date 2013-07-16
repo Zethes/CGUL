@@ -27,7 +27,10 @@ namespace Jatta
 
         // FixedList
         void SetSize(Size size);
-        void Set(Size index, T value);
+        void Set(Size index, const T& value);
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
+        void Set(Size index, const T&& value);
+#       endif
     };
 }
 
