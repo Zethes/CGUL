@@ -7,14 +7,14 @@
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
 
-#ifndef JATTA_NO_JSTR
+#ifndef JATTA_NO_U8
 #   ifdef CPP_HAS_U8
-#       define JSTR(text) Jatta::String(u8##text)
+#       define U8(text) Jatta::String(u8##text)
 #   else
 #       ifdef WINDOWS
-#           define JSTR(text) Jatta::String(L##text)
+#           define U8(text) Jatta::String(L##text)
 #       else
-#           define JSTR(text) Jatta::String(text)
+#           define U8(text) Jatta::String(text)
 #       endif
 #   endif
 #endif
