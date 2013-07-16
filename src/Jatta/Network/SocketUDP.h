@@ -44,8 +44,6 @@ namespace Jatta
 
             //! @brief Checks if the socket is currently bound to a port.
             bool IsBound();
-            //! @brief Checks if the socket is connected to a host.
-            bool IsConnected();
 
             //! @brief Sends data over the network.
             int Send(const void* data, unsigned int size);

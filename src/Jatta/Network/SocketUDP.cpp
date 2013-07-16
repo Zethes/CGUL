@@ -183,16 +183,7 @@ void Jatta::Network::SocketUDP::Close()
  */
 bool Jatta::Network::SocketUDP::IsBound()
 {
-    // TODO: this method
-    return true;
-}
-
-/** @returns True if the socket is connected, false otherwise.
- */
-bool Jatta::Network::SocketUDP::IsConnected()
-{
-    // TODO: this method
-    return true;
+    return sock != INVALID_SOCKET;
 }
 
 /** @param data An array of bytes to send over the network.
