@@ -26,7 +26,7 @@ _JATTA_EXPORT Jatta::OpenGL::Context::~Context()
     Destroy();
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
+_JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
 {
     this->window = window;
 
@@ -82,8 +82,10 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
 #   endif
 
 #   ifdef LINUX
+    this->display = window->_GetDisplay();
+
     XWindowAttributes attributes;
-    XGetWindowAttributes(window->_GetDisplay(), window->_GetHandle(), &attributes);
+    XGetWindowAttributes(this->display, window->_GetHandle(), &attributes);
 
     // TODO: remove this?
     /*attributes->visual = blah blah;
@@ -97,7 +99,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     int glxMajorVersion = 0;
     int glxMinorVersion = 0;
     // Get Version info
-    glXQueryVersion(window->_GetDisplay(), &glxMajorVersion, &glxMinorVersion);
+    glXQueryVersion(display, &glxMajorVersion, &glxMinorVersion);
     if(glxMajorVersion == 1 && glxMinorVersion < 2)
     {
         // TODO: error handling
@@ -122,8 +124,8 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     info.bits_per_rgb = 0;
 
     // also create a new GL context for rendering
-    this->context = glXCreateContext(window->_GetDisplay(), &info, 0, true);
-    glXMakeCurrent(window->_GetDisplay(), window->_GetHandle(), this->context);
+    this->context = glXCreateContext(this->display, &info, 0, true);
+    glXMakeCurrent(this->display, window->_GetHandle(), this->context);
 #   endif
 
 #   ifdef MACOS
@@ -170,6 +172,8 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(const Window* window)
     // clears out errors... we're not actually checking for any!
     // TODO: check for errors dammit!
     glGetError();
+
+    window->context = this;
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
@@ -196,19 +200,33 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 
 _JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
 {
+    // Check if this is a valid context first.
+    if (this->window == NULL)
+    {
+        return;
+    }
+
     // TODO: Context::Destroy
 
 #   ifdef LINUX
     if (this->context != NULL)
     {
         // Release the current context from this thread before deleting it
-        glXMakeCurrent(this->window->_GetDisplay(), None, NULL);
+        glXMakeCurrent(this->display, None, NULL);
 
         // Delete the context
-        glXDestroyContext(this->window->_GetDisplay(), this->context);
+        glXDestroyContext(this->display, this->context);
         this->context = NULL;
     }
 #   endif
+
+    this->window->context = NULL;
+    this->window = NULL;
+}
+
+_JATTA_EXPORT bool Jatta::OpenGL::Context::IsValid() const
+{
+    return this->window != NULL;
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Context::Enable(Enum capability)
@@ -274,7 +292,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
 #   endif
 
 #   ifdef LINUX
-    glXSwapBuffers(window->_GetDisplay(), window->_GetHandle());
+    glXSwapBuffers(this->display, this->window->_GetHandle());
 #   endif
 
 #   ifdef MACOS

@@ -19,7 +19,7 @@ namespace Jatta
     {
         class Context
         {
-            const Window* window;
+            Window* window;
 
 #           ifdef WINDOWS
             _JATTA_PIXELFORMATDESCRIPTOR pfd;
@@ -29,6 +29,7 @@ namespace Jatta
 #           endif
 
 #           ifdef LINUX
+            _JATTA_DISPLAY display;
             _JATTA_GLXCONTEXT context;
 #           endif
 
@@ -43,9 +44,10 @@ namespace Jatta
             _JATTA_EXPORT Context();
             _JATTA_EXPORT ~Context();
 
-            _JATTA_EXPORT void Create(const Window* window);
+            _JATTA_EXPORT void Create(Window* window);
             _JATTA_EXPORT void MakeCurrent();
             _JATTA_EXPORT void Destroy();
+            _JATTA_EXPORT bool IsValid() const;
 
             _JATTA_EXPORT void Enable(Enum capability);
             _JATTA_EXPORT void Disable(Enum capability);

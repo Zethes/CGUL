@@ -16,6 +16,13 @@
 
 namespace Jatta
 {
+#   ifdef Jatta_USE_OPENGL
+    namespace OpenGL
+    {
+        class Context;
+    }
+#   endif
+
     /** @brief A class capable of creating windows and manipulating them.
      *  @details Internally this class can work very differently depending on the operating system.
      *  Direct calls are made to WinAPI on Microsoft Windows, Cocoa on Mac OS X, and X11 on linux
@@ -26,6 +33,8 @@ namespace Jatta
      */
     class Window
     {
+        friend class OpenGL::Context;
+
 #       ifdef WINDOWS
         _JATTA_HWND handle;
 
@@ -52,6 +61,9 @@ namespace Jatta
 #       endif
 
         Input input;
+#       ifdef Jatta_USE_OPENGL
+        OpenGL::Context* context;
+#       endif
 
         _JATTA_EXPORT Window(const Window& copy);
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR

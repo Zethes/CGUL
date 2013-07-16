@@ -13,6 +13,10 @@
 #   import "MacOS/Application.h"
 #endif
 
+#ifdef Jatta_USE_OPENGL
+#   include "../OpenGL/Context.h"
+#endif
+
 #ifdef MSVC
     // Disable Warning C4355: 'this' : used in base member initializer list
     // How we're using 'this' will not cause any undefined behavior
@@ -173,6 +177,10 @@ _JATTA_EXPORT void Jatta::Window::Update()
 
 _JATTA_EXPORT Jatta::Window::Window() : input(this)
 {
+#   ifdef Jatta_USE_OPENGL
+    context = NULL;
+#   endif
+
 #   ifdef LINUX
     if (!initialized)
     {
@@ -340,6 +348,11 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
  */
 _JATTA_EXPORT void Jatta::Window::Close()
 {
+    if (context)
+    {
+        context->Destroy();
+    }
+
 #   ifdef WINDOWS
     if (IsWindow(handle))
     {
@@ -364,7 +377,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
         [handle close];
     }
 #   endif
-    // TODO: Window::Close on MacOS
+    // TODO: Window::Close on MacOS(?)
 }
 
 /** @brief Updates a window's input handler.
@@ -628,7 +641,7 @@ _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
         XSetWMNormalHints(display, this->handle, &hints);
     }
 #   endif
-    
+
 #   ifdef MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [handle setHeight: height];
