@@ -1,22 +1,49 @@
 # - Config file for the Jatta package
+# It defines the following targets
+#  Jatta@TARGET_COMMENT@
 # It defines the following variables
 #  Jatta_INCLUDE_DIRS                     - include directories for Jatta
 #  Jatta_LIBRARIES                        - libraries to link against
-#  Jatta_MODULES                          - the necessary modules (recommended: use jatta_copy_modules)
+#  Jatta_MODULE                           - the jatta module location (recommended: use jatta_copy_modules)
+#  Jatta_STATIC                           - ON if the library was built static, OFF for shared
+#  Jatta_SHARED_MODULES                   - a list of targets representing non-system wide shared modules required
+#  Jatta_<TARGET>_LIBRARY                 - a location to the required library <TARGET>
+#  Jatta_<TARGET>_PACKAGE                 - set to ON if the module should be packaged with Jatta
 # It defines the following macros
-#  jatta_copy_modules(target destination) - copies required modules (dll/so/dylib) to the given directory
+#  jatta_copy_modules(target destination) - copies required modules (dll/so/dylib) to the given directory after building target
+#  jatta_install_modules(destination)     - installs required modules (dll/so/dylib) to the given directory
+#  jatta_bake_rpath(target rpath)         - modifies the rpath for the given target (unix only)
 
 get_filename_component(Jatta_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/../include" ABSOLUTE)
-get_filename_component(Jatta_MODULES "${CMAKE_CURRENT_LIST_DIR}/../lib/@Jatta_MODULE_NAME@" ABSOLUTE)
+get_filename_component(Jatta_MODULE "${CMAKE_CURRENT_LIST_DIR}/../@LIB_DIR@/@Jatta_MODULE_NAME@" ABSOLUTE)@STATIC_IMPORTS@
 
 add_library(Jatta STATIC IMPORTED)
-set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_MODULES})
+set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_MODULE})
 set(Jatta_LIBRARIES Jatta@SYSTEM_LIBRARIES@)
 
+set(Jatta_STATIC @Jatta_STATIC@)
+set(Jatta_SHARED_MODULES @SHARED_MODULES@)
+
 function(jatta_copy_modules TARGET DESTINATION)
-    if(NOT Jatta_MODULES STREQUAL "")
-        add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Jatta_MODULES}" "${DESTINATION}" VERBATIM)
+    if(NOT Jatta_MODULE STREQUAL "" AND NOT Jatta_STATIC)
+        add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${Jatta_MODULE}" "${DESTINATION}" VERBATIM)
     endif()
+    foreach(SHARED_MODULE ${Jatta_SHARED_MODULES})
+        if(Jatta_${SHARED_MODULE}_PACKAGE)
+            get_target_property(LOCATION ${SHARED_MODULE} IMPORTED_LOCATION)
+            add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${LOCATION}" "${DESTINATION}" VERBATIM)
+        endif()
+    endforeach()
+endfunction()
+
+function(jatta_install_modules DESTINATION)
+    install(FILES ${Jatta_MODULE} DESTINATION ${DESTINATION})
+    foreach(SHARED_MODULE ${Jatta_SHARED_MODULES})
+        if(Jatta_${SHARED_MODULE}_PACKAGE)
+            get_target_property(LOCATION ${SHARED_MODULE} IMPORTED_LOCATION)
+            install(FILES ${LOCATION} DESTINATION ${DESTINATION})
+        endif()
+    endforeach()
 endfunction()
 
 function(jatta_bake_rpath TARGET RPATH)

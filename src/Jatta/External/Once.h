@@ -28,20 +28,48 @@ namespace Jatta
 }
 #endif
 
-// TODO: clean this up (make a more logical way of determining if std::move exists)
-// Clang doesn't support this...
-#ifdef MACOS
-namespace std
-{
-    template <typename T> const T& move(const T& value)
-    {
-        return value;
-    }
-    template <typename T> T& move(T& value)
-    {
-        return value;
-    }
-}
+// TODO: clean up the standard template library list
+// Standard Template Library Includes
+#ifdef CPP_HEADER_ALGORITHM
+#   include <algorithm>
+#endif
+#ifdef CPP_HEADER_CCTYPE
+#   include <cctype>
+#endif
+#ifdef CPP_HEADER_FSTREAM
+#   include <fstream>
+#endif
+#ifdef CPP_HEADER_LIST
+#   include <list>
+#endif
+#ifdef CPP_HEADER_MAP
+#   include <map>
+#endif
+#ifdef CPP_HEADER_MEMORY
+#   include <memory>
+#endif
+#ifdef CPP_HEADER_SSTREAM
+#   include <sstream>
+#endif
+#ifdef CPP_HEADER_STDEXCEPT
+#   include <stdexcept>
+#endif
+#ifdef CPP_HEADER_STRING
+#   include <string>
+#endif
+#ifdef CPP_HEADER_THREAD
+#   include <thread>
+#endif
+#ifdef CPP_HEADER_UTILITY
+#   include <utility>
+#endif
+#ifdef CPP_HEADER_VECTOR
+#   include <vector>
+#endif
+#if defined(CPP_HEADER_CSTDINT)
+#   include <cstdint>
+#elif defined(CPP_HEADER_STDINT_H)
+#   include <stdint.h>
 #endif
 
 // TODO: fix static assert on clang builds
@@ -65,35 +93,67 @@ namespace Jatta
 
     /** @brief An 8 bit (1 byte) signed integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(int8_t, SInt8, 1);
+#   else
     TYPE(char, SInt8, 1);
+#   endif
 
     /** @brief An 8 bit (1 byte) unsigned integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(uint8_t, UInt8, 1);
+#   else
     TYPE(unsigned char, UInt8, 1);
+#   endif
 
     /** @brief A 16 bit (2 bytes) signed integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(int16_t, SInt16, 2);
+#   else
     TYPE(short, SInt16, 2);
+#   endif
 
     /** @brief A 16 bit (2 bytes) unsigned integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(uint16_t, UInt16, 2);
+#   else
     TYPE(unsigned short, UInt16, 2);
+#   endif
 
     /** @brief A 32 bit (4 bytes) signed integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(int32_t, SInt32, 4);
+#   else
     TYPE(int, SInt32, 4);
+#   endif
 
     /** @brief A 32 bit (4 bytes) unsigned integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(uint32_t, UInt32, 4);
+#   else
     TYPE(unsigned int, UInt32, 4);
+#   endif
 
     /** @brief A 64 bit (8 bytes) signed integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(int64_t, SInt64, 8);
+#   else
     TYPE(long long, SInt64, 8);
+#   endif
 
     /** @brief A 64 bit (8 bytes) unsigned integer number.
      */
+#   ifdef _STDINT_H
+    TYPE(uint64_t, UInt64, 8);
+#   else
     TYPE(unsigned long long, UInt64, 8);
+#   endif
 
     /** @brief A 8 bit (1 byte) boolean value (true or false).
      */
@@ -109,48 +169,41 @@ namespace Jatta
 
     /** @brief A system-dependent sized integer capable of holding addresses in memory.
      */
+#   ifdef _STDINT_H
+    TYPE(uintptr_t, Size, sizeof(void*));
+#   else
     TYPE(unsigned long, Size, sizeof(void*));
+#   endif
+
+    /** @brief A system-dependent sized signed integer capable of holding addresses in memory.
+     */
+#   ifdef _STDINT_H
+    TYPE(intptr_t, SignedSize, sizeof(void*));
+#   else
+    TYPE(unsigned long, SignedSize, sizeof(void*));
+#   endif
+
+    const SInt8 SInt8Min = 127;
+    const SInt8 SInt8Max = -(127) - 1;
+    const UInt8 UInt8Min = 0;
+    const UInt8 UInt8Max = 255;
+
+    const SInt16 SInt16Min = -(32767) -1;
+    const SInt16 SInt16Max = 32767;
+    const UInt16 UInt16Min = 0;
+    const UInt16 UInt16Max = 65535;
+
+    const SInt32 SInt32Min = -(2147483647) - 1;
+    const SInt32 SInt32Max = 2147483647;
+    const UInt32 UInt32Min = 0;
+    const UInt32 UInt32Max = 4294967295;
+
+    const SInt64 SInt64Min = -(9223372036854775807LL) - 1;
+    const SInt64 SInt64Max = 9223372036854775807LL;
+    const UInt64 UInt64Min = 0ULL;
+    const UInt64 UInt64Max = 18446744073709551615ULL;
 }
 #undef TYPE
-
-// TODO: clean up the standard template library list
-// Standard Template Library Includes
-#ifdef CPP_HEADER_ALGORITHM
-#include <algorithm>
-#endif
-#ifdef CPP_HEADER_CCTYPE
-#include <cctype>
-#endif
-#ifdef CPP_HEADER_FSTREAM
-#include <fstream>
-#endif
-#ifdef CPP_HEADER_LIST
-#include <list>
-#endif
-#ifdef CPP_HEADER_MAP
-#include <map>
-#endif
-#ifdef CPP_HEADER_MEMORY
-#include <memory>
-#endif
-#ifdef CPP_HEADER_SSTREAM
-#include <sstream>
-#endif
-#ifdef CPP_HEADER_STDEXCEPT
-#include <stdexcept>
-#endif
-#ifdef CPP_HEADER_STRING
-#include <string>
-#endif
-#ifdef CPP_HEADER_THREAD
-#include <thread>
-#endif
-#ifdef CPP_HEADER_UTILITY
-#include <utility>
-#endif
-#ifdef CPP_HEADER_VECTOR
-#include <vector>
-#endif
 
 // DLL Exports
 #ifdef MSVC
@@ -178,6 +231,7 @@ namespace Jatta
 #       endif
 #   endif
 #   ifdef LINUX
+#       include <setjmp.h>
 #       include <X11/Xlib.h>
 #       include <X11/Xatom.h>
 #       include <X11/Xutil.h>

@@ -81,6 +81,26 @@ namespace Jatta
             return V();
         }
 
+        bool Get(T key, V* value)
+        {
+            Size index = hash(key);
+            index %= this->size;
+            Data** slot = &this->data[index];
+            while (*slot)
+            {
+                if ((*slot)->key == key)
+                {
+                    if (value)
+                    {
+                        *value = (*slot)->value;
+                    }
+                    return true;
+                }
+                slot = &((*slot)->next);
+            }
+            return false;
+        }
+
         void Clear()
         {
             for (Size i = 0; i < size; i++)

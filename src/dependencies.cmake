@@ -1,5 +1,5 @@
 # Macro to use a library
-macro(use_library LIBRARY SYSTEM)
+macro(use_library NAME LIBRARY SYSTEM)
     if(${SYSTEM} AND MSVC)
         list(APPEND Jatta_LIBRARIES "general ${LIBRARY}.lib ")
     else()
@@ -7,13 +7,21 @@ macro(use_library LIBRARY SYSTEM)
     endif()
     if(${SYSTEM})
         set(SYSTEM_LIBRARIES "${SYSTEM_LIBRARIES} ${LIBRARY}")
+    elseif(DEFINED ${NAME}_SHARED)
+        if(NOT ${NAME}_SHARED)
+            if(DEFINED STATIC_LIBRARIES)
+                set(STATIC_LIBRARIES "${STATIC_LIBRARIES};${NAME}")
+            else()
+                set(STATIC_LIBRARIES "${NAME}")
+            endif()
+        endif()
     endif()
 endmacro()
 
 # Macro to find Mac framework
 macro(find_framework NAME)
     find_library(FRAMEWORK ${NAME})
-    use_library(${FRAMEWORK} ON)
+    use_library(${NAME} ${FRAMEWORK} ON)
     unset(FRAMEWORK CACHE)
 endmacro()
 
@@ -26,25 +34,25 @@ LIST(APPEND ACKNOWLEDGEMENTS
 
 # System generic libraries
 if(WIN32)
-    use_library(Ws2_32 ON)
-    use_library(Iphlpapi ON)
+    use_library(WinSock2 Ws2_32 ON)
+    use_library(Iphlpapi Iphlpapi ON)
 elseif(APPLE)
     find_framework(Carbon)
     find_framework(Cocoa)
     find_framework(ApplicationServices)
 else()
-    use_library(X11 ON)
+    use_library(X11 X11 ON)
 endif()
 
 # OpenGL
 if(Jatta_USE_OPENGL)
-    use_library(${glew_LINK} OFF)
+    use_library(glew ${glew_LINK} OFF)
     if(WIN32)
-        use_library(opengl32 ON)
+        use_library(OpenGL opengl32 ON)
     elseif(APPLE)
         find_framework(OpenGL)
     else()
-        use_library(GL ON)
+        use_library(OpenGL GL ON)
     endif()
 
     list(APPEND ACKNOWLEDGEMENTS
@@ -59,7 +67,7 @@ endif()
 
 # Imported libraries
 if(Assimp_FOUND)
-    use_library(${Assimp_LINK} OFF)
+    use_library(Assimp ${Assimp_LINK} OFF)
 
     list(APPEND ACKNOWLEDGEMENTS
         "\n\n"
@@ -69,7 +77,7 @@ if(Assimp_FOUND)
     )
 endif()
 if(FreeType_FOUND)
-    use_library(${FreeType_LINK} OFF)
+    use_library(FreeType ${FreeType_LINK} OFF)
 
     list(APPEND ACKNOWLEDGEMENTS
         "\n\n"
@@ -78,7 +86,7 @@ if(FreeType_FOUND)
     )
 endif()
 if(JPEG_FOUND)
-    use_library(${JPEG_LINK} OFF)
+    use_library(JPEG ${JPEG_LINK} OFF)
 
     list(APPEND ACKNOWLEDGEMENTS
         "\n\n"
@@ -87,8 +95,8 @@ if(JPEG_FOUND)
     )
 endif()
 if(PNG_FOUND)
-    use_library(${PNG_LINK} OFF)
-    use_library(${zlib_LINK} OFF)
+    use_library(PNG ${PNG_LINK} OFF)
+    use_library(zlib ${zlib_LINK} OFF)
 
     list(APPEND ACKNOWLEDGEMENTS
         "\n\n"
@@ -102,15 +110,15 @@ if(PNG_FOUND)
     )
 endif()
 if(PortAudio_FOUND)
-    use_library(${PortAudio_LINK} OFF)
+    use_library(PortAudio ${PortAudio_LINK} OFF)
     if(WIN32)
-        use_library(winmm ON)
+        use_library(WinMM winmm ON)
     elseif(APPLE)
         find_framework(CoreAudio)
         find_framework(AudioToolbox)
         find_framework(AudioUnit)
     else()
-        use_library(asound ON)
+        use_library(asound asound ON)
     endif()
 
     list(APPEND ACKNOWLEDGEMENTS
