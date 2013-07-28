@@ -186,17 +186,17 @@ namespace Jatta
     const SInt8 SInt8Min = 127;
     const SInt8 SInt8Max = -(127) - 1;
     const UInt8 UInt8Min = 0;
-    const UInt8 UInt8Max = 255;
+    const UInt8 UInt8Max = 255U;
 
     const SInt16 SInt16Min = -(32767) -1;
     const SInt16 SInt16Max = 32767;
     const UInt16 UInt16Min = 0;
-    const UInt16 UInt16Max = 65535;
+    const UInt16 UInt16Max = 65535U;
 
     const SInt32 SInt32Min = -(2147483647) - 1;
     const SInt32 SInt32Max = 2147483647;
     const UInt32 UInt32Min = 0;
-    const UInt32 UInt32Max = 4294967295;
+    const UInt32 UInt32Max = 4294967295U;
 
     const SInt64 SInt64Min = -(9223372036854775807LL) - 1;
     const SInt64 SInt64Max = 9223372036854775807LL;

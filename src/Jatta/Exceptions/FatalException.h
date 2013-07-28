@@ -15,6 +15,7 @@ namespace Jatta
         Jatta::String error;
 
         FatalException(const Jatta::String& error, UInt16 code = 0);
+        ~FatalException() throw();
 
         Jatta::String GetString() const;
     };

@@ -5,6 +5,10 @@
 
 #include "FatalException.h"
 
+Jatta::FatalException::~FatalException() throw()
+{
+}
+
 Jatta::FatalException::FatalException(const Jatta::String& error, UInt16 code) : Exception(code, ExceptionType::FATAL)
 {
     this->error = error;

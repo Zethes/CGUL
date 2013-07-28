@@ -7,6 +7,10 @@
 
 static Jatta::String result;
 
+Jatta::Exception::~Exception() throw()
+{
+}
+
 const char* Jatta::Exception::what() const throw()
 {
     result = GetString();

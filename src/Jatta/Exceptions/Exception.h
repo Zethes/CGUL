@@ -32,6 +32,8 @@ namespace Jatta
             UInt32 unique;
         };
 
+        ~Exception() throw();
+
         virtual Jatta::String GetString() const = 0;
         virtual Jatta::String GetReason() const = 0;
 
