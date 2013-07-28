@@ -40,5 +40,6 @@
 #cmakedefine CPP_HAS_MOVE_CONSTRUCTOR
 #cmakedefine CPP_HAS_PTHREAD
 #cmakedefine CPP_HAS_STATIC_ASSERT
+#cmakedefine CPP_HAS_STD_MOVE
 #cmakedefine CPP_HAS_STD_THREAD
 #cmakedefine CPP_HAS_U8
