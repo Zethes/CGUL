@@ -11,7 +11,6 @@ jatta_copy_modules(window ${CMAKE_CURRENT_BINARY_DIR})
 jatta_bake_rpath(window "$ORIGIN")
 
 install(TARGETS window DESTINATION .)
-install(FILES "${Jatta_MODULES}" DESTINATION .)
 set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")
 if(WIN32)
     set(CPACK_GENERATOR "ZIP")
