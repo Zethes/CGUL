@@ -8,6 +8,7 @@
  */
 
 #include "SocketTCP.h"
+#include "../Exceptions/NetworkException.h"
 
 #ifndef DOXYGEN
 namespace Jatta
@@ -71,7 +72,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     // Check that the IP is valid
     if (!ip.IsValid())
     {
-        throw std::runtime_error("connect failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::ADDRESS_INVALID);
     }
 
     // For error checking.
@@ -108,7 +109,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     addrinfo* result;
     if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
     {
-        throw std::runtime_error("connect failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
 
     // Create the socket.  Because our hints are so strict, we don't have to worry about looping
@@ -117,7 +118,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw std::runtime_error("connect failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CREATE_SOCKET);
     }
 
     // Make the connection.
@@ -125,7 +126,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("connect failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CONNECT_CALL);
     }
 
     // Make a non-blocking socket.
@@ -182,7 +183,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     addrinfo* result;
     if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
     {
-        throw std::runtime_error("Failed to get address info.");
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
 
     // Create the socket.
@@ -190,7 +191,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw std::runtime_error("Failed to create socket.");
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_CREATE_SOCKET);
     }
 
     // Bind the socket to the port.
@@ -198,7 +199,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("Failed to bind socket.");
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_BIND_PORT);
     }
 
     // Start listening like the champ that we are.
@@ -206,7 +207,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("Failed to listen.");
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL);
     }
 
     // Make a non-blocking socket.
@@ -224,7 +225,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("accept failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Try to accept an incoming client.
@@ -240,7 +241,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
         }
         else
         {
-            throw std::runtime_error("accept failed");
+            throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::UNKNOWN);
         }
     }
 
@@ -313,14 +314,14 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("send failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Pizza delivery!
     int amount;
     if ((amount = ::send(sock, (const char*)data, size, 0)) == SOCKET_ERROR)
     {
-        throw std::runtime_error("send failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN);
     }
     return amount;
 }
@@ -335,7 +336,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("receive failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Pizza delivery!
@@ -354,7 +355,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
         }
         else
         {
-            throw std::runtime_error("receive failed");
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
         }
     }
 
@@ -375,7 +376,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("peek failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Pizza delivery!
@@ -394,7 +395,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
         }
         else
         {
-            throw std::runtime_error("peek failed");
+            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
         }
     }
 

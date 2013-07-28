@@ -71,6 +71,10 @@
 #include "Jatta/Containers/List.h"
 #include "Jatta/Containers/Vector.h"
 
+#include "Jatta/Exceptions/Exception.h"
+#include "Jatta/Exceptions/FatalException.h"
+#include "Jatta/Exceptions/NetworkException.h"
+
 #ifdef FreeType_FOUND
 #   include "Jatta/Fonts/Font.h"
 #   include "Jatta/Fonts/FontStyles.h"
@@ -124,6 +128,7 @@
 
 #include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/File.h"
+#include "Jatta/Utility/Move.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"

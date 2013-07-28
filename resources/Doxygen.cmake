@@ -30,9 +30,15 @@ if(DOXYGEN_ENABLE)
             set(DOXYGEN_DEFINES "")
 
             # Setup doxygen excludes
-            doxygen_exclude(Assimp)
-            doxygen_exclude(PortAudio)
-            doxygen_exclude(OpenGL)
+            if(NOT Assimp_FOUND)
+                doxygen_exclude(Assimp)
+            endif()
+            if(NOT PortAudio_FOUND)
+                doxygen_exclude(PortAudio)
+            endif()
+            if(NOT Jatta_USE_OPENGL)
+                doxygen_exclude(OpenGL)
+            endif()
 
             # Configure the doxygen file
             configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/${DOXYGEN_IN} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
