@@ -33,7 +33,9 @@ namespace Jatta
      */
     class Window
     {
+#       ifdef Jatta_USE_OPENGL
         friend class OpenGL::Context;
+#       endif
 
 #       ifdef WINDOWS
         _JATTA_HWND handle;

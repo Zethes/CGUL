@@ -348,10 +348,12 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
  */
 _JATTA_EXPORT void Jatta::Window::Close()
 {
+#   ifdef Jatta_USE_OPENGL
     if (context)
     {
         context->Destroy();
     }
+#   endif
 
 #   ifdef WINDOWS
     if (IsWindow(handle))
