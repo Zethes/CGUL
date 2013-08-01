@@ -5,7 +5,6 @@
 
 #include "Regex.h"
 #include "../Utility/Move.h"
-#include <pcre.h>
 
 #include <iostream>
 #include <string.h>

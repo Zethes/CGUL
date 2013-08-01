@@ -294,11 +294,13 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const String& string, Size 
     return none;
 }
 
+#ifdef Jatta_USE_REGEX
 _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Size offset) const
 {
     // TODO: this
     return none;
 }
+#endif
 
 /** @param string The string to look for.
  *  @param offset A backwards offset to start looking for the string.
@@ -328,11 +330,13 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const String& string, Size o
     return none;
 }
 
+#ifdef Jatta_USE_REGEX
 _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Size offset) const
 {
     // TODO: this
     return none;
 }
+#endif
 
 /** @param start The first character to grab.
  *  @param count The number of characters to grab.

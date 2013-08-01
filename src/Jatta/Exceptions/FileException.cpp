@@ -10,6 +10,10 @@ Jatta::FileException::FileException(const Jatta::String& fileName, UInt8 code, U
     this->fileName = fileName;
 }
 
+Jatta::FileException::~FileException() throw()
+{
+}
+
 Jatta::String Jatta::FileException::GetString() const
 {
     switch (code)

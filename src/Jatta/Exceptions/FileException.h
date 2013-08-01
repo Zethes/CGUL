@@ -32,6 +32,7 @@ namespace Jatta
         Jatta::String fileName;
 
         FileException(const Jatta::String& fileName, UInt8 code, UInt8 reason);
+        ~FileException() throw();
 
         Jatta::String GetString() const;
         Jatta::String GetReason() const;
