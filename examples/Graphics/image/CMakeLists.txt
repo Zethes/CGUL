@@ -1,8 +1,14 @@
-ADD_EXECUTABLE(Image main.cpp)
-INCLUDE_DIRECTORIES(${JATTA_INCLUDES})
-TARGET_LINK_LIBRARIES(Image Jatta)
+cmake_minimum_required(VERSION 2.8.7)
+cmake_policy(VERSION 2.8.7)
+project(Image CXX)
 
-CREATE_SYMLINK_COMMAND("${CMAKE_CURRENT_SOURCE_DIR}/../Resources" "${JATTA_OUTPUT_DIR}/Resources" LINK_COMMAND)
-ADD_CUSTOM_COMMAND(TARGET Image COMMAND ${LINK_COMMAND})
-CREATE_SYMLINK_COMMAND("${CMAKE_CURRENT_SOURCE_DIR}/../Resources" "${CMAKE_CURRENT_BINARY_DIR}/Resources" LINK_COMMAND)
-ADD_CUSTOM_COMMAND(TARGET Image COMMAND ${LINK_COMMAND})
+find_package(Jatta 0.1.1 REQUIRED)
+message(STATUS ${Jatta_DIR})
+
+include_directories(${Jatta_INCLUDE_DIRS})
+add_executable(image MACOSX_BUNDLE main.cpp)
+target_link_libraries(image ${Jatta_LIBRARIES})
+jatta_copy_modules(image ${CMAKE_CURRENT_BINARY_DIR})
+jatta_bake_rpath(image "$ORIGIN")
+
+add_custom_command(TARGET image POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources/)
