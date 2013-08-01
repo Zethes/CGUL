@@ -3,7 +3,6 @@
  * All rights reserved.
  */
 
-#include "Math.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -15,7 +14,7 @@
  *  @param x The number to get the absolute value of.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Abs(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Abs(Float32 x)
 {
     return (x > 0 ? x : -x);
 }
@@ -25,7 +24,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Abs(Float32 x)
  *  @param x The number to get the sign of.
  *  @returns -1, 0, or 1
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sign(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sign(Float32 x)
 {
     return (x > 0 ? 1 : (x < 0 ? -1 : 0));
 }
@@ -33,7 +32,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sign(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Cos(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cos(Float32 x)
 {
     return std::cos(x);
 }
@@ -41,7 +40,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Cos(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sin(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sin(Float32 x)
 {
     return std::sin(x);
 }
@@ -49,7 +48,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sin(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Tan(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tan(Float32 x)
 {
     return std::tan(x);
 }
@@ -57,7 +56,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Tan(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
 {
     return std::cosh(x);
 }
@@ -65,7 +64,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
 {
     return std::sinh(x);
 }
@@ -73,7 +72,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
 {
     return std::tanh(x);
 }
@@ -81,7 +80,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ACos(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACos(Float32 x)
 {
     return std::acos(x);
 }
@@ -89,7 +88,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ACos(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ASin(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASin(Float32 x)
 {
     return std::asin(x);
 }
@@ -97,12 +96,12 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ASin(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATan(Float32 x)
 {
     return std::atan(x);
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
 {
     return std::atan2(y, x);
 }
@@ -111,7 +110,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
 {
     return std::acosh(x);
 }
@@ -119,7 +118,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
 {
     return std::asinh(x);
 }
@@ -127,7 +126,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
 {
     return std::atanh(x);
 }
@@ -136,22 +135,22 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
 /** @param deg A value in degrees.
  *  @returns The resulting value in radians.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
 {
     return deg / 180.0f * pi;
 }
 
-_JATTA_EXPORT Jatta::Vector2 Jatta::Math::DegToRad(const Vector2& deg)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2 Jatta::Math::DegToRad(const Vector2& deg)
 {
     return Vector2(DegToRad(deg.x), DegToRad(deg.y));
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Math::DegToRad(const Vector3& deg)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3 Jatta::Math::DegToRad(const Vector3& deg)
 {
     return Vector3(DegToRad(deg.x), DegToRad(deg.y), DegToRad(deg.z));
 }
 
-_JATTA_EXPORT Jatta::Vector4 Jatta::Math::DegToRad(const Vector4& deg)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector4 Jatta::Math::DegToRad(const Vector4& deg)
 {
     return Vector4(DegToRad(deg.x), DegToRad(deg.y), DegToRad(deg.z), DegToRad(deg.w));
 }
@@ -159,32 +158,32 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Math::DegToRad(const Vector4& deg)
 /** @param deg A value in radians.
  *  @returns The resulting value in degrees.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::RadToDeg(Float32 rad)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::RadToDeg(Float32 rad)
 {
     return rad * (180.0f / pi);
 }
 
-_JATTA_EXPORT Jatta::Vector2 Jatta::Math::RadToDeg(const Vector2& rad)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2 Jatta::Math::RadToDeg(const Vector2& rad)
 {
     return Vector2(RadToDeg(rad.x), RadToDeg(rad.y));
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Math::RadToDeg(const Vector3& rad)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3 Jatta::Math::RadToDeg(const Vector3& rad)
 {
     return Vector3(RadToDeg(rad.x), DegToRad(rad.y), RadToDeg(rad.z));
 }
 
-_JATTA_EXPORT Jatta::Vector4 Jatta::Math::RadToDeg(const Vector4& rad)
+_JATTA_INLINE_IMPLEMENT Jatta::Vector4 Jatta::Math::RadToDeg(const Vector4& rad)
 {
     return Vector4(RadToDeg(rad.x), RadToDeg(rad.y), RadToDeg(rad.z), RadToDeg(rad.w));
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ln(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Ln(Float32 x)
 {
     return std::log(x);
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
 {
     return std::log(x) / std::log(b); //Change of base: log(x,b) = ln(x)/ln(b)
 }
@@ -193,7 +192,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
  *  @param b The second value.
  *  @returns The smaller of the two values.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
 {
     return (a < b ? a : b);
 }
@@ -202,7 +201,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
  *  @param b The second value.
  *  @returns The larger of the two values.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 {
     return (a > b ? a : b);
 }
@@ -210,7 +209,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Floor(Float32 x)
 {
     return std::floor(x);
 }
@@ -218,7 +217,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Floor(Float32 x)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Round(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Round(Float32 x)
 {
     return std::floor(x + 0.5f);
 }
@@ -226,7 +225,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Round(Float32 x)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
 {
     return std::ceil(x);
 }
@@ -238,7 +237,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
  *  @returns The resulting value.
  *  @see Sign
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
 {
     return Math::Abs(x - Math::Floor(x / div) * div) * Math::Sign(x);
 }
@@ -247,7 +246,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
  *  @param x The number to square.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
 {
     return x * x;
 }
@@ -256,7 +255,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
  *  @param x The number to find the square root of.
  *  @returns The resulting value.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
 {
     return std::sqrt(x);
 }
@@ -269,7 +268,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
  *  @param epsilon The maximum difference between the values.  Usually something really small like 0.00001f.
  *  @returns True if the two values are within the given epsilon, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::Math::InEpsilon(Float32 value, Float32 compare, Float32 epsilon)
+_JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Float32 value, Float32 compare, Float32 epsilon)
 {
     return (Math::Abs(value - compare) <= epsilon);
 }

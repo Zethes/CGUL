@@ -4,7 +4,6 @@
 
 set(Jatta_SOURCES
     ${Jatta_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Matrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Random.cpp
@@ -17,6 +16,7 @@ set(Jatta_SOURCES
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Math.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math.ipp
     ${CMAKE_CURRENT_SOURCE_DIR}/Matrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Random.h
