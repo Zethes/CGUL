@@ -39,8 +39,11 @@ check_feature(CPP_HAS_MOVE_CONSTRUCTOR move_constructor.cpp)
 check_feature(CPP_HAS_PTHREAD pthread.cpp)
 check_feature(CPP_HAS_STATIC_ASSERT static_assert.cpp)
 check_feature(CPP_HAS_STD_MOVE std_move.cpp)
+check_feature(CPP_HAS_STD_REGEX std_regex.cpp)
 check_feature(CPP_HAS_STD_THREAD std_thread.cpp)
 check_feature(CPP_HAS_U8 u8.cpp)
+
+check_feature(PCRE_HAS_FREE_STUDY pcre_free_study.cpp)
 
 if(Jatta_REFRESH_LIBRARIES)
     unset(Jatta_USE_NETWORK CACHE)
@@ -49,6 +52,11 @@ endif()
 jatta_define_feature(Jatta_STATIC "Build a static library." OFF)
 jatta_define_feature(Jatta_USE_NETWORK "Compile with networking features.")
 jatta_define_feature(Jatta_USE_OPENGL "Compile with OpenGL support (requires glew)." glew)
+
+set(Jatta_INLINE_DEFINE "" CACHE STRING "The inline to use for a function define.")
+mark_as_advanced(Jatta_INLINE_DEFINE)
+set(Jatta_INLINE_IMPLEMENT "inline" CACHE STRING "The inline to use for a function implementation.")
+mark_as_advanced(Jatta_INLINE_IMPLEMENT)
 
 # MinGW
 if (MINGW)

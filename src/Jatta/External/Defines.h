@@ -65,6 +65,8 @@
 #define _JATTA_PAHOSTAPI_INFO void*
 #define _JATTA_PASTREAM_INFO void*
 #define _JATTA_PAHOSTERROR_INFO void*
+#define _JATTA_PCRE void*
+#define _JATTA_PCRE_EXTRA void*
 
 #if defined(JATTA_INCLUDES)
 #   ifdef CPP_HAS_STATIC_ASSERT
@@ -86,18 +88,20 @@
         CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #   endif
 #   ifdef Assimp_FOUND
-      CHECK(::FT_Face, _JATTA_FT_FACE);
-      CHECK(::aiScene*, _JATTA_AISCENE);
-      CHECK(::aiMesh*, _JATTA_AIMESH);
-      CHECK(::aiTexture*, _JATTA_AITEXTURE);
-      CHECK(::aiTexture*, _JATTA_AIMATERIAL);
+        CHECK(::FT_Face, _JATTA_FT_FACE);
+        CHECK(::aiScene*, _JATTA_AISCENE);
+        CHECK(::aiMesh*, _JATTA_AIMESH);
+        CHECK(::aiTexture*, _JATTA_AITEXTURE);
+        CHECK(::aiTexture*, _JATTA_AIMATERIAL);
 #   endif
 #   ifdef PortAudio_FOUND
-      CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
-      CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
-      CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
-      CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
+        CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
+        CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
+        CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
+        CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
 #   endif
+        CHECK(::pcre*, _JATTA_PCRE);
+        CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
 #   undef CHECK
 #   include "Undefines.h"
 #   ifdef WINDOWS
@@ -154,6 +158,10 @@
 #       define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
 #       define _JATTA_PASTREAM_INFO ::PaStreamInfo*
 #       define _JATTA_PAHOSTERROR_INFO ::PaHostErrorInfo*
+#   endif
+#   ifdef PCRE_FOUND
+#       define _JATTA_PCRE ::pcre*
+#       define _JATTA_PCRE_EXTRA ::pcre_extra*
 #   endif
 #endif
 

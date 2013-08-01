@@ -8,12 +8,10 @@ macro(use_library NAME LIBRARY SYSTEM)
     if(${SYSTEM})
         set(SYSTEM_LIBRARIES "${SYSTEM_LIBRARIES} ${LIBRARY}")
     elseif(DEFINED ${NAME}_SHARED)
-        if(NOT ${NAME}_SHARED)
-            if(DEFINED STATIC_LIBRARIES)
-                set(STATIC_LIBRARIES "${STATIC_LIBRARIES};${NAME}")
-            else()
-                set(STATIC_LIBRARIES "${NAME}")
-            endif()
+        if(DEFINED STATIC_LIBRARIES)
+            set(STATIC_LIBRARIES "${STATIC_LIBRARIES};${NAME}")
+        else()
+            set(STATIC_LIBRARIES "${NAME}")
         endif()
     endif()
 endmacro()
@@ -124,9 +122,25 @@ if(PortAudio_FOUND)
     list(APPEND ACKNOWLEDGEMENTS
         "\n\n"
         "PortAudio Portable Real-Time Audio Library http://www.portaudio.com/\n"
-        "Copyright (C) 1999-2011 Ross Bencina, Phil Burk\n"
+        "Copyright (C) 1999-2011 Ross Bencina, Phil Burk"
     )
 endif()
+if(PCRE_FOUND)
+    use_library(PCRE ${PCRE_LINK} OFF)
+
+    list(APPEND ACKNOWLEDGEMENTS
+        "\n\n"
+        "Perl Compatible Regular Expression http://www.pcre.org/\n"
+        "Copyright (C) 1997-2013 University of Cambridge\n"
+        "Copyright (C) 2009-2013 Foltan Herczeg\n"
+        "All rights reserved."
+    )
+endif()
+
+list(APPEND ACKNOWLEDGEMENTS
+    "\n\n"
+    "The libraries above are released under absolutely no warranty."
+)
 
 string(REPLACE ";" "" ACKNOWLEDGEMENTS ${ACKNOWLEDGEMENTS})
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/acknowledgements.txt.in" "${CMAKE_CURRENT_BINARY_DIR}/acknowledgements.txt")

@@ -11,6 +11,7 @@
 #cmakedefine FreeType_FOUND
 #cmakedefine glew_FOUND
 #cmakedefine JPEG_FOUND
+#cmakedefine PCRE_FOUND
 #cmakedefine PNG_FOUND
 #cmakedefine PortAudio_FOUND
 #cmakedefine zlib_FOUND
@@ -41,5 +42,11 @@
 #cmakedefine CPP_HAS_PTHREAD
 #cmakedefine CPP_HAS_STATIC_ASSERT
 #cmakedefine CPP_HAS_STD_MOVE
+#cmakedefine CPP_HAS_STD_REGEX
 #cmakedefine CPP_HAS_STD_THREAD
 #cmakedefine CPP_HAS_U8
+
+#cmakedefine PCRE_HAS_FREE_STUDY
+
+#define _JATTA_INLINE_DEFINE @Jatta_INLINE_DEFINE@
+#define _JATTA_INLINE_IMPLEMENT @Jatta_INLINE_IMPLEMENT@

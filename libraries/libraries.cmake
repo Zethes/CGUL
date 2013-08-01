@@ -5,7 +5,6 @@ macro(jatta_find_library VARIABLE)
 endmacro()
 
 macro(jatta_check_shared NAME MODULE)
-    message(STATUS "Checking module ${MODULE}")
     get_filename_component(${NAME}_EXTENSION ${MODULE} EXT)
     string(TOLOWER "${${NAME}_EXTENSION}" ${NAME}_EXTENSION)
     if("${${NAME}_EXTENSION}" STREQUAL ".a" OR "${${NAME}_EXTENSION}" STREQUAL ".lib")
@@ -50,6 +49,7 @@ macro(jatta_find_package LIBRARY)
         # Setup cache
         if(NOT ${${LIBRARY}_SECONDARY})
             set(${LIBRARY}_REQUIRED OFF CACHE BOOL "Causes the compilation to fail if ${LIBRARY} cannot be found.")
+            mark_as_advanced(${LIBRARY}_REQUIRED)
             set(${LIBRARY}_IGNORE OFF CACHE BOOL "Ignores this library even if it was found.")
         endif()
 
@@ -220,6 +220,12 @@ jatta_find_package(
     PortAudio
     NAMES portaudio
     DEBUG portaudiod
+)
+
+jatta_find_package(
+    PCRE
+    NAMES pcre
+    DEBUG pcred
 )
 
 if("${SYSTEM_NAME}" STREQUAL "linux")

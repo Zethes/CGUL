@@ -21,7 +21,9 @@
 
 namespace Jatta
 {
+#   ifdef Jatta_USE_REGEX
     class Regex;
+#   endif
 
     /** @brief A Utf-8 compliant string.
      */
@@ -104,10 +106,14 @@ namespace Jatta
 
         //! @brief Finds the first occurence of a string.
         _JATTA_EXPORT Size FindFirstOf(const String& string, Size offset = 0) const;
+#       ifdef Jatta_USE_REGEX
         _JATTA_EXPORT Size FindFirstOf(const Regex& expression, Size offset = 0) const;
+#       endif
         //! @brief Finds the last occurence of a string.
         _JATTA_EXPORT Size FindLastOf(const String& string, Size offset = 0) const;
+#       ifdef Jatta_USE_REGEX
         _JATTA_EXPORT Size FindLastOf(const Regex& expression, Size offset = 0) const;
+#       endif
 
         //! @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
         _JATTA_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;

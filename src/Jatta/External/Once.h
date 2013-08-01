@@ -28,7 +28,6 @@ namespace Jatta
 }
 #endif
 
-// TODO: clean up the standard template library list
 // Standard Template Library Includes
 #ifdef CPP_HEADER_ALGORITHM
 #   include <algorithm>
@@ -72,7 +71,6 @@ namespace Jatta
 #   include <stdint.h>
 #endif
 
-// TODO: fix static assert on clang builds
 // Jatta Type Defines
 #ifdef CPP_HAS_STATIC_ASSERT
 #   define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.")
@@ -183,12 +181,18 @@ namespace Jatta
     TYPE(unsigned long, SignedSize, sizeof(void*));
 #   endif
 
+    /** @brief An value capable of holding an enumeration.
+     *  @details Enumerations are iffy in C++.  Older compilers hate typed enumerations.  It's
+     *  best, for portability, to reference all enumerations as an unsigned 32 bit integer.
+     */
+    typedef UInt32 Enum;
+
     const SInt8 SInt8Min = 127;
     const SInt8 SInt8Max = -(127) - 1;
     const UInt8 UInt8Min = 0;
     const UInt8 UInt8Max = 255U;
 
-    const SInt16 SInt16Min = -(32767) -1;
+    const SInt16 SInt16Min = -(32767) - 1;
     const SInt16 SInt16Max = 32767;
     const UInt16 UInt16Min = 0;
     const UInt16 UInt16Max = 65535U;
@@ -264,6 +268,9 @@ namespace Jatta
 #   ifdef PortAudio_FOUND
 #       include <portaudio.h>
 #   endif
+#   ifdef PCRE_FOUND
+#       include <pcre.h>
+#   endif
 #   if defined(LINUX) | defined(MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>
@@ -286,4 +293,9 @@ namespace Jatta
 
 #if defined(WINDOWS) && !defined(_WIN32_WINNT)
 #   define _WIN32_WINNT 0x0501
+#endif
+
+// Regex support
+#if defined(PCRE_FOUND) || defined(CPP_HAS_STD_REGEX)
+#   define Jatta_USE_REGEX
 #endif
