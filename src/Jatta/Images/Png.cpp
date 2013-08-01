@@ -170,14 +170,14 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean 
 #endif
     if (!stream)
     {
-        std::runtime_error("File could not be opened for writing");
+        throw std::runtime_error("File could not be opened for writing");
     }
 
     // Initialize a png struct for writing.
     png_structp pngPtr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pngPtr)
     {
-        std::runtime_error("png_create_write_struct failed");
+        throw std::runtime_error("png_create_write_struct failed");
     }
 
     // Create an info struct to setup the png image.
@@ -185,7 +185,7 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean 
     if (!infoPtr)
     {
         png_destroy_read_struct(&pngPtr, NULL, NULL);
-        std::runtime_error("png_create_info_struct failed");
+        throw std::runtime_error("png_create_info_struct failed");
     }
 
     // Create arrays used later, to be deleted if things go wrong.
@@ -240,7 +240,6 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean 
             rows[r] = (png_bytep)(data + width * r * 3);
         }
     }
-    
 
     // Write the image data.
     png_write_image(pngPtr, rows);

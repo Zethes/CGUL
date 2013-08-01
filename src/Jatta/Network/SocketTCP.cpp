@@ -24,33 +24,29 @@ namespace Jatta
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
  */
- void Jatta::Network::SocketTCP::MakeNonBlocking()
+bool Jatta::Network::SocketTCP::MakeNonBlocking()
 {
-    // TODO: error checking?
-
-    #ifdef WINDOWS
+#   ifdef WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
-    #else
+#   else
     fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK);
-    #endif
+#   endif
+
+    // TODO: error checking?
+    return true;
 }
 
 /** @brief Turns off the Nagle Algorithm which removes a small delay in sending and receiving.
  */
-void Jatta::Network::SocketTCP::MakeNoDelay()
+bool Jatta::Network::SocketTCP::MakeNoDelay()
 {
     // Turn off the Nagle Algorithm which will increase the socket's send and receive speed.
     int flag = 1;
     int result = setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(int));
 
     // Check if there was a problem in doing so.
-    if (result != 0)
-    {
-        // TODO: this exception will almost NEVER happen... maybe make the methods that call this
-        // one return some other well known exception?
-        throw std::runtime_error("makeNoDelay failed");
-    }
+    return (result == 0);
 }
 
 Jatta::Network::SocketTCP::SocketTCP()
@@ -99,11 +95,11 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
 
     // Convert the port into a string.
     char portString[6];
-    #ifdef MSVC
+#   ifdef MSVC
     sprintf_s(portString, "%d", port);
-    #else
+#   else
     sprintf(portString, "%d", port);
-    #endif
+#   endif
 
     // Get the address info using the hints.
     addrinfo* result;
@@ -125,15 +121,25 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     if (::connect(sock, result->ai_addr, result->ai_addrlen) == SOCKET_ERROR)
     {
         freeaddrinfo(result);
-        sock = INVALID_SOCKET;
+        Close();
         throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CONNECT_CALL);
     }
 
     // Make a non-blocking socket.
-    MakeNonBlocking();
+    if (!MakeNonBlocking())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NONBLOCKING);
+    }
 
     // Turn off the Nagle Algorithm to increase speed.
-    MakeNoDelay();
+    if (!MakeNoDelay())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NO_DELAY);
+    }
 
     // Free up the address info linked list.
     freeaddrinfo(result);
@@ -151,11 +157,11 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
 
     // Convert the port into a string.
     char portString[6];
-    #ifdef MSVC
+#    ifdef MSVC
     sprintf_s(portString, "%d", port);
-    #else
+#    else
     sprintf(portString, "%d", port);
-    #endif
+#    endif
 
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -198,7 +204,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     if (bind(sock, result->ai_addr, result->ai_addrlen) == SOCKET_ERROR)
     {
         freeaddrinfo(result);
-        sock = INVALID_SOCKET;
+        Close();
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_BIND_PORT);
     }
 
@@ -206,15 +212,26 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     if (::listen(sock, backlog) == SOCKET_ERROR)
     {
         freeaddrinfo(result);
-        sock = INVALID_SOCKET;
+        Close();
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL);
     }
 
     // Make a non-blocking socket.
-    MakeNonBlocking();
+    // Make a non-blocking socket.
+    if (!MakeNonBlocking())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NONBLOCKING);
+    }
 
     // Turn off the Nagle Algorithm to increase speed.
-    MakeNoDelay();
+    if (!MakeNoDelay())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NO_DELAY);
+    }
 
     // Free up the address info linked list.
     freeaddrinfo(result);
@@ -231,11 +248,11 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     // Try to accept an incoming client.
     if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
     {
-        #ifdef WINDOWS
+#       ifdef WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return false;
         }
@@ -246,21 +263,29 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     }
 
     // Make a non-blocking socket.
-    socket->MakeNonBlocking();
+    if (!socket->MakeNonBlocking())
+    {
+        socket->Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NONBLOCKING);
+    }
 
     // Turn off the Nagle Algorithm to increase speed.
-    socket->MakeNoDelay();
+    if (!socket->MakeNoDelay())
+    {
+        socket->Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NO_DELAY);
+    }
 
     return true;
 }
 
 void Jatta::Network::SocketTCP::Close()
 {
-    #ifdef WINDOWS
+#   ifdef WINDOWS
     closesocket(sock);
-    #else
+#   else
     ::close(sock);
-    #endif
+#   endif
     sock = INVALID_SOCKET;
 }
 
@@ -345,11 +370,11 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef WINDOWS
+#       ifdef WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return 0;
         }
@@ -385,11 +410,11 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef WINDOWS
+#       ifdef WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return 0;
         }

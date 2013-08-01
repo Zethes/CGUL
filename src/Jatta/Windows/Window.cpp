@@ -379,7 +379,6 @@ _JATTA_EXPORT void Jatta::Window::Close()
         [handle close];
     }
 #   endif
-    // TODO: Window::Close on MacOS(?)
 }
 
 /** @brief Updates a window's input handler.
@@ -512,8 +511,6 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     {
         return;
     }
-
-    // TODO: Jatta::Window::SetBackgroundColor
 
 #   ifdef WINDOWS
     if (backgroundBrush)

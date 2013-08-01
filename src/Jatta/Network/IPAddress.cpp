@@ -4,6 +4,7 @@
  */
 
 #include "IPAddress.h"
+#include "../Exceptions/NetworkException.h"
 
 #ifdef WINDOWS
 #   include <winsock2.h>
@@ -41,11 +42,11 @@ _JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateBroa
 {
     if (ip.GetType() == IPAddressType::IPV6 || netmask.GetType() == IPAddressType::IPV6)
     {
-        throw std::runtime_error("Cannot calculate broadcast address for ipv6 address.");
+        throw NetworkException(NetworkExceptionCode::FAILED_CALCULATE_ADDRESS, NetworkExceptionReason::ADDRESS_INVALID);
     }
     if (!ip.IsValid() || ip.GetType() != netmask.GetType())
     {
-        throw std::runtime_error("Incompatible IP addresses.");
+        throw NetworkException(NetworkExceptionCode::FAILED_CALCULATE_ADDRESS, NetworkExceptionReason::ADDRESS_MISMATCH);
     }
 
     return IPAddress(ip.ToUInt32() | (~netmask.ToUInt32()));
@@ -60,7 +61,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateNetw
 {
     if (!ip.IsValid() || ip.GetType() != netmask.GetType())
     {
-        throw std::runtime_error("Incompatible IP addresses.");
+        throw NetworkException(NetworkExceptionCode::FAILED_CALCULATE_ADDRESS, NetworkExceptionReason::ADDRESS_MISMATCH);
     }
 
     if (ip.GetType() == IPAddressType::IPV4)

@@ -16,7 +16,9 @@ namespace Jatta
         {
             USER,
             FATAL,
-            NETWORK
+            NETWORK,
+            FILE,
+            OPENGL,
         };
     }
     struct Exception : public std::exception
@@ -25,11 +27,11 @@ namespace Jatta
         {
             struct
             {
-                UInt8 code;
-                UInt8 reason;
-                UInt16 type;
+                UInt16 reason;
+                UInt16 code;
+                UInt32 type;
             };
-            UInt32 unique;
+            UInt64 unique;
         };
 
         ~Exception() throw();

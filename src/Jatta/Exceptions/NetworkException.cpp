@@ -25,6 +25,8 @@ Jatta::String Jatta::NetworkException::GetString() const
         return U8("Failed to receive connection.");
         case NetworkExceptionCode::FAILED_PEEK:
         return U8("Failed to peek message.");
+        case NetworkExceptionCode::FAILED_CALCULATE_ADDRESS:
+        return U8("Failed to calculate IP address.");
         case NetworkExceptionCode::UNKNOWN:
         default:
         return U8("Unknown error occurred.");
@@ -49,8 +51,14 @@ Jatta::String Jatta::NetworkException::GetReason() const
         return U8("The socket is invalid.");
         case NetworkExceptionReason::ADDRESS_INVALID:
         return U8("The IP address is invalid.");
+        case NetworkExceptionReason::ADDRESS_MISMATCH:
+        return U8("Addresses are not the same protocol (IPv4/IPv6).");
+        case NetworkExceptionReason::FAILED_NONBLOCKING:
+        return U8("Failed to set socket to nonblocking.");
+        case NetworkExceptionReason::FAILED_NO_DELAY:
+        return U8("Failed to set the TCP no delay algorithm.");
         case NetworkExceptionReason::UNKNOWN:
         default:
-        return U8("Unknown error occurred.");
+        return U8("Unknown.");
     }
 }

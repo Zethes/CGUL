@@ -6,8 +6,8 @@
  */
 
 #include <Jatta/Config.h>
+#include "../Exceptions/NetworkException.h"
 #include "../External/Once.h"
-
 
 #ifndef DOXYGEN
 #ifdef WINDOWS
@@ -30,7 +30,7 @@ namespace Jatta
                 WSADATA wsaData;
                 if (WSAStartup(MAKEWORD(1,1), &wsaData) != 0)
                 {
-                    throw std::runtime_error("WSAStartup() failed!");
+                    throw NetworkException(NetworkExceptionCode::FAILED_STARTUP, NetworkExceptionReason::FAILED_WINSOCK_INITIALIZE);
                 }
                 __jatta_network_initiated = true;
             }

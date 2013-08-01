@@ -4,8 +4,10 @@
  */
 
 #include "Shader.h"
+#include "../Exceptions/FatalException.h"
+#include "../Exceptions/OpenGLException.h"
 
- #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
+ #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw Jatta::FatalException(U8(str)); }
 
 _JATTA_EXPORT Jatta::OpenGL::Shader::Shader()
 {
@@ -16,8 +18,10 @@ _JATTA_EXPORT Jatta::OpenGL::Shader::~Shader()
 {
 }
 
-/** @brief Equivalent to <a href="http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml">glCreateShader()</a>.
- *  @param type An enumeration type which can be OpenGL::GL::VERTEX_SHADER, OpenGL::GL::TESS_CONTROL_SHADER, OpenGL::GL::TESS_EVALUATION_SHADER, OpenGL::GL::GEOMETRY_SHADER, or GL::FRAGMENT_SHADER.
+/** @brief Equivalent to
+ *  <a href="http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml">glCreateShader()</a>.
+ *  @param type An enumeration type which can be GL::VERTEX_SHADER, GL::TESS_CONTROL_SHADER,
+ *  GL::TESS_EVALUATION_SHADER, GL::GEOMETRY_SHADER, or GL::FRAGMENT_SHADER.
  */
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
 {
@@ -25,7 +29,8 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
     GLCHECK("Failed to create shader.");
 }
 
-/** @brief Equivalent to <a href="http://www.opengl.org/sdk/docs/man/xhtml/glDeleteShader.xml">glDeleteShader()</a>.
+/** @brief Equivalent to
+ *  <a href="http://www.opengl.org/sdk/docs/man/xhtml/glDeleteShader.xml">glDeleteShader()</a>.
  */
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Delete()
 {
@@ -39,7 +44,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Shader::GetID() const
     return shader;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Shader::Source(const Jatta::String& source)
+_JATTA_EXPORT void Jatta::OpenGL::Shader::SetSource(const Jatta::String& source)
 {
     const char* characters = source.GetCString();
     const GLchar** data = &characters;
@@ -50,13 +55,30 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Source(const Jatta::String& source)
 
 _JATTA_EXPORT void Jatta::OpenGL::Shader::Compile()
 {
+    GLint status;
     glCompileShader(shader);
     GLCHECK("Failed to compile shader.");
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    GLCHECK("Failed to get shader compile status.");
+    if (status != GL_TRUE)
+    {
+        GLint size;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &size);
+        GLCHECK("Failed to get shader info log length.");
+        GLsizei length;
+        GLchar* buffer = new GLchar[size];
+        glGetShaderInfoLog(shader, (GLsizei)size, &length, buffer);
+        GLCHECK("Failed to get shader info log.");
+        String log((char*)buffer);
+        delete[] buffer;
+        log.Trim();
+        throw FatalException(U8("Failed to compile shader:\n") + log);
+    }
 }
 
 _JATTA_EXPORT Jatta::OpenGL::Enum Jatta::OpenGL::Shader::GetShaderType()
 {
-    // TODO: this
+    // TODO: OpenGL::Shader::GetShaderType
     return 0;
 }
 
@@ -66,28 +88,6 @@ _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Shader::GetDeleteStatus()
     glGetShaderiv(shader, GL_DELETE_STATUS, &status);
     GLCHECK("Failed to get delete status of shader.");
     return status == GL_TRUE;
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Shader::GetCompileStatus()
-{
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    GLCHECK("Failed to get compile status of shader.");
-    return status == GL_TRUE;
-}
-
-_JATTA_EXPORT Jatta::String Jatta::OpenGL::Shader::GetInfoLog()
-{
-    GLint size;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &size);
-    GLCHECK("Failed to get shader info log length.");
-    GLsizei length;
-    GLchar* buffer = new GLchar[size];
-    glGetShaderInfoLog(shader, (GLsizei)size, &length, buffer);
-    GLCHECK("Failed to get shader info log.");
-    String log((char*)buffer);
-    delete[] buffer;
-    return log;
 }
 
 _JATTA_EXPORT Jatta::String Jatta::OpenGL::Shader::GetSource()

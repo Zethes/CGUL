@@ -1,4 +1,6 @@
 ﻿#include "File.h"
+#include "../Exceptions/FatalException.h"
+#include "../Exceptions/FileException.h"
 #include "../Utility/Encryption.h"
 
 #include <sys/stat.h>
@@ -52,16 +54,13 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileNam
 
     fwrite(buffer, 1, size, stream);
     fclose(stream);
-
     return true;
 }
 
-/** @brief Puts the file contents into a string.
- *  @param fileName The file to read.
+/** @param fileName The file to read.
  *  @param result A pointer to the string to append the data to.
- *  @returns True if the file was successfully read, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadText(const Jatta::String& fileName, Jatta::String* result)
+_JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::String* result)
 {
 #   ifdef WINDOWS
     std::wstring file = fileName._ToWideString();
@@ -71,7 +70,14 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadText(const Jatta::String& fileName
 #   endif
     if (stream == NULL)
     {
-        return false;
+        if (!Exists(fileName))
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+        }
+        else
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+        }
     }
     // obtain file size:
     fseek(stream, 0, SEEK_END);
@@ -90,15 +96,12 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadText(const Jatta::String& fileName
 
     fclose (stream);
     delete[] buffer;
-    return true;
 }
 
-/** @brief Reads the contents of the file line-by-line, putting each line into a vector one-by-one.
- *  @param fileName The file to read.
+/** @param fileName The file to read.
  *  @vector A pointer to the vector to append the lines to.
- *  @returns True if the file was successfully read, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadLines(const String& fileName, std::vector<Jatta::String>* vector)
+_JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Jatta::String>* vector)
 {
 #   ifdef WINDOWS
     std::wstring file = fileName._ToWideString();
@@ -108,7 +111,14 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadLines(const String& fileName, std:
 #   endif
     if (stream == NULL)
     {
-        return false;
+        if (!Exists(fileName))
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+        }
+        else
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+        }
     }
     // obtain file size:
     fseek (stream, 0, SEEK_END);
@@ -139,16 +149,13 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadLines(const String& fileName, std:
 
     fclose (stream);
     delete[] buffer;
-    return true;
 }
 
-/** @brief Reads the file into a byte buffer.
- *  @param fileName The file to read.
+/** @param fileName The file to read.
  *  @param buffer The buffer to copy the bytes into.
  *  @param size The size of the buffer or the max amount of bytes to read.
- *  @returns True if the file was successfully read, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
+_JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
 {
 #   ifdef WINDOWS
     std::wstring file = fileName._ToWideString();
@@ -158,18 +165,23 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::ReadData(const Jatta::String& fileName
 #   endif
     if (stream == NULL)
     {
-        return false;
+        if (!Exists(fileName))
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+        }
+        else
+        {
+            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+        }
     }
 
     // copy the file into the buffer:
     fread(buffer, 1, size, stream);
 
     fclose (stream);
-    return true;
 }
 
-/** @brief Obtains the size of a file.
- *  @param fileName The file to get the size of.
+/** @param fileName The file to get the size of.
  *  @param fileSize A pointer to an integer to put the size into.
  *  @returns True if the size was successfully obtained, false otherwise.
  */
@@ -196,8 +208,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileN
     return true;
 }
 
-/** @brief Obtains the size of a file.
- *  @param fileName The file to get the size of.
+/** @param fileName The file to get the size of.
  *  @returns The size of the file, or 0 if the size could not be obtained.
  *  @note There is a conflict in logic if a file is empty or if it does not exist.  Both cases will
  *  return 0.  Consider using the other GetFileSize function which returns a boolean value if the
@@ -273,8 +284,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(Jatta::String 
     return ret;
 }
 
-/** @brief Checks if a file exists.
- *  @param fileName The name of the file to check for.
+/** @param fileName The name of the file to check for.
  *  @returns True if the file exists, false otherwise.
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
@@ -283,11 +293,20 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
     return (attributes != INVALID_FILE_ATTRIBUTES);
 #   else
-    struct stat fileStat;
-    int err = stat(fileName.GetCString(), &fileStat);
-    if (err != 0) return 0;
+    return access(fileName.GetCString(), F_OK) != -1;
+#   endif
+}
 
-    return fileStat.st_size;
+/** @details Determines the READ, WRITE, and EXECUTE permissions of the current user for the given
+ *  file.  Simply checking if a file exists is not enough information to know if that file can be
+ *  operated on.
+ */
+_JATTA_EXPORT Jatta::Enum Jatta::File::GetAccess(const Jatta::String& fileName)
+{
+#   ifdef WINDOWS
+    return 7; // TODO: File::GetAccess for windows
+#   else
+    return ((access(fileName.GetCString(), R_OK) != -1) * Access::READ) | ((access(fileName.GetCString(), W_OK) != -1) * Access::WRITE) | ((access(fileName.GetCString(), X_OK) != -1) * Access::EXECUTE);
 #   endif
 }
 
@@ -305,8 +324,7 @@ _JATTA_EXPORT Jatta::String Jatta::File::MD5(const Jatta::String& fileName)
     return Encryption::MD5::String(str);
 }
 
-/** @brief Checks if the specified filename is a directory.
- *  @param fileName The filename to check.
+/** @param fileName The filename to check.
  *  @returns True if the filename is a directory, false otherwise.
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName)
@@ -327,8 +345,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName
 #   endif
 }
 
-/** @brief Checks if the specified filename is a file.
- *  @param fileName The filename to check.
+/** @param fileName The filename to check.
  *  @returns True if the filename is a file, false otherwise.
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFile(const Jatta::String& fileName)
@@ -398,8 +415,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
 #   endif
 }
 
-/** @brief Deletes the specified file.
- *  @param fileName The file to delete.
+/** @param fileName The file to delete.
  *  @returns True if the file was successfully deleted, false otherwise.
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileName)
@@ -411,8 +427,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileNa
 #   endif
 }
 
-/** @brief Copies a file from one location to another.
- *  @param fileName The target file.
+/** @param fileName The target file.
  *  @param fileTo The destination file.
  *  @returns True if the file was successfully copied, false otherwise.
  */
@@ -430,8 +445,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, co
 #   endif
 }
 
-/** @brief Moves a file from one location to another.
- *  @param fileName The target file.
+/** @param fileName The target file.
  *  @param fileTo The destination file.
  *  @returns True if the file was successfully moved, false otherwise.
  */

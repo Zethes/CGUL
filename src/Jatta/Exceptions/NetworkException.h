@@ -15,12 +15,14 @@ namespace Jatta
         enum
         {
             UNKNOWN,
+            FAILED_STARTUP,
             FAILED_LISTEN,
             FAILED_CONNECT,
             FAILED_ACCEPT,
             FAILED_SEND,
             FAILED_RECEIVE,
             FAILED_PEEK,
+            FAILED_CALCULATE_ADDRESS,
         };
     }
     namespace NetworkExceptionReason
@@ -28,6 +30,7 @@ namespace Jatta
         enum
         {
             UNKNOWN,
+            FAILED_WINSOCK_INITIALIZE,
             NO_NETWORK_INTERFACE,
             FAILED_CREATE_SOCKET,
             FAILED_BIND_PORT,
@@ -35,6 +38,9 @@ namespace Jatta
             FAILED_CONNECT_CALL,
             SOCKET_INVALID,
             ADDRESS_INVALID,
+            ADDRESS_MISMATCH,
+            FAILED_NONBLOCKING,
+            FAILED_NO_DELAY,
         };
     }
     struct NetworkException : public Exception

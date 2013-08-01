@@ -7,6 +7,7 @@ cmake_policy(VERSION 2.8.7)
 # Setup cmake settings
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_DEBUG_POSTFIX "d")
+message(STATUS "Configuring...")
 
 # Allow the installation to go under a different name
 set(Jatta_OUTPUT_NAME "Jatta" CACHE STRING "The name to install Jatta under.")
@@ -21,7 +22,7 @@ endif()
 # Version information
 set(Jatta_MAJOR_VERSION 0)
 set(Jatta_MINOR_VERSION 1)
-set(Jatta_PATCH_VERSION 0)
+set(Jatta_PATCH_VERSION 1)
 set(Jatta_VERSION ${Jatta_MAJOR_VERSION}.${Jatta_MINOR_VERSION}.${Jatta_PATCH_VERSION})
 project(${Jatta_OUTPUT_NAME} CXX)
 
@@ -40,6 +41,7 @@ math(EXPR SYSTEM_BITNESS "${CMAKE_SIZEOF_VOID_P} * 8")
 
 # Check if we should pretend this build is 32bit
 set(Jatta_PRETEND_BITNESS ${SYSTEM_BITNESS} CACHE STRING "The bitness that Jatta should pretend to be set at, initially set to the actual system bitness.")
+mark_as_advanced(Jatta_PRETEND_BITNESS)
 set(SYSTEM_BITNESS ${Jatta_PRETEND_BITNESS})
 
 # Determine lib directory name
@@ -51,7 +53,9 @@ endif()
 
 # Fix up the installation path
 set(Jatta_FIX_INSTALL_PATH ON CACHE BOOL "Causes Jatta to fix the installation path on first generation.")
+mark_as_advanced(Jatta_FIX_INSTALL_PATH)
 set(Jatta_INSTALL_ESSENTIALS_ONLY OFF CACHE BOOL "Installation will only install libraries and include files (no documentation).")
+mark_as_advanced(Jatta_INSTALL_ESSENTIALS_ONLY)
 if(NOT Jatta_FIX_INSTALL_PATH)
     set(FIRST OFF)
 endif()
@@ -88,6 +92,7 @@ set(Jatta_DEPENDENCY_LIBRARY_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${SYSTEM_NAM
 set(Jatta_DEPENDENCY_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${SYSTEM_NAME}/include" CACHE STRING "Directories to look for headers.")
 set(DOXYGEN_ENABLE OFF CACHE BOOL "Specifies whether or not to use Doxygen to generate documentation.")
 set(DOXYGEN_WARNINGS OFF CACHE BOOL "Turns on Doxygen warnings during doc generation stage.")
+mark_as_advanced(DOXYGEN_WARNINGS)
 set(CMAKE_REQUIRED_INCLUDES ${Jatta_DEPENDENCY_INCLUDE_DIRS} ${Jatta_LIBRARY_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_DEFINITIONS "-DGLEW_NO_GLU -DGLEW_STATIC -DHAVE_BOOLEAN -DPNG_SKIP_SETJMP_CHECK")
 if(MSVC)
@@ -97,6 +102,7 @@ set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_DEFINITIONS})
 
 # Look for libraries
 set(Jatta_REFRESH_LIBRARIES OFF CACHE BOOL "Forces Jatta to refresh searching for libraries everytime cmake runs.")
+mark_as_advanced(Jatta_REFRESH_LIBRARIES)
 include(libraries/libraries.cmake)
 
 # Compile the library

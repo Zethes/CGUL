@@ -28,13 +28,11 @@ namespace Jatta
             _JATTA_EXPORT void Delete();
             _JATTA_EXPORT UInt32 GetID() const;
 
-            _JATTA_EXPORT void Source(const String& source);
+            _JATTA_EXPORT void SetSource(const String& source);
             _JATTA_EXPORT void Compile();
 
             _JATTA_EXPORT Enum GetShaderType();
             _JATTA_EXPORT Boolean GetDeleteStatus();
-            _JATTA_EXPORT Boolean GetCompileStatus();
-            _JATTA_EXPORT String GetInfoLog();
             _JATTA_EXPORT String GetSource();
 
             // TODO: finish importing opengl shader functions

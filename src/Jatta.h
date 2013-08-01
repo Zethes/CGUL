@@ -73,7 +73,9 @@
 
 #include "Jatta/Exceptions/Exception.h"
 #include "Jatta/Exceptions/FatalException.h"
+#include "Jatta/Exceptions/FileException.h"
 #include "Jatta/Exceptions/NetworkException.h"
+#include "Jatta/Exceptions/OpenGLException.h"
 
 #ifdef FreeType_FOUND
 #   include "Jatta/Fonts/Font.h"
@@ -126,13 +128,16 @@
 #   include "Jatta/PortAudio/StreamInfo.h"
 #endif
 
+#include "Jatta/Utility/AutoRelease.h"
 #include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/File.h"
+#include "Jatta/Utility/Memory.h"
 #include "Jatta/Utility/Move.h"
 #include "Jatta/Utility/Regex.h"
 #include "Jatta/Utility/String.h"
 #include "Jatta/Utility/Timer.h"
 #include "Jatta/Utility/Thread.h"
+#include "Jatta/Utility/Version.h"
 
 #include "Jatta/Windows/Input.h"
 #include "Jatta/Windows/Inputs.h"

@@ -10,7 +10,6 @@
 
 namespace Jatta
 {
-    // TODO: come up with a better color list, we're missing some important ones here and have far too many useless ones
     namespace Colors
     {
         //! @brief Aero blue
@@ -1817,7 +1816,6 @@ namespace Jatta
         const Color zinnwalditeBrown(44, 22, 8, 255);
         //! @brief Zomp
         const Color zomp(57, 167, 142, 255);
-
     }
 }
 

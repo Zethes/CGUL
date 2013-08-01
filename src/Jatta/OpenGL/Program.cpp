@@ -4,6 +4,8 @@
  */
 
 #include "Program.h"
+#include "../Exceptions/FatalException.h"
+#include "../Exceptions/OpenGLException.h"
 
 #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
 
@@ -370,14 +372,48 @@ _JATTA_EXPORT void Jatta::OpenGL::Program::BindAttribLocation(UInt32 index, cons
 
 _JATTA_EXPORT void Jatta::OpenGL::Program::Link()
 {
+    GLint status;
     glLinkProgram(program);
     GLCHECK("Failed to link program.");
+    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    GLCHECK("Failed to get link status of program.");
+    if (status != GL_TRUE)
+    {
+        GLint size;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &size);
+        GLCHECK("Failed to get program info log length.");
+        GLsizei length;
+        GLchar* buffer = new GLchar[size];
+        glGetProgramInfoLog(program, (GLsizei)size, &length, buffer);
+        GLCHECK("Failed to get program info log.");
+        String log((char*)buffer);
+        delete[] buffer;
+        log.Trim();
+        throw FatalException(U8("Failed to link program:\n") + log);
+    }
 }
 
 _JATTA_EXPORT void Jatta::OpenGL::Program::Validate()
 {
+    GLint status;
     glValidateProgram(program);
     GLCHECK("Failed to validate program.");
+    glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
+    GLCHECK("Failed to get validate status of program.");
+    if (status != GL_TRUE)
+    {
+        GLint size;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &size);
+        GLCHECK("Failed to get program info log length.");
+        GLsizei length;
+        GLchar* buffer = new GLchar[size];
+        glGetProgramInfoLog(program, (GLsizei)size, &length, buffer);
+        GLCHECK("Failed to get program info log.");
+        String log((char*)buffer);
+        delete[] buffer;
+        log.Trim();
+        throw FatalException(U8("Failed to validate program:\n") + log);
+    }
 }
 
 _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Program::GetDeleteStatus()
@@ -386,36 +422,6 @@ _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Program::GetDeleteStatus()
     glGetProgramiv(program, GL_DELETE_STATUS, &status);
     GLCHECK("Failed to get delete status of program.");
     return status == GL_TRUE;
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Program::GetLinkStatus()
-{
-    GLint status;
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
-    GLCHECK("Failed to get link status of program.");
-    return status == GL_TRUE;
-}
-
-_JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Program::GetValidateStatus()
-{
-    GLint status;
-    glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
-    GLCHECK("Failed to get validate status of program.");
-    return status == GL_TRUE;
-}
-
-_JATTA_EXPORT Jatta::String Jatta::OpenGL::Program::GetInfoLog()
-{
-    GLint size;
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &size);
-    GLCHECK("Failed to get program info log length.");
-    GLsizei length;
-    GLchar* buffer = new GLchar[size];
-    glGetProgramInfoLog(program, (GLsizei)size, &length, buffer);
-    GLCHECK("Failed to get program info log.");
-    String log((char*)buffer);
-    delete[] buffer;
-    return log;
 }
 
 _JATTA_EXPORT Jatta::SInt32 Jatta::OpenGL::Program::GetUniformLocation(const String& name)

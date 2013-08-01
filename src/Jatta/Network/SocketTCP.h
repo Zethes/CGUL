@@ -26,8 +26,8 @@ namespace Jatta
             int sock;
             #endif
 
-            void MakeNonBlocking();
-            void MakeNoDelay();
+            bool MakeNonBlocking();
+            bool MakeNoDelay();
         public:
             SocketTCP();
             ~SocketTCP();

@@ -10,17 +10,27 @@
 
 namespace Jatta
 {
-    struct FatalException : public Exception
+    namespace OpenGLExceptionCode
     {
-        Jatta::String error;
-
-        FatalException(const Jatta::String& error, UInt16 code = 0);
-        ~FatalException() throw();
+        enum
+        {
+            UNKNOWN,
+            FAILED_CREATE_SHADER,
+        };
+    }
+    namespace OpenGLExceptionReason
+    {
+        enum
+        {
+            UNKNOWN,
+        };
+    }
+    struct OpenGLException : public Exception
+    {
+        OpenGLException(UInt8 code, UInt8 reason);
 
         Jatta::String GetString() const;
         Jatta::String GetReason() const;
-
-        virtual const char* what() const throw();
     };
 }
 

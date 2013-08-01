@@ -52,6 +52,9 @@ if(APPLE AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
     set_target_properties(Jatta PROPERTIES XCODE_ATTRIBUTE_GCC_INPUT_FILETYPE sourcecode.cpp.objcpp)
 endif()
 
+# Version info
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/Jatta/Utility/Version.cpp PROPERTIES COMPILE_DEFINITIONS "_JATTA_MAJOR=${Jatta_MAJOR_VERSION};_JATTA_MINOR=${Jatta_MINOR_VERSION};_JATTA_PATCH=${Jatta_PATCH_VERSION};_COMPILER_NAME=\"${COMPILER_NAME_SIMPLE}${COMPILER_VERSION}\"")
+
 # Installation setup
 string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}" DIR_LENGTH)
 math(EXPR DIR_LENGTH "${DIR_LENGTH} + 1")
@@ -86,6 +89,7 @@ if(NOT ${Jatta_INSTALL_ESSENTIALS_ONLY})
                 else()
                     set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset(Jatta_${STATIC}_PACKAGE OFF CACHE STRING \"Packages the ${STATIC} library with Jatta.\")")
                 endif()
+                set(STATIC_IMPORTS "${STATIC_IMPORTS}\nmark_as_advanced(Jatta_${STATIC}_PACKAGE)")
             endif()
             if(${STATIC}_PACKAGE)
                 install(FILES ${STATIC_DIR_REAL} DESTINATION ${LIB_DIR} RENAME ${STATIC_DIR_NAME})
