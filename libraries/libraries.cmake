@@ -205,8 +205,8 @@ jatta_find_package(
 
 jatta_find_package(
     PNG
-    NAMES png libpng png15 libpng15 png14 libpng14 png12 libpng12
-    DEBUG png15d libpng15d png14d libpng14d png12d libpng12d
+    NAMES png libpng png16 libpng16 png15 libpng15 png14 libpng14 png12 libpng12
+    DEBUG png16d libpng16d png15d libpng15d png14d libpng14d png12d libpng12d
 )
 
 jatta_find_package(

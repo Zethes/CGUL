@@ -26,7 +26,7 @@ template< typename T, typename Allocator > void Jatta::Vector< T, Allocator >::S
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
-template< typename T, typename Allocator > void Jatta::Vector< T, Allocator >::Set(Size index, const T& value)
+template< typename T, typename Allocator > void Jatta::Vector< T, Allocator >::Set(Size index, const T&& value)
 {
     std::vector<T, Allocator>::at(index) = value;
 }

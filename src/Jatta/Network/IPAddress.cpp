@@ -281,7 +281,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
         sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = AF_INET;
-        addr.sin_addr.s_addr = address[0];
+        addr.sin_addr.s_addr = (ULONG)address[0]; // this will truncate the address, which is PROPER functionality
         DWORD length = INET6_ADDRSTRLEN;
         if (WSAAddressToStringA((sockaddr*)&addr, sizeof(addr), NULL, str, &length) != 0)
         {

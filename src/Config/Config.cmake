@@ -2,36 +2,52 @@ include(CheckIncludeFileCXX)
 include(CheckCXXCompilerFlag)
 
 macro(check_feature VARIABLE FILE)
-    try_compile(FEATURE_COMPILES ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Config/${FILE}
-        CMAKE_FLAGS "-DCMAKE_CXX_LINK_EXECUTABLE='echo a'" # this line stops cmake from linking on the try_compile call
-        OUTPUT_VARIABLE OUTPUT
-      )
-    if(${FEATURE_COMPILES})
-        set(${VARIABLE} ON)
-    else()
-        file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
-          "Unable to compile config test script ${FILE}!"
-          "The test file ${FILE} failed to compile:"
-          "${OUTPUT}\n\n"
-        )
+    if(Jatta_REFRESH_LIBRARIES)
+        unset(${VARIABLE} CACHE)
+    endif()
+    if(NOT DEFINED ${VARIABLE})
+        try_compile(FEATURE_COMPILES ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Config/${FILE}
+            CMAKE_FLAGS "-DCMAKE_CXX_LINK_EXECUTABLE='echo a'" # this line stops cmake from linking on the try_compile call
+            OUTPUT_VARIABLE OUTPUT
+          )
+        if(${FEATURE_COMPILES})
+            set(${VARIABLE} ON CACHE INTERNAL "Feature")
+        else()
+            file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+              "Unable to compile config test script ${FILE}!"
+              "The test file ${FILE} failed to compile:"
+              "${OUTPUT}\n\n"
+            )
+            set(${VARIABLE} OFF CACHE INTERNAL "Feature")
+        endif()
     endif()
 endmacro()
 
-check_include_file_cxx(algorithm CPP_HEADER_ALGORITHM)
-check_include_file_cxx(cctype CPP_HEADER_CCTYPE)
-check_include_file_cxx(fstream CPP_HEADER_FSTREAM)
-check_include_file_cxx(list CPP_HEADER_LIST)
-check_include_file_cxx(map CPP_HEADER_MAP)
-check_include_file_cxx(memory CPP_HEADER_MEMORY)
-check_include_file_cxx(sstream CPP_HEADER_SSTREAM)
-check_include_file_cxx(stdexcept CPP_HEADER_STDEXCEPT)
-check_include_file_cxx(string CPP_HEADER_STRING)
-check_include_file_cxx(thread CPP_HEADER_THREAD)
-check_include_file_cxx(utility CPP_HEADER_UTILITY)
-check_include_file_cxx(vector CPP_HEADER_VECTOR)
+macro(fast_check_include_file FILE VARIABLE)
+    if(Jatta_REFRESH_VARIABLES)
+        unset(${VARIABLE} CACHE)
+    endif()
+    if(NOT DEFINED ${VARIABLE})
+        check_include_file_cxx(${FILE} ${VARIABLE})
+        set(${VARIABLE} ${${VARIABLE}} CACHE INTERNAL "Include")
+    endif()
+endmacro()
 
-check_include_file_cxx(cstdint CPP_HEADER_CSTDINT)
-check_include_file_cxx(stdint.h CPP_HEADER_STDINT_H)
+fast_check_include_file(algorithm CPP_HEADER_ALGORITHM)
+fast_check_include_file(cctype CPP_HEADER_CCTYPE)
+fast_check_include_file(fstream CPP_HEADER_FSTREAM)
+fast_check_include_file(list CPP_HEADER_LIST)
+fast_check_include_file(map CPP_HEADER_MAP)
+fast_check_include_file(memory CPP_HEADER_MEMORY)
+fast_check_include_file(sstream CPP_HEADER_SSTREAM)
+fast_check_include_file(stdexcept CPP_HEADER_STDEXCEPT)
+fast_check_include_file(string CPP_HEADER_STRING)
+fast_check_include_file(thread CPP_HEADER_THREAD)
+fast_check_include_file(utility CPP_HEADER_UTILITY)
+fast_check_include_file(vector CPP_HEADER_VECTOR)
+
+fast_check_include_file(cstdint CPP_HEADER_CSTDINT)
+fast_check_include_file(stdint.h CPP_HEADER_STDINT_H)
 
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_HYPERBOLIC_ARC hyperbolic_arc.cpp)

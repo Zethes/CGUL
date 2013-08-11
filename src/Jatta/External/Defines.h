@@ -100,8 +100,10 @@
         CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
         CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
 #   endif
+#   ifdef PCRE_FOUND
         CHECK(::pcre*, _JATTA_PCRE);
         CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
+#   endif
 #   undef CHECK
 #   include "Undefines.h"
 #   ifdef WINDOWS

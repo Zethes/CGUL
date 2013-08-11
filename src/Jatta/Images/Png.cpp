@@ -152,7 +152,7 @@ _JATTA_EXPORT bool Jatta::Image::LoadPng(const char* buffer, Jatta::UInt32 size)
         }
     }
 
-    return false;
+    return true;
 }
 
 /** @brief Saves the current image as a png.

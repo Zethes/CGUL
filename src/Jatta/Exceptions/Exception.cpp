@@ -18,7 +18,7 @@ const char* Jatta::Exception::what() const throw()
     return result.GetCString();
 }
 
-Jatta::Exception::Exception(UInt8 code, UInt8 reason, UInt16 type)
+Jatta::Exception::Exception(UInt16 code, UInt16 reason, UInt32 type)
 {
     this->code = code;
     this->reason = reason;

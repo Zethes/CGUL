@@ -91,7 +91,10 @@ int main()
     try
     {
         Image image;
-        image.Load(U8("resources/logo.png"));
+        if (!image.Load(U8("resources/logo.png")))
+        {
+            throw FatalException("Cannot load PNG images.");
+        }
 
         WindowStyle style;
         style.title = U8("logo.png (") + image.GetWidth() + U8(", ") + image.GetHeight() + U8(")");

@@ -26,7 +26,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Abs(Float32 x)
  */
 _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sign(Float32 x)
 {
-    return (x > 0 ? 1 : (x < 0 ? -1 : 0));
+    return (x > 0 ? 1.0f : (x < 0.0f ? -1 : 0.0f));
 }
 
 /** @param x The input value.

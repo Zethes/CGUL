@@ -677,7 +677,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
 #   ifdef WINDOWS
-    RECT rect = {0, 0, size.x, size.y};
+    RECT rect = {(LONG)0, (LONG)0, (LONG)size.x, (LONG)size.y};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
@@ -712,7 +712,7 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
     }
 
 #   ifdef WINDOWS
-    return Vector2(GetWidth(), GetHeight());
+    return Vector2((Float32)GetWidth(), (Float32)GetHeight());
 #   endif
 
 #   ifdef LINUX

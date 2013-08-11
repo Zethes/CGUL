@@ -57,7 +57,7 @@ template< typename T > void Jatta::Array< T >::Set(Size index, const T& value)
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
-template< typename T > void Jatta::Array< T >::Set(Size index, const T& value)
+template< typename T > void Jatta::Array< T >::Set(Size index, const T&& value)
 {
     data[index] = value;
 }

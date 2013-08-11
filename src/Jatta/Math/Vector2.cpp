@@ -370,7 +370,7 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetManhattanDistance(const Vector2&
 {
     //return Math::Abs(other.x - x) + Math::Abs(other.y - y);
     //return (other.x > x ? other.x - x : x - other.x) + (other.y > y ? other.y - y : y - other.y);
-    return (other.x > x ? 1 : -1) + (other.y > y ? 1 : -1);
+    return (other.x > x ? 1.0f : -1.0f) + (other.y > y ? 1.0f : -1.0f);
 }
 
 /** @details Sets the vector's angle while preserving its magnitude.  The new x is calculated based

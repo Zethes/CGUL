@@ -76,7 +76,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Compile()
     }
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Enum Jatta::OpenGL::Shader::GetShaderType()
+_JATTA_EXPORT Jatta::Enum Jatta::OpenGL::Shader::GetShaderType()
 {
     // TODO: OpenGL::Shader::GetShaderType
     return 0;

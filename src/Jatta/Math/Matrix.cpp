@@ -136,9 +136,9 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bo
     ret.m[0][0] = Float32(2) / (right - left);
     ret.m[1][1] = Float32(2) / (top - bottom);
     ret.m[2][2] = - Float32(2) / ((1) - (-1));
-    ret.m[3][0] = - (right + left) / (right - left);
-    ret.m[3][1] = - (top + bottom) / (top - bottom);
-    ret.m[3][2] = - ((1) + (-1)) / ((1) - (-1));
+    ret.m[3][0] = - Float32((right + left) / (right - left));
+    ret.m[3][1] = - Float32((top + bottom) / (top - bottom));
+    ret.m[3][2] = - Float32((1) + (-1)) / Float32((1) - (-1));
     return ret;
 }
 

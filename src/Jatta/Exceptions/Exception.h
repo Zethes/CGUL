@@ -41,7 +41,7 @@ namespace Jatta
 
         virtual const char* what() const throw();
     protected:
-        Exception(UInt8 code, UInt8 reason, UInt16 type = ExceptionType::USER);
+        Exception(UInt16 code, UInt16 reason, UInt32 type = ExceptionType::USER);
     };
 }
 

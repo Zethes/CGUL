@@ -41,13 +41,13 @@ _JATTA_EXPORT void Jatta::OpenGL::Disable(Enum cap)
     GLCHECK("Failed to disable OpenGL capability.");
 }
 
-_JATTA_EXPORT std::string Jatta::OpenGL::GetString(Jatta::OpenGL::Enum name)
+_JATTA_EXPORT std::string Jatta::OpenGL::GetString(Enum name)
 {
     std::string ret = (const char *)glGetString(name);
     GLCHECK("Failed to get OpenGL string.");
     return ret;
 }
-_JATTA_EXPORT std::string Jatta::OpenGL::GetStringi(Jatta::OpenGL::Enum name, unsigned int index)
+_JATTA_EXPORT std::string Jatta::OpenGL::GetStringi(Enum name, unsigned int index)
 {
     std::string ret = (const char *)glGetStringi(name, index);
     GLCHECK("Failed to get OpenGL string.");

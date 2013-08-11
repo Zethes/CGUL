@@ -337,8 +337,8 @@ _JATTA_EXPORT void Jatta::Input::SetMousePosition(Vector2 pos)
 {
 #   ifdef WINDOWS
     POINT p;
-    p.x = pos.x;
-    p.y = pos.y;
+    p.x = (LONG)pos.x;
+    p.y = (LONG)pos.y;
     ClientToScreen(this->window->_GetHandle(),&p);
     SetCursorPos(p.x,p.y);
 #   endif
