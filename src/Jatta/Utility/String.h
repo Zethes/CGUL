@@ -32,8 +32,14 @@ namespace Jatta
         /** @brief Internal string object to manage the data.
          */
         std::string data;
+
+        /** @brief Special case for a NULL string.
+         */
+        bool null;
     public:
         static const Size none = (Size)-1;
+
+        _JATTA_EXPORT static String FromCodePoint(UInt32 codePoint);
 
         //! @brief Initializes to "".
         _JATTA_EXPORT String();
@@ -53,11 +59,13 @@ namespace Jatta
         //! @brief Copies a raw std::string object.
         _JATTA_EXPORT String(const std::string& data);
 
+        //! @brief Copies the contents of a c string into this string.
+        _JATTA_EXPORT String& operator=(const char* operand);
         //! @brief Copies the contents of another string into this string.
         _JATTA_EXPORT String& operator=(const String& operand);
-        //! @brief Gets an individual character from the string at the specified index.
+        //! @brief Gets an individual byte from the string at the specified index.
         _JATTA_EXPORT char& operator[](Size operand);
-        //! @brief Gets an individual character from the string at the specified index.
+        //! @brief Gets an individual byte from the string at the specified index.
         _JATTA_EXPORT const char operator[](Size operand) const;
         //! @brief Checks if two strings are equal.
         _JATTA_EXPORT bool operator==(const String& operand) const;
@@ -81,7 +89,14 @@ namespace Jatta
         _JATTA_EXPORT bool operator<(const String& operand) const;
         friend std::ostream& operator<<(std::ostream& stream, const String& string)
         {
-            stream << string.data;
+            if (string.null)
+            {
+                stream << "[NULL]";
+            }
+            else
+            {
+                stream << string.data;
+            }
             return stream;
         }
 
@@ -95,7 +110,9 @@ namespace Jatta
         //! @brief Gets an individual code point from the string.
         _JATTA_EXPORT Size GetCodePoint(Size start, UInt32* codePoint) const;
         //! @brief Checks if the string is empty.
-        _JATTA_EXPORT Boolean Empty() const;
+        _JATTA_EXPORT Boolean IsEmpty() const;
+        //! @brief Checks if the string is null.
+        _JATTA_EXPORT Boolean IsNull() const;
 
         //! @brief An accessor to the wrapped std::string data.
         _JATTA_EXPORT std::string GetData() const;
@@ -118,6 +135,11 @@ namespace Jatta
         //! @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
         _JATTA_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;
 
+        //! @brief Sets the value of the string given a c string.
+        _JATTA_EXPORT String& Set(const char* str);
+        //! @brief Sets the value of the string given another string.
+        _JATTA_EXPORT String& Set(const String& str);
+
         //! @brief Trims whitespace at the beginning and end of the string.
         _JATTA_EXPORT void Trim();
         //! @brief Trims whitespace at the beginning of the string.
@@ -134,10 +156,21 @@ namespace Jatta
         //! @brief Removes all whitespace from within a string.
         _JATTA_EXPORT void RemoveWhitespace();
 
+        //! @brief Changes the string to empty if it is null.
+        _JATTA_EXPORT void SetNullToEmpty();
+        //! @brief Changes the string to null if it is empty.
+        _JATTA_EXPORT void SetEmptyToNull();
+
         //! @brief Checks if the string can be converted to the given data type.
         template <typename T> bool Is() const;
         //! @brief Converts the string to the given data type.
         template <typename T> T To() const;
+        //! @brief Converts the string to the given data type.
+        template <typename T> T To(const T& fallback) const;
+#       ifdef CPP_HAS_DOUBLE_REFERENCE
+        //! @brief Converts the string to the given data type.
+        template <typename T> T To(const T&& fallback) const;
+#       endif
 
 #       ifdef WINDOWS
         _JATTA_EXPORT std::wstring _ToWideString() const;
@@ -227,5 +260,47 @@ template <typename T> T Jatta::String::To() const
     convert >> x;
     return x;
 }
+
+/** @param fallback The value to set to if the conversion failed.
+ *  @returns The string as the given type.
+ */
+template <typename T> T Jatta::String::To(const T& fallback) const
+{
+    std::istringstream test;
+    test.str(data);
+    if (!test.good())
+    {
+        return false;
+    }
+    T x;
+    test >> x;
+    if (test.fail() || test.good())
+    {
+        x = fallback;
+    }
+    return x;
+}
+
+#ifdef CPP_HAS_DOUBLE_REFERENCE
+/** @param fallback The value to set to if the conversion failed.
+ *  @returns The string as the given type.
+ */
+template <typename T> T Jatta::String::To(const T&& fallback) const
+{
+    std::istringstream test;
+    test.str(data);
+    if (!test.good())
+    {
+        return false;
+    }
+    T x;
+    test >> x;
+    if (test.fail() || test.good())
+    {
+        x = fallback;
+    }
+    return x;
+}
+#endif
 
 #include "../External/Undefines.h"

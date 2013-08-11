@@ -8,16 +8,69 @@
 #include "../Math/Math.h"
 #include <cstring>
 
+_JATTA_EXPORT Jatta::String Jatta::String::FromCodePoint(UInt32 codePoint)
+{
+    Jatta::String result;
+    if ((codePoint & 0xFC000000) > 0) // 27 - 31 bits (6 bytes)
+    {
+        result = "      ";
+        result[0] = ((codePoint >> 30) & 0x1) | 0xFC;
+        result[1] = ((codePoint >> 24) & 0x3F) | 0x80;
+        result[2] = ((codePoint >> 18) & 0x3F) | 0x80;
+        result[3] = ((codePoint >> 12) & 0x3F) | 0x80;
+        result[4] = ((codePoint >> 6) & 0x3F) | 0x80;
+        result[5] = (codePoint & 0x3F) | 0x80;
+    }
+    else if ((codePoint & 0xFFE00000) > 0) // 22 - 26 bits (5 bytes)
+    {
+        result = "     ";
+        result[0] = ((codePoint >> 24) & 0x3) | 0xF8;
+        result[1] = ((codePoint >> 18) & 0x3F) | 0x80;
+        result[2] = ((codePoint >> 12) & 0x3F) | 0x80;
+        result[3] = ((codePoint >> 6) & 0x3F) | 0x80;
+        result[4] = (codePoint & 0x3F) | 0x80;
+    }
+    else if ((codePoint & 0xFFFF0000) > 0) // 17 - 21 bits (4 bytes)
+    {
+        result = "    ";
+        result[0] = ((codePoint >> 18) & 0x7) | 0xF0;
+        result[1] = ((codePoint >> 12) & 0x3F) | 0x80;
+        result[2] = ((codePoint >> 6) & 0x3F) | 0x80;
+        result[3] = (codePoint & 0x3F) | 0x80;
+    }
+    else if ((codePoint & 0xFFFFF800) > 0) // 12 - 16 bits (3 bytes)
+    {
+        result = "   ";
+        result[0] = ((codePoint >> 12) & 0xF) | 0xE0;
+        result[1] = ((codePoint >> 6) & 0x3F) | 0x80;
+        result[2] = (codePoint & 0x3F) | 0x80;
+    }
+    else if ((codePoint & 0xFFFFF800) > 0) // 8 - 11 bits (2 bytes)
+    {
+        result = "  ";
+        result[0] = ((codePoint >> 6) & 0x1F) | 0xC0;
+        result[1] = (codePoint & 0x3F) | 0x80;
+    }
+    else // 0 - 7 bits (1 byte)
+    {
+        result = " ";
+        result[0] = codePoint & 0x7F;
+    }
+    return result;
+}
+
 /**
  */
 _JATTA_EXPORT Jatta::String::String() : data()
 {
+    null = false;
 }
 
 /** @param copy The string to copy.
  */
 _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 {
+    null = false;
 }
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
@@ -25,6 +78,7 @@ _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
  */
 _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 {
+    null = false;
 }
 #endif
 
@@ -32,19 +86,47 @@ _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 _JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
 {
     _FromWideString(wideString);
+    null = false;
 }
 #endif
 
 /** @param data A character pointer to a null-terminated string.
  */
-_JATTA_EXPORT Jatta::String::String(const char* data) : data(data)
+_JATTA_EXPORT Jatta::String::String(const char* data)
 {
+    if (data == NULL)
+    {
+        this->data = "";
+        this->null = true;
+    }
+    else
+    {
+        this->data = data;
+        this->null = false;
+    }
 }
 
 /** @param An std::string value.
  */
 _JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
 {
+    null = false;
+}
+
+/** @param operand The c string or null.
+ *  @returns A reference to this object.
+ */
+_JATTA_EXPORT Jatta::String& Jatta::String::operator=(const char* operand)
+{
+    if (operand == NULL)
+    {
+        null = true;
+    }
+    else
+    {
+        data = operand;
+        null = false;
+    }
 }
 
 /** @param operand The other string.
@@ -53,6 +135,7 @@ _JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
 _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
 {
     this->data = operand.data;
+    this->null = operand.null;
     return *this;
 }
 
@@ -75,7 +158,7 @@ _JATTA_EXPORT const char Jatta::String::operator[](Size operand) const
  */
 _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
 {
-    return data == operand.data;
+    return (data == operand.data) && (null == operand.null);
 }
 
 /** @param operand The other string.
@@ -83,7 +166,7 @@ _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
  */
 _JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
 {
-    return data != operand.data;
+    return (data != operand.data) || (null != operand.null);
 }
 
 /** @param operand The other string.
@@ -94,14 +177,14 @@ _JATTA_EXPORT bool Jatta::String::operator<(const String& operand) const
     return this->data < operand.data;
 }
 
-/** @returns Numbers of bytes.
+/** @returns Number of bytes.
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::GetSize() const
 {
     return data.length();
 }
 
-/** @returns Numbers of code points.
+/** @returns Number of code points.
  */
 _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
 {
@@ -136,10 +219,11 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
  *
  *  int main()
  *  {
- *      String str;
+ *      String str = "\u3053\u3093\u306b\u3061\u306f";
+ *      //            ko    n     ni    chi   ha
+ *
  *      UInt32 codePoint;
  *      Size i = 0;
- *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
  *      while (i < str.GetSize())
  *      {
  *          i += str.GetCodePoint(i, &codePoint);
@@ -147,14 +231,11 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
  *      }
  *
  *      // outputs:
- *      // 732b
- *      // 304c
- *      // 304b
- *      // 308f
- *      // 3044
- *      // 3044
- *      // 3067
- *      // 3059
+ *      // 3053
+ *      // 3093
+ *      // 306b
+ *      // 3061
+ *      // 306f
  *  }
  *  @endcode
  */
@@ -235,9 +316,16 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetCodePoint(Size start, UInt32* codePo
 
 /** @returns True if the string is empty, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::String::Empty() const
+_JATTA_EXPORT Jatta::Boolean Jatta::String::IsEmpty() const
 {
     return data.empty();
+}
+
+/** @returns True if the string is null, false otherwise.
+ */
+_JATTA_EXPORT Jatta::Boolean Jatta::String::IsNull() const
+{
+    return null;
 }
 
 /** @returns The std::string variable.
@@ -251,6 +339,10 @@ _JATTA_EXPORT std::string Jatta::String::GetData() const
  */
 _JATTA_EXPORT const char* Jatta::String::GetCString() const
 {
+    if (null)
+    {
+        return NULL;
+    }
     return data.c_str();
 }
 
@@ -348,21 +440,19 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *  #include <iostream>
  *  using namespace Jatta;
  *
+ *  // Note: this example only works in terminals with unicode support
  *  int main()
  *  {
- *      String str;
+ *      String str = "\u3053\u3093\u306b\u3061\u306f";
+ *      //            ko    n     ni    chi   ha
  *
- *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™"; UGH THIS IS WHY WE CANT HAVE NICE THINGS
- *      str = str.SubString(3, 3);
- *      std::cout << str << std::endl;
+ *      std::cout << str.SubString(2, 2) << std::endl;
+ *      // outputs: \u306b\u3061
+ *      //          ni    chi
  *
- *      // outputs: ã‚�ã�„ã�„
- *
- *      str = "çŒ«ã�Œã�‹ã‚�ã�„ã�„ã�§ã�™";
- *      str = str.SubString(3, 3, true);
- *      std::cout << str << std::endl;
- *
- *      // outputs: ã�Œ
+ *      std::cout << str.SubString(3, 3, true) << std::endl;
+ *      // outputs: \u3093
+ *      //          n
  *  }
  *  @endcode
  */
@@ -395,6 +485,32 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
         }
         return Jatta::String(data.substr(offset, size));
     }
+}
+
+/** @param str The c string.
+ *  @returns A reference to this object.
+ */
+_JATTA_EXPORT Jatta::String& Jatta::String::Set(const char* str)
+{
+    if (str == NULL)
+    {
+        null = true;
+    }
+    else
+    {
+        data = str;
+        null = false;
+    }
+}
+
+/** @param str The c string.
+ *  @returns A reference to this object.
+ */
+_JATTA_EXPORT Jatta::String& Jatta::String::Set(const String& str)
+{
+    this->data = str.data;
+    this->null = str.null;
+    return *this;
 }
 
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
@@ -521,6 +637,26 @@ _JATTA_EXPORT void Jatta::String::ToUpper()
 _JATTA_EXPORT void Jatta::String::RemoveWhitespace()
 {
     data.erase(std::remove_if(data.begin(), data.end(), (int(*)(int))isspace), data.end());
+}
+
+/**
+ */
+_JATTA_EXPORT void Jatta::String::SetNullToEmpty()
+{
+    if (IsNull())
+    {
+        null = false;
+    }
+}
+
+/**
+ */
+_JATTA_EXPORT void Jatta::String::SetEmptyToNull()
+{
+    if (IsEmpty())
+    {
+        null = true;
+    }
 }
 
 #ifdef WINDOWS
