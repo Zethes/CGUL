@@ -17,12 +17,6 @@
 #   include "../OpenGL/Context.h"
 #endif
 
-#ifdef MSVC
-    // Disable Warning C4355: 'this' : used in base member initializer list
-    // How we're using 'this' will not cause any undefined behavior
-    #pragma warning( disable : 4355 )
-#endif
-
 #ifdef WINDOWS
 LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -41,32 +35,32 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
         }
         return 0;
         case WM_MOUSEMOVE:
-        window->GetInput()->mousePos.x = LOWORD(lParam);
-        window->GetInput()->mousePos.y = HIWORD(lParam);
+        //window->GetInput()->mousePos.x = LOWORD(lParam);
+        //window->GetInput()->mousePos.y = HIWORD(lParam);
         return 0;
         case WM_KEYDOWN:
-        window->GetInput()->GetKeyData()[wParam].down = true;
+        window->OnKeyPress(TranslateKey(wParam));
         return 0;
         case WM_KEYUP:
-        window->GetInput()->GetKeyData()[wParam].down = false;
+        window->OnKeyRelease(TranslateKey(wParam));
         return 0;
         case WM_LBUTTONDOWN:
-        window->GetInput()->GetMouseData()[0].down = true;
+        window->OnMousePress(0);
         return 0;
         case WM_LBUTTONUP:
-        window->GetInput()->GetMouseData()[0].down = false;
+        window->OnMouseRelease(0);
         return 0;
         case WM_RBUTTONDOWN:
-        window->GetInput()->GetMouseData()[2].down = true;
+        window->OnMousePress(1);
         return 0;
         case WM_RBUTTONUP:
-        window->GetInput()->GetMouseData()[2].down = false;
+        window->OnMouseRelease(1);
         return 0;
         case WM_MBUTTONDOWN:
-        window->GetInput()->GetMouseData()[1].down = true;
+        window->OnMousePress(2);
         return 0;
         case WM_MBUTTONUP:
-        window->GetInput()->GetMouseData()[1].down = false;
+        window->OnMouseRelease(2);
         return 0;
         case WM_DESTROY:
         PostQuitMessage(0);
@@ -88,13 +82,13 @@ static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 }
 #endif
 
-_JATTA_EXPORT Jatta::Window::Window(const Window& copy) : input(this)
+_JATTA_EXPORT Jatta::Window::Window(const Window& copy)
 {
     /* deleted */
 }
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
-_JATTA_EXPORT Jatta::Window::Window(Window&& move) : input(this)
+_JATTA_EXPORT Jatta::Window::Window(Window&& move)
 {
     /* deleted */
 }
@@ -139,7 +133,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     window->Close();
                     return;
                 case KeyPress:
-                    window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)].down = true;
+                    OnKeyPress(TranslateKey(event.xkey.keycode));
                     break;
                 case KeyRelease:
                     bool released = true;
@@ -154,7 +148,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     }
                     if (released)
                     {
-                        window->GetInput()->GetKeyData()[window->GetInput()->GetKeyFromLayout(event.xkey.keycode)].down = false;
+                        OnKeyRelease(TranslateKey(event.xkey.keycode));
                     }
                     break;
             }
@@ -175,7 +169,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-_JATTA_EXPORT Jatta::Window::Window() : input(this)
+_JATTA_EXPORT Jatta::Window::Window()
 {
 #   ifdef Jatta_USE_OPENGL
     context = NULL;
@@ -228,11 +222,6 @@ WindowDelegate* Jatta::Window::_GetHandle() const
     return handle;
 }
 #endif
-
-_JATTA_EXPORT Jatta::Input* Jatta::Window::GetInput()
-{
-    return &input;
-}
 
 /** @brief Creates a window based on the given style.
  *  @details See the tutorial on @ref create_window.
@@ -385,7 +374,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
  *  @details This method acts a little bit differently on each operating system.  It is important to
  *  call this every tick for every window.
  */
-_JATTA_EXPORT void Jatta::Window::UpdateInput()
+_JATTA_EXPORT void Jatta::Window::HandleMessages()
 {
     if (!IsOpen())
     {
@@ -397,13 +386,10 @@ _JATTA_EXPORT void Jatta::Window::UpdateInput()
     int rootX, rootY, winX, winY;
     unsigned int mask;
 
-    XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
+    /*XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
     GetInput()->mousePos.x = winX;
-    GetInput()->mousePos.y = winY;
+    GetInput()->mousePos.y = winY;*/
 #   endif
-
-    this->GetInput()->AnalyzeKeyData();
-    this->GetInput()->AnalyzeMouseData();
 }
 
 /** @brief Updates a window's style.
@@ -898,4 +884,20 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 #   ifdef MACOS
     return [handle isFocused];
 #   endif
+}
+
+_JATTA_EXPORT void Jatta::Window::OnKeyPress(UInt32 key)
+{
+}
+
+_JATTA_EXPORT void Jatta::Window::OnKeyRelease(UInt32 key)
+{
+}
+
+_JATTA_EXPORT void Jatta::Window::OnMousePress(Byte key)
+{
+}
+
+_JATTA_EXPORT void Jatta::Window::OnMouseRelease(Byte key)
+{
 }

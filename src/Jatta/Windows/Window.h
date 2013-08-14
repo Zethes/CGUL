@@ -5,7 +5,6 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "Input.h"
 #include "WindowStyle.h"
 #include "../Math/Vector2.h"
 #include "../Math/Vector4.h"
@@ -62,10 +61,11 @@ namespace Jatta
         void* handle;
 #       endif
 
-        Input input;
 #       ifdef Jatta_USE_OPENGL
         OpenGL::Context* context;
 #       endif
+
+        _JATTA_EXPORT static UInt32 TranslateKey(UInt64 key);
 
         _JATTA_EXPORT Window(const Window& copy);
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR
@@ -90,12 +90,10 @@ namespace Jatta
         WindowDelegate* _GetHandle() const;
 #       endif
 
-        _JATTA_EXPORT Input* GetInput();
-
         _JATTA_EXPORT void Create(const WindowStyle& style);
         _JATTA_EXPORT void Close();
 
-        _JATTA_EXPORT void UpdateInput();
+        _JATTA_EXPORT void HandleMessages();
 
         _JATTA_EXPORT void SetStyle(const WindowStyle& style);
         _JATTA_EXPORT WindowStyle GetStyle() const;
@@ -120,6 +118,12 @@ namespace Jatta
 
         _JATTA_EXPORT Boolean IsOpen() const;
         _JATTA_EXPORT Boolean IsFocused() const;
+
+        _JATTA_EXPORT virtual void OnKeyPress(UInt32 key);
+        _JATTA_EXPORT virtual void OnKeyRelease(UInt32 key);
+
+        _JATTA_EXPORT virtual void OnMousePress(Byte key);
+        _JATTA_EXPORT virtual void OnMouseRelease(Byte key);
     };
 }
 
