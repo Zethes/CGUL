@@ -67,6 +67,9 @@
 #define _JATTA_PAHOSTERROR_INFO void*
 #define _JATTA_PCRE void*
 #define _JATTA_PCRE_EXTRA void*
+//#define _JATTA_SSL void*
+//#define _JATTA_SSL_CTX void*
+
 
 #if defined(JATTA_INCLUDES)
 #   ifdef CPP_HAS_STATIC_ASSERT
@@ -165,6 +168,10 @@
 #       define _JATTA_PCRE ::pcre*
 #       define _JATTA_PCRE_EXTRA ::pcre_extra*
 #   endif
+/*#   ifdef OpenSSL_FOUND
+#       define _JATTA_SSL ::SSL*
+#       define _JATTA_SSL_CTX ::SSL_CTX*
+#   endif*/
 #endif
 
 #ifndef NULL

@@ -1,16 +1,24 @@
-#if 0
 /* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
 #include "DNS.h"
+ #include "../Exceptions/NetworkException.h"
 
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
 
-void __jatta_network_initiate();
-
+#ifndef DOXYGEN
+namespace Jatta
+{
+    namespace Network
+    {
+        void __jatta_network_initiate();
+        void __jatta_network_clean();
+    }
+}
+#endif
 static const char* inet_ntop(int af, const void *src, char *dst, socklen_t cnt)
 {
   if (af == AF_INET) {
@@ -34,15 +42,15 @@ static const char* inet_ntop(int af, const void *src, char *dst, socklen_t cnt)
   return NULL;
 }
 
-Jatta::DNS::DNS()
+Jatta::Network::DNS::DNS()
 {
 }
 
-Jatta::DNS::~DNS()
+Jatta::Network::DNS::~DNS()
 {
 }
 
-std::vector<std::string> Jatta::DNS::Lookup(const std::string& host, Filter filter)
+std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host, Filter filter)
 {
     __jatta_network_initiate();
 
@@ -56,23 +64,24 @@ std::vector<std::string> Jatta::DNS::Lookup(const std::string& host, Filter filt
     hints.ai_socktype = SOCK_STREAM;
 
     addrinfo* result;
-    if ((status = getaddrinfo(host.c_str(), nullptr, &hints, &result)) != 0)
+    if ((status = getaddrinfo(host.GetCString(), NULL, &hints, &result)) != 0)
     {
-        return std::vector<std::string>();
+        throw NetworkException(NetworkExceptionCode::FAILED_DNS_LOOKUP, status);
+        return std::vector<Jatta::String>();
     }
 
     unsigned int count = 0;
-    for (addrinfo* p = result; p != nullptr; p = p->ai_next)
+    for (addrinfo* p = result; p != NULL; p = p->ai_next)
     {
         count++;
     }
 
-    std::vector<std::string> list;
+    std::vector<Jatta::String> list;
     char ipstr[INET6_ADDRSTRLEN + 1];
     memset(ipstr, 0, INET6_ADDRSTRLEN + 1);
     ipstr[INET6_ADDRSTRLEN - 1] = 0;
     count = 0;
-    for (addrinfo* p = result; p != nullptr; p = p->ai_next)
+    for (addrinfo* p = result; p != NULL; p = p->ai_next)
     {
         void* addr;
 
@@ -107,5 +116,3 @@ std::vector<std::string> Jatta::DNS::Lookup(const std::string& host, Filter filt
     //return std::move(list);
     return list;
 }
-
-#endif

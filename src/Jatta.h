@@ -98,6 +98,8 @@
 #ifdef Jatta_USE_NETWORK
 #   include "Jatta/Network/Adapter.h"
 #   include "Jatta/Network/DNS.h"
+#   include "Jatta/Network/HTTPEnums.h"
+#   include "Jatta/Network/HTTPRequest.h"
 #   include "Jatta/Network/IPAddress.h"
 #   include "Jatta/Network/SocketTCP.h"
 #   include "Jatta/Network/SocketUDP.h"
@@ -139,8 +141,8 @@
 #include "Jatta/Utility/Thread.h"
 #include "Jatta/Utility/Version.h"
 
-#include "Jatta/Windows/Input.h"
+/*#include "Jatta/Windows/Input.h"
 #include "Jatta/Windows/Inputs.h"
-#include "Jatta/Windows/InputState.h"
+#include "Jatta/Windows/InputState.h"*/
 #include "Jatta/Windows/Window.h"
 #include "Jatta/Windows/WindowStyle.h"

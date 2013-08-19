@@ -23,6 +23,9 @@ namespace Jatta
             FAILED_RECEIVE,
             FAILED_PEEK,
             FAILED_CALCULATE_ADDRESS,
+            FAILED_DNS_LOOKUP,
+            FAILED_SSL_SETUP,
+            FAILED_HTTP_REQUEST,
         };
     }
     namespace NetworkExceptionReason
@@ -41,6 +44,12 @@ namespace Jatta
             ADDRESS_MISMATCH,
             FAILED_NONBLOCKING,
             FAILED_NO_DELAY,
+            FAILED_CTX_NEW,
+            FAILED_SSL_NEW,
+            FAILED_SSL_FD,
+            FAILED_SSL_CONNECT,
+            UNKNOWN_TRANSFER_ENCODING,
+            TIMEOUT,
         };
     }
     struct NetworkException : public Exception

@@ -15,6 +15,7 @@
 #cmakedefine PNG_FOUND
 #cmakedefine PortAudio_FOUND
 #cmakedefine zlib_FOUND
+#cmakedefine OpenSSL_FOUND
 
 #cmakedefine Jatta_STATIC
 #cmakedefine Jatta_USE_NETWORK

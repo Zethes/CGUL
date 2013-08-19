@@ -10,6 +10,12 @@
 #include "SocketTCP.h"
 #include "../Exceptions/NetworkException.h"
 
+#ifdef OpenSSL_FOUND
+#include <openssl/rand.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#endif
+
 #ifndef DOXYGEN
 namespace Jatta
 {
@@ -53,6 +59,10 @@ Jatta::Network::SocketTCP::SocketTCP()
 {
     sock = INVALID_SOCKET;
     __jatta_network_initiate();
+
+    /*#ifdef OpenSSL_FOUND
+    connectionSecure = false;
+    #endif*/
 }
 
 Jatta::Network::SocketTCP::~SocketTCP()
@@ -279,6 +289,63 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     return true;
 }
 
+
+/*#ifdef OpenSSL_FOUND
+void Jatta::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short port)
+{
+    connectionSecure = true;
+    Connect(ip, port);
+
+    sslHandle = NULL;
+    sslContext = NULL;
+
+    if (sock)
+    {
+        SSL_load_error_strings();
+        SSL_library_init();
+
+        sslContext = SSL_CTX_new(SSLv23_client_method());
+        if (sslContext == NULL)
+            throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_CTX_NEW);
+
+        sslHandle = SSL_new(sslContext);
+        if (sslHandle == NULL)
+            throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_NEW);
+
+        if (!SSL_set_fd(sslHandle, sock))
+            throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_FD);
+
+        while (true)
+        {
+            int resp = SSL_connect(sslHandle);
+            if (resp == 1)
+                break;
+
+            int error = SSL_get_error(sslHandle, resp);
+
+            if (error == SSL_ERROR_WANT_READ || error == SSL_ERROR_WANT_WRITE)
+            {
+                //Handle these errors then try again.
+                //Just waiting it out seems to work.
+            }
+            else
+                throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_CONNECT);
+        }
+
+    }
+    else
+    {
+        connectionSecure = false;
+        throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::UNKNOWN);
+    }
+}
+void Jatta::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int backlog)
+{
+
+}
+#endif*/
+
+
 void Jatta::Network::SocketTCP::Close()
 {
 #   ifdef WINDOWS
@@ -287,6 +354,21 @@ void Jatta::Network::SocketTCP::Close()
     ::close(sock);
 #   endif
     sock = INVALID_SOCKET;
+
+    /*#ifdef OpenSSL_FOUND
+    if (connectionSecure)
+    {
+        if (sslHandle)
+        {
+            SSL_shutdown(sslHandle);
+            SSL_free(sslHandle);
+        }
+        if (sslContext)
+            SSL_CTX_free(sslContext);
+
+        connectionSecure = false;
+    }
+    #endif*/
 }
 
 /** @brief Checks if the socket is still connected to the remote host.
@@ -344,6 +426,20 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
 
     // Pizza delivery!
     int amount;
+
+    //Send via SSL?
+    /*#ifdef OpenSSL_FOUND
+    if (connectionSecure)
+    {
+        if ((amount = SSL_write(sslHandle, (const char*)data, size)) <= 0)
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN);
+        }
+        return amount;
+    }
+    #endif*/
+
+    //Send normally
     if ((amount = ::send(sock, (const char*)data, size, 0)) == SOCKET_ERROR)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN);
@@ -366,6 +462,30 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
 
     // Pizza delivery!
     int amount;
+
+    //Receive via SSL.
+    /*#ifdef OpenSSL_FOUND
+    if (connectionSecure)
+    {
+        if (SSL_pending(sslHandle) < size)
+            size = SSL_pending(sslHandle);
+
+        if ((amount = SSL_read(sslHandle, (char*)data, size)) < 0)
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
+        }
+
+        if (amount == 0)
+        {
+            Close();
+            return 0;
+        }
+        else if (amount > 0)
+            return amount;
+    }
+    #endif*/
+
+    //Receive normally.
     if ((amount = ::recv(sock, (char*)data, size, 0)) == SOCKET_ERROR)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
@@ -379,11 +499,8 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
             return 0;
         }
         else
-        {
             throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
-        }
     }
-
     // Check if recv returned 0, if so, the remove socket disconnected gracefully.
     if (amount == 0)
     {
@@ -391,9 +508,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
         return 0;
     }
     else
-    {
         return amount;
-    }
 }
 
 int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
@@ -406,6 +521,30 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
 
     // Pizza delivery!
     int amount;
+
+    //Peek via SSL.
+    /*#ifdef OpenSSL_FOUND
+    if (connectionSecure)
+    {
+        if (SSL_pending(sslHandle) < size)
+            size = SSL_pending(sslHandle);
+
+        if ((amount = SSL_peek(sslHandle, (char*)data, size)) < 0)
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
+        }
+
+        if (amount == 0)
+        {
+            Close();
+            return 0;
+        }
+        else
+            return amount;
+    }
+    #endif*/
+
+    //Peek normally
     if ((amount = ::recv(sock, (char*)data, size, MSG_PEEK)) == SOCKET_ERROR)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
