@@ -24,6 +24,7 @@ Features
   - TCP Sockets
   - UDP Sockets
   - DNS Lookup
+  - SSL/TLS Support via OpenSSL
   - Query local network interfaces
 - **Object oriented OpenGL wrapper**
 - **Window system on Windows (WinAPI), MacOS (Cocoa) and Linux (X11)**
