@@ -271,11 +271,11 @@ namespace Jatta
 #   ifdef PCRE_FOUND
 #       include <pcre.h>
 #   endif
-/*#   ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
 #       include <openssl/rand.h>
 #       include <openssl/ssl.h>
 #       include <openssl/err.h>
-#   endif*/
+#   endif
 #   if defined(LINUX) | defined(MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>

@@ -94,14 +94,22 @@ Jatta::String Jatta::NetworkException::GetReason() const
         return U8("Failed to set socket to nonblocking.");
         case NetworkExceptionReason::FAILED_NO_DELAY:
         return U8("Failed to set the TCP no delay algorithm.");
+        case NetworkExceptionReason::FAILED_NEW_BIO:
+        return U8("Failed to create a new BIO connection.");
+        case NetworkExceptionReason::FAILED_BIO_CONNECT:
+        return U8("Failed to connect to unsecure BIO.");
         case NetworkExceptionReason::FAILED_CTX_NEW:
         return U8("Failed to create a new context.");
         case NetworkExceptionReason::FAILED_SSL_NEW:
-        return U8("Failed to setup a struct.");
+        return U8("Failed to create an OpenSSL handle.");
         case NetworkExceptionReason::FAILED_SSL_FD:
         return U8("Failed to link SSL to socket.");
         case NetworkExceptionReason::FAILED_SSL_CONNECT:
         return U8("Failed to connect.");
+        case NetworkExceptionReason::FAILED_LOADING_CERTIFICATE:
+        return U8("Failed to load a trust certificate.");
+        case NetworkExceptionReason::INVALID_CERTIFICATE:
+        return U8("Failed to validate a trust certificate.");
         case NetworkExceptionReason::UNKNOWN_TRANSFER_ENCODING:
         return U8("Unknown transfer encoding method.");
         case NetworkExceptionReason::TIMEOUT:

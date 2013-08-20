@@ -90,9 +90,13 @@ namespace Jatta
             ~HTTPRequest();
 
             void Http(const String url);
-            void Https(const String url);
             void Connect(const IPAddress& ip, int port);
+
+            #ifdef OpenSSL_FOUND
+            void Https(const String url);
             void ConnectSSL(const IPAddress& ip, int port);
+            #endif
+            
             void Close();
 
             bool Request(String request, int timeout = 0);

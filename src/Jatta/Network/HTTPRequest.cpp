@@ -669,27 +669,31 @@ void Jatta::Network::HTTPRequest::Http(const String url)
 
     sock->Connect(IPAddress(lookup[0]), 80);
 }
+void Jatta::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
+{
+    host = ip.ToString();
+    sock->Connect(ip, port);
+}
+
+#ifdef OpenSSL_FOUND
 void Jatta::Network::HTTPRequest::Https(const String url)
 {
-    /*host = url;
+    host = url;
 
     DNS dns;
     std::vector<Jatta::String> lookup = dns.Lookup(url);
     if (lookup.size() == 0)
         return;
 
-    sock->ConnectSSL(IPAddress(lookup[0]), 443);*/
-}
-void Jatta::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
-{
-    host = ip.ToString();
-    sock->Connect(ip, port);
+    sock->ConnectSSL(IPAddress(lookup[0]), 443);
 }
 void Jatta::Network::HTTPRequest::ConnectSSL(const IPAddress& ip, int port)
 {
-    //host = ip.ToString();
-    //sock->ConnectSSL(ip, port);
+    host = ip.ToString();
+    sock->ConnectSSL(ip, port);
 }
+#endif
+
 void Jatta::Network::HTTPRequest::Close()
 {
     sock->Close();

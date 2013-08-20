@@ -73,10 +73,11 @@
 #   undef _JATTA_PCRE_EXTRA
 #endif
 
-/*#ifdef OpenSSL_FOUND
+#ifdef OpenSSL_FOUND
 #   undef _JATTA_SSL
 #   undef _JATTA_SSL_CTX
-#endif*/
+#   undef _JATTA_SSL_BIO
+#endif
 
 #ifdef _JATTA_OBJC
 #   undef _JATTA_OBJC

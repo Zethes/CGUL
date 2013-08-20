@@ -228,17 +228,17 @@ jatta_find_package(
     DEBUG pcred
 )
 
-#jatta_find_package(
-#    OpenSSL
-#    NAMES ssl
-#    DEBUG ssld
-#)
+jatta_find_package(
+    OpenSSL
+    NAMES ssl
+    DEBUG ssld
+)
 
-#jatta_find_package(
-#    Crypto
-#    NAMES crypto
-#    DEBUG cryptod
-#)
+jatta_find_package(
+    Crypto
+    NAMES crypto
+    DEBUG cryptod
+)
 
 if("${SYSTEM_NAME}" STREQUAL "linux")
     jatta_find_package(

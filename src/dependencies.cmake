@@ -137,29 +137,29 @@ if(PCRE_FOUND)
     )
 endif()
 
-#if(OpenSSL_FOUND)
-#    use_library(OpenSSL ${OpenSSL_LINK} OFF)
-#
-#    list(APPEND ACKNOWLEDGEMENTS
-#        "\n\n"
-#        "OpenSSL - Open Secure Sockets Layer http://www.openssl.org/\n"
-#        "Copyright (C) 1999-2013 The OpenSSL Project\n"
-#        "Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)\n"
-#        "All rights reserved."
-#    )
-#endif()
+if(OpenSSL_FOUND)
+    use_library(OpenSSL ${OpenSSL_LINK} OFF)
 
-#if(Crypto_FOUND)
-#    use_library(Crypto ${Crypto_LINK} OFF)
-#
-#    list(APPEND ACKNOWLEDGEMENTS
-#        "\n\n"
-#        "OpenSSL - Crypto http://www.openssl.org/\n"
-#        "Copyright (C) 1999-2013 The OpenSSL Project\n"
-#        "Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)\n"
-#        "All rights reserved."
-#    )
-#endif()
+    list(APPEND ACKNOWLEDGEMENTS
+        "\n\n"
+        "OpenSSL - Open Secure Sockets Layer http://www.openssl.org/\n"
+        "Copyright (C) 1999-2013 The OpenSSL Project\n"
+        "Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)\n"
+        "All rights reserved."
+    )
+endif()
+
+if(Crypto_FOUND)
+    use_library(Crypto ${Crypto_LINK} OFF)
+
+    list(APPEND ACKNOWLEDGEMENTS
+        "\n\n"
+        "OpenSSL - Crypto http://www.openssl.org/\n"
+        "Copyright (C) 1999-2013 The OpenSSL Project\n"
+        "Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)\n"
+        "All rights reserved."
+    )
+endif()
 
 list(APPEND ACKNOWLEDGEMENTS
     "\n\n"

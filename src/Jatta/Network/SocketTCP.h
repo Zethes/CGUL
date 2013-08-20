@@ -26,11 +26,11 @@ namespace Jatta
             int sock;
             #endif
 
-            /*#ifdef OpenSSL_FOUND
+            #ifdef OpenSSL_FOUND
             bool connectionSecure;
             _JATTA_SSL sslHandle;
             _JATTA_SSL_CTX sslContext;
-            #endif*/
+            #endif
 
             bool MakeNonBlocking();
             bool MakeNoDelay();
@@ -43,10 +43,10 @@ namespace Jatta
             bool Accept(SocketTCP* socket);
             void Close();
 
-/*#           ifdef OpenSSL_FOUND
+#           ifdef OpenSSL_FOUND
             void ConnectSSL(const IPAddress& ip, unsigned short port);
             void ListenSSL(unsigned short port, bool ipv4 = true, int backlog = 10);
-#           endif*/
+#           endif
 
             bool IsConnected();
 
