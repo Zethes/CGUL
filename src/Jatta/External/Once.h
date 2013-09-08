@@ -206,6 +206,9 @@ namespace Jatta
     const SInt64 SInt64Max = 9223372036854775807LL;
     const UInt64 UInt64Min = 0ULL;
     const UInt64 UInt64Max = 18446744073709551615ULL;
+
+    typedef int SInt;
+    typedef unsigned int UInt;
 }
 #undef TYPE
 
