@@ -33,12 +33,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::Load(const std::string& fileName)
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
     if (error == FT_Err_Unknown_File_Format)
     {
-        std::runtime_error("Unknown font file format.");
+        throw std::runtime_error("Unknown font file format.");
         return -1;
     }
     else if (error)
     {
-        std::runtime_error("Unknown error with fonts.");
+        throw std::runtime_error("Unknown error with fonts.");
         return -1;
     }
     
@@ -53,12 +53,12 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::LoadFromMemory(const unsigned char* dat
     FT_Error error = FT_New_Memory_Face(__jatta_ttf_library, data, size, 0, &face);
     if (error == FT_Err_Unknown_File_Format)
     {
-        std::runtime_error("Unknown font file format.");
+        throw std::runtime_error("Unknown font file format.");
         return -1;
     }
     else if (error)
     {
-        std::runtime_error("Unknown error with fonts.");
+        throw std::runtime_error("Unknown error with fonts.");
         return -1;
     }
     

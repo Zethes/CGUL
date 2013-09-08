@@ -198,7 +198,7 @@ _JATTA_EXPORT void Jatta::Image::SavePng(const Jatta::String& fileName, Boolean 
         delete[] rows;
         delete[] data;
         png_destroy_read_struct(&pngPtr, &infoPtr,NULL);
-        std::runtime_error("Failed to write png image.");
+        throw std::runtime_error("Failed to write png image.");
     }
 
     // Setup png to use our file stream.

@@ -127,6 +127,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const char* operand)
         data = operand;
         null = false;
     }
+    return *this;
 }
 
 /** @param operand The other string.
@@ -501,6 +502,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::Set(const char* str)
         data = str;
         null = false;
     }
+    return *this;
 }
 
 /** @param str The c string.
