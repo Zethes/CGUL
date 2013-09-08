@@ -87,7 +87,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress()
     this->address[1] = 0;
 }
 
-/** @param address The 32 bit unsigned integer.
+/** @param address The 32 bit unsigned integer for IPv4.
  */
 _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt32 address)
 {
@@ -97,7 +97,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt32 address)
     this->address[1] = 0;
 }
 
-/** @param address The array of two 64 bit unsigned integers.
+/** @param address The array of two 64 bit unsigned integers for IPv6.
  */
 _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt64* address)
 {
