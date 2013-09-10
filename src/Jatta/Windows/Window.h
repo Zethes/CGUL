@@ -122,8 +122,8 @@ namespace Jatta
         _JATTA_EXPORT virtual void OnKeyPress(UInt32 key);
         _JATTA_EXPORT virtual void OnKeyRelease(UInt32 key);
 
-        _JATTA_EXPORT virtual void OnMousePress(Byte key);
-        _JATTA_EXPORT virtual void OnMouseRelease(Byte key);
+        _JATTA_EXPORT virtual void OnMousePress(Byte button);
+        _JATTA_EXPORT virtual void OnMouseRelease(Byte button);
     };
 }
 

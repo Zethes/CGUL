@@ -152,7 +152,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     }
 
     // TODO: move these to their own methods
-    glShadeModel(GL_SMOOTH);
+    /*glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClearDepth(1.0f);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -167,7 +167,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_CUBE_MAP);
     //glCullFace(GL_BACK);
-    //glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);*/
 
     // clears out errors... we're not actually checking for any!
     // TODO: check for errors dammit!
