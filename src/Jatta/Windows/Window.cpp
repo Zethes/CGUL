@@ -35,8 +35,7 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
         }
         return 0;
         case WM_MOUSEMOVE:
-        //window->GetInput()->mousePos.x = LOWORD(lParam);
-        //window->GetInput()->mousePos.y = HIWORD(lParam);
+        window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
         return 0;
         case WM_KEYDOWN:
         window->OnKeyPress(TranslateKey(wParam));
@@ -77,7 +76,7 @@ bool Jatta::Window::initialized = false;
 
 static int __jatta_windows_error_handler(Display* display, XErrorEvent* event)
 {
-    // TODO: something?
+    // TODO: handle x11 errors (throw exception?)
     return 0;
 }
 #endif
@@ -94,8 +93,7 @@ _JATTA_EXPORT Jatta::Window::Window(Window&& move)
 }
 #endif
 
-/** @brief Updates all windows in the current application.
- *  @details The operating system usually handles windows under the same application in bulk.  For
+/** @details The operating system usually handles windows under the same application in bulk.  For
  *  this reason, it is only necessary to call update once for every window.  It is still important
  *  to update a window's input manually, however.
  *  @see UpdateInput
@@ -167,8 +165,8 @@ _JATTA_EXPORT void Jatta::Window::Update()
 #   endif
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ */
 _JATTA_EXPORT Jatta::Window::Window()
 {
 #   ifdef Jatta_USE_OPENGL
@@ -189,6 +187,8 @@ _JATTA_EXPORT Jatta::Window::Window()
 #   endif
 }
 
+/**
+ */
 _JATTA_EXPORT Jatta::Window::~Window()
 {
     Close();
@@ -223,8 +223,7 @@ WindowDelegate* Jatta::Window::_GetHandle() const
 }
 #endif
 
-/** @brief Creates a window based on the given style.
- *  @details See the tutorial on @ref create_window.
+/** @details See the tutorial on @ref create_window.
  */
 _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 {
@@ -333,7 +332,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     SetStyle(style);
 }
 
-/** @brief Destroys the window.
+/**
  */
 _JATTA_EXPORT void Jatta::Window::Close()
 {
@@ -370,8 +369,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
 #   endif
 }
 
-/** @brief Updates a window's input handler.
- *  @details This method acts a little bit differently on each operating system.  It is important to
+/** @details This method acts a little bit differently on each operating system.  It is important to
  *  call this every tick for every window.
  */
 _JATTA_EXPORT void Jatta::Window::HandleMessages()
@@ -392,8 +390,7 @@ _JATTA_EXPORT void Jatta::Window::HandleMessages()
 #   endif
 }
 
-/** @brief Updates a window's style.
- *  @param style The style structure.
+/** @param style The style structure.
  *  @details This method will reset all elements within the WindowStyle, not only those which have
  *  changed.  It can be used to "backup" a window at a given state and then reset to it later.
  *  Alternatively, it is possible to grab the current style with GetStyle and then modify individual
@@ -413,8 +410,7 @@ _JATTA_EXPORT void Jatta::Window::SetStyle(const WindowStyle& style)
     SetResizable(style.resizable);
 }
 
-/** @brief Gets some information about the window.
- *  @returns A WindowStyle structure.
+/** @returns A WindowStyle structure.
  */
 _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
 {
@@ -427,6 +423,8 @@ _JATTA_EXPORT Jatta::WindowStyle Jatta::Window::GetStyle() const
     return style;
 }
 
+/** @param title The new title string.
+ */
 _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 {
     if (!IsOpen())
@@ -447,6 +445,8 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
 #   endif
 }
 
+/** @returns The window title.
+ */
 _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
 {
     if (!IsOpen())
@@ -491,6 +491,8 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
     return "";
 }
 
+/** @param color The new background color.
+ */
 _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
 {
     if (!IsOpen())
@@ -524,6 +526,8 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
 #   endif
 }
 
+/** @returns The window's background color.
+ */
 _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 {
     if (!IsOpen())
@@ -548,6 +552,8 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
     return Color(0, 0, 0);
 }
 
+/** @param width The new width of the window.
+ */
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
 #   ifdef WINDOWS
@@ -578,6 +584,8 @@ _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 #   endif
 }
 
+/** @returns The width of the window.
+ */
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 {
     if (!IsOpen())
@@ -604,6 +612,8 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 #   endif
 }
 
+/** @param height The new height of the window.
+ */
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
 #   ifdef WINDOWS
@@ -634,6 +644,8 @@ _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 #   endif
 }
 
+/** @returns The height of the window.
+ */
 _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 {
     if (!IsOpen())
@@ -660,6 +672,8 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 #   endif
 }
 
+/** @returns The new size of the window.
+ */
 _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
 #   ifdef WINDOWS
@@ -690,6 +704,8 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 #   endif
 }
 
+/** @returns The size of the window.
+ */
 _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
 {
     if (!IsOpen())
@@ -712,6 +728,8 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
 #   endif
 }
 
+/** @param resizable True for resizable, false otherwise.
+ */
 _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 {
     if (!IsOpen())
@@ -765,6 +783,8 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 #   endif
 }
 
+/** @returns True if resizable, false otherwise.
+ */
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 {
     if (!IsOpen())
@@ -793,6 +813,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
     return false;
 }
 
+/** @returns A vector containing the border extents.
+ */
 _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
@@ -826,6 +848,8 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 #   endif
 }
 
+/** @returns False if the window has been closed, true if it is still open.
+ */
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 {
 #   ifdef WINDOWS
@@ -852,6 +876,10 @@ _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 #   endif
 }
 
+/** @warning Can be weird on Mac when running an application from the console.  Macs have two forms
+ *  of focus and when an application is launced through a terminal it gets a little wonky.
+ *  @returns True if the window is focused, false otherwise.
+ */
 _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
 {
     if (!IsOpen())
@@ -899,5 +927,9 @@ _JATTA_EXPORT void Jatta::Window::OnMousePress(Byte key)
 }
 
 _JATTA_EXPORT void Jatta::Window::OnMouseRelease(Byte key)
+{
+}
+
+_JATTA_EXPORT void Jatta::Window::OnMouseMove(UInt32 mouseX, UInt32 mouseY)
 {
 }

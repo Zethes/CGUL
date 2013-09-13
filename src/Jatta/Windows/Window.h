@@ -72,9 +72,12 @@ namespace Jatta
         _JATTA_EXPORT Window(Window&& move);
 #       endif
     public:
+        // @brief Updates all windows in the current application.
         _JATTA_EXPORT static void Update();
 
+        // @brief Default constructor.
         _JATTA_EXPORT Window();
+        // @brief Deconstructor.
         _JATTA_EXPORT ~Window();
 
 #       ifdef WINDOWS
@@ -90,33 +93,53 @@ namespace Jatta
         WindowDelegate* _GetHandle() const;
 #       endif
 
+        // @brief Creates a window based on the given style.
         _JATTA_EXPORT void Create(const WindowStyle& style);
+        // @brief Destroys the window.
         _JATTA_EXPORT void Close();
 
+        // @brief Handles system messages and updates input.
         _JATTA_EXPORT void HandleMessages();
 
+        // @brief Updates a window's style.
         _JATTA_EXPORT void SetStyle(const WindowStyle& style);
+        // @brief Gets some information about the window.
         _JATTA_EXPORT WindowStyle GetStyle() const;
 
+        // @brief Sets the title of the window.
         _JATTA_EXPORT void SetTitle(const String& title);
+        // @brief Gets the title of the window.
         _JATTA_EXPORT String GetTitle() const;
 
+        // @brief Sets the background color of the window.
         _JATTA_EXPORT void SetBackgroundColor(const Color& color);
+        // @brief Gets the background color of the window.
         _JATTA_EXPORT Color GetBackgroundColor() const;
 
+        // @brief Sets the width of the window, excluding the border.
         _JATTA_EXPORT void SetWidth(UInt32 width);
+        // @brief Gets the width of the window, excluding the border.
         _JATTA_EXPORT UInt32 GetWidth() const;
+        // @brief Sets the height of the window, excluding the border.
         _JATTA_EXPORT void SetHeight(UInt32 height);
+        // @brief Gets the height of the window, excluding the border.
         _JATTA_EXPORT UInt32 GetHeight() const;
+        // @brief Sets the size of the window, excluding the border.
         _JATTA_EXPORT void SetSize(const Vector2& size) const; // TODO: use something other than Vector2
+        // @brief Gets the size of the window, excluding the border.
         _JATTA_EXPORT Vector2 GetSize() const;
 
+        // @brief Sets whether the window is resizable or not.
         _JATTA_EXPORT void SetResizable(Boolean resizable);
+        // @brief Gets whether the window is resizable or not.
         _JATTA_EXPORT Boolean GetResizable() const;
 
+        // @brief Gets the window's border extents (the frame around the window).
         _JATTA_EXPORT Vector4 GetFrameSize() const;
 
+        // @brief Checks if the window is still open.
         _JATTA_EXPORT Boolean IsOpen() const;
+        // @brief Checks if the window currently has focus.
         _JATTA_EXPORT Boolean IsFocused() const;
 
         _JATTA_EXPORT virtual void OnKeyPress(UInt32 key);
@@ -124,6 +147,8 @@ namespace Jatta
 
         _JATTA_EXPORT virtual void OnMousePress(Byte button);
         _JATTA_EXPORT virtual void OnMouseRelease(Byte button);
+
+        _JATTA_EXPORT virtual void OnMouseMove(UInt32 mouseX, UInt32 mouseY);
     };
 }
 
