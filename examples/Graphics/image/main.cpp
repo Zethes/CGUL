@@ -1,6 +1,8 @@
 #include <Jatta.h>
 using namespace Jatta;
 
+#include <GL/glew.h>
+
 #include <iostream>
 
 OpenGL::Program LoadShader(const String& vertexFile, const String& fragmentFile)
@@ -108,6 +110,11 @@ int main()
 
         OpenGL::Context context;
         context.Create(&window);
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
+        glEnable(GL_ALPHA_TEST);
+        glEnable(GL_TEXTURE_2D);
 
         OpenGL::Program program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
 

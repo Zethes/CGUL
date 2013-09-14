@@ -136,7 +136,6 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     //id content = [window contentView];
 
     // Set the content of the window to the OpenGL view we created
-    [window setContentView: view];
     [window->_GetHandle() SetContent: view];
 #   endif
 
