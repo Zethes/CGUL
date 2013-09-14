@@ -159,9 +159,6 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    // Um... linux doesn't like these
-    //glDrawBuffer(GL_FRONT_AND_BACK);
-    //glReadBuffer(GL_FRONT_AND_BACK);
     glEnable(GL_ALPHA_TEST);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_TEXTURE_CUBE_MAP);
