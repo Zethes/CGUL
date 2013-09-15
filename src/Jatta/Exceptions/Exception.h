@@ -16,6 +16,7 @@ namespace Jatta
         {
             USER,
             FATAL,
+            IMAGE,
             NETWORK,
             FILE,
             OPENGL,

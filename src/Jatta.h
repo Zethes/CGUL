@@ -86,6 +86,11 @@
 #include "Jatta/Images/Color.h"
 #include "Jatta/Images/Colors.h"
 #include "Jatta/Images/Image.h"
+#include "Jatta/Images/ImageFormats.h"
+#include "Jatta/Images/ImageInfo.h"
+#include "Jatta/Images/ImageLoader.h"
+#include "Jatta/Images/Mipmap.h"
+#include "Jatta/Images/Loaders/BMP.h"
 
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"

@@ -4,206 +4,112 @@
  */
 
 #include "Image.h"
-#include "Color.h"
+#include "../Exceptions/ImageException.h"
 
- #include "../Utility/File.h"
+_JATTA_EXPORT bool Jatta::Image::IsValid()
+{
+    return (width != 0 && height != 0);
+}
 
 _JATTA_EXPORT Jatta::Image::Image()
 {
-    this->colors = NULL;
-    this->width = 0;
-    this->height = 0;
+    format = ImageFormats::NONE;
 }
 
-_JATTA_EXPORT Jatta::Image::Image(Color* colors, unsigned int width, unsigned int height)
+_JATTA_EXPORT Jatta::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data)
 {
-    this->colors = colors;
+    this->format = format;
     this->width = width;
     this->height = height;
-}
 
-_JATTA_EXPORT Jatta::Image::Image(const Image& copy)
-{
-    this->width = copy.width;
-    this->height = copy.height;
-    this->colors = (Color*)new char[this->width * this->height * 4];
-    memcpy(this->colors, copy.colors, this->width * this->height * 4);
+    PushMipmap(width, height, data);
 }
-
-#ifdef CPP_HAS_MOVE_CONSTRUCTOR
-_JATTA_EXPORT Jatta::Image::Image(Image&& move)
-{
-    this->width = move.width;
-    this->height = move.height;
-    this->colors = move.colors;
-    move.width = 0;
-    move.height = 0;
-    move.colors = nullptr;
-}
-#endif
 
 _JATTA_EXPORT Jatta::Image::~Image()
 {
-    delete[] colors;
-}
-
-_JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(const Image& copy)
-{
-    this->width = copy.width;
-    this->height = copy.height;
-    this->colors = (Color*)new char[this->width * this->height * 4];
-    memcpy(this->colors, copy.colors, this->width * this->height * 4);
-    return *this;
-}
-
-#ifdef CPP_HAS_DOUBLE_REFERENCE
-_JATTA_EXPORT Jatta::Image& Jatta::Image::operator=(Image&& move)
-{
-    this->width = move.width;
-    this->height = move.height;
-    this->colors = move.colors;
-    move.width = 0;
-    move.height = 0;
-    move.colors = nullptr;
-    return *this;
-}
-#endif
-
-_JATTA_EXPORT unsigned char* Jatta::Image::GetData()
-{
-    return (unsigned char*)colors;
-}
-
-_JATTA_EXPORT const unsigned char* Jatta::Image::GetData() const
-{
-    return (const unsigned char*)colors;
-}
-
-_JATTA_EXPORT unsigned int Jatta::Image::GetWidth() const
-{
-    return width;
-}
-
-_JATTA_EXPORT unsigned int Jatta::Image::GetHeight() const
-{
-    return height;
-}
-
-_JATTA_EXPORT Jatta::Size Jatta::Image::GetSize() const
-{
-    return width * height * sizeof(Color);
-}
-
-_JATTA_EXPORT bool Jatta::Image::Create(UInt32 width, UInt32 height)
-{
-    colors = (Color*)new char[height * width * sizeof(Color)];
-    this->width = width;
-    this->height = height;
-    return true;
-}
-
-_JATTA_EXPORT bool Jatta::Image::Create(UInt32 width, UInt32 height, const Color& color)
-{
-    if (!Create(width, height))
-    {
-        return false;
-    }
-    for (unsigned int y = 0; y < height; y++)
-    {
-        for (unsigned int x = 0; x < width; x++)
-        {
-            colors[x + y * width] = color;
-        }
-    }
-    return true;
+    Free();
 }
 
 _JATTA_EXPORT void Jatta::Image::Free()
 {
-    // TODO: figure out why this crashes in linux
-    delete[] colors;
-    colors = NULL;
-}
+    this->format = ImageFormats::NONE;
+    this->width = 0;
+    this->height = 0;
 
-_JATTA_EXPORT bool Jatta::Image::Load(const Jatta::String& fileName)
-{
-    unsigned int size;
-    File::GetFileSize(fileName.GetData(), &size);
-    Byte* buffer = new Byte[size];
-    File::ReadData(fileName.GetData(), buffer, size);
-
-#   ifdef PNG_FOUND
-    if (IsPng((const char*)buffer, size))
-        return LoadPng((const char*)buffer, size);
-#   else
-    if (false) {}
-#   endif
-#   ifdef JPEG_FOUND
-    else if (IsJpg((const char*)buffer, size))
-        return LoadJpg((const char*)buffer, size);
-#   endif
-    else if (IsDds((const char*)buffer, size))
-        return LoadDds((const char*)buffer, size);
-    else
-        return false;
-}
-
-_JATTA_EXPORT bool Jatta::Image::LoadFromMemory(const char* buffer, Jatta::UInt32 size)
-{
-#   ifdef PNG_FOUND
-    if (IsPng(buffer, size))
-        return LoadPng(buffer, size);
-#   else
-    if (false) {}
-#   endif
-#   ifdef JPEG_FOUND
-    else if (IsJpg(buffer, size))
-        return LoadJpg(buffer, size);
-#   endif
-    else if (IsDds(buffer, size))
-        return LoadDds(buffer, size);
-    else
-        return false;
-}
-
-_JATTA_EXPORT void Jatta::Image::Mirror()
-{
-    for (UInt32 w = 0; w < width / 2; w++)
+    for (UInt32 i = 0; i < mipmaps.size(); i++)
     {
-        for (UInt32 h = 0; h < height; h++)
-        {
-            Color swap;
-            swap = colors[w + h * width];
-            colors[w + h * width] = colors[(width - (w + 1)) + h * width];
-            colors[(width - (w + 1)) + h * width] = swap;
-        }
+        mipmaps[i].Free();
     }
+    mipmaps.clear();
 }
 
-_JATTA_EXPORT void Jatta::Image::Flip()
+_JATTA_EXPORT bool Jatta::Image::GenerateMipmaps()
 {
-    for (UInt32 h = 0; h < height / 2; h++)
-    {
-        for (UInt32 w = 0; w < width; w++)
-        {
-            Color swap;
-            swap = colors[w + h * width];
-            colors[w + h * width] = colors[w + (height - (h + 1)) * width];
-            colors[w + (height - (h + 1)) * width] = swap;
-        }
-    }
+    if (!IsValid())
+        throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::IMAGE_IS_NOT_VALID);
+    if (mipmaps.size() <= 0)
+        throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::NO_BASE_MIPMAP);
+
+    //TODO: Mipmap generation.
 }
 
-_JATTA_EXPORT void Jatta::Image::MirrorFlip()
+_JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
 {
-    for (UInt32 h = 0; h < height / 2; h++)
-    {
-        for (UInt32 w = 0; w < width; w++)
-        {
-            Color swap;
-            swap = colors[w + h * width];
-            colors[w + h * width] = colors[(width - (w + 1)) + (height - (h + 1)) * width];
-            colors[(width - (w + 1)) + (height - (h + 1)) * width] = swap;
-        }
-    }
+    if (mipmaps.size() <= 0)
+        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
+
+    return mipmaps[0];
+}
+_JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
+{
+    if (mipmaps.size() <= index)
+        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::INDEX_OUT_OF_RANGE);
+
+    return mipmaps[index];
+}
+
+_JATTA_EXPORT const void* Jatta::Image::GetData()
+{
+    if (mipmaps.size() <= 0)
+        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
+
+    return mipmaps[0].GetData();
+}
+
+_JATTA_EXPORT Jatta::ImageFormat Jatta::Image::GetFormat() const
+{
+    return format;
+}
+_JATTA_EXPORT int Jatta::Image::GetMipmapCount() const
+{
+    return mipmaps.size();
+}
+_JATTA_EXPORT int Jatta::Image::GetWidth() const
+{
+    return width;
+}
+_JATTA_EXPORT int Jatta::Image::GetHeight() const
+{
+    return height;
+}
+
+_JATTA_EXPORT Jatta::ImageInfo Jatta::Image::GetInfo() const
+{
+    ImageInfo ret;
+    ret.Width = width;
+    ret.Height = height;
+    ret.Format = format;
+    ret.MipmapCount = mipmaps.size();
+
+    return ret;
+}
+
+_JATTA_EXPORT void Jatta::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
+{
+    mipmaps.push_back(Mipmap(format, width, height, (void*)data));
+    //mipmaps.pop_back();
+}
+_JATTA_EXPORT void Jatta::Image::PopMipmap()
+{
+    mipmaps.pop_back();
 }

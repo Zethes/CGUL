@@ -1,7 +1,7 @@
 #include <Jatta.h>
 using namespace Jatta;
 
-#include <GL/glew.h>
+//#include <GL/glew.h>
 
 #include <iostream>
 
@@ -92,16 +92,17 @@ int main()
 {
     try
     {
-        Image image;
-        if (!image.Load(U8("resources/logo.png")))
-        {
-            throw FatalException("Cannot load PNG images.");
-        }
+        ImageLoaders::BMP bmpLoader("resources/logo.bmp");
+        if (!bmpLoader.CanLoad())
+            throw FatalException("Cannot load BMP images.");
+
+        Image*image = bmpLoader.Load();
+        std::cout << "Image has been loaded!" << std::endl;
 
         WindowStyle style;
-        style.title = U8("logo.png (") + image.GetWidth() + U8(", ") + image.GetHeight() + U8(")");
-        style.width = image.GetWidth();
-        style.height = image.GetHeight();
+        style.title = U8("logo.bmp (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.width = image->GetWidth();
+        style.height = image->GetHeight();
         style.backgroundColor = Colors::black;
         style.resizable = false;
 
@@ -111,10 +112,10 @@ int main()
         OpenGL::Context context;
         context.Create(&window);
 
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_BLEND);
-        glEnable(GL_ALPHA_TEST);
-        glEnable(GL_TEXTURE_2D);
+        Jatta::OpenGL::BlendFunc(Jatta::GL::SRC_ALPHA, Jatta::GL::ONE_MINUS_SRC_ALPHA);
+        Jatta::OpenGL::Enable(Jatta::GL::BLEND);
+        //Jatta::OpenGL::Enable(Jatta::GL::ALPHA_TEST); (Missing this constant)
+        Jatta::OpenGL::Enable(Jatta::GL::TEXTURE_2D);
 
         OpenGL::Program program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
 
@@ -127,7 +128,7 @@ int main()
         texture.SetTextureWrapT(GL::REPEAT);
         texture.SetMinFilter(GL::LINEAR);
         texture.SetMagFilter(GL::LINEAR);
-        texture.Image2D(0, GL::RGBA, image.GetWidth(), image.GetHeight(), 0, GL::RGBA, GL::UNSIGNED_BYTE, image.GetData());
+        texture.Image2D(0, GL::RGBA, image->GetWidth(), image->GetHeight(), 0, image->GetFormat().GLFormat, GL::UNSIGNED_BYTE, (void*)image->GetData());
         texture.Unbind();
 
         Timer timer;
