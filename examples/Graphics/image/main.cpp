@@ -92,15 +92,19 @@ int main()
 {
     try
     {
+        ImageLoaders::PNG pngLoader("resources/logo.png");
+        if (!pngLoader.CanLoad())
+            throw FatalException("Cannot load PNG images.");
+
         ImageLoaders::BMP bmpLoader("resources/logo.bmp");
         if (!bmpLoader.CanLoad())
             throw FatalException("Cannot load BMP images.");
 
-        Image*image = bmpLoader.Load();
+        Image*image = pngLoader.Load();
         std::cout << "Image has been loaded!" << std::endl;
 
         WindowStyle style;
-        style.title = U8("logo.bmp (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.title = U8("resources/logo.png") + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
         style.width = image->GetWidth();
         style.height = image->GetHeight();
         style.backgroundColor = Colors::black;

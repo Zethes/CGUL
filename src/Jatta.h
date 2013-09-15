@@ -91,6 +91,9 @@
 #include "Jatta/Images/ImageLoader.h"
 #include "Jatta/Images/Mipmap.h"
 #include "Jatta/Images/Loaders/BMP.h"
+#ifdef PNG_FOUND
+#   include "Jatta/Images/Loaders/PNG.h"
+#endif
 
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"

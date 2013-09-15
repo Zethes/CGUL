@@ -18,6 +18,7 @@ namespace Jatta
             GENERATE_MIPMAPS,
             GET_MIPMAP,
             BMP,
+            PNG,
         };
     }
     namespace ImageExceptionReason
@@ -32,6 +33,12 @@ namespace Jatta
             INVALID_COLOR_PLANE_COUNT,
             NOT_A_BMP_FILE,
             UNSUPPORTED_FORMAT,
+            NOT_A_PNG_FILE,
+            PNG_CREATE_READ_STRUCT_FAILED,
+            PNG_CREATE_INFO_STRUCT_FAILED,
+            PNG_INIT_IO_ERROR,
+            PNG_FAILED_TO_OPEN,
+            PNG_READ_IMAGE_ERROR,
         };
     }
     struct ImageException : public Exception

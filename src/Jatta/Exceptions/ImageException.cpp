@@ -19,6 +19,8 @@ Jatta::String Jatta::ImageException::GetString() const
         return U8("Failed to get mipmap.");
         case ImageExceptionCode::BMP:
         return U8("Failed to load BMP file.");
+        case ImageExceptionCode::PNG:
+        return U8("Failed to load PNG file.");
         case ImageExceptionCode::UNKNOWN:
         default:
         return U8("Unknown error occurred.");
@@ -43,6 +45,18 @@ Jatta::String Jatta::ImageException::GetReason() const
         return U8("File is not a BMP file.");
         case ImageExceptionReason::UNSUPPORTED_FORMAT:
         return U8("Unsupported format.");
+        case ImageExceptionReason::NOT_A_PNG_FILE:
+        return U8("File is not a PNG file.");
+        case ImageExceptionReason::PNG_CREATE_READ_STRUCT_FAILED:
+        return U8("png_create_read_struct failed.");
+        case ImageExceptionReason::PNG_CREATE_INFO_STRUCT_FAILED:
+        return U8("png_create_info_struct failed.");
+        case ImageExceptionReason::PNG_INIT_IO_ERROR:
+        return U8("Error during init_io.");
+        case ImageExceptionReason::PNG_FAILED_TO_OPEN:
+        return U8("Failed to open file.");
+        case ImageExceptionReason::PNG_READ_IMAGE_ERROR:
+        return U8("Error during read_image.");
         case ImageExceptionReason::UNKNOWN:
         default:
         return U8("Unknown.");
