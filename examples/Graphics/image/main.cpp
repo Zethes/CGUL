@@ -122,6 +122,7 @@ int main()
         OpenGL::VertexArray box = MakeBox();
 
         OpenGL::Texture texture;
+        std::cout << "Creating texture with format 0x" << std::hex << image->GetFormat().GLFormat << std::dec << "..." << std::endl;
         texture.Create(GL::TEXTURE_2D);
         texture.Bind();
         texture.SetTextureWrapS(GL::REPEAT);
@@ -130,6 +131,7 @@ int main()
         texture.SetMagFilter(GL::LINEAR);
         texture.Image2D(0, GL::RGBA, image->GetWidth(), image->GetHeight(), 0, image->GetFormat().GLFormat, GL::UNSIGNED_BYTE, (void*)image->GetData());
         texture.Unbind();
+        std::cout << "Done!" << std::endl;
 
         Timer timer;
         Float32 hue = 0.0f;

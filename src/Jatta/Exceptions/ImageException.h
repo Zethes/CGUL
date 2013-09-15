@@ -31,6 +31,7 @@ namespace Jatta
             INVALID_DATA_FORMAT,
             INVALID_COLOR_PLANE_COUNT,
             NOT_A_BMP_FILE,
+            UNSUPPORTED_FORMAT,
         };
     }
     struct ImageException : public Exception

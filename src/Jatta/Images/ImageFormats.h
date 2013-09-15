@@ -78,6 +78,12 @@ namespace Jatta
         static const ImageFormat RG8      = GenerateImageFormat(2, 1, ImageFormatDataTypes::BYTE);
 
         #ifdef Jatta_USE_OPENGL
+        static const ImageFormat RGBA4    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGBA4);
+        #else
+        static const ImageFormat RGBA4    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, 0x8056);
+        #endif
+
+        #ifdef Jatta_USE_OPENGL
         static const ImageFormat RGB8     = GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGB);
         static const ImageFormat RGBA8    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGBA);
         #else

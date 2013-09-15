@@ -41,6 +41,8 @@ Jatta::String Jatta::ImageException::GetReason() const
         return U8("Invalid number of color planes being used. (Must be one)");
         case ImageExceptionReason::NOT_A_BMP_FILE:
         return U8("File is not a BMP file.");
+        case ImageExceptionReason::UNSUPPORTED_FORMAT:
+        return U8("Unsupported format.");
         case ImageExceptionReason::UNKNOWN:
         default:
         return U8("Unknown.");

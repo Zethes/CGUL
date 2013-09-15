@@ -107,7 +107,6 @@ _JATTA_EXPORT Jatta::ImageInfo Jatta::Image::GetInfo() const
 _JATTA_EXPORT void Jatta::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
 {
     mipmaps.push_back(Mipmap(format, width, height, (void*)data));
-    //mipmaps.pop_back();
 }
 _JATTA_EXPORT void Jatta::Image::PopMipmap()
 {
