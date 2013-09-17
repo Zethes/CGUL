@@ -15,15 +15,15 @@ namespace Jatta
     */
     namespace ImageLoaders
     {
-        /** @brief Class inherited from ImageLoader to support PNG file formats.
+        /** @brief Class inherited from ImageLoader to support JPEG file formats.
          */
-        class PNG : ImageLoader
+        class JPEG : ImageLoader
         {
         protected:
             Jatta::String file;
         public:
-            _JATTA_EXPORT PNG(const String& filename);  
-            _JATTA_EXPORT ~PNG();
+            _JATTA_EXPORT JPEG(const String& filename);  
+            _JATTA_EXPORT ~JPEG();
 
             _JATTA_EXPORT virtual void Free();
 

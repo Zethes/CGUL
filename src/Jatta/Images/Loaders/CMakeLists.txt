@@ -14,6 +14,18 @@ if (PNG_FOUND)
     )
 endif()
 
+if (JPEG_FOUND)
+    set(Jatta_SOURCES
+        ${Jatta_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.cpp
+    )
+
+    set(Jatta_INSTALL
+        ${Jatta_INSTALL}
+        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.h
+    )
+endif()
+
 set(Jatta_SOURCES
     ${Jatta_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/BMP.cpp

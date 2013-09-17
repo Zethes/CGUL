@@ -100,11 +100,15 @@ int main()
         if (!bmpLoader.CanLoad())
             throw FatalException("Cannot load BMP images.");
 
-        Image*image = pngLoader.Load();
+        ImageLoaders::JPEG jpegLoader("resources/logo.jpg");
+        if (!jpegLoader.CanLoad())
+            throw FatalException("Cannot load JPEG images.");
+
+        Image*image = jpegLoader.Load();
         std::cout << "Image has been loaded!" << std::endl;
 
         WindowStyle style;
-        style.title = U8("resources/logo.png") + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.title = U8("resources/logo.jpg") + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
         style.width = image->GetWidth();
         style.height = image->GetHeight();
         style.backgroundColor = Colors::black;

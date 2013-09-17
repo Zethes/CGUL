@@ -94,6 +94,9 @@
 #ifdef PNG_FOUND
 #   include "Jatta/Images/Loaders/PNG.h"
 #endif
+#ifdef JPEG_FOUND
+#   include "Jatta/Images/Loaders/JPEG.h"
+#endif
 
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"

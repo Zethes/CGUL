@@ -19,6 +19,7 @@ namespace Jatta
             GET_MIPMAP,
             BMP,
             PNG,
+            JPEG,
         };
     }
     namespace ImageExceptionReason
@@ -37,8 +38,10 @@ namespace Jatta
             PNG_CREATE_READ_STRUCT_FAILED,
             PNG_CREATE_INFO_STRUCT_FAILED,
             PNG_INIT_IO_ERROR,
-            PNG_FAILED_TO_OPEN,
+            FAILED_TO_OPEN,
             PNG_READ_IMAGE_ERROR,
+            NOT_A_JPEG_FILE,
+            JPEG_FAILED_TO_START_DECOMPRESSOR,
         };
     }
     struct ImageException : public Exception

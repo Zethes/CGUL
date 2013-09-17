@@ -52,7 +52,7 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::PNG::Load()
     char header[8];
     FILE * fp = fopen(file.GetCString(), "rb");
     if (!fp)
-        throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::PNG_FAILED_TO_OPEN);
+        throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::FAILED_TO_OPEN);
     fread(header, 1, 8, fp);
 
     //Initialize structs

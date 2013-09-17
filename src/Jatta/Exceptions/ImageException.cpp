@@ -21,6 +21,8 @@ Jatta::String Jatta::ImageException::GetString() const
         return U8("Failed to load BMP file.");
         case ImageExceptionCode::PNG:
         return U8("Failed to load PNG file.");
+        case ImageExceptionCode::JPEG:
+        return U8("Failed to load JPEG file.");
         case ImageExceptionCode::UNKNOWN:
         default:
         return U8("Unknown error occurred.");
@@ -53,10 +55,14 @@ Jatta::String Jatta::ImageException::GetReason() const
         return U8("png_create_info_struct failed.");
         case ImageExceptionReason::PNG_INIT_IO_ERROR:
         return U8("Error during init_io.");
-        case ImageExceptionReason::PNG_FAILED_TO_OPEN:
+        case ImageExceptionReason::FAILED_TO_OPEN:
         return U8("Failed to open file.");
         case ImageExceptionReason::PNG_READ_IMAGE_ERROR:
         return U8("Error during read_image.");
+        case ImageExceptionReason::NOT_A_JPEG_FILE:
+        return U8("File is not a JPEG file.");
+        case ImageExceptionReason::JPEG_FAILED_TO_START_DECOMPRESSOR:
+        return U8("Failed to start the decompressor.");
         case ImageExceptionReason::UNKNOWN:
         default:
         return U8("Unknown.");
