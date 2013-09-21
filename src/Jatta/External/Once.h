@@ -181,21 +181,15 @@ namespace Jatta
     TYPE(unsigned long, SignedSize, sizeof(void*));
 #   endif
 
-    /** @brief An value capable of holding an enumeration.
-     *  @details Enumerations are iffy in C++.  Older compilers hate typed enumerations.  It's
-     *  best, for portability, to reference all enumerations as an unsigned 32 bit integer.
-     */
-    typedef UInt32 Enum;
-
     const SInt8 SInt8Min = 127;
     const SInt8 SInt8Max = -(127) - 1;
     const UInt8 UInt8Min = 0;
-    const UInt8 UInt8Max = 255U;
+    const UInt8 UInt8Max = 255;
 
     const SInt16 SInt16Min = -(32767) - 1;
     const SInt16 SInt16Max = 32767;
     const UInt16 UInt16Min = 0;
-    const UInt16 UInt16Max = 65535U;
+    const UInt16 UInt16Max = 65535;
 
     const SInt32 SInt32Min = -(2147483647) - 1;
     const SInt32 SInt32Max = 2147483647;
@@ -207,8 +201,56 @@ namespace Jatta
     const UInt64 UInt64Min = 0ULL;
     const UInt64 UInt64Max = 18446744073709551615ULL;
 
+    /** @brief System dependent signed short integer.
+     *  @see SInt
+     */
+    typedef short SShort;
+
+    /** @brief System dependent unsigned short integer.
+     *  @see SInt
+     */
+    typedef unsigned short UShort;
+
+    /** @brief System dependent signed integer.
+     *  @details Jatta redefines some of the standard integers in C and C++ for explicitness.  It is
+     *  clear that using "SInt" rather than "SInt32" that the user wants a system-dependent (and
+     *  usually "faster") integer rather than a fixed size integer.  Short integers will be less
+     *  than or equal in size as "normal" integers (SInt and UInt) and long integers will be
+     *  larger than or equal in size as "normal" integers.  Note that, depending on whatever wonky
+     *  system/compiler you're using, all three types of integers could be the the same size, all
+     *  the way down to 8 bytes small.  On modern systems most short integers will be 16 bits,
+     *  "normal" integers will be 32 bits, and long integers will be 32 bits on a 32 bit machine and
+     *  64 bits on a 64 bit machine.
+     *  @see SShort
+     *  @see UShort
+     *  @see SInt
+     *  @see UInt
+     *  @see SLong
+     *  @see ULong
+     */
     typedef int SInt;
+
+    /** @brief System dependent unsigned integer.
+     *  @see SInt
+     */
     typedef unsigned int UInt;
+
+    /** @brief System dependent signed long integer.
+     *  @see SInt
+     */
+    typedef long SLong;
+
+    /** @brief System dependent unsigned long integer.
+     *  @see SInt
+     */
+    typedef unsigned long ULong;
+
+    /** @brief A value capable of holding an enumeration.
+     *  @details Enumerations are iffy in C++.  Older compilers hate typed enumerations.  It's
+     *  best, for portability, to reference all enumerations as system-specific sized integer.
+     *  (and hope that you never need more than 65535 enumerations)
+     */
+    typedef SInt Enum;
 }
 #undef TYPE
 
