@@ -9,21 +9,7 @@
 #include "../../Math/Math.h"
 #include "../../Exceptions/ImageException.h"
 
-_JATTA_EXPORT Jatta::ImageLoaders::BMP::BMP(const String& filename) : ImageLoader(filename)
-{
-    file = filename;
-}
-_JATTA_EXPORT Jatta::ImageLoaders::BMP::~BMP()
-{
-    Free();
-}
-
-_JATTA_EXPORT void Jatta::ImageLoaders::BMP::Free()
-{
-
-}
-
-_JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad()
+_JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad(const String& file)
 {
     Byte* buffer = new Byte[2];
     File::ReadData(file, buffer, 2);
@@ -31,33 +17,6 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad()
     if (buffer[0] == 0x42 && buffer[1] == 0x4D)
         return true;
     return false;
-}
-
-_JATTA_EXPORT Jatta::ImageInfo Jatta::ImageLoaders::BMP::GetImageInfo()
-{
-    ImageInfo ret;
-    ret.Format = ImageFormats::NONE;
-    ret.MipmapCount = 1;
-
-    if (!CanLoad())
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
-
-    unsigned int fileSize = File::GetFileSize(file);
-    if (fileSize < 14)
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
-
-    Byte* buffer = new Byte[fileSize];
-    File::ReadData(file, buffer, fileSize);
-
-    BITMAPHEADER header = ReadHeader(&buffer[0], fileSize);
-
-    UInt32 dibHeaderSize;
-    memcpy(&dibHeaderSize, &buffer[14], 4);
-    BITMAPDIBHEADER dibHeader;
-    dibHeader = ReadDIBHeader(&buffer[18], dibHeaderSize);
-    ret.Width = dibHeader.Width;
-    ret.Height = dibHeader.Height;
-    return ret;
 }
 
 _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::ReadHeader(Byte* data, UInt32 size)
@@ -166,9 +125,9 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
     memcpy(&header.Reserved, &data[116], 4);
 }
 
-_JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load()
+_JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
 {
-    if (!CanLoad())
+    if (!CanLoad(file))
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
 
     unsigned int fileSize = File::GetFileSize(file);
@@ -240,9 +199,9 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load()
     }
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHeader()
+_JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHeader(const String& file)
 {
-    if (!CanLoad())
+    if (!CanLoad(file))
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
 
     unsigned int fileSize = File::GetFileSize(file);
@@ -255,9 +214,9 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHea
     return ReadHeader(&buffer[0], fileSize);
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::GetDIBHeader()
+_JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::GetDIBHeader(const String& file)
 {
-    if (!CanLoad())
+    if (!CanLoad(file))
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
 
     unsigned int fileSize = File::GetFileSize(file);
@@ -270,4 +229,9 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Get
     UInt32 dibHeaderSize;
     memcpy(&dibHeaderSize, &buffer[14], 4);
     return ReadDIBHeader(&buffer[18], dibHeaderSize);
+}
+
+_JATTA_EXPORT void Jatta::ImageLoaders::BMP::Save(const String& filename, Jatta::Image* image)
+{
+    //TODO: BMP Saving.
 }

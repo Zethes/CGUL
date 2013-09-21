@@ -23,6 +23,12 @@ Jatta::String Jatta::ImageException::GetString() const
         return U8("Failed to load PNG file.");
         case ImageExceptionCode::JPEG:
         return U8("Failed to load JPEG file.");
+        case ImageExceptionCode::BMP_WRITE:
+        return U8("Failed to save BMP file.");
+        case ImageExceptionCode::PNG_WRITE:
+        return U8("Failed to save PNG file.");
+        case ImageExceptionCode::JPEG_WRITE:
+        return U8("Failed to save JPEG file.");
         case ImageExceptionCode::UNKNOWN:
         default:
         return U8("Unknown error occurred.");
@@ -63,6 +69,12 @@ Jatta::String Jatta::ImageException::GetReason() const
         return U8("File is not a JPEG file.");
         case ImageExceptionReason::JPEG_FAILED_TO_START_DECOMPRESSOR:
         return U8("Failed to start the decompressor.");
+        case ImageExceptionReason::NULL_POINTER:
+        return U8("A null pointer was passed in.");
+        case ImageExceptionReason::FAILED_WRITE_HEADER:
+        return U8("Failed to write header.");
+        case ImageExceptionReason::FAILED_WRITE_IMAGE:
+        return U8("Failed to write image data.");
         case ImageExceptionReason::UNKNOWN:
         default:
         return U8("Unknown.");

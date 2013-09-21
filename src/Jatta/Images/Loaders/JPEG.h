@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../../Utility/String.h"
-#include "../ImageLoader.h"
+#include "../Image.h"
 #include "../../External/Defines.h"
 
 namespace Jatta
@@ -17,19 +17,12 @@ namespace Jatta
     {
         /** @brief Class inherited from ImageLoader to support JPEG file formats.
          */
-        class JPEG : ImageLoader
+        class JPEG
         {
-        protected:
-            Jatta::String file;
         public:
-            _JATTA_EXPORT JPEG(const String& filename);  
-            _JATTA_EXPORT ~JPEG();
-
-            _JATTA_EXPORT virtual void Free();
-
-            _JATTA_EXPORT virtual bool CanLoad(); 
-            _JATTA_EXPORT virtual ImageInfo GetImageInfo();
-            _JATTA_EXPORT virtual Jatta::Image* Load();
+            _JATTA_EXPORT static bool CanLoad(const String& filename); 
+            _JATTA_EXPORT static Jatta::Image* Load(const String& filename);
+            _JATTA_EXPORT static void Save(const String& filename, Jatta::Image* image);
         };
     }
 }

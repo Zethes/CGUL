@@ -93,17 +93,6 @@ _JATTA_EXPORT int Jatta::Image::GetHeight() const
     return height;
 }
 
-_JATTA_EXPORT Jatta::ImageInfo Jatta::Image::GetInfo() const
-{
-    ImageInfo ret;
-    ret.Width = width;
-    ret.Height = height;
-    ret.Format = format;
-    ret.MipmapCount = mipmaps.size();
-
-    return ret;
-}
-
 _JATTA_EXPORT void Jatta::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
 {
     mipmaps.push_back(Mipmap(format, width, height, (void*)data));

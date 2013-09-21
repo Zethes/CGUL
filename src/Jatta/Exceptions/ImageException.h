@@ -20,6 +20,9 @@ namespace Jatta
             BMP,
             PNG,
             JPEG,
+            BMP_WRITE,
+            PNG_WRITE,
+            JPEG_WRITE,
         };
     }
     namespace ImageExceptionReason
@@ -42,6 +45,9 @@ namespace Jatta
             PNG_READ_IMAGE_ERROR,
             NOT_A_JPEG_FILE,
             JPEG_FAILED_TO_START_DECOMPRESSOR,
+            NULL_POINTER,
+            FAILED_WRITE_HEADER,
+            FAILED_WRITE_IMAGE,
         };
     }
     struct ImageException : public Exception

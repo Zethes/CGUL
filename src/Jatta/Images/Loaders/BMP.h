@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../../Utility/String.h"
-#include "../ImageLoader.h"
+#include "../Image.h"
 #include "../../External/Defines.h"
 
 namespace Jatta
@@ -94,24 +94,17 @@ namespace Jatta
 
         /** @brief Class inherited from ImageLoader to support BMP file formats.
          */
-        class BMP : ImageLoader
+        class BMP
         {
-            _JATTA_EXPORT BITMAPHEADER ReadHeader(Byte* data, UInt32 size);
-            _JATTA_EXPORT BITMAPDIBHEADER ReadDIBHeader(Byte* data, UInt32 size);
-        protected:
-            Jatta::String file;
+            _JATTA_EXPORT static BITMAPHEADER ReadHeader(Byte* data, UInt32 size);
+            _JATTA_EXPORT static BITMAPDIBHEADER ReadDIBHeader(Byte* data, UInt32 size);
         public:
-            _JATTA_EXPORT BMP(const String& filename);  
-            _JATTA_EXPORT ~BMP();
+            _JATTA_EXPORT static bool CanLoad(const String& filename); 
+            _JATTA_EXPORT static Jatta::Image* Load(const String& filename);
+            _JATTA_EXPORT static void Save(const String& filename, Jatta::Image* image);
 
-            _JATTA_EXPORT virtual void Free();
-
-            _JATTA_EXPORT virtual bool CanLoad(); 
-            _JATTA_EXPORT virtual ImageInfo GetImageInfo();
-            _JATTA_EXPORT virtual Jatta::Image* Load();
-
-            _JATTA_EXPORT BITMAPHEADER GetHeader();
-            _JATTA_EXPORT BITMAPDIBHEADER GetDIBHeader();
+            _JATTA_EXPORT static BITMAPHEADER GetHeader(const String& filename);
+            _JATTA_EXPORT static BITMAPDIBHEADER GetDIBHeader(const String& filename);
         };
     }
 }

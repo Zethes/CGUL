@@ -8,7 +8,6 @@
 #include "../Utility/String.h"
 #include "ImageFormats.h"
 #include "Mipmap.h"
-#include "ImageInfo.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -41,7 +40,6 @@ namespace Jatta
         _JATTA_EXPORT int GetMipmapCount() const;
         _JATTA_EXPORT int GetWidth() const;
         _JATTA_EXPORT int GetHeight() const;
-        _JATTA_EXPORT ImageInfo GetInfo() const;
 
         _JATTA_EXPORT void PushMipmap(UInt32 width, UInt32 height, const void* data);
         _JATTA_EXPORT void PopMipmap();

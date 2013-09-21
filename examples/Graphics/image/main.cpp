@@ -92,23 +92,21 @@ int main()
 {
     try
     {
-        ImageLoaders::PNG pngLoader("resources/logo.png");
-        if (!pngLoader.CanLoad())
+        if (!ImageLoaders::PNG::CanLoad("resources/logo.png"))
             throw FatalException("Cannot load PNG images.");
 
-        ImageLoaders::BMP bmpLoader("resources/logo.bmp");
-        if (!bmpLoader.CanLoad())
+        if (!ImageLoaders::BMP::CanLoad("resources/logo.bmp"))
             throw FatalException("Cannot load BMP images.");
 
-        ImageLoaders::JPEG jpegLoader("resources/logo.jpg");
-        if (!jpegLoader.CanLoad())
-            throw FatalException("Cannot load JPEG images.");
+       // if (!ImageLoaders::JPEG::CanLoad("resources/logo.jpg"))
+        //    throw FatalException("Cannot load JPEG images.");
 
-        Image*image = jpegLoader.Load();
-        std::cout << "Image has been loaded!" << std::endl;
+        Image*image = ImageLoaders::PNG::Load("resources/logo.png");
+        std::cout << "Image has been loaded! Saving to output.png..." << std::endl;
+        ImageLoaders::PNG::Save("output.png", image);
 
         WindowStyle style;
-        style.title = U8("resources/logo.jpg") + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.title = U8("resources/logo.png") + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
         style.width = image->GetWidth();
         style.height = image->GetHeight();
         style.backgroundColor = Colors::black;

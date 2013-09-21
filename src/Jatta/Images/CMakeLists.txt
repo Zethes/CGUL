@@ -8,7 +8,6 @@ set(Jatta_SOURCES
     ${Jatta_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Mipmap.cpp
     PARENT_SCOPE
 )
@@ -19,8 +18,6 @@ set(Jatta_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/Colors.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageFormats.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ImageInfo.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Mipmap.h
     PARENT_SCOPE
 )
