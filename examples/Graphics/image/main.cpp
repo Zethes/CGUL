@@ -102,16 +102,17 @@ int main()
 {
     try
     {
-        Image image;
-        if (!image.Load(U8("resources/logo.png")))
+        ImageLoaders::PNG loader;
+        if (!loader.CanLoad("resources/logo.png"))
         {
             throw FatalException("Cannot load PNG images.");
         }
+        Image* image = loader.Load("resources/logo.png");
 
         WindowStyle style;
-        style.title = U8("logo.png (") + image.GetWidth() + U8(", ") + image.GetHeight() + U8(")");
-        style.width = image.GetWidth();
-        style.height = image.GetHeight();
+        style.title = U8("logo.png (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.width = image->GetWidth();
+        style.height = image->GetHeight();
         style.backgroundColor = Colors::black;
         style.resizable = false;
 
@@ -139,7 +140,7 @@ int main()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->GetWidth(), image->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->GetData());
         glBindTexture(GL_TEXTURE_2D, 0);
 
         Timer timer;
