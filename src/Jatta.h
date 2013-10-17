@@ -86,6 +86,15 @@
 #include "Jatta/Images/Color.h"
 #include "Jatta/Images/Colors.h"
 #include "Jatta/Images/Image.h"
+#include "Jatta/Images/ImageFormats.h"
+#include "Jatta/Images/Mipmap.h"
+#include "Jatta/Images/Loaders/BMP.h"
+#ifdef PNG_FOUND
+#   include "Jatta/Images/Loaders/PNG.h"
+#endif
+#ifdef JPEG_FOUND
+#   include "Jatta/Images/Loaders/JPEG.h"
+#endif
 
 #include "Jatta/Math/Math.h"
 #include "Jatta/Math/Matrix.h"

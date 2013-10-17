@@ -658,6 +658,12 @@ namespace Jatta
         /** @brief Equivalent to GL_UNSIGNED_INT_10_10_10_2.
          */
         static const Enum UNSIGNED_INT_10_10_10_2     = 0x8036;
+        /** @brief Equivalent to GL_RGB4.
+         */
+        static const Enum RGB4                        = 0x804F;
+        /** @brief Equivalent to GL_RGBA4.
+         */
+        static const Enum RGBA4                       = 0x8056;
         /** @brief Equivalent to GL_PROXY_TEXTURE_2D.
          */
         static const Enum PROXY_TEXTURE_2D            = 0x8064;
