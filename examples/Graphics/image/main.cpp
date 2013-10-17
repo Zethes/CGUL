@@ -5,86 +5,96 @@ using namespace Jatta;
 
 #include <iostream>
 
-OpenGL::Program LoadShader(const String& vertexFile, const String& fragmentFile)
+UInt LoadShader(const String& vertexFile, const String& fragmentFile)
 {
     // Create autoreleased shaders to comply with RAII
     // If an exception occurs, the shaders' Delete methods will be called
-    AutoRelease<OpenGL::Shader> vertexShader, fragmentShader;
-    vertexShader.SetRelease(&OpenGL::Shader::Delete);
-    fragmentShader.SetRelease(&OpenGL::Shader::Delete);
+    UInt vertexShader, fragmentShader;
 
     // Create the shaders
-    vertexShader.Create(GL::VERTEX_SHADER);
-    fragmentShader.Create(GL::FRAGMENT_SHADER);
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
     // Load the contents of the files
     String vertexSource, fragmentSource;
     File::ReadText(vertexFile, &vertexSource);
-    vertexShader.SetSource(vertexSource);
     File::ReadText(fragmentFile, &fragmentSource);
-    fragmentShader.SetSource(fragmentSource);
+
+    // Set the shader sources
+    const char* characters = vertexSource.GetCString();
+    const GLchar** data = &characters;
+    GLint count = (GLint)vertexSource.GetSize();
+    glShaderSource((GLuint)vertexShader, (GLsizei)1, data, &count);
+    characters = fragmentSource.GetCString();
+    count = (GLint)fragmentSource.GetSize();
+    glShaderSource((GLuint)fragmentShader, (GLsizei)1, data, &count);
 
     // Compile the shaders
-    vertexShader.Compile();
-    fragmentShader.Compile();
+    glCompileShader(vertexShader);
+    glCompileShader(fragmentShader);
 
     // Create the program
-    AutoRelease<OpenGL::Program> program;
-    program.SetRelease(&OpenGL::Program::Delete);
-    program.Create();
+    UInt program = glCreateProgram();
 
     // Setup the attributes
-    program.BindAttribLocation(GL::POSITION1, "vertPosition");
-    program.BindAttribLocation(GL::TEXCOORD1, "vertTexCoord");
+    glBindAttribLocation(program, GL::POSITION1, "vertPosition");
+    glBindAttribLocation(program, GL::TEXCOORD1, "vertTexCoord");
 
     // Link the program
-    program.AttachShader(vertexShader);
-    program.AttachShader(fragmentShader);
-    program.Link();
-    program.Validate();
-
-    // Do not autodelete the program once AutoRelease goes out of scope since we will be passing it
-    // off in the return
-    program.SetRelease(NULL);
+    SInt status;
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    glLinkProgram(program);
+    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    // todo: check status, error
+    glValidateProgram(program);
+    glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
+    // todo: check status, error
 
     // All done, the shaders can be deleted (and they will automatically since they are
     // AutoRelease'd), all we care about is the program
     return program;
 }
 
-OpenGL::VertexArray MakeBox()
+UInt MakeBox()
 {
     // Setup the buffer data
     Vector2 boxPositions[] = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0) };
     Vector2 boxTexCoords[] = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0) };
 
     // Create the vertex array object
-    AutoRelease<OpenGL::VertexArray> vertexArray;
-    vertexArray.SetRelease(&OpenGL::VertexArray::Delete);
-    vertexArray.Create();
-    vertexArray.Bind();
+#   ifndef MACOS
+    UInt vertexArray;
+    glGenVertexArrays(1, &vertexArray);
+    glBindVertexArray(vertexArray);
+#   else
+    UInt vertexArray;
+    glGenVertexArraysAPPLE(1, &vertexArray);
+    glBindVertexArrayAPPLE(vertexArray);
+#   endif
 
     // Setup the position buffer and attach it to the vertex array
-    AutoRelease<OpenGL::Buffer> buffer1;
-    buffer1.SetRelease(&OpenGL::Buffer::Delete);
-    buffer1.Create(GL::ARRAY_BUFFER);
-    buffer1.Bind();
-    buffer1.Data(4 * sizeof(Vector2), boxPositions, GL::STATIC_DRAW);
-    vertexArray.AttribPointer(GL::POSITION1, 2, GL::FLOAT, false, 0, 0);
-    vertexArray.EnableAttribArray(GL::POSITION1);
+    UInt buffer1;
+    glGenBuffers(1, &buffer1);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer1);
+    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2), boxPositions, GL_STATIC_DRAW);
+    glVertexAttribPointer(GL::POSITION1, 2, GL_FLOAT, false, 0, 0);
+    glEnableVertexAttribArray(GL::POSITION1);
 
     // Setup the texcoord buffer and attach it to the vertex array
-    AutoRelease<OpenGL::Buffer> buffer2;
-    buffer2.SetRelease(&OpenGL::Buffer::Delete);
-    buffer2.Create(GL::ARRAY_BUFFER);
-    buffer2.Bind();
-    buffer2.Data(4 * sizeof(Vector2), boxTexCoords, GL::STATIC_DRAW);
-    vertexArray.AttribPointer(GL::TEXCOORD1, 2, GL::FLOAT, false, 0, 0);
-    vertexArray.EnableAttribArray(GL::TEXCOORD1);
+    UInt buffer2;
+    glGenBuffers(1, &buffer2);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer2);
+    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2), boxTexCoords, GL_STATIC_DRAW);
+    glVertexAttribPointer(GL::TEXCOORD1, 2, GL_FLOAT, false, 0, 0);
+    glEnableVertexAttribArray(GL::TEXCOORD1);
 
     // All done
-    vertexArray.Unbind();
-    vertexArray.SetRelease(NULL);
+#   ifndef MACOS
+    glBindVertexArray(0);
+#   else
+    glBindVertexArrayAPPLE(0);
+#   endif
     return vertexArray;
 }
 
@@ -116,19 +126,21 @@ int main()
         glEnable(GL_ALPHA_TEST);
         glEnable(GL_TEXTURE_2D);
 
-        OpenGL::Program program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
+        UInt program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
 
-        OpenGL::VertexArray box = MakeBox();
+        UInt box = MakeBox();
 
-        OpenGL::Texture texture;
-        texture.Create(GL::TEXTURE_2D);
-        texture.Bind();
-        texture.SetTextureWrapS(GL::REPEAT);
-        texture.SetTextureWrapT(GL::REPEAT);
-        texture.SetMinFilter(GL::LINEAR);
-        texture.SetMagFilter(GL::LINEAR);
-        texture.Image2D(0, GL::RGBA, image.GetWidth(), image.GetHeight(), 0, GL::RGBA, GL::UNSIGNED_BYTE, image.GetData());
-        texture.Unbind();
+        UInt texture;
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData());
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         Timer timer;
         Float32 hue = 0.0f;
@@ -140,17 +152,16 @@ int main()
 
             context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
-            program.Bind();
-            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("orthoMatrix"), false, Matrix::MakeOrtho(0, 1, 1, 0));
-            OpenGL::Program::UniformMatrix4f(program.GetUniformLocation("modelMatrix"), false, Matrix::Identity());
-            OpenGL::Program::Uniform1i(program.GetUniformLocation("texture"), 0);
-            OpenGL::ClearErrors();
-            OpenGL::Texture::Active(0);
-            texture.Bind();
-            box.Bind();
-            box.DrawArrays(GL::QUADS, 0, 4);
-            box.Unbind();
-            program.Unbind();
+            glUseProgram(program);
+            glUniformMatrix4fv(glGetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho(0, 1, 1, 0).GetData());
+            glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, false, Matrix::Identity().GetData());
+            glUniform1i(glGetUniformLocation(program, "texture"), 0);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glBindVertexArray(box);
+            glDrawArrays(GL_QUADS, 0, 4);
+            glBindVertexArray(0);
+            glUseProgram(0);
             context.SwapBuffers();
 
             Window::Update();
