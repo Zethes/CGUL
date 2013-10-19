@@ -49,6 +49,9 @@ fast_check_include_file(vector CPP_HEADER_VECTOR)
 fast_check_include_file(cstdint CPP_HEADER_CSTDINT)
 fast_check_include_file(stdint.h CPP_HEADER_STDINT_H)
 
+fast_check_include_file(cstddef CPP_HEADER_CSTDDEF)
+fast_check_include_file(stddef.h CPP_HEADER_STDDEF_H)
+
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_HYPERBOLIC_ARC hyperbolic_arc.cpp)
 check_feature(CPP_HAS_MOVE_CONSTRUCTOR move_constructor.cpp)

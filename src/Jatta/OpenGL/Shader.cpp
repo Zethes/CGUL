@@ -7,8 +7,6 @@
 #include "../Exceptions/FatalException.h"
 #include "../Exceptions/OpenGLException.h"
 
- #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw Jatta::FatalException(U8(str)); }
-
 _JATTA_EXPORT Jatta::OpenGL::Shader::Shader()
 {
     shader = 0;

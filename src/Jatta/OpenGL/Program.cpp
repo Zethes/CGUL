@@ -7,8 +7,6 @@
 #include "../Exceptions/FatalException.h"
 #include "../Exceptions/OpenGLException.h"
 
-#define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 _JATTA_EXPORT void Jatta::OpenGL::Program::Uniform1f(SInt32 location, Float32 value0)
 {
     glUniform1f(location, value0);

@@ -5,8 +5,6 @@
 
 #include "Context.h"
 
-#define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 static Jatta::OpenGL::Context* currentContext;
 
 _JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()

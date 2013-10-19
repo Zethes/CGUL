@@ -5,8 +5,6 @@
 
 #include "Buffer.h"
 
-#define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 _JATTA_EXPORT Jatta::OpenGL::Buffer::Buffer()
 {
     this->buffer = 0;

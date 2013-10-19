@@ -37,6 +37,9 @@
 #cmakedefine CPP_HEADER_CSTDINT
 #cmakedefine CPP_HEADER_STDINT_H
 
+#cmakedefine CPP_HEADER_CSTDDEF
+#cmakedefine CPP_HEADER_STDDEF_H
+
 #cmakedefine CPP_HAS_DOUBLE_REFERENCE
 #cmakedefine CPP_HAS_HYPERBOLIC_ARC
 #cmakedefine CPP_HAS_MOVE_CONSTRUCTOR

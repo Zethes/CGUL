@@ -7,8 +7,6 @@
 #include "Texture.h"
 #include "RenderBuffer.h"
 
-#define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 _JATTA_EXPORT Jatta::OpenGL::FrameBuffer::FrameBuffer()
 {
     frameBuffer = 0;

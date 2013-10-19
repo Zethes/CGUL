@@ -20,10 +20,12 @@ namespace Jatta
      */
     namespace Math
     {
-        //! @brief The constant PI, defined as 3.14159f
-        const Float32 pi = 3.14159f;
-        //! @brief The constant e, defined as 2.71828f
-        const Float32 e = 2.71828f;
+        //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
+        const Float32 tau = 6.2831853071795864f;
+        //! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
+        const Float32 pi = 3.14159265358979323f;
+        //! @brief The constant e, defined as 2.718281828459045235
+        const Float32 e = 2.718281828459045235f;
 
         //! @brief Calculates the absolute value of x.
         _JATTA_INLINE_DEFINE Float32 Abs(Float32 x);

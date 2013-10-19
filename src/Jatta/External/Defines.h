@@ -180,4 +180,9 @@
 #   define NULL 0
 #endif
 
+#ifdef JATTA_BUILD
+#   define GLCLEAR() { glGetError(); }
+#   define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL: " str); }
+#endif
+
 #endif

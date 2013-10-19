@@ -70,6 +70,11 @@ namespace Jatta
 #elif defined(CPP_HEADER_STDINT_H)
 #   include <stdint.h>
 #endif
+#if defined(CPP_HEADER_CSTDDEF)
+#   include <cstddef>
+#elif defined(CPP_HEADER_STDDEF_H)
+#   include <stddef.h>
+#endif
 
 // Jatta Type Defines
 #ifdef CPP_HAS_STATIC_ASSERT
@@ -245,12 +250,22 @@ namespace Jatta
      */
     typedef unsigned long ULong;
 
-    /** @brief A value capable of holding an enumeration.
+    /** @brief A type capable of holding an enumeration.
      *  @details Enumerations are iffy in C++.  Older compilers hate typed enumerations.  It's
      *  best, for portability, to reference all enumerations as system-specific sized integer.
      *  (and hope that you never need more than 65535 enumerations)
      */
     typedef SInt Enum;
+
+    /** @brief A type capable of holding the difference between two pointers.
+     */
+#if defined(CPP_HEADER_CSTDDEF)
+    typedef std::ptrdiff_t PtrDiff;
+#elif defined(CPP_HEADER_STDDEF_H)
+#   typedef ptrdiff_t PtrDiff;
+#else
+    typedef SignedSize PtrDiff
+#endif
 }
 #undef TYPE
 
@@ -291,7 +306,7 @@ namespace Jatta
 #   endif
 #   ifdef MACOS
 #       ifdef Jatta_USE_OPENGL
-#           include <GL/glew.h>
+#           include <GL/glew.h>cstddef
 #       endif
 #       import <Cocoa/Cocoa.h>
 #   endif

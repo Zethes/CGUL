@@ -5,8 +5,6 @@
 
 #include "OpenGL.h"
 
-#define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 /** @brief Clears out OpenGL errors.
  *  @details Since the OpenGL portion of Jatta is experimental, this will be a useful tool to
  *  determine where errors are actually occurring.  This is a direct result of OpenGL's utter shit

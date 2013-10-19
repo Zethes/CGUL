@@ -5,8 +5,6 @@
 
 #include "Texture.h"
 
- #define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error(str); }
-
 _JATTA_EXPORT void Jatta::OpenGL::Texture::Active(UInt32 active)
 {
     glActiveTexture(GL_TEXTURE0 + active);
