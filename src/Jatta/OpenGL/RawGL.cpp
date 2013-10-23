@@ -159,7 +159,7 @@ _JATTA_EXPORT void Jatta::GL::GenVertexArrays(SignedSize n, UInt* arrays)
 _JATTA_EXPORT void Jatta::GL::GetProgramInfoLog(UInt program, SignedSize maxLength, SignedSize* length, char* infoLog)
 {
     GLCLEAR();
-    glGetProgramInfoLog(program, maxLength, length, infoLog);
+    glGetProgramInfoLog(program, maxLength, (GLsizei*)length, infoLog);
     GLCHECK("Failed to get shader info log.");
 }
 
@@ -171,7 +171,7 @@ _JATTA_EXPORT void Jatta::GL::GetProgramInfoLog(UInt program, String* infoLog)
     // TODO: length could be 0 if there is no log info, need to handle that case
     char* buffer = new char[maxLength];
     SignedSize length;
-    glGetProgramInfoLog(program, maxLength, &length, buffer);
+    glGetProgramInfoLog(program, maxLength, (GLsizei*)&length, buffer);
     *infoLog = buffer;
     delete[] buffer;
     GLCHECK("Failed to get shader info log.");
@@ -187,7 +187,7 @@ _JATTA_EXPORT void Jatta::GL::GetProgramiv(UInt program, Enum pname, SInt* param
 _JATTA_EXPORT void Jatta::GL::GetShaderInfoLog(UInt shader, SignedSize maxLength, SignedSize* length, char* infoLog)
 {
     GLCLEAR();
-    glGetShaderInfoLog(shader, maxLength, length, infoLog);
+    glGetShaderInfoLog(shader, maxLength, (GLsizei*)length, infoLog);
     GLCHECK("Failed to get shader info log.");
 }
 
@@ -199,7 +199,7 @@ _JATTA_EXPORT void Jatta::GL::GetShaderInfoLog(UInt shader, String* infoLog)
     // TODO: length could be 0 if there is no log info, need to handle that case
     char* buffer = new char[maxLength];
     SignedSize length;
-    glGetShaderInfoLog(shader, maxLength, &length, buffer);
+    glGetShaderInfoLog(shader, maxLength, (GLsizei*)&length, buffer);
     *infoLog = buffer;
     delete[] buffer;
     GLCHECK("Failed to get shader info log.");
