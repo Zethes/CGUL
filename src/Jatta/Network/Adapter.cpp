@@ -5,7 +5,7 @@
 
 #include "Adapter.h"
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 #   include <winsock2.h>
 #   include <iphlpapi.h>
 #else
@@ -29,7 +29,7 @@ void Jatta::Network::GetAdapters(FixedList<Adapter>* adapters)
 {
     std::vector<Adapter> result;
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     // TODO: this wont work correctly right now (?)
     PIP_ADAPTER_INFO adapterInfo;
     ULONG adapterLength = sizeof(IP_ADAPTER_INFO);

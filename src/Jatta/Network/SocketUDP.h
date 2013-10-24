@@ -20,7 +20,7 @@ namespace Jatta
         {
             #if defined(MSVC)
             unsigned int __w64 sock;
-            #elif defined(WINDOWS)
+            #elif defined(JATTA_WINDOWS)
             unsigned int sock;
             #else
             int sock;

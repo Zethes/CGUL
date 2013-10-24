@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "OpenGL.h"
-#if defined(JATTA_BUILD) && defined(MACOS)
+#if defined(JATTA_BUILD) && defined(JATTA_MACOS)
 #   import "MacOS/OpenGLView.h"
 #endif
 #include "../Windows/Window.h"
@@ -21,21 +21,21 @@ namespace Jatta
         {
             Window* window;
 
-#           ifdef WINDOWS
+#           ifdef JATTA_WINDOWS
             _JATTA_PIXELFORMATDESCRIPTOR pfd;
             _JATTA_HDC deviceContext;
             UInt32 pixelFormat;
             _JATTA_HGLRC renderContext;
 #           endif
 
-#           ifdef LINUX
+#           ifdef JATTA_LINUX
             _JATTA_DISPLAY display;
             _JATTA_GLXCONTEXT context;
 #           endif
 
-#           if defined(JATTA_BUILD) && defined(MACOS)
+#           if defined(JATTA_BUILD) && defined(JATTA_MACOS)
             OpenGLView* view;
-#           elif defined(MACOS)
+#           elif defined(JATTA_MACOS)
             void* view;
 #           endif
         public:

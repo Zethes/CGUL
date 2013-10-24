@@ -10,7 +10,7 @@
 #include "../External/Once.h"
 
 #ifndef DOXYGEN
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 static bool __jatta_network_initiated = false;
 #endif
 #endif
@@ -24,7 +24,7 @@ namespace Jatta
 #       ifndef DOXYGEN
         void __jatta_network_initiate()
         {
-        #   ifdef WINDOWS
+        #   ifdef JATTA_WINDOWS
             if (!__jatta_network_initiated)
             {
                 WSADATA wsaData;
@@ -39,7 +39,7 @@ namespace Jatta
 
         void __jatta_network_clean()
         {
-        #   ifdef WINDOWS
+        #   ifdef JATTA_WINDOWS
             if (__jatta_network_initiated)
             {
                 WSACleanup();

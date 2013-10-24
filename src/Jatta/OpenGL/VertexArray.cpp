@@ -12,7 +12,7 @@ _JATTA_EXPORT Jatta::OpenGL::VertexArray::VertexArray()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Create()
 {
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     glGenVertexArraysAPPLE(1, &vertexArray);
 #   else
     glGenVertexArrays(1, &vertexArray);
@@ -22,7 +22,7 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Create()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Delete()
 {
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     glDeleteVertexArraysAPPLE(1, &vertexArray);
 #   else
     glDeleteVertexArrays(1, &vertexArray);
@@ -41,7 +41,7 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
     {
         throw std::runtime_error("Cannot bind invalid vertex array.");
     }
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     glBindVertexArrayAPPLE(vertexArray);
 #   else
     glBindVertexArray(vertexArray);
@@ -51,7 +51,7 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
 
 _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Unbind()
 {
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     glBindVertexArrayAPPLE(0);
 #   else
     glBindVertexArray(0);

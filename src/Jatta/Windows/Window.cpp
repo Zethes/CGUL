@@ -9,7 +9,7 @@
 
 #include <limits.h>
 
-#ifdef MACOS
+#ifdef JATTA_MACOS
 #   import "MacOS/Application.h"
 #endif
 
@@ -17,7 +17,7 @@
 #   include "../OpenGL/Context.h"
 #endif
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LONG_PTR ptr = GetWindowLongPtr(handle, GWLP_USERDATA);
@@ -69,7 +69,7 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
 }
 #endif
 
-#ifdef LINUX
+#ifdef JATTA_LINUX
 std::map<Window, Jatta::Window*> Jatta::Window::windowMap;
 Display* Jatta::Window::display;
 bool Jatta::Window::initialized = false;
@@ -100,7 +100,7 @@ _JATTA_EXPORT Jatta::Window::Window(Window&& move)
  */
 _JATTA_EXPORT void Jatta::Window::Update()
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     MSG Msg;
     while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE) > 0)
     {
@@ -109,7 +109,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
     }
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (display)
     {
         while (XPending(display))
@@ -154,7 +154,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
     }
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     //[[Application sharedApplication] updateWindows];
@@ -173,7 +173,7 @@ _JATTA_EXPORT Jatta::Window::Window()
     context = NULL;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
@@ -182,7 +182,7 @@ _JATTA_EXPORT Jatta::Window::Window()
     }
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     handle = [WindowDelegate alloc];
 #   endif
 }
@@ -192,19 +192,19 @@ _JATTA_EXPORT Jatta::Window::Window()
 _JATTA_EXPORT Jatta::Window::~Window()
 {
     Close();
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     //[handle release];
 #   endif
 }
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 _JATTA_EXPORT HWND Jatta::Window::_GetHandle() const
 {
     return handle;
 }
 #endif
 
-#ifdef LINUX
+#ifdef JATTA_LINUX
 _JATTA_EXPORT Display* Jatta::Window::_GetDisplay() const
 {
     return display;
@@ -216,7 +216,7 @@ _JATTA_EXPORT ::Window Jatta::Window::_GetHandle() const
 }
 #endif
 
-#if defined(JATTA_BUILD) && defined(MACOS)
+#if defined(JATTA_BUILD) && defined(JATTA_MACOS)
 WindowDelegate* Jatta::Window::_GetHandle() const
 {
     return handle;
@@ -227,7 +227,7 @@ WindowDelegate* Jatta::Window::_GetHandle() const
  */
 _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     // Generate a unique class name for this window
     std::wostringstream ss;
     static int windowCounter = 0;
@@ -283,7 +283,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     ShowWindow(handle, SW_SHOW);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     int screen = DefaultScreen(display);
     Visual* visual = DefaultVisual(display, screen);
     int depth = DefaultDepth(display, screen);
@@ -301,7 +301,7 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
 
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     // Create an autorelease pool
     // There won't be many things in it from start to finish (since most everything is C++ side),
     // but it's still here for those few things that should be autoreleased!
@@ -343,7 +343,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
     }
 #   endif
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     if (IsWindow(handle))
     {
         DestroyWindow(handle);
@@ -351,7 +351,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
     handle = 0;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (IsOpen())
     {
         XDestroyWindow(display, handle);
@@ -361,7 +361,7 @@ _JATTA_EXPORT void Jatta::Window::Close()
     display = NULL;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     if (IsOpen())
     {
         [handle close];
@@ -379,7 +379,7 @@ _JATTA_EXPORT void Jatta::Window::HandleMessages()
         return;
     }
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     ::Window root, child;
     int rootX, rootY, winX, winY;
     unsigned int mask;
@@ -432,15 +432,15 @@ _JATTA_EXPORT void Jatta::Window::SetTitle(const String& title)
         return;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     SetWindowText(handle, title._ToWideString().c_str());
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XChangeProperty(display, handle, XInternAtom(display, "_NET_WM_NAME", false), XInternAtom(display, "UTF8_STRING", false), 8, PropModeReplace, (unsigned char*)title.GetData().c_str(), title.GetSize());
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     [handle setTitle: title];
 #   endif
 }
@@ -454,7 +454,7 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
         return "";
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     int size = GetWindowTextLength(this->handle) + 1;
     wchar_t* buffer = new wchar_t[size];
     GetWindowText(this->handle, buffer, size);
@@ -464,7 +464,7 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
     return title;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     Atom nameAtom = XInternAtom(display, "_NET_WM_NAME", false);
     Atom utf8Atom = XInternAtom(display, "UTF8_STRING", false);
     Atom type;
@@ -484,7 +484,7 @@ _JATTA_EXPORT Jatta::String Jatta::Window::GetTitle() const
     return "";
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getTitle];
 #   endif
 
@@ -500,7 +500,7 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
         return;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     if (backgroundBrush)
     {
         DeleteObject(backgroundBrush);
@@ -514,14 +514,14 @@ _JATTA_EXPORT void Jatta::Window::SetBackgroundColor(const Color& color)
     UpdateWindow(handle);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XSetWindowBackground(display, this->handle, color.b | (color.g << 8) | (color.r << 16));
     XClearWindow(display, this->handle);
     XFlush(display);
     backgroundColor = color;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     [handle setBackgroundColor: color];
 #   endif
 }
@@ -535,18 +535,18 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
         return Jatta::Color(0, 0, 0, 0);
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     HGDIOBJ brush = (HGDIOBJ)GetClassLongPtr(handle, GCLP_HBRBACKGROUND);
     LOGBRUSH lb;
     GetObject(brush, sizeof(LOGBRUSH), &lb);
     return Color((lb.lbColor & 255), ((lb.lbColor >> 8) & 255), ((lb.lbColor >> 16) & 255), 255);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     return backgroundColor;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getBackgroundColor];
 #   endif
     return Color(0, 0, 0);
@@ -556,13 +556,13 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
  */
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, width, GetHeight()};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (GetResizable())
     {
         XResizeWindow(display, this->handle, width, GetHeight());
@@ -577,7 +577,7 @@ _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
     }
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [handle setWidth: width];
     [pool drain];
@@ -593,7 +593,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
         return 0;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.left + rect.right;
@@ -601,13 +601,13 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
     return rect.right - rect.left - borders;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
     return attributes.width;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getWidth];
 #   endif
 }
@@ -616,13 +616,13 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
  */
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, GetWidth(), height};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (GetResizable())
     {
         XResizeWindow(display, this->handle, GetWidth(), height);
@@ -637,7 +637,7 @@ _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
     }
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [handle setHeight: height];
     [pool drain];
@@ -653,7 +653,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
         return 0;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     int borders = -rect.top + rect.bottom;
@@ -661,13 +661,13 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
     return rect.bottom - rect.top - borders;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
     return attributes.height;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getHeight];
 #   endif
 }
@@ -676,13 +676,13 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
  */
 _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {(LONG)0, (LONG)0, (LONG)size.x, (LONG)size.y};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (GetResizable())
     {
         XResizeWindow(display, this->handle, size.x, size.y);
@@ -697,7 +697,7 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
     }
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [handle setSize: size];
     [pool drain];
@@ -713,17 +713,17 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
         return Jatta::Vector2(0, 0);
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return Vector2((Float32)GetWidth(), (Float32)GetHeight());
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
     return Vector2(attributes.height, attributes.width);
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return Vector2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
 }
@@ -737,7 +737,7 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
         return;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     // Capture the current size of the window
     RECT windowRect = {0, 0, GetWidth(), GetHeight()};
 
@@ -762,7 +762,7 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
     SetWindowPos(handle, 0, 0, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XSizeHints hints;
     hints.flags = PMinSize | PMaxSize;
     if (resizable)
@@ -778,7 +778,7 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
     XSetWMNormalHints(display, handle, &hints);
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     [handle setResizable: resizable];
 #   endif
 }
@@ -792,11 +792,11 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
         return false;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return ((GetWindowLongPtr(this->handle, GWL_STYLE) & WS_THICKFRAME) || (GetWindowLongPtr(this->handle, GWL_STYLE) & WS_MAXIMIZEBOX));
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     XSizeHints hints;
     long hintsSupplied;
     XGetWMNormalHints(display, this->handle, &hints, &hintsSupplied);
@@ -807,7 +807,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
     return (hints.min_width != hints.max_width || hints.min_height != hints.max_height);
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getResizable];
 #   endif
     return false;
@@ -822,13 +822,13 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
         return Jatta::Vector4(0, 0, 0, 0);
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     return Vector4((float)-rect.left, (float)-rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     Atom netFrameExtents = XInternAtom(display, "_NET_FRAME_EXTENTS", False);
     Atom actualType;
     int actualFormat;
@@ -843,7 +843,7 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
     return Vector4(0, 0, 0, 0);
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle getFrameSize];
 #   endif
 }
@@ -852,15 +852,15 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
  */
 _JATTA_EXPORT bool Jatta::Window::IsOpen() const
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return IsWindow(handle) == TRUE;
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     return display && handle;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     if (handle == nil)
     {
         return false;
@@ -887,11 +887,11 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
         return false;
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return (handle == GetForegroundWindow());
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     Atom netActiveWindow = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
 
     ::Window activeWindow = None;
@@ -909,7 +909,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::IsFocused() const
     return activeWindow == handle;
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     return [handle isFocused];
 #   endif
 }

@@ -27,7 +27,7 @@ namespace Jatta
 {
     // TODO: error checking?
 
-    #ifdef WINDOWS
+    #ifdef JATTA_WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
     #else
@@ -171,7 +171,7 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
  */
 void Jatta::Network::SocketUDP::Close()
 {
-    #ifdef WINDOWS
+    #ifdef JATTA_WINDOWS
     closesocket(sock);
     #else
     ::close(sock);
@@ -225,7 +225,7 @@ int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef WINDOWS
+        #ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
         #else
         if (errno == EWOULDBLOCK)
@@ -275,7 +275,7 @@ int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, 
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef WINDOWS
+        #ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
         #else
         if (errno == EWOULDBLOCK)
@@ -327,7 +327,7 @@ int Jatta::Network::SocketUDP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef WINDOWS
+        #ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
         #else
         if (errno == EWOULDBLOCK)

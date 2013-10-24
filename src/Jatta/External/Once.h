@@ -6,19 +6,19 @@
 #pragma once
 
 // Operating System Detection
-#if !defined(WINDOWS) & !defined(LINUX) & !defined(MACOS)
+#if !defined(JATTA_WINDOWS) & !defined(JATTA_LINUX) & !defined(JATTA_MACOS)
 #   if defined(_WIN32)
-#       define WINDOWS
+#       define JATTA_WINDOWS
 #   elif defined(__APPLE__)
-#       define MACOS
+#       define JATTA_MACOS
 #   elif defined(__GNUC__)
-#       define LINUX
+#       define JATTA_LINUX
 #   else
-#       error Failed to automatically detected operating system.  Must define WINDOWS, LINUX, or MACOS on the command line.
+#       error Failed to automatically detected operating system.  Must define JATTA_WINDOWS, JATTA_LINUX, or JATTA_MACOS on the command line.
 #   endif
 #endif
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 namespace Jatta
 {
     struct _JATTA_PIXELFORMATDESCRIPTOR
@@ -281,7 +281,7 @@ namespace Jatta
 #endif
 
 #if defined(JATTA_INCLUDES)
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
 #       define UNICODE
 #       define _UNICODE
 #       ifdef Jatta_USE_NETWORK
@@ -294,7 +294,7 @@ namespace Jatta
 #           include <GL/glew.h>
 #       endif
 #   endif
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
 #       include <setjmp.h>
 #       include <X11/Xlib.h>
 #       include <X11/Xatom.h>
@@ -304,7 +304,7 @@ namespace Jatta
 #           include <GL/glew.h>
 #       endif
 #   endif
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
 #       ifdef Jatta_USE_OPENGL
 #           include <GL/glew.h>cstddef
 #       endif
@@ -336,7 +336,7 @@ namespace Jatta
 #       include <openssl/ssl.h>
 #       include <openssl/err.h>
 #   endif
-#   if defined(LINUX) | defined(MACOS)
+#   if defined(JATTA_LINUX) | defined(JATTA_MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>
 #       include <fcntl.h>
@@ -356,7 +356,7 @@ namespace Jatta
 #   endif
 #endif
 
-#if defined(WINDOWS) && !defined(_WIN32_WINNT)
+#if defined(JATTA_WINDOWS) && !defined(_WIN32_WINNT)
 #   define _WIN32_WINNT 0x0501
 #endif
 

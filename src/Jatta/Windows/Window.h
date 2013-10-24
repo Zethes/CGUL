@@ -8,7 +8,7 @@
 #include "WindowStyle.h"
 #include "../Math/Vector2.h"
 #include "../Math/Vector4.h"
-#if defined(JATTA_BUILD) && defined(MACOS)
+#if defined(JATTA_BUILD) && defined(JATTA_MACOS)
 #   include "MacOS/WindowDelegate.h"
 #endif
 #include "../External/Defines.h"
@@ -36,7 +36,7 @@ namespace Jatta
         friend class OpenGL::Context;
 #       endif
 
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         _JATTA_HWND handle;
 
         char className[20];
@@ -46,7 +46,7 @@ namespace Jatta
         static long __stdcall WindowProcedure(_JATTA_HWND handle, unsigned int message, unsigned int wParam, long int lParam);
 #       endif
 
-#       ifdef LINUX
+#       ifdef JATTA_LINUX
         static std::map<_JATTA_WINDOW, Window*> windowMap;
         static _JATTA_DISPLAY display;
         _JATTA_WINDOW handle;
@@ -55,9 +55,9 @@ namespace Jatta
         static Boolean initialized;
 #       endif
 
-#       if defined(JATTA_BUILD) && defined(MACOS)
+#       if defined(JATTA_BUILD) && defined(JATTA_MACOS)
         WindowDelegate* handle;
-#       elif defined(MACOS)
+#       elif defined(JATTA_MACOS)
         void* handle;
 #       endif
 
@@ -80,16 +80,16 @@ namespace Jatta
         // @brief Deconstructor.
         _JATTA_EXPORT ~Window();
 
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         _JATTA_EXPORT _JATTA_HWND _GetHandle() const;
 #       endif
 
-#       ifdef LINUX
+#       ifdef JATTA_LINUX
         _JATTA_EXPORT _JATTA_DISPLAY _GetDisplay() const;
         _JATTA_EXPORT _JATTA_WINDOW _GetHandle() const;
 #       endif
 
-#       if defined(JATTA_BUILD) && defined(MACOS)
+#       if defined(JATTA_BUILD) && defined(JATTA_MACOS)
         WindowDelegate* _GetHandle() const;
 #       endif
 

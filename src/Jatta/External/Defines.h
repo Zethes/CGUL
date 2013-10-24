@@ -16,7 +16,7 @@
 
 #ifndef DOXYGEN
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 #   define _JATTA_HWND void*
 #   define _JATTA_DWORD long
 #   define _JATTA_PIXELFORMATDESCRIPTOR Jatta::_JATTA_PIXELFORMATDESCRIPTOR
@@ -25,7 +25,7 @@
 #   define _JATTA_HGDIOBJ void*
 #endif
 
-#ifdef LINUX
+#ifdef JATTA_LINUX
 #   define _JATTA_DISPLAY void*
 #   define _JATTA_WINDOW void*
 #   define _JATTA_GLXCONTEXT void*
@@ -78,7 +78,7 @@
 #   else
 #       define CHECK(x, y)
 #   endif
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
         CHECK(::HWND, _JATTA_HWND);
         CHECK(::DWORD, _JATTA_DWORD);
         CHECK(::PIXELFORMATDESCRIPTOR, _JATTA_PIXELFORMATDESCRIPTOR);
@@ -86,7 +86,7 @@
         CHECK(::HGLRC, _JATTA_HGLRC);
         CHECK(::HGDIOBJ, _JATTA_HGDIOBJ);
 #   endif
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
         CHECK(::Display*, _JATTA_DISPLAY);
         CHECK(::Window, _JATTA_WINDOW);
         CHECK(::GLXContext, _JATTA_GLXCONTEXT);
@@ -110,7 +110,7 @@
 #   endif
 #   undef CHECK
 #   include "Undefines.h"
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
 #       define _JATTA_HWND ::HWND
 #       define _JATTA_DWORD ::DWORD
 #       define _JATTA_PIXELFORMATDESCRIPTOR ::PIXELFORMATDESCRIPTOR
@@ -118,7 +118,7 @@
 #       define _JATTA_HGLRC ::HGLRC
 #       define _JATTA_HGDIOBJ ::HGDIOBJ
 #    endif
-#    ifdef LINUX
+#    ifdef JATTA_LINUX
 #       define _JATTA_DISPLAY ::Display*
 #       define _JATTA_WINDOW ::Window
 #       ifdef Jatta_USE_OPENGL

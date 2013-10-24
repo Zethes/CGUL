@@ -82,7 +82,7 @@ _JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
 }
 #endif
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 _JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
 {
     _FromWideString(wideString);
@@ -661,7 +661,7 @@ _JATTA_EXPORT void Jatta::String::SetEmptyToNull()
     }
 }
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
 {
     int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), -1, 0, 0);

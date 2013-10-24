@@ -4,7 +4,7 @@
 #include "../Utility/Encryption.h"
 
 #include <sys/stat.h>
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 #   include <direct.h>
 #   ifdef DeleteFile
 #       undef DeleteFile
@@ -19,7 +19,7 @@
 
 _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, String string)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"w");
 #   else
@@ -41,7 +41,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, Stri
 
 _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"w");
 #   else
@@ -62,7 +62,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileNam
  */
 _JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::String* result)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -103,7 +103,7 @@ _JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::S
  */
 _JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Jatta::String>* vector)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -157,7 +157,7 @@ _JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Ja
  */
 _JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"rb");
 #   else
@@ -187,7 +187,7 @@ _JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* bu
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileName, UInt32* fileSize)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -216,7 +216,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileN
  */
 _JATTA_EXPORT Jatta::UInt32 Jatta::File::GetFileSize(const Jatta::String& fileName)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -289,7 +289,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(Jatta::String 
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
     return (attributes != INVALID_FILE_ATTRIBUTES);
 #   else
@@ -303,7 +303,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
  */
 _JATTA_EXPORT Jatta::Enum Jatta::File::GetAccess(const Jatta::String& fileName)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return 7; // TODO: File::GetAccess for windows
 #   else
     return ((access(fileName.GetCString(), R_OK) != -1) * Access::READ) | ((access(fileName.GetCString(), W_OK) != -1) * Access::WRITE) | ((access(fileName.GetCString(), X_OK) != -1) * Access::EXECUTE);
@@ -329,7 +329,7 @@ _JATTA_EXPORT Jatta::String Jatta::File::MD5(const Jatta::String& fileName)
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
     {
@@ -367,7 +367,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& file
             CreateFolder(up.GetData(), recursive);
     }
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
     return 0 == _wmkdir(folderName._ToWideString().c_str());
 #else
     return 0 == mkdir(folderName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
@@ -408,7 +408,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
         }
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return 0 == _wrmdir(fileName._ToWideString().c_str());
 #   else
     return 0 == rmdir(fileName.GetCString());
@@ -420,7 +420,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileName)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return ::DeleteFileW(fileName._ToWideString().c_str()) != 0;
 #   else
     return 0 == unlink(fileName.GetCString());
@@ -433,7 +433,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileNa
  */
 _JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, const Jatta::String& fileTo)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     return ::CopyFileW(fileName._ToWideString().c_str(), fileTo._ToWideString().c_str(), false) != 0;
 #   else
     std::ifstream f1( fileName.GetCString(), std::fstream::binary );

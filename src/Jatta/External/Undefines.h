@@ -10,7 +10,7 @@
  *  cleaning process.
  */
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 #   undef _JATTA_HWND
 #   undef _JATTA_DWORD
 #   undef _JATTA_PIXELFORMATDESCRIPTOR
@@ -19,7 +19,7 @@
 #   undef _JATTA_HGDIOBJ
 #endif
 
-#ifdef LINUX
+#ifdef JATTA_LINUX
 #   undef _JATTA_DISPLAY
 #   undef _JATTA_WINDOW
 #   undef _JATTA_GLXCONTEXT

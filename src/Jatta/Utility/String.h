@@ -11,7 +11,7 @@
 #   ifdef CPP_HAS_U8
 #       define U8(text) Jatta::String(u8##text)
 #   else
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
 #           define U8(text) Jatta::String(L##text)
 #       else
 #           define U8(text) Jatta::String(text)
@@ -49,7 +49,7 @@ namespace Jatta
         //! @brief Moves the contents of one string to another.
         _JATTA_EXPORT String(String&& move);
 #       endif
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         //! @brief Converts a std::wstring object to a Utf-8 string.
         //! @warning Windows only!
         _JATTA_EXPORT String(const std::wstring& wideString);
@@ -172,7 +172,7 @@ namespace Jatta
         template <typename T> T To(const T&& fallback) const;
 #       endif
 
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         _JATTA_EXPORT std::wstring _ToWideString() const;
         _JATTA_EXPORT void _FromWideString(const std::wstring& wideString);
 #       endif

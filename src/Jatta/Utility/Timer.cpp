@@ -4,7 +4,7 @@
  */
 
 #include "Timer.h"
-#if defined(LINUX) || defined(MACOS)
+#if defined(JATTA_LINUX) || defined(JATTA_MACOS)
 #   include <sys/time.h>
 #   include <unistd.h>
 #endif
@@ -19,7 +19,7 @@
  */
 _JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     ::Sleep(milliseconds);
 #   else
     usleep(milliseconds * 1000);
@@ -30,7 +30,7 @@ _JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
  */
 _JATTA_EXPORT Jatta::Timer::Timer()
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     LARGE_INTEGER li;
     QueryPerformanceFrequency(&li);
     pcFreq = Float32(li.QuadPart) / 1000.0f;
@@ -101,7 +101,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetSeconds()
  */
 _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetMilliseconds()
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     LARGE_INTEGER li;
     QueryPerformanceCounter(&li);
     return (UInt32)(li.QuadPart / (UInt32)pcFreq);

@@ -32,7 +32,7 @@ namespace Jatta
  */
 bool Jatta::Network::SocketTCP::MakeNonBlocking()
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
 #   else
@@ -258,7 +258,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     // Try to accept an incoming client.
     if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
     {
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -345,7 +345,7 @@ void Jatta::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int ba
 
 void Jatta::Network::SocketTCP::Close()
 {
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     closesocket(sock);
 #   else
     ::close(sock);
@@ -514,7 +514,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -582,7 +582,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)

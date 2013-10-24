@@ -6,7 +6,7 @@
 #include "IPAddress.h"
 #include "../Exceptions/NetworkException.h"
 
-#ifdef WINDOWS
+#ifdef JATTA_WINDOWS
 #   include <winsock2.h>
 #   include <iphlpapi.h>
 #else
@@ -117,7 +117,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip)
 {
     __jatta_network_initiate();
     this->type = IPAddressType::INVALID;
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     sockaddr_in addr4;
     int length = sizeof(sockaddr_in);
     if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET, NULL, (sockaddr*)&addr4, &length) == 0)
@@ -163,7 +163,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip, UInt
     this->type = IPAddressType::INVALID;
     if (type == IPAddressType::IPV4)
     {
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         sockaddr_in addr;
         int length = sizeof(sockaddr_in);
         if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET, NULL, (sockaddr*)&addr, &length) == 0)
@@ -181,7 +181,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip, UInt
     }
     if (type == IPAddressType::IPV6)
     {
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         sockaddr_in6 addr;
         int length = sizeof(sockaddr_in6);
         if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET6, NULL, (sockaddr*)&addr, &length) == 0)
@@ -277,7 +277,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
     }
     if (type == IPAddressType::IPV4)
     {
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = AF_INET;
@@ -298,7 +298,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
     }
     if (type == IPAddressType::IPV6)
     {
-#       ifdef WINDOWS
+#       ifdef JATTA_WINDOWS
         sockaddr_in6 addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin6_family = AF_INET6;

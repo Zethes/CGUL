@@ -14,7 +14,7 @@ _JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()
 
 _JATTA_EXPORT Jatta::OpenGL::Context::Context()
 {
-#    ifdef LINUX
+#    ifdef JATTA_LINUX
      context = NULL;
 #    endif
 }
@@ -28,7 +28,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
 {
     this->window = window;
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     // setup the pixel format descriptor
     pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
     pfd.nVersion = 0;
@@ -79,7 +79,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     }
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     this->display = window->_GetDisplay();
 
     XWindowAttributes attributes;
@@ -126,7 +126,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     glXMakeCurrent(this->display, window->_GetHandle(), this->context);
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     view = [[OpenGLView alloc] init];
 
     // TODO: remove these?
@@ -174,7 +174,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 {
     // TODO: error checking
 
-    #   ifdef WINDOWS
+    #   ifdef JATTA_WINDOWS
     if (!wglMakeCurrent(deviceContext, renderContext))
     {
         throw std::runtime_error("Failed to make device current.");
@@ -183,7 +183,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 
     // TODO: Context::MakeCurrent for Linux
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [view MakeCurrent];
     [pool drain];
@@ -202,7 +202,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
 
     // TODO: Context::Destroy
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     if (this->context != NULL)
     {
         // Release the current context from this thread before deleting it
@@ -281,15 +281,15 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
         throw std::runtime_error("Graphics device not current");
     }
 
-#   ifdef WINDOWS
+#   ifdef JATTA_WINDOWS
     ::SwapBuffers(deviceContext);
 #   endif
 
-#   ifdef LINUX
+#   ifdef JATTA_LINUX
     glXSwapBuffers(this->display, this->window->_GetHandle());
 #   endif
 
-#   ifdef MACOS
+#   ifdef JATTA_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [view SwapBuffers];
     [pool drain];
