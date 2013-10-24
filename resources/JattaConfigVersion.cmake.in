@@ -7,6 +7,8 @@ endif()
 
 set(PACKAGE_VERSION "@Jatta_VERSION@")
 
+@COMPILER_CHECK@
+
 # Check whether the requested PACKAGE_FIND_VERSION is compatible
 if("${PACKAGE_VERSION}" VERSION_LESS "${PACKAGE_FIND_VERSION}")
     set(PACKAGE_VERSION_COMPATIBLE FALSE)

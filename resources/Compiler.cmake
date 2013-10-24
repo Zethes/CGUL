@@ -4,6 +4,7 @@ set(COMPILER_NAME "Unknown")
 set(COMPILER_NAME_SIMPLE "Unknown")
 set(COMPILER_VERSION "")
 set(COMPILER_SUFFIX "")
+set(COMPILER_CHECK "")
 if(MSVC)
     set(COMPILER_NAME "Visual Studio")
     set(COMPILER_NAME_SIMPLE "VS")
@@ -23,19 +24,45 @@ if(MSVC)
         set(COMPILER_VERSION "2011")
     endif()
     set(COMPILER_SUFFIX "-${COMPILER_NAME_SIMPLE}${COMPILER_VERSION}")
+
+    set(COMPILER_CHECK
+            "if(NOT MSVC)"
+            "    set(PACKAGE_VERSION \"\${PACKAGE_VERSION} (msvc only)\")"
+            "    set(PACKAGE_VERSION_COMPATIBLE FALSE)"
+            "    return()"
+            "endif()"
+       )
 elseif(CMAKE_COMPILER_IS_GNUCXX)
     set(COMPILER_NAME "GNU Compiler Collection (GCC)")
     set(COMPILER_NAME_SIMPLE "GCC")
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE COMPILER_VERSION)
     string(REPLACE "\n" "" COMPILER_VERSION ${COMPILER_VERSION})
     set(COMPILER_SUFFIX "-${COMPILER_NAME_SIMPLE}${COMPILER_VERSION}")
+
+    set(COMPILER_CHECK
+            "if(NOT CMAKE_COMPILER_IS_GNUCXX)"
+            "    set(PACKAGE_VERSION \"\${PACKAGE_VERSION} (gcc only)\")"
+            "    set(PACKAGE_VERSION_COMPATIBLE FALSE)"
+            "    return()"
+            "endif()"
+       )
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(COMPILER_NAME "LLVM Clang")
     set(COMPILER_NAME_SIMPLE "clang")
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE COMPILER_VERSION)
     string(REPLACE "\n" "" COMPILER_VERSION ${COMPILER_VERSION})
     set(COMPILER_SUFFIX "-${COMPILER_NAME_SIMPLE}${COMPILER_VERSION}")
+
+    set(COMPILER_CHECK
+            "if(NOT \"${CMAKE_CXX_COMPILER_ID\" STREQUAL \"Clang\")"
+            "    set(PACKAGE_VERSION \"\${PACKAGE_VERSION} (clang only)\")"
+            "    set(PACKAGE_VERSION_COMPATIBLE FALSE)"
+            "    return()"
+            "endif()"
+       )
 endif()
+
+string(REPLACE ";" "\n" COMPILER_CHECK "${COMPILER_CHECK}")
 
 if("${COMPILER_NAME}" STREQUAL "Unknown" AND ${FIRST})
     message(WARNING "Your compiler is not recognized and may not be supported.")
