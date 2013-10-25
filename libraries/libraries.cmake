@@ -55,7 +55,10 @@ macro(jatta_find_package LIBRARY)
 
         # Look for the release and debug libraries
         jatta_find_library(${LIBRARY}_LIBRARY ${NAMES})
+        jatta_find_library(${LIBRARY}_DEBUG_LIBRARY ${DEBUG})
     else()
+        # If this is not first generation and the reload flag is off...
+        # do not show any prints when processing libraries
         set(QUIET ON)
     endif()
 
@@ -64,7 +67,6 @@ macro(jatta_find_package LIBRARY)
     if("${${LIBRARY}_LIBRARY}" STREQUAL "${LIBRARY}_LIBRARY-NOTFOUND")
         set(${LIBRARY}_RELEASE_FOUND OFF)
     endif()
-    jatta_find_library(${LIBRARY}_DEBUG_LIBRARY ${DEBUG})
     set(${LIBRARY}_DEBUG_FOUND ON)
     if("${${LIBRARY}_DEBUG_LIBRARY}" STREQUAL "${LIBRARY}_DEBUG_LIBRARY-NOTFOUND")
         set(${LIBRARY}_DEBUG_FOUND OFF)
