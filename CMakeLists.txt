@@ -20,9 +20,7 @@ else()
 endif()
 
 # Version information
-set(Jatta_MAJOR_VERSION 0)
-set(Jatta_MINOR_VERSION 1)
-set(Jatta_PATCH_VERSION 1)
+include(resources/Version.cmake)
 set(Jatta_VERSION ${Jatta_MAJOR_VERSION}.${Jatta_MINOR_VERSION}.${Jatta_PATCH_VERSION})
 project(${Jatta_OUTPUT_NAME} CXX)
 

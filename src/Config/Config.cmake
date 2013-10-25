@@ -68,7 +68,7 @@ if(Jatta_REFRESH_LIBRARIES)
     unset(Jatta_USE_NETWORK CACHE)
     unset(Jatta_USE_OPENGL CACHE)
 endif()
-jatta_define_feature(Jatta_STATIC "Build a static library." OFF)
+jatta_define_feature(Jatta_STATIC "Build a static library." ON)
 jatta_define_feature(Jatta_USE_NETWORK "Compile with networking features.")
 jatta_define_feature(Jatta_USE_OPENGL "Compile with OpenGL support (requires glew)." glew)
 
