@@ -5,6 +5,7 @@
 #  Jatta_INCLUDE_DIRS                     - include directories for Jatta
 #  Jatta_LIBRARIES                        - libraries to link against
 #  Jatta_MODULE                           - the jatta module location (recommended: use jatta_copy_modules)
+#  Jatta_DEBUG_MODULE                     - the jatta debug module location (msvc only)
 #  Jatta_STATIC                           - ON if the library was built static, OFF for shared
 #  Jatta_SHARED_MODULES                   - a list of targets representing non-system wide shared modules required
 #  Jatta_<TARGET>_LIBRARY                 - a location to the required library <TARGET>
@@ -15,11 +16,12 @@
 #  jatta_bake_rpath(target rpath)         - modifies the rpath for the given target (unix only)
 
 get_filename_component(Jatta_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/../include" ABSOLUTE)
-get_filename_component(Jatta_MODULE "${CMAKE_CURRENT_LIST_DIR}/../@LIB_DIR@/@Jatta_MODULE_NAME@" ABSOLUTE)@STATIC_IMPORTS@
+get_filename_component(Jatta_MODULE "${CMAKE_CURRENT_LIST_DIR}/../@LIB_DIR@/@Jatta_MODULE_NAME@" ABSOLUTE)@DEBUG_MODULE@@STATIC_IMPORTS@
 
 add_library(Jatta STATIC IMPORTED)
-set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_MODULE})
-set(Jatta_LIBRARIES Jatta@SYSTEM_LIBRARIES@)
+set_target_properties(Jatta PROPERTIES IMPORTED_LOCATION ${Jatta_MODULE})@DEBUG_TARGET@
+
+set(Jatta_LIBRARIES @SYSTEM_LIBRARIES@)
 
 set(Jatta_STATIC @Jatta_STATIC@)
 set(Jatta_SHARED_MODULES @SHARED_MODULES@)

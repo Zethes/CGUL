@@ -22,7 +22,7 @@ macro(jatta_find_package LIBRARY)
         unset(${LIBRARY}_DEBUG_LIBRARY CACHE)
         unset(${LIBRARY}_SHARED CACHE)
     endif()
-    if(NOT DEFINED ${LIBRARY}_LIBRARY)
+    if(NOT DEFINED ${LIBRARY}_LIBRARY OR NOT DEFINED ${LIBRARY}_DEBUG_LIBRARY)
         message(STATUS "Looking for library ${LIBRARY}")
 
         # Parse arguments
