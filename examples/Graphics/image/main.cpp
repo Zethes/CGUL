@@ -7,11 +7,8 @@ using namespace Jatta;
 
 UInt LoadShader(const String& vertexFile, const String& fragmentFile)
 {
-    // Create autoreleased shaders to comply with RAII
-    // If an exception occurs, the shaders' Delete methods will be called
-    UInt vertexShader, fragmentShader;
-
     // Create the shaders
+    UInt vertexShader, fragmentShader;
     vertexShader = GL::CreateShader(GL_VERTEX_SHADER);
     fragmentShader = GL::CreateShader(GL_FRAGMENT_SHADER);
 

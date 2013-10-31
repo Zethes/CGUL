@@ -60,6 +60,7 @@ _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
 
     return mipmaps[0];
 }
+
 _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
 {
     if (mipmaps.size() <= index)
@@ -80,14 +81,17 @@ _JATTA_EXPORT Jatta::ImageFormat Jatta::Image::GetFormat() const
 {
     return format;
 }
+
 _JATTA_EXPORT int Jatta::Image::GetMipmapCount() const
 {
     return mipmaps.size();
 }
+
 _JATTA_EXPORT int Jatta::Image::GetWidth() const
 {
     return width;
 }
+
 _JATTA_EXPORT int Jatta::Image::GetHeight() const
 {
     return height;
@@ -97,6 +101,7 @@ _JATTA_EXPORT void Jatta::Image::PushMipmap(UInt32 width, UInt32 height, const v
 {
     mipmaps.push_back(Mipmap(format, width, height, (void*)data));
 }
+
 _JATTA_EXPORT void Jatta::Image::PopMipmap()
 {
     mipmaps.pop_back();

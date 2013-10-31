@@ -272,3 +272,21 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Float32 value, Float32 compa
 {
     return (Math::Abs(value - compare) <= epsilon);
 }
+
+/** @param x The base value.
+ *  @param y The exponent value.
+ *  @returns x raised to the power of y.
+ */
+_JATTA_INLINE_IMPLEMENT bool Jatta::Math::Pow(Float32 x, Float32 y)
+{
+    return std::pow(x, y);
+}
+
+/** @details The zero case is handled correctly.  Passing in zero for x will result in false.
+ *  @param x Value to check.
+ *  @returns True if x is a power of 2, false otherwise.
+ */
+_JATTA_INLINE_IMPLEMENT bool Jatta::Math::IsPowerOfTwo(UInt32 x)
+{
+    return (x != 0) && ((x & (x - 1)) == 0);
+}

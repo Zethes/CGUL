@@ -5,11 +5,8 @@
 
 #pragma once
 #include <Jatta/Config.h>
-
-#ifdef Jatta_USE_OPENGL
-#include "../OpenGL/GL.h"
-#endif
-
+#include "../Exceptions/FatalException.h"
+#include "../Math/Math.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -18,93 +15,76 @@ namespace Jatta
     {
         enum
         {
-            BYTE        = 1,
-            INTEGER     = 2,
-            FLOAT       = 3
+            BYTE    = 1,
+            INTEGER = 2,
+            FLOAT   = 3
         };
     }
 
-    /** @brief A container containing an image format's information.
+    /** @brief Contains an image format's information.
      */
     struct ImageFormat
     {
-    public:
-        int Format;
-        UInt32 GLFormat;
-
-        ImageFormat(int format = -1)
+        union
         {
-            Format = format;
+            UInt32 format;
+            struct
+            {
+                UInt8 componentCount;
+                UInt8 componentSize;
+                UInt8 dataType;
+                UInt8 special;
+            };
+        };
+
+        ImageFormat(UInt8 special = -1)
+        {
+            this->componentCount = 0;
+            this->componentSize = 0;
+            this->dataType = 0;
+            this->special = special;
+        }
+
+        ImageFormat(UInt8 componentCount, UInt8 componentSize, UInt8 dataType)
+        {
+            this->componentCount = componentCount;
+            this->componentSize = componentSize;
+            this->dataType = dataType;
+            this->special = 0;
+        }
+
+        bool IsNone() const
+        {
+            return format == 0;
+        }
+
+        bool IsAuto() const
+        {
+            return special == 1;
         }
     };
 
     namespace ImageFormats
     {
-        static ImageFormat GenerateImageFormat(int componentCount, int componentSize, int dataType, int gl = 0)
-        {
-            ImageFormat format((componentCount << 24) | (componentSize << 16) | (dataType << 8));
-            format.GLFormat = gl;
-            return format;
-        }
+        static const ImageFormat NONE  (0);
+        static const ImageFormat AUTO  (1);
 
-        static int GetComponentCount(ImageFormat format)
-        {
-            return (format.Format & 0xFF000000) >> 24;
-        }
+        static const ImageFormat R8    (1, 1, ImageFormatDataTypes::BYTE);
+        static const ImageFormat RG8   (2, 1, ImageFormatDataTypes::BYTE);
 
-        static int GetComponentSize(ImageFormat format)
-        {
-            return (format.Format & 0x00FF0000) >> 16;
-        }
+        static const ImageFormat RGBA4 (4, 1, ImageFormatDataTypes::BYTE);
 
-        static int GetDataType(ImageFormat format)
-        {
-            return (format.Format & 0x0000FF00) >> 8;
-        }
+        static const ImageFormat RGB8  (3, 1, ImageFormatDataTypes::BYTE);
+        static const ImageFormat RGBA8 (4, 1, ImageFormatDataTypes::BYTE);
 
-        static bool HasAlphaComponent(ImageFormat format)
-        {
-            return GetComponentCount(format.Format) == 4;
-        }
+        static const ImageFormat RGBA16(4, 2, ImageFormatDataTypes::BYTE);
+        static const ImageFormat RGBA32(4, 4, ImageFormatDataTypes::BYTE);
 
-        static int GetPixelSize(ImageFormat format)
-        {
-            return GetComponentCount(format.Format) * GetComponentSize(format.Format);
-        }
+        static const ImageFormat BGR8  (3, 1, ImageFormatDataTypes::BYTE);
+        static const ImageFormat BGRA8 (4, 1, ImageFormatDataTypes::BYTE);
 
-        static const ImageFormat NONE     = ImageFormat(-1);
-        static const ImageFormat AUTO     = ImageFormat(0);
-        static const ImageFormat R8       = GenerateImageFormat(1, 1, ImageFormatDataTypes::BYTE);
-        static const ImageFormat RG8      = GenerateImageFormat(2, 1, ImageFormatDataTypes::BYTE);
-
-        #ifdef Jatta_USE_OPENGL
-        static const ImageFormat RGBA4    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGBA4);
-        #else
-        static const ImageFormat RGBA4    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, 0x8056);
-        #endif
-
-        #ifdef Jatta_USE_OPENGL
-        static const ImageFormat RGB8     = GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGB);
-        static const ImageFormat RGBA8    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, Jatta::GL::RGBA);
-        #else
-        static const ImageFormat RGB8     = GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE);
-        static const ImageFormat RGBA8    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE);
-        #endif
-
-        static const ImageFormat RGBA16   = GenerateImageFormat(4, 2, ImageFormatDataTypes::BYTE);
-        static const ImageFormat RGBA32   = GenerateImageFormat(4, 4, ImageFormatDataTypes::BYTE);
-
-        #ifdef Jatta_USE_OPENGL
-        static const ImageFormat BGR8     = GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE, Jatta::GL::BGR);
-        static const ImageFormat BGRA8    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE, Jatta::GL::BGRA);
-        #else
-        static const ImageFormat BGR8     = GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE);
-        static const ImageFormat BGRA8    = GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE);
-        #endif
-
-
-        static const ImageFormat BGRA16   = GenerateImageFormat(4, 2, ImageFormatDataTypes::BYTE);
-        static const ImageFormat BGRA32   = GenerateImageFormat(4, 4, ImageFormatDataTypes::BYTE);
+        static const ImageFormat BGRA16(4, 2, ImageFormatDataTypes::BYTE);
+        static const ImageFormat BGRA32(4, 4, ImageFormatDataTypes::BYTE);
     }
 }
 

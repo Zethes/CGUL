@@ -101,6 +101,12 @@ namespace Jatta
         //! @brief Checks if two values are equal within a given epsilon.
         _JATTA_INLINE_DEFINE bool InEpsilon(Float32 value, Float32 compare, Float32 epsilon);
 
+        //! @brief Raises x to the power of y.
+        _JATTA_INLINE_DEFINE bool Pow(Float32 x, Float32 y);
+
+        //! @brief Checks if the value is a power of two.
+        _JATTA_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);
+
         // TODO: add some more frequently used math functions (maybe reference .NET's math lib?)
     }
 }

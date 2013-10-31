@@ -104,18 +104,18 @@ _JATTA_EXPORT void Jatta::ImageLoaders::PNG::Save(const String& filename, Jatta:
     width = image->GetWidth();
     height = image->GetHeight();
 
-    if (image->GetFormat().Format == ImageFormats::GenerateImageFormat(4, 1, ImageFormatDataTypes::BYTE).Format)
+    if (image->GetFormat().format == ImageFormat(4, 1, ImageFormatDataTypes::BYTE).format)
     {
         color_type = PNG_COLOR_TYPE_RGBA;
         bit_depth = 8;
         pixelSize = 4;
-    }  
-    else if (image->GetFormat().Format == ImageFormats::GenerateImageFormat(3, 1, ImageFormatDataTypes::BYTE).Format)
+    }
+    else if (image->GetFormat().format == ImageFormat(3, 1, ImageFormatDataTypes::BYTE).format)
     {
         color_type = PNG_COLOR_TYPE_RGB;
         bit_depth = 8;
         pixelSize = 3;
-    }  
+    }
     else
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::UNSUPPORTED_FORMAT);
 
