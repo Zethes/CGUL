@@ -47,6 +47,7 @@ namespace Jatta
             stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << "]";
             return stream;
         }
+        _JATTA_EXPORT bool operator==(const Vector3& operand) const;
 
         _JATTA_EXPORT Jatta::Float32 At(UInt32 index) const;
 
