@@ -4,6 +4,7 @@
  */
 
 #include "Font.h"
+#include "../Images/ImageFormats.h"
 #include <string.h>
 
 static FT_Library __jatta_ttf_library;
@@ -41,7 +42,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::Load(const std::string& fileName)
         throw std::runtime_error("Unknown error with fonts.");
         return -1;
     }
-    
+
     faces.push_back(face);
 
     return faces.size()-1;
@@ -220,7 +221,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
         }
     }
 
-    return Image((Color*)buffer, width, height);
+    return Image(ImageFormats::RGBA8, width, height, (Color*)buffer);
 }
 
 _JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt32 face, UInt64 characterCode)

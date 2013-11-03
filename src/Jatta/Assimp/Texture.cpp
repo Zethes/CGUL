@@ -4,6 +4,7 @@
  */
 
 #include "Texture.h"
+#include "../Images/ImageFormats.h"
 
 _JATTA_EXPORT Jatta::Assimp::Texture::Texture(aiTexture* texture)
 {
@@ -20,7 +21,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Texture::GetHeight() const
 }
 
 _JATTA_EXPORT Jatta::Image Jatta::Assimp::Texture::GetImage() const
-{  
+{
     //Image is stored as ARGB8888, convert it to RGBA8888
     Color*colors = new Jatta::Color[texture->mWidth*texture->mHeight];
 
@@ -32,5 +33,5 @@ _JATTA_EXPORT Jatta::Image Jatta::Assimp::Texture::GetImage() const
         colors[i].a = texture->pcData[i].a;
     }
 
-    return Image(colors, texture->mWidth, texture->mHeight);
+    return Image(ImageFormats::RGBA8, texture->mWidth, texture->mHeight, colors);
 }

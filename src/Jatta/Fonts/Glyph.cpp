@@ -3,8 +3,9 @@
  * All rights reserved.
  */
 
- #include "Glyph.h"
- #include "../Math/Math.h"
+#include "Glyph.h"
+#include "../Images/ImageFormats.h"
+#include "../Math/Math.h"
 
 _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
 {
@@ -123,5 +124,5 @@ _JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags
     }
 
 
-    return Image((Color*)buffer, width, height);
+    return Image(ImageFormats::RGBA8, width, height, (Color*)buffer);
 }
