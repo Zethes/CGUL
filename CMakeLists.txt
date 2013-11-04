@@ -3,50 +3,49 @@
 # All rights reserved.
 cmake_minimum_required(VERSION 2.8.7)
 cmake_policy(VERSION 2.8.7)
-
-# Setup cmake settings
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_DEBUG_POSTFIX "d")
 message(STATUS "Configuring...")
 
-# Allow the installation to go under a different name
-set(Jatta_OUTPUT_NAME "Jatta" CACHE STRING "The name to install Jatta under.")
+# Setup Jatta options
+include(cmake/Jatta.cmake)
 
-# Do some weirdness if this is the first generation
-if("${CMAKE_INSTALL_PREFIX}" STREQUAL "")
-    set(FIRST ON)
-else()
-    set(FIRST OFF)
-endif()
+# Set installation path
+include(cmake/InstallPath.cmake)
 
-# Version information
-include(resources/Version.cmake)
-set(Jatta_VERSION ${Jatta_MAJOR_VERSION}.${Jatta_MINOR_VERSION}.${Jatta_PATCH_VERSION})
+# Setup CMake
+set(CMAKE_CONFIGURATION_TYPES "Release;Debug" CACHE STRING "A list of build configurations.")
 project(${Jatta_OUTPUT_NAME} CXX)
 
+# Support configuration postfixes
+foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
+
+    string(TOUPPER "${__CONFIGURATION}" __CONFIGURATION_UPPER)
+
+    if("${__CONFIGURATION_UPPER}" STREQUAL "RELEASE")
+
+        set(Jatta_POSTFIX_${__CONFIGURATION_UPPER} "" CACHE STRING "Postfix for configuration ${__CONFIGURATION}.")
+
+    else()
+
+        set(Jatta_POSTFIX_${__CONFIGURATION_UPPER} "${__CONFIGURATION}" CACHE STRING "Postfix for configuration ${__CONFIGURATION}.")
+
+    endif()
+
+endforeach()
+
+# Version information
+include(cmake/Version.cmake)
+
 # Determine compiler
-include(resources/Compiler.cmake)
+include(cmake/Compiler.cmake)
 
 # Determine system information
-if(MINGW)
-    set(SYSTEM_NAME mingw)
-    set(SYSTEM_NAME_UPPER MinGW)
-else()
-    string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME)
-    set(SYSTEM_NAME_UPPER ${CMAKE_SYSTEM_NAME})
-endif()
-math(EXPR SYSTEM_BITNESS "${CMAKE_SIZEOF_VOID_P} * 8")
-
-# Check if we should pretend this build is 32bit
-set(Jatta_PRETEND_BITNESS ${SYSTEM_BITNESS} CACHE STRING "The bitness that Jatta should pretend to be set at, initially set to the actual system bitness.")
-mark_as_advanced(Jatta_PRETEND_BITNESS)
-set(SYSTEM_BITNESS ${Jatta_PRETEND_BITNESS})
+include(cmake/System.cmake)
 
 # Determine lib directory name
-if(${SYSTEM_BITNESS} EQUAL 32)
-    set(LIB_DIR "lib")
+if(${System_BITNESS} EQUAL 32)
+    set(Jatta_LIB_DIR "lib")
 else()
-    set(LIB_DIR "lib${SYSTEM_BITNESS}")
+    set(Jatta_LIB_DIR "lib${System_BITNESS}")
 endif()
 
 # Fix up the installation path
@@ -55,15 +54,15 @@ mark_as_advanced(Jatta_FIX_INSTALL_PATH)
 set(Jatta_INSTALL_ESSENTIALS_ONLY OFF CACHE BOOL "Installation will only install libraries and include files (no documentation).")
 mark_as_advanced(Jatta_INSTALL_ESSENTIALS_ONLY)
 if(NOT Jatta_FIX_INSTALL_PATH)
-    set(FIRST OFF)
+    set(Jatta_FIRST_GENERATION OFF)
 endif()
-if(FIRST)
+if(Jatta_FIRST_GENERATION)
     set(INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
     if(${INSTALL_PREFIX} STREQUAL "/usr/local")
         if(${Jatta_INSTALL_ESSENTIALS_ONLY})
             set(INSTALL_PREFIX "/usr")
         else()
-            set(INSTALL_PREFIX "/usr/${LIB_DIR}")
+            set(INSTALL_PREFIX "/usr/${Jatta_LIB_DIR}")
         endif()
     endif()
     if(WIN32 OR NOT Jatta_INSTALL_ESSENTIALS_ONLY)
@@ -86,8 +85,8 @@ endif()
 set(Jatta_LIBRARY_INCLUDE_DIRS ${LIBRARY_INCLUDE_DIRS} CACHE STRING "Additional include directories.")
 
 # Set the dependecy directory to the default path
-set(Jatta_DEPENDENCY_LIBRARY_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${SYSTEM_NAME}/lib${SYSTEM_BITNESS}" CACHE STRING "Directories to look for libraries.")
-set(Jatta_DEPENDENCY_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${SYSTEM_NAME}/include" CACHE STRING "Directories to look for headers.")
+set(Jatta_DEPENDENCY_LIBRARY_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${System_DISTRO_LOWER}/lib${System_BITNESS}" CACHE STRING "Directories to look for libraries.")
+set(Jatta_DEPENDENCY_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/deps-${System_DISTRO_LOWER}/include" CACHE STRING "Directories to look for headers.")
 set(DOXYGEN_ENABLE OFF CACHE BOOL "Specifies whether or not to use Doxygen to generate documentation.")
 set(DOXYGEN_WARNINGS OFF CACHE BOOL "Turns on Doxygen warnings during doc generation stage.")
 mark_as_advanced(DOXYGEN_WARNINGS)
@@ -101,13 +100,13 @@ set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_DEFINITIONS})
 # Look for libraries
 set(Jatta_REFRESH_LIBRARIES OFF CACHE BOOL "Forces Jatta to refresh searching for libraries everytime cmake runs.")
 mark_as_advanced(Jatta_REFRESH_LIBRARIES)
-include(libraries/libraries.cmake)
+include(cmake/Libraries/Libraries.cmake)
 
 # Compile the library
 add_subdirectory(src)
 
 # Add a build step for Doxygen
-include(resources/Doxygen.cmake)
+include(cmake/Doxygen.cmake)
 
 # Allow packaging
-include(resources/Package.cmake)
+include(cmake/Package.cmake)

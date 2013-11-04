@@ -1,5 +1,5 @@
 # Make sure the necessary files exist
-if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/../include" OR NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/../@LIB_DIR@")
+if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/../include" OR NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/../@Jatta_LIB_DIR@")
     set(PACKAGE_VERSION "invalid")
     set(PACKAGE_VERSION_COMPATIBLE FALSE)
     return()
@@ -7,7 +7,11 @@ endif()
 
 set(PACKAGE_VERSION "@Jatta_VERSION@")
 
-@COMPILER_CHECK@
+if(NOT (@Compiler_CHECK@))
+    set(PACKAGE_VERSION "${PACKAGE_VERSION} (requires @Compiler_NAME_SIMPLE@)")
+    set(PACKAGE_VERSION_COMPATIBLE FALSE)
+    return()
+endif()
 
 # Check whether the requested PACKAGE_FIND_VERSION is compatible
 if("${PACKAGE_VERSION}" VERSION_LESS "${PACKAGE_FIND_VERSION}")

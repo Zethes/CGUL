@@ -6,35 +6,40 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Config/Config.h.in ${CMAKE_CURRENT_BI
 add_subdirectory(Jatta)
 set(Jatta_INSTALL ${Jatta_INSTALL} ${CMAKE_CURRENT_SOURCE_DIR}/Jatta.h)
 
-# Make all of the files Obj-C++ on Mac
-if(APPLE AND NOT ${CMAKE_GENERATOR} STREQUAL "Xcode")
-    set(CMAKE_CXX_FLAGS "-ObjC++ ${CMAKE_CXX_FLAGS}")
-endif()
-
-# Turn on all warnings and warning to errors in GCC
-if(CMAKE_COMPILER_IS_GNUCXX)
-    #set(CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
-    # there is a very good reason that this is commented out
-    # and it is only 50% because of laziness
-endif()
-
 # Determine dependencies
 include(dependencies.cmake)
 
 # Determine library type
 set(Jatta_LIBRARY_TYPE SHARED)
-if (Jatta_STATIC)
+if(Jatta_STATIC)
+
     set(Jatta_LIBRARY_TYPE STATIC)
+
 endif()
+
 set(DEFINE_DEBUG ${MSVC})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_REQUIRED_INCLUDES})
 if(APPLE)
+
     include_directories(/Developer/Headers/FlatCarbon)
+
 endif()
 add_definitions(-DJATTA_BUILD -DJATTA_INCLUDES ${CMAKE_REQUIRED_FLAGS})
 add_library(Jatta ${Jatta_LIBRARY_TYPE} ${Jatta_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h)
+
 set_property(TARGET Jatta PROPERTY OUTPUT_NAME "${Jatta_OUTPUT_NAME}")
+set_property(TARGET Jatta PROPERTY ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Jatta_LIB_DIR}")
+set_property(TARGET Jatta PROPERTY LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Jatta_LIB_DIR}")
+foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
+
+    string(TOUPPER "${__CONFIGURATION}" __CONFIGURATION)
+    set_property(TARGET Jatta PROPERTY OUTPUT_NAME_${__CONFIGURATION} "${Jatta_OUTPUT_NAME}${Jatta_POSTFIX_${__CONFIGURATION}}")
+    set_property(TARGET Jatta PROPERTY ARCHIVE_OUTPUT_DIRECTORY_${__CONFIGURATION} "${CMAKE_BINARY_DIR}/${Jatta_LIB_DIR}")
+    set_property(TARGET Jatta PROPERTY LIBRARY_OUTPUT_DIRECTORY_${__CONFIGURATION} "${CMAKE_BINARY_DIR}/${Jatta_LIB_DIR}")
+
+endforeach()
+
 
 string(STRIP "${Jatta_LIBRARIES}" Jatta_LIBRARIES)
 string(REPLACE " " ";" LIBRARY_LIST "${Jatta_LIBRARIES}")
@@ -42,138 +47,29 @@ target_link_libraries(Jatta ${LIBRARY_LIST})
 
 # Get information about the library
 if(${DEFINE_DEBUG})
+
     get_property(Jatta_MODULE_NAME_PATH TARGET Jatta PROPERTY LOCATION)
     get_property(Jatta_MODULE_NAME_PATH_DEBUG TARGET Jatta PROPERTY LOCATION_DEBUG)
     get_filename_component(Jatta_MODULE_NAME_DEBUG ${Jatta_MODULE_NAME_PATH_DEBUG} NAME)
+
 else()
+
     if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+
         get_property(Jatta_MODULE_NAME_PATH TARGET Jatta PROPERTY LOCATION)
+
     else()
+
         get_property(Jatta_MODULE_NAME_PATH TARGET Jatta PROPERTY LOCATION_${CMAKE_BUILD_TYPE})
+
     endif()
+
 endif()
+
 get_filename_component(Jatta_MODULE_NAME ${Jatta_MODULE_NAME_PATH} NAME)
 
-# Fix for Xcode to enforce Obj-C++ on all files
-if(APPLE AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
-    set_target_properties(Jatta PROPERTIES XCODE_ATTRIBUTE_GCC_INPUT_FILETYPE sourcecode.cpp.objcpp)
-endif()
-
 # Version info
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/Jatta/Utility/Version.cpp PROPERTIES COMPILE_DEFINITIONS "_JATTA_MAJOR=${Jatta_MAJOR_VERSION};_JATTA_MINOR=${Jatta_MINOR_VERSION};_JATTA_PATCH=${Jatta_PATCH_VERSION};_COMPILER_NAME=\"${COMPILER_NAME_SIMPLE}${COMPILER_VERSION}\"")
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/Jatta/Utility/Version.cpp PROPERTIES COMPILE_DEFINITIONS "_JATTA_MAJOR=${Jatta_VERSION_MAJOR};_JATTA_MINOR=${Jatta_VERSION_MINOR};_JATTA_PATCH=${Jatta_VERSION_PATCH};_COMPILER_NAME=\"${Compiler_NAME_SIMPLE}${Compiler_VERSION}\"")
 
 # Installation setup
-string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}" DIR_LENGTH)
-math(EXPR DIR_LENGTH "${DIR_LENGTH} + 1")
-foreach(FILE ${Jatta_INSTALL})
-    string(SUBSTRING "${FILE}" ${DIR_LENGTH} -1 INSTALL_FILE)
-    get_filename_component(INSTALL_DIR ${INSTALL_FILE} PATH)
-    install(FILES ${FILE} DESTINATION include/${INSTALL_DIR}/)
-endforeach()
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h DESTINATION include/Jatta/)
-if(${DEFINE_DEBUG})
-    get_property(Jatta_OUTPUT TARGET Jatta PROPERTY LOCATION)
-    string(REPLACE "$(Configuration)" "Release" Jatta_OUTPUT "${Jatta_OUTPUT}")
-    get_property(Jatta_OUTPUT_DEBUG TARGET Jatta PROPERTY LOCATION_DEBUG)
-    string(REPLACE "$(Configuration)" "Debug" Jatta_OUTPUT "${Jatta_OUTPUT}")
-    install(FILES ${Jatta_OUTPUT} DESTINATION ${LIB_DIR}/)
-    install(FILES ${Jatta_OUTPUT_DEBUG} DESTINATION ${LIB_DIR}/)
-else()
-    install(TARGETS Jatta DESTINATION ${LIB_DIR}/)
-endif()
-if(NOT ${Jatta_INSTALL_ESSENTIALS_ONLY})
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION .)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/acknowledgements.txt DESTINATION .)
-    if(DOXYGEN_ENABLE)
-        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../html DESTINATION doc)
-    endif()
-    foreach(STATIC ${STATIC_LIBRARIES})
-        if(Jatta_STATIC OR ${STATIC}_SHARED)
-            if("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG" AND NOT ${DEFINE_DEBUG})
-                get_target_property(STATIC_DIR ${STATIC}d IMPORTED_LOCATION)
-            else()
-                get_target_property(STATIC_DIR ${STATIC} IMPORTED_LOCATION)
-            endif()
-            get_filename_component(STATIC_DIR_REAL ${STATIC_DIR} REALPATH)
-            get_filename_component(STATIC_DIR_ABSOLUTE ${STATIC_DIR} ABSOLUTE)
-            get_filename_component(STATIC_DIR_NAME ${STATIC_DIR} NAME)
-            if(${DEFINE_DEBUG})
-                get_target_property(STATIC_DIR_DEBUG ${STATIC}d IMPORTED_LOCATION)
-                get_filename_component(STATIC_DIR_DEBUG_REAL ${STATIC_DIR_DEBUG} REALPATH)
-                get_filename_component(STATIC_DIR_DEBUG_ABSOLUTE ${STATIC_DIR_DEBUG} ABSOLUTE)
-                get_filename_component(STATIC_DIR_DEBUG_NAME ${STATIC_DIR_DEBUG} NAME)
-            endif()
-            if(DEFINED ${STATIC}_SHARED AND NOT ${STATIC}_SHARED)
-                set(STATIC_IMPORTS "${STATIC_IMPORTS}\n\nadd_library(${STATIC} STATIC IMPORTED)")
-                if(${DEFINE_DEBUG})
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nadd_library(${STATIC}d STATIC IMPORTED)")
-                endif()
-            else()
-                set(STATIC_IMPORTS "${STATIC_IMPORTS}\n\nadd_library(${STATIC} SHARED IMPORTED)")
-                if(${DEFINE_DEBUG})
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nadd_library(${STATIC}d SHARED IMPORTED)")
-                endif()
-                if(${STATIC}_PACKAGE)
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset(Jatta_${STATIC}_PACKAGE ON CACHE STRING \"Packages the ${STATIC} library with Jatta.\")")
-                else()
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset(Jatta_${STATIC}_PACKAGE OFF CACHE STRING \"Packages the ${STATIC} library with Jatta.\")")
-                endif()
-                set(STATIC_IMPORTS "${STATIC_IMPORTS}\nmark_as_advanced(Jatta_${STATIC}_PACKAGE)")
-            endif()
-            if(${STATIC}_PACKAGE)
-                install(FILES ${STATIC_DIR_REAL} DESTINATION ${LIB_DIR} RENAME ${STATIC_DIR_NAME})
-                if(${DEFINE_DEBUG})
-                    install(FILES ${STATIC_DIR_DEBUG_REAL} DESTINATION ${LIB_DIR} RENAME ${STATIC_DIR_DEBUG_NAME})
-                endif()
-                set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC} PROPERTIES IMPORTED_LOCATION \${CMAKE_CURRENT_LIST_DIR}/../${LIB_DIR}/${STATIC_DIR_NAME})")
-                if(${DEFINE_DEBUG})
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC}d PROPERTIES IMPORTED_LOCATION \${CMAKE_CURRENT_LIST_DIR}/../${LIB_DIR}/${STATIC_DIR_DEBUG_NAME})")
-                endif()
-            else()
-                set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC} PROPERTIES IMPORTED_LOCATION \"${STATIC_DIR_ABSOLUTE}\")")
-                if(WIN32)
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC} PROPERTIES IMPORTED_IMPLIB \"${STATIC_DIR_ABSOLUTE}\")")
-                endif()
-                if(${DEFINE_DEBUG})
-                    set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC}d PROPERTIES IMPORTED_LOCATION \"${STATIC_DIR_DEBUG_ABSOLUTE}\")")
-                    if(WIN32)
-                        set(STATIC_IMPORTS "${STATIC_IMPORTS}\nset_target_properties(${STATIC}d PROPERTIES IMPORTED_IMPLIB \"${STATIC_DIR_DEBUG_ABSOLUTE}\")")
-                    endif()
-                endif()
-            endif()
-            if(${STATIC}_SHARED)
-                if("${SHARED_MODULES}" STREQUAL "")
-                    set(SHARED_MODULES "${STATIC}")
-                else()
-                    set(SHARED_MODULES "${SHARED_MODULES};${STATIC}")
-                endif()
-            endif()
-            set(TARGET_COMMENT "${TARGET_COMMENT}\n#  ${STATIC}")
-            if(${DEFINE_DEBUG})
-                set(TARGET_COMMENT "${TARGET_COMMENT}\n#  ${STATIC}d")
-            endif()
-        endif()
-    endforeach()
-    if(${DEFINE_DEBUG})
-        string(STRIP "${STATIC_LIBRARIES}" STATIC_LIBRARIES_PARSED)
-        set(STATIC_LIBRARIES_DEBUG "optimized Jatta debug Jattad")
-        foreach(LIBRARY ${STATIC_LIBRARIES_PARSED})
-            set(STATIC_LIBRARIES_DEBUG "${STATIC_LIBRARIES_DEBUG} optimized ${LIBRARY} debug ${LIBRARY}d")
-        endforeach()
-        set(SYSTEM_LIBRARIES "${STATIC_LIBRARIES_DEBUG}${SYSTEM_LIBRARIES}")
-        set(TARGET_COMMENT "\n#  Jattad${TARGET_COMMENT}")
-        set(DEBUG_TARGET "\n\nadd_library(Jattad STATIC IMPORTED)\nset_target_properties(Jattad PROPERTIES IMPORTED_LOCATION \${Jatta_DEBUG_MODULE})")
-        set(DEBUG_MODULE "\nget_filename_component(Jatta_DEBUG_MODULE \"\${CMAKE_CURRENT_LIST_DIR}/../${LIB_DIR}/${Jatta_MODULE_NAME_DEBUG}\" ABSOLUTE)")
-    else()
-        string(STRIP "${STATIC_LIBRARIES}" STATIC_LIBRARIES_PARSED)
-        string(REPLACE ";" " " STATIC_LIBRARIES_PARSED "${STATIC_LIBRARIES_PARSED}")
-        set(SYSTEM_LIBRARIES "Jatta ${STATIC_LIBRARIES_PARSED}${SYSTEM_LIBRARIES}")
-    endif()
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/JattaConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}Config.cmake" @ONLY)
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/JattaConfigVersion.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}ConfigVersion.cmake" @ONLY)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}Config.cmake DESTINATION cmake/)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}ConfigVersion.cmake DESTINATION cmake/)
-endif()
-
-# Installing the "include" directory is a temporary workaround for OpenGL calls in Jatta
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include DESTINATION .)
+include(../cmake/Install.cmake)
