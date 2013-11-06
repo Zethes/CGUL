@@ -1,6 +1,6 @@
 # Add the Jatta target
 set(INSTALL_TARGET_LIST "# Jatta")
-if(${Jatta_STATIC})
+if(Jatta_STATIC)
 
     set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nadd_library(Jatta STATIC IMPORTED)")
 
@@ -15,7 +15,12 @@ endif()
 get_target_property(__LOCATION Jatta LOCATION)
 get_filename_component(__FILENAME "${__LOCATION}" NAME)
 set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_LOCATION \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
-set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+
+if(WIN32 AND Jatta_STATIC)
+
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+
+endif()
 
 # Add an import for each configuration
 foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
@@ -27,7 +32,12 @@ foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
 
         get_filename_component(__FILENAME "${__LOCATION}" NAME)
         set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_LOCATION_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
-        set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+
+        if(WIN32 AND NOT Jatta_STATIC)
+
+            set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+
+        endif()
 
     endif()
 
@@ -87,7 +97,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
                 set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_LOCATION${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
 
                 # Special case for MSVC, need to set IMPORTED_IMPLIB too
-                if(MSVC)
+                if(WIN32 AND ${__LIBRARY}_SHARED)
 
                     set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_IMPLIB${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
 
@@ -99,7 +109,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
                 set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_LOCATION${__CONFIGURATION} \"${__LOCATION}\")")
 
                 # Special case for MSVC, need to set IMPORTED_IMPLIB too
-                if(MSVC)
+                if(WIN32 AND ${__LIBRARY}_SHARED)
 
                     set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_IMPLIB${__CONFIGURATION} \"${__LOCATION}\")")
 
