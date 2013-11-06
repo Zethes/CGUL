@@ -9,7 +9,8 @@
 
 namespace Jatta
 {
-    template< typename T > class Container
+    template< typename T >
+    class Container
     {
     };
 }

@@ -3,23 +3,27 @@
  * All rights reserved.
  */
 
-template< typename T > Jatta::Array< T >::Array()
+template< typename T >
+Jatta::Array< T >::Array()
 {
     data = NULL;
     size = 0;
 }
 
-template< typename T > Jatta::Array< T >::~Array()
+template< typename T >
+Jatta::Array< T >::~Array()
 {
     Free();
 }
 
-template< typename T > T* Jatta::Array< T >::GetData()
+template< typename T >
+T* Jatta::Array< T >::GetData()
 {
     return data;
 }
 
-template< typename T > void Jatta::Array< T >::SetData(void* data, Size size)
+template< typename T >
+void Jatta::Array< T >::SetData(void* data, Size size)
 {
     if (this->data != data)
     {
@@ -29,7 +33,8 @@ template< typename T > void Jatta::Array< T >::SetData(void* data, Size size)
     }
 }
 
-template< typename T > void Jatta::Array< T >::Free()
+template< typename T >
+void Jatta::Array< T >::Free()
 {
     if (this->size != 0)
     {
@@ -39,25 +44,29 @@ template< typename T > void Jatta::Array< T >::Free()
     }
 }
 
-template< typename T > Jatta::Size Jatta::Array< T >::GetSize() const
+template< typename T >
+Jatta::Size Jatta::Array< T >::GetSize() const
 {
     return size;
 }
 
-template< typename T > void Jatta::Array< T >::SetSize(Size size)
+template< typename T >
+void Jatta::Array< T >::SetSize(Size size)
 {
     Free();
     data = (T*)new unsigned char[sizeof(T) * size];
     this->size = size;
 }
 
-template< typename T > void Jatta::Array< T >::Set(Size index, const T& value)
+template< typename T >
+void Jatta::Array< T >::Set(Size index, const T& value)
 {
     data[index] = value;
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
-template< typename T > void Jatta::Array< T >::Set(Size index, const T&& value)
+template< typename T >
+void Jatta::Array< T >::Set(Size index, const T&& value)
 {
     data[index] = value;
 }

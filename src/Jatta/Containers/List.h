@@ -10,7 +10,8 @@
 
 namespace Jatta
 {
-    template< typename T > class List : public FixedList< T >
+    template< typename T >
+    class List : public FixedList< T >
     {
     public:
         virtual void Push(const T& value) = 0;

@@ -73,17 +73,21 @@ namespace Jatta
         _JATTA_EXPORT bool operator!=(const String& operand) const;
         //! @brief Attempts to convert a data type to string and concatinate it to this string,
         //! returning the result.
-        template <typename T> String operator+(const T& operand) const;
+        template <typename T>
+        String operator+(const T& operand) const;
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
         //! @brief Attempts to convert a data type to string and concatinate it to this string,
         //! returning the result.
-        template <typename T> String operator+(const T&& operand) const;
+        template <typename T>
+        String operator+(const T&& operand) const;
 #       endif
         //! @brief Attempts to convert a data type to string and concatinate it to this string.
-        template <typename T> String& operator+=(const T& operand);
+        template <typename T>
+        String& operator+=(const T& operand);
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
         //! @brief Attempts to convert a data type to string and concatinate it to this string.
-        template <typename T> String& operator+=(const T&& operand);
+        template <typename T>
+        String& operator+=(const T&& operand);
 #       endif
         //! @brief Checks if this string is lexicographically less than another.
         _JATTA_EXPORT bool operator<(const String& operand) const;
@@ -162,14 +166,18 @@ namespace Jatta
         _JATTA_EXPORT void SetEmptyToNull();
 
         //! @brief Checks if the string can be converted to the given data type.
-        template <typename T> bool Is() const;
+        template <typename T>
+        bool Is() const;
         //! @brief Converts the string to the given data type.
-        template <typename T> T To() const;
+        template <typename T>
+        T To() const;
         //! @brief Converts the string to the given data type.
-        template <typename T> T To(const T& fallback) const;
+        template <typename T>
+        T To(const T& fallback) const;
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
         //! @brief Converts the string to the given data type.
-        template <typename T> T To(const T&& fallback) const;
+        template <typename T>
+        T To(const T&& fallback) const;
 #       endif
 
 #       ifdef JATTA_WINDOWS
@@ -185,7 +193,8 @@ namespace Jatta
  *  @returns The new string.
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
-template <typename T> Jatta::String Jatta::String::operator+(const T& operand) const
+template <typename T>
+Jatta::String Jatta::String::operator+(const T& operand) const
 {
     std::ostringstream ss;
     ss << operand;
@@ -197,7 +206,8 @@ template <typename T> Jatta::String Jatta::String::operator+(const T& operand) c
  *  @returns The new string.
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
-template <typename T> Jatta::String Jatta::String::operator+(const T&& operand) const
+template <typename T>
+Jatta::String Jatta::String::operator+(const T&& operand) const
 {
     std::ostringstream ss;
     ss << operand;
@@ -209,7 +219,8 @@ template <typename T> Jatta::String Jatta::String::operator+(const T&& operand) 
  *  @returns A reference to this object.
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
-template <typename T> Jatta::String& Jatta::String::operator+=(const T& operand)
+template <typename T>
+Jatta::String& Jatta::String::operator+=(const T& operand)
 {
     std::ostringstream ss;
     ss << operand;
@@ -222,7 +233,8 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T& operand)
  *  @returns A reference to this object.
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
-template <typename T> Jatta::String& Jatta::String::operator+=(const T&& operand)
+template <typename T>
+Jatta::String& Jatta::String::operator+=(const T&& operand)
 {
     std::ostringstream ss;
     ss << operand;
@@ -233,7 +245,8 @@ template <typename T> Jatta::String& Jatta::String::operator+=(const T&& operand
 
 /** @returns True if the string can be converted, false otherwise.
  */
-template <typename T> bool Jatta::String::Is() const
+template <typename T>
+bool Jatta::String::Is() const
 {
     std::istringstream test;
     test.str(data);
@@ -252,7 +265,8 @@ template <typename T> bool Jatta::String::Is() const
 
 /** @returns The string as the given type.
  */
-template <typename T> T Jatta::String::To() const
+template <typename T>
+T Jatta::String::To() const
 {
     std::istringstream convert;
     convert.str(data);
@@ -264,7 +278,8 @@ template <typename T> T Jatta::String::To() const
 /** @param fallback The value to set to if the conversion failed.
  *  @returns The string as the given type.
  */
-template <typename T> T Jatta::String::To(const T& fallback) const
+template <typename T>
+T Jatta::String::To(const T& fallback) const
 {
     std::istringstream test;
     test.str(data);
@@ -285,7 +300,8 @@ template <typename T> T Jatta::String::To(const T& fallback) const
 /** @param fallback The value to set to if the conversion failed.
  *  @returns The string as the given type.
  */
-template <typename T> T Jatta::String::To(const T&& fallback) const
+template <typename T>
+T Jatta::String::To(const T&& fallback) const
 {
     std::istringstream test;
     test.str(data);

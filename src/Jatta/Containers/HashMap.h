@@ -11,135 +11,39 @@
 #include <iostream>
 namespace Jatta
 {
-    template< typename T, typename V > class HashMap : public Container< T >
+    template< typename KeyType, typename ValueType >
+    class HashMap : public Container< KeyType >
     {
-        typedef Size (*Function)(const T& object);
+        typedef Size (*Function)(const KeyType& object);
         Function hash;
 
         Size size;
 
         struct Data
         {
-            T key;
-            V value;
+            KeyType key;
+            ValueType value;
             Data* next;
         };
 
         Data** data;
     public:
-        HashMap(Function hash, Size pool)
-        {
-            this->hash = hash;
-            data = new Data*[pool];
-            this->size = pool;
-            for (unsigned int i = 0; i < pool; i++)
-            {
-                data[i] = NULL;
-            }
-        }
+        HashMap(Function hash, Size pool);
+        ~HashMap();
 
-        ~HashMap()
-        {
-            Clear();
-            delete[] data;
-        }
+        void Insert(KeyType key, ValueType value);
 
-        void Insert(T key, V value)
-        {
-            Size index = hash(key);
-            index %= this->size;
-            Data** slot = &this->data[index];
-            while (*slot)
-            {
-                if ((*slot)->key == key)
-                {
-                    (*slot)->value = value;
-                    return;
-                }
-                slot = &((*slot)->next);
-            }
-            Data* newData = new Data;
-            newData->key = key;
-            newData->value = value;
-            newData->next = NULL;
-            *slot = newData;
-        }
+        ValueType Get(KeyType key) const;
+        bool Get(KeyType key, ValueType* value) const;
 
-        V Get(T key)
-        {
-            Size index = hash(key);
-            index %= this->size;
-            Data** slot = &this->data[index];
-            while (*slot)
-            {
-                if ((*slot)->key == key)
-                {
-                    return (*slot)->value;
-                }
-                slot = &((*slot)->next);
-            }
-            return V();
-        }
+        void Erase(KeyType key);
 
-        bool Get(T key, V* value)
-        {
-            Size index = hash(key);
-            index %= this->size;
-            Data** slot = &this->data[index];
-            while (*slot)
-            {
-                if ((*slot)->key == key)
-                {
-                    if (value)
-                    {
-                        *value = (*slot)->value;
-                    }
-                    return true;
-                }
-                slot = &((*slot)->next);
-            }
-            return false;
-        }
+        void Clear();
+        void Clear(Size pool);
 
-        void Clear()
-        {
-            for (Size i = 0; i < size; i++)
-            {
-                Data** slot = &data[i];
-                Size it = 0;
-                while (*slot)
-                {
-                    Data** last = slot;
-                    slot = &((*slot)->next);
-                    delete *last;
-                    *last = NULL;
-                }
-            }
-        }
-
-        void Clear(Size pool)
-        {
-            Clear();
-            delete[] data;
-            data = new Data*[pool];
-            this->size = pool;
-        }
-
-        void Debug()
-        {
-            for (Size i = 0; i < size; i++)
-            {
-                Data* slot = data[i];
-                Size it = 0;
-                while (slot)
-                {
-                    std::cout << "[" << i << " - " << (it++) << "] " << slot->key << " -> " << slot->value << std::endl;
-                    slot = slot->next;
-                }
-            }
-        }
+        void Debug() const;
     };
 }
 
 #include "../External/Undefines.h"
-//#include "HashMap.ipp"
+#include "HashMap.ipp"

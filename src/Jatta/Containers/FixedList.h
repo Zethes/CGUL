@@ -16,7 +16,8 @@ namespace Jatta
      *  the container that data will be put into, so long as that container inherits from this
      *  class.
      */
-    template< typename T > class FixedList : public Container< T >
+    template< typename T >
+    class FixedList : public Container< T >
     {
     public:
         virtual void SetSize(Size size) = 0;

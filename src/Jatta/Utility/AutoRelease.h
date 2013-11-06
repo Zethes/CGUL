@@ -16,7 +16,8 @@ namespace Jatta
      *  scope.  The purpose of this method is to release classes which are not automatically
      *  cleaned on destruction, but instead provide a method to be released.
      */
-    template< class T > class AutoRelease : public T
+    template< class T >
+    class AutoRelease : public T
     {
         typedef void (T::*Release)();
         Release release;

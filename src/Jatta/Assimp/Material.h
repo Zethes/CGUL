@@ -39,7 +39,7 @@ namespace Jatta
             _JATTA_EXPORT SInt32 Get(const char* key, UInt32 type, UInt32 idx, Type* out, UInt32* max) const;
 
             template <typename Type>
-            _JATTA_EXPORT SInt32 Get(const char* key, UInt32 type, UInt32 idx, Type& out) const;  
+            _JATTA_EXPORT SInt32 Get(const char* key, UInt32 type, UInt32 idx, Type& out) const;
         };
     }
 }

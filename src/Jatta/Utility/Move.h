@@ -10,11 +10,14 @@
 namespace Jatta
 {
 #   if defined(CPP_HAS_STD_MOVE)
-    template< class T > typename std::remove_reference<T>::type&& Move(T&& t);
+    template< class T >
+    typename std::remove_reference<T>::type&& Move(T&& t);
 #   elif defined(CPP_HAS_DOUBLE_REFERENCE)
-    template< class T > T&& Move(T&& t);
+    template< class T >
+    T&& Move(T&& t);
 #   else
-    template< class T > T& Move(T& t);
+    template< class T >
+    T& Move(T& t);
 #   endif
 }
 

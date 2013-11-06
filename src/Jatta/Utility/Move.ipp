@@ -4,17 +4,20 @@
  */
 
 #if defined(CPP_HAS_STD_MOVE)
-template< class T > typename std::remove_reference<T>::type&& Jatta::Move(T&& t)
+template< class T >
+typename std::remove_reference<T>::type&& Jatta::Move(T&& t)
 {
     return std::move(t);
 }
 #elif defined(CPP_HAS_DOUBLE_REFERENCE)
-template< class T > T&& Jatta::Move(T&& t)
+template< class T >
+T&& Jatta::Move(T&& t)
 {
     return t;
 }
 #else
-template< class T > T& Jatta::Move(T& t)
+template< class T >
+T& Jatta::Move(T& t)
 {
     return t;
 }

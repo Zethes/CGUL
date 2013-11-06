@@ -14,7 +14,8 @@ namespace Jatta
     /** @brief A vector functionally equivalent to an std::vector but capable of acting as a
      *  FixedList.
      */
-    template< typename T, typename Allocator = std::allocator< T > > class Vector : public std::vector< T, Allocator >, public FixedList< T >
+    template< typename T, typename Allocator = std::allocator< T > >
+    class Vector : public std::vector< T, Allocator >, public FixedList< T >
     {
     public:
         // List

@@ -1,6 +1,7 @@
 #include <utility>
 
-template<typename T> typename std::remove_reference<T>::type&& check(T&& t)
+template<typename T>
+typename std::remove_reference<T>::type&& check(T&& t)
 {
     return t;
 }

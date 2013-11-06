@@ -10,7 +10,8 @@
 
 namespace Jatta
 {
-    template< typename T > class Array : public FixedList< T >
+    template< typename T >
+    class Array : public FixedList< T >
     {
         T* data;
         Size size;

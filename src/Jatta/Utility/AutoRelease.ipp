@@ -3,12 +3,14 @@
  * All rights reserved.
  */
 
-template< class T > Jatta::AutoRelease< T >::AutoRelease()
+template< class T >
+Jatta::AutoRelease< T >::AutoRelease()
 {
     this->release = NULL;
 }
 
-template< class T > Jatta::AutoRelease< T >::~AutoRelease()
+template< class T >
+Jatta::AutoRelease< T >::~AutoRelease()
 {
     if (release != NULL)
     {
@@ -21,7 +23,8 @@ template< class T > Jatta::AutoRelease< T >::~AutoRelease()
  *  autorelease, it is possible to pass NULL to this method to remove the autorelease functionality
  *  from the class.
  */
-template< class T > void Jatta::AutoRelease< T >::SetRelease(Release release)
+template< class T >
+void Jatta::AutoRelease< T >::SetRelease(Release release)
 {
     this->release = release;
 }

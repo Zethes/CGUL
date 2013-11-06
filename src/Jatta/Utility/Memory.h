@@ -14,11 +14,14 @@ namespace Jatta
      */
     namespace Memory
     {
-        template< typename T > T* AllocateBulk(Size count);
-        template< typename T > void FreeBulk(T* data);
+        template< typename T >
+        T* AllocateBulk(Size count);
+        template< typename T >
+        void FreeBulk(T* data);
 
         _JATTA_INLINE_DEFINE void ZeroData(void* data, Size count);
-        template< typename T > void ZeroArray(T* data, Size count);
+        template< typename T >
+        void ZeroArray(T* data, Size count);
     }
 }
 
