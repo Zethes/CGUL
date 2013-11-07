@@ -19,57 +19,57 @@ namespace Jatta
          */
         struct Header
         {
-            Jatta::String AccessControlAllowOrigin;
-            Jatta::String AcceptRanges;
-            int Age;
-            Jatta::String AgeString;
-            Jatta::String Allow;
-            Jatta::String CacheControl;
-            int Charset;
-            Jatta::String CharsetString;
-            int Connection;
-            Jatta::String ConnectionString;
-            Jatta::String ContentDisposition;
-            int ContentEncoding;
-            Jatta::String ContentEncodingString;
-            Jatta::String ContentLanguage;
-            int ContentLength;
-            Jatta::String ContentLengthString;
-            Jatta::String ContentLocation;
-            Jatta::String ContentMD5;
-            int ContentRangeMin,ContentRangeMax;
-            Jatta::String ContentRangeString;
-            Jatta::String ContentType;
-            Jatta::String Date;
-            Jatta::String ETag;
-            Jatta::String Expires;
-            Jatta::String LastModified;
-            Jatta::String Link;
-            Jatta::String Location;
-            Jatta::String MIME;
-            Jatta::String P3P;
-            Jatta::String Pragma;
-            Jatta::String ProxyAuthenticate;
-            int Refresh;
-            Jatta::String RefreshString;
-            Jatta::String RefreshUrl;
-            int RetryAfter;
-            Jatta::String RetryAfterString;
-            Jatta::String Server;
-            Jatta::String SetCookie;
-            Jatta::String SetCookieID;
-            int SetCookieValue;
-            int SetCookieVersion;
-            int Status;
-            Jatta::String StatusString;
-            Jatta::String StrictTransportSecurity;
-            Jatta::String Trailer;
-            int TransferEncoding;
-            Jatta::String TransferEncodingString;
-            Jatta::String Vary;
-            Jatta::String Via;
-            Jatta::String Warning;
-            Jatta::String WWWAuthenticate;
+            String accessControlAllowOrigin;
+            String acceptRanges;
+            int age;
+            String ageString;
+            String allow;
+            String cacheControl;
+            int charset;
+            String charsetString;
+            int connection;
+            String connectionString;
+            String contentDisposition;
+            int contentEncoding;
+            String contentEncodingString;
+            String contentLanguage;
+            int contentLength;
+            String contentLengthString;
+            String contentLocation;
+            String contentMD5;
+            int contentRangeMin, contentRangeMax;
+            String contentRangeString;
+            String contentType;
+            String date;
+            String eTag;
+            String expires;
+            String lastModified;
+            String link;
+            String location;
+            String mime;
+            String p3p;
+            String pragma;
+            String proxyAuthenticate;
+            int refresh;
+            String refreshString;
+            String refreshUrl;
+            int retryAfter;
+            String retryAfterString;
+            String server;
+            String setCookie;
+            String setCookieID;
+            int setCookieValue;
+            int setCookieVersion;
+            int status;
+            String statusString;
+            String strictTransportSecurity;
+            String trailer;
+            int transferEncoding;
+            String transferEncodingString;
+            String vary;
+            String via;
+            String warning;
+            String wwwAuthenticate;
         };
 
         /** @class HTTPRequest HTTPRequest.h <Base/Network/HTTPRequest.h>
@@ -78,13 +78,13 @@ namespace Jatta
         class HTTPRequest
         {
             SocketTCP* sock;
-            Jatta::String host;
-            Jatta::String request, response, responseHead, responseBody;
+            String host;
+            String request, response, responseHead, responseBody;
             Header header;
 
             bool PerformRequest(int timeout);
             void ParseResponseHead();
-            Jatta::String EncodeString(const char* buffer, int len);
+            String EncodeString(const char* buffer, int len);
         public:
             HTTPRequest();
             ~HTTPRequest();
@@ -96,24 +96,23 @@ namespace Jatta
             void Https(const String url);
             void ConnectSSL(const IPAddress& ip, int port);
             #endif
-            
+
             void Close();
 
             bool Request(String request, int timeout = 0);
             bool Get(String page, int timeout = 0);
             bool Head(String page, int timeout = 0);
-            bool Post(String page, Jatta::String content, int timeout = 0);
+            bool Post(String page, String content, int timeout = 0);
             //TODO: PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
 
             bool IsConnected();
             SocketTCP* GetSocket();
 
-            Jatta::String GetRequest();
-            Jatta::String GetResponse();
+            String GetRequest();
+            String GetResponse();
             Header GetHeader();
-            Jatta::String GetResponseHead();
-            Jatta::String GetResponseBody();
-            
+            String GetResponseHead();
+            String GetResponseBody();
         };
     }
 }

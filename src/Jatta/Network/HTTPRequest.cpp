@@ -18,7 +18,7 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
     response = "";
     responseHead = "";
     responseBody = "";
-    
+
     if (!sock->IsConnected())
     {
         throw NetworkException(NetworkExceptionCode::FAILED_HTTP_REQUEST, NetworkExceptionReason::SOCKET_INVALID);
@@ -59,16 +59,16 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
     int count = 0;
     int amount = 0;
 
-    switch (header.TransferEncoding)
+    switch (header.transferEncoding)
     {
         case HTTPTransferEncoding::CONTENT_LENGTH:
         {
-            char * bufferBody = new char[1024];
+            char* bufferBody = new char[1024];
             while (sock->IsConnected())
             {
                 int size = 1024;
-                if (count + size > header.ContentLength)
-                    size = header.ContentLength - count;
+                if (count + size > header.contentLength)
+                    size = header.contentLength - count;
 
                 char* buff = new char[size];
                 amount = sock->Receive((void*)buff, size);
@@ -76,7 +76,7 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
                 if (amount > 0)
                     responseBody += EncodeString(buff, size);
 
-                if (count >= header.ContentLength)
+                if (count >= header.contentLength)
                     break;
             }
         }
@@ -111,11 +111,11 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
                 {
                     char code = sizeString[sizeString.GetLength()-j-1];
                     if (code >= 48 && code <= 57) //Number
-                        size += (code-48)*((j == 0) ? 1 : 16*j);
+                        size += (code - 48)*((j == 0) ? 1 : 16*j);
                     if (code >= 65 && code <= 70) //A-F
-                        size += (code-55)*((j == 0) ? 1 : 16*j);
+                        size += (code - 55)*((j == 0) ? 1 : 16*j);
                     if (code >= 97 && code <= 102) //a-f
-                        size += (code-87)*((j == 0) ? 1 : 16*j);
+                        size += (code - 87)*((j == 0) ? 1 : 16*j);
                 }
                 sock->Receive(sizeBuffer, sizeString.GetLength()+2);
 
@@ -139,7 +139,7 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
 
     response = responseHead + responseBody;
 
-    if (header.Connection == Network::HTTPConnections::CLOSE)
+    if (header.connection == Network::HTTPConnections::CLOSE)
         Close();
 
     return true;
@@ -150,7 +150,7 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
     header = Header();
 
     //Setup defaults:
-    header.TransferEncoding = HTTPTransferEncoding::CONTENT_LENGTH;
+    header.transferEncoding = HTTPTransferEncoding::CONTENT_LENGTH;
 
     //Split the lines to parse one by one.
     std::vector<String> lines = responseHead.Explode("\n");
@@ -162,365 +162,365 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
 
         //Begin parsing.
         if (i == 0) //First line contains the status code.
-        { 
-            header.Status = parts[1].To<int>(HTTPStatusCodes::UNKNOWN);
-            for (unsigned int j = 1; j < parts.size(); j++)
-                header.StatusString += parts[j] + " ";
-            header.StatusString.Trim();
-        }
-        else if (parts[0] == "Access-Control-Allow-Origin:") 
         {
-            header.AccessControlAllowOrigin = "";
+            header.status = parts[1].To<int>(HTTPStatusCodes::UNKNOWN);
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.AccessControlAllowOrigin += parts[j] + " ";
-            header.AccessControlAllowOrigin.Trim();
+                header.statusString += parts[j] + " ";
+            header.statusString.Trim();
         }
-        else if (parts[0] == "Accept-Ranges:") 
+        else if (parts[0] == "Access-Control-Allow-Origin:")
         {
-            header.AcceptRanges = "";
+            header.accessControlAllowOrigin = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.AcceptRanges += parts[j] + " ";
-            header.AcceptRanges.Trim();
+                header.accessControlAllowOrigin += parts[j] + " ";
+            header.accessControlAllowOrigin.Trim();
         }
-        else if (parts[0] == "Age:") 
+        else if (parts[0] == "Accept-Ranges:")
         {
-            header.AgeString = "";
+            header.acceptRanges = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.AgeString += parts[j] + " ";
-            header.AgeString.Trim();
+                header.acceptRanges += parts[j] + " ";
+            header.acceptRanges.Trim();
+        }
+        else if (parts[0] == "Age:")
+        {
+            header.ageString = "";
+            for (unsigned int j = 1; j < parts.size(); j++)
+                header.ageString += parts[j] + " ";
+            header.ageString.Trim();
 
-            header.Age = header.AgeString.To<int>(-1);
+            header.age = header.ageString.To<int>(-1);
         }
-        else if (parts[0] == "Allow:") 
+        else if (parts[0] == "Allow:")
         {
-            header.Allow = "";
+            header.allow = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Allow += parts[j] + " ";
-            header.Allow.Trim();
+                header.allow += parts[j] + " ";
+            header.allow.Trim();
         }
-        else if (parts[0] == "Cache-Control:") 
+        else if (parts[0] == "Cache-Control:")
         {
-            header.CacheControl = "";
+            header.cacheControl = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.CacheControl += parts[j] + " ";
-            header.CacheControl.Trim();
+                header.cacheControl += parts[j] + " ";
+            header.cacheControl.Trim();
         }
         else if (parts[0] == "Connection:")
         {
-            header.ContentEncodingString = "";
+            header.contentEncodingString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentEncodingString += parts[j] + " ";
-            header.ContentEncodingString.Trim();
+                header.contentEncodingString += parts[j] + " ";
+            header.contentEncodingString.Trim();
 
-            if (header.ConnectionString == "close")
-                header.Connection = HTTPConnections::CLOSE;
-            else if (header.ConnectionString == "Keep-Alive")
-                header.Connection = HTTPConnections::KEEP_ALIVE;
+            if (header.connectionString == "close")
+                header.connection = HTTPConnections::CLOSE;
+            else if (header.connectionString == "Keep-Alive")
+                header.connection = HTTPConnections::KEEP_ALIVE;
             else
-                header.Connection = HTTPConnections::UNKNOWN;
+                header.connection = HTTPConnections::UNKNOWN;
         }
-        else if (parts[0] == "Content-Disposition:") 
+        else if (parts[0] == "Content-Disposition:")
         {
-            header.ContentDisposition = "";
+            header.contentDisposition = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentDisposition += parts[j] + " ";
-            header.ContentDisposition.Trim();
+                header.contentDisposition += parts[j] + " ";
+            header.contentDisposition.Trim();
         }
         else if (parts[0] == "Content-Encoding:")
         {
-            header.ConnectionString = "";
+            header.connectionString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ConnectionString += parts[j] + " ";
-            header.ConnectionString.Trim();
+                header.connectionString += parts[j] + " ";
+            header.connectionString.Trim();
 
-            if (header.ContentEncodingString == "compress")
-                header.ContentEncoding = HTTPContentEncoding::COMPRESS;
-            else if (header.ContentEncodingString == "deflate")
-                header.ContentEncoding = HTTPContentEncoding::DEFLATE;
-            else if (header.ContentEncodingString == "exi")
-                header.ContentEncoding = HTTPContentEncoding::EXI;
-            else if (header.ContentEncodingString == "gzip")
-                header.ContentEncoding = HTTPContentEncoding::GZIP;
-            else if (header.ContentEncodingString == "identity")
-                header.ContentEncoding = HTTPContentEncoding::IDENTITY;
-            else if (header.ContentEncodingString == "pack200-gzip")
-                header.ContentEncoding = HTTPContentEncoding::PACK200_GZIP;
-            else if (header.ContentEncodingString == "sdch")
-                header.ContentEncoding = HTTPContentEncoding::SDCH;
-            else if (header.ContentEncodingString == "bzip2")
-                header.ContentEncoding = HTTPContentEncoding::BZIP2;
-            else if (header.ContentEncodingString == "peerdist")
-                header.ContentEncoding = HTTPContentEncoding::PEERDIST;
-            else if (header.ContentEncodingString == "lzma")
-                header.ContentEncoding = HTTPContentEncoding::LZMA;
+            if (header.contentEncodingString == "compress")
+                header.contentEncoding = HTTPContentEncoding::COMPRESS;
+            else if (header.contentEncodingString == "deflate")
+                header.contentEncoding = HTTPContentEncoding::DEFLATE;
+            else if (header.contentEncodingString == "exi")
+                header.contentEncoding = HTTPContentEncoding::EXI;
+            else if (header.contentEncodingString == "gzip")
+                header.contentEncoding = HTTPContentEncoding::GZIP;
+            else if (header.contentEncodingString == "identity")
+                header.contentEncoding = HTTPContentEncoding::IDENTITY;
+            else if (header.contentEncodingString == "pack200-gzip")
+                header.contentEncoding = HTTPContentEncoding::PACK200_GZIP;
+            else if (header.contentEncodingString == "sdch")
+                header.contentEncoding = HTTPContentEncoding::SDCH;
+            else if (header.contentEncodingString == "bzip2")
+                header.contentEncoding = HTTPContentEncoding::BZIP2;
+            else if (header.contentEncodingString == "peerdist")
+                header.contentEncoding = HTTPContentEncoding::PEERDIST;
+            else if (header.contentEncodingString == "lzma")
+                header.contentEncoding = HTTPContentEncoding::LZMA;
             else
-                header.ContentEncoding = HTTPContentEncoding::UNKNOWN;
+                header.contentEncoding = HTTPContentEncoding::UNKNOWN;
         }
-        else if (parts[0] == "Content-Language:") 
+        else if (parts[0] == "Content-Language:")
         {
-            header.ContentLanguage = "";
+            header.contentLanguage = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentLanguage += parts[j] + " ";
-            header.ContentLanguage.Trim();
+                header.contentLanguage += parts[j] + " ";
+            header.contentLanguage.Trim();
         }
         else if (parts[0] == "Content-Length:")
         {
-            header.ContentLength = parts[1].To<int>(0); 
+            header.contentLength = parts[1].To<int>(0);
 
-            header.ContentLengthString = "";
+            header.contentLengthString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentLengthString += parts[j] + " ";
-            header.ContentLengthString.Trim();
+                header.contentLengthString += parts[j] + " ";
+            header.contentLengthString.Trim();
         }
-        else if (parts[0] == "Content-Location:") 
+        else if (parts[0] == "Content-Location:")
         {
-            header.ContentLocation = "";
+            header.contentLocation = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentLocation += parts[j] + " ";
-            header.ContentLocation.Trim();
+                header.contentLocation += parts[j] + " ";
+            header.contentLocation.Trim();
         }
-        else if (parts[0] == "Content-MD5:") 
+        else if (parts[0] == "Content-MD5:")
         {
-            header.ContentMD5 = "";
+            header.contentMD5 = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentMD5 += parts[j] + " ";
-            header.ContentMD5.Trim();
+                header.contentMD5 += parts[j] + " ";
+            header.contentMD5.Trim();
         }
-        else if (parts[0] == "Content-Range:") 
+        else if (parts[0] == "Content-Range:")
         {
-            header.ContentRangeString = "";
+            header.contentRangeString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ContentRangeString += parts[j] + " ";
-            header.ContentRangeString.Trim();
+                header.contentRangeString += parts[j] + " ";
+            header.contentRangeString.Trim();
         }
-        else if (parts[0] == "Content-Type:") 
+        else if (parts[0] == "Content-Type:")
         {
-            header.ContentType = "";
+            header.contentType = "";
             for (unsigned int j = 1; j < parts.size(); j++)
             {
-                header.ContentType += parts[j] + " ";
+                header.contentType += parts[j] + " ";
                 if (parts[j].SubString(0,8) == "charset=")
                 {
-                    header.CharsetString = parts[j].SubString(8);
-                    header.CharsetString.Trim();
-                    header.CharsetString.ToUpper();
+                    header.charsetString = parts[j].SubString(8);
+                    header.charsetString.Trim();
+                    header.charsetString.ToUpper();
 
-                    if (header.CharsetString == "ISO-8859-1")
-                        header.Charset = HTTPCharsets::ISO_8859_1;
-                    else if (header.CharsetString == "ISO-8859-2")
-                        header.Charset = HTTPCharsets::ISO_8859_2;
-                    else if (header.CharsetString == "ISO-8859-3")
-                        header.Charset = HTTPCharsets::ISO_8859_3;
-                    else if (header.CharsetString == "ISO-8859-4")
-                        header.Charset = HTTPCharsets::ISO_8859_4;
-                    else if (header.CharsetString == "ISO-8859-5")
-                        header.Charset = HTTPCharsets::ISO_8859_5;
-                    else if (header.CharsetString == "ISO-8859-6")
-                        header.Charset = HTTPCharsets::ISO_8859_6;
-                    else if (header.CharsetString == "ISO-8859-7")
-                        header.Charset = HTTPCharsets::ISO_8859_7;
-                    else if (header.CharsetString == "ISO-8859-8")
-                        header.Charset = HTTPCharsets::ISO_8859_8;
-                    else if (header.CharsetString == "ISO-8859-9")
-                        header.Charset = HTTPCharsets::ISO_8859_9;
-                    else if (header.CharsetString == "ISO-8859-10")
-                        header.Charset = HTTPCharsets::ISO_8859_10;
-                    else if (header.CharsetString == "ISO-8859-15")
-                        header.Charset = HTTPCharsets::ISO_8859_15;
-                    else if (header.CharsetString == "ISO-2022-JP")
-                        header.Charset = HTTPCharsets::ISO_2022_JP;
-                    else if (header.CharsetString == "ISO-2022-JP-2")
-                        header.Charset = HTTPCharsets::ISO_2022_JP_2;
-                    else if (header.CharsetString == "ISO-2022-KR")
-                        header.Charset = HTTPCharsets::ISO_2022_KR;
-                    else if (header.CharsetString == "UTF-8")
-                        header.Charset = HTTPCharsets::UTF_8;
-                    else if (header.CharsetString == "UTF-16")
-                        header.Charset = HTTPCharsets::UTF_16;
+                    if (header.charsetString == "ISO-8859-1")
+                        header.charset = HTTPCharsets::ISO_8859_1;
+                    else if (header.charsetString == "ISO-8859-2")
+                        header.charset = HTTPCharsets::ISO_8859_2;
+                    else if (header.charsetString == "ISO-8859-3")
+                        header.charset = HTTPCharsets::ISO_8859_3;
+                    else if (header.charsetString == "ISO-8859-4")
+                        header.charset = HTTPCharsets::ISO_8859_4;
+                    else if (header.charsetString == "ISO-8859-5")
+                        header.charset = HTTPCharsets::ISO_8859_5;
+                    else if (header.charsetString == "ISO-8859-6")
+                        header.charset = HTTPCharsets::ISO_8859_6;
+                    else if (header.charsetString == "ISO-8859-7")
+                        header.charset = HTTPCharsets::ISO_8859_7;
+                    else if (header.charsetString == "ISO-8859-8")
+                        header.charset = HTTPCharsets::ISO_8859_8;
+                    else if (header.charsetString == "ISO-8859-9")
+                        header.charset = HTTPCharsets::ISO_8859_9;
+                    else if (header.charsetString == "ISO-8859-10")
+                        header.charset = HTTPCharsets::ISO_8859_10;
+                    else if (header.charsetString == "ISO-8859-15")
+                        header.charset = HTTPCharsets::ISO_8859_15;
+                    else if (header.charsetString == "ISO-2022-JP")
+                        header.charset = HTTPCharsets::ISO_2022_JP;
+                    else if (header.charsetString == "ISO-2022-JP-2")
+                        header.charset = HTTPCharsets::ISO_2022_JP_2;
+                    else if (header.charsetString == "ISO-2022-KR")
+                        header.charset = HTTPCharsets::ISO_2022_KR;
+                    else if (header.charsetString == "UTF-8")
+                        header.charset = HTTPCharsets::UTF_8;
+                    else if (header.charsetString == "UTF-16")
+                        header.charset = HTTPCharsets::UTF_16;
                     else
-                        header.Charset = HTTPCharsets::UNKNOWN;
+                        header.charset = HTTPCharsets::UNKNOWN;
                 }
                 else if (parts[j].FindFirstOf(";") > 0)
                 {
-                    header.MIME = parts[j].SubString(0,parts[j].FindFirstOf(";"));
+                    header.mime = parts[j].SubString(0,parts[j].FindFirstOf(";"));
                 }
             }
-            header.ContentType.Trim();
+            header.contentType.Trim();
         }
-        else if (parts[0] == "Date:") 
+        else if (parts[0] == "Date:")
         {
-            header.Date = "";
+            header.date = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Date += parts[j] + " ";
-            header.Date.Trim();
+                header.date += parts[j] + " ";
+            header.date.Trim();
         }
-        else if (parts[0] == "ETag:") 
+        else if (parts[0] == "ETag:")
         {
-            header.ETag = "";
+            header.eTag = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ETag += parts[j] + " ";
-            header.ETag.Trim();
+                header.eTag += parts[j] + " ";
+            header.eTag.Trim();
         }
-        else if (parts[0] == "Expires:") 
+        else if (parts[0] == "Expires:")
         {
-            header.Expires = "";
+            header.expires = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Expires += parts[j] + " ";
-            header.Expires.Trim();
+                header.expires += parts[j] + " ";
+            header.expires.Trim();
         }
-        else if (parts[0] == "Last-Modified:") 
+        else if (parts[0] == "Last-Modified:")
         {
-            header.LastModified = "";
+            header.lastModified = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.LastModified += parts[j] + " ";
-            header.LastModified.Trim();
+                header.lastModified += parts[j] + " ";
+            header.lastModified.Trim();
         }
-        else if (parts[0] == "Link:") 
+        else if (parts[0] == "Link:")
         {
-            header.Link = "";
+            header.link = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Link += parts[j] + " ";
-            header.Link.Trim();
+                header.link += parts[j] + " ";
+            header.link.Trim();
         }
-        else if (parts[0] == "Location:") 
+        else if (parts[0] == "Location:")
         {
-            header.Location = "";
+            header.location = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Location += parts[j] + " ";
-            header.Location.Trim();
+                header.location += parts[j] + " ";
+            header.location.Trim();
         }
-        else if (parts[0] == "P3P:") 
+        else if (parts[0] == "P3P:")
         {
-            header.P3P = "";
+            header.p3p = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.P3P += parts[j] + " ";
-            header.P3P.Trim();
+                header.p3p += parts[j] + " ";
+            header.p3p.Trim();
         }
-        else if (parts[0] == "Pragma:") 
+        else if (parts[0] == "Pragma:")
         {
-            header.Pragma = "";
+            header.pragma = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Pragma += parts[j] + " ";
-            header.Pragma.Trim();
+                header.pragma += parts[j] + " ";
+            header.pragma.Trim();
         }
-        else if (parts[0] == "Proxy-Authenticate:") 
+        else if (parts[0] == "Proxy-Authenticate:")
         {
-            header.ProxyAuthenticate = "";
+            header.proxyAuthenticate = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.ProxyAuthenticate += parts[j] + " ";
-            header.ProxyAuthenticate.Trim();
+                header.proxyAuthenticate += parts[j] + " ";
+            header.proxyAuthenticate.Trim();
         }
-        else if (parts[0] == "Refresh:") 
+        else if (parts[0] == "Refresh:")
         {
-            header.RefreshString = "";
+            header.refreshString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
             {
-                header.RefreshString += parts[j] + " ";
+                header.refreshString += parts[j] + " ";
                 if (parts[j].SubString(0,4) == "url=")
                 {
-                    header.RefreshUrl = parts[j].SubString(4);
-                    header.RefreshUrl.Trim();
+                    header.refreshUrl = parts[j].SubString(4);
+                    header.refreshUrl.Trim();
                 }
                 else if (parts[j].FindFirstOf(";") > 0)
-                    header.Refresh = parts[j].SubString(0,parts[j].FindFirstOf(";")).To<int>(0);
+                    header.refresh = parts[j].SubString(0,parts[j].FindFirstOf(";")).To<int>(0);
             }
-            header.RefreshString.Trim();
+            header.refreshString.Trim();
         }
-        else if (parts[0] == "Retry-After:") 
+        else if (parts[0] == "Retry-After:")
         {
-            header.RetryAfterString = "";
+            header.retryAfterString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.RetryAfterString += parts[j] + " ";
-            header.RetryAfterString.Trim();
+                header.retryAfterString += parts[j] + " ";
+            header.retryAfterString.Trim();
 
-            header.RetryAfter = header.RetryAfterString.To<int>(0);
+            header.retryAfter = header.retryAfterString.To<int>(0);
         }
         else if (parts[0] == "Server:")
         {
-            header.Server = "";
+            header.server = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Server += parts[j] + " ";
-            header.Server.Trim();
+                header.server += parts[j] + " ";
+            header.server.Trim();
         }
         else if (parts[0] == "Set-Cookie:")
         {
-            header.SetCookie = "";
+            header.setCookie = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.SetCookie += parts[j] + " ";
-            header.SetCookie.Trim();
+                header.setCookie += parts[j] + " ";
+            header.setCookie.Trim();
 
             //TODO: Parse Set-Cookie
         }
         else if (parts[0] == "Status:")
         {
-            header.Status = parts[1].To<int>(0);
+            header.status = parts[1].To<int>(0);
 
-            header.StatusString = "";
+            header.statusString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.StatusString += parts[j] + " ";
-            header.StatusString.Trim();
+                header.statusString += parts[j] + " ";
+            header.statusString.Trim();
         }
         else if (parts[0] == "Strict-Transport-Security:")
         {
-            header.StrictTransportSecurity = "";
+            header.strictTransportSecurity = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.StrictTransportSecurity += parts[j] + " ";
-            header.StrictTransportSecurity.Trim();
+                header.strictTransportSecurity += parts[j] + " ";
+            header.strictTransportSecurity.Trim();
         }
         else if (parts[0] == "Trailer:")
         {
-            header.Trailer = "";
+            header.trailer = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Trailer += parts[j] + " ";
-            header.Trailer.Trim();
+                header.trailer += parts[j] + " ";
+            header.trailer.Trim();
         }
         else if (parts[0] == "Transfer-Encoding:")
         {
-            header.TransferEncodingString = "";
+            header.transferEncodingString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.TransferEncodingString += parts[j] + " ";
-            header.TransferEncodingString.Trim();
+                header.transferEncodingString += parts[j] + " ";
+            header.transferEncodingString.Trim();
 
-            if (header.TransferEncodingString == "chunked")
-                header.TransferEncoding = HTTPTransferEncoding::CHUNKED;
-            else if (header.TransferEncodingString == "compress")
-                header.TransferEncoding = HTTPTransferEncoding::COMPRESS;
-            else if (header.TransferEncodingString == "deflate")
-                header.TransferEncoding = HTTPTransferEncoding::DEFLATE;
-            else if (header.TransferEncodingString == "gzip")
-                header.TransferEncoding = HTTPTransferEncoding::GZIP;
-            else if (header.TransferEncodingString == "identity")
-                header.TransferEncoding = HTTPTransferEncoding::IDENTITY;
+            if (header.transferEncodingString == "chunked")
+                header.transferEncoding = HTTPTransferEncoding::CHUNKED;
+            else if (header.transferEncodingString == "compress")
+                header.transferEncoding = HTTPTransferEncoding::COMPRESS;
+            else if (header.transferEncodingString == "deflate")
+                header.transferEncoding = HTTPTransferEncoding::DEFLATE;
+            else if (header.transferEncodingString == "gzip")
+                header.transferEncoding = HTTPTransferEncoding::GZIP;
+            else if (header.transferEncodingString == "identity")
+                header.transferEncoding = HTTPTransferEncoding::IDENTITY;
             else
-                header.TransferEncoding = HTTPTransferEncoding::UNKNOWN;
+                header.transferEncoding = HTTPTransferEncoding::UNKNOWN;
         }
         else if (parts[0] == "Vary:")
         {
-            header.Vary = "";
+            header.vary = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Vary += parts[j] + " ";
-            header.Vary.Trim();
+                header.vary += parts[j] + " ";
+            header.vary.Trim();
         }
         else if (parts[0] == "Via:")
         {
-            header.Via = "";
+            header.via = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Via += parts[j] + " ";
-            header.Via.Trim();
+                header.via += parts[j] + " ";
+            header.via.Trim();
         }
         else if (parts[0] == "Warning:")
         {
-            header.Warning = "";
+            header.warning = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.Warning += parts[j] + " ";
-            header.Warning.Trim();
+                header.warning += parts[j] + " ";
+            header.warning.Trim();
         }
         else if (parts[0] == "WWW-Authenticate:")
         {
-            header.WWWAuthenticate = "";
+            header.wwwAuthenticate = "";
             for (unsigned int j = 1; j < parts.size(); j++)
-                header.WWWAuthenticate += parts[j] + " ";
-            header.WWWAuthenticate.Trim();
+                header.wwwAuthenticate += parts[j] + " ";
+            header.wwwAuthenticate.Trim();
         }
     }
 }
@@ -529,10 +529,10 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, int 
 {
     String ret = "";
 
-    switch (header.Charset)
+    switch (header.charset)
     {
         case HTTPCharsets::UTF_8: //Char* to UTF-8
-        { 
+        {
             for (unsigned int i = 0; i < len; i++)
             {
                 if (buffer[i] == '\\' && i+1 < len)

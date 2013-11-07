@@ -131,7 +131,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     window->Close();
                     return;
                 case KeyPress:
-                    OnKeyPress(TranslateKey(event.xkey.keycode));
+                    window->OnKeyPress(TranslateKey(event.xkey.keycode));
                     break;
                 case KeyRelease:
                     bool released = true;
@@ -146,7 +146,7 @@ _JATTA_EXPORT void Jatta::Window::Update()
                     }
                     if (released)
                     {
-                        OnKeyRelease(TranslateKey(event.xkey.keycode));
+                        window->OnKeyRelease(TranslateKey(event.xkey.keycode));
                     }
                     break;
             }
