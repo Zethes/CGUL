@@ -33,7 +33,9 @@ namespace Jatta
         _JATTA_EXPORT UInt CreateShader(Enum shaderType);
 
         _JATTA_EXPORT void Disable(Enum cap);
+        _JATTA_EXPORT void DisableVertexAttribArray(UInt index);
         _JATTA_EXPORT void DrawArrays(Enum mode, SInt first, SignedSize count);
+        _JATTA_EXPORT void DrawElements(Enum mode, SignedSize count, Enum type, const void* indices);
 
         _JATTA_EXPORT void Enable(Enum cap);
         _JATTA_EXPORT void EnableVertexAttribArray(UInt index);

@@ -110,11 +110,25 @@ _JATTA_EXPORT void Jatta::GL::Disable(Enum cap)
     GLCHECK("Failed to disable capability.");
 }
 
+_JATTA_EXPORT void Jatta::GL::DisableVertexAttribArray(UInt index)
+{
+    GLCLEAR();
+    glDisableVertexAttribArray(index);
+    GLCHECK("Failed to disable vertex attribute array.");
+}
+
 _JATTA_EXPORT void Jatta::GL::DrawArrays(Enum mode, SInt first, SignedSize count)
 {
     GLCLEAR();
     glDrawArrays(mode, first, count);
     GLCHECK("Failed to draw arrays.");
+}
+
+_JATTA_EXPORT void Jatta::GL::DrawElements(Enum mode, SignedSize count, Enum type, const void* indices)
+{
+	GLCLEAR();
+    glDrawElements(mode, count, type, indices);
+    GLCHECK("Failed to draw elements.");
 }
 
 _JATTA_EXPORT void Jatta::GL::Enable(Enum cap)
