@@ -407,6 +407,7 @@ _JATTA_EXPORT void Jatta::Matrix::Invert()
 {
     *this = Inverse(*this);
 }
+
 _JATTA_EXPORT void Jatta::Matrix::Transpose()
 {
     *this = Transpose(*this);
