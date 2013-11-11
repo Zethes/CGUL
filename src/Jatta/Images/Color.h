@@ -9,8 +9,10 @@
 
 namespace Jatta
 {
-    struct Vector3;
-    struct Vector4;
+    template< typename Type >
+    struct Vector3T;
+    template< typename Type >
+    struct Vector4T;
 
     /** @brief An RGBA (red, green, blue, alpha) color.
      */
@@ -51,10 +53,13 @@ namespace Jatta
         }
 
         //! @brief Calculates RGB values from 0.0f to 1.0f and returns a Vector3 with the result.
-        _JATTA_EXPORT Vector3 ToVector3() const;
+        template< typename Type >
+        _JATTA_EXPORT Vector3T< Type > ToVector3() const;
         //! @brief Calculates RGBA values from 0.0f to 1.0f and returns a Vector4 with the result.
-        _JATTA_EXPORT Vector4 ToVector4() const;
+        template< typename Type >
+        _JATTA_EXPORT Vector4T< Type > ToVector4() const;
     };
 }
 
 #include "../External/Undefines.h"
+#include "Color.ipp"

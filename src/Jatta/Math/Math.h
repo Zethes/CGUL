@@ -7,12 +7,14 @@
 #include <Jatta/Config.h>
 #include "../External/Defines.h"
 
+#ifdef CPP_HAS_FUNCTION_TEMPLATE_DEFAULT
+#   define _JATTA_DEFAULT_MATH_TYPE = Jatta::Float32
+#else
+#   define _JATTA_DEFAULT_MATH_TYPE
+#endif
+
 namespace Jatta
 {
-    struct Vector2;
-    struct Vector3;
-    struct Vector4;
-
     /** @brief A namespace containing many common mathematical functions.
      *  @details Some mathematical concepts were ruthlessly stolen from MathGeoLib.  Be sure to
      *  check it out as an awesome standalone math library!
@@ -21,88 +23,116 @@ namespace Jatta
     namespace Math
     {
         //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
-        const Float32 tau = 6.2831853071795864f;
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Tau();
+
         //! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
-        const Float32 pi = 3.14159265358979323f;
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Pi();
+
         //! @brief The constant e, defined as 2.718281828459045235
-        const Float32 e = 2.718281828459045235f;
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type E();
 
         //! @brief Calculates the absolute value of x.
-        _JATTA_INLINE_DEFINE Float32 Abs(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Abs(Type x);
         //! @brief Gets the sign of the value, returning -1, 0, or 1.
-        _JATTA_INLINE_DEFINE Float32 Sign(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Sign(Type x);
 
         //! @brief Calculates the cosine of x.
-        _JATTA_INLINE_DEFINE Float32 Cos(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Cos(Type x);
         //! @brief Calculates the sine of x.
-        _JATTA_INLINE_DEFINE Float32 Sin(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Sin(Type x);
         //! @brief Calculates the tangent of x.
-        _JATTA_INLINE_DEFINE Float32 Tan(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Tan(Type x);
 
         //! @brief Calculates the hyperbolic cosine of x.
-        _JATTA_INLINE_DEFINE Float32 Cosh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Cosh(Type x);
         //! @brief Calculates the hyperbolic sine of x.
-        _JATTA_INLINE_DEFINE Float32 Sinh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Sinh(Type x);
         //! @brief Calculates the hyperbolic tangent of x.
-        _JATTA_INLINE_DEFINE Float32 Tanh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Tanh(Type x);
 
         //! @brief Calculates the arc cosine of x.
-        _JATTA_INLINE_DEFINE Float32 ACos(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ACos(Type x);
         //! @brief Calculates the arc sine of x.
-        _JATTA_INLINE_DEFINE Float32 ASin(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ASin(Type x);
         //! @brief Calculates the arc tangent of x.
-        _JATTA_INLINE_DEFINE Float32 ATan(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ATan(Type x);
 
-        _JATTA_INLINE_DEFINE Float32 ATan2(Float32 y, Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ATan2(Type y, Type x);
 
 #       ifdef CPP_HAS_HYPERBOLIC
         //! @brief Calculates the hyperbolic arc cosine of x.
-        _JATTA_INLINE_DEFINE Float32 ACosh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ACosh(Type x);
         //! @brief Calculates the hyperbolic arc sine of x.
-        _JATTA_INLINE_DEFINE Float32 ASinh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ASinh(Type x);
         //! @brief Calculates the hyperbolic arc tangent of x.
-        _JATTA_INLINE_DEFINE Float32 ATanh(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type ATanh(Type x);
 #       endif
 
         //! @brief Converts degrees to radians.
-        _JATTA_INLINE_DEFINE Float32 DegToRad(Float32 deg);
-        _JATTA_INLINE_DEFINE Vector2 DegToRad(const Vector2& deg);
-        _JATTA_INLINE_DEFINE Vector3 DegToRad(const Vector3& deg);
-        _JATTA_INLINE_DEFINE Vector4 DegToRad(const Vector4& deg);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type DegToRad(Type deg);
         //! @brief Converts radians to degrees.
-        _JATTA_INLINE_DEFINE Float32 RadToDeg(Float32 rad);
-        _JATTA_INLINE_DEFINE Vector2 RadToDeg(const Vector2& rad);
-        _JATTA_INLINE_DEFINE Vector3 RadToDeg(const Vector3& rad);
-        _JATTA_INLINE_DEFINE Vector4 RadToDeg(const Vector4& rad);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type RadToDeg(Type rad);
 
-        _JATTA_INLINE_DEFINE Float32 Ln(Float32 x);
-        _JATTA_INLINE_DEFINE Float32 Log(Float32 x, Float32 b = 10);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Ln(Type x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Log(Type x, Type b = 10);
 
         //! @brief Finds the smaller of the two values.
-        _JATTA_INLINE_DEFINE Float32 Min(Float32 a, Float32 b);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Min(Type a, Type b);
         //! @brief Finds the larger of the two values.
-        _JATTA_INLINE_DEFINE Float32 Max(Float32 a, Float32 b);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Max(Type a, Type b);
 
         //! @brief Rounds the number down.
-        _JATTA_INLINE_DEFINE Float32 Floor(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Floor(Type x);
         //! @brief Rounds the number.
-        _JATTA_INLINE_DEFINE Float32 Round(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Round(Type x);
         //! @brief Rounds the number up.
-        _JATTA_INLINE_DEFINE Float32 Ceil(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Ceil(Type x);
 
         //! @brief A modulus function that works with floating point numbers.
-        _JATTA_INLINE_DEFINE Float32 Mod(Float32 x, Float32 div);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Mod(Type x, Type div);
 
         //! @brief Calculates the square of a number.
-        _JATTA_INLINE_DEFINE Float32 Sqr(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Sqr(Type x);
         //! @brief Calculates the square root of a number.
-        _JATTA_INLINE_DEFINE Float32 Sqrt(Float32 x);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE Type Sqrt(Type x);
 
         //! @brief Checks if two values are equal within a given epsilon.
-        _JATTA_INLINE_DEFINE bool InEpsilon(Float32 value, Float32 compare, Float32 epsilon);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE bool InEpsilon(Type value, Type compare, Type epsilon);
 
         //! @brief Raises x to the power of y.
-        _JATTA_INLINE_DEFINE bool Pow(Float32 x, Float32 y);
+        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE bool Pow(Type x, Type y);
 
         //! @brief Checks if the value is a power of two.
         _JATTA_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);

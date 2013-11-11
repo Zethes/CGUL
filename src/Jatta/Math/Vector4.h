@@ -9,50 +9,58 @@
 
 namespace Jatta
 {
-    struct Vector2;
-    struct Vector3;
-    struct Matrix;
+    template< typename Type >
+    struct Vector2T;
+    template< typename Type >
+    struct Vector3T;
+    template< typename Type >
+    struct MatrixT;
 
     /** @brief A four dimensional 32 bit floating point vector.
      *  @todo Template this to allow 64 bit floating point or integer as well?
      */
-    struct Vector4
+    template< typename Type >
+    struct Vector4T
     {
         union
         {
             struct
             {
-                Float32 x, y, z, w;
+                Type x, y, z, w;
             };
-            Float32 m[4];
+            Type m[4];
         };
 
-        _JATTA_EXPORT Vector4();
-        _JATTA_EXPORT Vector4(const Vector4& copy);
-        _JATTA_EXPORT Vector4(float value);
-        _JATTA_EXPORT Vector4(float x, float y, float z, float w);
+        _JATTA_INLINE_DEFINE Vector4T();
+        _JATTA_INLINE_DEFINE Vector4T(const Vector4T& copy);
+        _JATTA_INLINE_DEFINE Vector4T(Type value);
+        _JATTA_INLINE_DEFINE Vector4T(Type x, Type y, Type z, Type w);
 
-        _JATTA_EXPORT float& operator[](UInt32 index);
-        _JATTA_EXPORT Vector4 operator*(const Matrix& operand) const;
-        friend std::ostream& operator<<(std::ostream& stream, const Vector4& vector)
+        _JATTA_INLINE_DEFINE Type& operator[](UInt32 index);
+        _JATTA_INLINE_DEFINE Vector4T operator*(const MatrixT< Type >& operand) const;
+        friend std::ostream& operator<<(std::ostream& stream, const Vector4T& vector)
         {
             stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
             return stream;
         }
 
-        _JATTA_EXPORT Jatta::Float32 At(UInt32 index) const;
+        _JATTA_INLINE_DEFINE Jatta::Float32 At(UInt32 index) const;
 
-        _JATTA_EXPORT void Set(Float32 value);
-        _JATTA_EXPORT void Set(Float32 x, Float32 y, Float32 z, Float32 w);
+        _JATTA_INLINE_DEFINE void Set(Float32 value);
+        _JATTA_INLINE_DEFINE void Set(Float32 x, Float32 y, Float32 z, Float32 w);
 
-        _JATTA_EXPORT Vector2 Swizzle(UInt32 x, UInt32 y) const;
-        _JATTA_EXPORT Vector3 Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
-        _JATTA_EXPORT Vector4 Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
+        _JATTA_INLINE_DEFINE Vector2T< Type > Swizzle(UInt32 x, UInt32 y) const;
+        _JATTA_INLINE_DEFINE Vector3T< Type > Swizzle(UInt32 x, UInt32 y, UInt32 z) const;
+        _JATTA_INLINE_DEFINE Vector4T< Type > Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const;
 
-        _JATTA_EXPORT void Normalize();
+        _JATTA_INLINE_DEFINE void Normalize();
 
-        _JATTA_EXPORT float GetMagnitude();
+        _JATTA_INLINE_DEFINE Type GetMagnitude();
     };
+
+    typedef Vector4T< Float32 > Vector4;
+    typedef Vector4T< Float32 > Vector4D;
 }
 
 #include "../External/Undefines.h"
+#include "Vector4.ipp"

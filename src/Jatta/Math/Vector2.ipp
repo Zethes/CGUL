@@ -10,19 +10,23 @@
 
 /**
  */
-_JATTA_EXPORT const Jatta::Vector2 zero(0, 0);
+template< typename Type >
+const Jatta::Vector2T< Type > Jatta::Vector2T< Type >::zero(0, 0);
 
 /**
  */
-_JATTA_EXPORT const Jatta::Vector2 one(1, 1);
+template< typename Type >
+const Jatta::Vector2T< Type > Jatta::Vector2T< Type >::one(1, 1);
 
 /**
  */
-_JATTA_EXPORT const Jatta::Vector2 unitX(1, 0);
+template< typename Type >
+const Jatta::Vector2T< Type > Jatta::Vector2T< Type >::unitX(1, 0);
 
 /**
  */
-_JATTA_EXPORT const Jatta::Vector2 unitY(0, 1);
+template< typename Type >
+const Jatta::Vector2T< Type > Jatta::Vector2T< Type >::unitY(0, 1);
 
 /** @details Defined as (cos(angle) * magnitude, sin(angle) * magnitude).  If no magnitude is given
  *  it will default to one.
@@ -30,14 +34,16 @@ _JATTA_EXPORT const Jatta::Vector2 unitY(0, 1);
  *  @param magnitude An optional magnitude.
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::FromAngle(Float32 angle, Float32 magnitude)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::FromAngle(Type angle, Type magnitude)
 {
     return Jatta::Vector2(Math::Cos(angle) * magnitude, Math::Sin(angle) * magnitude);
 }
 
 /**
  */
-_JATTA_EXPORT Jatta::Vector2::Vector2()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T()
 {
     this->x = 0;
     this->y = 0;
@@ -45,7 +51,8 @@ _JATTA_EXPORT Jatta::Vector2::Vector2()
 
 /** @param copy The vector to copy.
  */
-_JATTA_EXPORT Jatta::Vector2::Vector2(const Vector2& copy)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T(const Vector2T& copy)
 {
     this->x = copy.x;
     this->y = copy.y;
@@ -53,7 +60,8 @@ _JATTA_EXPORT Jatta::Vector2::Vector2(const Vector2& copy)
 
 /** @param value The value for both x and y.
  */
-_JATTA_EXPORT Jatta::Vector2::Vector2(float value)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T(Type value)
 {
     this->x = value;
     this->y = value;
@@ -62,7 +70,8 @@ _JATTA_EXPORT Jatta::Vector2::Vector2(float value)
 /** @param x The x component.
  *  @param y The y component.
  */
-_JATTA_EXPORT Jatta::Vector2::Vector2(float x, float y)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T(Type x, Type y)
 {
     this->x = x;
     this->y = y;
@@ -71,7 +80,8 @@ _JATTA_EXPORT Jatta::Vector2::Vector2(float x, float y)
 /** @param operand The other vector.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator=(const Vector2& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operator=(const Vector2T& operand)
 {
     this->x = operand.x;
     this->y = operand.y;
@@ -82,7 +92,8 @@ _JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator=(const Vector2& operand)
  *  @param index The component index (0 for x, 1 for y).
  *  @returns The value at that index.
  */
-_JATTA_EXPORT Jatta::Float32& Jatta::Vector2::operator[](UInt32 index)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type& Jatta::Vector2T< Type >::operator[](UInt32 index)
 {
     return m[index];
 }
@@ -93,7 +104,8 @@ _JATTA_EXPORT Jatta::Float32& Jatta::Vector2::operator[](UInt32 index)
  *  @param index The component index (0 for x, 1 for y).
  *  @returns The value at that index.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::operator[](UInt32 index) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::operator[](UInt32 index) const
 {
     return m[index];
 }
@@ -101,7 +113,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::operator[](UInt32 index) const
 /** @details The inverse is defined as (-x, -y) of the original vector.
  *  @returns The inverse vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator-() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operator-() const
 {
     return Vector2(-this->x, -this->y);
 }
@@ -111,7 +124,8 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator-() const
  *  @param operand The other vector.
  *  @returns True if they are equal, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::Vector2::operator==(const Vector2& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::Vector2T< Type >::operator==(const Vector2T& operand) const
 {
     return (this->x == operand.x && this->y == operand.y);
 }
@@ -121,7 +135,8 @@ _JATTA_EXPORT bool Jatta::Vector2::operator==(const Vector2& operand) const
  *  @param operand The other vector.
  *  @returns True if they are not equal, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::Vector2::operator!=(const Vector2& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::Vector2T< Type >::operator!=(const Vector2T& operand) const
 {
     return (this->x != operand.x || this->y != operand.y);
 }
@@ -129,15 +144,17 @@ _JATTA_EXPORT bool Jatta::Vector2::operator!=(const Vector2& operand) const
 /** @param operand The other vector.
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator+(const Vector2& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operator+(const Vector2T& operand) const
 {
-    return Vector2(this->x + operand.x, this->y + operand.y);
+    return Vector2T(this->x + operand.x, this->y + operand.y);
 }
 
 /** @param operand The other operand.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator+=(const Vector2& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operator+=(const Vector2T& operand)
 {
     this->x += operand.x;
     this->y += operand.y;
@@ -147,15 +164,17 @@ _JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator+=(const Vector2& operand)
 /** @param operand The other vector.
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator-(const Vector2& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operator-(const Vector2T& operand) const
 {
-    return Vector2(this->x - operand.x, this->y - operand.y);
+    return Vector2T(this->x - operand.x, this->y - operand.y);
 }
 
 /** @param operand The other operand.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator-=(const Vector2& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operator-=(const Vector2T& operand)
 {
     this->x -= operand.x;
     this->y -= operand.y;
@@ -165,15 +184,17 @@ _JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator-=(const Vector2& operand)
 /** @param operand The other vector.
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator*(float operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operator*(Type operand) const
 {
-    return Vector2(this->x * operand, this->y * operand);
+    return Vector2T(this->x * operand, this->y * operand);
 }
 
 /** @param operand The other operand.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator*=(float operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operator*=(Type operand)
 {
     this->x *= operand;
     this->y *= operand;
@@ -183,35 +204,28 @@ _JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator*=(float operand)
 /** @param operand The other vector.
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::operator/(Float32 operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operator/(Type operand) const
 {
-    return Vector2(this->x / operand, this->y / operand);
+    return Vector2T(this->x / operand, this->y / operand);
 }
 
 /** @param operand The other operand.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Vector2& Jatta::Vector2::operator/=(Float32 operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operator/=(Type operand)
 {
     this->x /= operand;
     this->y /= operand;
     return *this;
 }
 
-/** @details Outputs the vector as "[x, y]" so for example: [3.54, 1.23]
- *  @param stream The output stream.
- *  @param vector The vector to output.
- */
-_JATTA_EXPORT std::ostream& operator<<(std::ostream& stream, const Jatta::Vector2& vector)
-{
-    stream << "[" << vector.x << ", " << vector.y << "]";
-    return stream;
-}
-
 /** @param index The component index, so 0 for x and 1 for y.
  *  @returns The value at that index.
  */
-_JATTA_EXPORT Jatta::Float32& Jatta::Vector2::At(UInt32 index)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type& Jatta::Vector2T< Type >::At(UInt32 index)
 {
     return m[index];
 }
@@ -219,14 +233,16 @@ _JATTA_EXPORT Jatta::Float32& Jatta::Vector2::At(UInt32 index)
 /** @param index The component index, so 0 for x and 1 for y.
  *  @returns The value at that index.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::At(UInt32 index) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::At(UInt32 index) const
 {
     return m[index];
 }
 
 /** @param value The value to set both x and y to.
  */
-_JATTA_EXPORT void Jatta::Vector2::Set(Float32 value)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Set(Type value)
 {
     this->x = value;
     this->y = value;
@@ -235,7 +251,8 @@ _JATTA_EXPORT void Jatta::Vector2::Set(Float32 value)
 /** @param x The x component.
  *  @param y The y component.
  */
-_JATTA_EXPORT void Jatta::Vector2::Set(Float32 x, Float32 y)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Set(Type x, Type y)
 {
     this->x = x;
     this->y = y;
@@ -243,7 +260,8 @@ _JATTA_EXPORT void Jatta::Vector2::Set(Float32 x, Float32 y)
 
 /**
  */
-_JATTA_EXPORT void Jatta::Vector2::Clear()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Clear()
 {
     this->x = 0;
     this->y = 0;
@@ -255,7 +273,8 @@ _JATTA_EXPORT void Jatta::Vector2::Clear()
  *  @returns The resulting vector.
  *  @todo Better documentation on swizzle (for now just look it up!)
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::Swizzle(UInt32 x, UInt32 y) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::Swizzle(UInt32 x, UInt32 y) const
 {
     return Vector2(m[x], m[y]);
 }
@@ -266,7 +285,8 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::Swizzle(UInt32 x, UInt32 y) const
  *  @param z The z component (0 for x, 1 for y).
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector2::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector2T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
 {
     return Vector3(m[x], m[y], m[z]);
 }
@@ -278,23 +298,26 @@ _JATTA_EXPORT Jatta::Vector3 Jatta::Vector2::Swizzle(UInt32 x, UInt32 y, UInt32 
  *  @param w The w component (0 for x, 1 for y).
  *  @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector4 Jatta::Vector2::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type > Jatta::Vector2T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
 {
     return Vector4(m[x], m[y], m[z], m[w]);
 }
 
 /** @warning This method uses sqrt() which can be slow!
  */
-_JATTA_EXPORT void Jatta::Vector2::Normalize()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Normalize()
 {
-    Float32 inverseMagnitude = 1.0f / GetMagnitude();
+    Type inverseMagnitude = 1.0f / GetMagnitude();
     x *= inverseMagnitude;
     y *= inverseMagnitude;
 }
 
 /** @warning This method uses sqrt() which can be slow!
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::Vector2::IsNormalized(Float32 epsilon) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Boolean Jatta::Vector2T< Type >::IsNormalized(Type epsilon) const
 {
     return Math::InEpsilon(GetMagnitude(), 1, epsilon);
 }
@@ -306,7 +329,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Vector2::IsNormalized(Float32 epsilon) const
  *  @see GetSquaredMagnitude
  *  @see GetManhattanMagnitude
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetMagnitude() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetMagnitude() const
 {
     return Math::Sqrt(x * x + y * y);
 }
@@ -316,7 +340,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetMagnitude() const
  *  larger than another, but cannot be used to accurately determine differences between magnitudes.
  *  @returns The squared magnitude.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetSquaredMagnitude() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetSquaredMagnitude() const
 {
     return (x * x + y * y);
 }
@@ -332,7 +357,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetSquaredMagnitude() const
  *  make the values absolute is also necessary to ensure an always positive result.
  *  @returns The manhattan magnitude.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetManhattanMagnitude() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetManhattanMagnitude() const
 {
     return Math::Abs(x) + Math::Abs(y);
 }
@@ -347,7 +373,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetManhattanMagnitude() const
  *  @see GetSquaredDistance
  *  @see GetManhattanDistance
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetDistance(const Vector2& other) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetDistance(const Vector2T& other) const
 {
     return Math::Sqrt(Math::Sqr(other.x - x) + Math::Sqr(other.y - y));
 }
@@ -356,7 +383,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetDistance(const Vector2& other) c
  *  @returns The squared distance between the two vectors.
  *  @see GetDistance
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetSquaredDistance(const Vector2& other) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetSquaredDistance(const Vector2T& other) const
 {
     return Math::Sqr(other.x - x) + Math::Sqr(other.y - y);
 }
@@ -366,7 +394,8 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetSquaredDistance(const Vector2& o
  *  @see GetDistance
  *  @todo Check the implementation because this is actually slower than the squared distance.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetManhattanDistance(const Vector2& other) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetManhattanDistance(const Vector2T& other) const
 {
     //return Math::Abs(other.x - x) + Math::Abs(other.y - y);
     //return (other.x > x ? other.x - x : x - other.x) + (other.y > y ? other.y - y : y - other.y);
@@ -380,9 +409,10 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetManhattanDistance(const Vector2&
  *  @warning This method uses sqrt() which can be slow!
  *  @param angle The new angle (in radians) for the vector.
  */
-_JATTA_EXPORT void Jatta::Vector2::SetAngle(Float32 angle)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::SetAngle(Type angle)
 {
-    Float32 magnitude = GetMagnitude();
+    Type magnitude = GetMagnitude();
     x = Math::Cos(angle) * magnitude;
     y = Math::Sin(angle) * magnitude;
 }
@@ -390,14 +420,16 @@ _JATTA_EXPORT void Jatta::Vector2::SetAngle(Float32 angle)
 /** @details Gets an angle from the vector.
  *  @todo Check, does the vector have to be normalized for this to work?
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector2::GetAngle() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::GetAngle() const
 {
     return Math::ATan2(y, x);
 }
 
 /**
  */
-_JATTA_EXPORT void Jatta::Vector2::Floor()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Floor()
 {
     this->x = Math::Floor(this->x);
     this->y = Math::Floor(this->y);
@@ -405,7 +437,8 @@ _JATTA_EXPORT void Jatta::Vector2::Floor()
 
 /**
  */
-_JATTA_EXPORT void Jatta::Vector2::Round()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Round()
 {
     this->x = Math::Round(this->x);
     this->y = Math::Round(this->y);
@@ -413,7 +446,8 @@ _JATTA_EXPORT void Jatta::Vector2::Round()
 
 /**
  */
-_JATTA_EXPORT void Jatta::Vector2::Ceil()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Ceil()
 {
     this->x = Math::Ceil(this->x);
     this->y = Math::Ceil(this->y);
@@ -421,21 +455,24 @@ _JATTA_EXPORT void Jatta::Vector2::Ceil()
 
 /** @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::Floored()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::Floored()
 {
     return Vector2(Math::Floor(this->x), Math::Floor(this->y));
 }
 
 /** @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::Rounded()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::Rounded()
 {
     return Vector2(Math::Round(this->x), Math::Round(this->y));
 }
 
 /** @returns The resulting vector.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector2::Ceiled()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::Ceiled()
 {
     return Vector2(Math::Ceil(this->x), Math::Ceil(this->y));
 }
