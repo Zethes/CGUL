@@ -9,69 +9,80 @@
 
 #include <cmath>
 
-_JATTA_EXPORT float Jatta::Vector3::DotProduct(const Vector3& valueA, const Vector3& valueB)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::DotProduct(const Vector3T& valueA, const Vector3T& valueB)
 {
     return (valueA.x * valueB.x) + (valueA.y * valueB.y) + (valueA.z * valueB.z);
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::CrossProduct(const Vector3& valueA, const Vector3& valueB)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::CrossProduct(const Vector3T& valueA, const Vector3T& valueB)
 {
-    return Vector3(valueA.y * valueB.z - valueA.z * valueB.y, valueA.z * valueB.x - valueA.x * valueB.z, valueA.x * valueB.y - valueA.y * valueB.x);
+    return Vector3T(valueA.y * valueB.z - valueA.z * valueB.y, valueA.z * valueB.x - valueA.x * valueB.z, valueA.x * valueB.y - valueA.y * valueB.x);
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::Normalized(const Vector3& value)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Normalized(const Vector3T& value)
 {
-    float inverseMagnitude = 1.0f / value.GetMagnitude();
-    return Vector3(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude);
+    Type inverseMagnitude = 1.0f / value.GetMagnitude();
+    return Vector3T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude);
 }
 
-_JATTA_EXPORT Jatta::Vector3::Vector3()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T()
 {
     this->x = 0;
     this->y = 0;
     this->z = 0;
 }
 
-_JATTA_EXPORT Jatta::Vector3::Vector3(const Vector3& copy)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(const Vector3T& copy)
 {
     this->x = copy.x;
     this->y = copy.y;
     this->z = copy.z;
 }
 
-_JATTA_EXPORT Jatta::Vector3::Vector3(float value)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type value)
 {
     this->x = value;
     this->y = value;
     this->z = value;
 }
 
-_JATTA_EXPORT Jatta::Vector3::Vector3(float x, float y, float z)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type x, Type y, Type z)
 {
     this->x = x;
     this->y = y;
     this->z = z;
 }
 
-_JATTA_EXPORT void Jatta::Vector3::Normalize()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Normalize()
 {
-    float inverseMagnitude = 1.0f / GetMagnitude();
+    Type inverseMagnitude = 1.0f / GetMagnitude();
     this->x *= inverseMagnitude;
     this->y *= inverseMagnitude;
     this->z *= inverseMagnitude;
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::operator-() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator-() const
 {
     return Vector3(-this->x, -this->y, -this->z);
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::operator+(const Vector3& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator+(const Vector3T& operand) const
 {
     return Vector3(this->x + operand.x, this->y + operand.y, this->z + operand.z);
 }
 
-_JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator+=(const Vector3& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator+=(const Vector3T& operand)
 {
     this->x += operand.x;
     this->y += operand.y;
@@ -79,12 +90,14 @@ _JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator+=(const Vector3& operand)
     return *this;
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::operator-(const Vector3& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator-(const Vector3T& operand) const
 {
     return Vector3(this->x - operand.x, this->y - operand.y, this->z - operand.z);
 }
 
-_JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator-=(const Vector3& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator-=(const Vector3T& operand)
 {
     this->x -= operand.x;
     this->y -= operand.y;
@@ -92,12 +105,14 @@ _JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator-=(const Vector3& operand)
     return *this;
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::operator*(float operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator*(Type operand) const
 {
     return Vector3(this->x * operand, this->y * operand, this->z * operand);
 }
 
-_JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator*=(float operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator*=(Type operand)
 {
     this->x *= operand;
     this->y *= operand;
@@ -105,46 +120,54 @@ _JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator*=(float operand)
     return *this;
 }
 
-_JATTA_EXPORT bool Jatta::Vector3::operator==(const Vector3& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator==(const Vector3T& operand) const
 {
 	return (this->x == operand.x && this->y == operand.y && this->z == operand.z);
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Vector3::At(UInt32 index) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::At(UInt32 index) const
 {
     return m[index];
 }
 
-_JATTA_EXPORT void Jatta::Vector3::Set(Float32 value)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type value)
 {
     this->x = value;
     this->y = value;
     this->z = value;
 }
 
-_JATTA_EXPORT void Jatta::Vector3::Set(Float32 x, Float32 y, Float32 z)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type x, Type y, Type z)
 {
     this->x = x;
     this->y = y;
     this->z = z;
 }
 
-_JATTA_EXPORT Jatta::Vector2 Jatta::Vector3::Swizzle(UInt32 x, UInt32 y) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y) const
 {
-    return Vector2(m[x], m[y]);
+    return Vector2T< Type >(m[x], m[y]);
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Vector3::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
 {
-    return Vector3(m[x], m[y], m[z]);
+    return Vector3T< Type >(m[x], m[y], m[z]);
 }
 
-_JATTA_EXPORT Jatta::Vector4 Jatta::Vector3::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
 {
-    return Vector4(m[x], m[y], m[z], m[w]);
+    return Vector4T< Type >(m[x], m[y], m[z], m[w]);
 }
 
-_JATTA_EXPORT float Jatta::Vector3::GetMagnitude() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetMagnitude() const
 {
     return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }

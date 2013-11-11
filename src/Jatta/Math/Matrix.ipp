@@ -3,148 +3,165 @@
  * All rights reserved.
  */
 
-#include "Matrix.h"
 #include "Math.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Quaternion.h"
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Identity()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Identity()
 {
-	return Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    return MatrixT(Type(1), Type(0), Type(0), Type(0),
+                   Type(0), Type(1), Type(0), Type(0),
+                   Type(0), Type(0), Type(1), Type(0),
+                   Type(0), Type(0), Type(0), Type(1));
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(float angle)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotation(Type angle)
 {
-    return Matrix(Math::Cos(angle),  Math::Sin(angle), 0, 0,
-                  -Math::Sin(angle), Math::Cos(angle), 0, 0,
-                  0,                0,                 1, 0,
-                  0,                0,                 0, 1);
+    return MatrixT(Math::Cos(angle),  Math::Sin(angle), 0, 0,
+                   -Math::Sin(angle), Math::Cos(angle), 0, 0,
+                   0,                0,                 1, 0,
+                   0,                0,                 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationX(float angle)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationX(Type angle)
 {
-    return Matrix(1, 0,          0,           0,
-                  0, Math::Cos(angle),  Math::Sin(angle), 0,
-                  0, -Math::Sin(angle), Math::Cos(angle), 0,
-                  0, 0,                0,                 1);
+    return MatrixT(1, 0,          0,           0,
+                   0, Math::Cos(angle),  Math::Sin(angle), 0,
+                   0, -Math::Sin(angle), Math::Cos(angle), 0,
+                   0, 0,                0,                 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationY(float angle)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationY(Type angle)
 {
-    return Matrix(Math::Cos(angle), 0, -Math::Sin(angle), 0,
-                  0,                1, 0,                 0,
-                  Math::Sin(angle), 0, Math::Cos(angle),  0,
-                  0,                0, 0,                 1);
+    return MatrixT(Math::Cos(angle), 0, -Math::Sin(angle), 0,
+                   0,                1, 0,                 0,
+                   Math::Sin(angle), 0, Math::Cos(angle),  0,
+                   0,                0, 0,                 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotationZ(float angle)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationZ(Type angle)
 {
-    return Matrix(Math::Cos(angle),  Math::Sin(angle), 0, 0,
-                  -Math::Sin(angle), Math::Cos(angle), 0, 0,
-                  0,                0,                 1, 0,
-                  0,                0,                 0, 1);
+    return MatrixT(Math::Cos(angle),  Math::Sin(angle), 0, 0,
+                   -Math::Sin(angle), Math::Cos(angle), 0, 0,
+                   0,                0,                 1, 0,
+                   0,                0,                 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(const Quaternion& quaternion)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotation(const QuaternionT< Type >& quaternion)
 {
-    return Matrix(quaternion);
+    return MatrixT(quaternion);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Vector2 scale)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector2T< Type >& scale)
 {
-    return Matrix(scale.x, 0,       0, 0,
-                  0,       scale.y, 0, 0,
-                  0,       0,       1, 0,
-                  0,       0,       0, 1);
+    return MatrixT(scale.x, 0,       0, 0,
+                   0,       scale.y, 0, 0,
+                   0,       0,       1, 0,
+                   0,       0,       0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeScaling(Vector3 scale)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector3T< Type >& scale)
 {
-    return Matrix(scale.x, 0,       0,       0,
-                  0,       scale.y, 0,       0,
-                  0,       0,       scale.z, 0,
-                  0,       0,       0,       1);
+    return MatrixT(scale.x, 0,       0,       0,
+                   0,       scale.y, 0,       0,
+                   0,       0,       scale.z, 0,
+                   0,       0,       0,       1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Vector2 translation)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTranslation(const Vector2T< Type >& translation)
 {
-    return Matrix(1,             0,             0, 0,
-                  0,             1,             0, 0,
-                  0,             0,             1, 0,
-                  translation.x, translation.y, 0, 1);
+    return MatrixT(1,             0,             0, 0,
+                   0,             1,             0, 0,
+                   0,             0,             1, 0,
+                   translation.x, translation.y, 0, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeTranslation(Vector3 translation)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTranslation(const Vector3T< Type >& translation)
 {
-    return Matrix(1,             0,             0,             0,
-                  0,             1,             0,             0,
-                  0,             0,             1,             0,
-                  translation.x, translation.y, translation.z, 1);
+    return MatrixT(1,             0,             0,             0,
+                   0,             1,             0,             0,
+                   0,             0,             1,             0,
+                   translation.x, translation.y, translation.z, 1);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakePerspective(float fovY, float aspectRatio, float zNear, float zFar)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakePerspective(Type fovY, Type aspectRatio, Type zNear, Type zFar)
 {
-    float yScale = 1.0f / Math::Tan(Math::DegToRad(fovY / 2.0f));
-    float xScale = yScale / aspectRatio;
+    Type yScale = Type(1.0) / Math::Tan(Math::DegToRad(fovY / Type(2.0)));
+    Type xScale = yScale / aspectRatio;
     return Matrix(xScale, 0,      0,                              0,
                   0,      yScale, 0,                              0,
                   0,      0,      zFar / (zFar - zNear),          1,
                   0,      0,      -zNear * zFar / (zFar - zNear), 0);
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeLookAt(const Vector3& eye, const Vector3& at, const Vector3& up)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeLookAt(const Vector3T< Type >& eye, const Vector3T< Type >& at, const Vector3T< Type >& up)
 {
-    Vector3 zAxis = Vector3::Normalized(eye - at); // forward
-    Vector3 xAxis = Vector3::Normalized(Vector3::CrossProduct(up, zAxis)); // right
-    Vector3 yAxis = Vector3::CrossProduct(xAxis, zAxis); // up
+    Vector3T< Type > zAxis = Vector3T< Type >::Normalized(eye - at); // forward
+    Vector3T< Type > xAxis = Vector3T< Type >::Normalized(Vector3T< Type >::CrossProduct(up, zAxis)); // right
+    Vector3T< Type > yAxis = Vector3T< Type >::CrossProduct(xAxis, zAxis); // up
     zAxis *= -1;
     yAxis *= -1;
 
-    return Matrix(xAxis.x,                          yAxis.x,                          zAxis.x,                         0,
-                  xAxis.y,                          yAxis.y,                          zAxis.y,                         0,
-                  xAxis.z,                          yAxis.z,                          zAxis.z,                         0,
-                  -Vector3::DotProduct(xAxis, eye),  -Vector3::DotProduct(yAxis, eye),  -Vector3::DotProduct(zAxis, eye), 1);
+    return MatrixT< Type >(xAxis.x,                                    yAxis.x,                                    zAxis.x,                                   0,
+                           xAxis.y,                                    yAxis.y,                                    zAxis.y,                                   0,
+                           xAxis.z,                                    yAxis.z,                                    zAxis.z,                                   0,
+                           -Vector3T< Type >::DotProduct(xAxis, eye),  -Vector3T< Type >::DotProduct(yAxis, eye),  -Vector3T< Type >::DotProduct(zAxis, eye), 1);
 }
 
-/*_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
+//template< typename Type >
+/*_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeOrtho(int left, int right, int bottom, int top)
 {
-  Vector3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
+  Vector3 t((right + left) / (Type)(right - left), (top + bottom) / (Type)(top - bottom), 0);
 
-  return Matrix(2.0f / (right - left), 0,                     0,    0,
-                0,                     2.0f / (top - bottom), 0,    0,
-                0,                     0,                     -1,   0,
-                -t.x,                  -t.y,                  -t.z, 1);// * Matrix::makeScaling(Vector3(1, -1, 1));
+  return Matrix(Type(2.0) / (right - left), 0,                          0,    0,
+                0,                          Type(2.0) / (top - bottom), 0,    0,
+                0,                          0,                         -1,   0,
+                -t.x,                      -t.y,                       -t.z, 1);// * Matrix::makeScaling(Vector3(1, -1, 1));
 }*/
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeOrtho(int left, int right, int bottom, int top)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeOrtho(SInt left, SInt right, SInt bottom, SInt top)
 {
-  /*Vector3 t((right + left) / (float)(right - left), (top + bottom) / (float)(top - bottom), 0);
+  /*Vector3 t((right + left) / (Type)(right - left), (top + bottom) / (Type)(top - bottom), 0);
 
-  return Matrix(2.0f / (right - left), 0,                     0,    -t.x,
-                0,                     2.0f / (top - bottom), 0,    -t.y,
-                0,                     0,                     -1,   -t.z,
-                0,                     0,                      0,  1);// * Matrix::makeScaling(Vector3(1, -1, 1));*/
+  return Matrix(Type(2.0) / (right - left), 0,                          0,    -t.x,
+                0,                          Type(2.0) / (top - bottom), 0,    -t.y,
+                0,                          0,                          -1,   -t.z,
+                0,                          0,                          0,  1);// * Matrix::makeScaling(Vector3(1, -1, 1));*/
 
-    Matrix ret = Identity();
-    /*ret.m[0][0] = Float32(2) / (right - left);
-    ret.m[1][1] = Float32(2) / (top - bottom);
-    ret.m[2][2] = - Float32(2) / (1 - (-1));
+    MatrixT< Type > ret = Identity();
+    /*ret.m[0][0] = Type(2) / (right - left);
+    ret.m[1][1] = Type(2) / (top - bottom);
+    ret.m[2][2] = - Type(2) / (1 - (-1));
     ret.m[3][0] = - (right + left) / (right - left);
     ret.m[3][1] = - (top + bottom) / (top - bottom);
     ret.m[3][2] = - (1 + (-1)) / (1 - (-1));*/
-    ret.m[0][0] = Float32(2) / (right - left);
-    ret.m[1][1] = Float32(2) / (top - bottom);
-    ret.m[2][2] = - Float32(2) / ((1) - (-1));
-    ret.m[3][0] = - Float32((right + left) / (right - left));
-    ret.m[3][1] = - Float32((top + bottom) / (top - bottom));
-    ret.m[3][2] = - Float32((1) + (-1)) / Float32((1) - (-1));
+    ret.m[0][0] = Type(2) / (right - left);
+    ret.m[1][1] = Type(2) / (top - bottom);
+    ret.m[2][2] = - Type(2) / ((1) - (-1));
+    ret.m[3][0] = - Type((right + left) / (right - left));
+    ret.m[3][1] = - Type((top + bottom) / (top - bottom));
+    ret.m[3][2] = - Type((1) + (-1)) / Type((1) - (-1));
     return ret;
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Inverse(const Matrix& matrix)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Inverse(const MatrixT& matrix)
 {
-    Matrix result;
+    MatrixT< Type > result;
     result.m[0][0] = matrix.m[1][1] * matrix.m[2][2] * matrix.m[3][3] + matrix.m[1][2] * matrix.m[2][3] * matrix.m[3][1] + matrix.m[1][3] * matrix.m[2][1] * matrix.m[3][2] - matrix.m[1][1] * matrix.m[2][3] * matrix.m[3][2] - matrix.m[1][2] * matrix.m[2][1] * matrix.m[3][3] - matrix.m[1][3] * matrix.m[2][2] * matrix.m[3][1];
     result.m[0][1] = matrix.m[0][1] * matrix.m[2][3] * matrix.m[3][2] + matrix.m[0][2] * matrix.m[2][1] * matrix.m[3][3] + matrix.m[0][3] * matrix.m[2][2] * matrix.m[3][1] - matrix.m[0][1] * matrix.m[2][2] * matrix.m[3][3] - matrix.m[0][2] * matrix.m[2][3] * matrix.m[3][1] - matrix.m[0][3] * matrix.m[2][1] * matrix.m[3][2];
     result.m[0][2] = matrix.m[0][1] * matrix.m[1][2] * matrix.m[3][3] + matrix.m[0][2] * matrix.m[1][3] * matrix.m[3][1] + matrix.m[0][3] * matrix.m[1][1] * matrix.m[3][2] - matrix.m[0][1] * matrix.m[1][3] * matrix.m[3][2] - matrix.m[0][2] * matrix.m[1][1] * matrix.m[3][3] - matrix.m[0][3] * matrix.m[1][2] * matrix.m[3][1];
@@ -165,9 +182,10 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Inverse(const Matrix& matrix)
     return result;
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Transpose(const Matrix& matrix)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Transpose(const MatrixT& matrix)
 {
-    Matrix result;
+    MatrixT< Type > result;
     result.m[0][0] = matrix.m[0][0]; result.m[1][0] = matrix.m[0][1]; result.m[2][0] = matrix.m[0][2]; result.m[3][0] = matrix.m[0][3];
     result.m[0][1] = matrix.m[1][0]; result.m[1][1] = matrix.m[1][1]; result.m[2][1] = matrix.m[1][2]; result.m[3][1] = matrix.m[1][3];
     result.m[0][2] = matrix.m[2][0]; result.m[1][2] = matrix.m[2][1]; result.m[2][2] = matrix.m[2][2]; result.m[3][2] = matrix.m[2][3];
@@ -175,7 +193,8 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Transpose(const Matrix& matrix)
     return result;
 }
 
-_JATTA_EXPORT Jatta::Matrix::Matrix()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT()
 {
     this->m[0][0] = 1;
     this->m[0][1] = 0;
@@ -195,7 +214,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix()
     this->m[3][3] = 1;
 }
 
-_JATTA_EXPORT Jatta::Matrix::Matrix(const Matrix& copy)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const MatrixT& copy)
 {
     this->m[0][0] = copy.m[0][0];
     this->m[0][1] = copy.m[0][1];
@@ -216,7 +236,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(const Matrix& copy)
 }
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
-_JATTA_EXPORT Jatta::Matrix::Matrix(Matrix&& move)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(MatrixT&& move)
 {
     this->m[0][0] = move.m[0][0];
     this->m[0][1] = move.m[0][1];
@@ -237,7 +258,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(Matrix&& move)
 }
 #endif
 
-_JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m21, float m22)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m11, Type m12, Type m21, Type m22)
 {
     this->m[0][0] = m11;
     this->m[0][1] = m12;
@@ -257,7 +279,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m21, float m22)
     this->m[3][3] = 1;
 }
 
-_JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m11, Type m12, Type m13, Type m21, Type m22, Type m23, Type m31, Type m32, Type m33)
 {
     this->m[0][0] = m11;
     this->m[0][1] = m12;
@@ -277,7 +300,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m13, float m21, 
     this->m[3][3] = 1;
 }
 
-_JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m11, Type m12, Type m13, Type m14, Type m21, Type m22, Type m23, Type m24, Type m31, Type m32, Type m33, Type m34, Type m41, Type m42, Type m43, Type m44)
 {
     this->m[0][0] = m11;
     this->m[0][1] = m12;
@@ -297,7 +321,8 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(float m11, float m12, float m13, float m14, 
     this->m[3][3] = m44;
 }
 
-_JATTA_EXPORT Jatta::Matrix::Matrix(const Quaternion& quaternion)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const QuaternionT< Type >& quaternion)
 {
     this->m[0][0] = 1 - (2 * Math::Sqr(quaternion.y) + 2 * Math::Sqr(quaternion.z));
     this->m[0][1] = 2 * quaternion.x * quaternion.y + 2 * quaternion.z * quaternion.w;
@@ -317,11 +342,13 @@ _JATTA_EXPORT Jatta::Matrix::Matrix(const Quaternion& quaternion)
     this->m[3][3] = 1;
 }
 
-_JATTA_EXPORT Jatta::Matrix::~Matrix()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::~MatrixT()
 {
 }
 
-_JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Matrix& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator=(const MatrixT& operand)
 {
     this->m[0][0] = operand.m[0][0];
     this->m[0][1] = operand.m[0][1];
@@ -342,22 +369,53 @@ _JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Matrix& operand)
     return *this;
 }
 
-_JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator=(const Quaternion& operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator=(const QuaternionT< Type >& operand)
 {
     return *this = Matrix(operand);
 }
 
-_JATTA_EXPORT Jatta::Float32* Jatta::Matrix::operator[](UInt32 index)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::operator==(const MatrixT& operand)
+{
+    return (m[0][0] == operand.m[0][0] &&
+            m[0][1] == operand.m[0][1] &&
+            m[0][2] == operand.m[0][2] &&
+            m[0][3] == operand.m[0][3] &&
+            m[1][0] == operand.m[1][0] &&
+            m[1][1] == operand.m[1][1] &&
+            m[1][2] == operand.m[1][2] &&
+            m[1][3] == operand.m[1][3] &&
+            m[2][0] == operand.m[2][0] &&
+            m[2][1] == operand.m[2][1] &&
+            m[2][2] == operand.m[2][2] &&
+            m[2][3] == operand.m[2][3] &&
+            m[3][0] == operand.m[3][0] &&
+            m[3][1] == operand.m[3][1] &&
+            m[3][2] == operand.m[3][2] &&
+            m[3][3] == operand.m[3][3]);
+}
+
+template< typename Type >
+_JATTA_INLINE_DEFINE bool Jatta::MatrixT< Type >::operator!=(const MatrixT& operand)
+{
+    return !(*this == operand);
+}
+
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type* Jatta::MatrixT< Type >::operator[](UInt32 index)
 {
     return m[index];
 }
 
-_JATTA_EXPORT const Jatta::Float32* Jatta::Matrix::operator[](UInt32 index) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT const Type* Jatta::MatrixT< Type >::operator[](UInt32 index) const
 {
     return m[index];
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(const Matrix& operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*(const MatrixT& operand) const
 {
     return Matrix(this->m[0][0] * operand.m[0][0] + this->m[0][1] * operand.m[1][0] + this->m[0][2] * operand.m[2][0] + this->m[0][3] * operand.m[3][0],
                   this->m[0][0] * operand.m[0][1] + this->m[0][1] * operand.m[1][1] + this->m[0][2] * operand.m[2][1] + this->m[0][3] * operand.m[3][1],
@@ -376,7 +434,8 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(const Matrix& operand) cons
                   this->m[3][0] * operand.m[0][2] + this->m[3][1] * operand.m[1][2] + this->m[3][2] * operand.m[2][2] + this->m[3][3] * operand.m[3][2],
                   this->m[3][0] * operand.m[0][3] + this->m[3][1] * operand.m[1][3] + this->m[3][2] * operand.m[2][3] + this->m[3][3] * operand.m[3][3]);
 }
-_JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(Float32 operand) const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*(Type operand) const
 {
     return Matrix(  this->m[0][0]*operand, this->m[0][1]*operand, this->m[0][2]*operand, this->m[0][3]*operand,
                     this->m[1][0]*operand, this->m[1][1]*operand, this->m[1][2]*operand, this->m[1][3]*operand,
@@ -384,7 +443,8 @@ _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::operator*(Float32 operand) const
                     this->m[3][0]*operand, this->m[3][1]*operand, this->m[3][2]*operand, this->m[3][3]*operand);
 }
 
-_JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator*=(Float32 operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator*=(Type operand)
 {
     m[0][0] *= operand; m[1][0] *= operand; m[2][0] *= operand; m[3][0] *= operand;
     m[0][1] *= operand; m[1][1] *= operand; m[2][1] *= operand; m[3][1] *= operand;
@@ -393,9 +453,10 @@ _JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator*=(Float32 operand)
     return *this;
 }
 
-_JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator/=(Float32 operand)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator/=(Type operand)
 {
-    Float32 inverse = 1 / operand;
+    Type inverse = 1 / operand;
     m[0][0] *= inverse; m[1][0] *= inverse; m[2][0] *= inverse; m[3][0] *= inverse;
     m[0][1] *= inverse; m[1][1] *= inverse; m[2][1] *= inverse; m[3][1] *= inverse;
     m[0][2] *= inverse; m[1][2] *= inverse; m[2][2] *= inverse; m[3][2] *= inverse;
@@ -403,17 +464,20 @@ _JATTA_EXPORT Jatta::Matrix& Jatta::Matrix::operator/=(Float32 operand)
     return *this;
 }
 
-_JATTA_EXPORT void Jatta::Matrix::Invert()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Invert()
 {
     *this = Inverse(*this);
 }
 
-_JATTA_EXPORT void Jatta::Matrix::Transpose()
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Transpose()
 {
     *this = Transpose(*this);
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Matrix::GetDeterminant() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::MatrixT< Type >::GetDeterminant() const
 {
     return m[0][0] * m[1][1] * m[2][2] * m[3][3] + m[0][0] * m[1][2] * m[2][3] * m[3][1] + m[0][0] * m[1][3] * m[2][1] * m[3][2] +
            m[0][1] * m[1][0] * m[2][3] * m[3][2] + m[0][1] * m[1][2] * m[2][0] * m[3][3] + m[0][1] * m[1][3] * m[2][2] * m[3][0] +
@@ -425,24 +489,30 @@ _JATTA_EXPORT Jatta::Float32 Jatta::Matrix::GetDeterminant() const
            m[0][3] * m[1][0] * m[2][1] * m[3][2] - m[0][3] * m[1][1] * m[2][2] * m[3][0] - m[0][3] * m[1][2] * m[2][0] * m[3][1];
 }
 
-_JATTA_EXPORT float* Jatta::Matrix::GetData() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type* Jatta::MatrixT< Type >::GetData() const
 {
-    return (float*)m;
+    return (Type*)m;
 }
 
-_JATTA_EXPORT bool Jatta::Matrix::IsReflexive() const
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsReflexive() const
 {
     return (m[0][0] == m[1][1] && m[2][2] == m[3][3] && m[0][0] == m[2][2]);
 }
-_JATTA_EXPORT bool Jatta::Matrix::IsSymmetric() const
+
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsSymmetric() const
 {
     //A = Transpose(A);
 
     return (*this == Transpose(*this));
 }
-_JATTA_EXPORT bool Jatta::Matrix::IsAntisymmetric() const
+
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsAntisymmetric() const
 {
     //A = -Transpose(A);
 
-    return (*this == Transpose(*this) * Float32(-1));
+    return (*this == Transpose(*this) * Type(-1));
 }

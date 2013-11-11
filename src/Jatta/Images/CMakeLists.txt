@@ -15,6 +15,7 @@ set(Jatta_SOURCES
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color.ipp
     ${CMAKE_CURRENT_SOURCE_DIR}/Colors.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageFormats.h
