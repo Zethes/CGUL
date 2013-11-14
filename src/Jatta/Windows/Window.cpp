@@ -557,7 +557,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
 #   ifdef JATTA_WINDOWS
-    RECT rect = {0, 0, width, GetHeight()};
+    RECT rect = {(LONG)0, (LONG)0, (LONG)width, (LONG)GetHeight()};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
@@ -617,7 +617,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
 #   ifdef JATTA_WINDOWS
-    RECT rect = {0, 0, GetWidth(), height};
+    RECT rect = {(LONG)0, (LONG)0, (LONG)GetWidth(), (LONG)height};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
@@ -674,7 +674,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 
 /** @returns The new size of the window.
  */
-_JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
+_JATTA_EXPORT void Jatta::Window::SetSize(const UCoord32& size) const
 {
 #   ifdef JATTA_WINDOWS
     RECT rect = {(LONG)0, (LONG)0, (LONG)size.x, (LONG)size.y};
@@ -706,25 +706,25 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 
 /** @returns The size of the window.
  */
-_JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
+_JATTA_EXPORT Jatta::UCoord32 Jatta::Window::GetSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::Vector2(0, 0);
+        return Jatta::UCoord32(0, 0);
     }
 
 #   ifdef JATTA_WINDOWS
-    return Vector2((Float32)GetWidth(), (Float32)GetHeight());
+    return UCoord32(GetWidth(), GetHeight());
 #   endif
 
 #   ifdef JATTA_LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
-    return Vector2(attributes.height, attributes.width);
+    return UCoord32(attributes.height, attributes.width);
 #   endif
 
 #   ifdef JATTA_MACOS
-    return Vector2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
+    return UCoord32([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
 }
 
@@ -739,7 +739,7 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 
 #   ifdef JATTA_WINDOWS
     // Capture the current size of the window
-    RECT windowRect = {0, 0, GetWidth(), GetHeight()};
+    RECT windowRect = {(LONG)0, (LONG)0, (LONG)GetWidth(), (LONG)GetHeight()};
 
     // Turn on or off the bits for a resizable window
     LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);
@@ -815,17 +815,17 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 
 /** @returns A vector containing the border extents.
  */
-_JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
+_JATTA_EXPORT Jatta::URect32 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::Vector4(0, 0, 0, 0);
+        return Jatta::URect32(0, 0, 0, 0);
     }
 
 #   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    return Vector4((float)-rect.left, (float)-rect.top, (float)rect.right, (float)rect.bottom);
+    return URect32(Math::Abs< UInt32, LONG >(rect.left), Math::Abs< UInt32, LONG >(rect.top), Math::Abs< UInt32, LONG >(rect.right), Math::Abs< UInt32, LONG >(rect.bottom));
 #   endif
 
 #   ifdef JATTA_LINUX
@@ -836,15 +836,15 @@ _JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
     long* data = NULL;
     if (Success == XGetWindowProperty(display, handle, netFrameExtents, 0L, 4, False, AnyPropertyType, &actualType, &actualFormat, &items, &bytesAfter, (unsigned char**)&data) && data)
     {
-        Vector4 result(data[0], data[2], data[1], data[3]);
+        URect32 result((UInt32)data[0], (UInt32)data[2], (UInt32)data[1], (UInt32)data[3]);
         XFree(data);
         return result;
     }
-    return Vector4(0, 0, 0, 0);
+    return URect32(0, 0, 0, 0);
 #   endif
 
 #   ifdef JATTA_MACOS
-    return [handle getFrameSize];
+    return [handle getFrameSize]; // TODO: fix this
 #   endif
 }
 

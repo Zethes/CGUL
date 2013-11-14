@@ -11,7 +11,8 @@
 
 namespace Jatta
 {
-    class Matrix;
+    template< typename Type>
+    struct MatrixT;
 
     // Nitpick: For convenience, these should be in alphabetical order
     namespace GL
@@ -86,9 +87,9 @@ namespace Jatta
         _JATTA_EXPORT void UniformMatrix2fv(SInt location, SignedSize count, bool transpose, const Float32* value);
         _JATTA_EXPORT void UniformMatrix3fv(SInt location, SignedSize count, bool transpose, const Float32* value);
         _JATTA_EXPORT void UniformMatrix4f(SInt location, bool transpose, const Float32* value);
-        _JATTA_EXPORT void UniformMatrix4f(SInt location, bool transpose, const Matrix& value);
+        _JATTA_EXPORT void UniformMatrix4f(SInt location, bool transpose, const MatrixT< Float32 >& value);
         _JATTA_EXPORT void UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const Float32* value);
-        _JATTA_EXPORT void UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const Matrix* value);
+        _JATTA_EXPORT void UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const MatrixT< Float32 >* value);
         _JATTA_EXPORT void UseProgram(UInt program);
 
         _JATTA_EXPORT void ValidateProgram(UInt program);

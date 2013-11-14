@@ -35,8 +35,8 @@ namespace Jatta
         _JATTA_INLINE_DEFINE Type E();
 
         //! @brief Calculates the absolute value of x.
-        template< typename Type _JATTA_DEFAULT_MATH_TYPE >
-        _JATTA_INLINE_DEFINE Type Abs(Type x);
+        template< typename ReturnType _JATTA_DEFAULT_MATH_TYPE, typename Type _JATTA_DEFAULT_MATH_TYPE >
+        _JATTA_INLINE_DEFINE ReturnType Abs(Type x);
         //! @brief Gets the sign of the value, returning -1, 0, or 1.
         template< typename Type _JATTA_DEFAULT_MATH_TYPE >
         _JATTA_INLINE_DEFINE Type Sign(Type x);

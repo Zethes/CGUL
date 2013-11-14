@@ -60,6 +60,12 @@ namespace Jatta
 
     typedef Vector4T< Float32 > Vector4;
     typedef Vector4T< Float32 > Vector4D;
+    typedef Vector4T< SInt16  > Rect16;
+    typedef Vector4T< SInt32  > Rect32;
+    typedef Vector4T< SInt64  > Rect64;
+    typedef Vector4T< UInt16  > URect16;
+    typedef Vector4T< UInt32  > URect32;
+    typedef Vector4T< UInt64  > URect64;
 }
 
 #include "../External/Undefines.h"

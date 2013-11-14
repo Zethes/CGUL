@@ -35,10 +35,10 @@ _JATTA_INLINE_DEFINE Type Jatta::Math::E()
  *  @param x The number to get the absolute value of.
  *  @returns The resulting value.
  */
-template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Abs(Type x)
+template< typename ReturnType, typename Type >
+_JATTA_INLINE_IMPLEMENT ReturnType Jatta::Math::Abs(Type x)
 {
-    return (x > 0 ? x : -x);
+    return (ReturnType)(x > 0 ? x : -x);
 }
 
 /** @details The sign is determined based on if the number is positive, negative, or zero.  A
