@@ -152,6 +152,12 @@ namespace Jatta
 
     typedef Vector2T< Float32 > Vector2;
     typedef Vector2T< Float64 > Vector2D;
+    typedef Vector2T< SInt16  > Coord16;
+    typedef Vector2T< SInt32  > Coord32;
+    typedef Vector2T< SInt64  > Coord64;
+    typedef Vector2T< UInt16  > UCoord16;
+    typedef Vector2T< UInt32  > UCoord32;
+    typedef Vector2T< UInt64  > UCoord64;
 }
 
 #include "../External/Undefines.h"

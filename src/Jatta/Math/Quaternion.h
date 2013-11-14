@@ -54,6 +54,9 @@ namespace Jatta
 
         // TODO: finish the quaternion class, reference DirectX's D3DXQUATERNION
     };
+
+    typedef QuaternionT<Float32> Quaternion;
+    typedef QuaternionT<Float64> QuaternionD;
 }
 
 #include "../External/Undefines.h"
