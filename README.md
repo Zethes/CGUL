@@ -19,7 +19,11 @@ Features
   - PNG with libpng
   - Jpeg with libjpeg
   - DDS
-- **3D mathematics library**
+- **Mathematics library**
+  - Matrices, quaternions, and vectors for 3D worlds
+  - Linear congruential generator (RNG)
+  - Probability distributions
+  - Many common mathematic functions
 - **Simplified networking**
   - TCP Sockets
   - UDP Sockets
