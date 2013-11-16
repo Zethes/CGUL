@@ -26,5 +26,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-
-#include "Memory.ipp"
+#include "Memory_Implement.h"

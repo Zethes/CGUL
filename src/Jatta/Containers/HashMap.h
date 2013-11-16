@@ -58,4 +58,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "HashMap.ipp"
+#include "HashMap_Implement.h"
