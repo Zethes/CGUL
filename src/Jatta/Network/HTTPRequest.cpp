@@ -13,6 +13,29 @@
 #include "../Exceptions/NetworkException.h"
 #include "../Utility/Timer.h"
 
+Jatta::Network::Header::Header() :
+    age             (0),
+    allow           (0),
+    charset         (0),
+    connection      (0),
+    contentEncoding (0),
+    contentLength   (0),
+    contentRangeMin (0),
+    contentRangeMax (0),
+    refresh         (0),
+    retryAfter      (0),
+    setCookieValue  (0),
+    setCookieVersion(0),
+    status          (0),
+    transferEncoding(0)
+{
+}
+
+Jatta::Network::HTTPRequest::HTTPRequest(const HTTPRequest& copy)
+{
+    // private
+}
+
 bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
 {
     response = "";
@@ -56,14 +79,13 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
     ParseResponseHead();
 
     //Get the reponse's body.
-    int count = 0;
     int amount = 0;
 
     switch (header.transferEncoding)
     {
         case HTTPTransferEncoding::CONTENT_LENGTH:
         {
-            char* bufferBody = new char[1024];
+            int count = 0;
             while (sock->IsConnected())
             {
                 int size = 1024;
@@ -126,7 +148,6 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
                 //Otherwise receive the next chunk and add a new line (\r\n)
                 char* buff = new char[size];
                 amount = sock->Receive((void*)buff, size);
-                count += amount;
                 responseBody += EncodeString(buff, size);
             }
         }
@@ -652,13 +673,14 @@ Jatta::Network::HTTPRequest::HTTPRequest()
 {
     sock = new SocketTCP();
 }
+
 Jatta::Network::HTTPRequest::~HTTPRequest()
 {
     Close();
     delete sock;
 }
 
-void Jatta::Network::HTTPRequest::Http(const String url)
+void Jatta::Network::HTTPRequest::Http(const String& url)
 {
     host = url;
 
@@ -676,7 +698,7 @@ void Jatta::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
 }
 
 #ifdef OpenSSL_FOUND
-void Jatta::Network::HTTPRequest::Https(const String url)
+void Jatta::Network::HTTPRequest::Https(const String& url)
 {
     host = url;
 
@@ -687,6 +709,7 @@ void Jatta::Network::HTTPRequest::Https(const String url)
 
     sock->ConnectSSL(IPAddress(lookup[0]), 443);
 }
+
 void Jatta::Network::HTTPRequest::ConnectSSL(const IPAddress& ip, int port)
 {
     host = ip.ToString();

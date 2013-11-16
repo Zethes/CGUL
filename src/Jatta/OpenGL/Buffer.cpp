@@ -43,6 +43,6 @@ _JATTA_EXPORT void Jatta::OpenGL::Buffer::Unbind()
 
 _JATTA_EXPORT void Jatta::OpenGL::Buffer::Data(Size size, void* data, Enum usage)
 {
-	glBufferData(this->type, size, data, usage);
+    glBufferData(this->type, size, data, usage);
     GLCHECK("Failed to set buffer data.");
 }

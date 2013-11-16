@@ -6,14 +6,14 @@
 #include "Assimp.h"
 
 _JATTA_EXPORT Jatta::String Jatta::Assimp::GetLegalString()
-{  
+{
     return String(aiGetLegalString());
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMinor()
 {
     return aiGetVersionMinor();
-} 
+}
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMajor()
 {

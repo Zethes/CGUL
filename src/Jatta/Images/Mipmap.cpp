@@ -5,25 +5,26 @@
 
 #include "Mipmap.h"
 
-_JATTA_EXPORT bool Jatta::Mipmap::IsValid()
+// TODO: remove this? it's not used
+/*_JATTA_EXPORT bool Jatta::Mipmap::IsValid()
 {
     return (width != 0 && height != 0);
+}*/
+
+_JATTA_EXPORT Jatta::Mipmap::Mipmap() :
+    data(NULL),
+    format(ImageFormats::NONE),
+    width(0),
+    height(0)
+{
 }
 
-_JATTA_EXPORT Jatta::Mipmap::Mipmap()
+_JATTA_EXPORT Jatta::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data) :
+    format(format),
+    width(width),
+    height(height),
+    data(data)
 {
-    data = NULL;
-    format = ImageFormats::NONE;
-    width = 0;
-    height = 0;
-}
-
-_JATTA_EXPORT Jatta::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data)
-{
-    this->format = format;
-    this->width = width;
-    this->height = height;
-    this->data = data;
 }
 
 _JATTA_EXPORT Jatta::Mipmap::~Mipmap()

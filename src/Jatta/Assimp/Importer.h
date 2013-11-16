@@ -18,8 +18,9 @@ namespace Jatta
         class Importer
         {
             _JATTA_AIIMPORTER importer;
-            Scene*scene;
+            Scene* scene;
 
+            _JATTA_EXPORT Importer(const Importer& copy);
         public:
             _JATTA_EXPORT Importer();
             _JATTA_EXPORT ~Importer();

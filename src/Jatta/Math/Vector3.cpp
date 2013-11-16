@@ -107,7 +107,7 @@ _JATTA_EXPORT Jatta::Vector3& Jatta::Vector3::operator*=(float operand)
 
 _JATTA_EXPORT bool Jatta::Vector3::operator==(const Vector3& operand) const
 {
-	return (this->x == operand.x && this->y == operand.y && this->z == operand.z);
+    return (this->x == operand.x && this->y == operand.y && this->z == operand.z);
 }
 
 _JATTA_EXPORT Jatta::Float32 Jatta::Vector3::At(UInt32 index) const

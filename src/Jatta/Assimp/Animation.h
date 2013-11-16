@@ -22,7 +22,7 @@ namespace Jatta
             _JATTA_AIANIMATION animation;
         public:
             _JATTA_EXPORT Animation(_JATTA_AIANIMATION animation);
-    
+
             _JATTA_EXPORT Jatta::String GetName();
             _JATTA_EXPORT double GetDuration();
             _JATTA_EXPORT double GetTicksPerSecond();

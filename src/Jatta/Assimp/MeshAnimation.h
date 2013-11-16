@@ -22,7 +22,7 @@ namespace Jatta
             _JATTA_AIMESHANIM meshAnim;
         public:
             _JATTA_EXPORT MeshAnimation(_JATTA_AIMESHANIM meshAnim);
-    
+
             _JATTA_EXPORT Jatta::String GetName();
             _JATTA_EXPORT Jatta::UInt32 GetKeyCount();
             _JATTA_EXPORT MeshKey* GetKeys();

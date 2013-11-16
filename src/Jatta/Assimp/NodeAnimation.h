@@ -21,7 +21,7 @@ namespace Jatta
             _JATTA_AINODEANIM nodeAnim;
         public:
             _JATTA_EXPORT NodeAnimation(_JATTA_AINODEANIM nodeAnim);
-    
+
             _JATTA_EXPORT Jatta::String GetName();
             _JATTA_EXPORT Jatta::UInt32 GetPositionKeyCount();
             _JATTA_EXPORT Jatta::UInt32 GetRotationKeyCount();

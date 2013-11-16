@@ -12,7 +12,8 @@ _JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()
     return currentContext;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Context::Context()
+_JATTA_EXPORT Jatta::OpenGL::Context::Context() :
+    window(NULL)
 {
 #    ifdef JATTA_LINUX
      context = NULL;

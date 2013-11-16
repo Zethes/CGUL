@@ -7,18 +7,20 @@
 
 _JATTA_EXPORT Jatta::Assimp::MeshAnimation::MeshAnimation(aiMeshAnim* meshAnim)
 {
-	this->meshAnim = meshAnim;
+    this->meshAnim = meshAnim;
 }
 
 _JATTA_EXPORT Jatta::String Jatta::Assimp::MeshAnimation::GetName()
 {
-	return String(meshAnim->mName.C_Str());
+    return String(meshAnim->mName.C_Str());
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MeshAnimation::GetKeyCount()
 {
-	return meshAnim->mNumKeys;
+    return meshAnim->mNumKeys;
 }
+
 _JATTA_EXPORT Jatta::Assimp::MeshKey* Jatta::Assimp::MeshAnimation::GetKeys()
 {
-	return (MeshKey*)meshAnim->mKeys;
+    return reinterpret_cast<MeshKey*>(meshAnim->mKeys);
 }
