@@ -21,11 +21,11 @@ namespace Jatta
             _JATTA_AIBONE bone;
         public:
             _JATTA_EXPORT Bone(_JATTA_AIBONE bone);
-    
+
             _JATTA_EXPORT Jatta::String GetName();
-			_JATTA_EXPORT Jatta::UInt32 GetWeightCount();
+            _JATTA_EXPORT Jatta::UInt32 GetWeightCount();
             _JATTA_EXPORT Jatta::Assimp::VertexWeight GetWeight(Jatta::UInt32 id);
-			_JATTA_EXPORT Jatta::Matrix GetOffsetMatrix();
+            _JATTA_EXPORT Jatta::Matrix GetOffsetMatrix();
         };
     }
 }

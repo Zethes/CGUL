@@ -81,9 +81,6 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
         throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::ADDRESS_INVALID);
     }
 
-    // For error checking.
-    int status;
-
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
     memset(&hints, 0, sizeof(addrinfo));
@@ -113,7 +110,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
+    if (getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
@@ -162,16 +159,13 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
  */
 void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
 {
-    // For error checking.
-    int status;
-
     // Convert the port into a string.
     char portString[6];
-#    ifdef MSVC
+#   ifdef MSVC
     sprintf_s(portString, "%d", port);
-#    else
+#   else
     sprintf(portString, "%d", port);
-#    endif
+#   endif
 
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -197,7 +191,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
+    if (getaddrinfo(NULL, portString, &hints, &result) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
@@ -226,7 +220,6 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL);
     }
 
-    // Make a non-blocking socket.
     // Make a non-blocking socket.
     if (!MakeNonBlocking())
     {

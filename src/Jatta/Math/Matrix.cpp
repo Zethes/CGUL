@@ -11,7 +11,7 @@
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::Identity()
 {
-	return Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    return Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Matrix::MakeRotation(float angle)

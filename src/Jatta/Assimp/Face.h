@@ -13,12 +13,11 @@ namespace Jatta
     {
         class Face
         {
-        private:
             _JATTA_AIFACE face;
         public:
             _JATTA_EXPORT Face();
             _JATTA_EXPORT Face(_JATTA_AIFACE face);
-    
+
             _JATTA_EXPORT Jatta::UInt32 GetIndicesCount();
             _JATTA_EXPORT Jatta::UInt32* GetIndices();
         };

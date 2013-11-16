@@ -21,7 +21,7 @@
 LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LONG_PTR ptr = GetWindowLongPtr(handle, GWLP_USERDATA);
-    Window* window = (Window*)ptr;
+    Window* window = reinterpret_cast<Window*>(ptr);
     if (ptr != 0)
     {
         //window->getOnMessage()();

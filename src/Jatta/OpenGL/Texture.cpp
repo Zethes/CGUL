@@ -11,14 +11,16 @@ _JATTA_EXPORT void Jatta::OpenGL::Texture::Active(UInt32 active)
     GLCHECK("Failed to set active texture.");
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Texture::Texture()
+_JATTA_EXPORT Jatta::OpenGL::Texture::Texture() :
+    texture(0),
+    type(0)
 {
-    texture = 0;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Texture::Texture(UInt32 texture)
+_JATTA_EXPORT Jatta::OpenGL::Texture::Texture(UInt32 texture) :
+    texture(texture),
+    type(0)
 {
-    this->texture = texture;
 }
 
 _JATTA_EXPORT Jatta::OpenGL::Texture::~Texture()
