@@ -3,13 +3,33 @@
  * All rights reserved.
  */
 
-template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType >::HashMap(Function hash, Size pool)
+template< typename Type >
+Jatta::Size Jatta::Hash::Integer(const Type& object)
 {
-    this->hash = hash;
-    data = new Data*[pool];
-    this->size = pool;
-    for (unsigned int i = 0; i < pool; i++)
+    return static_cast<Size>(object);
+}
+
+template< typename KeyType, typename ValueType >
+Jatta::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy)
+{
+    // private
+}
+
+template< typename KeyType, typename ValueType >
+Jatta::HashMap< KeyType, ValueType >::HashMap() :
+    hash(NULL),
+    size(0),
+    data(NULL)
+{
+}
+
+template< typename KeyType, typename ValueType >
+Jatta::HashMap< KeyType, ValueType >::HashMap(Function hash, Size pool) :
+    hash(hash),
+    size(pool),
+    data(new Data*[pool])
+{
+    for (Size i = 0; i < pool; i++)
     {
         data[i] = NULL;
     }
@@ -24,8 +44,51 @@ Jatta::HashMap< KeyType, ValueType>::~HashMap()
 }
 
 template< typename KeyType, typename ValueType >
+void Jatta::HashMap< KeyType, ValueType >::SetSize(Size pool)
+{
+    if (size == 0)
+    {
+        delete[] data;
+        data = new Data*[pool];
+        size = pool;
+        for (Size i = 0; i < pool; i++)
+        {
+            data[i] = NULL;
+        }
+    }
+    else
+    {
+        // TODO: remove this, add logic for resize
+        throw std::runtime_error("Cannot resize a hash map, can only set its size once.");
+    }
+}
+
+template< typename KeyType, typename ValueType >
+void Jatta::HashMap< KeyType, ValueType >::SetHashFunction(Function hash)
+{
+    if (this->hash == NULL)
+    {
+        this->hash = hash;
+    }
+    else
+    {
+        // TODO: remove this, add logic to reorder contents with new hash function
+        throw std::runtime_error("Cannot change the hash function for a hash map after it has already been set.");
+    }
+}
+
+template< typename KeyType, typename ValueType >
 void Jatta::HashMap< KeyType, ValueType >::Insert(KeyType key, ValueType value)
 {
+    if (hash == NULL)
+    {
+        throw std::runtime_error("Cannot insert into a hash map that has no hashing function.");
+    }
+    if (size == 0)
+    {
+        throw std::runtime_error("Cannot insert into a hash map with new data pools.  Use SetSize() first.");
+    }
+
     Size index = hash(key);
     index %= this->size;
     Data** slot = &this->data[index];
@@ -48,6 +111,15 @@ void Jatta::HashMap< KeyType, ValueType >::Insert(KeyType key, ValueType value)
 template< typename KeyType, typename ValueType >
 ValueType Jatta::HashMap< KeyType, ValueType >::Get(KeyType key) const
 {
+    if (hash == NULL)
+    {
+        throw std::runtime_error("Cannot get from a hash map that has no hashing function.");
+    }
+    if (size == 0)
+    {
+        throw std::runtime_error("Cannot get from a hash map with new data pools.  Use SetSize() first.");
+    }
+
     Size index = hash(key);
     index %= this->size;
     Data** slot = &this->data[index];
@@ -65,6 +137,15 @@ ValueType Jatta::HashMap< KeyType, ValueType >::Get(KeyType key) const
 template< typename KeyType, typename ValueType >
 bool Jatta::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) const
 {
+    if (hash == NULL)
+    {
+        throw std::runtime_error("Cannot get from a hash map that has no hashing function.");
+    }
+    if (size == 0)
+    {
+        throw std::runtime_error("Cannot get from a hash map with new data pools.  Use SetSize() first.");
+    }
+
     Size index = hash(key);
     index %= this->size;
     Data** slot = &this->data[index];
@@ -86,6 +167,15 @@ bool Jatta::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) co
 template< typename KeyType, typename ValueType >
 void Jatta::HashMap< KeyType, ValueType >::Erase(KeyType key)
 {
+    if (hash == NULL)
+    {
+        throw std::runtime_error("Cannot erase from a hash map that has no hashing function.");
+    }
+    if (size == 0)
+    {
+        throw std::runtime_error("Cannot erase from a hash map with new data pools.  Use SetSize() first.");
+    }
+
     Size index = hash(key);
     index %= this->size;
     Data** slot = &this->data[index];

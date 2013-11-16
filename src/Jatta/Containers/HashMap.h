@@ -11,6 +11,12 @@
 #include <iostream>
 namespace Jatta
 {
+    namespace Hash
+    {
+        template< typename Type >
+        Size Integer(const Type& object);
+    }
+
     template< typename KeyType, typename ValueType >
     class HashMap : public Container< KeyType >
     {
@@ -27,9 +33,15 @@ namespace Jatta
         };
 
         Data** data;
+
+        HashMap(const HashMap& copy);
     public:
+        HashMap();
         HashMap(Function hash, Size pool);
         ~HashMap();
+
+        void SetSize(Size pool);
+        void SetHashFunction(Function hash);
 
         void Insert(KeyType key, ValueType value);
 
