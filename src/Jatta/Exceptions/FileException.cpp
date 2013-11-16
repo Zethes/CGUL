@@ -5,9 +5,10 @@
 
 #include "FileException.h"
 
-Jatta::FileException::FileException(const Jatta::String& fileName, UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::FILE)
+Jatta::FileException::FileException(const Jatta::String& fileName, UInt8 code, UInt8 reason) :
+    Exception(code, reason, ExceptionType::FILE),
+    fileName(fileName)
 {
-    this->fileName = fileName;
 }
 
 Jatta::FileException::~FileException() throw()

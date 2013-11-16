@@ -11,17 +11,19 @@
 #include "Node.h"
 #include "Texture.h"
 #include "Animation.h"
- 
+
 /** @brief Just a test.
  */
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene()
 {
     scene = NULL;
 }
+
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene(::aiScene* scene)
 {
     this->scene = scene;
 }
+
 _JATTA_EXPORT Jatta::Assimp::Scene::Scene(const ::aiScene* scene)
 {
     this->scene = scene;
@@ -35,14 +37,15 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 f
         throw std::runtime_error(aiGetErrorString());
     }
 }
- _JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags)
- {
+
+_JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags)
+{
     scene = aiImportFileFromMemory(buffer, size, flags, "");
     if (scene == NULL)
     {
         throw std::runtime_error(aiGetErrorString());
     }
- }
+}
 
 _JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasAnimations() const
 {
@@ -106,11 +109,11 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount() const
 
 _JATTA_EXPORT Jatta::Matrix Jatta::Assimp::Scene::GetSceneTransformation() const
 {
-    return Jatta::Matrix(
-        *scene->mRootNode->mTransformation[0], *scene->mRootNode->mTransformation[1], *scene->mRootNode->mTransformation[2], *scene->mRootNode->mTransformation[3], 
-        *scene->mRootNode->mTransformation[4], *scene->mRootNode->mTransformation[5], *scene->mRootNode->mTransformation[6], *scene->mRootNode->mTransformation[7], 
-        *scene->mRootNode->mTransformation[8], *scene->mRootNode->mTransformation[9], *scene->mRootNode->mTransformation[10], *scene->mRootNode->mTransformation[11], 
-        *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
+    // TODO: make sure this order is correct, the matrix constructor is changing in the mathfix branch
+    return Jatta::Matrix(*scene->mRootNode->mTransformation[ 0], *scene->mRootNode->mTransformation[ 1], *scene->mRootNode->mTransformation[ 2], *scene->mRootNode->mTransformation[ 3],
+                         *scene->mRootNode->mTransformation[ 4], *scene->mRootNode->mTransformation[ 5], *scene->mRootNode->mTransformation[ 6], *scene->mRootNode->mTransformation[ 7],
+                         *scene->mRootNode->mTransformation[ 8], *scene->mRootNode->mTransformation[ 9], *scene->mRootNode->mTransformation[10], *scene->mRootNode->mTransformation[11],
+                         *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
 }
 
 _JATTA_EXPORT Jatta::Assimp::Node Jatta::Assimp::Scene::GetRootNode() const
@@ -142,6 +145,7 @@ _JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 ind
 {
     return Texture(scene->mTextures[index]);
 }
+
 _JATTA_EXPORT Jatta::Assimp::Animation Jatta::Assimp::Scene::GetAnimation(UInt32 index) const
 {
     return Animation(scene->mAnimations[index]);

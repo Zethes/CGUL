@@ -51,9 +51,9 @@ namespace Jatta
             _JATTA_EXPORT UInt32 GetMaterialCount() const;
             _JATTA_EXPORT UInt32 GetMeshCount() const;
             _JATTA_EXPORT UInt32 GetTextureCount() const;
-            
+
             _JATTA_EXPORT Jatta::Matrix GetSceneTransformation() const;
- 
+
             _JATTA_EXPORT Node GetRootNode() const;
 
             _JATTA_EXPORT Animation GetAnimation(UInt32 index) const;

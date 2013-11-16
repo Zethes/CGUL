@@ -14,10 +14,12 @@ _JATTA_EXPORT Jatta::Vector2 Jatta::Assimp::UVTransform::GetTranslation()
 {
     return Vector2(uvTransform->mTranslation.x, uvTransform->mTranslation.y);
 }
+
 _JATTA_EXPORT Jatta::Vector2 Jatta::Assimp::UVTransform::GetScaling()
 {
     return Vector2(uvTransform->mScaling.x, uvTransform->mScaling.y);
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Assimp::UVTransform::GetRotation()
 {
     return uvTransform->mRotation;

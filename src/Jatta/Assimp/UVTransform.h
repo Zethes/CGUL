@@ -14,7 +14,7 @@ namespace Jatta
     namespace Assimp
     {
         class UVTransform
-        {   
+        {
             _JATTA_AIUVTRANSFORM uvTransform;
         public:
             _JATTA_EXPORT UVTransform(_JATTA_AIUVTRANSFORM uvTransform);

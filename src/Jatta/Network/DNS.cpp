@@ -63,7 +63,7 @@ std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host
         // Determine if the address is an IPv4 or IPv6 address
         if (p->ai_family == AF_INET)
         {
-            struct sockaddr_in *ipv4 = (sockaddr_in *)p->ai_addr;
+            struct sockaddr_in *ipv4 = reinterpret_cast<sockaddr_in*>(p->ai_addr);
             addr = &(ipv4->sin_addr);
             struct sockaddr_in in;
             memset(&in, 0, sizeof(in));
@@ -73,7 +73,7 @@ std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host
         }
         else
         {
-            struct sockaddr_in6 *ipv6 = (sockaddr_in6 *)p->ai_addr;
+            struct sockaddr_in6 *ipv6 = reinterpret_cast<sockaddr_in6*>(p->ai_addr);
             addr = &(ipv6->sin6_addr);
             struct sockaddr_in6 in;
             memset(&in, 0, sizeof(in));

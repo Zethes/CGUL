@@ -9,6 +9,7 @@ _JATTA_EXPORT Jatta::Assimp::Face::Face()
 {
     this->face = NULL;
 }
+
 _JATTA_EXPORT Jatta::Assimp::Face::Face(aiFace* face)
 {
     this->face = face;
@@ -16,9 +17,10 @@ _JATTA_EXPORT Jatta::Assimp::Face::Face(aiFace* face)
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Face::GetIndicesCount()
 {
-	return face->mNumIndices;
+    return face->mNumIndices;
 }
+
 _JATTA_EXPORT Jatta::UInt32* Jatta::Assimp::Face::GetIndices()
 {
-	return (Jatta::UInt32*)face->mIndices;
+    return (Jatta::UInt32*)face->mIndices;
 }

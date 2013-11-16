@@ -20,7 +20,8 @@ namespace Jatta
         UInt32 width;
         UInt32 height;
 
-        _JATTA_EXPORT bool IsValid();
+        // TODO: remove this? it's not used
+        //_JATTA_EXPORT bool IsValid();
     public:
         _JATTA_EXPORT Mipmap();
         _JATTA_EXPORT Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data);

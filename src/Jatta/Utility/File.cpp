@@ -36,6 +36,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, Stri
     fwrite(buffer, 1, string.GetSize(), stream);
     fclose(stream);
 
+    delete[] buffer;
+
     return true;
 }
 

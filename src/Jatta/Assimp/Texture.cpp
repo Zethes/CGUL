@@ -15,6 +15,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Texture::GetWidth() const
 {
     return texture->mWidth;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Texture::GetHeight() const
 {
     return texture->mHeight;
@@ -22,7 +23,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Texture::GetHeight() const
 
 _JATTA_EXPORT Jatta::Image Jatta::Assimp::Texture::GetImage() const
 {
-    //Image is stored as ARGB8888, convert it to RGBA8888
+    // Image is stored as ARGB8888, convert it to RGBA8888
     Color*colors = new Jatta::Color[texture->mWidth*texture->mHeight];
 
     for (unsigned int i = 0; i < texture->mWidth*texture->mHeight; i++)

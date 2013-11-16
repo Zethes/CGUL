@@ -15,7 +15,9 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad(const String& file)
     File::ReadData(file, buffer, 2);
 
     if (buffer[0] == 0x42 && buffer[1] == 0x4D)
+    {
         return true;
+    }
     return false;
 }
 
@@ -24,8 +26,10 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::ReadHe
     BITMAPHEADER header;
 
     if (size < 14)
+    {
        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
-       
+    }
+
     memcpy(&header.MagicNumber, &data[0], 2);
     memcpy(&header.FileSize, &data[2], 4);
     memcpy(&header.Reserved1, &data[6], 2);
@@ -43,13 +47,16 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
     //Check to make sure it's a supported size.
     //Supported formats: BITMAPCOREHEADER, BITMAPINFOHEADER, BITMAPCOREHEADER2, BITMAPV4HEADER, BITMAPV5HEADER
     if (size != 12 && size != 40 && size != 64 && size != 108 && size != 124)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+    }
 
     //Must atleast be a BITMAPCOREINFO
     if (size < 12)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+    }
 
-    int pos = 0;
     if (size == 12) //BITMAPCOREINFO uses shorts for width and height
     {
         memcpy(&header.Width, &data[0], 2);
@@ -59,7 +66,7 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
         header.Compression = BMPCompressionMethods::RGB;
         return header;
     }
-    
+
     memcpy(&header.Width, &data[0], 4);
     memcpy(&header.Height, &data[4], 4);
     memcpy(&header.Planes, &data[8], 2);

@@ -27,8 +27,6 @@
  */
 void Jatta::Network::GetAdapters(FixedList<Adapter>* adapters)
 {
-    std::vector<Adapter> result;
-
 #   ifdef JATTA_WINDOWS
     // TODO: this wont work correctly right now (?)
     PIP_ADAPTER_INFO adapterInfo;

@@ -23,6 +23,17 @@ if(System_PROCESSOR_COUNT)
 
 endif()
 
+# Determine how the output should be displayed
+if(MSVC)
+
+    set(__TEMPLATE_FLAG --template=vs)
+
+elseif(CMAKE_COMPILER_IS_GNUCXX)
+
+    set(__TEMPLATE_FLAG --template=gcc)
+
+endif()
+
 # Add a custom target
 add_custom_target("check" COMMAND
   "${cppcheck_EXECUTABLE}"
@@ -35,4 +46,5 @@ add_custom_target("check" COMMAND
   ${__CPPCHECK_DEFINES}
   "${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta"
   ${__JOBS_FLAG}
+  ${__TEMPLATE_FLAG}
 )

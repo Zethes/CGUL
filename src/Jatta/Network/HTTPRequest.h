@@ -21,23 +21,23 @@ namespace Jatta
         {
             String accessControlAllowOrigin;
             String acceptRanges;
-            int age;
+            SInt age;
             String ageString;
             String allow;
             String cacheControl;
-            int charset;
+            SInt charset;
             String charsetString;
-            int connection;
+            SInt connection;
             String connectionString;
             String contentDisposition;
-            int contentEncoding;
+            SInt contentEncoding;
             String contentEncodingString;
             String contentLanguage;
-            int contentLength;
+            SInt contentLength;
             String contentLengthString;
             String contentLocation;
             String contentMD5;
-            int contentRangeMin, contentRangeMax;
+            SInt contentRangeMin, contentRangeMax;
             String contentRangeString;
             String contentType;
             String date;
@@ -50,26 +50,28 @@ namespace Jatta
             String p3p;
             String pragma;
             String proxyAuthenticate;
-            int refresh;
+            SInt refresh;
             String refreshString;
             String refreshUrl;
-            int retryAfter;
+            SInt retryAfter;
             String retryAfterString;
             String server;
             String setCookie;
             String setCookieID;
-            int setCookieValue;
-            int setCookieVersion;
-            int status;
+            SInt setCookieValue;
+            SInt setCookieVersion;
+            SInt status;
             String statusString;
             String strictTransportSecurity;
             String trailer;
-            int transferEncoding;
+            SInt transferEncoding;
             String transferEncodingString;
             String vary;
             String via;
             String warning;
             String wwwAuthenticate;
+
+            Header();
         };
 
         /** @class HTTPRequest HTTPRequest.h <Base/Network/HTTPRequest.h>
@@ -82,6 +84,8 @@ namespace Jatta
             String request, response, responseHead, responseBody;
             Header header;
 
+            HTTPRequest(const HTTPRequest& copy);
+
             bool PerformRequest(int timeout);
             void ParseResponseHead();
             String EncodeString(const char* buffer, int len);
@@ -89,11 +93,11 @@ namespace Jatta
             HTTPRequest();
             ~HTTPRequest();
 
-            void Http(const String url);
+            void Http(const String& url);
             void Connect(const IPAddress& ip, int port);
 
             #ifdef OpenSSL_FOUND
-            void Https(const String url);
+            void Https(const String& url);
             void ConnectSSL(const IPAddress& ip, int port);
             #endif
 

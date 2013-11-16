@@ -52,9 +52,6 @@ Jatta::Network::SocketUDP::~SocketUDP()
  */
 void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 {
-    // For error checking.
-    int status;
-
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
     memset(&hints, 0, sizeof(addrinfo));
@@ -78,7 +75,7 @@ void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
+    if (getaddrinfo(NULL, portString, &hints, &result) != 0)
     {
         throw std::runtime_error("bind failed");
     }
@@ -115,9 +112,6 @@ void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
  */
 void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
 {
-    // For error checking.
-    int status;
-
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
     memset(&hints, 0, sizeof(addrinfo));
@@ -138,7 +132,7 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
+    if (getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result) != 0)
     {
         throw std::runtime_error("Failed to get address info.");
     }

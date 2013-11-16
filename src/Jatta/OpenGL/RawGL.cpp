@@ -126,7 +126,7 @@ _JATTA_EXPORT void Jatta::GL::DrawArrays(Enum mode, SInt first, SignedSize count
 
 _JATTA_EXPORT void Jatta::GL::DrawElements(Enum mode, SignedSize count, Enum type, const void* indices)
 {
-	GLCLEAR();
+    GLCLEAR();
     glDrawElements(mode, count, type, indices);
     GLCHECK("Failed to draw elements.");
 }

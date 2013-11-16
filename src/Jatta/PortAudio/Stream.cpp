@@ -5,14 +5,15 @@
 
 #include "Stream.h"
 
-_JATTA_EXPORT Jatta::PortAudio::Stream::Stream()
+_JATTA_EXPORT Jatta::PortAudio::Stream::Stream() :
+    volume(1.0f),
+    pitch(0.0f),
+    loop(false),
+    sampleRate(0),
+    framesPerBuffer(paFramesPerBufferUnspecified)
 {
-    volume = 1.0f;
     streamData.StreamPtr = this;
     streamData.NumberOfChannels = 1;
-
-    sampleRate = 0;
-    framesPerBuffer = paFramesPerBufferUnspecified;
 }
 
 _JATTA_EXPORT Jatta::PortAudio::Stream::~Stream()
