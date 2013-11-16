@@ -35,11 +35,11 @@ endforeach()
 # Version information
 include(cmake/Version.cmake)
 
-# Determine compiler
-include(cmake/Compiler.cmake)
-
 # Determine system information
 include(cmake/System.cmake)
+
+# Determine compiler
+include(cmake/Compiler.cmake)
 
 # Determine lib directory name
 if(${System_BITNESS} EQUAL 32)
@@ -91,7 +91,22 @@ set(DOXYGEN_ENABLE OFF CACHE BOOL "Specifies whether or not to use Doxygen to ge
 set(DOXYGEN_WARNINGS OFF CACHE BOOL "Turns on Doxygen warnings during doc generation stage.")
 mark_as_advanced(DOXYGEN_WARNINGS)
 set(CMAKE_REQUIRED_INCLUDES ${Jatta_DEPENDENCY_INCLUDE_DIRS} ${Jatta_LIBRARY_INCLUDE_DIRS})
-set(CMAKE_REQUIRED_DEFINITIONS "-DGLEW_NO_GLU -DGLEW_STATIC -DHAVE_BOOLEAN -DPNG_SKIP_SETJMP_CHECK")
+
+if(WIN32)
+
+    set(__PLATFORM "-DJATTA_WINDOWS")
+
+elseif(APPLE)
+
+    set(__PLATFORM "-DJATTA_MACOS")
+
+else()
+
+    set(__PLATFORM "-DJATTA_LINUX")
+
+endif()
+
+set(CMAKE_REQUIRED_DEFINITIONS "-DGLEW_NO_GLU -DGLEW_STATIC -DHAVE_BOOLEAN -DPNG_SKIP_SETJMP_CHECK ${__PLATFORM}")
 if(MSVC)
     set(CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS} -DMSVC")
 endif()
@@ -105,8 +120,9 @@ include(cmake/Libraries/Libraries.cmake)
 # Compile the library
 add_subdirectory(src)
 
-# Add a build step for Doxygen
-include(cmake/Doxygen.cmake)
+
+# Add external program support
+include(cmake/Programs/Programs.cmake)
 
 # Allow packaging
 include(cmake/Package.cmake)
