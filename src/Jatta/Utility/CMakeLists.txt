@@ -18,13 +18,13 @@ set(Jatta_SOURCES
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.ipp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease_Implement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.h
     ${CMAKE_CURRENT_SOURCE_DIR}/File.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Memory.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Memory.ipp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Memory_Implement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Move.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Move.ipp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Move_Implement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Regex.h
     ${CMAKE_CURRENT_SOURCE_DIR}/String.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread.h

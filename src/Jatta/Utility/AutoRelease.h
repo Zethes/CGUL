@@ -32,5 +32,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-
-#include "AutoRelease.ipp"
+#include "AutoRelease_Implement.h"
