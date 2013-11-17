@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "Container.h"
+#include "List.h"
 #include "../External/Defines.h"
 
 #include <iostream>
@@ -33,10 +33,9 @@ namespace Jatta
         };
 
         Data** data;
-
-        HashMap(const HashMap& copy);
     public:
         HashMap();
+        HashMap(const HashMap& copy);
         HashMap(Function hash, Size pool);
         ~HashMap();
 
@@ -47,6 +46,9 @@ namespace Jatta
 
         ValueType Get(KeyType key) const;
         bool Get(KeyType key, ValueType* value) const;
+
+        void GetKeys(List< KeyType >* keys) const;
+        void GetEntries(List< std::pair< KeyType, ValueType > >* entries) const;
 
         void Erase(KeyType key);
 
