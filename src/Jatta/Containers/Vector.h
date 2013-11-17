@@ -15,7 +15,7 @@ namespace Jatta
      *  FixedList.
      */
     template< typename T, typename Allocator = std::allocator< T > >
-    class Vector : public std::vector< T, Allocator >, public FixedList< T >
+    class Vector : public std::vector< T, Allocator >, public List< T >
     {
     public:
         // List
