@@ -10,17 +10,31 @@ Jatta::Size Jatta::Hash::Integer(const Type& object)
 }
 
 template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy)
-{
-    // private
-}
-
-template< typename KeyType, typename ValueType >
 Jatta::HashMap< KeyType, ValueType >::HashMap() :
     hash(NULL),
     size(0),
     data(NULL)
 {
+}
+
+template< typename KeyType, typename ValueType >
+Jatta::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy) :
+    hash(copy.hash),
+    size(copy.size),
+    data(new Data*[copy.size])
+{
+    for (Size i = 0; i < size; i++)
+    {
+        data[i] = NULL;
+
+        Data* slot = copy.data[i];
+        Size it = 0;
+        while (slot)
+        {
+            Insert(slot->key, slot->value);
+            slot = slot->next;
+        }
+    }
 }
 
 template< typename KeyType, typename ValueType >
@@ -162,6 +176,36 @@ bool Jatta::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) co
         slot = &((*slot)->next);
     }
     return false;
+}
+
+template< typename KeyType, typename ValueType >
+void Jatta::HashMap< KeyType, ValueType >::GetKeys(List< KeyType >* keys) const
+{
+    for (Size i = 0; i < size; i++)
+    {
+        Data* slot = data[i];
+        Size it = 0;
+        while (slot)
+        {
+            keys->Push(slot->key);
+            slot = slot->next;
+        }
+    }
+}
+
+template< typename KeyType, typename ValueType >
+void Jatta::HashMap< KeyType, ValueType >::GetEntries(List< std::pair< KeyType, ValueType > >* entries) const
+{
+    for (Size i = 0; i < size; i++)
+    {
+        Data* slot = data[i];
+        Size it = 0;
+        while (slot)
+        {
+            entries->Push(std::make_pair(slot->key, slot->value));
+            slot = slot->next;
+        }
+    }
 }
 
 template< typename KeyType, typename ValueType >
