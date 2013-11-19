@@ -231,7 +231,11 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     // Generate a unique class name for this window
     std::wostringstream ss;
     static int windowCounter = 0;
+#   ifdef MSVC
+    strcpy_s(className, "JATTA_");
+#   else
     strcpy(className, "JATTA_");
+#   endif
     sprintf(className + 6, "%d", windowCounter++);
     ss << className;
 
@@ -380,9 +384,10 @@ _JATTA_EXPORT void Jatta::Window::HandleMessages()
     }
 
 #   ifdef JATTA_LINUX
-    ::Window root, child;
-    int rootX, rootY, winX, winY;
-    unsigned int mask;
+    // TODO
+    //::Window root, child;
+    //int rootX, rootY, winX, winY;
+    //unsigned int mask;
 
     /*XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
     GetInput()->mousePos.x = winX;
@@ -557,7 +562,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Window::GetBackgroundColor() const
 _JATTA_EXPORT void Jatta::Window::SetWidth(UInt32 width)
 {
 #   ifdef JATTA_WINDOWS
-    RECT rect = {0, 0, width, GetHeight()};
+    RECT rect = {(LONG)0, (LONG)0, (LONG)width, (LONG)GetHeight()};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
@@ -617,7 +622,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetWidth() const
 _JATTA_EXPORT void Jatta::Window::SetHeight(UInt32 height)
 {
 #   ifdef JATTA_WINDOWS
-    RECT rect = {0, 0, GetWidth(), height};
+    RECT rect = {(LONG)0, (LONG)0, (LONG)GetWidth(), (LONG)height};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
     SetWindowPos(handle, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOZORDER | SWP_NOMOVE);
 #   endif
@@ -739,7 +744,7 @@ _JATTA_EXPORT void Jatta::Window::SetResizable(Boolean resizable)
 
 #   ifdef JATTA_WINDOWS
     // Capture the current size of the window
-    RECT windowRect = {0, 0, GetWidth(), GetHeight()};
+    RECT windowRect = {(LONG)0, (LONG)0, (LONG)GetWidth(), (LONG)GetHeight()};
 
     // Turn on or off the bits for a resizable window
     LONG_PTR style = GetWindowLongPtr(this->handle, GWL_STYLE);

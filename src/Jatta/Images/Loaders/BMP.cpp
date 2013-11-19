@@ -74,7 +74,10 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
 
     //BITMAPINFOHEADER
     if (size < 40)
-    { header.Compression = BMPCompressionMethods::RGB; return header; }
+    {
+        header.Compression = BMPCompressionMethods::RGB;
+        return header;
+    }
 
     memcpy(&header.Compression, &data[12], 4);
     memcpy(&header.ImageSize, &data[16], 4);
@@ -85,7 +88,9 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
 
     //BITMAPCOREHEADER2+
     if (size < 64)
+    {
         return header;
+    }
 
     if (size == 64) //BITMAPCOREHEADER2 has different data here.
     {
@@ -124,12 +129,15 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
 
     //BITMAPV5HEADER
     if (size < 124)
+    {
         return header;
+    }
 
     memcpy(&header.Intent, &data[104], 4);
     memcpy(&header.ProfileData, &data[108], 4);
     memcpy(&header.ProfileSize, &data[112], 4);
     memcpy(&header.Reserved, &data[116], 4);
+    return header;
 }
 
 _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
@@ -163,7 +171,9 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
     //Check for valid pixel format.
     if (dibHeader.BitCount != 1 && dibHeader.BitCount != 2 && dibHeader.BitCount != 4 && dibHeader.BitCount != 8 && 
         dibHeader.BitCount != 16 && dibHeader.BitCount != 24 && dibHeader.BitCount != 32)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+    }
 
     //Load the pixel data
     int rowSize = Math::Floor((dibHeader.BitCount*dibHeader.Width+31)/32)*4;

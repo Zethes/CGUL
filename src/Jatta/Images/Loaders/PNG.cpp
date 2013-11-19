@@ -35,7 +35,12 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::PNG::Load(const String& file)
     }
 
     char header[8];
+#   ifdef MSVC
+    FILE* fp;
+    fopen_s(&fp, file.GetCString(), "rb");
+#   else
     FILE* fp = fopen(file.GetCString(), "rb");
+#   endif
     if (!fp)
     {
         throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::FAILED_TO_OPEN);
@@ -68,8 +73,8 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::PNG::Load(const String& file)
     png_set_sig_bytes(png_ptr, 8);
     png_read_info(png_ptr, info_ptr);
 
-    int width = png_get_image_width(png_ptr, info_ptr);
-    int height = png_get_image_height(png_ptr, info_ptr);
+    UInt32 width = (UInt32)png_get_image_width(png_ptr, info_ptr);
+    UInt32 height = (UInt32)png_get_image_height(png_ptr, info_ptr);
     int colorType = png_get_color_type(png_ptr, info_ptr);
     //int bitDepth = png_get_bit_depth(png_ptr, info_ptr); // TODO: remove this? unused
 
@@ -148,7 +153,12 @@ _JATTA_EXPORT void Jatta::ImageLoaders::PNG::Save(const String& filename, Jatta:
 
 
     //Open file
-    FILE * fp = fopen(filename.GetCString(), "wb");
+#   if MSVC
+    FILE* fp;
+    fopen_s(&fp, filename.GetCString(), "wb");
+#   else
+    FILE* fp = fopen(filename.GetCString(), "wb");
+#   endif
     if (!fp)
     {
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::FAILED_TO_OPEN);

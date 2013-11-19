@@ -33,7 +33,7 @@ namespace Jatta
             SInt contentEncoding;
             String contentEncodingString;
             String contentLanguage;
-            SInt contentLength;
+            UInt contentLength;
             String contentLengthString;
             String contentLocation;
             String contentMD5;
@@ -86,9 +86,9 @@ namespace Jatta
 
             HTTPRequest(const HTTPRequest& copy);
 
-            bool PerformRequest(int timeout);
+            bool PerformRequest(UInt32 timeout);
             void ParseResponseHead();
-            String EncodeString(const char* buffer, int len);
+            String EncodeString(const char* buffer, UInt len);
         public:
             HTTPRequest();
             ~HTTPRequest();
@@ -103,10 +103,10 @@ namespace Jatta
 
             void Close();
 
-            bool Request(String request, int timeout = 0);
-            bool Get(String page, int timeout = 0);
-            bool Head(String page, int timeout = 0);
-            bool Post(String page, String content, int timeout = 0);
+            bool Request(String request, UInt32 timeout = 0);
+            bool Get(String page, UInt32 timeout = 0);
+            bool Head(String page, UInt32 timeout = 0);
+            bool Post(String page, String content, UInt32 timeout = 0);
             //TODO: PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
 
             bool IsConnected();

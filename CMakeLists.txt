@@ -41,6 +41,9 @@ include(cmake/System.cmake)
 # Determine compiler
 include(cmake/Compiler.cmake)
 
+# Determine compiler
+include(cmake/CompilerSettings.cmake)
+
 # Determine lib directory name
 if(${System_BITNESS} EQUAL 32)
     set(Jatta_LIB_DIR "lib")

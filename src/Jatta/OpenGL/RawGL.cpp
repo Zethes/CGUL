@@ -257,14 +257,14 @@ _JATTA_EXPORT void Jatta::GL::PixelStorei(Enum pname, SInt param)
     glPixelStorei(pname, param);
 }
 
-_JATTA_EXPORT Jatta::UInt Jatta::GL::ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length)
+_JATTA_EXPORT void Jatta::GL::ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length)
 {
     GLCLEAR();
     glShaderSource(shader, count, string, length);
     GLCHECK("Failed to set the shader source.");
 }
 
-_JATTA_EXPORT Jatta::UInt Jatta::GL::ShaderSource(UInt shader, const char* string)
+_JATTA_EXPORT void Jatta::GL::ShaderSource(UInt shader, const char* string)
 {
     GLCLEAR();
     const char** data = &string;
@@ -273,7 +273,7 @@ _JATTA_EXPORT Jatta::UInt Jatta::GL::ShaderSource(UInt shader, const char* strin
     GLCHECK("Failed to set the shader source.");
 }
 
-_JATTA_EXPORT Jatta::UInt Jatta::GL::ShaderSource(UInt shader, const Jatta::String& string)
+_JATTA_EXPORT void Jatta::GL::ShaderSource(UInt shader, const Jatta::String& string)
 {
     GLCLEAR();
     const char* cstr = string.GetCString();

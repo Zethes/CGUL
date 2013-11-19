@@ -262,11 +262,19 @@ static void finalize()
 std::string hexdigest()
 {
     if (!finalized)
+    {
         return "";
+    }
 
     char buf[33];
     for (int i=0; i<16; i++)
+    {
+#       ifdef MSVC
+        sprintf_s(buf + i * 2, 33 - i * 2, "%02x", digest[i]);
+#       else
         sprintf(buf+i*2, "%02x", digest[i]);
+#       endif
+    }
     buf[32]=0;
 
     return std::string(buf);

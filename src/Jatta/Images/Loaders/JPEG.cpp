@@ -8,7 +8,9 @@
 #include "../ImageFormats.h"
 #include "../../Exceptions/ImageException.h"
 
-#define XMD_H
+#ifndef XMD_H
+#   define XMD_H
+#endif
 #define boolean bool
 extern "C"
 {
