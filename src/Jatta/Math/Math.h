@@ -102,7 +102,7 @@ namespace Jatta
         _JATTA_INLINE_DEFINE bool InEpsilon(Float32 value, Float32 compare, Float32 epsilon);
 
         //! @brief Raises x to the power of y.
-        _JATTA_INLINE_DEFINE bool Pow(Float32 x, Float32 y);
+        _JATTA_INLINE_DEFINE Float32 Pow(Float32 x, Float32 y);
 
         //! @brief Checks if the value is a power of two.
         _JATTA_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);

@@ -277,7 +277,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Float32 value, Float32 compa
  *  @param y The exponent value.
  *  @returns x raised to the power of y.
  */
-_JATTA_INLINE_IMPLEMENT bool Jatta::Math::Pow(Float32 x, Float32 y)
+_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Pow(Float32 x, Float32 y)
 {
     return std::pow(x, y);
 }

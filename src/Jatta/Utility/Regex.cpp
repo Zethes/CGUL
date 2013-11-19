@@ -26,7 +26,6 @@ _JATTA_EXPORT Jatta::Regex::Regex(String expression)
 _JATTA_EXPORT Jatta::Regex::Regex(const Regex& copy)
 {
 #   ifdef PCRE_FOUND
-    const char* error;
     this->pcre = copy.pcre;
     this->pcreExtra = copy.pcreExtra;
     if (this->pcre)
@@ -56,7 +55,6 @@ _JATTA_EXPORT Jatta::Regex::~Regex()
 Jatta::Regex& Jatta::Regex::operator=(const Regex& operand)
 {
 #   ifdef PCRE_FOUND
-    const char* error;
     this->pcre = operand.pcre;
     this->pcreExtra = operand.pcreExtra;
     if (this->pcre)
@@ -64,6 +62,7 @@ Jatta::Regex& Jatta::Regex::operator=(const Regex& operand)
         pcre_refcount(this->pcre, 1);
     }
 #   endif
+    return *this;
 }
 
 _JATTA_EXPORT void Jatta::Regex::SetExpression(const String& expression)
@@ -133,7 +132,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Regex::Find(const String& test, Size offset,
     }
     static int ovec[30];
     int res = pcre_exec(pcre, pcreExtra, test.GetCString(), test.GetSize(), offset, 0, ovec, 30);
-    if (res > 0 && ovec[0] != test.GetSize())
+    if (res > 0 && (Size)ovec[0] != test.GetSize())
     {
         if (start != NULL)
         {

@@ -11,7 +11,7 @@
 
 namespace Jatta
 {
-    class Matrix;
+    struct Matrix;
 
     // Nitpick: For convenience, these should be in alphabetical order
     namespace GL
@@ -57,9 +57,9 @@ namespace Jatta
         _JATTA_EXPORT void PixelStoref(Enum pname, Float32 param);
         _JATTA_EXPORT void PixelStorei(Enum pname, SInt param);
 
-        _JATTA_EXPORT UInt ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length);
-        _JATTA_EXPORT UInt ShaderSource(UInt shader, const char* string);
-        _JATTA_EXPORT UInt ShaderSource(UInt shader, const String& string);
+        _JATTA_EXPORT void ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length);
+        _JATTA_EXPORT void ShaderSource(UInt shader, const char* string);
+        _JATTA_EXPORT void ShaderSource(UInt shader, const String& string);
 
         _JATTA_EXPORT void TexEnvf(Enum target, Enum pname, Float32 param);
         _JATTA_EXPORT void TexEnvi(Enum target, Enum pname, SInt param);

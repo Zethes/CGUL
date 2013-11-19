@@ -20,10 +20,10 @@ _JATTA_EXPORT Jatta::Mipmap::Mipmap() :
 }
 
 _JATTA_EXPORT Jatta::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data) :
+    data(data),
     format(format),
     width(width),
-    height(height),
-    data(data)
+    height(height)
 {
 }
 
