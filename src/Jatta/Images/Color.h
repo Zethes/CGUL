@@ -16,7 +16,7 @@ namespace Jatta
      */
     struct Color
     {
-         //! @brief Creates a color given a hue, saturation, luminance, and (optionally) alpha.
+        //! @brief Creates a color given a hue, saturation, luminance, and (optionally) alpha.
         _JATTA_EXPORT static Color MakeHSL(UInt32 hue, Byte saturation, Byte luminance, Byte alpha = 255);
 
         //! @brief The red value.

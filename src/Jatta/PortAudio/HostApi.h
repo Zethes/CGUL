@@ -42,7 +42,7 @@ namespace Jatta
             _JATTA_EXPORT SInt32 GetType();
             _JATTA_EXPORT SInt32 GetDeviceCount();
             _JATTA_EXPORT Device GetDefaultInputDevice();
-            _JATTA_EXPORT Device GetDefaultOutputDevice(); 
+            _JATTA_EXPORT Device GetDefaultOutputDevice();
         };
     }
 }

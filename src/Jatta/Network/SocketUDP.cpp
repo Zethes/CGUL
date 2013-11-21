@@ -23,16 +23,16 @@ namespace Jatta
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
  */
- void Jatta::Network::SocketUDP::MakeNonBlocking()
+void Jatta::Network::SocketUDP::MakeNonBlocking()
 {
     // TODO: error checking?
 
-    #ifdef JATTA_WINDOWS
+#   ifdef JATTA_WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
-    #else
+#   else
     fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK);
-    #endif
+#   endif
 }
 
 Jatta::Network::SocketUDP::SocketUDP()
@@ -67,11 +67,11 @@ void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 
     // Convert the port into a string.
     char portString[6];
-    #ifdef MSVC
+#   ifdef MSVC
     sprintf_s(portString, "%d", port);
-    #else
+#   else
     sprintf(portString, "%d", port);
-    #endif
+#   endif
 
     // Get the address info using the hints.
     addrinfo* result;
@@ -124,11 +124,11 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
 
     // Convert the port into a string.
     char portString[6];
-    #ifdef MSVC
+#   ifdef MSVC
     sprintf_s(portString, "%d", port);
-    #else
+#   else
     sprintf(portString, "%d", port);
-    #endif
+#   endif
 
     // Get the address info using the hints.
     addrinfo* result;
@@ -165,11 +165,11 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
  */
 void Jatta::Network::SocketUDP::Close()
 {
-    #ifdef JATTA_WINDOWS
+#   ifdef JATTA_WINDOWS
     closesocket(sock);
-    #else
+#   else
     ::close(sock);
-    #endif
+#   endif
     sock = INVALID_SOCKET;
 }
 
@@ -219,11 +219,11 @@ int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef JATTA_WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return 0;
         }
@@ -269,11 +269,11 @@ int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, 
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef JATTA_WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return 0;
         }
@@ -321,11 +321,11 @@ int Jatta::Network::SocketUDP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-        #ifdef JATTA_WINDOWS
+#       ifdef JATTA_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
-        #else
+#       else
         if (errno == EWOULDBLOCK)
-        #endif
+#       endif
         {
             return 0;
         }

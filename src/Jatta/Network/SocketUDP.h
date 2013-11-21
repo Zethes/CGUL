@@ -18,13 +18,13 @@ namespace Jatta
          */
         class SocketUDP
         {
-            #if defined(MSVC)
+#           if defined(MSVC)
             unsigned int __w64 sock;
-            #elif defined(JATTA_WINDOWS)
+#           elif defined(JATTA_WINDOWS)
             unsigned int sock;
-            #else
+#           else
             int sock;
-            #endif
+#           endif
 
             //! @brief Makes the socket a non-blocking socket.
             void MakeNonBlocking();

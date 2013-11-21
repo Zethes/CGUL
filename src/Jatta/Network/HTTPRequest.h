@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Network/IPAddress.h"
- #include "../Network/SocketTCP.h"
+#include "../Network/SocketTCP.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -96,10 +96,10 @@ namespace Jatta
             void Http(const String& url);
             void Connect(const IPAddress& ip, int port);
 
-            #ifdef OpenSSL_FOUND
+#           ifdef OpenSSL_FOUND
             void Https(const String& url);
             void ConnectSSL(const IPAddress& ip, int port);
-            #endif
+#           endif
 
             void Close();
 

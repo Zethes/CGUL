@@ -461,7 +461,7 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
 {
     if (bytes)
     {
-       return Jatta::String(data.substr(start, count));
+        return Jatta::String(data.substr(start, count));
     }
     else
     {
@@ -610,7 +610,8 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& de
         find = FindFirstOf(delimiter, from);
         result.push_back(SubString(from, find - from, true));
         from = find + 1;
-    } while (find != none);
+    }
+    while (find != none);
     return result;
 }
 

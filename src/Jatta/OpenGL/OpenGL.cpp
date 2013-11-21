@@ -20,10 +20,10 @@ _JATTA_EXPORT void Jatta::OpenGL::ClearErrors()
 _JATTA_EXPORT void Jatta::OpenGL::Test()
 {
     glBegin(GL_QUADS);
-        glVertex2f(0.0f, 0.0f);
-        glVertex2f(0.0f, 1.0f);
-        glVertex2f(1.0f, 1.0f);
-        glVertex2f(1.0f, 0.0f);
+    glVertex2f(0.0f, 0.0f);
+    glVertex2f(0.0f, 1.0f);
+    glVertex2f(1.0f, 1.0f);
+    glVertex2f(1.0f, 0.0f);
     glEnd();
 }
 

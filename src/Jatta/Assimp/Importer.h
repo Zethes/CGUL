@@ -27,7 +27,7 @@ namespace Jatta
 
             _JATTA_EXPORT SInt32 RegisterLoader(_JATTA_AIBASEIMPORTER importer);
             _JATTA_EXPORT SInt32 UnregisterLoader(_JATTA_AIBASEIMPORTER importer);
-            _JATTA_EXPORT SInt32 RegisterPPStep(_JATTA_AIBASEPROCESS importer); 
+            _JATTA_EXPORT SInt32 RegisterPPStep(_JATTA_AIBASEPROCESS importer);
             _JATTA_EXPORT SInt32 UnregisterPPStep(_JATTA_AIBASEPROCESS importer);
 
             _JATTA_EXPORT void SetProperty(String name, SInt32 value, bool* existing = NULL);
@@ -64,7 +64,7 @@ namespace Jatta
             _JATTA_EXPORT const _JATTA_AIIMPORTERDESC GetImporterInfo(UInt32 index) const;
             _JATTA_EXPORT _JATTA_AIBASEIMPORTER GetImporter(UInt32 index) const;
             _JATTA_EXPORT _JATTA_AIBASEIMPORTER GetImporter(String extension) const;
-            _JATTA_EXPORT UInt32 GetImporterIndex(String extension) const;  
+            _JATTA_EXPORT UInt32 GetImporterIndex(String extension) const;
 
             _JATTA_EXPORT _JATTA_AIMEMORYINFO GetMemoryRequirements() const;
             _JATTA_EXPORT void SetExtraVerbose(bool bDo);

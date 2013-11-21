@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Images/Image.h"
- #include "../Images/Color.h"
+#include "../Images/Color.h"
 #include "../External/Defines.h"
 
 namespace Jatta
@@ -22,7 +22,7 @@ namespace Jatta
             _JATTA_EXPORT UInt32 GetWidth() const;
             _JATTA_EXPORT UInt32 GetHeight() const;
 
-            _JATTA_EXPORT Image GetImage() const; 
+            _JATTA_EXPORT Image GetImage() const;
         };
     }
 }

@@ -673,7 +673,7 @@ namespace Jatta
         /** @brief Equivalent to GL_CLAMP_TO_EDGE.
          */
         static const Enum CLAMP_TO_EDGE               = 0x812f;
-         /** @brief Equivalent to GL_DEPTH_STENCIL_ATTACHMENT.
+        /** @brief Equivalent to GL_DEPTH_STENCIL_ATTACHMENT.
          */
         static const Enum DEPTH_STENCIL_ATTACHMENT    = 0x821a;
         /** @brief Equivalent to GL_MAJOR_VERSION.

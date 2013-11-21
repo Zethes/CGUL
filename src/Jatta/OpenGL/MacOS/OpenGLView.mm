@@ -11,73 +11,73 @@ static OpenGLView* current = nil;
 
 @implementation OpenGLView
 
-    + (NSOpenGLPixelFormat*)defaultPixelFormat
++ (NSOpenGLPixelFormat*)defaultPixelFormat
+{
+    // Set up the OpenGL view's attributes
+    NSOpenGLPixelFormatAttribute attributes[] =
     {
-        // Set up the OpenGL view's attributes
-        NSOpenGLPixelFormatAttribute attributes[] =
-        {
-            NSOpenGLPFAWindow,
-            NSOpenGLPFADoubleBuffer,
-            NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)24,
-            (NSOpenGLPixelFormatAttribute)nil
-        };
+        NSOpenGLPFAWindow,
+        NSOpenGLPFADoubleBuffer,
+        NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)24,
+        (NSOpenGLPixelFormatAttribute)nil
+    };
 
-        // Create our pixel format using the above attributes
-        return [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
-    }
+    // Create our pixel format using the above attributes
+    return [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
+}
 
-    - (id)init
+- (id)init
+{
+    if ((self = [super init]))
     {
-        if ((self = [super init]))
+        if (current == nil)
         {
-            if (current == nil)
-            {
-                current = self;
-            }
+            current = self;
         }
-        return self;
     }
+    return self;
+}
 
-    - (void)idle: (NSTimer*)pTimer
+- (void)idle: (NSTimer*)pTimer
+{
+    static double lastTime = CFAbsoluteTimeGetCurrent();
+    double time = CFAbsoluteTimeGetCurrent();
+    //float dt = float(time - lastTime);
+    lastTime = time;
+    /*glClearColor(0, 255, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    [[self openGLContext] flushBuffer];*/
+    //app->update(dt);
+    //glClearColor(255, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //[[self openGLContext] flushBuffer];
+
+    /*if (!*running)
     {
-        static double lastTime = CFAbsoluteTimeGetCurrent();
-        double time = CFAbsoluteTimeGetCurrent();
-        //float dt = float(time - lastTime);
-        lastTime = time;
-        /*glClearColor(0, 255, 0, 0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        [[self openGLContext] flushBuffer];*/
-        //app->update(dt);
-        //glClearColor(255, 0, 0, 0);
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //[[self openGLContext] flushBuffer];
+        [[self window] close];
+    }*/
+}
 
-        /*if (!*running)
-        {
-            [[self window] close];
-        }*/
-    }
+- (void)prepareOpenGL
+{
+    // Set up the idle function call
+    pTimer = [NSTimer timerWithTimeInterval:(1.0 / 60.0) target:self selector: @selector(idle:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop]addTimer: pTimer forMode: NSDefaultRunLoopMode];
 
-    - (void)prepareOpenGL
-    {
-        // Set up the idle function call
-        pTimer = [NSTimer timerWithTimeInterval:(1.0 / 60.0) target:self selector: @selector(idle:) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop]addTimer: pTimer forMode: NSDefaultRunLoopMode];
+    // Initialize the application
+    //app->initialize();
+}
 
-        // Initialize the application
-        //app->initialize();
-    }
+- (void)MakeCurrent
+{
+    [[self openGLContext] makeCurrentContext];
+    // TODO: make Jatta::Graphics create and contain this interface
+}
 
-    - (void)MakeCurrent
-    {
-        [[self openGLContext] makeCurrentContext];
-        // TODO: make Jatta::Graphics create and contain this interface
-    }
-
-    - (void)SwapBuffers
-    {
-        [[self openGLContext] flushBuffer];
-    }
+- (void)SwapBuffers
+{
+    [[self openGLContext] flushBuffer];
+}
 
 @end
 

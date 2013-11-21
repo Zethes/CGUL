@@ -37,7 +37,7 @@
 - (void)run
 {
     [self finishLaunching];
- 
+
     shouldKeepRunning = YES;
 }
 
@@ -46,11 +46,11 @@
     // IDK??
     NSEvent *event =
         [self
-            nextEventMatchingMask:NSAnyEventMask
-            untilDate:nil
-            inMode:NSDefaultRunLoopMode
-            dequeue:YES];
-    
+         nextEventMatchingMask:NSAnyEventMask
+         untilDate:nil
+         inMode:NSDefaultRunLoopMode
+         dequeue:YES];
+
     // Cocoa is some sort of black magic
     [self sendEvent:event];
     [self updateWindows];
