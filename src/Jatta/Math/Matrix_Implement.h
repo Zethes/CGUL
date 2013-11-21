@@ -21,36 +21,36 @@ template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotation(Type angle)
 {
     return MatrixT(Math::Cos(angle), -Math::Sin(angle), Type(0.0), Type(0.0),
-                   Math::Sin(angle),  Math::Cos(angle), Type(0.0), Type(0.0),
-                          Type(0.0),         Type(0.0), Type(1.0), Type(0.0),
-                          Type(0.0),         Type(0.0), Type(0.0), Type(1.0));
+                   Math::Sin(angle), Math::Cos(angle),  Type(0.0), Type(0.0),
+                   Type(0.0),        Type(0.0),         Type(1.0), Type(0.0),
+                   Type(0.0),        Type(0.0),         Type(0.0), Type(1.0));
 }
 
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationX(Type angle)
 {
-    return MatrixT(Type(1.0),         Type(0.0),        Type(0.0), Type(0.0),
-                   Type(0.0),  Math::Cos(angle), Math::Sin(angle), Type(0.0),
+    return MatrixT(Type(1.0), Type(0.0),         Type(0.0),        Type(0.0),
+                   Type(0.0), Math::Cos(angle),  Math::Sin(angle), Type(0.0),
                    Type(0.0), -Math::Sin(angle), Math::Cos(angle), Type(0.0),
-                   Type(0.0),         Type(0.0),        Type(0.0), Type(1.0));
+                   Type(0.0), Type(0.0),         Type(0.0),        Type(1.0));
 }
 
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationY(Type angle)
 {
     return MatrixT(Math::Cos(angle), Type(0), -Math::Sin(angle), Type(0),
-                            Type(0), Type(1),           Type(0), Type(0),
+                   Type(0),          Type(1),  Type(0),          Type(0),
                    Math::Sin(angle), Type(0),  Math::Cos(angle), Type(0),
-                            Type(0), Type(0),           Type(0), Type(1));
+                   Type(0),          Type(0),  Type(0),          Type(1));
 }
 
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationZ(Type angle)
 {
-    return MatrixT( Math::Cos(angle), Math::Sin(angle), Type(0.0), Type(0.0),
-                   -Math::Sin(angle), Math::Cos(angle), Type(0.0), Type(0.0),
-                           Type(0.0),        Type(0.0), Type(1.0), Type(0.0),
-                           Type(0.0),        Type(0.0), Type(0.0), Type(1.0));
+    return MatrixT( Math::Cos(angle),  Math::Sin(angle), Type(0.0), Type(0.0),
+                    -Math::Sin(angle), Math::Cos(angle), Type(0.0), Type(0.0),
+                    Type(0.0),         Type(0.0),        Type(1.0), Type(0.0),
+                    Type(0.0),         Type(0.0),        Type(0.0), Type(1.0));
 }
 
 template< typename Type >
@@ -62,19 +62,19 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotat
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector2T< Type >& scale)
 {
-    return MatrixT(  scale.x, Type(0.0), Type(0.0), Type(0.0),
-                   Type(0.0),   scale.y, Type(0.0), Type(0.0),
-                   Type(0.0), Type(0.0), Type(1.0), Type(0.0),
-                   Type(0.0), Type(0.0), Type(0.0), Type(1.0));
+    return MatrixT(  scale.x,   Type(0.0), Type(0.0), Type(0.0),
+                     Type(0.0), scale.y,   Type(0.0), Type(0.0),
+                     Type(0.0), Type(0.0), Type(1.0), Type(0.0),
+                     Type(0.0), Type(0.0), Type(0.0), Type(1.0));
 }
 
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector3T< Type >& scale)
 {
-    return MatrixT(  scale.x, Type(0.0), Type(0.0), Type(0.0),
-                   Type(0.0),   scale.y, Type(0.0), Type(0.0),
-                   Type(0.0), Type(0.0),   scale.z, Type(0.0),
-                   Type(0.0), Type(0.0), Type(0.0), Type(1.0));
+    return MatrixT(  scale.x,   Type(0.0), Type(0.0), Type(0.0),
+                     Type(0.0), scale.y,   Type(0.0), Type(0.0),
+                     Type(0.0), Type(0.0), scale.z,   Type(0.0),
+                     Type(0.0), Type(0.0), Type(0.0), Type(1.0));
 }
 
 template< typename Type >
@@ -82,8 +82,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTrans
 {
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), translation.x,
                    Type(0.0), Type(1.0), Type(0.0), translation.y,
-                   Type(0.0), Type(0.0), Type(1.0),     Type(0.0),
-                   Type(0.0), Type(0.0), Type(0.0),     Type(1.0));
+                   Type(0.0), Type(0.0), Type(1.0), Type(0.0),
+                   Type(0.0), Type(0.0), Type(0.0), Type(1.0));
 }
 
 template< typename Type >
@@ -92,7 +92,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTrans
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), translation.x,
                    Type(0.0), Type(1.0), Type(0.0), translation.y,
                    Type(0.0), Type(0.0), Type(1.0), translation.z,
-                   Type(0.0), Type(0.0), Type(0.0),     Type(1.0));
+                   Type(0.0), Type(0.0), Type(0.0), Type(1.0));
 }
 
 template< typename Type >
@@ -101,10 +101,10 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakePersp
     Type yScale = Type(1.0) / Math::Tan(Math::DegToRad(fovY / Type(2.0)));
     Type xScale = yScale / aspectRatio;
 
-    return MatrixT(   xScale, Type(0.0),             Type(0.0),                      Type(0.0),
-                   Type(0.0),    yScale,             Type(0.0),                      Type(0.0),
+    return MatrixT(xScale,    Type(0.0), Type(0.0),             Type(0.0),
+                   Type(0.0), yScale,    Type(0.0),             Type(0.0),
                    Type(0.0), Type(0.0), zFar / (zFar - zNear), -zNear * zFar / (zFar - zNear),
-                   Type(0.0), Type(0.0),             Type(1.0),                      Type(0.0));
+                   Type(0.0), Type(0.0), Type(1.0),             Type(0.0));
 }
 
 template< typename Type >
@@ -116,10 +116,10 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeLookA
     zAxis *= Type(-1.0);
     yAxis *= Type(-1.0);
 
-    return MatrixT< Type >(   xAxis.x,   xAxis.y,   xAxis.z, -Vector3T< Type >::DotProduct(xAxis, eye),
-                              yAxis.x,   yAxis.y,   yAxis.z, -Vector3T< Type >::DotProduct(yAxis, eye),
-                              zAxis.x,   zAxis.y,   zAxis.z, -Vector3T< Type >::DotProduct(zAxis, eye),
-                            Type(0.0), Type(0.0), Type(0.0),                                 Type(1.0));
+    return MatrixT< Type >(   xAxis.x,   xAxis.y,   xAxis.z,   -Vector3T< Type >::DotProduct(xAxis, eye),
+                              yAxis.x,   yAxis.y,   yAxis.z,   -Vector3T< Type >::DotProduct(yAxis, eye),
+                              zAxis.x,   zAxis.y,   zAxis.z,   -Vector3T< Type >::DotProduct(zAxis, eye),
+                              Type(0.0), Type(0.0), Type(0.0), Type(1.0));
 }
 
 template< typename Type >

@@ -123,7 +123,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator==(const Vector3T& operand) const
 {
-	return (this->x == operand.x && this->y == operand.y && this->z == operand.z);
+    return (this->x == operand.x && this->y == operand.y && this->z == operand.z);
 }
 
 template< typename Type >

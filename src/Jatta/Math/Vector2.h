@@ -1,4 +1,4 @@
-    /* Jatta - General Utility Library
+/* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
@@ -161,4 +161,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Vector2.ipp"
+#include "Vector2_Implement.h"

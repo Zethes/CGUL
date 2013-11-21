@@ -71,4 +71,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Vector3.ipp"
+#include "Vector3_Implement.h"

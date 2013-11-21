@@ -143,4 +143,4 @@ namespace Jatta
 
 #include "../External/Undefines.h"
 
-#include "Math.ipp"
+#include "Math_Implement.h"
