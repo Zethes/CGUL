@@ -7,35 +7,40 @@
 
 _JATTA_EXPORT Jatta::Assimp::Animation::Animation(aiAnimation* animation)
 {
-	this->animation = animation;
+    this->animation = animation;
 }
 
 _JATTA_EXPORT Jatta::String Jatta::Assimp::Animation::GetName()
 {
-	return String(animation->mName.C_Str());
+    return String(animation->mName.C_Str());
 }
+
 _JATTA_EXPORT double Jatta::Assimp::Animation::GetDuration()
 {
-	return animation->mDuration;
+    return animation->mDuration;
 }
+
 _JATTA_EXPORT double Jatta::Assimp::Animation::GetTicksPerSecond()
 {
-	return animation->mTicksPerSecond;
+    return animation->mTicksPerSecond;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Animation::GetChannelCount()
 {
-	return animation->mNumChannels;
+    return animation->mNumChannels;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Animation::GetMeshChannelCount()
 {
-	return animation->mNumMeshChannels;
-}	
+    return animation->mNumMeshChannels;
+}
 
 _JATTA_EXPORT Jatta::Assimp::NodeAnimation* Jatta::Assimp::Animation::GetChannels()
 {
-	return (NodeAnimation*)animation->mChannels;
+    return reinterpret_cast<NodeAnimation*>(animation->mChannels);
 }
+
 _JATTA_EXPORT Jatta::Assimp::MeshAnimation* Jatta::Assimp::Animation::GetMeshChannels()
 {
-	return (MeshAnimation*)animation->mMeshChannels;
+    return reinterpret_cast<MeshAnimation*>(animation->mMeshChannels);
 }

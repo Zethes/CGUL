@@ -7,7 +7,7 @@
 
 _JATTA_EXPORT Jatta::PortAudio::SawWave::SawWave(Device device) : Stream()
 {
-   OpenStream(device);
+    OpenStream(device);
 }
 
 _JATTA_EXPORT bool Jatta::PortAudio::SawWave::Update(StreamData* data)

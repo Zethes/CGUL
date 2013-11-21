@@ -36,6 +36,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, Stri
     fwrite(buffer, 1, string.GetSize(), stream);
     fclose(stream);
 
+    delete[] buffer;
+
     return true;
 }
 
@@ -204,6 +206,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileN
         *fileSize = ftell(stream);
     }
     rewind(stream);
+    fclose(stream);
 
     return true;
 }
@@ -230,6 +233,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::File::GetFileSize(const Jatta::String& fileNa
     fseek(stream, 0, SEEK_END);
     UInt32 fileSize = ftell(stream);
     rewind(stream);
+    fclose(stream);
 
     return fileSize;
 }

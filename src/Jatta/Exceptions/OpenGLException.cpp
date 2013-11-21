@@ -15,7 +15,7 @@ Jatta::String Jatta::OpenGLException::GetString() const
     {
         case OpenGLExceptionCode::UNKNOWN:
         default:
-        return U8("Unknown error occurred.");
+            return U8("Unknown error occurred.");
     }
 }
 
@@ -25,6 +25,6 @@ Jatta::String Jatta::OpenGLException::GetReason() const
     {
         case OpenGLExceptionReason::UNKNOWN:
         default:
-        return U8("Unknown.");
+            return U8("Unknown.");
     }
 }

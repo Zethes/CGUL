@@ -7,14 +7,16 @@
 #include "Texture.h"
 #include "RenderBuffer.h"
 
-_JATTA_EXPORT Jatta::OpenGL::FrameBuffer::FrameBuffer()
+_JATTA_EXPORT Jatta::OpenGL::FrameBuffer::FrameBuffer() :
+    frameBuffer(0),
+    type(0)
 {
-    frameBuffer = 0;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::FrameBuffer::FrameBuffer(UInt32 frameBuffer)
+_JATTA_EXPORT Jatta::OpenGL::FrameBuffer::FrameBuffer(UInt32 frameBuffer) :
+    frameBuffer(frameBuffer),
+    type(0)
 {
-    this->frameBuffer = frameBuffer;
 }
 
 _JATTA_EXPORT Jatta::OpenGL::FrameBuffer::~FrameBuffer()

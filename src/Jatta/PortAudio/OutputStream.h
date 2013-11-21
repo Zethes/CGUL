@@ -23,7 +23,7 @@ namespace Jatta
             _JATTA_EXPORT OutputStream(const OutputStream& copy);
 #           ifdef CPP_HAS_MOVE_CONSTRUCTOR
             _JATTA_EXPORT OutputStream(OutputStream&& move);
-#           endif           
+#           endif
         };
     }
 }

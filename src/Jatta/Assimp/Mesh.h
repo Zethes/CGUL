@@ -18,7 +18,6 @@ namespace Jatta
     {
         class Mesh
         {
-        private:
             _JATTA_AIMESH mesh;
         public:
             _JATTA_EXPORT Mesh(_JATTA_AIMESH mesh);

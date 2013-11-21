@@ -1,4 +1,4 @@
- /* Jatta - General Utility Library
+/* Jatta - General Utility Library
  * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
@@ -14,7 +14,7 @@ namespace Jatta
     namespace Assimp
     {
         class UVTransform
-        {   
+        {
             _JATTA_AIUVTRANSFORM uvTransform;
         public:
             _JATTA_EXPORT UVTransform(_JATTA_AIUVTRANSFORM uvTransform);

@@ -23,30 +23,35 @@ _JATTA_EXPORT Jatta::String Jatta::Assimp::Material::GetTexturePath(Enum type, U
     material->GetTexture((aiTextureType)type, index, &path);
     return String(path.C_Str());
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Material::GetTextureMapping(Enum type, UInt32 index)
 {
     aiTextureMapping value;
     material->GetTexture((aiTextureType)type, index, NULL, &value);
     return (UInt32)value;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Material::GetTextureUVIndex(Enum type, UInt32 index)
 {
     UInt32 value;
     material->GetTexture((aiTextureType)type, index, NULL, NULL, &value);
     return value;
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Material::GetTextureBlendFactor(Enum type, UInt32 index)
 {
     Float32 value;
     material->GetTexture((aiTextureType)type, index, NULL, NULL, NULL, &value);
     return value;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Material::GetTextureOp(Enum type, UInt32 index)
 {
     aiTextureOp value;
     material->GetTexture((aiTextureType)type, index, NULL, NULL, NULL, NULL, &value);
     return (UInt32)value;
 }
+
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Material::GetTextureMapMode(Enum type, UInt32 index)
 {
     aiTextureMapMode value;

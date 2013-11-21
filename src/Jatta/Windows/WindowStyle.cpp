@@ -15,25 +15,25 @@
  *  resizable = true;
  *  @endcode
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle()
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle() :
+    title("Jatta Window"),
+    backgroundColor(Color(255, 255, 255)),
+    width(640),
+    height(480),
+    resizable(true)
 {
-    this->title = "Jatta Window";
-    this->backgroundColor = Color(255, 255, 255);
-    this->width = 640;
-    this->height = 480;
-    this->resizable = true;
 }
 
 /** @brief Copy constructor.
  *  @param style The style to copy.
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style) :
+    title(style.title),
+    backgroundColor(style.backgroundColor),
+    width(style.width),
+    height(style.height),
+    resizable(style.resizable)
 {
-    this->title = style.title;
-    this->backgroundColor = style.backgroundColor;
-    this->width = style.width;
-    this->height = style.height;
-    this->resizable = style.resizable;
 }
 
 /** @brief Parameterized constructor.
@@ -46,11 +46,11 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style)
  *  @param maximizable Whether the maximize button is enabled or not.
  *  @param closeable Whether the close button is enabled or not.
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable)
+_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable) :
+    title(title),
+    backgroundColor(backgroundColor),
+    width(width),
+    height(height),
+    resizable(resizable)
 {
-    this->title = title;
-    this->backgroundColor = backgroundColor;
-    this->width = width;
-    this->height = height;
-    this->resizable = resizable;
 }

@@ -54,7 +54,9 @@ static int paCallbackInput(const void* inputBuffer, void* output, unsigned long 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device device)
 {
     if (sampleRate == 0)
-    { sampleRate = device.GetDefaultSampleRate(); }
+    {
+        sampleRate = device.GetDefaultSampleRate();
+    }
 
     PaStreamParameters inputParameters;
     inputParameters.device = device.GetIndex();
@@ -64,14 +66,14 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device dev
     inputParameters.hostApiSpecificStreamInfo = NULL;
 
     return Pa_OpenStream(
-        &stream,
-        &inputParameters,
-        NULL,
-        sampleRate,
-        framesPerBuffer,
-        paClipOff,
-        paCallbackInput,
-        &streamData);
+               &stream,
+               &inputParameters,
+               NULL,
+               sampleRate,
+               framesPerBuffer,
+               paClipOff,
+               paCallbackInput,
+               &streamData);
 }
 
 

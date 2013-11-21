@@ -77,17 +77,17 @@ _JATTA_EXPORT Jatta::Byte* Jatta::Glyph::GetData()
 _JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags)
 {
     //TODO: Speed this up.
-    Color* buffer = (Color*)new char[width*height*sizeof(Color)];
+    Color* buffer = reinterpret_cast<Color*>(new char[width*height*sizeof(Color)]);
     memset(buffer, 0, width*height*sizeof(Color));
     for (unsigned int y = 0; y < height; y++)
     {
         for (unsigned int x = 0; x < width; x++)
         {
-                buffer[y*width+x].r = color.r;
-                buffer[y*width+x].g = color.g;
-                buffer[y*width+x].b = color.b;
+            buffer[y*width+x].r = color.r;
+            buffer[y*width+x].g = color.g;
+            buffer[y*width+x].b = color.b;
 
-                buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
+            buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
         }
     }
 
@@ -123,6 +123,5 @@ _JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags
         }
     }
 
-
-    return Image(ImageFormats::RGBA8, width, height, (Color*)buffer);
+    return Image(ImageFormats::RGBA8, width, height, buffer);
 }

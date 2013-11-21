@@ -22,5 +22,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-
-#include "Move.ipp"
+#include "Move_Implement.h"

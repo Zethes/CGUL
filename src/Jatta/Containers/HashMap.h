@@ -5,12 +5,18 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "Container.h"
+#include "List.h"
 #include "../External/Defines.h"
 
 #include <iostream>
 namespace Jatta
 {
+    namespace Hash
+    {
+        template< typename Type >
+        Size Integer(const Type& object);
+    }
+
     template< typename KeyType, typename ValueType >
     class HashMap : public Container< KeyType >
     {
@@ -28,13 +34,21 @@ namespace Jatta
 
         Data** data;
     public:
+        HashMap();
+        HashMap(const HashMap& copy);
         HashMap(Function hash, Size pool);
         ~HashMap();
+
+        void SetSize(Size pool);
+        void SetHashFunction(Function hash);
 
         void Insert(KeyType key, ValueType value);
 
         ValueType Get(KeyType key) const;
         bool Get(KeyType key, ValueType* value) const;
+
+        void GetKeys(List< KeyType >* keys) const;
+        void GetEntries(List< std::pair< KeyType, ValueType > >* entries) const;
 
         void Erase(KeyType key);
 
@@ -46,4 +60,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "HashMap.ipp"
+#include "HashMap_Implement.h"

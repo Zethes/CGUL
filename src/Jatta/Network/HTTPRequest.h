@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Network/IPAddress.h"
- #include "../Network/SocketTCP.h"
+#include "../Network/SocketTCP.h"
 #include "../Utility/String.h"
 #include "../External/Defines.h"
 
@@ -21,23 +21,23 @@ namespace Jatta
         {
             String accessControlAllowOrigin;
             String acceptRanges;
-            int age;
+            SInt age;
             String ageString;
             String allow;
             String cacheControl;
-            int charset;
+            SInt charset;
             String charsetString;
-            int connection;
+            SInt connection;
             String connectionString;
             String contentDisposition;
-            int contentEncoding;
+            SInt contentEncoding;
             String contentEncodingString;
             String contentLanguage;
-            int contentLength;
+            UInt contentLength;
             String contentLengthString;
             String contentLocation;
             String contentMD5;
-            int contentRangeMin, contentRangeMax;
+            SInt contentRangeMin, contentRangeMax;
             String contentRangeString;
             String contentType;
             String date;
@@ -50,26 +50,28 @@ namespace Jatta
             String p3p;
             String pragma;
             String proxyAuthenticate;
-            int refresh;
+            SInt refresh;
             String refreshString;
             String refreshUrl;
-            int retryAfter;
+            SInt retryAfter;
             String retryAfterString;
             String server;
             String setCookie;
             String setCookieID;
-            int setCookieValue;
-            int setCookieVersion;
-            int status;
+            SInt setCookieValue;
+            SInt setCookieVersion;
+            SInt status;
             String statusString;
             String strictTransportSecurity;
             String trailer;
-            int transferEncoding;
+            SInt transferEncoding;
             String transferEncodingString;
             String vary;
             String via;
             String warning;
             String wwwAuthenticate;
+
+            Header();
         };
 
         /** @class HTTPRequest HTTPRequest.h <Base/Network/HTTPRequest.h>
@@ -82,27 +84,29 @@ namespace Jatta
             String request, response, responseHead, responseBody;
             Header header;
 
-            bool PerformRequest(int timeout);
+            HTTPRequest(const HTTPRequest& copy);
+
+            bool PerformRequest(UInt32 timeout);
             void ParseResponseHead();
-            String EncodeString(const char* buffer, int len);
+            String EncodeString(const char* buffer, UInt len);
         public:
             HTTPRequest();
             ~HTTPRequest();
 
-            void Http(const String url);
+            void Http(const String& url);
             void Connect(const IPAddress& ip, int port);
 
-            #ifdef OpenSSL_FOUND
-            void Https(const String url);
+#           ifdef OpenSSL_FOUND
+            void Https(const String& url);
             void ConnectSSL(const IPAddress& ip, int port);
-            #endif
+#           endif
 
             void Close();
 
-            bool Request(String request, int timeout = 0);
-            bool Get(String page, int timeout = 0);
-            bool Head(String page, int timeout = 0);
-            bool Post(String page, String content, int timeout = 0);
+            bool Request(String request, UInt32 timeout = 0);
+            bool Get(String page, UInt32 timeout = 0);
+            bool Head(String page, UInt32 timeout = 0);
+            bool Post(String page, String content, UInt32 timeout = 0);
             //TODO: PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
 
             bool IsConnected();

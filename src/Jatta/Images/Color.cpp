@@ -34,36 +34,36 @@ _JATTA_EXPORT Jatta::Color Jatta::Color::MakeHSL(UInt32 hue, Byte saturation, By
 
     switch (h)
     {
-    case 0:
-        ret.r = luminance;
-        ret.g = t;
-        ret.b = p;
-        break;
-    case 1:
-        ret.r = q;
-        ret.g = luminance;
-        ret.b = p;
-        break;
-    case 2:
-        ret.r = p;
-        ret.g = luminance;
-        ret.b = t;
-        break;
-    case 3:
-        ret.r = p;
-        ret.g = q;
-        ret.b = luminance;
-        break;
-    case 4:
-        ret.r = t;
-        ret.g = p;
-        ret.b = luminance;
-        break;
-    default:
-        ret.r = luminance;
-        ret.g = p;
-        ret.b = q;
-        break;
+        case 0:
+            ret.r = luminance;
+            ret.g = t;
+            ret.b = p;
+            break;
+        case 1:
+            ret.r = q;
+            ret.g = luminance;
+            ret.b = p;
+            break;
+        case 2:
+            ret.r = p;
+            ret.g = luminance;
+            ret.b = t;
+            break;
+        case 3:
+            ret.r = p;
+            ret.g = q;
+            ret.b = luminance;
+            break;
+        case 4:
+            ret.r = t;
+            ret.g = p;
+            ret.b = luminance;
+            break;
+        default:
+            ret.r = luminance;
+            ret.g = p;
+            ret.b = q;
+            break;
     }
     return ret;
 }

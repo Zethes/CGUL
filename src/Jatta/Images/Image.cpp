@@ -11,17 +11,18 @@ _JATTA_EXPORT bool Jatta::Image::IsValid()
     return (width != 0 && height != 0);
 }
 
-_JATTA_EXPORT Jatta::Image::Image()
+_JATTA_EXPORT Jatta::Image::Image() :
+    format(ImageFormats::NONE),
+    width(0),
+    height(0)
 {
-    format = ImageFormats::NONE;
 }
 
-_JATTA_EXPORT Jatta::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data)
+_JATTA_EXPORT Jatta::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data) :
+    format(format),
+    width(width),
+    height(height)
 {
-    this->format = format;
-    this->width = width;
-    this->height = height;
-
     PushMipmap(width, height, data);
 }
 
@@ -46,11 +47,16 @@ _JATTA_EXPORT void Jatta::Image::Free()
 _JATTA_EXPORT bool Jatta::Image::GenerateMipmaps()
 {
     if (!IsValid())
+    {
         throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::IMAGE_IS_NOT_VALID);
+    }
     if (mipmaps.size() <= 0)
+    {
         throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::NO_BASE_MIPMAP);
+    }
 
     //TODO: Mipmap generation.
+    return false;
 }
 
 _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()

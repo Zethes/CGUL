@@ -36,4 +36,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Array.ipp"
+#include "Array_Implement.h"

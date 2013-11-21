@@ -20,7 +20,9 @@ namespace Jatta
         class Exporter
         {
             _JATTA_AIEXPORTER exporter;
-            ExportBlob*blob;
+            ExportBlob* blob;
+
+            _JATTA_EXPORT Exporter(const Exporter& exporter);
         public:
             _JATTA_EXPORT Exporter();
             _JATTA_EXPORT ~Exporter();

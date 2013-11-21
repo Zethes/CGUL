@@ -60,9 +60,9 @@ Jatta::Network::SocketTCP::SocketTCP()
     sock = INVALID_SOCKET;
     __jatta_network_initiate();
 
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     connectionSecure = false;
-    #endif
+#   endif
 }
 
 Jatta::Network::SocketTCP::~SocketTCP()
@@ -80,9 +80,6 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
     {
         throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::ADDRESS_INVALID);
     }
-
-    // For error checking.
-    int status;
 
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -113,7 +110,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
+    if (getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
@@ -162,16 +159,13 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
  */
 void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
 {
-    // For error checking.
-    int status;
-
     // Convert the port into a string.
     char portString[6];
-#    ifdef MSVC
+#   ifdef MSVC
     sprintf_s(portString, "%d", port);
-#    else
+#   else
     sprintf(portString, "%d", port);
-#    endif
+#   endif
 
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -197,7 +191,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
 
     // Get the address info using the hints.
     addrinfo* result;
-    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
+    if (getaddrinfo(NULL, portString, &hints, &result) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::NO_NETWORK_INTERFACE);
     }
@@ -226,7 +220,6 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
         throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL);
     }
 
-    // Make a non-blocking socket.
     // Make a non-blocking socket.
     if (!MakeNonBlocking())
     {
@@ -352,7 +345,7 @@ void Jatta::Network::SocketTCP::Close()
 #   endif
     sock = INVALID_SOCKET;
 
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     if (connectionSecure)
     {
         if (sslHandle)
@@ -365,7 +358,7 @@ void Jatta::Network::SocketTCP::Close()
 
         connectionSecure = false;
     }
-    #endif
+#   endif
 }
 
 /** @brief Checks if the socket is still connected to the remote host.
@@ -373,7 +366,7 @@ void Jatta::Network::SocketTCP::Close()
  */
 bool Jatta::Network::SocketTCP::IsConnected()
 {
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     if (connectionSecure)
     {
         char data;
@@ -386,7 +379,7 @@ bool Jatta::Network::SocketTCP::IsConnected()
         }
         return true;
     }
-    #endif
+#   endif
 
     // Check if we've already determined the connection is dead.  If so, we can go ahead and return.
     if (sock == INVALID_SOCKET)
@@ -430,7 +423,7 @@ Jatta::Network::IPAddress Jatta::Network::SocketTCP::GetIP()
  */
 int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
 {
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     if (connectionSecure)
     {
         int amount;
@@ -443,7 +436,7 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
         }
         return amount;
     }
-    #endif
+#   endif
 
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -468,7 +461,7 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
  */
 int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
 {
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     if (connectionSecure)
     {
         int amount;
@@ -478,7 +471,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
         while (true)
         {
             amount = SSL_read(sslHandle, (char*)data, size);
-            
+
             if (amount == 0)
             {
                 Close();
@@ -498,7 +491,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
                 throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
         }
     }
-    #endif
+#   endif
 
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -538,17 +531,17 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
 #include <iostream>
 int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
 {
-    #ifdef OpenSSL_FOUND
+#   ifdef OpenSSL_FOUND
     if (connectionSecure)
     {
         int amount;
         if (sock == INVALID_SOCKET)
             return false;
-        
+
         while (true)
         {
             amount = SSL_peek(sslHandle, (char*)data, size);
-            
+
             if (amount == 0)
             {
                 Close();
@@ -568,7 +561,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
                 throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
         }
     }
-    #endif
+#   endif
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {

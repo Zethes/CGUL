@@ -7,14 +7,15 @@
 
 _JATTA_EXPORT Jatta::Assimp::VertexWeight::VertexWeight(aiVertexWeight* weight)
 {
-	this->weight = weight;
+    this->weight = weight;
 }
 
 _JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::VertexWeight::GetVertexId()
 {
-	return weight->mVertexId;
+    return weight->mVertexId;
 }
+
 _JATTA_EXPORT Jatta::Float32 Jatta::Assimp::VertexWeight::GetWeight()
 {
-	return weight->mWeight;
+    return weight->mWeight;
 }

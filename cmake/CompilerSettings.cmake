@@ -10,7 +10,7 @@ endif()
 
 # Turn on all warnings and warning to errors in GCC
 if(CMAKE_COMPILER_IS_GNUCXX)
-    #set(CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
-    # there is a very good reason that this is commented out
-    # and it is only 50% because of laziness
+    if(Jatta_STRICT)
+        set(CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
+    endif()
 endif()

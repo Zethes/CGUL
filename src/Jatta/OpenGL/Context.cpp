@@ -12,10 +12,11 @@ _JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()
     return currentContext;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Context::Context()
+_JATTA_EXPORT Jatta::OpenGL::Context::Context() :
+    window(NULL)
 {
 #    ifdef JATTA_LINUX
-     context = NULL;
+    context = NULL;
 #    endif
 }
 
@@ -174,7 +175,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 {
     // TODO: error checking
 
-    #   ifdef JATTA_WINDOWS
+#   ifdef JATTA_WINDOWS
     if (!wglMakeCurrent(deviceContext, renderContext))
     {
         throw std::runtime_error("Failed to make device current.");

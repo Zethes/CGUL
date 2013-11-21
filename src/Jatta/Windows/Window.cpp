@@ -21,7 +21,7 @@
 LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
     LONG_PTR ptr = GetWindowLongPtr(handle, GWLP_USERDATA);
-    Window* window = (Window*)ptr;
+    Window* window = reinterpret_cast<Window*>(ptr);
     if (ptr != 0)
     {
         //window->getOnMessage()();
@@ -29,41 +29,41 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
     switch (message)
     {
         case WM_CLOSE:
-        if (window != 0)
-        {
-            window->Close();
-        }
-        return 0;
+            if (window != 0)
+            {
+                window->Close();
+            }
+            return 0;
         case WM_MOUSEMOVE:
-        window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
-        return 0;
+            window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
+            return 0;
         case WM_KEYDOWN:
-        window->OnKeyPress(TranslateKey(wParam));
-        return 0;
+            window->OnKeyPress(TranslateKey(wParam));
+            return 0;
         case WM_KEYUP:
-        window->OnKeyRelease(TranslateKey(wParam));
-        return 0;
+            window->OnKeyRelease(TranslateKey(wParam));
+            return 0;
         case WM_LBUTTONDOWN:
-        window->OnMousePress(0);
-        return 0;
+            window->OnMousePress(0);
+            return 0;
         case WM_LBUTTONUP:
-        window->OnMouseRelease(0);
-        return 0;
+            window->OnMouseRelease(0);
+            return 0;
         case WM_RBUTTONDOWN:
-        window->OnMousePress(1);
-        return 0;
+            window->OnMousePress(1);
+            return 0;
         case WM_RBUTTONUP:
-        window->OnMouseRelease(1);
-        return 0;
+            window->OnMouseRelease(1);
+            return 0;
         case WM_MBUTTONDOWN:
-        window->OnMousePress(2);
-        return 0;
+            window->OnMousePress(2);
+            return 0;
         case WM_MBUTTONUP:
-        window->OnMouseRelease(2);
-        return 0;
+            window->OnMouseRelease(2);
+            return 0;
         case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
+            PostQuitMessage(0);
+            return 0;
     }
     return DefWindowProc(handle, message, wParam, lParam);
 }
@@ -231,7 +231,11 @@ _JATTA_EXPORT void Jatta::Window::Create(const WindowStyle& style)
     // Generate a unique class name for this window
     std::wostringstream ss;
     static int windowCounter = 0;
+#   ifdef MSVC
+    strcpy_s(className, "JATTA_");
+#   else
     strcpy(className, "JATTA_");
+#   endif
     sprintf(className + 6, "%d", windowCounter++);
     ss << className;
 
@@ -380,9 +384,10 @@ _JATTA_EXPORT void Jatta::Window::HandleMessages()
     }
 
 #   ifdef JATTA_LINUX
-    ::Window root, child;
-    int rootX, rootY, winX, winY;
-    unsigned int mask;
+    // TODO
+    //::Window root, child;
+    //int rootX, rootY, winX, winY;
+    //unsigned int mask;
 
     /*XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
     GetInput()->mousePos.x = winX;
@@ -674,7 +679,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Window::GetHeight() const
 
 /** @returns The new size of the window.
  */
-_JATTA_EXPORT void Jatta::Window::SetSize(const UCoord32& size) const
+_JATTA_EXPORT void Jatta::Window::SetSize(const Vector2& size) const
 {
 #   ifdef JATTA_WINDOWS
     RECT rect = {(LONG)0, (LONG)0, (LONG)size.x, (LONG)size.y};
@@ -706,25 +711,25 @@ _JATTA_EXPORT void Jatta::Window::SetSize(const UCoord32& size) const
 
 /** @returns The size of the window.
  */
-_JATTA_EXPORT Jatta::UCoord32 Jatta::Window::GetSize() const
+_JATTA_EXPORT Jatta::Vector2 Jatta::Window::GetSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::UCoord32(0, 0);
+        return Jatta::Vector2(0, 0);
     }
 
 #   ifdef JATTA_WINDOWS
-    return UCoord32(GetWidth(), GetHeight());
+    return Vector2((Float32)GetWidth(), (Float32)GetHeight());
 #   endif
 
 #   ifdef JATTA_LINUX
     XWindowAttributes attributes;
     XGetWindowAttributes(display, handle, &attributes);
-    return UCoord32(attributes.height, attributes.width);
+    return Vector2(attributes.height, attributes.width);
 #   endif
 
 #   ifdef JATTA_MACOS
-    return UCoord32([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
+    return Vector2([[[handle Window] contentView] frame].size.width, [[[handle Window] contentView] frame].size.height);
 #   endif
 }
 
@@ -815,17 +820,17 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Window::GetResizable() const
 
 /** @returns A vector containing the border extents.
  */
-_JATTA_EXPORT Jatta::URect32 Jatta::Window::GetFrameSize() const
+_JATTA_EXPORT Jatta::Vector4 Jatta::Window::GetFrameSize() const
 {
     if (!IsOpen())
     {
-        return Jatta::URect32(0, 0, 0, 0);
+        return Jatta::Vector4(0, 0, 0, 0);
     }
 
 #   ifdef JATTA_WINDOWS
     RECT rect = {0, 0, 0, 0};
     AdjustWindowRectEx(&rect, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
-    return URect32(Math::Abs< UInt32, LONG >(rect.left), Math::Abs< UInt32, LONG >(rect.top), Math::Abs< UInt32, LONG >(rect.right), Math::Abs< UInt32, LONG >(rect.bottom));
+    return Vector4((float)-rect.left, (float)-rect.top, (float)rect.right, (float)rect.bottom);
 #   endif
 
 #   ifdef JATTA_LINUX
@@ -836,15 +841,15 @@ _JATTA_EXPORT Jatta::URect32 Jatta::Window::GetFrameSize() const
     long* data = NULL;
     if (Success == XGetWindowProperty(display, handle, netFrameExtents, 0L, 4, False, AnyPropertyType, &actualType, &actualFormat, &items, &bytesAfter, (unsigned char**)&data) && data)
     {
-        URect32 result((UInt32)data[0], (UInt32)data[2], (UInt32)data[1], (UInt32)data[3]);
+        Vector4 result(data[0], data[2], data[1], data[3]);
         XFree(data);
         return result;
     }
-    return URect32(0, 0, 0, 0);
+    return Vector4(0, 0, 0, 0);
 #   endif
 
 #   ifdef JATTA_MACOS
-    return [handle getFrameSize]; // TODO: fix this
+    return [handle getFrameSize];
 #   endif
 }
 

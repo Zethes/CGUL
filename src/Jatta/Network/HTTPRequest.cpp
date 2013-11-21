@@ -13,7 +13,30 @@
 #include "../Exceptions/NetworkException.h"
 #include "../Utility/Timer.h"
 
-bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
+Jatta::Network::Header::Header() :
+    age             (0),
+    allow           (0),
+    charset         (0),
+    connection      (0),
+    contentEncoding (0),
+    contentLength   (0),
+    contentRangeMin (0),
+    contentRangeMax (0),
+    refresh         (0),
+    retryAfter      (0),
+    setCookieValue  (0),
+    setCookieVersion(0),
+    status          (0),
+    transferEncoding(0)
+{
+}
+
+Jatta::Network::HTTPRequest::HTTPRequest(const HTTPRequest& copy)
+{
+    // private
+}
+
+bool Jatta::Network::HTTPRequest::PerformRequest(UInt32 timeout)
 {
     response = "";
     responseHead = "";
@@ -31,15 +54,19 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
     // Wait for the response.
     Timer timeoutTimer;
     timeoutTimer.Start();
-    while (sock->Peek(buffer, 1) == 0 && (timeoutTimer.GetElapsedMilliseconds() < timeout || timeout == 0)) 
+    while (sock->Peek(buffer, 1) == 0 && (timeoutTimer.GetElapsedMilliseconds() < timeout || timeout == 0))
     {
         if (!sock->IsConnected())
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_HTTP_REQUEST, NetworkExceptionReason::SOCKET_INVALID);
+        }
     }
     timeoutTimer.Stop();
 
     if (timeoutTimer.GetElapsedMilliseconds() >= timeout && timeout != 0)
+    {
         throw NetworkException(NetworkExceptionCode::FAILED_HTTP_REQUEST, NetworkExceptionReason::TIMEOUT);
+    }
 
     //Get the headers length.
     int headSize = 0;
@@ -56,31 +83,36 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
     ParseResponseHead();
 
     //Get the reponse's body.
-    int count = 0;
     int amount = 0;
 
     switch (header.transferEncoding)
     {
         case HTTPTransferEncoding::CONTENT_LENGTH:
         {
-            char* bufferBody = new char[1024];
+            unsigned int count = 0;
             while (sock->IsConnected())
             {
-                int size = 1024;
+                unsigned int size = 1024;
                 if (count + size > header.contentLength)
+                {
                     size = header.contentLength - count;
+                }
 
                 char* buff = new char[size];
                 amount = sock->Receive((void*)buff, size);
                 count += amount;
                 if (amount > 0)
+                {
                     responseBody += EncodeString(buff, size);
+                }
 
                 if (count >= header.contentLength)
+                {
                     break;
+                }
             }
+            break;
         }
-        break;
 
         case HTTPTransferEncoding::CHUNKED:
         {
@@ -91,19 +123,25 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
                 //Get the size.
                 amount = sock->Peek(sizeBuffer, 64);
                 if (amount <= 0)
+                {
                     break;
+                }
 
                 String sizeString = "";
-                for (unsigned int i = 0; i < amount; i++)
+                for (int i = 0; i < amount; i++)
                 {
                     if (sizeBuffer[i] == '\r')
                     {
                         if (sizeBuffer[i+1] == '\n')
+                        {
                             break;
+                        }
                         throw NetworkException(NetworkExceptionCode::FAILED_HTTP_REQUEST, NetworkExceptionReason::UNKNOWN);
                     }
                     else
+                    {
                         sizeString += sizeBuffer[i];
+                    }
                 }
                 //Convert from hex to decimal
                 unsigned int size = 0;
@@ -111,30 +149,39 @@ bool Jatta::Network::HTTPRequest::PerformRequest(int timeout)
                 {
                     char code = sizeString[sizeString.GetLength()-j-1];
                     if (code >= 48 && code <= 57) //Number
+                    {
                         size += (code - 48)*((j == 0) ? 1 : 16*j);
+                    }
                     if (code >= 65 && code <= 70) //A-F
+                    {
                         size += (code - 55)*((j == 0) ? 1 : 16*j);
+                    }
                     if (code >= 97 && code <= 102) //a-f
+                    {
                         size += (code - 87)*((j == 0) ? 1 : 16*j);
+                    }
                 }
                 sock->Receive(sizeBuffer, sizeString.GetLength()+2);
 
                 if (size == 0) //If the size is 0, then we are done
+                {
                     break;
+                }
                 size += 2;
 
                 //Otherwise receive the next chunk and add a new line (\r\n)
                 char* buff = new char[size];
                 amount = sock->Receive((void*)buff, size);
-                count += amount;
                 responseBody += EncodeString(buff, size);
             }
+            break;
         }
-        break;
 
         default:
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_HTTP_REQUEST, NetworkExceptionReason::UNKNOWN_TRANSFER_ENCODING);
             break;
+        }
     }
 
     response = responseHead + responseBody;
@@ -265,11 +312,13 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         }
         else if (parts[0] == "Content-Length:")
         {
-            header.contentLength = parts[1].To<int>(0);
+            header.contentLength = parts[1].To<UInt>(0);
 
             header.contentLengthString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentLengthString += parts[j] + " ";
+            }
             header.contentLengthString.Trim();
         }
         else if (parts[0] == "Content-Location:")
@@ -525,7 +574,7 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
     }
 }
 
-Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, int len)
+Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt len)
 {
     String ret = "";
 
@@ -652,13 +701,14 @@ Jatta::Network::HTTPRequest::HTTPRequest()
 {
     sock = new SocketTCP();
 }
+
 Jatta::Network::HTTPRequest::~HTTPRequest()
 {
     Close();
     delete sock;
 }
 
-void Jatta::Network::HTTPRequest::Http(const String url)
+void Jatta::Network::HTTPRequest::Http(const String& url)
 {
     host = url;
 
@@ -676,17 +726,20 @@ void Jatta::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
 }
 
 #ifdef OpenSSL_FOUND
-void Jatta::Network::HTTPRequest::Https(const String url)
+void Jatta::Network::HTTPRequest::Https(const String& url)
 {
     host = url;
 
     DNS dns;
     std::vector<Jatta::String> lookup = dns.Lookup(url);
     if (lookup.size() == 0)
+    {
         return;
+    }
 
     sock->ConnectSSL(IPAddress(lookup[0]), 443);
 }
+
 void Jatta::Network::HTTPRequest::ConnectSSL(const IPAddress& ip, int port)
 {
     host = ip.ToString();
@@ -699,7 +752,7 @@ void Jatta::Network::HTTPRequest::Close()
     sock->Close();
 }
 
-bool Jatta::Network::HTTPRequest::Request(String req, int timeout)
+bool Jatta::Network::HTTPRequest::Request(String req, UInt32 timeout)
 {
     request = req;
     request += "\n\r\n";
@@ -707,7 +760,7 @@ bool Jatta::Network::HTTPRequest::Request(String req, int timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Get(String page, int timeout)
+bool Jatta::Network::HTTPRequest::Get(String page, UInt32 timeout)
 {
     request = "";
     request += "GET ";
@@ -722,7 +775,7 @@ bool Jatta::Network::HTTPRequest::Get(String page, int timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Head(String page, int timeout)
+bool Jatta::Network::HTTPRequest::Head(String page, UInt32 timeout)
 {
     request = "";
     request += "HEAD ";
@@ -735,7 +788,7 @@ bool Jatta::Network::HTTPRequest::Head(String page, int timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Post(String page, Jatta::String content, int timeout)
+bool Jatta::Network::HTTPRequest::Post(String page, Jatta::String content, UInt32 timeout)
 {
     request = "";
     request += "POST ";

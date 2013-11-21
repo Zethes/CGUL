@@ -33,3 +33,4 @@ examples/*/build/
 
 # Backup Files
 *~
+*.orig
