@@ -22,7 +22,7 @@ namespace Jatta
         protected:
             Jatta::String file;
         public:
-            _JATTA_EXPORT static bool CanLoad(const String& filename); 
+            _JATTA_EXPORT static bool CanLoad(const String& filename);
             _JATTA_EXPORT static Jatta::Image* Load(const String& filename);
             _JATTA_EXPORT static void Save(const String& filename, Jatta::Image* image);
         };

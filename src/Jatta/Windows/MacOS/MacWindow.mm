@@ -8,26 +8,26 @@
 #import "MacWindow.h"
 #include <fstream>
 
- @implementation MacWindow : NSWindow
+@implementation MacWindow : NSWindow
 
-    - (id)init
+- (id)init
+{
+    // Initialize the base application and make sure it's not nil
+    if ((self = [super init]))
     {
-        // Initialize the base application and make sure it's not nil
-        if ((self = [super init]))
-        {
-            //
-        }
-
-        return self;
+        //
     }
 
-    - (void) keyUp: (NSEvent *)event
-    {
-    }
+    return self;
+}
 
-    - (void) keyDown: (NSEvent *)event
-    {
-    }
+- (void) keyUp: (NSEvent *)event
+{
+}
+
+- (void) keyDown: (NSEvent *)event
+{
+}
 
 @end
 

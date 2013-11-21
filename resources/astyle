@@ -1,0 +1,7 @@
+recursive
+formatted
+indent-switches
+indent-namespaces
+style=allman
+indent=spaces=4
+keep-one-line-statements

@@ -63,7 +63,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::LoadFromMemory(const unsigned char* dat
         throw std::runtime_error("Unknown error with fonts.");
         return -1;
     }
-    
+
     faces.push_back(face);
 
     return faces.size()-1;
@@ -243,7 +243,9 @@ _JATTA_EXPORT Jatta::Glyph* Jatta::Font::GetGlyph(UInt32 utf8Character, bool use
     for (unsigned int i = 0; i < faces.size(); i++)
     {
         if (GetCharacterIndex(i, utf8Character) != 0)
-        { return new Glyph(this->faces[i], utf8Character); }
+        {
+            return new Glyph(this->faces[i], utf8Character);
+        }
     }
     return NULL;
 }

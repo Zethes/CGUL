@@ -24,7 +24,7 @@ namespace Jatta
 #       ifndef DOXYGEN
         void __jatta_network_initiate()
         {
-        #   ifdef JATTA_WINDOWS
+#           ifdef JATTA_WINDOWS
             if (!__jatta_network_initiated)
             {
                 WSADATA wsaData;
@@ -34,18 +34,18 @@ namespace Jatta
                 }
                 __jatta_network_initiated = true;
             }
-        #   endif
+#           endif
         }
 
         void __jatta_network_clean()
         {
-        #   ifdef JATTA_WINDOWS
+#           ifdef JATTA_WINDOWS
             if (__jatta_network_initiated)
             {
                 WSACleanup();
                 __jatta_network_initiated = false;
             }
-        #   endif
+#           endif
         }
 #       endif
     }

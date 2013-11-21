@@ -78,7 +78,7 @@ namespace Jatta
                 LZMA,
             };
         }
-        
+
         namespace HTTPStatusCodes
         {
             enum

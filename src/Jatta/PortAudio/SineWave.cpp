@@ -25,7 +25,9 @@ _JATTA_EXPORT bool Jatta::PortAudio::SineWave::Update(StreamData* data)
 
     position++;
     while (position >= 199)
-    { position -= 200; }
+    {
+        position -= 200;
+    }
 
     return true;
 }

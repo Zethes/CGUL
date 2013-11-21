@@ -26,7 +26,9 @@ static int paCallbackOutput(const void* input, void* output, unsigned long fpb, 
             return paAbort;
 
         for (unsigned int j = 0; j < data->NumberOfChannels; j++)
-        { *out++ = data->StreamPtr->GetVolume()*data->OutputChannels.at(j)[data->CurrentPosition]; }
+        {
+            *out++ = data->StreamPtr->GetVolume()*data->OutputChannels.at(j)[data->CurrentPosition];
+        }
 
         data->CurrentPosition++;//= data->StreamPtr->GetPitch();
     }
@@ -37,7 +39,9 @@ static int paCallbackOutput(const void* input, void* output, unsigned long fpb, 
 _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::OutputStream::OpenStream(Device device)
 {
     if (sampleRate == 0)
-    { sampleRate = device.GetDefaultSampleRate(); }
+    {
+        sampleRate = device.GetDefaultSampleRate();
+    }
 
     PaStreamParameters outputParameters;
     outputParameters.device = device.GetIndex();
@@ -47,14 +51,14 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::OutputStream::OpenStream(Device de
     outputParameters.hostApiSpecificStreamInfo = NULL;
 
     return Pa_OpenStream(
-        &stream,
-        NULL,
-        &outputParameters,
-        sampleRate,
-        framesPerBuffer,
-        paClipOff,
-        paCallbackOutput,
-        &streamData);
+               &stream,
+               NULL,
+               &outputParameters,
+               sampleRate,
+               framesPerBuffer,
+               paClipOff,
+               paCallbackOutput,
+               &streamData);
 }
 
 _JATTA_EXPORT Jatta::PortAudio::OutputStream::OutputStream(Device device)

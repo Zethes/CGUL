@@ -15,8 +15,8 @@ _JATTA_EXPORT Jatta::Assimp::Exporter::Exporter(const Exporter& exporter)
 
 _JATTA_EXPORT Jatta::Assimp::Exporter::Exporter()
 {
-      exporter = new ::Assimp::Exporter();
-      blob = NULL;
+    exporter = new ::Assimp::Exporter();
+    blob = NULL;
 }
 
 _JATTA_EXPORT Jatta::Assimp::Exporter::~Exporter()

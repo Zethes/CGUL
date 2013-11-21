@@ -89,7 +89,7 @@ namespace Jatta
             UInt32 Intent;
             UInt32 ProfileData;
             UInt32 ProfileSize;
-            UInt32 Reserved; 
+            UInt32 Reserved;
         };
 
         /** @brief Class inherited from ImageLoader to support BMP file formats.
@@ -99,7 +99,7 @@ namespace Jatta
             _JATTA_EXPORT static BITMAPHEADER ReadHeader(Byte* data, UInt32 size);
             _JATTA_EXPORT static BITMAPDIBHEADER ReadDIBHeader(Byte* data, UInt32 size);
         public:
-            _JATTA_EXPORT static bool CanLoad(const String& filename); 
+            _JATTA_EXPORT static bool CanLoad(const String& filename);
             _JATTA_EXPORT static Jatta::Image* Load(const String& filename);
             _JATTA_EXPORT static void Save(const String& filename, Jatta::Image* image);
 

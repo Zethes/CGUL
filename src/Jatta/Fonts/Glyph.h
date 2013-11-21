@@ -8,7 +8,7 @@
 #include "../Math/Vector2.h"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
- #include "FontStyles.h"
+#include "FontStyles.h"
 #include "../External/Defines.h"
 
 /*
@@ -18,26 +18,26 @@
  *                       xmin                     xmax
  *                        |                         |
  *                        |<-------- width -------->|
- *                        |                         |    
+ *                        |                         |
  *              |         +-------------------------+----------------- ymax
  *              |         |    ggggggggg   ggggg    |     ^        ^
- *              |         |   g:::::::::ggg::::g    |     |        | 
- *              |         |  g:::::::::::::::::g    |     |        | 
- *              |         | g::::::ggggg::::::gg    |     |        | 
- *              |         | g:::::g     g:::::g     |     |        | 
- *    offset_x -|-------->| g:::::g     g:::::g     |  offset_y    | 
- *              |         | g:::::g     g:::::g     |     |        | 
- *              |         | g::::::g    g:::::g     |     |        | 
- *              |         | g:::::::ggggg:::::g     |     |        |  
+ *              |         |   g:::::::::ggg::::g    |     |        |
+ *              |         |  g:::::::::::::::::g    |     |        |
+ *              |         | g::::::ggggg::::::gg    |     |        |
+ *              |         | g:::::g     g:::::g     |     |        |
+ *    offset_x -|-------->| g:::::g     g:::::g     |  offset_y    |
+ *              |         | g:::::g     g:::::g     |     |        |
+ *              |         | g::::::g    g:::::g     |     |        |
+ *              |         | g:::::::ggggg:::::g     |     |        |
  *              |         |  g::::::::::::::::g     |     |      height
- *              |         |   gg::::::::::::::g     |     |        | 
+ *              |         |   gg::::::::::::::g     |     |        |
  *  baseline ---*---------|---- gggggggg::::::g-----*--------      |
- *            / |         |             g:::::g     |              | 
- *     origin   |         | gggggg      g:::::g     |              | 
- *              |         | g:::::gg   gg:::::g     |              | 
- *              |         |  g::::::ggg:::::::g     |              | 
- *              |         |   gg:::::::::::::g      |              | 
- *              |         |     ggg::::::ggg        |              | 
+ *            / |         |             g:::::g     |              |
+ *     origin   |         | gggggg      g:::::g     |              |
+ *              |         | g:::::gg   gg:::::g     |              |
+ *              |         |  g::::::ggg:::::::g     |              |
+ *              |         |   gg:::::::::::::g      |              |
+ *              |         |     ggg::::::ggg        |              |
  *              |         |         gggggg          |              v
  *              |         +-------------------------+----------------- ymin
  *              |                                   |

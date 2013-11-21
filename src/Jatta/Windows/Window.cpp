@@ -29,41 +29,41 @@ LRESULT CALLBACK Jatta::Window::WindowProcedure(HWND handle, UINT message, WPARA
     switch (message)
     {
         case WM_CLOSE:
-        if (window != 0)
-        {
-            window->Close();
-        }
-        return 0;
+            if (window != 0)
+            {
+                window->Close();
+            }
+            return 0;
         case WM_MOUSEMOVE:
-        window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
-        return 0;
+            window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
+            return 0;
         case WM_KEYDOWN:
-        window->OnKeyPress(TranslateKey(wParam));
-        return 0;
+            window->OnKeyPress(TranslateKey(wParam));
+            return 0;
         case WM_KEYUP:
-        window->OnKeyRelease(TranslateKey(wParam));
-        return 0;
+            window->OnKeyRelease(TranslateKey(wParam));
+            return 0;
         case WM_LBUTTONDOWN:
-        window->OnMousePress(0);
-        return 0;
+            window->OnMousePress(0);
+            return 0;
         case WM_LBUTTONUP:
-        window->OnMouseRelease(0);
-        return 0;
+            window->OnMouseRelease(0);
+            return 0;
         case WM_RBUTTONDOWN:
-        window->OnMousePress(1);
-        return 0;
+            window->OnMousePress(1);
+            return 0;
         case WM_RBUTTONUP:
-        window->OnMouseRelease(1);
-        return 0;
+            window->OnMouseRelease(1);
+            return 0;
         case WM_MBUTTONDOWN:
-        window->OnMousePress(2);
-        return 0;
+            window->OnMousePress(2);
+            return 0;
         case WM_MBUTTONUP:
-        window->OnMouseRelease(2);
-        return 0;
+            window->OnMouseRelease(2);
+            return 0;
         case WM_DESTROY:
-        PostQuitMessage(0);
-        return 0;
+            PostQuitMessage(0);
+            return 0;
     }
     return DefWindowProc(handle, message, wParam, lParam);
 }

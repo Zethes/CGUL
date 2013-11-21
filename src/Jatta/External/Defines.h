@@ -3,14 +3,14 @@
  * All rights reserved.
  */
 
- /** @file Defines.h
-  *  @brief Sets up the build environment for header files.
-  *  @details The goal of this file was to exclude system files which dump defines to the global
-  *  namespace from applications which relied on Jatta.  An example of this is Window's CreateWindow
-  *  function which is commonly defined as either CreateWindowA or CreateWindowW.  Since this same
-  *  define does not exist on Linux or Mac it creates issues only present on Windows.  By excluding
-  *  the inclusion of Windows.h in the final product, OS-specific defines are minimized.
-  */
+/** @file Defines.h
+ *  @brief Sets up the build environment for header files.
+ *  @details The goal of this file was to exclude system files which dump defines to the global
+ *  namespace from applications which relied on Jatta.  An example of this is Window's CreateWindow
+ *  function which is commonly defined as either CreateWindowA or CreateWindowW.  Since this same
+ *  define does not exist on Linux or Mac it creates issues only present on Windows.  By excluding
+ *  the inclusion of Windows.h in the final product, OS-specific defines are minimized.
+ */
 
 #include "Once.h"
 
@@ -79,34 +79,34 @@
 #       define CHECK(x, y)
 #   endif
 #   ifdef JATTA_WINDOWS
-        CHECK(::HWND, _JATTA_HWND);
-        CHECK(::DWORD, _JATTA_DWORD);
-        CHECK(::PIXELFORMATDESCRIPTOR, _JATTA_PIXELFORMATDESCRIPTOR);
-        CHECK(::HDC, _JATTA_HDC);
-        CHECK(::HGLRC, _JATTA_HGLRC);
-        CHECK(::HGDIOBJ, _JATTA_HGDIOBJ);
+CHECK(::HWND, _JATTA_HWND);
+CHECK(::DWORD, _JATTA_DWORD);
+CHECK(::PIXELFORMATDESCRIPTOR, _JATTA_PIXELFORMATDESCRIPTOR);
+CHECK(::HDC, _JATTA_HDC);
+CHECK(::HGLRC, _JATTA_HGLRC);
+CHECK(::HGDIOBJ, _JATTA_HGDIOBJ);
 #   endif
 #   ifdef JATTA_LINUX
-        CHECK(::Display*, _JATTA_DISPLAY);
-        CHECK(::Window, _JATTA_WINDOW);
-        CHECK(::GLXContext, _JATTA_GLXCONTEXT);
+CHECK(::Display*, _JATTA_DISPLAY);
+CHECK(::Window, _JATTA_WINDOW);
+CHECK(::GLXContext, _JATTA_GLXCONTEXT);
 #   endif
 #   ifdef Assimp_FOUND
-        CHECK(::FT_Face, _JATTA_FT_FACE);
-        CHECK(::aiScene*, _JATTA_AISCENE);
-        CHECK(::aiMesh*, _JATTA_AIMESH);
-        CHECK(::aiTexture*, _JATTA_AITEXTURE);
-        CHECK(::aiTexture*, _JATTA_AIMATERIAL);
+CHECK(::FT_Face, _JATTA_FT_FACE);
+CHECK(::aiScene*, _JATTA_AISCENE);
+CHECK(::aiMesh*, _JATTA_AIMESH);
+CHECK(::aiTexture*, _JATTA_AITEXTURE);
+CHECK(::aiTexture*, _JATTA_AIMATERIAL);
 #   endif
 #   ifdef PortAudio_FOUND
-        CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
-        CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
-        CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
-        CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
+CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
+CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
+CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
+CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
 #   endif
 #   ifdef PCRE_FOUND
-        CHECK(::pcre*, _JATTA_PCRE);
-        CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
+CHECK(::pcre*, _JATTA_PCRE);
+CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
 #   endif
 #   undef CHECK
 #   include "Undefines.h"

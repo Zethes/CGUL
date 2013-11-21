@@ -83,11 +83,11 @@ _JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags
     {
         for (unsigned int x = 0; x < width; x++)
         {
-                buffer[y*width+x].r = color.r;
-                buffer[y*width+x].g = color.g;
-                buffer[y*width+x].b = color.b;
+            buffer[y*width+x].r = color.r;
+            buffer[y*width+x].g = color.g;
+            buffer[y*width+x].b = color.b;
 
-                buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
+            buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
         }
     }
 

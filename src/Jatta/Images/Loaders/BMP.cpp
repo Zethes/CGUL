@@ -27,7 +27,7 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::ReadHe
 
     if (size < 14)
     {
-       throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
     }
 
     memcpy(&header.MagicNumber, &data[0], 2);
@@ -169,8 +169,8 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
 
     //Check for valid pixel format.
-    if (dibHeader.BitCount != 1 && dibHeader.BitCount != 2 && dibHeader.BitCount != 4 && dibHeader.BitCount != 8 && 
-        dibHeader.BitCount != 16 && dibHeader.BitCount != 24 && dibHeader.BitCount != 32)
+    if (dibHeader.BitCount != 1 && dibHeader.BitCount != 2 && dibHeader.BitCount != 4 && dibHeader.BitCount != 8 &&
+            dibHeader.BitCount != 16 && dibHeader.BitCount != 24 && dibHeader.BitCount != 32)
     {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
@@ -211,7 +211,7 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
             case 32: format = ImageFormats::BGRA8; break;
         }
 
-        
+
         return new Image(format, dibHeader.Width, dibHeader.Height, (void*)data);
     }
 }
