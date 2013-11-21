@@ -132,7 +132,7 @@ namespace Jatta
 
         //! @brief Raises x to the power of y.
         template< typename Type _JATTA_DEFAULT_MATH_TYPE >
-        _JATTA_INLINE_DEFINE bool Pow(Type x, Type y);
+        _JATTA_INLINE_DEFINE Type Pow(Type x, Type y);
 
         //! @brief Checks if the value is a power of two.
         _JATTA_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);

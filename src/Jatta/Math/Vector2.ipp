@@ -181,7 +181,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operat
     return *this;
 }
 
-/** @param operand The other vector.
+/** @param operand A scalar value.
  *  @returns The resulting vector.
  */
 template< typename Type >
@@ -190,7 +190,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector2T< Type >::operato
     return Vector2T(this->x * operand, this->y * operand);
 }
 
-/** @param operand The other operand.
+/** @param operand A scalar value.
  *  @returns A reference to the current object.
  */
 template< typename Type >
