@@ -297,7 +297,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Type value, Type compare, Ty
  *  @returns x raised to the power of y.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::Math::Pow(Type x, Type y)
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Pow(Type x, Type y)
 {
     return std::pow(x, y);
 }
