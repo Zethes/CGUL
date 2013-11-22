@@ -18,8 +18,8 @@ namespace Jatta
             UInt32 renderBuffer;
             Enum type;
         public:
-            _JATTA_EXPORT RenderBuffer();
-            _JATTA_EXPORT RenderBuffer(UInt32 renderBuffer);
+            DEPRECATED(_JATTA_EXPORT RenderBuffer(), "Use Raw GL wrappers instead.");
+            DEPRECATED(_JATTA_EXPORT RenderBuffer(UInt32 renderBuffer), "Use Raw GL wrappers instead.");
             _JATTA_EXPORT ~RenderBuffer();
 
             _JATTA_EXPORT void Create(Enum type);

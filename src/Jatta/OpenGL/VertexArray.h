@@ -17,7 +17,7 @@ namespace Jatta
         {
             UInt32 vertexArray;
         public:
-            _JATTA_EXPORT VertexArray();
+            DEPRECATED(_JATTA_EXPORT VertexArray(), "Use Raw GL wrappers instead.");
 
             _JATTA_EXPORT void Create();
             _JATTA_EXPORT void Delete();

@@ -21,8 +21,8 @@ namespace Jatta
             UInt32 frameBuffer;
             Enum type;
         public:
-            _JATTA_EXPORT FrameBuffer();
-            _JATTA_EXPORT FrameBuffer(UInt32 frameBuffer);
+            DEPRECATED(_JATTA_EXPORT FrameBuffer(), "Use Raw GL wrappers instead.");
+            DEPRECATED(_JATTA_EXPORT FrameBuffer(UInt32 frameBuffer), "Use Raw GL wrappers instead.");
             _JATTA_EXPORT ~FrameBuffer();
 
             _JATTA_EXPORT void Create(Enum type);

@@ -18,7 +18,7 @@ namespace Jatta
             UInt32 buffer;
             Enum type;
         public:
-            _JATTA_EXPORT Buffer();
+            DEPRECATED(_JATTA_EXPORT Buffer(), "Use Raw GL wrappers instead.");
 
             _JATTA_EXPORT void Create(Enum type);
             _JATTA_EXPORT void Delete();

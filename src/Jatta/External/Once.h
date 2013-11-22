@@ -364,3 +364,12 @@ namespace Jatta
 #if defined(PCRE_FOUND) || defined(CPP_HAS_STD_REGEX)
 #   define Jatta_USE_REGEX
 #endif
+
+// Deprecated code tag
+#if defined(CPP_DEPRECATED_GCC_MESSAGE)
+#   define DEPRECATED(func, str) func __attribute__ ((deprecated(str)))
+#elif defined(CPP_DEPRECATED_GCC)
+#   define DEPRECATED(func, str) func __attribute__ ((deprecated))
+#elif defined(CPP_DEPRECATED_MSVC)
+#   define DEPRECATED(func, str) __declspec(deprecated) func
+#endif
