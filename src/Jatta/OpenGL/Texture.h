@@ -21,8 +21,8 @@ namespace Jatta
         public:
             _JATTA_EXPORT static void Active(UInt32 active);
 
-            _JATTA_EXPORT Texture();
-            _JATTA_EXPORT Texture(UInt32 texture);
+            DEPRECATED(_JATTA_EXPORT Texture(), "Use Raw GL wrappers instead.");
+            DEPRECATED(_JATTA_EXPORT Texture(UInt32 texture), "Use Raw GL wrappers instead.");
             _JATTA_EXPORT ~Texture();
 
             _JATTA_EXPORT void Create(Enum type);

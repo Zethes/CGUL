@@ -55,6 +55,7 @@ fast_check_include_file(stdint.h CPP_HEADER_STDINT_H)
 fast_check_include_file(cstddef CPP_HEADER_CSTDDEF)
 fast_check_include_file(stddef.h CPP_HEADER_STDDEF_H)
 
+# C++ standard checks
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_FUNCTION_TEMPLATE_DEFAULT function_template_default.cpp)
 check_feature(CPP_HAS_HYPERBOLIC_ARC hyperbolic_arc.cpp)
@@ -66,7 +67,17 @@ check_feature(CPP_HAS_STD_REGEX std_regex.cpp)
 check_feature(CPP_HAS_STD_THREAD std_thread.cpp)
 check_feature(CPP_HAS_U8 u8.cpp)
 
+# Library specific checks
 check_feature(PCRE_HAS_FREE_STUDY pcre_free_study.cpp)
+
+# Deprecated tag checks
+check_feature(CPP_DEPRECATED_GCC_MESSAGE deprecated_gcc_message.cpp)
+if(NOT CPP_DEPRECATED_GCC_MESSAGE)
+    check_feature(CPP_DEPRECATED_GCC deprecated_gcc.cpp)
+    if(NOT CPP_DEPRECATED_GCC)
+        check_feature(CPP_DEPRECATED_MSVC deprecated_msvc.cpp)
+    endif()
+endif()
 
 if(Jatta_REFRESH_CAPABILITIES)
     unset(Jatta_USE_NETWORK CACHE)
