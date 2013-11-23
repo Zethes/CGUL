@@ -143,6 +143,7 @@
 #include "Jatta/Utility/AutoRelease.h"
 #include "Jatta/Utility/Encryption.h"
 #include "Jatta/Utility/File.h"
+#include "Jatta/Utility/JSON.hpp"
 #include "Jatta/Utility/Memory.h"
 #include "Jatta/Utility/Move.h"
 #include "Jatta/Utility/Regex.h"
