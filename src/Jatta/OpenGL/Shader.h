@@ -21,8 +21,8 @@ namespace Jatta
         {
             UInt32 shader;
         public:
-            _JATTA_EXPORT Shader();
-            _JATTA_EXPORT ~Shader();
+            DEPRECATED(_JATTA_EXPORT Shader(), "Use Raw GL wrappers instead.");
+            DEPRECATED(_JATTA_EXPORT ~Shader(), "Use Raw GL wrappers instead.");
 
             _JATTA_EXPORT void Create(Enum type);
             _JATTA_EXPORT void Delete();

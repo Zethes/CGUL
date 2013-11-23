@@ -28,7 +28,9 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::JPEG::CanLoad(const String& file)
     FILE * fp;
     fp = fopen(file.GetCString(), "rb");
     if (fp == NULL)
+    {
         return false;
+    }
 
     cinfo.err = jpeg_std_error(&jerr);
 
@@ -57,7 +59,9 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::JPEG::Load(const String& file)
 
     fp = fopen(file.GetCString(), "rb");
     if (fp == NULL)
+    {
         throw ImageException(ImageExceptionCode::JPEG, ImageExceptionReason::FAILED_TO_OPEN);
+    }
 
     cinfo.err = jpeg_std_error(&jerr);
 
@@ -67,7 +71,9 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::JPEG::Load(const String& file)
     //Step 3: Get data source and read header.
     jpeg_stdio_src(&cinfo, fp);
     if (jpeg_read_header(&cinfo, TRUE) != JPEG_HEADER_OK)
+    {
         throw ImageException(ImageExceptionCode::JPEG, ImageExceptionReason::NOT_A_JPEG_FILE);
+    }
 
     //Step 4: Start decompressor
     if (!jpeg_start_decompress(&cinfo))

@@ -18,14 +18,18 @@ static int paCallbackInput(const void* inputBuffer, void* output, unsigned long 
     int ret = paContinue;
 
     for (i = 0; i < data->NumberOfChannels; i++)
+    {
         inputData.push_back(new Jatta::Float32[fpb]);
+    }
 
     if (inputBuffer == NULL)
     {
         for (i = 0; i < fpb; i++)
         {
             for (j = 0; j < data->NumberOfChannels; j++)
+            {
                 inputData.at(j)[i] = 0.0f;
+            }
         }
     }
     else
@@ -33,7 +37,9 @@ static int paCallbackInput(const void* inputBuffer, void* output, unsigned long 
         for (i = 0; i < fpb; i++)
         {
             for (j = 0; j < data->NumberOfChannels; j++)
-                inputData.at(j)[i] = 1.0f*(*rptr++); //data->StreamPtr->GetVolume()
+            {
+                inputData.at(j)[i] = 1.0f*(*rptr++);    //data->StreamPtr->GetVolume()
+            }
         }
     }
     data->Length++;

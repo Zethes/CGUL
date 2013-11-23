@@ -201,6 +201,14 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
     return len;
 }
 
+/** @param position The index of the character.
+ *  @returns The character in the string.
+ */
+_JATTA_EXPORT char Jatta::String::GetChar(Size position) const
+{
+    return (char)data.at(position);
+}
+
 /** @param position The index of the byte.
  *  @returns The byte in the string.
  */

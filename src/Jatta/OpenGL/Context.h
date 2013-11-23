@@ -41,7 +41,7 @@ namespace Jatta
         public:
             _JATTA_EXPORT Context* GetCurrent();
 
-            _JATTA_EXPORT Context();
+            DEPRECATED(_JATTA_EXPORT Context(), "Use Raw GL wrappers instead.");
             _JATTA_EXPORT ~Context();
 
             _JATTA_EXPORT void Create(Window* window);

@@ -10,9 +10,13 @@ static int paCallbackOutput(const void* input, void* output, unsigned long fpb, 
     Jatta::PortAudio::StreamData* data = (Jatta::PortAudio::StreamData*)udata;
 
     if (data == NULL)
+    {
         return paAbort;
+    }
     if (data->StreamPtr == NULL)
+    {
         return paAbort;
+    }
 
     float *out = (float*)output;
     unsigned int i;
@@ -21,9 +25,13 @@ static int paCallbackOutput(const void* input, void* output, unsigned long fpb, 
     for (i = 0; i < fpb; i++)
     {
         if (data->CurrentPosition >= data->Length && data->StreamPtr->GetLooping())
+        {
             data->CurrentPosition = 0;
+        }
         else if (data->CurrentPosition >= data->Length)
+        {
             return paAbort;
+        }
 
         for (unsigned int j = 0; j < data->NumberOfChannels; j++)
         {
@@ -99,9 +107,13 @@ _JATTA_EXPORT Jatta::PortAudio::OutputStream::OutputStream(Device device, std::v
     volume = 1.0f;
     streamData.StreamPtr = this;
     if (data.size() > (unsigned int)device.GetMaxOutputChannels())
+    {
         streamData.NumberOfChannels = device.GetMaxOutputChannels();
+    }
     else
+    {
         streamData.NumberOfChannels = data.size();
+    }
 
     sampleRate = sr;
     framesPerBuffer = paFramesPerBufferUnspecified;

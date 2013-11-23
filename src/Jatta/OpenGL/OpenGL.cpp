@@ -65,7 +65,9 @@ _JATTA_EXPORT bool Jatta::OpenGL::SupportsExtension(Jatta::String ext)
     for (unsigned int i = 0; i < extensions.size(); i++)
     {
         if (extensions[i] == ext)
+        {
             return true;
+        }
     }
     return false;
 }
