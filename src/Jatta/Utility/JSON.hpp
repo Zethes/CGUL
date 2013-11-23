@@ -37,7 +37,7 @@
                 const char PAIR_SEPERATOR = ':';
                 const char VALUE_SEPERATOR = ',';
                 const char STRING_DELIMITOR = '"';
-            }  
+            }
             namespace Literals
             {
                 const Jatta::String FALSE_STRING = "false";
@@ -171,12 +171,12 @@
 
             _JATTA_EXPORT Value& operator=(const Value& v);
 
-            operator Float32() const { return valueFloat; }
-            operator SInt32() const { return valueInt; }
-            operator bool() const { return valueBool; }
-            operator String() const { return valueString; }
-            operator Object() const { return valueObject; }
-            operator Array() const { return valueArray; }
+            operator Float32() const;
+            operator SInt32() const;
+            operator bool() const;
+            operator String() const;
+            operator Object() const;
+            operator Array() const;
 
             _JATTA_EXPORT String ToString();
         };

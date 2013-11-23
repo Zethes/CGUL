@@ -109,6 +109,8 @@ namespace Jatta
         //! @brief Counts the number of code points in the string.
         _JATTA_EXPORT Size GetLength() const;
 
+        //! @brief Gets an individual character from the string.
+        _JATTA_EXPORT char GetChar(Size position) const;
         //! @brief Gets an individual byte from the string.
         _JATTA_EXPORT Byte GetByte(Size position) const;
         //! @brief Gets an individual code point from the string.
