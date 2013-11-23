@@ -62,4 +62,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Color.ipp"
+#include "Color_Implement.h"

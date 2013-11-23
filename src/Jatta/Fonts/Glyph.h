@@ -5,7 +5,7 @@
 
 #pragma once
 #include <Jatta/Config.h>
-#include "../Math/Vector2.h"
+#include "../Math/Vector2.hpp"
 #include "../Images/Image.h"
 #include "../Images/Color.h"
 #include "FontStyles.h"

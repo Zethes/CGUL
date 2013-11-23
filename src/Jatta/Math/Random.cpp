@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "Random.h"
+#include "Random.hpp"
 #include <ctime>
 #include <cmath>
 

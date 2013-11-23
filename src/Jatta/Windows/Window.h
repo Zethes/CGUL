@@ -6,8 +6,8 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "WindowStyle.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector4.h"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector4.hpp"
 #if defined(JATTA_BUILD) && defined(JATTA_MACOS)
 #   include "MacOS/WindowDelegate.h"
 #endif

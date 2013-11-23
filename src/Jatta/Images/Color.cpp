@@ -4,8 +4,8 @@
  */
 
 #include "Color.h"
-#include "../Math/Vector3.h"
-#include "../Math/Vector4.h"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
 
 /** @param hue Hue value from 0-360.
  *  @param saturation Saturation value from 0-255.

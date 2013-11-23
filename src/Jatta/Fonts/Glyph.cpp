@@ -5,7 +5,7 @@
 
 #include "Glyph.h"
 #include "../Images/ImageFormats.h"
-#include "../Math/Math.h"
+#include "../Math/Math.hpp"
 
 _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
 {

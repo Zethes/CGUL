@@ -5,7 +5,7 @@
 
 #include "String.h"
 #include "Regex.h"
-#include "../Math/Math.h"
+#include "../Math/Math.hpp"
 #include <cstring>
 
 _JATTA_EXPORT Jatta::String Jatta::String::FromCodePoint(UInt32 codePoint)

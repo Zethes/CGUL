@@ -6,7 +6,7 @@
 #include "BMP.h"
 #include "../ImageFormats.h"
 #include "../../Utility/File.h"
-#include "../../Math/Math.h"
+#include "../../Math/Math.hpp"
 #include "../../Exceptions/ImageException.h"
 
 _JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad(const String& file)
