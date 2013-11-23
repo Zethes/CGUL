@@ -161,4 +161,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Vector2_Implement.h"
+#include "Vector2_Implement.hpp"

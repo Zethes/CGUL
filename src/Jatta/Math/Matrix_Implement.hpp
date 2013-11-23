@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-#include "Math.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Quaternion.h"
+#include "Math.hpp"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Quaternion.hpp"
 
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Identity()

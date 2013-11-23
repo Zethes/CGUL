@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Vector4.hpp"
 #include <cmath>
 
 //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
