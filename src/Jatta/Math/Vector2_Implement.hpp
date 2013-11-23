@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Math.h"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Vector4.hpp"
+#include "Math.hpp"
 
 /**
  */

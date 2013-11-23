@@ -69,4 +69,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Vector4_Implement.h"
+#include "Vector4_Implement.hpp"

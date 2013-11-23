@@ -60,4 +60,4 @@ namespace Jatta
 }
 
 #include "../External/Undefines.h"
-#include "Quaternion_Implement.h"
+#include "Quaternion_Implement.hpp"

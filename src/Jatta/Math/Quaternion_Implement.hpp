@@ -1,7 +1,7 @@
-#include "Math.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix.h"
+#include "Math.hpp"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Matrix.hpp"
 
 template< typename Type >
 Jatta::QuaternionT< Type >::QuaternionT()

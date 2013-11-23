@@ -10,18 +10,18 @@ set(Jatta_SOURCES
 
 set(Jatta_INSTALL
     ${Jatta_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Math_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Matrix.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Matrix_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Random.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector4.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector4_Implement.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Matrix.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Matrix_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quaternion_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Random.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector3_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector4.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vector4_Implement.hpp
     PARENT_SCOPE
 )
