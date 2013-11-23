@@ -372,4 +372,6 @@ namespace Jatta
 #   define DEPRECATED(func, str) func __attribute__ ((deprecated))
 #elif defined(CPP_DEPRECATED_MSVC)
 #   define DEPRECATED(func, str) __declspec(deprecated) func
+#else
+#   define DEPRECATED(func, src)
 #endif
