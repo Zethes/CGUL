@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "../Math/Vector3.h"
-#include "../Math/Vector4.h"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
 
 /** @details Each element is calculated by taking their respective values and dividing by 255.0f.
  *  This is useful when colors need to be represented as floating point numbers rather than byte
