@@ -62,7 +62,9 @@ _JATTA_EXPORT bool Jatta::Image::GenerateMipmaps()
 _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
 {
     if (mipmaps.size() <= 0)
+    {
         throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
+    }
 
     return mipmaps[0];
 }
@@ -70,7 +72,9 @@ _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
 _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
 {
     if (mipmaps.size() <= index)
+    {
         throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::INDEX_OUT_OF_RANGE);
+    }
 
     return mipmaps[index];
 }
@@ -78,7 +82,9 @@ _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
 _JATTA_EXPORT const void* Jatta::Image::GetData()
 {
     if (mipmaps.size() <= 0)
+    {
         throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
+    }
 
     return mipmaps[0].GetData();
 }

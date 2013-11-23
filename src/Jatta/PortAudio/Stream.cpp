@@ -70,14 +70,18 @@ _JATTA_EXPORT void Jatta::PortAudio::Stream::SetLooping(bool loop)
 _JATTA_EXPORT bool Jatta::PortAudio::Stream::IsStopped()
 {
     if (Pa_IsStreamStopped(stream) == 1)
+    {
         return true;
+    }
     return false;
 }
 
 _JATTA_EXPORT bool Jatta::PortAudio::Stream::IsActive()
 {
     if (Pa_IsStreamActive(stream) == 1)
+    {
         return true;
+    }
     return false;
 }
 

@@ -130,9 +130,13 @@ _JATTA_EXPORT void Jatta::ImageLoaders::PNG::Save(const String& filename, Jatta:
     //Get image information.
     Jatta::UInt32 width, height, bit_depth, color_type, pixelSize;
     if (image == NULL)
+    {
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::NULL_POINTER);
+    }
     if (image->GetMipmapCount() <= 0)
+    {
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::NO_BASE_MIPMAP);
+    }
     width = image->GetWidth();
     height = image->GetHeight();
 
@@ -149,7 +153,9 @@ _JATTA_EXPORT void Jatta::ImageLoaders::PNG::Save(const String& filename, Jatta:
         pixelSize = 3;
     }
     else
+    {
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::UNSUPPORTED_FORMAT);
+    }
 
 
     //Open file
