@@ -343,7 +343,10 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName
 #   else
     struct stat fileStat;
     int err = stat(fileName.GetCString(), &fileStat);
-    if (err != 0) return 0;
+    if (err != 0)
+    {
+        return 0;
+    }
 
     return (fileStat.st_mode & S_IFMT) == S_IFDIR;
 #   endif
@@ -362,13 +365,17 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& file
     String folderName = fileName;
 
     if (IsFolder(folderName.GetData())) //Folder exists
+    {
         return false;
+    }
 
     if (recursive)
     {
         String up = folderName.SubString(0,folderName.FindLastOf("/"));
         if (up != folderName)
+        {
             CreateFolder(up.GetData(), recursive);
+        }
     }
 
 #ifdef JATTA_WINDOWS
@@ -381,7 +388,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& file
 _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& fileName, bool recursive)
 {
     if (!IsFolder(fileName))
+    {
         return false;
+    }
 
     if (recursive)
     {
@@ -395,7 +404,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
             path += "/";
             path += files[i];
             if (DeleteFile(path.GetData()) == false)
+            {
                 return false;
+            }
         }
 
         //Delete each folder.
@@ -407,7 +418,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
                 path += "/";
                 path += folders[i];
                 if (DeleteFolder(path.GetData(), true) == false)
+                {
                     return false;
+                }
             }
         }
     }
@@ -441,9 +454,15 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, co
     return ::CopyFileW(fileName._ToWideString().c_str(), fileTo._ToWideString().c_str(), false) != 0;
 #   else
     std::ifstream f1( fileName.GetCString(), std::fstream::binary );
-    if ( !f1.is_open() ) return false;
+    if ( !f1.is_open() )
+    {
+        return false;
+    }
     std::ofstream f2( fileTo.GetCString(), std::fstream::trunc|std::fstream::binary );
-    if ( !f2.is_open() ) return false;
+    if ( !f2.is_open() )
+    {
+        return false;
+    }
     f2 << f1.rdbuf();
     return true;
 #   endif
@@ -457,6 +476,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Move(const Jatta::String& fileName, co
 {
     bool r = Copy(fileName, fileTo);
     if (r == false)
+    {
         return false;
+    }
     return DeleteFile(fileName);
 }

@@ -298,20 +298,28 @@ void Jatta::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short p
 
         sslContext = SSL_CTX_new(SSLv23_client_method());
         if (sslContext == NULL)
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_CTX_NEW);
+        }
 
         sslHandle = SSL_new(sslContext);
         if (sslHandle == NULL)
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_NEW);
+        }
 
         if (!SSL_set_fd(sslHandle, sock))
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_FD);
+        }
 
         while (true)
         {
             int resp = SSL_connect(sslHandle);
             if (resp == 1)
+            {
                 break;
+            }
 
             int error = SSL_get_error(sslHandle, resp);
 
@@ -321,11 +329,15 @@ void Jatta::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short p
                 //Just waiting it out seems to work.
             }
             else
+            {
                 throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_SSL_CONNECT);
+            }
         }
     }
     else
+    {
         throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::SOCKET_INVALID);
+    }
 
     connectionSecure = true;
 }
@@ -354,7 +366,9 @@ void Jatta::Network::SocketTCP::Close()
             SSL_free(sslHandle);
         }
         if (sslContext)
+        {
             SSL_CTX_free(sslContext);
+        }
 
         connectionSecure = false;
     }
@@ -371,7 +385,9 @@ bool Jatta::Network::SocketTCP::IsConnected()
     {
         char data;
         if (sock == INVALID_SOCKET)
+        {
             return false;
+        }
         if (SSL_peek(sslHandle, &data, 1) == 0)
         {
             sock = INVALID_SOCKET;
@@ -428,7 +444,9 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
     {
         int amount;
         if (sock == INVALID_SOCKET)
+        {
             return false;
+        }
 
         if ((amount = SSL_write(sslHandle, (const char*)data, size)) <= 0)
         {
@@ -466,7 +484,9 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     {
         int amount;
         if (sock == INVALID_SOCKET)
+        {
             return false;
+        }
 
         while (true)
         {
@@ -478,7 +498,9 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
                 return 0;
             }
             else if (amount > 0)
+            {
                 return amount;
+            }
 
             int error = SSL_get_error(sslHandle, amount);
 
@@ -488,7 +510,9 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
                 //Just waiting it out seems to work.
             }
             else
+            {
                 throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
+            }
         }
     }
 #   endif
@@ -516,7 +540,9 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
             return 0;
         }
         else
+        {
             throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
+        }
     }
     // Check if recv returned 0, if so, the remove socket disconnected gracefully.
     if (amount == 0)
@@ -525,7 +551,9 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
         return 0;
     }
     else
+    {
         return amount;
+    }
 }
 
 #include <iostream>
@@ -536,7 +564,9 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     {
         int amount;
         if (sock == INVALID_SOCKET)
+        {
             return false;
+        }
 
         while (true)
         {
@@ -548,7 +578,9 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
                 return 0;
             }
             else if (amount > 0)
+            {
                 return amount;
+            }
 
             int error = SSL_get_error(sslHandle, amount);
 
@@ -558,7 +590,9 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
                 //Just waiting it out seems to work.
             }
             else
+            {
                 throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
+            }
         }
     }
 #   endif

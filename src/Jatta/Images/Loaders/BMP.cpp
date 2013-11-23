@@ -143,11 +143,15 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
 _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
 {
     if (!CanLoad(file))
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+    }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+    }
 
     Byte* buffer = new Byte[fileSize];
     File::ReadData(file, buffer, fileSize);
@@ -161,12 +165,16 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
 
     //Check validitiy of the plane count. (Sanity check)
     if (dibHeader.Planes != 1)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_COLOR_PLANE_COUNT);
+    }
 
     //Check that there is no compression.  (No support atm)
     //TODO: Add compression support.
     if (dibHeader.Compression != BMPCompressionMethods::RGB)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+    }
 
     //Check for valid pixel format.
     if (dibHeader.BitCount != 1 && dibHeader.BitCount != 2 && dibHeader.BitCount != 4 && dibHeader.BitCount != 8 &&
@@ -219,11 +227,15 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
 _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHeader(const String& file)
 {
     if (!CanLoad(file))
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+    }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+    }
 
     Byte* buffer = new Byte[14];
     File::ReadData(file, buffer, 14);
@@ -234,11 +246,15 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHea
 _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::GetDIBHeader(const String& file)
 {
     if (!CanLoad(file))
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+    }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
+    {
         throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+    }
 
     Byte* buffer = new Byte[fileSize];
     File::ReadData(file, buffer, fileSize);

@@ -87,7 +87,9 @@ static void init()
 static void decode(uint4 output[], const uint1 input[], size_type len)
 {
     for (unsigned int i = 0, j = 0; j < len; i++, j += 4)
+    {
         output[i] = ((uint4)input[j]) | (((uint4)input[j+1]) << 8) | (((uint4)input[j+2]) << 16) | (((uint4)input[j+3]) << 24);
+    }
 }
 static void encode(uint1 output[], const uint4 input[], size_type len)
 {
@@ -191,7 +193,9 @@ static void update(const unsigned char *input, size_type length)
 
     // Update number of bits
     if ((count[0] += (length << 3)) < (length << 3))
+    {
         count[1]++;
+    }
     count[1] += (length >> 29);
 
     // number of bytes we need to fill in buffer
@@ -208,12 +212,16 @@ static void update(const unsigned char *input, size_type length)
 
         // transform chunks of blocksize (64 bytes)
         for (i = firstpart; i + blocksize <= length; i += blocksize)
+        {
             transform(&input[i]);
+        }
 
         index = 0;
     }
     else
+    {
         i = 0;
+    }
 
     // buffer remaining input
     memcpy(&buffer[index], &input[i], length-i);

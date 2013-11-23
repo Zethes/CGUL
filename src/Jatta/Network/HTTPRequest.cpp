@@ -187,7 +187,9 @@ bool Jatta::Network::HTTPRequest::PerformRequest(UInt32 timeout)
     response = responseHead + responseBody;
 
     if (header.connection == Network::HTTPConnections::CLOSE)
+    {
         Close();
+    }
 
     return true;
 }
@@ -205,35 +207,45 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
     {
         std::vector<String> parts = lines[i].Explode(" ");
         for (unsigned int j = 0; j < parts.size(); j++)
+        {
             parts[j].Trim();
+        }
 
         //Begin parsing.
         if (i == 0) //First line contains the status code.
         {
             header.status = parts[1].To<int>(HTTPStatusCodes::UNKNOWN);
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.statusString += parts[j] + " ";
+            }
             header.statusString.Trim();
         }
         else if (parts[0] == "Access-Control-Allow-Origin:")
         {
             header.accessControlAllowOrigin = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.accessControlAllowOrigin += parts[j] + " ";
+            }
             header.accessControlAllowOrigin.Trim();
         }
         else if (parts[0] == "Accept-Ranges:")
         {
             header.acceptRanges = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.acceptRanges += parts[j] + " ";
+            }
             header.acceptRanges.Trim();
         }
         else if (parts[0] == "Age:")
         {
             header.ageString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.ageString += parts[j] + " ";
+            }
             header.ageString.Trim();
 
             header.age = header.ageString.To<int>(-1);
@@ -242,72 +254,112 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         {
             header.allow = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.allow += parts[j] + " ";
+            }
             header.allow.Trim();
         }
         else if (parts[0] == "Cache-Control:")
         {
             header.cacheControl = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.cacheControl += parts[j] + " ";
+            }
             header.cacheControl.Trim();
         }
         else if (parts[0] == "Connection:")
         {
             header.contentEncodingString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentEncodingString += parts[j] + " ";
+            }
             header.contentEncodingString.Trim();
 
             if (header.connectionString == "close")
+            {
                 header.connection = HTTPConnections::CLOSE;
+            }
             else if (header.connectionString == "Keep-Alive")
+            {
                 header.connection = HTTPConnections::KEEP_ALIVE;
+            }
             else
+            {
                 header.connection = HTTPConnections::UNKNOWN;
+            }
         }
         else if (parts[0] == "Content-Disposition:")
         {
             header.contentDisposition = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentDisposition += parts[j] + " ";
+            }
             header.contentDisposition.Trim();
         }
         else if (parts[0] == "Content-Encoding:")
         {
             header.connectionString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.connectionString += parts[j] + " ";
+            }
             header.connectionString.Trim();
 
             if (header.contentEncodingString == "compress")
+            {
                 header.contentEncoding = HTTPContentEncoding::COMPRESS;
+            }
             else if (header.contentEncodingString == "deflate")
+            {
                 header.contentEncoding = HTTPContentEncoding::DEFLATE;
+            }
             else if (header.contentEncodingString == "exi")
+            {
                 header.contentEncoding = HTTPContentEncoding::EXI;
+            }
             else if (header.contentEncodingString == "gzip")
+            {
                 header.contentEncoding = HTTPContentEncoding::GZIP;
+            }
             else if (header.contentEncodingString == "identity")
+            {
                 header.contentEncoding = HTTPContentEncoding::IDENTITY;
+            }
             else if (header.contentEncodingString == "pack200-gzip")
+            {
                 header.contentEncoding = HTTPContentEncoding::PACK200_GZIP;
+            }
             else if (header.contentEncodingString == "sdch")
+            {
                 header.contentEncoding = HTTPContentEncoding::SDCH;
+            }
             else if (header.contentEncodingString == "bzip2")
+            {
                 header.contentEncoding = HTTPContentEncoding::BZIP2;
+            }
             else if (header.contentEncodingString == "peerdist")
+            {
                 header.contentEncoding = HTTPContentEncoding::PEERDIST;
+            }
             else if (header.contentEncodingString == "lzma")
+            {
                 header.contentEncoding = HTTPContentEncoding::LZMA;
+            }
             else
+            {
                 header.contentEncoding = HTTPContentEncoding::UNKNOWN;
+            }
         }
         else if (parts[0] == "Content-Language:")
         {
             header.contentLanguage = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentLanguage += parts[j] + " ";
+            }
             header.contentLanguage.Trim();
         }
         else if (parts[0] == "Content-Length:")
@@ -325,21 +377,27 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         {
             header.contentLocation = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentLocation += parts[j] + " ";
+            }
             header.contentLocation.Trim();
         }
         else if (parts[0] == "Content-MD5:")
         {
             header.contentMD5 = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentMD5 += parts[j] + " ";
+            }
             header.contentMD5.Trim();
         }
         else if (parts[0] == "Content-Range:")
         {
             header.contentRangeString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.contentRangeString += parts[j] + " ";
+            }
             header.contentRangeString.Trim();
         }
         else if (parts[0] == "Content-Type:")
@@ -355,39 +413,73 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
                     header.charsetString.ToUpper();
 
                     if (header.charsetString == "ISO-8859-1")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_1;
+                    }
                     else if (header.charsetString == "ISO-8859-2")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_2;
+                    }
                     else if (header.charsetString == "ISO-8859-3")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_3;
+                    }
                     else if (header.charsetString == "ISO-8859-4")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_4;
+                    }
                     else if (header.charsetString == "ISO-8859-5")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_5;
+                    }
                     else if (header.charsetString == "ISO-8859-6")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_6;
+                    }
                     else if (header.charsetString == "ISO-8859-7")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_7;
+                    }
                     else if (header.charsetString == "ISO-8859-8")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_8;
+                    }
                     else if (header.charsetString == "ISO-8859-9")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_9;
+                    }
                     else if (header.charsetString == "ISO-8859-10")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_10;
+                    }
                     else if (header.charsetString == "ISO-8859-15")
+                    {
                         header.charset = HTTPCharsets::ISO_8859_15;
+                    }
                     else if (header.charsetString == "ISO-2022-JP")
+                    {
                         header.charset = HTTPCharsets::ISO_2022_JP;
+                    }
                     else if (header.charsetString == "ISO-2022-JP-2")
+                    {
                         header.charset = HTTPCharsets::ISO_2022_JP_2;
+                    }
                     else if (header.charsetString == "ISO-2022-KR")
+                    {
                         header.charset = HTTPCharsets::ISO_2022_KR;
+                    }
                     else if (header.charsetString == "UTF-8")
+                    {
                         header.charset = HTTPCharsets::UTF_8;
+                    }
                     else if (header.charsetString == "UTF-16")
+                    {
                         header.charset = HTTPCharsets::UTF_16;
+                    }
                     else
+                    {
                         header.charset = HTTPCharsets::UNKNOWN;
+                    }
                 }
                 else if (parts[j].FindFirstOf(";") > 0)
                 {
@@ -400,63 +492,81 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         {
             header.date = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.date += parts[j] + " ";
+            }
             header.date.Trim();
         }
         else if (parts[0] == "ETag:")
         {
             header.eTag = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.eTag += parts[j] + " ";
+            }
             header.eTag.Trim();
         }
         else if (parts[0] == "Expires:")
         {
             header.expires = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.expires += parts[j] + " ";
+            }
             header.expires.Trim();
         }
         else if (parts[0] == "Last-Modified:")
         {
             header.lastModified = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.lastModified += parts[j] + " ";
+            }
             header.lastModified.Trim();
         }
         else if (parts[0] == "Link:")
         {
             header.link = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.link += parts[j] + " ";
+            }
             header.link.Trim();
         }
         else if (parts[0] == "Location:")
         {
             header.location = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.location += parts[j] + " ";
+            }
             header.location.Trim();
         }
         else if (parts[0] == "P3P:")
         {
             header.p3p = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.p3p += parts[j] + " ";
+            }
             header.p3p.Trim();
         }
         else if (parts[0] == "Pragma:")
         {
             header.pragma = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.pragma += parts[j] + " ";
+            }
             header.pragma.Trim();
         }
         else if (parts[0] == "Proxy-Authenticate:")
         {
             header.proxyAuthenticate = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.proxyAuthenticate += parts[j] + " ";
+            }
             header.proxyAuthenticate.Trim();
         }
         else if (parts[0] == "Refresh:")
@@ -471,7 +581,9 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
                     header.refreshUrl.Trim();
                 }
                 else if (parts[j].FindFirstOf(";") > 0)
+                {
                     header.refresh = parts[j].SubString(0,parts[j].FindFirstOf(";")).To<int>(0);
+                }
             }
             header.refreshString.Trim();
         }
@@ -479,7 +591,9 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         {
             header.retryAfterString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.retryAfterString += parts[j] + " ";
+            }
             header.retryAfterString.Trim();
 
             header.retryAfter = header.retryAfterString.To<int>(0);
@@ -488,14 +602,18 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
         {
             header.server = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.server += parts[j] + " ";
+            }
             header.server.Trim();
         }
         else if (parts[0] == "Set-Cookie:")
         {
             header.setCookie = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.setCookie += parts[j] + " ";
+            }
             header.setCookie.Trim();
 
             //TODO: Parse Set-Cookie
@@ -506,69 +624,97 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
 
             header.statusString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.statusString += parts[j] + " ";
+            }
             header.statusString.Trim();
         }
         else if (parts[0] == "Strict-Transport-Security:")
         {
             header.strictTransportSecurity = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.strictTransportSecurity += parts[j] + " ";
+            }
             header.strictTransportSecurity.Trim();
         }
         else if (parts[0] == "Trailer:")
         {
             header.trailer = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.trailer += parts[j] + " ";
+            }
             header.trailer.Trim();
         }
         else if (parts[0] == "Transfer-Encoding:")
         {
             header.transferEncodingString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.transferEncodingString += parts[j] + " ";
+            }
             header.transferEncodingString.Trim();
 
             if (header.transferEncodingString == "chunked")
+            {
                 header.transferEncoding = HTTPTransferEncoding::CHUNKED;
+            }
             else if (header.transferEncodingString == "compress")
+            {
                 header.transferEncoding = HTTPTransferEncoding::COMPRESS;
+            }
             else if (header.transferEncodingString == "deflate")
+            {
                 header.transferEncoding = HTTPTransferEncoding::DEFLATE;
+            }
             else if (header.transferEncodingString == "gzip")
+            {
                 header.transferEncoding = HTTPTransferEncoding::GZIP;
+            }
             else if (header.transferEncodingString == "identity")
+            {
                 header.transferEncoding = HTTPTransferEncoding::IDENTITY;
+            }
             else
+            {
                 header.transferEncoding = HTTPTransferEncoding::UNKNOWN;
+            }
         }
         else if (parts[0] == "Vary:")
         {
             header.vary = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.vary += parts[j] + " ";
+            }
             header.vary.Trim();
         }
         else if (parts[0] == "Via:")
         {
             header.via = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.via += parts[j] + " ";
+            }
             header.via.Trim();
         }
         else if (parts[0] == "Warning:")
         {
             header.warning = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.warning += parts[j] + " ";
+            }
             header.warning.Trim();
         }
         else if (parts[0] == "WWW-Authenticate:")
         {
             header.wwwAuthenticate = "";
             for (unsigned int j = 1; j < parts.size(); j++)
+            {
                 header.wwwAuthenticate += parts[j] + " ";
+            }
             header.wwwAuthenticate.Trim();
         }
     }
@@ -656,11 +802,17 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt
                         {
                             char code = buffer[i+3-j];
                             if (code >= 48 && code <= 57) //Number
+                            {
                                 codePoint += (code-48)*((j == 0) ? 1 : 16*j);
+                            }
                             if (code >= 65 && code <= 70) //A-F
+                            {
                                 codePoint += (code-55)*((j == 0) ? 1 : 16*j);
+                            }
                             if (code >= 97 && code <= 102) //a-f
+                            {
                                 codePoint += (code-87)*((j == 0) ? 1 : 16*j);
+                            }
                         }
 
                         ret += codePoint;
@@ -673,11 +825,17 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt
                         {
                             char code = buffer[i+5-j];
                             if (code >= 48 && code <= 57) //Number
+                            {
                                 codePoint += (code-48)*((j == 0) ? 1 : 16*j);
+                            }
                             if (code >= 65 && code <= 70) //A-F
+                            {
                                 codePoint += (code-55)*((j == 0) ? 1 : 16*j);
+                            }
                             if (code >= 97 && code <= 102) //a-f
+                            {
                                 codePoint += (code-87)*((j == 0) ? 1 : 16*j);
+                            }
                         }
 
                         ret += Jatta::String::FromCodePoint(codePoint);
@@ -685,7 +843,9 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt
                     }
                 }
                 else
+                {
                     ret += buffer[i];
+                }
             }
         }
         break;
@@ -715,7 +875,9 @@ void Jatta::Network::HTTPRequest::Http(const String& url)
     DNS dns;
     std::vector<Jatta::String> lookup = dns.Lookup(url);
     if (lookup.size() == 0)
+    {
         return;
+    }
 
     sock->Connect(IPAddress(lookup[0]), 80);
 }
