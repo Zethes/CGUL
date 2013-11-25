@@ -29,6 +29,17 @@ namespace Jatta
             Type m[3];
         };
 
+        //! @brief Zero vector, defined as (0, 0, 0).
+        static const Vector3T zero;
+        //! @brief One vector, defined as (1, 1, 1).
+        static const Vector3T one;
+        //! @brief Unit X vector, defined as (1, 0, 0).
+        static const Vector3T unitX;
+        //! @brief Unit Y vector, defined as (0, 1, 0).
+        static const Vector3T unitY;
+        //! @brief Unit Y vector, defined as (0, 0, 1).
+        static const Vector3T unitZ;
+
         _JATTA_INLINE_DEFINE static Type DotProduct(const Vector3T& valueA, const Vector3T& valueB);
         _JATTA_INLINE_DEFINE static Vector3T CrossProduct(const Vector3T& valueA, const Vector3T& valueB);
         _JATTA_INLINE_DEFINE static Vector3T Normalized(const Vector3T& value);
@@ -45,11 +56,8 @@ namespace Jatta
         _JATTA_INLINE_DEFINE Vector3T& operator-=(const Vector3T& operand);
         _JATTA_INLINE_DEFINE Vector3T operator*(Type operand) const;
         _JATTA_INLINE_DEFINE Vector3T& operator*=(Type operand);
-        friend std::ostream& operator<<(std::ostream& stream, const Vector3T& vector)
-        {
-            stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << "]";
-            return stream;
-        }
+        //! @brief An operator to output this vector on an output stream.
+        _JATTA_INLINE_DEFINE std::ostream& operator<<(std::ostream& stream) const;
         _JATTA_INLINE_DEFINE bool operator==(const Vector3T< Type >& operand) const;
 
         _JATTA_INLINE_DEFINE Type At(UInt32 index) const;

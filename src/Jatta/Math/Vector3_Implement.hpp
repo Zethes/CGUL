@@ -9,6 +9,31 @@
 
 #include <cmath>
 
+/**
+ */
+template< typename Type >
+const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::zero(0, 0, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::one(1, 1, 1);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitX(1, 0, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitY(0, 1, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitZ(0, 0, 1);
+
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::DotProduct(const Vector3T& valueA, const Vector3T& valueB)
 {
@@ -118,6 +143,16 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
     this->y *= operand;
     this->z *= operand;
     return *this;
+}
+
+/** @param stream The output stream.
+ *  @returns A reference to the output stream.
+ */
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector3T< Type >::operator<<(std::ostream& stream) const
+{
+    stream << "[" << x << ", " << y << ", " << z << "]";
+    return stream;
 }
 
 template< typename Type >

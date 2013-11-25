@@ -221,6 +221,16 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >& Jatta::Vector2T< Type >::operat
     return *this;
 }
 
+/** @param stream The output stream.
+ *  @returns A reference to the output stream.
+ */
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector2T< Type >::operator<<(std::ostream& stream) const
+{
+    stream << "[" << x << ", " << y << "]";
+    return stream;
+}
+
 /** @param index The component index, so 0 for x and 1 for y.
  *  @returns The value at that index.
  */

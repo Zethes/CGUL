@@ -31,6 +31,19 @@ namespace Jatta
             Type m[4];
         };
 
+        //! @brief Zero vector, defined as (0, 0, 0, 0).
+        static const Vector4T zero;
+        //! @brief One vector, defined as (1, 1, 1, 1).
+        static const Vector4T one;
+        //! @brief Unit X vector, defined as (1, 0, 0, 0).
+        static const Vector4T unitX;
+        //! @brief Unit Y vector, defined as (0, 1, 0, 0).
+        static const Vector4T unitY;
+        //! @brief Unit Y vector, defined as (0, 0, 1, 0).
+        static const Vector4T unitZ;
+        //! @brief Unit Y vector, defined as (0, 0, 0, 1).
+        static const Vector4T unitW;
+
         _JATTA_INLINE_DEFINE Vector4T();
         _JATTA_INLINE_DEFINE Vector4T(const Vector4T& copy);
         _JATTA_INLINE_DEFINE Vector4T(Type value);
@@ -38,11 +51,8 @@ namespace Jatta
 
         _JATTA_INLINE_DEFINE Type& operator[](UInt32 index);
         _JATTA_INLINE_DEFINE Vector4T operator*(const MatrixT< Type >& operand) const;
-        friend std::ostream& operator<<(std::ostream& stream, const Vector4T& vector)
-        {
-            stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << "]";
-            return stream;
-        }
+        //! @brief An operator to output this vector on an output stream.
+        _JATTA_INLINE_DEFINE std::ostream& operator<<(std::ostream& stream) const;
 
         _JATTA_INLINE_DEFINE Jatta::Float32 At(UInt32 index) const;
 

@@ -10,6 +10,36 @@
 
 #include <cmath>
 
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::zero(0, 0, 0, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::one(1, 1, 1, 1);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::unitX(1, 0, 0, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::unitY(0, 1, 0, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::unitZ(0, 0, 1, 0);
+
+/**
+ */
+template< typename Type >
+const Jatta::Vector4T< Type > Jatta::Vector4T< Type >::unitW(0, 0, 0, 1);
+
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type >::Vector4T()
 {
@@ -59,6 +89,16 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type > Jatta::Vector4T< Type >::operato
                    x * operand.m[0][1] + y * operand.m[1][1] + z * operand.m[2][1] + w * operand.m[3][1],
                    x * operand.m[0][2] + y * operand.m[1][2] + z * operand.m[2][2] + w * operand.m[3][2],
                    x * operand.m[0][3] + y * operand.m[1][3] + z * operand.m[2][3] + w * operand.m[3][3]);
+}
+
+/** @param stream The output stream.
+ *  @returns A reference to the output stream.
+ */
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector4T< Type >::operator<<(std::ostream& stream) const
+{
+    stream << "[" << x << ", " << y << ", " << z << ", " << w << "]";
+    return stream;
 }
 
 template< typename Type >
