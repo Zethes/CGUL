@@ -8,14 +8,16 @@
 _JATTA_EXPORT Jatta::JSON::Object::Object()
 {
 }
+
 _JATTA_EXPORT Jatta::JSON::Object::~Object()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Object::Object(const Object& o)
+_JATTA_EXPORT Jatta::JSON::Object::Object(const Object& o) :
+    pairs(o.pairs)
 {
-    pairs = o.pairs;
 }
+
 _JATTA_EXPORT Jatta::JSON::Object& Jatta::JSON::Object::operator=(const Object& o)
 {
     pairs = o.pairs;
@@ -65,9 +67,9 @@ _JATTA_EXPORT Jatta::JSON::Array::~Array()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Array::Array(const Array& a)
+_JATTA_EXPORT Jatta::JSON::Array::Array(const Array& a) :
+    items(a.items)
 {
-    items = a.items;
 }
 
 _JATTA_EXPORT Jatta::JSON::Array& Jatta::JSON::Array::operator=(const Array& a)
@@ -121,61 +123,86 @@ _JATTA_EXPORT Jatta::Size Jatta::JSON::Array::Size() const
     return items.size();
 }
 
-
-_JATTA_EXPORT Jatta::JSON::Value::Value()
+_JATTA_EXPORT Jatta::JSON::Value::Value() :
+    type(ValueType::NIL),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(false)
 {
-    type = ValueType::NIL;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const SInt32 v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const SInt32 v) :
+    type(ValueType::INT),
+    valueInt(v),
+    valueFloat(0.0f),
+    valueBool(false)
 {
-    type = ValueType::INT;
-    valueInt = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const UInt32 v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const UInt32 v) :
+    type(ValueType::INT),
+    valueInt(v),
+    valueFloat(0.0f),
+    valueBool(false)
 {
-    type = ValueType::INT;
-    valueInt = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const double v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const double v) :
+    type(ValueType::FLOAT),
+    valueInt(0),
+    valueFloat(v),
+    valueBool(false)
 {
-    type = ValueType::FLOAT;
-    valueInt = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Float32 v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const Float32 v) :
+    type(ValueType::FLOAT),
+    valueInt(0),
+    valueFloat(v),
+    valueBool(false)
 {
-    type = ValueType::FLOAT;
-    valueFloat = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const bool v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const bool v) :
+    type(ValueType::BOOL),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(v)
 {
-    type = ValueType::BOOL;
-    valueBool = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const String& v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const String& v) :
+    type(ValueType::STRING),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(false),
+    valueString(v)
 {
-    type = ValueType::STRING;
-    valueString = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Object& v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const Object& v) :
+    type(ValueType::OBJECT),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(false),
+    valueObject(v)
 {
-    type = ValueType::OBJECT;
-    valueObject = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Array& v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const Array& v) :
+    type(ValueType::ARRAY),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(false),
+    valueArray(v)
 {
-    type = ValueType::ARRAY;
-    valueArray = v;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const JSON::Value& v)
+_JATTA_EXPORT Jatta::JSON::Value::Value(const JSON::Value& v) :
+    type(ValueType::NIL),
+    valueInt(0),
+    valueFloat(0.0f),
+    valueBool(false)
 {
     switch (v.Type())
     {
@@ -218,10 +245,6 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const JSON::Value& v)
         case ValueType::NIL:
         {
             type = ValueType::NIL;
-            break;
-        }
-        default:
-        {
             break;
         }
     }
@@ -374,7 +397,6 @@ _JATTA_EXPORT Jatta::String Jatta::JSON::Value::ToString()
         default:
         {
             return U8("null");
-            break;
         }
     }
 }
@@ -797,7 +819,7 @@ _JATTA_EXPORT Jatta::JSON::Object Jatta::JSON::ParseObject(Jatta::String str)
     }
     parts.push_back(part);
 
-    for (std::vector<String>::const_iterator i = parts.begin(); i != parts.end(); i++)
+    for (std::vector<String>::const_iterator i = parts.begin(); i != parts.end(); ++i)
     {
         bool insideString = false;
 
