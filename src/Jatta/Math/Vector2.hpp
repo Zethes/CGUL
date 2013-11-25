@@ -50,9 +50,9 @@ namespace Jatta
         _JATTA_INLINE_DEFINE Vector2T();
         //! @brief Copies a vector into this vector.
         _JATTA_INLINE_DEFINE Vector2T(const Vector2T& copy);
-        //! @brief Initializes both x and y to a given value.
+        //! @brief Initializes all components to a given value.
         _JATTA_INLINE_DEFINE Vector2T(Type value);
-        //! @brief Initializes the vector with a given x and y value.
+        //! @brief Initializes the vector with individual component values.
         _JATTA_INLINE_DEFINE Vector2T(Type x, Type y);
 
         //! @brief Assigns another vector into this vector.
@@ -94,9 +94,9 @@ namespace Jatta
         //! @brief Accesses an individual (constant) component in this vector.
         _JATTA_INLINE_DEFINE Type At(UInt32 index) const;
 
-        //! @brief Sets both x and y components to a given value.
+        //! @brief Sets all components to a given value.
         _JATTA_INLINE_DEFINE void Set(Type value);
-        //! @brief Sets the x and y components to the given values.
+        //! @brief Sets all components to the given values.
         _JATTA_INLINE_DEFINE void Set(Type x, Type y);
 
         //! @brief Clears the vector to (0, 0).

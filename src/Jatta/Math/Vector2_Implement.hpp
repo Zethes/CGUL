@@ -58,7 +58,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T(const Vector2T& copy)
     this->y = copy.y;
 }
 
-/** @param value The value for both x and y.
+/** @param value The value for each component.
  */
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type >::Vector2T(Type value)
@@ -231,7 +231,7 @@ _JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector2T< Type >::operator<<(std::o
     return stream;
 }
 
-/** @param index The component index, so 0 for x and 1 for y.
+/** @param index The component index, so 0 for x, and 1 for y.
  *  @returns The value at that index.
  */
 template< typename Type >
@@ -240,7 +240,7 @@ _JATTA_INLINE_IMPLEMENT Type& Jatta::Vector2T< Type >::At(UInt32 index)
     return m[index];
 }
 
-/** @param index The component index, so 0 for x and 1 for y.
+/** @param index The component index, so 0 for x, and 1 for y.
  *  @returns The value at that index.
  */
 template< typename Type >
@@ -249,7 +249,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector2T< Type >::At(UInt32 index) const
     return m[index];
 }
 
-/** @param value The value to set both x and y to.
+/** @param value The value to set all components to.
  */
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Set(Type value)
@@ -273,8 +273,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Set(Type x, Type y)
 template< typename Type >
 _JATTA_INLINE_IMPLEMENT void Jatta::Vector2T< Type >::Clear()
 {
-    this->x = 0;
-    this->y = 0;
+    this->x = this->y = 0;
 }
 
 /** @details Swizzles the vector allowing the components to be re-arranged into a new vector.
