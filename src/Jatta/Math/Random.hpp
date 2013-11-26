@@ -22,24 +22,24 @@ namespace Jatta
         unsigned int addition;
         unsigned int modulus;
     public:
-        _JATTA_EXPORT static float UniformDist(float a, float b, float u);
-        _JATTA_EXPORT static float ExponentialDist(float beta, float u);
-        _JATTA_EXPORT static float WeibullDist(float a, float b, float c, float u);
-        _JATTA_EXPORT static float TriangularDist(float xmin, float xmax, float c, float u);
-        _JATTA_EXPORT static float Normal(float mean, float variance, float x);
+        _JATTA_INLINE_DEFINE static float UniformDist(float a, float b, float u);
+        _JATTA_INLINE_DEFINE static float ExponentialDist(float beta, float u);
+        _JATTA_INLINE_DEFINE static float WeibullDist(float a, float b, float c, float u);
+        _JATTA_INLINE_DEFINE static float TriangularDist(float xmin, float xmax, float c, float u);
+        _JATTA_INLINE_DEFINE static float Normal(float mean, float variance, float x);
 
-        _JATTA_EXPORT Random();
-        _JATTA_EXPORT Random(unsigned int seed);
-        _JATTA_EXPORT Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus);
+        _JATTA_INLINE_DEFINE Random();
+        _JATTA_INLINE_DEFINE Random(unsigned int seed);
+        _JATTA_INLINE_DEFINE Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus);
 
-        _JATTA_EXPORT void SetSeed(unsigned int seed);
+        _JATTA_INLINE_DEFINE void SetSeed(unsigned int seed);
 
-        _JATTA_EXPORT unsigned int GetInteger();
-        _JATTA_EXPORT float GetDecimal();
+        _JATTA_INLINE_DEFINE unsigned int GetInteger();
+        _JATTA_INLINE_DEFINE float GetDecimal();
 
-        _JATTA_EXPORT float GetUniform(float a, float b);
-        _JATTA_EXPORT float GetExponential(float beta);
-        _JATTA_EXPORT float GetWeibull(float a, float b, float c);
+        _JATTA_INLINE_DEFINE float GetUniform(float a, float b);
+        _JATTA_INLINE_DEFINE float GetExponential(float beta);
+        _JATTA_INLINE_DEFINE float GetWeibull(float a, float b, float c);
 
         // TODO: clean this up and maybe add functionality
     };
