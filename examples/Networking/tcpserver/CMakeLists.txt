@@ -12,7 +12,6 @@ jatta_bake_rpath(server "$ORIGIN")
 
 add_executable(client client.cpp)
 target_link_libraries(client ${Jatta_LIBRARIES})
-jatta_copy_modules(client ${CMAKE_CURRENT_BINARY_DIR})
 jatta_bake_rpath(client "$ORIGIN")
 
 install(TARGETS server DESTINATION .)

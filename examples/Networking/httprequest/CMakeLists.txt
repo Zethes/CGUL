@@ -8,7 +8,6 @@ include_directories(${Jatta_INCLUDE_DIRS})
 
 add_executable(http main.cpp)
 target_link_libraries(http ${Jatta_LIBRARIES})
-jatta_copy_modules(http ${CMAKE_CURRENT_BINARY_DIR})
 jatta_bake_rpath(http "$ORIGIN")
 
 set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")
