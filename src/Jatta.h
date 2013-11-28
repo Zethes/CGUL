@@ -96,13 +96,13 @@
 #   include "Jatta/Images/Loaders/JPEG.h"
 #endif
 
-#include "Jatta/Math/Math.h"
-#include "Jatta/Math/Matrix.h"
-#include "Jatta/Math/Random.h"
-#include "Jatta/Math/Quaternion.h"
-#include "Jatta/Math/Vector2.h"
-#include "Jatta/Math/Vector3.h"
-#include "Jatta/Math/Vector4.h"
+#include "Jatta/Math/Math.hpp"
+#include "Jatta/Math/Matrix.hpp"
+#include "Jatta/Math/Random.hpp"
+#include "Jatta/Math/Quaternion.hpp"
+#include "Jatta/Math/Vector2.hpp"
+#include "Jatta/Math/Vector3.hpp"
+#include "Jatta/Math/Vector4.hpp"
 
 #ifdef Jatta_USE_NETWORK
 #   include "Jatta/Network/Adapter.h"

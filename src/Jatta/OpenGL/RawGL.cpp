@@ -4,7 +4,7 @@
  */
 
 #include "RawGL.h"
-#include "../Math/Matrix.h"
+#include "../Math/Matrix.hpp"
 
 _JATTA_EXPORT void Jatta::GL::ActiveTexture(Enum target)
 {
@@ -451,7 +451,7 @@ _JATTA_EXPORT void Jatta::GL::UniformMatrix4f(SInt location, bool transpose, con
     GLCHECK("Failed to set shader uniform.");
 }
 
-_JATTA_EXPORT void Jatta::GL::UniformMatrix4f(SInt location, bool transpose, const Matrix& value)
+_JATTA_EXPORT void Jatta::GL::UniformMatrix4f(SInt location, bool transpose, const MatrixT< Float32 >& value)
 {
     GLCLEAR();
     glUniformMatrix4fv(location, 1, transpose, value.GetData());

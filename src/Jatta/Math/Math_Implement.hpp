@@ -3,10 +3,31 @@
  * All rights reserved.
  */
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Vector4.hpp"
 #include <cmath>
+
+//! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
+template< typename Type >
+_JATTA_INLINE_DEFINE Type Jatta::Math::Tau()
+{
+    return (Type)6.2831853071795864;
+}
+
+//! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
+template< typename Type >
+_JATTA_INLINE_DEFINE Type Jatta::Math::Pi()
+{
+    return (Type)3.14159265358979323;
+}
+
+//! @brief The constant e, defined as 2.718281828459045235
+template< typename Type >
+_JATTA_INLINE_DEFINE Type Jatta::Math::E()
+{
+    return (Type)2.718281828459045235;
+}
 
 /** @details The absolute value is defined as the one dimensional distance of a value from 0.  In
  *  other words, the value is always positive.  A value of 5 results in 5, while a value of -4
@@ -14,9 +35,10 @@
  *  @param x The number to get the absolute value of.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Abs(Float32 x)
+template< typename ReturnType, typename Type >
+_JATTA_INLINE_IMPLEMENT ReturnType Jatta::Math::Abs(Type x)
 {
-    return (x > 0 ? x : -x);
+    return (ReturnType)(x > 0 ? x : -x);
 }
 
 /** @details The sign is determined based on if the number is positive, negative, or zero.  A
@@ -24,7 +46,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Abs(Float32 x)
  *  @param x The number to get the sign of.
  *  @returns -1, 0, or 1
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sign(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sign(Type x)
 {
     return (x > 0 ? 1.0f : (x < 0.0f ? -1 : 0.0f));
 }
@@ -32,7 +55,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sign(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cos(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cos(Type x)
 {
     return std::cos(x);
 }
@@ -40,7 +64,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cos(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sin(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sin(Type x)
 {
     return std::sin(x);
 }
@@ -48,7 +73,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sin(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tan(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tan(Type x)
 {
     return std::tan(x);
 }
@@ -56,7 +82,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tan(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cosh(Type x)
 {
     return std::cosh(x);
 }
@@ -64,7 +91,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Cosh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sinh(Type x)
 {
     return std::sinh(x);
 }
@@ -72,7 +100,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sinh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tanh(Type x)
 {
     return std::tanh(x);
 }
@@ -80,7 +109,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Tanh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACos(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACos(Type x)
 {
     return std::acos(x);
 }
@@ -88,7 +118,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACos(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASin(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASin(Type x)
 {
     return std::asin(x);
 }
@@ -96,12 +127,14 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASin(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATan(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATan(Type x)
 {
     return std::atan(x);
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATan2(Type y, Type x)
 {
     return std::atan2(y, x);
 }
@@ -110,7 +143,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATan2(Float32 y, Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACosh(Type x)
 {
     return std::acosh(x);
 }
@@ -118,7 +152,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ACosh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASinh(Type x)
 {
     return std::asinh(x);
 }
@@ -126,7 +161,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ASinh(Float32 x)
 /** @param x The input value.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATanh(Type x)
 {
     return std::atanh(x);
 }
@@ -135,55 +171,29 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::ATanh(Float32 x)
 /** @param deg A value in degrees.
  *  @returns The resulting value in radians.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::DegToRad(Float32 deg)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::DegToRad(Type deg)
 {
-    return deg / 180.0f * pi;
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Vector2 Jatta::Math::DegToRad(const Vector2& deg)
-{
-    return Vector2(DegToRad(deg.x), DegToRad(deg.y));
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3 Jatta::Math::DegToRad(const Vector3& deg)
-{
-    return Vector3(DegToRad(deg.x), DegToRad(deg.y), DegToRad(deg.z));
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Vector4 Jatta::Math::DegToRad(const Vector4& deg)
-{
-    return Vector4(DegToRad(deg.x), DegToRad(deg.y), DegToRad(deg.z), DegToRad(deg.w));
+    return deg / 180.0f * Pi< Type >();
 }
 
 /** @param deg A value in radians.
  *  @returns The resulting value in degrees.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::RadToDeg(Float32 rad)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::RadToDeg(Type rad)
 {
-    return rad * (180.0f / pi);
+    return rad * (180.0f / Pi< Type >());
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Vector2 Jatta::Math::RadToDeg(const Vector2& rad)
-{
-    return Vector2(RadToDeg(rad.x), RadToDeg(rad.y));
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3 Jatta::Math::RadToDeg(const Vector3& rad)
-{
-    return Vector3(RadToDeg(rad.x), DegToRad(rad.y), RadToDeg(rad.z));
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Vector4 Jatta::Math::RadToDeg(const Vector4& rad)
-{
-    return Vector4(RadToDeg(rad.x), RadToDeg(rad.y), RadToDeg(rad.z), RadToDeg(rad.w));
-}
-
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Ln(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Ln(Type x)
 {
     return std::log(x);
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Log(Type x, Type b)
 {
     return std::log(x) / std::log(b); //Change of base: log(x,b) = ln(x)/ln(b)
 }
@@ -192,7 +202,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Log(Float32 x, Float32 b)
  *  @param b The second value.
  *  @returns The smaller of the two values.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Min(Type a, Type b)
 {
     return (a < b ? a : b);
 }
@@ -201,7 +212,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Min(Float32 a, Float32 b)
  *  @param b The second value.
  *  @returns The larger of the two values.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Max(Type a, Type b)
 {
     return (a > b ? a : b);
 }
@@ -209,7 +221,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Max(Float32 a, Float32 b)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Floor(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Floor(Type x)
 {
     return std::floor(x);
 }
@@ -217,7 +230,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Floor(Float32 x)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Round(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Round(Type x)
 {
     return std::floor(x + 0.5f);
 }
@@ -225,7 +239,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Round(Float32 x)
 /** @param x The number to round.
  *  @return The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Ceil(Type x)
 {
     return std::ceil(x);
 }
@@ -237,7 +252,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Ceil(Float32 x)
  *  @returns The resulting value.
  *  @see Sign
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Mod(Type x, Type div)
 {
     return Math::Abs(x - Math::Floor(x / div) * div) * Math::Sign(x);
 }
@@ -246,7 +262,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Mod(Float32 x, Float32 div)
  *  @param x The number to square.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqr(Type x)
 {
     return x * x;
 }
@@ -255,7 +272,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqr(Float32 x)
  *  @param x The number to find the square root of.
  *  @returns The resulting value.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqrt(Type x)
 {
     return std::sqrt(x);
 }
@@ -268,7 +286,8 @@ _JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Sqrt(Float32 x)
  *  @param epsilon The maximum difference between the values.  Usually something really small like 0.00001f.
  *  @returns True if the two values are within the given epsilon, false otherwise.
  */
-_JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Float32 value, Float32 compare, Float32 epsilon)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Type value, Type compare, Type epsilon)
 {
     return (Math::Abs(value - compare) <= epsilon);
 }
@@ -277,7 +296,8 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Float32 value, Float32 compa
  *  @param y The exponent value.
  *  @returns x raised to the power of y.
  */
-_JATTA_INLINE_IMPLEMENT Jatta::Float32 Jatta::Math::Pow(Float32 x, Float32 y)
+template< typename Type >
+_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Pow(Type x, Type y)
 {
     return std::pow(x, y);
 }

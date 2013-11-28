@@ -6,7 +6,7 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "../Exceptions/FatalException.h"
-#include "../Math/Math.h"
+#include "../Math/Math.hpp"
 #ifdef Jatta_USE_OPENGL
 #   include "../OpenGL/GL.h"
 #endif

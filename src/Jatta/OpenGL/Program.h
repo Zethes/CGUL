@@ -6,10 +6,10 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "Shader.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector3.h"
-#include "../Math/Vector4.h"
-#include "../Math/Matrix.h"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
+#include "../Math/Matrix.hpp"
 #include "../Images/Color.h"
 #include "../External/Defines.h"
 

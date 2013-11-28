@@ -4,8 +4,8 @@
  */
 
 #include "Color.h"
-#include "../Math/Vector3.h"
-#include "../Math/Vector4.h"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
 
 /** @param hue Hue value from 0-360.
  *  @param saturation Saturation value from 0-255.
@@ -139,22 +139,4 @@ _JATTA_EXPORT Jatta::Color& Jatta::Color::operator=(const Color& operand)
     this->b = operand.b;
     this->a = operand.a;
     return *this;
-}
-
-/** @details Each element is calculated by taking their respective values and dividing by 255.0f.
- *  This is useful when colors need to be represented as floating point numbers rather than byte
- *  values, as is the case in a lot of API's (especially graphical ones, such as OpenGL).
- *  @returns A vector containing the r, g, b values as floating point x, y, z.
- */
-_JATTA_EXPORT Jatta::Vector3 Jatta::Color::ToVector3() const
-{
-    return Vector3(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
-}
-
-/** @details Same as @ref ToVector3 except it contains the alpha value as well.
- *  @returns A vector containing the r, g, b, a values as floating point x, y, z, w.
- */
-_JATTA_EXPORT Jatta::Vector4 Jatta::Color::ToVector4() const
-{
-    return Vector4(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
 }

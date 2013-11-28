@@ -116,8 +116,8 @@ endif()
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_DEFINITIONS})
 
 # Look for libraries
-set(Jatta_REFRESH_LIBRARIES OFF CACHE BOOL "Forces Jatta to refresh searching for libraries everytime cmake runs.")
-mark_as_advanced(Jatta_REFRESH_LIBRARIES)
+set(Jatta_REFRESH_CAPABILITIES OFF CACHE BOOL "Forces Jatta to refresh c++ capabilities in Config.h")
+mark_as_advanced(Jatta_REFRESH_CAPABILITIES)
 include(cmake/Libraries/Libraries.cmake)
 
 # Compile the library

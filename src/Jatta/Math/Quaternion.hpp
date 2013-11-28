@@ -9,30 +9,35 @@
 
 namespace Jatta
 {
-    struct Vector2;
-    struct Vector3;
-    struct Vector4;
-    struct Matrix;
+    template< typename Type >
+    struct Vector2T;
+    template< typename Type >
+    struct Vector3T;
+    template< typename Type >
+    struct Vector4T;
+    template< typename Type >
+    struct MatrixT;
 
     /** @brief Quaternion
      *  @todo Finish this class.
      */
-    struct Quaternion
+    template< typename Type >
+    struct QuaternionT
     {
         union
         {
             struct
             {
-                Float32 r, i, j, k;
+                Type r, i, j, k;
             };
             struct
             {
-                Float32 w, x, y, z;
+                Type w, x, y, z;
             };
-            Float32 m[4];
+            Type m[4];
         };
-        Quaternion();
-        Quaternion(Float32 w, Float32 x, Float32 y, Float32 z);
+        QuaternionT();
+        QuaternionT(Type w, Type x, Type y, Type z);
         /*Quaternion(double, const jVector3&);
         Quaternion(const jVector3&, double);
         jQuaternion operator+(const jQuaternion);
@@ -45,10 +50,14 @@ namespace Jatta
         void CreateBasis(jVector3*, jVector3*, jVector3*);*/
         void Normalize();
 
-        void RotateOnAxis(const Vector3& axis, Float32 angle);
+        void RotateOnAxis(const Vector3T< Type >& axis, Type angle);
 
         // TODO: finish the quaternion class, reference DirectX's D3DXQUATERNION
     };
+
+    typedef QuaternionT<Float32> Quaternion;
+    typedef QuaternionT<Float64> QuaternionD;
 }
 
 #include "../External/Undefines.h"
+#include "Quaternion_Implement.hpp"

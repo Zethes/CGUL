@@ -1,24 +1,23 @@
-#include "Quaternion.h"
-#include "Math.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix.h"
+#include "Math.hpp"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Matrix.hpp"
 
-Jatta::Quaternion::Quaternion()
+template< typename Type >
+Jatta::QuaternionT< Type >::QuaternionT()
 {
     w = 1;
     x = y = z = 0;
 }
 
-Jatta::Quaternion::Quaternion(Float32 w, Float32 x, Float32 y, Float32 z)
+template< typename Type >
+Jatta::QuaternionT< Type >::QuaternionT(Type w, Type x, Type y, Type z)
 {
     this->w = w;
     this->x = x;
     this->y = y;
     this->z = z;
 }
-
-
 
 /** @brief Normalizes the quaternion.
  *  @details In theory, a quaternion should always be normalized.  Due to floating point
@@ -27,11 +26,13 @@ Jatta::Quaternion::Quaternion(Float32 w, Float32 x, Float32 y, Float32 z)
  *  @note "A de-normalized quaternion is NOT a happy quaternion and will cause you problems"
  *  -Professor Nicholson
  */
-void Jatta::Quaternion::Normalize()
+template< typename Type >
+void Jatta::QuaternionT< Type >::Normalize()
 {
 }
 
-void Jatta::Quaternion::RotateOnAxis(const Vector3& axis, Float32 angle)
+template< typename Type >
+void Jatta::QuaternionT< Type >::RotateOnAxis(const Vector3T< Type >& axis, Type angle)
 {
     w = Math::Cos(angle / 2.0f);
     x = Math::Sin(angle / 2.0f) * axis.x;

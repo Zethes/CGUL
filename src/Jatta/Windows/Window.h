@@ -6,8 +6,8 @@
 #pragma once
 #include <Jatta/Config.h>
 #include "WindowStyle.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector4.h"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector4.hpp"
 #if defined(JATTA_BUILD) && defined(JATTA_MACOS)
 #   include "MacOS/WindowDelegate.h"
 #endif
@@ -125,9 +125,9 @@ namespace Jatta
         // @brief Gets the height of the window, excluding the border.
         _JATTA_EXPORT UInt32 GetHeight() const;
         // @brief Sets the size of the window, excluding the border.
-        _JATTA_EXPORT void SetSize(const Vector2& size) const; // TODO: use something other than Vector2
+        _JATTA_EXPORT void SetSize(const UCoord32& size) const;
         // @brief Gets the size of the window, excluding the border.
-        _JATTA_EXPORT Vector2 GetSize() const;
+        _JATTA_EXPORT UCoord32 GetSize() const;
 
         // @brief Sets whether the window is resizable or not.
         _JATTA_EXPORT void SetResizable(Boolean resizable);
@@ -135,7 +135,7 @@ namespace Jatta
         _JATTA_EXPORT Boolean GetResizable() const;
 
         // @brief Gets the window's border extents (the frame around the window).
-        _JATTA_EXPORT Vector4 GetFrameSize() const;
+        _JATTA_EXPORT URect32 GetFrameSize() const;
 
         // @brief Checks if the window is still open.
         _JATTA_EXPORT Boolean IsOpen() const;
