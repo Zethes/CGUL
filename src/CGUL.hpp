@@ -1,9 +1,20 @@
-/*                                    _____                                         *\
-|                                   (, /                                             |
-|                                     /  _  _/__/_ _                                 |
-|                                 ___/__(_(_(__(__(_(_                               |
-|                               /   /                                                |
-|                              (__ /                                                 |
+/*                                                                                  *\
+|                       ,gggg,                                                       |
+|                      ,88"""Y8b,                        ,dPYb,                      |
+|                     d8"     `Y8                        IP'`Yb                      |
+|                    d8'   8b  d8                        I8  8I                      |
+|                   ,8I    "Y88P'                        I8  8'                      |
+|                   I8'            ,gggg,gg  gg      gg  I8 dP                       |
+|                   d8            dP"  "Y8I  I8      8I  I8dP                        |
+|                   Y8,          i8'    ,8I  I8,    ,8I  I8P                         |
+|                   `Yba,,_____,,d8,   ,d8I ,d8b,  ,d8b,,d8b,_                       |
+|                     `"Y8888888P"Y8888P"8888P'"Y88P"`Y88P'"Y88                      |
+|                                      ,d8I'                                         |
+|                                    ,dP'8I                                          |
+|                                   ,8"  8I                                          |
+|                                   I8   8I                                          |
+|                                   `8, ,8I                                          |
+|                                    `Y8P"                                           |
 |                                                                                    |
 |  Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall                        |
 |  All rights reserved.                                                              |
