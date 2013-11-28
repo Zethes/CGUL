@@ -1,5 +1,9 @@
 ![CGUL](https://raw.github.com/Zethes/CGUL/master/resources/logo.png)
 
+What is it?
+=====
+CGUL (formerly Jatta) is a General Utility Library for C++.  CGUL is partially a thin wrapper between popular C libraries, but also uses and abuses the C++ syntax to extend the language.  CGUL's goal is to be compliant with C++ standards instead of C standards.  CGUL takes an object-oriented approach to common problems.  Error checking occurs through exceptions and classes are RAII compliant.  No error goes unchecked.
+
 Features
 =====
 
