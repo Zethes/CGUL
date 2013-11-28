@@ -12,5 +12,5 @@ add_subdirectory(PortAudio)
 add_subdirectory(Utility)
 add_subdirectory(Windows)
 
-set(Jatta_SOURCES ${Jatta_SOURCES} PARENT_SCOPE)
-set(Jatta_INSTALL ${Jatta_INSTALL} PARENT_SCOPE)
+set(CGUL_SOURCES ${CGUL_SOURCES} PARENT_SCOPE)
+set(CGUL_INSTALL ${CGUL_INSTALL} PARENT_SCOPE)

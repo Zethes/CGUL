@@ -1,14 +1,13 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
- */
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
 /** @file SocketTCP.cpp
  *  @brief Implements Network::SocketTCP
  */
 
-#include "SocketTCP.h"
-#include "../Exceptions/NetworkException.h"
+#include "SocketTCP.hpp"
+#include "../Exceptions/NetworkException.hpp"
 
 #ifdef OpenSSL_FOUND
 #include <openssl/rand.h>
@@ -17,7 +16,7 @@
 #endif
 
 #ifndef DOXYGEN
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -30,9 +29,9 @@ namespace Jatta
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
  */
-bool Jatta::Network::SocketTCP::MakeNonBlocking()
+bool CGUL::Network::SocketTCP::MakeNonBlocking()
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
 #   else
@@ -45,7 +44,7 @@ bool Jatta::Network::SocketTCP::MakeNonBlocking()
 
 /** @brief Turns off the Nagle Algorithm which removes a small delay in sending and receiving.
  */
-bool Jatta::Network::SocketTCP::MakeNoDelay()
+bool CGUL::Network::SocketTCP::MakeNoDelay()
 {
     // Turn off the Nagle Algorithm which will increase the socket's send and receive speed.
     int flag = 1;
@@ -55,7 +54,7 @@ bool Jatta::Network::SocketTCP::MakeNoDelay()
     return (result == 0);
 }
 
-Jatta::Network::SocketTCP::SocketTCP()
+CGUL::Network::SocketTCP::SocketTCP()
 {
     sock = INVALID_SOCKET;
     __jatta_network_initiate();
@@ -65,7 +64,7 @@ Jatta::Network::SocketTCP::SocketTCP()
 #   endif
 }
 
-Jatta::Network::SocketTCP::~SocketTCP()
+CGUL::Network::SocketTCP::~SocketTCP()
 {
 }
 
@@ -73,7 +72,7 @@ Jatta::Network::SocketTCP::~SocketTCP()
  *  @param ip The IP address to connect to.
  *  @param port The port number.
  */
-void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
+void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
 {
     // Check that the IP is valid
     if (!ip.IsValid())
@@ -157,7 +156,7 @@ void Jatta::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port
  *  @param ipv4 Whether to use the local ipv4 address or not.  Will use an ipv6 address otherwise.
  *  @param backlog How many clients can wait to be accepted.  Defaults to 10.
  */
-void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
+void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlog)
 {
     // Convert the port into a string.
     char portString[6];
@@ -240,7 +239,7 @@ void Jatta::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backl
     freeaddrinfo(result);
 }
 
-bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
+bool CGUL::Network::SocketTCP::Accept(SocketTCP* socket)
 {
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -251,7 +250,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
     // Try to accept an incoming client.
     if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
     {
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -285,7 +284,7 @@ bool Jatta::Network::SocketTCP::Accept(SocketTCP* socket)
 
 #ifdef OpenSSL_FOUND
 #include <iostream>
-void Jatta::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short port)
+void CGUL::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short port)
 {
     sslHandle = NULL;
     sslContext = NULL;
@@ -341,16 +340,16 @@ void Jatta::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short p
 
     connectionSecure = true;
 }
-void Jatta::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int backlog)
+void CGUL::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int backlog)
 {
 
 }
 #endif
 
 
-void Jatta::Network::SocketTCP::Close()
+void CGUL::Network::SocketTCP::Close()
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     closesocket(sock);
 #   else
     ::close(sock);
@@ -378,7 +377,7 @@ void Jatta::Network::SocketTCP::Close()
 /** @brief Checks if the socket is still connected to the remote host.
  *  @returns True if the connection is still active, false otherwise.
  */
-bool Jatta::Network::SocketTCP::IsConnected()
+bool CGUL::Network::SocketTCP::IsConnected()
 {
 #   ifdef OpenSSL_FOUND
     if (connectionSecure)
@@ -415,7 +414,7 @@ bool Jatta::Network::SocketTCP::IsConnected()
     return true;
 }
 
-Jatta::Network::IPAddress Jatta::Network::SocketTCP::GetIP()
+CGUL::Network::IPAddress CGUL::Network::SocketTCP::GetIP()
 {
     struct sockaddr_storage _Addr;
     socklen_t _Length = sizeof(_Addr);
@@ -437,7 +436,7 @@ Jatta::Network::IPAddress Jatta::Network::SocketTCP::GetIP()
  *  @param size The size of the array.
  *  @returns The number of bytes that were sent.
  */
-int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
+int CGUL::Network::SocketTCP::Send(const void* data, unsigned int size)
 {
 #   ifdef OpenSSL_FOUND
     if (connectionSecure)
@@ -477,7 +476,7 @@ int Jatta::Network::SocketTCP::Send(const void* data, unsigned int size)
  *  @param size The size of the data array.
  *  @returns The number of bytes that were received, or 0 if there was nothing to be received.
  */
-int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
+int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
 {
 #   ifdef OpenSSL_FOUND
     if (connectionSecure)
@@ -531,7 +530,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -557,7 +556,7 @@ int Jatta::Network::SocketTCP::Receive(void* data, unsigned int size)
 }
 
 #include <iostream>
-int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
+int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
 {
 #   ifdef OpenSSL_FOUND
     if (connectionSecure)
@@ -609,7 +608,7 @@ int Jatta::Network::SocketTCP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)

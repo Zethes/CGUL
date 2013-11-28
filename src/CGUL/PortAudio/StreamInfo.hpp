@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file StreamInfo.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace PortAudio
     {
         class StreamInfo
         {
-            const _JATTA_PASTREAM_INFO info;
+            const _CGUL_PASTREAM_INFO info;
         public:
-            _JATTA_EXPORT StreamInfo(const _JATTA_PASTREAM_INFO info);
+            _CGUL_EXPORT StreamInfo(const _CGUL_PASTREAM_INFO info);
 
-            _JATTA_EXPORT double GetInputLatency();
-            _JATTA_EXPORT double GetOutputLatency();
-            _JATTA_EXPORT double GetSampleRate();
+            _CGUL_EXPORT double GetInputLatency();
+            _CGUL_EXPORT double GetOutputLatency();
+            _CGUL_EXPORT double GetSampleRate();
         };
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

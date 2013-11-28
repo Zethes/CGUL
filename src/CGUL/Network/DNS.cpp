@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file DNS.cpp
  */
 
-#include "DNS.h"
-#include "../Exceptions/NetworkException.h"
+#include "DNS.hpp"
+#include "../Exceptions/NetworkException.hpp"
 
 #ifndef DOXYGEN
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -17,15 +19,15 @@ namespace Jatta
 }
 #endif
 
-Jatta::Network::DNS::DNS()
+CGUL::Network::DNS::DNS()
 {
 }
 
-Jatta::Network::DNS::~DNS()
+CGUL::Network::DNS::~DNS()
 {
 }
 
-std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host, Filter filter)
+std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, Filter filter)
 {
     __jatta_network_initiate();
 
@@ -42,7 +44,7 @@ std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host
     if ((status = getaddrinfo(host.GetCString(), NULL, &hints, &result)) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_DNS_LOOKUP, status);
-        return std::vector<Jatta::String>();
+        return std::vector<CGUL::String>();
     }
 
     unsigned int count = 0;
@@ -51,7 +53,7 @@ std::vector<Jatta::String> Jatta::Network::DNS::Lookup(const Jatta::String& host
         count++;
     }
 
-    std::vector<Jatta::String> list;
+    std::vector<CGUL::String> list;
     char ipstr[INET6_ADDRSTRLEN + 1];
     memset(ipstr, 0, INET6_ADDRSTRLEN + 1);
     ipstr[INET6_ADDRSTRLEN - 1] = 0;

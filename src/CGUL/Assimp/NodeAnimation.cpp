@@ -1,51 +1,53 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file NodeAnimation.cpp
  */
 
-#include "NodeAnimation.h"
+#include "NodeAnimation.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::NodeAnimation::NodeAnimation(aiNodeAnim* nodeAnim)
+_CGUL_EXPORT CGUL::Assimp::NodeAnimation::NodeAnimation(aiNodeAnim* nodeAnim)
 {
     this->nodeAnim = nodeAnim;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::NodeAnimation::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::NodeAnimation::GetName()
 {
     return String(nodeAnim->mNodeName.C_Str());
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::NodeAnimation::GetPositionKeyCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::NodeAnimation::GetPositionKeyCount()
 {
     return nodeAnim->mNumPositionKeys;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::NodeAnimation::GetRotationKeyCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::NodeAnimation::GetRotationKeyCount()
 {
     return nodeAnim->mNumRotationKeys;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::NodeAnimation::GetScalingKeyCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::NodeAnimation::GetScalingKeyCount()
 {
     return nodeAnim->mNumScalingKeys;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::NodeAnimation::GetPreState()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::NodeAnimation::GetPreState()
 {
     return nodeAnim->mPreState;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::NodeAnimation::GetPostState()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::NodeAnimation::GetPostState()
 {
     return nodeAnim->mPostState;
 }
 
-_JATTA_EXPORT Jatta::Assimp::VectorKey* Jatta::Assimp::NodeAnimation::GetPositionKeys()
+_CGUL_EXPORT CGUL::Assimp::VectorKey* CGUL::Assimp::NodeAnimation::GetPositionKeys()
 {
     return reinterpret_cast<VectorKey*>(nodeAnim->mPositionKeys);
 }
 
-_JATTA_EXPORT Jatta::Assimp::QuatKey* Jatta::Assimp::NodeAnimation::GetRotationKeys()
+_CGUL_EXPORT CGUL::Assimp::QuatKey* CGUL::Assimp::NodeAnimation::GetRotationKeys()
 {
     aiQuatKey* keys = nodeAnim->mRotationKeys;
 
@@ -53,13 +55,13 @@ _JATTA_EXPORT Jatta::Assimp::QuatKey* Jatta::Assimp::NodeAnimation::GetRotationK
     for (unsigned int i = 0; i < nodeAnim->mNumRotationKeys; i++)
     {
         ret[i].time = keys[i].mTime;
-        ret[i].value = Jatta::Quaternion(keys[i].mValue.w, keys[i].mValue.x, keys[i].mValue.y, keys[i].mValue.z);
+        ret[i].value = CGUL::Quaternion(keys[i].mValue.w, keys[i].mValue.x, keys[i].mValue.y, keys[i].mValue.z);
     }
 
     return ret;
 }
 
-_JATTA_EXPORT Jatta::Assimp::VectorKey* Jatta::Assimp::NodeAnimation::GetScalingKeys()
+_CGUL_EXPORT CGUL::Assimp::VectorKey* CGUL::Assimp::NodeAnimation::GetScalingKeys()
 {
     return reinterpret_cast<VectorKey*>(nodeAnim->mScalingKeys);
 }

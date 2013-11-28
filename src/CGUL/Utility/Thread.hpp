@@ -1,33 +1,35 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Thread.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
 #ifdef CPP_HAS_STD_THREAD
 
-namespace Jatta
+namespace CGUL
 {
     class Thread
     {
     private:
         std::thread* thread;
     public:
-        _JATTA_EXPORT Thread();
-        _JATTA_EXPORT virtual ~Thread();
+        _CGUL_EXPORT Thread();
+        _CGUL_EXPORT virtual ~Thread();
 
-        _JATTA_EXPORT void Run();
+        _CGUL_EXPORT void Run();
 
-        _JATTA_EXPORT void Join();
-        _JATTA_EXPORT void Detach();
+        _CGUL_EXPORT void Join();
+        _CGUL_EXPORT void Detach();
 
-        _JATTA_EXPORT virtual void Main() = 0;
+        _CGUL_EXPORT virtual void Main() = 0;
     };
 }
 
 #endif
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

@@ -1,39 +1,39 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+# C++ General Utility Library (mailto:cgul@zethes.com)
+# Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
 if (PNG_FOUND)
-    set(Jatta_SOURCES
-        ${Jatta_SOURCES}
+    set(CGUL_SOURCES
+        ${CGUL_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/PNG.cpp
     )
 
-    set(Jatta_INSTALL
-        ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
         ${CMAKE_CURRENT_SOURCE_DIR}/PNG.h
     )
 endif()
 
 if (JPEG_FOUND)
-    set(Jatta_SOURCES
-        ${Jatta_SOURCES}
+    set(CGUL_SOURCES
+        ${CGUL_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.cpp
     )
 
-    set(Jatta_INSTALL
-        ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
         ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.h
     )
 endif()
 
-set(Jatta_SOURCES
-    ${Jatta_SOURCES}
+set(CGUL_SOURCES
+    ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/BMP.cpp
     PARENT_SCOPE
 )
 
-set(Jatta_INSTALL
-    ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/BMP.h
     PARENT_SCOPE
 )

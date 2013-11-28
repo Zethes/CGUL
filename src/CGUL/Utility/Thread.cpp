@@ -1,38 +1,40 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Thread.cpp
  */
 
-#include "Thread.h"
+#include "Thread.hpp"
 
 // TODO: add some alternatives to std::thread (pthread and winapi thread)
 #ifdef CPP_HAS_STD_THREAD
 
-static void runThread(Jatta::Thread* ptr)
+static void runThread(CGUL::Thread* ptr)
 {
     ptr->Main();
 }
 
-_JATTA_EXPORT Jatta::Thread::Thread()
+_CGUL_EXPORT CGUL::Thread::Thread()
 {
 
 }
-_JATTA_EXPORT Jatta::Thread::~Thread()
+_CGUL_EXPORT CGUL::Thread::~Thread()
 {
     delete thread;
 }
 
-_JATTA_EXPORT void Jatta::Thread::Run()
+_CGUL_EXPORT void CGUL::Thread::Run()
 {
     thread = new std::thread(runThread, this);
 }
 
-_JATTA_EXPORT void Jatta::Thread::Join()
+_CGUL_EXPORT void CGUL::Thread::Join()
 {
     thread->join();
 }
 
-_JATTA_EXPORT void Jatta::Thread::Detach()
+_CGUL_EXPORT void CGUL::Thread::Detach()
 {
     thread->detach();
 }

@@ -1,84 +1,83 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
- */
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
-/** @file Undefines.h
- *  @brief Cleans up defines used in Jatta header files.
+/** @file Undefines.hpp
+ *  @brief Cleans up defines used in CGUL header files.
  *  @details Each header file sets up some defines to make including them as clean as possible.
- *  This file is included at the end of each Jatta header file to remove left-over defines from this
+ *  This file is included at the end of each CGUL header file to remove left-over defines from this
  *  cleaning process.
  */
 
-#ifdef JATTA_WINDOWS
-#   undef _JATTA_HWND
-#   undef _JATTA_DWORD
-#   undef _JATTA_PIXELFORMATDESCRIPTOR
-#   undef _JATTA_HDC
-#   undef _JATTA_HGLRC
-#   undef _JATTA_HGDIOBJ
+#ifdef CGUL_WINDOWS
+#   undef _CGUL_HWND
+#   undef _CGUL_DWORD
+#   undef _CGUL_PIXELFORMATDESCRIPTOR
+#   undef _CGUL_HDC
+#   undef _CGUL_HGLRC
+#   undef _CGUL_HGDIOBJ
 #endif
 
-#ifdef JATTA_LINUX
-#   undef _JATTA_DISPLAY
-#   undef _JATTA_WINDOW
-#   undef _JATTA_GLXCONTEXT
+#ifdef CGUL_LINUX
+#   undef _CGUL_DISPLAY
+#   undef _CGUL_WINDOW
+#   undef _CGUL_GLXCONTEXT
 #endif
 
 #ifdef FreeType_FOUND
-#   undef _JATTA_FT_FACE
+#   undef _CGUL_FT_FACE
 #endif
 
 #ifdef Assimp_FOUND
-#   undef _JATTA_AISCENE
-#   undef _JATTA_AIMESH
-#   undef _JATTA_AITEXTURE
-#   undef _JATTA_AIMATERIAL
-#   undef _JATTA_AICAMERA
-#   undef _JATTA_AIBONE
-#   undef _JATTA_AIVERTEXWEIGHT
-#   undef _JATTA_AIANIMATION
-#   undef _JATTA_AIMESHANIM
-#   undef _JATTA_AINODEANIM
-#   undef _JATTA_AIFACE
-#   undef _JATTA_AILIGHT
-#   undef _JATTA_AINODE
-#   undef _JATTA_AIUVTRANSFORM
-#   undef _JATTA_AIMATERIALPROPERTY
-#   undef _JATTA_AIBASEPROCESS
-#   undef _JATTA_AIBASEIMPORTER
-#   undef _JATTA_AIIOHANDLER
-#   undef _JATTA_AIPROGRESHANDLER
-#   undef _JATTA_AIIMPORTERDESC
-#   undef _JATTA_AIMEMORYINFO
-#   undef _JATTA_AIIMPORTER
-#   undef _JATTA_AIEXPORTER
-#   undef _JATTA_AIEXPORTFORMATDESC
-#   undef _JATTA_AIEXPORTDATABLOB
-#   undef _JATTA_AIEXPORTFORMATENTRY
+#   undef _CGUL_AISCENE
+#   undef _CGUL_AIMESH
+#   undef _CGUL_AITEXTURE
+#   undef _CGUL_AIMATERIAL
+#   undef _CGUL_AICAMERA
+#   undef _CGUL_AIBONE
+#   undef _CGUL_AIVERTEXWEIGHT
+#   undef _CGUL_AIANIMATION
+#   undef _CGUL_AIMESHANIM
+#   undef _CGUL_AINODEANIM
+#   undef _CGUL_AIFACE
+#   undef _CGUL_AILIGHT
+#   undef _CGUL_AINODE
+#   undef _CGUL_AIUVTRANSFORM
+#   undef _CGUL_AIMATERIALPROPERTY
+#   undef _CGUL_AIBASEPROCESS
+#   undef _CGUL_AIBASEIMPORTER
+#   undef _CGUL_AIIOHANDLER
+#   undef _CGUL_AIPROGRESHANDLER
+#   undef _CGUL_AIIMPORTERDESC
+#   undef _CGUL_AIMEMORYINFO
+#   undef _CGUL_AIIMPORTER
+#   undef _CGUL_AIEXPORTER
+#   undef _CGUL_AIEXPORTFORMATDESC
+#   undef _CGUL_AIEXPORTDATABLOB
+#   undef _CGUL_AIEXPORTFORMATENTRY
 #endif
 
 #ifdef PortAudio_FOUND
-#   undef _JATTA_PASTREAM
-#   undef _JATTA_PASTREAM_CALLBACK_TIMEINFO
-#   undef _JATTA_PASTREAM_CALLBACK_FLAGS
-#   undef _JATTA_PADEVICE_INFO
-#   undef _JATTA_PAHOSTAPI_INFO
-#   undef _JATTA_PASTREAM_INFO
-#   undef _JATTA_PAHOSTERROR_INFO
+#   undef _CGUL_PASTREAM
+#   undef _CGUL_PASTREAM_CALLBACK_TIMEINFO
+#   undef _CGUL_PASTREAM_CALLBACK_FLAGS
+#   undef _CGUL_PADEVICE_INFO
+#   undef _CGUL_PAHOSTAPI_INFO
+#   undef _CGUL_PASTREAM_INFO
+#   undef _CGUL_PAHOSTERROR_INFO
 #endif
 
 #ifdef PCRE_FOUND
-#   undef _JATTA_PCRE
-#   undef _JATTA_PCRE_EXTRA
+#   undef _CGUL_PCRE
+#   undef _CGUL_PCRE_EXTRA
 #endif
 
 #ifdef OpenSSL_FOUND
-#   undef _JATTA_SSL
-#   undef _JATTA_SSL_CTX
-#   undef _JATTA_SSL_BIO
+#   undef _CGUL_SSL
+#   undef _CGUL_SSL_CTX
+#   undef _CGUL_SSL_BIO
 #endif
 
-#ifdef _JATTA_OBJC
-#   undef _JATTA_OBJC
+#ifdef _CGUL_OBJC
+#   undef _CGUL_OBJC
 #endif

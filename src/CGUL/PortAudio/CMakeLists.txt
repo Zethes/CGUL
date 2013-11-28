@@ -1,13 +1,13 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+# C++ General Utility Library (mailto:cgul@zethes.com)
+# Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
 if(NOT PortAudio_FOUND)
     return()
 endif()
 
-set(Jatta_SOURCES
-    ${Jatta_SOURCES}
+set(CGUL_SOURCES
+    ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Device.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HostApi.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HostError.cpp
@@ -19,8 +19,8 @@ set(Jatta_SOURCES
     PARENT_SCOPE
 )
 
-set(Jatta_INSTALL
-    ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Device.h
     ${CMAKE_CURRENT_SOURCE_DIR}/HostApi.h
     ${CMAKE_CURRENT_SOURCE_DIR}/HostError.h

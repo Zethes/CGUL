@@ -1,41 +1,43 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file MaterialProperty.cpp
  */
 
-#include "MaterialProperty.h"
+#include "MaterialProperty.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::MaterialProperty::MaterialProperty(::aiMaterialProperty* matProp)
+_CGUL_EXPORT CGUL::Assimp::MaterialProperty::MaterialProperty(::aiMaterialProperty* matProp)
 {
     this->matProp = matProp;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::MaterialProperty::GetKey()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::MaterialProperty::GetKey()
 {
     return String(matProp->mKey.data);
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetSemantic()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::MaterialProperty::GetSemantic()
 {
     return matProp->mSemantic;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetIndex()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::MaterialProperty::GetIndex()
 {
     return matProp->mIndex;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetDataLength()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::MaterialProperty::GetDataLength()
 {
     return matProp->mDataLength;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MaterialProperty::GetType()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::MaterialProperty::GetType()
 {
     return matProp->mType;
 }
 
-_JATTA_EXPORT char* Jatta::Assimp::MaterialProperty::GetData()
+_CGUL_EXPORT char* CGUL::Assimp::MaterialProperty::GetData()
 {
     return matProp->mData;
 }

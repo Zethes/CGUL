@@ -1,33 +1,35 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Bone.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "VertexWeight.h"
-#include "../Math/Matrix.h"
-#include "../Math/Vector3.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "VertexWeight.hpp"
+#include "../Math/Matrix.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class Bone
         {
         private:
-            _JATTA_AIBONE bone;
+            _CGUL_AIBONE bone;
         public:
-            _JATTA_EXPORT Bone(_JATTA_AIBONE bone);
+            _CGUL_EXPORT Bone(_CGUL_AIBONE bone);
 
-            _JATTA_EXPORT Jatta::String GetName();
-            _JATTA_EXPORT Jatta::UInt32 GetWeightCount();
-            _JATTA_EXPORT Jatta::Assimp::VertexWeight GetWeight(Jatta::UInt32 id);
-            _JATTA_EXPORT Jatta::Matrix GetOffsetMatrix();
+            _CGUL_EXPORT String GetName();
+            _CGUL_EXPORT UInt32 GetWeightCount();
+            _CGUL_EXPORT Assimp::VertexWeight GetWeight(CGUL::UInt32 id);
+            _CGUL_EXPORT Matrix GetOffsetMatrix();
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

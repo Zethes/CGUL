@@ -32,8 +32,8 @@ endmacro()
 # Keep track of acknowledgements
 LIST(APPEND ACKNOWLEDGEMENTS
     "This software utilizies the following libraries:\n\n"
-    "Jatta http://jatta.zethes.com/\n"
-    "Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall"
+    "CGUL http://jatta.zethes.com/\n"
+    "Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall"
 )
 
 # System generic libraries
@@ -55,7 +55,7 @@ else()
 endif()
 
 # OpenGL
-if(Jatta_USE_OPENGL)
+if(CGUL_USE_OPENGL)
 
     use_library(glew OFF)
 

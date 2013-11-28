@@ -1,16 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
- */
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
 /** @file SocketUDP.cpp
  *  @brief Implements Network::SocketUDP
  */
 
-#include "SocketUDP.h"
+#include "SocketUDP.hpp"
 
 #ifndef DOXYGEN
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -23,11 +22,11 @@ namespace Jatta
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
  */
-void Jatta::Network::SocketUDP::MakeNonBlocking()
+void CGUL::Network::SocketUDP::MakeNonBlocking()
 {
     // TODO: error checking?
 
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     u_long uNonBlocking = 1;
     ioctlsocket(sock, FIONBIO, &uNonBlocking);
 #   else
@@ -35,13 +34,13 @@ void Jatta::Network::SocketUDP::MakeNonBlocking()
 #   endif
 }
 
-Jatta::Network::SocketUDP::SocketUDP()
+CGUL::Network::SocketUDP::SocketUDP()
 {
     sock = INVALID_SOCKET;
     __jatta_network_initiate();
 }
 
-Jatta::Network::SocketUDP::~SocketUDP()
+CGUL::Network::SocketUDP::~SocketUDP()
 {
 }
 
@@ -50,7 +49,7 @@ Jatta::Network::SocketUDP::~SocketUDP()
  *  @param port The port to receive packets on.
  *  @param ipv4 True for IPv4, false for IPv6.
  */
-void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
+void CGUL::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 {
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -110,7 +109,7 @@ void Jatta::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
  *  @param port The remote port.
  *  @todo Isnt it necessary to have a local and remote port?
  */
-void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
+void CGUL::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
 {
     // Create a hints variable used to determine the connection configuration.
     struct addrinfo hints;
@@ -163,9 +162,9 @@ void Jatta::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port
 /** @note Because UDP sockets are connectionless, no remote hosts will be notified when this socket
  *  is closed.
  */
-void Jatta::Network::SocketUDP::Close()
+void CGUL::Network::SocketUDP::Close()
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     closesocket(sock);
 #   else
     ::close(sock);
@@ -175,7 +174,7 @@ void Jatta::Network::SocketUDP::Close()
 
 /** @returns True if the socket is bound, false otherwise.
  */
-bool Jatta::Network::SocketUDP::IsBound()
+bool CGUL::Network::SocketUDP::IsBound()
 {
     return sock != INVALID_SOCKET;
 }
@@ -184,7 +183,7 @@ bool Jatta::Network::SocketUDP::IsBound()
  *  @param size The size of the array.
  *  @returns The number of bytes that were sent.
  */
-int Jatta::Network::SocketUDP::Send(const void* data, unsigned int size)
+int CGUL::Network::SocketUDP::Send(const void* data, unsigned int size)
 {
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -205,7 +204,7 @@ int Jatta::Network::SocketUDP::Send(const void* data, unsigned int size)
  *  @param size The size of the data array.
  *  @returns The number of bytes that were received, or 0 if there was nothing to be received.
  */
-int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
+int CGUL::Network::SocketUDP::Receive(void* data, unsigned int size)
 {
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -219,7 +218,7 @@ int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -251,7 +250,7 @@ int Jatta::Network::SocketUDP::Receive(void* data, unsigned int size)
  *  @param size The size of the buffer put into the data parameter.
  *  @returns The number of bytes that were received, or 0 if there was nothing to be received.
  */
-int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, void* data, unsigned int size)
+int CGUL::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, void* data, unsigned int size)
 {
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -269,7 +268,7 @@ int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, 
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)
@@ -307,7 +306,7 @@ int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, 
     }
 }
 
-int Jatta::Network::SocketUDP::Peek(void* data, unsigned int size)
+int CGUL::Network::SocketUDP::Peek(void* data, unsigned int size)
 {
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
@@ -321,7 +320,7 @@ int Jatta::Network::SocketUDP::Peek(void* data, unsigned int size)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         if (WSAGetLastError() == WSAEWOULDBLOCK)
 #       else
         if (errno == EWOULDBLOCK)

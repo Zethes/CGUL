@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Container.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     template< typename T >
     class Container
@@ -15,4 +17,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

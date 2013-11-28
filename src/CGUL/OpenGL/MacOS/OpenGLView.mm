@@ -1,11 +1,13 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file OpenGLView.mm
  */
 
 #ifndef DOXYGEN
 
-#import "OpenGLView.h"
+#import "OpenGLView.hpp"
 
 static OpenGLView* current = nil;
 
@@ -71,7 +73,7 @@ static OpenGLView* current = nil;
 - (void)MakeCurrent
 {
     [[self openGLContext] makeCurrentContext];
-    // TODO: make Jatta::Graphics create and contain this interface
+    // TODO: make CGUL::Graphics create and contain this interface
 }
 
 - (void)SwapBuffers

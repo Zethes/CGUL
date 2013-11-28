@@ -1,12 +1,14 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Random_Implement.hpp
  */
 
 #include <ctime>
 #include <cmath>
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::UniformDist(float a, float b, float u)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::UniformDist(float a, float b, float u)
 {
     if (u < 0)
     {
@@ -19,7 +21,7 @@ _JATTA_INLINE_IMPLEMENT float Jatta::Random::UniformDist(float a, float b, float
     return u * (b - a) + a;
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::ExponentialDist(float beta, float u)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::ExponentialDist(float beta, float u)
 {
     if (u < 0)
     {
@@ -33,7 +35,7 @@ _JATTA_INLINE_IMPLEMENT float Jatta::Random::ExponentialDist(float beta, float u
     return beta * std::log(-1 / (u - 1));
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::WeibullDist(float a, float b, float c, float u)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::WeibullDist(float a, float b, float c, float u)
 {
     if (u < 0)
     {
@@ -46,7 +48,7 @@ _JATTA_INLINE_IMPLEMENT float Jatta::Random::WeibullDist(float a, float b, float
     return b * std::pow(std::log(-1 / (u - 1)), 1 / c) + a;
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::TriangularDist(float xmin, float xmax, float c, float u)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::TriangularDist(float xmin, float xmax, float c, float u)
 {
     if (u < 0)
     {
@@ -66,12 +68,12 @@ _JATTA_INLINE_IMPLEMENT float Jatta::Random::TriangularDist(float xmin, float xm
     }
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::Normal(float mean, float variance, float x)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::Normal(float mean, float variance, float x)
 {
     return (1 / (float)std::sqrt(2 * 3.14159 * variance)) * std::exp(-(std::pow(x - mean, 2) / (2 * variance)));
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Random::Random()
+_CGUL_INLINE_IMPLEMENT CGUL::Random::Random()
 {
     this->seed = (unsigned int)std::time(0);
     this->multiplier = 16807;
@@ -79,7 +81,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Random::Random()
     this->modulus = 2147483647;
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Random::Random(unsigned int seed)
+_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed)
 {
     this->seed = seed;
     this->multiplier = 16807;
@@ -87,7 +89,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Random::Random(unsigned int seed)
     this->modulus = 2147483647;
 }
 
-_JATTA_INLINE_IMPLEMENT Jatta::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus)
+_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus)
 {
     this->seed = seed;
     this->multiplier = multiplier;
@@ -95,33 +97,33 @@ _JATTA_INLINE_IMPLEMENT Jatta::Random::Random(unsigned int seed, unsigned int mu
     this->modulus = modulus;
 }
 
-_JATTA_INLINE_IMPLEMENT void Jatta::Random::SetSeed(unsigned int seed)
+_CGUL_INLINE_IMPLEMENT void CGUL::Random::SetSeed(unsigned int seed)
 {
     this->seed = seed;
 }
 
-_JATTA_INLINE_IMPLEMENT unsigned int Jatta::Random::GetInteger()
+_CGUL_INLINE_IMPLEMENT unsigned int CGUL::Random::GetInteger()
 {
     seed = (multiplier * seed + addition) % modulus;
     return seed;
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::GetDecimal()
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetDecimal()
 {
     return GetInteger() / float(modulus);
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::GetUniform(float a, float b)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetUniform(float a, float b)
 {
     return GetDecimal() * (b - a) + a;
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::GetExponential(float beta)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetExponential(float beta)
 {
     return ExponentialDist(beta, GetDecimal());
 }
 
-_JATTA_INLINE_IMPLEMENT float Jatta::Random::GetWeibull(float a, float b, float c)
+_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetWeibull(float a, float b, float c)
 {
     return WeibullDist(a, b, c, GetDecimal());
 }

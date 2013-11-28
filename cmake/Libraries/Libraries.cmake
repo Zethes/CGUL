@@ -1,53 +1,53 @@
 include(CheckIncludeFileCXX)
 
 # Assimp
-list(APPEND Jatta_LIBRARY_LIST Assimp)
+list(APPEND CGUL_LIBRARY_LIST Assimp)
 set(Assimp_NAMES Assimp)
 
 # FreeType
-list(APPEND Jatta_LIBRARY_LIST FreeType)
+list(APPEND CGUL_LIBRARY_LIST FreeType)
 set(FreeType_NAMES freetype)
 
 # glew
-list(APPEND Jatta_LIBRARY_LIST glew)
+list(APPEND CGUL_LIBRARY_LIST glew)
 set(glew_NAMES glew glew32 glew32s GLEW)
 
 # JPEG
-list(APPEND Jatta_LIBRARY_LIST JPEG)
+list(APPEND CGUL_LIBRARY_LIST JPEG)
 set(JPEG_NAMES jpeg)
 
 # PNG
-list(APPEND Jatta_LIBRARY_LIST PNG)
+list(APPEND CGUL_LIBRARY_LIST PNG)
 set(PNG_NAMES png libpng png16 libpng16 png15 libpng15 png14 libpng14 png12 libpng12)
 
 # zlib
-list(APPEND Jatta_LIBRARY_LIST zlib)
+list(APPEND CGUL_LIBRARY_LIST zlib)
 set(zlib_NAMES z zlib)
 
 # PortAudio
-list(APPEND Jatta_LIBRARY_LIST PortAudio)
+list(APPEND CGUL_LIBRARY_LIST PortAudio)
 set(PortAudio_NAMES portaudio)
 
 # PCRE
-list(APPEND Jatta_LIBRARY_LIST PCRE)
+list(APPEND CGUL_LIBRARY_LIST PCRE)
 set(PCRE_NAMES pcre)
 
 # OpenSSL
-list(APPEND Jatta_LIBRARY_LIST OpenSSL)
+list(APPEND CGUL_LIBRARY_LIST OpenSSL)
 set(OpenSSL_NAMES ssl)
 
 # Crypto
-list(APPEND Jatta_LIBRARY_LIST Crypto)
+list(APPEND CGUL_LIBRARY_LIST Crypto)
 set(Crypto_NAMES crypto)
 
 # ALSA (Linux Only)
 if("${System_TYPE_LOWER}" STREQUAL "linux")
-    list(APPEND Jatta_LIBRARY_LIST ALSA)
+    list(APPEND CGUL_LIBRARY_LIST ALSA)
     set(ALSA_NAMES asound)
 endif()
 
 # Try to find each library
-foreach(__LIBRARY ${Jatta_LIBRARY_LIST})
+foreach(__LIBRARY ${CGUL_LIBRARY_LIST})
 
     if(NOT DEFINED ${__LIBRARY}_ENABLED OR
        NOT DEFINED ${__LIBRARY}_LIBRARY OR
@@ -62,7 +62,7 @@ foreach(__LIBRARY ${Jatta_LIBRARY_LIST})
         unset(${__LIBRARY}_PACKAGE CACHE)
 
         # Find the library
-        find_library(${__LIBRARY}_LIBRARY NAMES ${${__LIBRARY}_NAMES} PATHS ${Jatta_DEPENDENCY_LIBRARY_DIRS})
+        find_library(${__LIBRARY}_LIBRARY NAMES ${${__LIBRARY}_NAMES} PATHS ${CGUL_DEPENDENCY_LIBRARY_DIRS})
 
         # Check if the library was found
         if(${__LIBRARY}_LIBRARY)
@@ -184,12 +184,12 @@ elseif(NOT PNG_ENABLED)
 endif()
 
 # Create the library targets
-foreach(__LIBRARY ${Jatta_LIBRARY_LIST})
+foreach(__LIBRARY ${CGUL_LIBRARY_LIST})
 
     if(${__LIBRARY}_ENABLED)
 
         # Add to the list of libraries
-        list(APPEND Jatta_LIBRARIES ${__LIBRARY})
+        list(APPEND CGUL_LIBRARIES ${__LIBRARY})
 
         # Create the correct type of library
         if(${__LIBRARY}_SHARED)
@@ -225,7 +225,7 @@ foreach(__LIBRARY ${Jatta_LIBRARY_LIST})
 
 endforeach()
 
-function(jatta_define_feature NAME DOC)
+function(cgul_define_feature NAME DOC)
     set(ENABLED ON)
     foreach(dependency ${ARGN})
         if(NOT ${dependency}_ENABLED)
@@ -235,6 +235,6 @@ function(jatta_define_feature NAME DOC)
     set(${NAME} ${ENABLED} CACHE BOOL ${DOC})
 endfunction()
 
-macro(jatta_common_library LIBRARY)
-    set(Jatta_COMMON_LIBRARIES ${Jatta_COMMON_LIBRARIES} ${LIBRARY})
+macro(cgul_common_library LIBRARY)
+    set(CGUL_COMMON_LIBRARIES ${CGUL_COMMON_LIBRARIES} ${LIBRARY})
 endmacro()

@@ -1,5 +1,5 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+/* CGUL - General Utility Library
+ * Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
  * All rights reserved.
  */
 
@@ -17,9 +17,9 @@
 #cmakedefine zlib_FOUND
 #cmakedefine OpenSSL_FOUND
 
-#cmakedefine Jatta_STATIC
-#cmakedefine Jatta_USE_NETWORK
-#cmakedefine Jatta_USE_OPENGL
+#cmakedefine CGUL_STATIC
+#cmakedefine CGUL_USE_NETWORK
+#cmakedefine CGUL_USE_OPENGL
 
 #cmakedefine CPP_HEADER_ALGORITHM
 #cmakedefine CPP_HEADER_CCTYPE
@@ -57,5 +57,5 @@
 #cmakedefine CPP_DEPRECATED_GCC
 #cmakedefine CPP_DEPRECATED_MSVC
 
-#define _JATTA_INLINE_DEFINE @Jatta_INLINE_DEFINE@
-#define _JATTA_INLINE_IMPLEMENT @Jatta_INLINE_IMPLEMENT@
+#define _CGUL_INLINE_DEFINE @CGUL_INLINE_DEFINE@
+#define _CGUL_INLINE_IMPLEMENT @CGUL_INLINE_IMPLEMENT@

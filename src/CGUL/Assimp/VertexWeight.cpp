@@ -1,21 +1,23 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file VertexWeight.cpp
  */
 
-#include "VertexWeight.h"
+#include "VertexWeight.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::VertexWeight::VertexWeight(aiVertexWeight* weight)
+_CGUL_EXPORT CGUL::Assimp::VertexWeight::VertexWeight(aiVertexWeight* weight)
 {
     this->weight = weight;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::VertexWeight::GetVertexId()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::VertexWeight::GetVertexId()
 {
     return weight->mVertexId;
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::VertexWeight::GetWeight()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::VertexWeight::GetWeight()
 {
     return weight->mWeight;
 }

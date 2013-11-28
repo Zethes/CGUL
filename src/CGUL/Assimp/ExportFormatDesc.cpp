@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file ExportFormatDesc.cpp
  */
 
-#include "ExportFormatDesc.h"
+#include "ExportFormatDesc.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::ExportFormatDesc::ExportFormatDesc(const ::aiExportFormatDesc* desc)
+_CGUL_EXPORT CGUL::Assimp::ExportFormatDesc::ExportFormatDesc(const ::aiExportFormatDesc* desc)
 {
     this->desc = desc;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetID()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::ExportFormatDesc::GetID()
 {
     return String(desc->id);
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetDescription()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::ExportFormatDesc::GetDescription()
 {
     return String(desc->description);
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportFormatDesc::GetFileExtension()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::ExportFormatDesc::GetFileExtension()
 {
     return String(desc->fileExtension);
 }

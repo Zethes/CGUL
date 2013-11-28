@@ -1,19 +1,19 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+# C++ General Utility Library (mailto:cgul@zethes.com)
+# Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
 add_subdirectory(Loaders)
 
-set(Jatta_SOURCES
-    ${Jatta_SOURCES}
+set(CGUL_SOURCES
+    ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Mipmap.cpp
     PARENT_SCOPE
 )
 
-set(Jatta_INSTALL
-    ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Color_Implement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Colors.h

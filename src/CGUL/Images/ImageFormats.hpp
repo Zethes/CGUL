@@ -1,18 +1,20 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file ImageFormats.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Exceptions/FatalException.h"
+#include <CGUL/Config.hpp>
+#include "../Exceptions/FatalException.hpp"
 #include "../Math/Math.hpp"
-#ifdef Jatta_USE_OPENGL
-#   include "../OpenGL/GL.h"
+#ifdef CGUL_USE_OPENGL
+#   include "../OpenGL/GL.hpp"
 #endif
-#include "../External/Defines.h"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace ImageFormatDataTypes
     {
@@ -78,13 +80,13 @@ namespace Jatta
         static const ImageFormat R8    (1, 1, ImageFormatDataTypes::BYTE);
         static const ImageFormat RG8   (2, 1, ImageFormatDataTypes::BYTE);
 
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
         static const ImageFormat RGBA4 (4, 1, ImageFormatDataTypes::BYTE, GL::RGBA4);
 #       else
         static const ImageFormat RGBA4 (4, 1, ImageFormatDataTypes::BYTE);
 #       endif
 
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
         static const ImageFormat RGB8  (3, 1, ImageFormatDataTypes::BYTE, GL::RGB);
         static const ImageFormat RGBA8 (4, 1, ImageFormatDataTypes::BYTE, GL::RGBA);
 #       else
@@ -95,7 +97,7 @@ namespace Jatta
         static const ImageFormat RGBA16(4, 2, ImageFormatDataTypes::BYTE);
         static const ImageFormat RGBA32(4, 4, ImageFormatDataTypes::BYTE);
 
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
         static const ImageFormat BGR8  (3, 1, ImageFormatDataTypes::BYTE, GL::BGR);
         static const ImageFormat BGRA8 (4, 1, ImageFormatDataTypes::BYTE, GL::BGRA);
 #       else
@@ -108,4 +110,4 @@ namespace Jatta
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

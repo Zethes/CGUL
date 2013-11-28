@@ -1,18 +1,20 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file WindowDelegate.hpp
  */
 
-#ifdef JATTA_INCLUDES
+#ifdef CGUL_INCLUDES
 
 #pragma once
-#include <Jatta/Config.h>
-#include "MacWindow.h"
-#include "../../Windows/WindowStyle.h"
-#include "../../Utility/String.h"
-#include "../../Math/Vector2.h"
-#include "../../OpenGL/MacOS/OpenGLView.h"
-#include "../../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "MacWindow.hpp"
+#include "../../Windows/WindowStyle.hpp"
+#include "../../Utility/String.hpp"
+#include "../../Math/Vector2.hpp"
+#include "../../OpenGL/MacOS/OpenGLView.hpp"
+#include "../../External/Defines.hpp"
 
 // Define the cocoa application delegate
 @interface WindowDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
@@ -29,7 +31,7 @@
     int windowOpen;
 }
 
-- (id)init: (Jatta::WindowStyle)style;
+- (id)init: (CGUL::WindowStyle)style;
 
 - (MacWindow*)Window;
 - (int)IsOpen;
@@ -39,29 +41,29 @@
 
 //- (void) updateInput;
 
-- (void) setTitle: (const Jatta::String&)title;
-- (Jatta::String) getTitle;
+- (void) setTitle: (const CGUL::String&)title;
+- (CGUL::String) getTitle;
 
-- (void) setBackgroundColor: (const Jatta::Color&)color;
-- (Jatta::Color) getBackgroundColor;
+- (void) setBackgroundColor: (const CGUL::Color&)color;
+- (CGUL::Color) getBackgroundColor;
 
 - (void) setWidth: (UInt32)width;
-- (Jatta::UInt32) getWidth;
+- (CGUL::UInt32) getWidth;
 - (void) setHeight: (UInt32)height;
-- (Jatta::UInt32) getHeight;
-- (void) setSize: (const Jatta::Vector2&)size; // TODO: use something other than Vector2
-- (Jatta::Vector2) getSize;
+- (CGUL::UInt32) getHeight;
+- (void) setSize: (const CGUL::Vector2&)size; // TODO: use something other than Vector2
+- (CGUL::Vector2) getSize;
 
-- (void) setResizable: (Jatta::Boolean)resizable;
-- (Jatta::Boolean) getResizable;
+- (void) setResizable: (CGUL::Boolean)resizable;
+- (CGUL::Boolean) getResizable;
 
-- (Jatta::Vector4) getFrameSize;
+- (CGUL::Vector4) getFrameSize;
 /*
-- (Jatta::Boolean) isOpen2;*/
-- (Jatta::Boolean) isFocused;
+- (CGUL::Boolean) isOpen2;*/
+- (CGUL::Boolean) isFocused;
 
 @end
 
-#include "../../External/Undefines.h"
+#include "../../External/Undefines.hpp"
 
 #endif

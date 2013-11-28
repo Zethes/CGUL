@@ -1,22 +1,24 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file WindowStyle.cpp
  */
 
-#include "WindowStyle.h"
+#include "WindowStyle.hpp"
 
 /** @brief Default constructor.  Loads the window style with presets.
  *  @details Sets up the window style with the following presets:
  *  @code
- *  title = "Jatta Window";
+ *  title = "CGUL Window";
  *  backgroundColor = Color(255, 255, 255);
  *  width = 640;
  *  height = 480;
  *  resizable = true;
  *  @endcode
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle() :
-    title("Jatta Window"),
+_CGUL_EXPORT CGUL::WindowStyle::WindowStyle() :
+    title("CGUL Window"),
     backgroundColor(Color(255, 255, 255)),
     width(640),
     height(480),
@@ -27,7 +29,7 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle() :
 /** @brief Copy constructor.
  *  @param style The style to copy.
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style) :
+_CGUL_EXPORT CGUL::WindowStyle::WindowStyle(const WindowStyle& style) :
     title(style.title),
     backgroundColor(style.backgroundColor),
     width(style.width),
@@ -46,7 +48,7 @@ _JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const WindowStyle& style) :
  *  @param maximizable Whether the maximize button is enabled or not.
  *  @param closeable Whether the close button is enabled or not.
  */
-_JATTA_EXPORT Jatta::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable) :
+_CGUL_EXPORT CGUL::WindowStyle::WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable) :
     title(title),
     backgroundColor(backgroundColor),
     width(width),

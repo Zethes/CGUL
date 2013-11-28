@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file HostError.cpp
  */
 
-#include "HostError.h"
+#include "HostError.hpp"
 
-_JATTA_EXPORT Jatta::PortAudio::HostError::HostError(const ::PaHostErrorInfo* info)
+_CGUL_EXPORT CGUL::PortAudio::HostError::HostError(const ::PaHostErrorInfo* info)
 {
     this->info = info;
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::HostError::GetType()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::HostError::GetType()
 {
     return (SInt32)info->hostApiType;
 }
 
-_JATTA_EXPORT Jatta::SInt64 Jatta::PortAudio::HostError::GetErrorCode()
+_CGUL_EXPORT CGUL::SInt64 CGUL::PortAudio::HostError::GetErrorCode()
 {
     return (SInt64)info->errorCode;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::PortAudio::HostError::GetErrorText()
+_CGUL_EXPORT CGUL::String CGUL::PortAudio::HostError::GetErrorText()
 {
     return String(info->errorText);
 }

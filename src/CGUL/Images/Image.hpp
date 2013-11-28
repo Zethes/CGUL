@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Image.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "ImageFormats.h"
-#include "Mipmap.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "ImageFormats.hpp"
+#include "Mipmap.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief A container capable of loading and manipulating RGBA images.
      *  @todo Support other types of images besides just RGBA.
@@ -23,27 +25,27 @@ namespace Jatta
 
         std::vector<Mipmap> mipmaps;
 
-        _JATTA_EXPORT bool IsValid();
+        _CGUL_EXPORT bool IsValid();
     public:
-        _JATTA_EXPORT Image();
-        _JATTA_EXPORT Image(ImageFormat format, UInt32 width, UInt32 height, const void* data);
-        _JATTA_EXPORT ~Image();
+        _CGUL_EXPORT Image();
+        _CGUL_EXPORT Image(ImageFormat format, UInt32 width, UInt32 height, const void* data);
+        _CGUL_EXPORT ~Image();
 
-        _JATTA_EXPORT void Free();
+        _CGUL_EXPORT void Free();
 
-        _JATTA_EXPORT bool GenerateMipmaps();
+        _CGUL_EXPORT bool GenerateMipmaps();
 
-        _JATTA_EXPORT Mipmap& GetBaseMipmap();
-        _JATTA_EXPORT Mipmap& GetMipmap(UInt32 index);
-        _JATTA_EXPORT const void* GetData();
-        _JATTA_EXPORT ImageFormat GetFormat() const;
-        _JATTA_EXPORT int GetMipmapCount() const;
-        _JATTA_EXPORT int GetWidth() const;
-        _JATTA_EXPORT int GetHeight() const;
+        _CGUL_EXPORT Mipmap& GetBaseMipmap();
+        _CGUL_EXPORT Mipmap& GetMipmap(UInt32 index);
+        _CGUL_EXPORT const void* GetData();
+        _CGUL_EXPORT ImageFormat GetFormat() const;
+        _CGUL_EXPORT int GetMipmapCount() const;
+        _CGUL_EXPORT int GetWidth() const;
+        _CGUL_EXPORT int GetHeight() const;
 
-        _JATTA_EXPORT void PushMipmap(UInt32 width, UInt32 height, const void* data);
-        _JATTA_EXPORT void PopMipmap();
+        _CGUL_EXPORT void PushMipmap(UInt32 width, UInt32 height, const void* data);
+        _CGUL_EXPORT void PopMipmap();
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

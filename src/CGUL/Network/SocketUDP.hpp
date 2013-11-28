@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file SocketUDP.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Network/IPAddress.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Network/IPAddress.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
-        /** @class SocketUDP SocketUDP.h <Base/Network/SocketUDP.h>
+        /** @class SocketUDP SocketUDP.hpp <CGUL/Network/SocketUDP.hpp>
          *  @brief A class to communicate on a UDP network.
          */
         class SocketUDP
         {
 #           if defined(MSVC)
             unsigned int __w64 sock;
-#           elif defined(JATTA_WINDOWS)
+#           elif defined(CGUL_WINDOWS)
             unsigned int sock;
 #           else
             int sock;
@@ -86,55 +88,55 @@ namespace Jatta
 }
 
 template <typename T>
-int Jatta::Network::SocketUDP::Send(const T& data)
+int CGUL::Network::SocketUDP::Send(const T& data)
 {
     return Send(&data, sizeof(T));
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
 template <typename T>
-int Jatta::Network::SocketUDP::Send(const T&& data)
+int CGUL::Network::SocketUDP::Send(const T&& data)
 {
     return Send(&data, sizeof(T));
 }
 #endif
 
 template <typename T>
-int Jatta::Network::SocketUDP::SendTo(const IPAddress& ip, unsigned short port, const T& data)
+int CGUL::Network::SocketUDP::SendTo(const IPAddress& ip, unsigned short port, const T& data)
 {
     return Send(ip, port, &data, sizeof(T));
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
 template <typename T>
-int Jatta::Network::SocketUDP::SendTo(const IPAddress& ip, unsigned short port, const T&& data)
+int CGUL::Network::SocketUDP::SendTo(const IPAddress& ip, unsigned short port, const T&& data)
 {
     return SendTo(ip, port, &data, sizeof(T));
 }
 #endif
 
 template <typename T>
-int Jatta::Network::SocketUDP::Receive(T* data)
+int CGUL::Network::SocketUDP::Receive(T* data)
 {
     return Receive(data, sizeof(T));
 }
 
 template <typename T>
-int Jatta::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, T* data)
+int CGUL::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, T* data)
 {
     return ReceiveFrom(ip, port, data, sizeof(T));
 }
 
 template <typename T>
-int Jatta::Network::SocketUDP::Peek(T* data)
+int CGUL::Network::SocketUDP::Peek(T* data)
 {
     return Peek(data, sizeof(T));
 }
 
 template <typename T>
-int Jatta::Network::SocketUDP::PeekFrom(IPAddress* ip, unsigned short* port, T* data)
+int CGUL::Network::SocketUDP::PeekFrom(IPAddress* ip, unsigned short* port, T* data)
 {
     return PeekFrom(ip, port, data, sizeof(T));
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

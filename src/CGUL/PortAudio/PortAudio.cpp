@@ -1,93 +1,95 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file PortAudio.cpp
  */
 
-#include "PortAudio.h"
-#include "Device.h"
-#include "HostApi.h"
-#include "HostError.h"
+#include "PortAudio.hpp"
+#include "Device.hpp"
+#include "HostApi.hpp"
+#include "HostError.hpp"
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Initialize()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::Initialize()
 {
     return Pa_Initialize();
 }
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::Terminate()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::Terminate()
 {
     return Pa_Terminate();
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetVersion()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetVersion()
 {
     return Pa_GetVersion();
 }
 
-_JATTA_EXPORT Jatta::String Jatta::PortAudio::GetVersionText()
+_CGUL_EXPORT CGUL::String CGUL::PortAudio::GetVersionText()
 {
     return String(Pa_GetVersionText());
 }
 
-_JATTA_EXPORT Jatta::String Jatta::PortAudio::GetErrorText(SInt32 error)
+_CGUL_EXPORT CGUL::String CGUL::PortAudio::GetErrorText(SInt32 error)
 {
     return String(Pa_GetErrorText(error));
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDeviceCount()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetDeviceCount()
 {
     return (SInt32)Pa_GetDeviceCount();
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDefaultInputDeviceIndex()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetDefaultInputDeviceIndex()
 {
     return (SInt32)Pa_GetDefaultInputDevice();
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDefaultOutputDeviceIndex()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetDefaultOutputDeviceIndex()
 {
     return (SInt32)Pa_GetDefaultOutputDevice();
 }
 
-_JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDefaultInputDevice()
+_CGUL_EXPORT CGUL::PortAudio::Device CGUL::PortAudio::GetDefaultInputDevice()
 {
     return Device(Pa_GetDefaultInputDevice(), Pa_GetDeviceInfo(Pa_GetDefaultInputDevice()));
 }
 
-_JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDefaultOutputDevice()
+_CGUL_EXPORT CGUL::PortAudio::Device CGUL::PortAudio::GetDefaultOutputDevice()
 {
     return Device(Pa_GetDefaultOutputDevice(), Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice()));
 }
 
-_JATTA_EXPORT Jatta::PortAudio::Device Jatta::PortAudio::GetDevice(SInt32 index)
+_CGUL_EXPORT CGUL::PortAudio::Device CGUL::PortAudio::GetDevice(SInt32 index)
 {
     return Device(index, Pa_GetDeviceInfo(index));
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetHostApiCount()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetHostApiCount()
 {
     return (SInt32)Pa_GetHostApiCount();
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::GetDefaultHostApiIndex()
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::GetDefaultHostApiIndex()
 {
     return (SInt32)Pa_GetDefaultHostApi();
 }
 
-_JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetDefaultHostApi()
+_CGUL_EXPORT CGUL::PortAudio::HostApi CGUL::PortAudio::GetDefaultHostApi()
 {
     return HostApi(Pa_GetHostApiInfo(Pa_GetDefaultHostApi()));
 }
 
-_JATTA_EXPORT Jatta::PortAudio::HostApi Jatta::PortAudio::GetHostApi(SInt32 index)
+_CGUL_EXPORT CGUL::PortAudio::HostApi CGUL::PortAudio::GetHostApi(SInt32 index)
 {
     return HostApi(Pa_GetHostApiInfo(index));
 }
 
-_JATTA_EXPORT Jatta::PortAudio::HostError Jatta::PortAudio::GetLastHostError()
+_CGUL_EXPORT CGUL::PortAudio::HostError CGUL::PortAudio::GetLastHostError()
 {
     return HostError(Pa_GetLastHostErrorInfo());
 }
 
-_JATTA_EXPORT void Jatta::PortAudio::Sleep(UInt32 miliseconds)
+_CGUL_EXPORT void CGUL::PortAudio::Sleep(UInt32 miliseconds)
 {
     Pa_Sleep(miliseconds);
 }

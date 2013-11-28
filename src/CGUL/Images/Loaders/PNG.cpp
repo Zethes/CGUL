@@ -1,18 +1,20 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file PNG.cpp
  */
 
-#include "PNG.h"
-#include "../../Utility/File.h"
-#include "../ImageFormats.h"
-#include "../../Exceptions/ImageException.h"
+#include "PNG.hpp"
+#include "../../Utility/File.hpp"
+#include "../ImageFormats.hpp"
+#include "../../Exceptions/ImageException.hpp"
 
 #include <png.h>
 #include <stdlib.h>
 #define PNGSIGSIZE 8
 
-_JATTA_EXPORT bool Jatta::ImageLoaders::PNG::CanLoad(const String& file)
+_CGUL_EXPORT bool CGUL::ImageLoaders::PNG::CanLoad(const String& file)
 {
     UInt32 fileSize = File::GetFileSize(file);
     if (fileSize < PNGSIGSIZE)
@@ -26,7 +28,7 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::PNG::CanLoad(const String& file)
     return png_sig_cmp((png_bytep)data, 0, PNGSIGSIZE) == 0;
 }
 
-_JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::PNG::Load(const String& file)
+_CGUL_EXPORT CGUL::Image* CGUL::ImageLoaders::PNG::Load(const String& file)
 {
     //Sanity check
     if (!CanLoad(file))
@@ -125,10 +127,10 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::PNG::Load(const String& file)
     return new Image(format, width, height, (void*)data);
 }
 
-_JATTA_EXPORT void Jatta::ImageLoaders::PNG::Save(const String& filename, Jatta::Image* image)
+_CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& filename, CGUL::Image* image)
 {
     //Get image information.
-    Jatta::UInt32 width, height, bit_depth, color_type, pixelSize;
+    CGUL::UInt32 width, height, bit_depth, color_type, pixelSize;
     if (image == NULL)
     {
         throw ImageException(ImageExceptionCode::PNG_WRITE, ImageExceptionReason::NULL_POINTER);

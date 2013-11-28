@@ -1,35 +1,37 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Scene.cpp
  */
 
-#include "Scene.h"
-#include "Camera.h"
-#include "Light.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "Node.h"
-#include "Texture.h"
-#include "Animation.h"
+#include "Scene.hpp"
+#include "Camera.hpp"
+#include "Light.hpp"
+#include "Material.hpp"
+#include "Mesh.hpp"
+#include "Node.hpp"
+#include "Texture.hpp"
+#include "Animation.hpp"
 
 /** @brief Just a test.
  */
-_JATTA_EXPORT Jatta::Assimp::Scene::Scene()
+_CGUL_EXPORT CGUL::Assimp::Scene::Scene()
 {
     scene = NULL;
 }
 
-_JATTA_EXPORT Jatta::Assimp::Scene::Scene(::aiScene* scene)
+_CGUL_EXPORT CGUL::Assimp::Scene::Scene(::aiScene* scene)
 {
     this->scene = scene;
 }
 
-_JATTA_EXPORT Jatta::Assimp::Scene::Scene(const ::aiScene* scene)
+_CGUL_EXPORT CGUL::Assimp::Scene::Scene(const ::aiScene* scene)
 {
     this->scene = scene;
 }
 
-_JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 flags)
+_CGUL_EXPORT void CGUL::Assimp::Scene::Import(const String& fileName, UInt32 flags)
 {
     scene = aiImportFile(fileName.GetData().c_str(), flags);
     if (scene == NULL)
@@ -38,7 +40,7 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::Import(const String& fileName, UInt32 f
     }
 }
 
-_JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Jatta::UInt32 size, Enum flags)
+_CGUL_EXPORT void CGUL::Assimp::Scene::ImportFromMemory(const char* buffer, CGUL::UInt32 size, Enum flags)
 {
     scene = aiImportFileFromMemory(buffer, size, flags, "");
     if (scene == NULL)
@@ -47,106 +49,106 @@ _JATTA_EXPORT void Jatta::Assimp::Scene::ImportFromMemory(const char* buffer, Ja
     }
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasAnimations() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasAnimations() const
 {
     return scene->HasAnimations();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasCameras() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasCameras() const
 {
     return scene->HasCameras();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasLights() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasLights() const
 {
     return scene->HasLights();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMaterials() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasMaterials() const
 {
     return scene->HasMaterials();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasMeshes() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasMeshes() const
 {
     return scene->HasMeshes();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Scene::HasTextures() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Scene::HasTextures() const
 {
     return scene->HasTextures();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetAnimationCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetAnimationCount() const
 {
     return scene->mNumAnimations;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetCameraCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetCameraCount() const
 {
     return scene->mNumCameras;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetLightCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetLightCount() const
 {
     return scene->mNumLights;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMaterialCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetMaterialCount() const
 {
     return scene->mNumMaterials;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetMeshCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetMeshCount() const
 {
     return scene->mNumMeshes;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Scene::GetTextureCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Scene::GetTextureCount() const
 {
     return scene->mNumTextures;
 }
 
-_JATTA_EXPORT Jatta::Matrix Jatta::Assimp::Scene::GetSceneTransformation() const
+_CGUL_EXPORT CGUL::Matrix CGUL::Assimp::Scene::GetSceneTransformation() const
 {
     // TODO: make sure this order is correct, the matrix constructor is changing in the mathfix branch
-    return Jatta::Matrix(*scene->mRootNode->mTransformation[ 0], *scene->mRootNode->mTransformation[ 1], *scene->mRootNode->mTransformation[ 2], *scene->mRootNode->mTransformation[ 3],
-                         *scene->mRootNode->mTransformation[ 4], *scene->mRootNode->mTransformation[ 5], *scene->mRootNode->mTransformation[ 6], *scene->mRootNode->mTransformation[ 7],
-                         *scene->mRootNode->mTransformation[ 8], *scene->mRootNode->mTransformation[ 9], *scene->mRootNode->mTransformation[10], *scene->mRootNode->mTransformation[11],
-                         *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
+    return CGUL::Matrix(*scene->mRootNode->mTransformation[ 0], *scene->mRootNode->mTransformation[ 1], *scene->mRootNode->mTransformation[ 2], *scene->mRootNode->mTransformation[ 3],
+                        *scene->mRootNode->mTransformation[ 4], *scene->mRootNode->mTransformation[ 5], *scene->mRootNode->mTransformation[ 6], *scene->mRootNode->mTransformation[ 7],
+                        *scene->mRootNode->mTransformation[ 8], *scene->mRootNode->mTransformation[ 9], *scene->mRootNode->mTransformation[10], *scene->mRootNode->mTransformation[11],
+                        *scene->mRootNode->mTransformation[12], *scene->mRootNode->mTransformation[13], *scene->mRootNode->mTransformation[14], *scene->mRootNode->mTransformation[15]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Node Jatta::Assimp::Scene::GetRootNode() const
+_CGUL_EXPORT CGUL::Assimp::Node CGUL::Assimp::Scene::GetRootNode() const
 {
     return Node(scene->mRootNode);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Camera Jatta::Assimp::Scene::GetCamera(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Camera CGUL::Assimp::Scene::GetCamera(UInt32 index) const
 {
     return Camera(scene->mCameras[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Light Jatta::Assimp::Scene::GetLight(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Light CGUL::Assimp::Scene::GetLight(UInt32 index) const
 {
     return Light(scene->mLights[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Material Jatta::Assimp::Scene::GetMaterial(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Material CGUL::Assimp::Scene::GetMaterial(UInt32 index) const
 {
     return Material(scene->mMaterials[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Mesh Jatta::Assimp::Scene::GetMesh(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Mesh CGUL::Assimp::Scene::GetMesh(UInt32 index) const
 {
     return Mesh(scene->mMeshes[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Texture Jatta::Assimp::Scene::GetTexture(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Texture CGUL::Assimp::Scene::GetTexture(UInt32 index) const
 {
     return Texture(scene->mTextures[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Animation Jatta::Assimp::Scene::GetAnimation(UInt32 index) const
+_CGUL_EXPORT CGUL::Assimp::Animation CGUL::Assimp::Scene::GetAnimation(UInt32 index) const
 {
     return Animation(scene->mAnimations[index]);
 }

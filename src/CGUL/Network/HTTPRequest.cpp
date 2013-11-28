@@ -1,19 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
- */
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
 /** @file HTTPRequest.cpp
  *  @brief Implements Network::HTTPRequest
  */
 
-#include "DNS.h"
-#include "HTTPRequest.h"
-#include "HTTPEnums.h"
-#include "../Exceptions/NetworkException.h"
-#include "../Utility/Timer.h"
+#include "DNS.hpp"
+#include "HTTPRequest.hpp"
+#include "HTTPEnums.hpp"
+#include "../Exceptions/NetworkException.hpp"
+#include "../Utility/Timer.hpp"
 
-Jatta::Network::Header::Header() :
+CGUL::Network::Header::Header() :
     age             (0),
     allow           (0),
     charset         (0),
@@ -31,12 +30,12 @@ Jatta::Network::Header::Header() :
 {
 }
 
-Jatta::Network::HTTPRequest::HTTPRequest(const HTTPRequest& copy)
+CGUL::Network::HTTPRequest::HTTPRequest(const HTTPRequest& copy)
 {
     // private
 }
 
-bool Jatta::Network::HTTPRequest::PerformRequest(UInt32 timeout)
+bool CGUL::Network::HTTPRequest::PerformRequest(UInt32 timeout)
 {
     response = "";
     responseHead = "";
@@ -71,7 +70,7 @@ bool Jatta::Network::HTTPRequest::PerformRequest(UInt32 timeout)
     //Get the headers length.
     int headSize = 0;
     sock->Peek(buffer, 1024);
-    Jatta::String bufferString = buffer;
+    CGUL::String bufferString = buffer;
     headSize = bufferString.FindFirstOf("\r\n\r\n")+4;
 
     //Get the reponse's head.
@@ -194,7 +193,7 @@ bool Jatta::Network::HTTPRequest::PerformRequest(UInt32 timeout)
     return true;
 }
 
-void Jatta::Network::HTTPRequest::ParseResponseHead()
+void CGUL::Network::HTTPRequest::ParseResponseHead()
 {
     header = Header();
 
@@ -720,7 +719,7 @@ void Jatta::Network::HTTPRequest::ParseResponseHead()
     }
 }
 
-Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt len)
+CGUL::String CGUL::Network::HTTPRequest::EncodeString(const char* buffer, UInt len)
 {
     String ret = "";
 
@@ -838,7 +837,7 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt
                             }
                         }
 
-                        ret += Jatta::String::FromCodePoint(codePoint);
+                        ret += CGUL::String::FromCodePoint(codePoint);
                         i += 5;
                     }
                 }
@@ -857,23 +856,23 @@ Jatta::String Jatta::Network::HTTPRequest::EncodeString(const char* buffer, UInt
     return ret;
 }
 
-Jatta::Network::HTTPRequest::HTTPRequest()
+CGUL::Network::HTTPRequest::HTTPRequest()
 {
     sock = new SocketTCP();
 }
 
-Jatta::Network::HTTPRequest::~HTTPRequest()
+CGUL::Network::HTTPRequest::~HTTPRequest()
 {
     Close();
     delete sock;
 }
 
-void Jatta::Network::HTTPRequest::Http(const String& url)
+void CGUL::Network::HTTPRequest::Http(const String& url)
 {
     host = url;
 
     DNS dns;
-    std::vector<Jatta::String> lookup = dns.Lookup(url);
+    std::vector<CGUL::String> lookup = dns.Lookup(url);
     if (lookup.size() == 0)
     {
         return;
@@ -881,19 +880,19 @@ void Jatta::Network::HTTPRequest::Http(const String& url)
 
     sock->Connect(IPAddress(lookup[0]), 80);
 }
-void Jatta::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
+void CGUL::Network::HTTPRequest::Connect(const IPAddress& ip, int port)
 {
     host = ip.ToString();
     sock->Connect(ip, port);
 }
 
 #ifdef OpenSSL_FOUND
-void Jatta::Network::HTTPRequest::Https(const String& url)
+void CGUL::Network::HTTPRequest::Https(const String& url)
 {
     host = url;
 
     DNS dns;
-    std::vector<Jatta::String> lookup = dns.Lookup(url);
+    std::vector<CGUL::String> lookup = dns.Lookup(url);
     if (lookup.size() == 0)
     {
         return;
@@ -902,19 +901,19 @@ void Jatta::Network::HTTPRequest::Https(const String& url)
     sock->ConnectSSL(IPAddress(lookup[0]), 443);
 }
 
-void Jatta::Network::HTTPRequest::ConnectSSL(const IPAddress& ip, int port)
+void CGUL::Network::HTTPRequest::ConnectSSL(const IPAddress& ip, int port)
 {
     host = ip.ToString();
     sock->ConnectSSL(ip, port);
 }
 #endif
 
-void Jatta::Network::HTTPRequest::Close()
+void CGUL::Network::HTTPRequest::Close()
 {
     sock->Close();
 }
 
-bool Jatta::Network::HTTPRequest::Request(String req, UInt32 timeout)
+bool CGUL::Network::HTTPRequest::Request(String req, UInt32 timeout)
 {
     request = req;
     request += "\n\r\n";
@@ -922,7 +921,7 @@ bool Jatta::Network::HTTPRequest::Request(String req, UInt32 timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Get(String page, UInt32 timeout)
+bool CGUL::Network::HTTPRequest::Get(String page, UInt32 timeout)
 {
     request = "";
     request += "GET ";
@@ -937,7 +936,7 @@ bool Jatta::Network::HTTPRequest::Get(String page, UInt32 timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Head(String page, UInt32 timeout)
+bool CGUL::Network::HTTPRequest::Head(String page, UInt32 timeout)
 {
     request = "";
     request += "HEAD ";
@@ -950,7 +949,7 @@ bool Jatta::Network::HTTPRequest::Head(String page, UInt32 timeout)
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::Post(String page, Jatta::String content, UInt32 timeout)
+bool CGUL::Network::HTTPRequest::Post(String page, CGUL::String content, UInt32 timeout)
 {
     request = "";
     request += "POST ";
@@ -967,32 +966,32 @@ bool Jatta::Network::HTTPRequest::Post(String page, Jatta::String content, UInt3
     return PerformRequest(timeout);
 }
 
-bool Jatta::Network::HTTPRequest::IsConnected()
+bool CGUL::Network::HTTPRequest::IsConnected()
 {
     return sock->IsConnected();
 }
-Jatta::Network::SocketTCP* Jatta::Network::HTTPRequest::GetSocket()
+CGUL::Network::SocketTCP* CGUL::Network::HTTPRequest::GetSocket()
 {
     return sock;
 }
 
-Jatta::String Jatta::Network::HTTPRequest::GetRequest()
+CGUL::String CGUL::Network::HTTPRequest::GetRequest()
 {
     return request;
 }
-Jatta::String Jatta::Network::HTTPRequest::GetResponse()
+CGUL::String CGUL::Network::HTTPRequest::GetResponse()
 {
     return response;
 }
-Jatta::Network::Header Jatta::Network::HTTPRequest::GetHeader()
+CGUL::Network::Header CGUL::Network::HTTPRequest::GetHeader()
 {
     return header;
 }
-Jatta::String Jatta::Network::HTTPRequest::GetResponseHead()
+CGUL::String CGUL::Network::HTTPRequest::GetResponseHead()
 {
     return responseHead;
 }
-Jatta::String Jatta::Network::HTTPRequest::GetResponseBody()
+CGUL::String CGUL::Network::HTTPRequest::GetResponseBody()
 {
     return responseBody;
 }

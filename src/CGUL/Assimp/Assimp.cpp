@@ -1,31 +1,33 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Assimp.cpp
  */
 
-#include "Assimp.h"
+#include "Assimp.hpp"
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::GetLegalString()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::GetLegalString()
 {
     return String(aiGetLegalString());
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMinor()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::GetVersionMinor()
 {
     return aiGetVersionMinor();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionMajor()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::GetVersionMajor()
 {
     return aiGetVersionMajor();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetVersionRevision()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::GetVersionRevision()
 {
     return aiGetVersionMajor();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::GetCompileFlags()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::GetCompileFlags()
 {
     return aiGetCompileFlags();
 }

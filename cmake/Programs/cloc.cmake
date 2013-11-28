@@ -4,8 +4,8 @@ find_program(cloc_EXECUTABLE cloc DOC "A tool for counting lines of code.")
 # Cloc directories/files
 set(__CLOC__LOCATIONS
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL.h
 )
 
 # Add custom targets

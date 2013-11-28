@@ -1,4 +1,4 @@
-![Jatta](https://raw.github.com/Zethes/Jatta/master/resources/logo.png)
+![CGUL](https://raw.github.com/Zethes/CGUL/master/resources/logo.png)
 
 Features
 =====
@@ -36,7 +36,7 @@ Features
 - **Easy to use PortAudio wrapper**
 - **A very liberal [license](https://github.com/Zethes/Jatta/blob/master/license.md)***
 
-<i>* Jatta and the libraries required to build Jatta are released under very unrestricting licenses for your convenience and freedom as a developer. Please consider uprooting all your improvements to the [respective developers](http://jatta.zethes.com/acknowledgements.html).  Thanks!</i>
+<i>* CGUL and the libraries required to build CGUL are released under very unrestricting licenses for your convenience and freedom as a developer. Please consider uprooting all your improvements to the [respective developers](http://jatta.zethes.com/acknowledgements.html).  Thanks!</i>
 
 Ubuntu Packages
 =====

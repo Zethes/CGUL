@@ -1,6 +1,8 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Matrix_Implement.hpp
  */
 
 #include "Math.hpp"
@@ -9,7 +11,7 @@
 #include "Quaternion.hpp"
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Identity()
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Identity()
 {
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), Type(0.0),
                    Type(0.0), Type(1.0), Type(0.0), Type(0.0),
@@ -18,7 +20,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Identity(
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotation(Type angle)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeRotation(Type angle)
 {
     return MatrixT(Math::Cos(angle), -Math::Sin(angle), Type(0.0), Type(0.0),
                    Math::Sin(angle), Math::Cos(angle),  Type(0.0), Type(0.0),
@@ -27,7 +29,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotat
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationX(Type angle)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeRotationX(Type angle)
 {
     return MatrixT(Type(1.0), Type(0.0),         Type(0.0),        Type(0.0),
                    Type(0.0), Math::Cos(angle),  Math::Sin(angle), Type(0.0),
@@ -36,7 +38,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotat
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationY(Type angle)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeRotationY(Type angle)
 {
     return MatrixT(Math::Cos(angle), Type(0), -Math::Sin(angle), Type(0),
                    Type(0),          Type(1),  Type(0),          Type(0),
@@ -45,7 +47,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotat
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotationZ(Type angle)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeRotationZ(Type angle)
 {
     return MatrixT( Math::Cos(angle),  Math::Sin(angle), Type(0.0), Type(0.0),
                     -Math::Sin(angle), Math::Cos(angle), Type(0.0), Type(0.0),
@@ -54,13 +56,13 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotat
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeRotation(const QuaternionT< Type >& quaternion)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeRotation(const QuaternionT< Type >& quaternion)
 {
     return MatrixT(quaternion);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector2T< Type >& scale)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeScaling(const Vector2T< Type >& scale)
 {
     return MatrixT(  scale.x,   Type(0.0), Type(0.0), Type(0.0),
                      Type(0.0), scale.y,   Type(0.0), Type(0.0),
@@ -69,7 +71,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScali
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScaling(const Vector3T< Type >& scale)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeScaling(const Vector3T< Type >& scale)
 {
     return MatrixT(  scale.x,   Type(0.0), Type(0.0), Type(0.0),
                      Type(0.0), scale.y,   Type(0.0), Type(0.0),
@@ -78,7 +80,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeScali
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTranslation(const Vector2T< Type >& translation)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeTranslation(const Vector2T< Type >& translation)
 {
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), translation.x,
                    Type(0.0), Type(1.0), Type(0.0), translation.y,
@@ -87,7 +89,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTrans
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTranslation(const Vector3T< Type >& translation)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeTranslation(const Vector3T< Type >& translation)
 {
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), translation.x,
                    Type(0.0), Type(1.0), Type(0.0), translation.y,
@@ -96,7 +98,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeTrans
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakePerspective(Type fovY, Type aspectRatio, Type zNear, Type zFar)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakePerspective(Type fovY, Type aspectRatio, Type zNear, Type zFar)
 {
     Type yScale = Type(1.0) / Math::Tan(Math::DegToRad(fovY / Type(2.0)));
     Type xScale = yScale / aspectRatio;
@@ -108,7 +110,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakePersp
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeLookAt(const Vector3T< Type >& eye, const Vector3T< Type >& at, const Vector3T< Type >& up)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeLookAt(const Vector3T< Type >& eye, const Vector3T< Type >& at, const Vector3T< Type >& up)
 {
     Vector3T< Type > zAxis = Vector3T< Type >::Normalized(eye - at); // forward
     Vector3T< Type > xAxis = Vector3T< Type >::Normalized(Vector3T< Type >::CrossProduct(up, zAxis)); // right
@@ -123,7 +125,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeLookA
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeOrtho(Type left, Type right, Type bottom, Type top, Type zNear, Type zFar)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeOrtho(Type left, Type right, Type bottom, Type top, Type zNear, Type zFar)
 {
     MatrixT< Type > result;
     result[0][0] = Type(2.0) / (right - left);
@@ -136,25 +138,25 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeOrtho
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::MakeOrtho2D(Type left, Type right, Type bottom, Type top)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeOrtho2D(Type left, Type right, Type bottom, Type top)
 {
     return MakeOrtho(left, right, bottom, top, Type(-1.0), Type(1.0));
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Inverse(const MatrixT& matrix)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Inverse(const MatrixT& matrix)
 {
     return matrix.GetInverse();
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::Transpose(const MatrixT& matrix)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Transpose(const MatrixT& matrix)
 {
     return matrix.GetTranspose();
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT()
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT()
 {
     this->m[0][0] = Type(1); this->m[1][0] = Type(0); this->m[2][0] = Type(0); this->m[3][0] = Type(0);
     this->m[0][1] = Type(0); this->m[1][1] = Type(1); this->m[2][1] = Type(0); this->m[3][1] = Type(0);
@@ -163,7 +165,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT()
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const MatrixT& copy)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(const MatrixT& copy)
 {
     this->m[0][0] = copy.m[0][0]; this->m[1][0] = copy.m[1][0]; this->m[2][0] = copy.m[2][0]; this->m[3][0] = copy.m[3][0];
     this->m[0][1] = copy.m[0][1]; this->m[1][1] = copy.m[1][1]; this->m[2][1] = copy.m[2][1]; this->m[3][1] = copy.m[3][1];
@@ -173,7 +175,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const MatrixT& copy)
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(MatrixT&& move)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(MatrixT&& move)
 {
     this->m[0][0] = move.m[0][0]; this->m[1][0] = move.m[1][0]; this->m[2][0] = move.m[2][0]; this->m[3][0] = move.m[3][0];
     this->m[0][1] = move.m[0][1]; this->m[1][1] = move.m[1][1]; this->m[2][1] = move.m[2][1]; this->m[3][1] = move.m[3][1];
@@ -183,7 +185,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(MatrixT&& move)
 #endif
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m01, Type m11)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m01, Type m11)
 {
     this->m[0][0] =       m00; this->m[1][0] =       m10; this->m[2][0] = Type(0.0); this->m[3][0] = Type(0.0);
     this->m[0][1] =       m01; this->m[1][1] =       m11; this->m[2][1] = Type(0.0); this->m[3][1] = Type(0.0);
@@ -192,7 +194,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m20, Type m01, Type m11, Type m21, Type m02, Type m12, Type m22)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m20, Type m01, Type m11, Type m21, Type m02, Type m12, Type m22)
 {
     this->m[0][0] =       m00; this->m[1][0] =       m10; this->m[2][0] =       m20; this->m[3][0] = Type(0.0);
     this->m[0][1] =       m01; this->m[1][1] =       m11; this->m[2][1] =       m21; this->m[3][1] = Type(0.0);
@@ -201,7 +203,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m20, Type m30, Type m01, Type m11, Type m21, Type m31, Type m02, Type m12, Type m22, Type m32, Type m03, Type m13, Type m23, Type m33)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(Type m00, Type m10, Type m20, Type m30, Type m01, Type m11, Type m21, Type m31, Type m02, Type m12, Type m22, Type m32, Type m03, Type m13, Type m23, Type m33)
 {
     this->m[0][0] = m00; this->m[1][0] = m10; this->m[2][0] = m20; this->m[3][0] = m30;
     this->m[0][1] = m01; this->m[1][1] = m11; this->m[2][1] = m21; this->m[3][1] = m31;
@@ -210,7 +212,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(Type m00, Type m10, Type
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const QuaternionT< Type >& quaternion)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(const QuaternionT< Type >& quaternion)
 {
     this->m[0][0] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.y) + Type(2.0) * Math::Sqr(quaternion.z));
     this->m[1][0] = Type(2.0) * quaternion.x * quaternion.y - Type(2.0) * quaternion.z * quaternion.w;
@@ -231,12 +233,12 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::MatrixT(const QuaternionT< Type 
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >::~MatrixT()
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::~MatrixT()
 {
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator=(const MatrixT& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator=(const MatrixT& operand)
 {
     this->m[0][0] = operand.m[0][0]; this->m[1][0] = operand.m[1][0]; this->m[2][0] = operand.m[2][0]; this->m[3][0] = operand.m[3][0];
     this->m[0][1] = operand.m[0][1]; this->m[1][1] = operand.m[1][1]; this->m[2][1] = operand.m[2][1]; this->m[3][1] = operand.m[3][1];
@@ -246,13 +248,13 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator=(const QuaternionT< Type >& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator=(const QuaternionT< Type >& operand)
 {
     return *this = MatrixT(operand);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::operator==(const MatrixT& operand)
+_CGUL_INLINE_IMPLEMENT bool CGUL::MatrixT< Type >::operator==(const MatrixT& operand)
 {
     return (m[0][0] == operand.m[0][0] &&
             m[1][0] == operand.m[1][0] &&
@@ -273,25 +275,25 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::operator==(const MatrixT& o
 }
 
 template< typename Type >
-_JATTA_INLINE_DEFINE bool Jatta::MatrixT< Type >::operator!=(const MatrixT& operand)
+_CGUL_INLINE_DEFINE bool CGUL::MatrixT< Type >::operator!=(const MatrixT& operand)
 {
     return !(*this == operand);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type* Jatta::MatrixT< Type >::operator[](UInt32 index)
+_CGUL_INLINE_IMPLEMENT Type* CGUL::MatrixT< Type >::operator[](UInt32 index)
 {
     return m[index];
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT const Type* Jatta::MatrixT< Type >::operator[](UInt32 index) const
+_CGUL_INLINE_IMPLEMENT const Type* CGUL::MatrixT< Type >::operator[](UInt32 index) const
 {
     return m[index];
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*(const MatrixT& operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::operator*(const MatrixT& operand) const
 {
     return MatrixT(this->m[0][0] * operand.m[0][0] + this->m[0][1] * operand.m[1][0] + this->m[0][2] * operand.m[2][0] + this->m[0][3] * operand.m[3][0],
                    this->m[1][0] * operand.m[0][0] + this->m[1][1] * operand.m[1][0] + this->m[1][2] * operand.m[2][0] + this->m[1][3] * operand.m[3][0],
@@ -312,7 +314,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*(Type operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::operator*(Type operand) const
 {
     return MatrixT(this->m[0][0] * operand, this->m[1][0] * operand, this->m[2][0] * operand, this->m[3][0] * operand,
                    this->m[0][1] * operand, this->m[1][1] * operand, this->m[2][1] * operand, this->m[3][1] * operand,
@@ -321,7 +323,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::operator*
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator*=(Type operand)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator*=(Type operand)
 {
     m[0][0] *= operand; m[1][0] *= operand; m[2][0] *= operand; m[3][0] *= operand;
     m[0][1] *= operand; m[1][1] *= operand; m[2][1] *= operand; m[3][1] *= operand;
@@ -331,7 +333,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator/=(Type operand)
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator/=(Type operand)
 {
     Type inverse = 1 / operand;
     m[0][0] *= inverse; m[1][0] *= inverse; m[2][0] *= inverse; m[3][0] *= inverse;
@@ -342,7 +344,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type >& Jatta::MatrixT< Type >::operator
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Type m01, Type m11)
+_CGUL_INLINE_IMPLEMENT void CGUL::MatrixT< Type >::Set(Type m00, Type m10, Type m01, Type m11)
 {
     this->m[0][0] =       m00; this->m[1][0] =       m10; this->m[2][0] = Type(0.0); this->m[3][0] = Type(0.0);
     this->m[0][1] =       m01; this->m[1][1] =       m11; this->m[2][1] = Type(0.0); this->m[3][1] = Type(0.0);
@@ -351,7 +353,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Typ
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Type m20, Type m01, Type m11, Type m21, Type m02, Type m12, Type m22)
+_CGUL_INLINE_IMPLEMENT void CGUL::MatrixT< Type >::Set(Type m00, Type m10, Type m20, Type m01, Type m11, Type m21, Type m02, Type m12, Type m22)
 {
     this->m[0][0] =       m00; this->m[1][0] =       m10; this->m[2][0] =       m20; this->m[3][0] = Type(0.0);
     this->m[0][1] =       m01; this->m[1][1] =       m11; this->m[2][1] =       m21; this->m[3][1] = Type(0.0);
@@ -360,7 +362,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Typ
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Type m20, Type m30, Type m01, Type m11, Type m21, Type m31, Type m02, Type m12, Type m22, Type m32, Type m03, Type m13, Type m23, Type m33)
+_CGUL_INLINE_IMPLEMENT void CGUL::MatrixT< Type >::Set(Type m00, Type m10, Type m20, Type m30, Type m01, Type m11, Type m21, Type m31, Type m02, Type m12, Type m22, Type m32, Type m03, Type m13, Type m23, Type m33)
 {
     this->m[0][0] = m00; this->m[1][0] = m10; this->m[2][0] = m20; this->m[3][0] = m30;
     this->m[0][1] = m01; this->m[1][1] = m11; this->m[2][1] = m21; this->m[3][1] = m31;
@@ -389,25 +391,25 @@ _JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Set(Type m00, Type m10, Typ
  *  @returns Pointer to raw data.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type* Jatta::MatrixT< Type >::GetData() const
+_CGUL_INLINE_IMPLEMENT Type* CGUL::MatrixT< Type >::GetData() const
 {
     return (Type*)m;
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Invert()
+_CGUL_INLINE_IMPLEMENT void CGUL::MatrixT< Type >::Invert()
 {
     *this = GetInverse();
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::MatrixT< Type >::Transpose()
+_CGUL_INLINE_IMPLEMENT void CGUL::MatrixT< Type >::Transpose()
 {
     *this = GetTranspose();
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::GetInverse() const
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::GetInverse() const
 {
     MatrixT< Type > result;
     result.m[0][0] = m[1][1] * m[2][2] * m[3][3] + m[1][2] * m[2][3] * m[3][1] + m[1][3] * m[2][1] * m[3][2] - m[1][1] * m[2][3] * m[3][2] - m[1][2] * m[2][1] * m[3][3] - m[1][3] * m[2][2] * m[3][1];
@@ -431,7 +433,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::GetInvers
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::GetTranspose() const
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::GetTranspose() const
 {
     MatrixT< Type > result;
     result.m[0][0] = m[0][0]; result.m[1][0] = m[0][1]; result.m[2][0] = m[0][2]; result.m[3][0] = m[0][3];
@@ -442,7 +444,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::MatrixT< Type > Jatta::MatrixT< Type >::GetTransp
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::MatrixT< Type >::GetDeterminant() const
+_CGUL_INLINE_IMPLEMENT Type CGUL::MatrixT< Type >::GetDeterminant() const
 {
     return m[0][0] * m[1][1] * m[2][2] * m[3][3] + m[0][0] * m[1][2] * m[2][3] * m[3][1] + m[0][0] * m[1][3] * m[2][1] * m[3][2] +
            m[0][1] * m[1][0] * m[2][3] * m[3][2] + m[0][1] * m[1][2] * m[2][0] * m[3][3] + m[0][1] * m[1][3] * m[2][2] * m[3][0] +
@@ -455,13 +457,13 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::MatrixT< Type >::GetDeterminant() const
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsReflexive() const
+_CGUL_INLINE_IMPLEMENT bool CGUL::MatrixT< Type >::IsReflexive() const
 {
     return (m[0][0] == m[1][1] && m[2][2] == m[3][3] && m[0][0] == m[2][2]);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsSymmetric() const
+_CGUL_INLINE_IMPLEMENT bool CGUL::MatrixT< Type >::IsSymmetric() const
 {
     //A = Transpose(A);
 
@@ -469,7 +471,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsSymmetric() const
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::MatrixT< Type >::IsAntisymmetric() const
+_CGUL_INLINE_IMPLEMENT bool CGUL::MatrixT< Type >::IsAntisymmetric() const
 {
     //A = -Transpose(A);
 

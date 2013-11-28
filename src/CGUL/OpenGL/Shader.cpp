@@ -1,18 +1,20 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Shader.cpp
  */
 
-#include "Shader.h"
-#include "../Exceptions/FatalException.h"
-#include "../Exceptions/OpenGLException.h"
+#include "Shader.hpp"
+#include "../Exceptions/FatalException.hpp"
+#include "../Exceptions/OpenGLException.hpp"
 
-_JATTA_EXPORT Jatta::OpenGL::Shader::Shader()
+_CGUL_EXPORT CGUL::OpenGL::Shader::Shader()
 {
     shader = 0;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Shader::~Shader()
+_CGUL_EXPORT CGUL::OpenGL::Shader::~Shader()
 {
 }
 
@@ -21,7 +23,7 @@ _JATTA_EXPORT Jatta::OpenGL::Shader::~Shader()
  *  @param type An enumeration type which can be GL::VERTEX_SHADER, GL::TESS_CONTROL_SHADER,
  *  GL::TESS_EVALUATION_SHADER, GL::GEOMETRY_SHADER, or GL::FRAGMENT_SHADER.
  */
-_JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
+_CGUL_EXPORT void CGUL::OpenGL::Shader::Create(Enum type)
 {
     shader = glCreateShader((GLenum)type);
     GLCHECK("Failed to create shader.");
@@ -30,19 +32,19 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Create(Enum type)
 /** @brief Equivalent to
  *  <a href="http://www.opengl.org/sdk/docs/man/xhtml/glDeleteShader.xml">glDeleteShader()</a>.
  */
-_JATTA_EXPORT void Jatta::OpenGL::Shader::Delete()
+_CGUL_EXPORT void CGUL::OpenGL::Shader::Delete()
 {
     glDeleteShader((GLuint)shader);
     GLCHECK("Failed to delete shader.");
     shader = 0;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::Shader::GetID() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::OpenGL::Shader::GetID() const
 {
     return shader;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Shader::SetSource(const Jatta::String& source)
+_CGUL_EXPORT void CGUL::OpenGL::Shader::SetSource(const CGUL::String& source)
 {
     const char* characters = source.GetCString();
     const GLchar** data = &characters;
@@ -51,7 +53,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::SetSource(const Jatta::String& source)
     GLCHECK("Failed to set shader source.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Shader::Compile()
+_CGUL_EXPORT void CGUL::OpenGL::Shader::Compile()
 {
     GLint status;
     glCompileShader(shader);
@@ -74,13 +76,13 @@ _JATTA_EXPORT void Jatta::OpenGL::Shader::Compile()
     }
 }
 
-_JATTA_EXPORT Jatta::Enum Jatta::OpenGL::Shader::GetShaderType()
+_CGUL_EXPORT CGUL::Enum CGUL::OpenGL::Shader::GetShaderType()
 {
     // TODO: OpenGL::Shader::GetShaderType
     return 0;
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Shader::GetDeleteStatus()
+_CGUL_EXPORT CGUL::Boolean CGUL::OpenGL::Shader::GetDeleteStatus()
 {
     GLint status;
     glGetShaderiv(shader, GL_DELETE_STATUS, &status);
@@ -88,7 +90,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::OpenGL::Shader::GetDeleteStatus()
     return status == GL_TRUE;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::OpenGL::Shader::GetSource()
+_CGUL_EXPORT CGUL::String CGUL::OpenGL::Shader::GetSource()
 {
     GLint size;
     glGetShaderiv(shader, GL_SHADER_SOURCE_LENGTH, &size);

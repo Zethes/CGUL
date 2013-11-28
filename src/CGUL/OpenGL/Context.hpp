@@ -1,19 +1,21 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Context.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "OpenGL.h"
-#if defined(JATTA_BUILD) && defined(JATTA_MACOS)
-#   import "MacOS/OpenGLView.h"
+#include <CGUL/Config.hpp>
+#include "OpenGL.hpp"
+#if defined(CGUL_BUILD) && defined(CGUL_MACOS)
+#   import "MacOS/OpenGLView.hpp"
 #endif
-#include "../Windows/Window.h"
-#include "../External/Defines.h"
+#include "../Windows/Window.hpp"
+#include "../External/Defines.hpp"
 
-/* OpenGL is an experimental namespace in Jatta! */
-namespace Jatta
+/* OpenGL is an experimental namespace in CGUL! */
+namespace CGUL
 {
     namespace OpenGL
     {
@@ -21,50 +23,50 @@ namespace Jatta
         {
             Window* window;
 
-#           ifdef JATTA_WINDOWS
-            _JATTA_PIXELFORMATDESCRIPTOR pfd;
-            _JATTA_HDC deviceContext;
+#           ifdef CGUL_WINDOWS
+            _CGUL_PIXELFORMATDESCRIPTOR pfd;
+            _CGUL_HDC deviceContext;
             UInt32 pixelFormat;
-            _JATTA_HGLRC renderContext;
+            _CGUL_HGLRC renderContext;
 #           endif
 
-#           ifdef JATTA_LINUX
-            _JATTA_DISPLAY display;
-            _JATTA_GLXCONTEXT context;
+#           ifdef CGUL_LINUX
+            _CGUL_DISPLAY display;
+            _CGUL_GLXCONTEXT context;
 #           endif
 
-#           if defined(JATTA_BUILD) && defined(JATTA_MACOS)
+#           if defined(CGUL_BUILD) && defined(CGUL_MACOS)
             OpenGLView* view;
-#           elif defined(JATTA_MACOS)
+#           elif defined(CGUL_MACOS)
             void* view;
 #           endif
         public:
-            _JATTA_EXPORT Context* GetCurrent();
+            _CGUL_EXPORT Context* GetCurrent();
 
-            _JATTA_EXPORT Context();
-            _JATTA_EXPORT ~Context();
+            _CGUL_EXPORT Context();
+            _CGUL_EXPORT ~Context();
 
-            _JATTA_EXPORT void Create(Window* window);
-            _JATTA_EXPORT void MakeCurrent();
-            _JATTA_EXPORT void Destroy();
-            _JATTA_EXPORT bool IsValid() const;
+            _CGUL_EXPORT void Create(Window* window);
+            _CGUL_EXPORT void MakeCurrent();
+            _CGUL_EXPORT void Destroy();
+            _CGUL_EXPORT bool IsValid() const;
 
-            _JATTA_EXPORT void Enable(Enum capability);
-            _JATTA_EXPORT void Disable(Enum capability);
+            _CGUL_EXPORT void Enable(Enum capability);
+            _CGUL_EXPORT void Disable(Enum capability);
 
-            _JATTA_EXPORT void DepthMask(bool enabled);
-            _JATTA_EXPORT void StencilMask(bool enabled);
-            _JATTA_EXPORT void StencilMask(UInt32 mask);
+            _CGUL_EXPORT void DepthMask(bool enabled);
+            _CGUL_EXPORT void StencilMask(bool enabled);
+            _CGUL_EXPORT void StencilMask(UInt32 mask);
 
-            _JATTA_EXPORT void StencilFunc(Enum func, SInt32 reference, UInt32 mask = ~0);
-            _JATTA_EXPORT void StencilOp(Enum sfail, Enum dpfail, Enum dppass);
+            _CGUL_EXPORT void StencilFunc(Enum func, SInt32 reference, UInt32 mask = ~0);
+            _CGUL_EXPORT void StencilOp(Enum sfail, Enum dpfail, Enum dppass);
 
-            _JATTA_EXPORT void Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height);
+            _CGUL_EXPORT void Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height);
 
-            _JATTA_EXPORT void ClearColor(const Color& color);
-            _JATTA_EXPORT void Clear(Enum mask);
+            _CGUL_EXPORT void ClearColor(const Color& color);
+            _CGUL_EXPORT void Clear(Enum mask);
 
-            _JATTA_EXPORT void SwapBuffers();
+            _CGUL_EXPORT void SwapBuffers();
 
             // TODO: finish importing opengl context functions
         };

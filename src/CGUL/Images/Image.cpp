@@ -1,24 +1,26 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Image.cpp
  */
 
-#include "Image.h"
-#include "../Exceptions/ImageException.h"
+#include "Image.hpp"
+#include "../Exceptions/ImageException.hpp"
 
-_JATTA_EXPORT bool Jatta::Image::IsValid()
+_CGUL_EXPORT bool CGUL::Image::IsValid()
 {
     return (width != 0 && height != 0);
 }
 
-_JATTA_EXPORT Jatta::Image::Image() :
+_CGUL_EXPORT CGUL::Image::Image() :
     format(ImageFormats::NONE),
     width(0),
     height(0)
 {
 }
 
-_JATTA_EXPORT Jatta::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data) :
+_CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data) :
     format(format),
     width(width),
     height(height)
@@ -26,12 +28,12 @@ _JATTA_EXPORT Jatta::Image::Image(ImageFormat format, UInt32 width, UInt32 heigh
     PushMipmap(width, height, data);
 }
 
-_JATTA_EXPORT Jatta::Image::~Image()
+_CGUL_EXPORT CGUL::Image::~Image()
 {
     Free();
 }
 
-_JATTA_EXPORT void Jatta::Image::Free()
+_CGUL_EXPORT void CGUL::Image::Free()
 {
     this->format = ImageFormats::NONE;
     this->width = 0;
@@ -44,7 +46,7 @@ _JATTA_EXPORT void Jatta::Image::Free()
     mipmaps.clear();
 }
 
-_JATTA_EXPORT bool Jatta::Image::GenerateMipmaps()
+_CGUL_EXPORT bool CGUL::Image::GenerateMipmaps()
 {
     if (!IsValid())
     {
@@ -59,7 +61,7 @@ _JATTA_EXPORT bool Jatta::Image::GenerateMipmaps()
     return false;
 }
 
-_JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
+_CGUL_EXPORT CGUL::Mipmap& CGUL::Image::GetBaseMipmap()
 {
     if (mipmaps.size() <= 0)
     {
@@ -69,7 +71,7 @@ _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetBaseMipmap()
     return mipmaps[0];
 }
 
-_JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
+_CGUL_EXPORT CGUL::Mipmap& CGUL::Image::GetMipmap(UInt32 index)
 {
     if (mipmaps.size() <= index)
     {
@@ -79,7 +81,7 @@ _JATTA_EXPORT Jatta::Mipmap& Jatta::Image::GetMipmap(UInt32 index)
     return mipmaps[index];
 }
 
-_JATTA_EXPORT const void* Jatta::Image::GetData()
+_CGUL_EXPORT const void* CGUL::Image::GetData()
 {
     if (mipmaps.size() <= 0)
     {
@@ -89,32 +91,32 @@ _JATTA_EXPORT const void* Jatta::Image::GetData()
     return mipmaps[0].GetData();
 }
 
-_JATTA_EXPORT Jatta::ImageFormat Jatta::Image::GetFormat() const
+_CGUL_EXPORT CGUL::ImageFormat CGUL::Image::GetFormat() const
 {
     return format;
 }
 
-_JATTA_EXPORT int Jatta::Image::GetMipmapCount() const
+_CGUL_EXPORT int CGUL::Image::GetMipmapCount() const
 {
     return mipmaps.size();
 }
 
-_JATTA_EXPORT int Jatta::Image::GetWidth() const
+_CGUL_EXPORT int CGUL::Image::GetWidth() const
 {
     return width;
 }
 
-_JATTA_EXPORT int Jatta::Image::GetHeight() const
+_CGUL_EXPORT int CGUL::Image::GetHeight() const
 {
     return height;
 }
 
-_JATTA_EXPORT void Jatta::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
+_CGUL_EXPORT void CGUL::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
 {
     mipmaps.push_back(Mipmap(format, width, height, (void*)data));
 }
 
-_JATTA_EXPORT void Jatta::Image::PopMipmap()
+_CGUL_EXPORT void CGUL::Image::PopMipmap()
 {
     mipmaps.pop_back();
 }

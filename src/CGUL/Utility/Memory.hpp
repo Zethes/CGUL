@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Memory.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief A simple memory utility.
      */
@@ -19,11 +21,11 @@ namespace Jatta
         template< typename T >
         void FreeBulk(T* data);
 
-        _JATTA_INLINE_DEFINE void ZeroData(void* data, Size count);
+        _CGUL_INLINE_DEFINE void ZeroData(void* data, Size count);
         template< typename T >
         void ZeroArray(T* data, Size count);
     }
 }
 
-#include "../External/Undefines.h"
-#include "Memory_Implement.h"
+#include "../External/Undefines.hpp"
+#include "Memory_Implement.hpp"

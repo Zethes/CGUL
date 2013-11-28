@@ -1,12 +1,14 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file IPAddress.cpp
  */
 
-#include "IPAddress.h"
-#include "../Exceptions/NetworkException.h"
+#include "IPAddress.hpp"
+#include "../Exceptions/NetworkException.hpp"
 
-#ifdef JATTA_WINDOWS
+#ifdef CGUL_WINDOWS
 #   include <winsock2.h>
 #   include <iphlpapi.h>
 #else
@@ -20,7 +22,7 @@
 #endif
 
 #ifndef DOXYGEN
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -38,7 +40,7 @@ namespace Jatta
  *  @param netmask The netmask defining the network range.
  *  @returns The broadcast address.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateBroadcast(const IPAddress& ip, const IPAddress& netmask)
+_CGUL_EXPORT CGUL::Network::IPAddress CGUL::Network::IPAddress::CalculateBroadcast(const IPAddress& ip, const IPAddress& netmask)
 {
     if (ip.GetType() == IPAddressType::IPV6 || netmask.GetType() == IPAddressType::IPV6)
     {
@@ -57,7 +59,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateBroa
  *  @param netmask The netmask defining the network range.
  *  @returns The network address.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateNetwork(const IPAddress& ip, const IPAddress& netmask)
+_CGUL_EXPORT CGUL::Network::IPAddress CGUL::Network::IPAddress::CalculateNetwork(const IPAddress& ip, const IPAddress& netmask)
 {
     if (!ip.IsValid() || ip.GetType() != netmask.GetType())
     {
@@ -79,7 +81,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress Jatta::Network::IPAddress::CalculateNetw
 
 /**
  */
-_JATTA_EXPORT Jatta::Network::IPAddress::IPAddress()
+_CGUL_EXPORT CGUL::Network::IPAddress::IPAddress()
 {
     __jatta_network_initiate();
     this->type = IPAddressType::INVALID;
@@ -89,7 +91,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress()
 
 /** @param address The 32 bit unsigned integer for IPv4.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt32 address)
+_CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt32 address)
 {
     __jatta_network_initiate();
     this->type = IPAddressType::IPV4;
@@ -99,7 +101,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt32 address)
 
 /** @param address The array of two 64 bit unsigned integers for IPv6.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt64* address)
+_CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt64* address)
 {
     __jatta_network_initiate();
     this->type = IPAddressType::IPV6;
@@ -113,11 +115,11 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(UInt64* address)
  *  invalid.
  *  @param ip A parsable ip address, either IPv4 or IPv6.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip)
+_CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip)
 {
     __jatta_network_initiate();
     this->type = IPAddressType::INVALID;
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     sockaddr_in addr4;
     int length = sizeof(sockaddr_in);
     if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET, NULL, (sockaddr*)&addr4, &length) == 0)
@@ -157,13 +159,13 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip)
  *  @param ip A parsable IP address of the given type.
  *  @param type The type of address to attempt to parse.
  */
-_JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip, UInt32 type)
+_CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip, UInt32 type)
 {
     __jatta_network_initiate();
     this->type = IPAddressType::INVALID;
     if (type == IPAddressType::IPV4)
     {
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         sockaddr_in addr;
         int length = sizeof(sockaddr_in);
         if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET, NULL, (sockaddr*)&addr, &length) == 0)
@@ -181,7 +183,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip, UInt
     }
     if (type == IPAddressType::IPV6)
     {
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         sockaddr_in6 addr;
         int length = sizeof(sockaddr_in6);
         if (WSAStringToAddressA((char*)ip.GetCString(), AF_INET6, NULL, (sockaddr*)&addr, &length) == 0)
@@ -201,7 +203,7 @@ _JATTA_EXPORT Jatta::Network::IPAddress::IPAddress(const Jatta::String& ip, UInt
 /** @param address The 32 bit unsigned integer.
  *  @see IPAddress(UInt32)
  */
-_JATTA_EXPORT void Jatta::Network::IPAddress::Set(UInt32 address)
+_CGUL_EXPORT void CGUL::Network::IPAddress::Set(UInt32 address)
 {
     *this = IPAddress(address);
 }
@@ -209,29 +211,29 @@ _JATTA_EXPORT void Jatta::Network::IPAddress::Set(UInt32 address)
 /** @param address The array of two 64 bit unsigned integers.
  *  @see IPAddress(UInt64*)
  */
-_JATTA_EXPORT void Jatta::Network::IPAddress::Set(UInt64* address)
+_CGUL_EXPORT void CGUL::Network::IPAddress::Set(UInt64* address)
 {
     *this = IPAddress(address);
 }
 
 /** @param ip A parsable ip address, either IPv4 or IPv6.
- *  @see IPAddress(const Jatta::String&)
+ *  @see IPAddress(const CGUL::String&)
  */
-_JATTA_EXPORT void Jatta::Network::IPAddress::Set(const Jatta::String& ip)
+_CGUL_EXPORT void CGUL::Network::IPAddress::Set(const CGUL::String& ip)
 {
     *this = IPAddress(ip);
 }
 
 /** @param ip A parsable IP address of the given type.
  *  @param type The type of address to attempt to parse.
- *  @see IPAddress(const Jatta::String&, UInt32)
+ *  @see IPAddress(const CGUL::String&, UInt32)
  */
-_JATTA_EXPORT void Jatta::Network::IPAddress::Set(const Jatta::String& ip, UInt32 type)
+_CGUL_EXPORT void CGUL::Network::IPAddress::Set(const CGUL::String& ip, UInt32 type)
 {
     *this = IPAddress(ip, type);
 }
 
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -239,7 +241,7 @@ namespace Jatta
          *  @param ip The IP address to output.
          *  @returns A reference to the stream passed in.
          */
-        _JATTA_EXPORT std::ostream& operator<<(std::ostream& stream, const Jatta::Network::IPAddress& ip)
+        _CGUL_EXPORT std::ostream& operator<<(std::ostream& stream, const CGUL::Network::IPAddress& ip)
         {
             stream << ip.ToString();
             return stream;
@@ -249,14 +251,14 @@ namespace Jatta
 
 /** @returns The address type.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Network::IPAddress::GetType() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Network::IPAddress::GetType() const
 {
     return type;
 }
 
 /** @returns True if the address is valid, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::Network::IPAddress::IsValid() const
+_CGUL_EXPORT bool CGUL::Network::IPAddress::IsValid() const
 {
     return type != IPAddressType::INVALID;
 }
@@ -267,7 +269,7 @@ _JATTA_EXPORT bool Jatta::Network::IPAddress::IsValid() const
  *  IPAddressType::INVALID then this method simply returns "Invalid."
  *  @returns A string of the human readable IP address.
  */
-_JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
+_CGUL_EXPORT CGUL::String CGUL::Network::IPAddress::ToString() const
 {
     char str[INET6_ADDRSTRLEN];
     str[0] = 0;
@@ -277,7 +279,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
     }
     if (type == IPAddressType::IPV4)
     {
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = AF_INET;
@@ -298,7 +300,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
     }
     if (type == IPAddressType::IPV6)
     {
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         sockaddr_in6 addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin6_family = AF_INET6;
@@ -317,7 +319,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
         }
 #       endif
     }
-    return Jatta::String(str);
+    return CGUL::String(str);
 }
 
 /** @details While it is possible to call this method on an IPv6 address, the resulting value will
@@ -325,7 +327,7 @@ _JATTA_EXPORT Jatta::String Jatta::Network::IPAddress::ToString() const
  *  the address may be IPv4 or IPv6, consider using @ref ToUInt128 instead.
  *  @returns A 32 bit unsigned integer.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Network::IPAddress::ToUInt32() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Network::IPAddress::ToUInt32() const
 {
     return (UInt32)address[0];
 }
@@ -334,7 +336,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Network::IPAddress::ToUInt32() const
  *  integer value.  Since an IPv4 address is only 32 bits, the unused bits will be zerod out.
  *  @param in An array of two 64 bit unsigned integers to store the address into.
  */
-_JATTA_EXPORT void Jatta::Network::IPAddress::ToUInt128(UInt64* in) const
+_CGUL_EXPORT void CGUL::Network::IPAddress::ToUInt128(UInt64* in) const
 {
     memcpy(in, address, sizeof(address));
 }

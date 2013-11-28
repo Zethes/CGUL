@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Face.cpp
  */
 
 #include "Face.h"
 
-_JATTA_EXPORT Jatta::Assimp::Face::Face()
+_CGUL_EXPORT CGUL::Assimp::Face::Face()
 {
     this->face = NULL;
 }
 
-_JATTA_EXPORT Jatta::Assimp::Face::Face(aiFace* face)
+_CGUL_EXPORT CGUL::Assimp::Face::Face(aiFace* face)
 {
     this->face = face;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Face::GetIndicesCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Face::GetIndicesCount()
 {
     return face->mNumIndices;
 }
 
-_JATTA_EXPORT Jatta::UInt32* Jatta::Assimp::Face::GetIndices()
+_CGUL_EXPORT CGUL::UInt32* CGUL::Assimp::Face::GetIndices()
 {
-    return (Jatta::UInt32*)face->mIndices;
+    return (CGUL::UInt32*)face->mIndices;
 }

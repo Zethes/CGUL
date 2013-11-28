@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file WindowStyle.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../Images/Color.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../Images/Color.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief Contains customizable attributes for window creation.
      */
@@ -21,9 +23,9 @@ namespace Jatta
         UInt32 height;
         Boolean resizable;
 
-        _JATTA_EXPORT WindowStyle();
-        _JATTA_EXPORT WindowStyle(const WindowStyle& style);
-        _JATTA_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
+        _CGUL_EXPORT WindowStyle();
+        _CGUL_EXPORT WindowStyle(const WindowStyle& style);
+        _CGUL_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
 
         friend std::ostream& operator<<(std::ostream& stream, const WindowStyle& style)
         {
@@ -37,4 +39,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

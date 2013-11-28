@@ -1,27 +1,29 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Memory_Implement.hpp
  */
 
 template< typename T >
-T* Jatta::Memory::AllocateBulk(Size count)
+T* CGUL::Memory::AllocateBulk(Size count)
 {
     return (T*)new unsigned char[count * sizeof(T)];
 }
 
 template< typename T >
-void Jatta::Memory::FreeBulk(T* data)
+void CGUL::Memory::FreeBulk(T* data)
 {
     delete[] data; // TODO: check this function on windows, it might need to delete one at a time (to avoid stack overflow)
 }
 
-_JATTA_INLINE_IMPLEMENT void Jatta::Memory::ZeroData(void* data, Size count)
+_CGUL_INLINE_IMPLEMENT void CGUL::Memory::ZeroData(void* data, Size count)
 {
     //memset(data, 0, count);
 }
 
 template< typename T >
-void Jatta::Memory::ZeroArray(T* data, Size count)
+void CGUL::Memory::ZeroArray(T* data, Size count)
 {
     //memset(data, 0, sizeof(T) * count);
 }

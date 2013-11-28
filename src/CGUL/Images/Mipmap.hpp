@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Mipmap.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "ImageFormats.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "ImageFormats.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief A container containing the image data of a certain mipmap
      */
@@ -21,17 +23,17 @@ namespace Jatta
         UInt32 height;
 
         // TODO: remove this? it's not used
-        //_JATTA_EXPORT bool IsValid();
+        //_CGUL_EXPORT bool IsValid();
     public:
-        _JATTA_EXPORT Mipmap();
-        _JATTA_EXPORT Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data);
-        _JATTA_EXPORT ~Mipmap();
+        _CGUL_EXPORT Mipmap();
+        _CGUL_EXPORT Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data);
+        _CGUL_EXPORT ~Mipmap();
 
-        _JATTA_EXPORT void Free();
+        _CGUL_EXPORT void Free();
 
-        _JATTA_EXPORT const void* GetData();
-        _JATTA_EXPORT ImageFormat GetFormat() const;
+        _CGUL_EXPORT const void* GetData();
+        _CGUL_EXPORT ImageFormat GetFormat() const;
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

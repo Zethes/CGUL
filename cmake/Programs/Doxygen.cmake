@@ -1,5 +1,5 @@
 macro(doxygen_exclude FOLDER)
-    set(DOXYGEN_EXCLUDE "${DOXYGEN_EXCLUDE} ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta/${FOLDER}")
+    set(DOXYGEN_EXCLUDE "${DOXYGEN_EXCLUDE} ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL/${FOLDER}")
 endmacro()
 
 if(DOXYGEN_ENABLE)
@@ -36,7 +36,7 @@ if(DOXYGEN_ENABLE)
             if(NOT PortAudio_FOUND)
                 doxygen_exclude(PortAudio)
             endif()
-            if(NOT Jatta_USE_OPENGL)
+            if(NOT CGUL_USE_OPENGL)
                 doxygen_exclude(OpenGL)
             endif()
 

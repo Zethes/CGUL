@@ -44,7 +44,7 @@ add_custom_target("check" COMMAND
 #  --enable=information
   -q
   ${__CPPCHECK_DEFINES}
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL"
   ${__JOBS_FLAG}
   ${__TEMPLATE_FLAG}
 )

@@ -1,46 +1,48 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Animation.cpp
  */
 
-#include "Animation.h"
+#include "Animation.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::Animation::Animation(aiAnimation* animation)
+_CGUL_EXPORT CGUL::Assimp::Animation::Animation(aiAnimation* animation)
 {
     this->animation = animation;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::Animation::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::Animation::GetName()
 {
     return String(animation->mName.C_Str());
 }
 
-_JATTA_EXPORT double Jatta::Assimp::Animation::GetDuration()
+_CGUL_EXPORT double CGUL::Assimp::Animation::GetDuration()
 {
     return animation->mDuration;
 }
 
-_JATTA_EXPORT double Jatta::Assimp::Animation::GetTicksPerSecond()
+_CGUL_EXPORT double CGUL::Assimp::Animation::GetTicksPerSecond()
 {
     return animation->mTicksPerSecond;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Animation::GetChannelCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Animation::GetChannelCount()
 {
     return animation->mNumChannels;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Animation::GetMeshChannelCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Animation::GetMeshChannelCount()
 {
     return animation->mNumMeshChannels;
 }
 
-_JATTA_EXPORT Jatta::Assimp::NodeAnimation* Jatta::Assimp::Animation::GetChannels()
+_CGUL_EXPORT CGUL::Assimp::NodeAnimation* CGUL::Assimp::Animation::GetChannels()
 {
     return reinterpret_cast<NodeAnimation*>(animation->mChannels);
 }
 
-_JATTA_EXPORT Jatta::Assimp::MeshAnimation* Jatta::Assimp::Animation::GetMeshChannels()
+_CGUL_EXPORT CGUL::Assimp::MeshAnimation* CGUL::Assimp::Animation::GetMeshChannels()
 {
     return reinterpret_cast<MeshAnimation*>(animation->mMeshChannels);
 }

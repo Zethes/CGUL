@@ -1,33 +1,35 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file MeshAnimation.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Math/Matrix.h"
-#include "../Math/Quaternion.h"
-#include "../Math/Vector3.h"
-#include "../Utility/String.h"
-#include "MeshKey.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Math/Matrix.hpp"
+#include "../Math/Quaternion.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Utility/String.hpp"
+#include "MeshKey.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class MeshAnimation
         {
         private:
-            _JATTA_AIMESHANIM meshAnim;
+            _CGUL_AIMESHANIM meshAnim;
         public:
-            _JATTA_EXPORT MeshAnimation(_JATTA_AIMESHANIM meshAnim);
+            _CGUL_EXPORT MeshAnimation(_CGUL_AIMESHANIM meshAnim);
 
-            _JATTA_EXPORT Jatta::String GetName();
-            _JATTA_EXPORT Jatta::UInt32 GetKeyCount();
-            _JATTA_EXPORT MeshKey* GetKeys();
+            _CGUL_EXPORT String GetName();
+            _CGUL_EXPORT UInt32 GetKeyCount();
+            _CGUL_EXPORT MeshKey* GetKeys();
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

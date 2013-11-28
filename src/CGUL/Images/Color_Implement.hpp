@@ -1,6 +1,8 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Color_Implement.hpp
  */
 
 #include "../Math/Vector3.hpp"
@@ -12,7 +14,7 @@
  *  @returns A vector containing the r, g, b values as floating point x, y, z.
  */
 template< typename Type >
-_JATTA_EXPORT Jatta::Vector3T< Type > Jatta::Color::ToVector3() const
+_CGUL_EXPORT CGUL::Vector3T< Type > CGUL::Color::ToVector3() const
 {
     return Vector3T< Type >(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
 }
@@ -21,7 +23,7 @@ _JATTA_EXPORT Jatta::Vector3T< Type > Jatta::Color::ToVector3() const
  *  @returns A vector containing the r, g, b, a values as floating point x, y, z, w.
  */
 template< typename Type >
-_JATTA_EXPORT Jatta::Vector4T< Type > Jatta::Color::ToVector4() const
+_CGUL_EXPORT CGUL::Vector4T< Type > CGUL::Color::ToVector4() const
 {
     return Vector4T< Type >(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
 }

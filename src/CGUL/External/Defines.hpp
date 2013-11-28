@@ -1,178 +1,177 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
- */
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
-/** @file Defines.h
+/** @file Defines.hpp
  *  @brief Sets up the build environment for header files.
  *  @details The goal of this file was to exclude system files which dump defines to the global
- *  namespace from applications which relied on Jatta.  An example of this is Window's CreateWindow
+ *  namespace from applications which relied on CGUL.  An example of this is Window's CreateWindow
  *  function which is commonly defined as either CreateWindowA or CreateWindowW.  Since this same
  *  define does not exist on Linux or Mac it creates issues only present on Windows.  By excluding
  *  the inclusion of Windows.h in the final product, OS-specific defines are minimized.
  */
 
-#include "Once.h"
+#include "Once.hpp"
 
 #ifndef DOXYGEN
 
-#ifdef JATTA_WINDOWS
-#   define _JATTA_HWND void*
-#   define _JATTA_DWORD long
-#   define _JATTA_PIXELFORMATDESCRIPTOR Jatta::_JATTA_PIXELFORMATDESCRIPTOR
-#   define _JATTA_HDC int
-#   define _JATTA_HGLRC int
-#   define _JATTA_HGDIOBJ void*
+#ifdef CGUL_WINDOWS
+#   define _CGUL_HWND void*
+#   define _CGUL_DWORD long
+#   define _CGUL_PIXELFORMATDESCRIPTOR CGUL::_CGUL_PIXELFORMATDESCRIPTOR
+#   define _CGUL_HDC int
+#   define _CGUL_HGLRC int
+#   define _CGUL_HGDIOBJ void*
 #endif
 
-#ifdef JATTA_LINUX
-#   define _JATTA_DISPLAY void*
-#   define _JATTA_WINDOW void*
-#   define _JATTA_GLXCONTEXT void*
+#ifdef CGUL_LINUX
+#   define _CGUL_DISPLAY void*
+#   define _CGUL_WINDOW void*
+#   define _CGUL_GLXCONTEXT void*
 #endif
 
-#define _JATTA_FT_FACE void*
-#define _JATTA_AISCENE void*
-#define _JATTA_AIMESH void*
-#define _JATTA_AITEXTURE void*
-#define _JATTA_AIMATERIAL void*
-#define _JATTA_AICAMERA void*
-#define _JATTA_AIBONE void*
-#define _JATTA_AIVERTEXWEIGHT void*
-#define _JATTA_AIANIMATION void*
-#define _JATTA_AIMESHANIM void*
-#define _JATTA_AINODEANIM void*
-#define _JATTA_AIFACE void*
-#define _JATTA_AILIGHT void*
-#define _JATTA_AINODE void*
-#define _JATTA_AIUVTRANSFORM void*
-#define _JATTA_AIMATERIALPROPERTY void*
-#define _JATTA_AIBASEPROCESS void*
-#define _JATTA_AIBASEIMPORTER void*
-#define _JATTA_AIIOHANDLER void*
-#define _JATTA_AIPROGRESHANDLER void*
-#define _JATTA_AIIMPORTERDESC void*
-#define _JATTA_AIMEMORYINFO void*
-#define _JATTA_AIIMPORTER void*
-#define _JATTA_AIEXPORTER void*
-#define _JATTA_AIEXPORTFORMATDESC void*
-#define _JATTA_AIEXPORTDATABLOB void*
-#define _JATTA_AIEXPORTFORMATENTRY void*
-#define _JATTA_PASTREAM void*
-#define _JATTA_PASTREAM_CALLBACK_TIMEINFO void*
-#define _JATTA_PASTREAM_CALLBACK_FLAGS unsigned long
-#define _JATTA_PADEVICE_INFO void*
-#define _JATTA_PAHOSTAPI_INFO void*
-#define _JATTA_PASTREAM_INFO void*
-#define _JATTA_PAHOSTERROR_INFO void*
-#define _JATTA_PCRE void*
-#define _JATTA_PCRE_EXTRA void*
-#define _JATTA_SSL void*
-#define _JATTA_SSL_CTX void*
-#define _JATTA_SSL_BIO void*
+#define _CGUL_FT_FACE void*
+#define _CGUL_AISCENE void*
+#define _CGUL_AIMESH void*
+#define _CGUL_AITEXTURE void*
+#define _CGUL_AIMATERIAL void*
+#define _CGUL_AICAMERA void*
+#define _CGUL_AIBONE void*
+#define _CGUL_AIVERTEXWEIGHT void*
+#define _CGUL_AIANIMATION void*
+#define _CGUL_AIMESHANIM void*
+#define _CGUL_AINODEANIM void*
+#define _CGUL_AIFACE void*
+#define _CGUL_AILIGHT void*
+#define _CGUL_AINODE void*
+#define _CGUL_AIUVTRANSFORM void*
+#define _CGUL_AIMATERIALPROPERTY void*
+#define _CGUL_AIBASEPROCESS void*
+#define _CGUL_AIBASEIMPORTER void*
+#define _CGUL_AIIOHANDLER void*
+#define _CGUL_AIPROGRESHANDLER void*
+#define _CGUL_AIIMPORTERDESC void*
+#define _CGUL_AIMEMORYINFO void*
+#define _CGUL_AIIMPORTER void*
+#define _CGUL_AIEXPORTER void*
+#define _CGUL_AIEXPORTFORMATDESC void*
+#define _CGUL_AIEXPORTDATABLOB void*
+#define _CGUL_AIEXPORTFORMATENTRY void*
+#define _CGUL_PASTREAM void*
+#define _CGUL_PASTREAM_CALLBACK_TIMEINFO void*
+#define _CGUL_PASTREAM_CALLBACK_FLAGS unsigned long
+#define _CGUL_PADEVICE_INFO void*
+#define _CGUL_PAHOSTAPI_INFO void*
+#define _CGUL_PASTREAM_INFO void*
+#define _CGUL_PAHOSTERROR_INFO void*
+#define _CGUL_PCRE void*
+#define _CGUL_PCRE_EXTRA void*
+#define _CGUL_SSL void*
+#define _CGUL_SSL_CTX void*
+#define _CGUL_SSL_BIO void*
 
 
-#if defined(JATTA_INCLUDES)
+#if defined(CGUL_INCLUDES)
 #   ifdef CPP_HAS_STATIC_ASSERT
 #       define CHECK(x, y) static_assert(sizeof(x) == sizeof(y), "sizeof(" #x ") != sizeof(" #y ")");
 #   else
 #       define CHECK(x, y)
 #   endif
-#   ifdef JATTA_WINDOWS
-CHECK(::HWND, _JATTA_HWND);
-CHECK(::DWORD, _JATTA_DWORD);
-CHECK(::PIXELFORMATDESCRIPTOR, _JATTA_PIXELFORMATDESCRIPTOR);
-CHECK(::HDC, _JATTA_HDC);
-CHECK(::HGLRC, _JATTA_HGLRC);
-CHECK(::HGDIOBJ, _JATTA_HGDIOBJ);
+#   ifdef CGUL_WINDOWS
+CHECK(::HWND, _CGUL_HWND);
+CHECK(::DWORD, _CGUL_DWORD);
+CHECK(::PIXELFORMATDESCRIPTOR, _CGUL_PIXELFORMATDESCRIPTOR);
+CHECK(::HDC, _CGUL_HDC);
+CHECK(::HGLRC, _CGUL_HGLRC);
+CHECK(::HGDIOBJ, _CGUL_HGDIOBJ);
 #   endif
-#   ifdef JATTA_LINUX
-CHECK(::Display*, _JATTA_DISPLAY);
-CHECK(::Window, _JATTA_WINDOW);
-CHECK(::GLXContext, _JATTA_GLXCONTEXT);
+#   ifdef CGUL_LINUX
+CHECK(::Display*, _CGUL_DISPLAY);
+CHECK(::Window, _CGUL_WINDOW);
+CHECK(::GLXContext, _CGUL_GLXCONTEXT);
 #   endif
 #   ifdef Assimp_FOUND
-CHECK(::FT_Face, _JATTA_FT_FACE);
-CHECK(::aiScene*, _JATTA_AISCENE);
-CHECK(::aiMesh*, _JATTA_AIMESH);
-CHECK(::aiTexture*, _JATTA_AITEXTURE);
-CHECK(::aiTexture*, _JATTA_AIMATERIAL);
+CHECK(::FT_Face, _CGUL_FT_FACE);
+CHECK(::aiScene*, _CGUL_AISCENE);
+CHECK(::aiMesh*, _CGUL_AIMESH);
+CHECK(::aiTexture*, _CGUL_AITEXTURE);
+CHECK(::aiTexture*, _CGUL_AIMATERIAL);
 #   endif
 #   ifdef PortAudio_FOUND
-CHECK(::PaStreamCallbackTimeInfo*, _JATTA_PASTREAM_CALLBACK_TIMEINFO);
-CHECK(::PaStreamCallbackFlags, _JATTA_PASTREAM_CALLBACK_FLAGS);
-CHECK(::PaDeviceInfo*, _JATTA_PADEVICE_INFO);
-CHECK(::PaHostApiInfo*, _JATTA_PAHOSTAPI_INFO);
+CHECK(::PaStreamCallbackTimeInfo*, _CGUL_PASTREAM_CALLBACK_TIMEINFO);
+CHECK(::PaStreamCallbackFlags, _CGUL_PASTREAM_CALLBACK_FLAGS);
+CHECK(::PaDeviceInfo*, _CGUL_PADEVICE_INFO);
+CHECK(::PaHostApiInfo*, _CGUL_PAHOSTAPI_INFO);
 #   endif
 #   ifdef PCRE_FOUND
-CHECK(::pcre*, _JATTA_PCRE);
-CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
+CHECK(::pcre*, _CGUL_PCRE);
+CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA);
 #   endif
 #   undef CHECK
-#   include "Undefines.h"
-#   ifdef JATTA_WINDOWS
-#       define _JATTA_HWND ::HWND
-#       define _JATTA_DWORD ::DWORD
-#       define _JATTA_PIXELFORMATDESCRIPTOR ::PIXELFORMATDESCRIPTOR
-#       define _JATTA_HDC ::HDC
-#       define _JATTA_HGLRC ::HGLRC
-#       define _JATTA_HGDIOBJ ::HGDIOBJ
+#   include "Undefines.hpp"
+#   ifdef CGUL_WINDOWS
+#       define _CGUL_HWND ::HWND
+#       define _CGUL_DWORD ::DWORD
+#       define _CGUL_PIXELFORMATDESCRIPTOR ::PIXELFORMATDESCRIPTOR
+#       define _CGUL_HDC ::HDC
+#       define _CGUL_HGLRC ::HGLRC
+#       define _CGUL_HGDIOBJ ::HGDIOBJ
 #    endif
-#    ifdef JATTA_LINUX
-#       define _JATTA_DISPLAY ::Display*
-#       define _JATTA_WINDOW ::Window
-#       ifdef Jatta_USE_OPENGL
-#           define _JATTA_GLXCONTEXT ::GLXContext
+#    ifdef CGUL_LINUX
+#       define _CGUL_DISPLAY ::Display*
+#       define _CGUL_WINDOW ::Window
+#       ifdef CGUL_USE_OPENGL
+#           define _CGUL_GLXCONTEXT ::GLXContext
 #       endif
 #   endif
 #   ifdef FreeType_FOUND
-#       define _JATTA_FT_FACE ::FT_Face
+#       define _CGUL_FT_FACE ::FT_Face
 #   endif
 #   ifdef Assimp_FOUND
-#       define _JATTA_AISCENE ::aiScene*
-#       define _JATTA_AIMESH ::aiMesh*
-#       define _JATTA_AITEXTURE ::aiTexture*
-#       define _JATTA_AIMATERIAL ::aiMaterial*
-#       define _JATTA_AICAMERA ::aiCamera*
-#       define _JATTA_AIBONE ::aiBone*
-#       define _JATTA_AIVERTEXWEIGHT ::aiVertexWeight*
-#       define _JATTA_AIANIMATION ::aiAnimation*
-#       define _JATTA_AIMESHANIM ::aiMeshAnim*
-#       define _JATTA_AINODEANIM ::aiNodeAnim*
-#       define _JATTA_AIFACE ::aiFace*
-#       define _JATTA_AILIGHT ::aiLight*
-#       define _JATTA_AINODE ::aiNode*
-#       define _JATTA_AIUVTRANSFORM ::aiUVTransform*
-#       define _JATTA_AIMATERIALPROPERTY ::aiMaterialProperty*
-#       define _JATTA_AIBASEPROCESS ::Assimp::BaseProcess*
-#       define _JATTA_AIBASEIMPORTER ::Assimp::BaseImporter*
-#       define _JATTA_AIIOHANDLER ::Assimp::IOSystem*
-#       define _JATTA_AIPROGRESHANDLER ::Assimp::ProgressHandler*
-#       define _JATTA_AIIMPORTERDESC ::aiImporterDesc*
-#       define _JATTA_AIMEMORYINFO ::aiMemoryInfo
-#       define _JATTA_AIIMPORTER ::Assimp::Importer*
-#       define _JATTA_AIEXPORTER ::Assimp::Exporter*
-#       define _JATTA_AIEXPORTFORMATDESC ::aiExportFormatDesc*
-#       define _JATTA_AIEXPORTDATABLOB ::aiExportDataBlob*
-#       define _JATTA_AIEXPORTFORMATENTRY ::Assimp::Exporter::ExportFormatEntry
+#       define _CGUL_AISCENE ::aiScene*
+#       define _CGUL_AIMESH ::aiMesh*
+#       define _CGUL_AITEXTURE ::aiTexture*
+#       define _CGUL_AIMATERIAL ::aiMaterial*
+#       define _CGUL_AICAMERA ::aiCamera*
+#       define _CGUL_AIBONE ::aiBone*
+#       define _CGUL_AIVERTEXWEIGHT ::aiVertexWeight*
+#       define _CGUL_AIANIMATION ::aiAnimation*
+#       define _CGUL_AIMESHANIM ::aiMeshAnim*
+#       define _CGUL_AINODEANIM ::aiNodeAnim*
+#       define _CGUL_AIFACE ::aiFace*
+#       define _CGUL_AILIGHT ::aiLight*
+#       define _CGUL_AINODE ::aiNode*
+#       define _CGUL_AIUVTRANSFORM ::aiUVTransform*
+#       define _CGUL_AIMATERIALPROPERTY ::aiMaterialProperty*
+#       define _CGUL_AIBASEPROCESS ::Assimp::BaseProcess*
+#       define _CGUL_AIBASEIMPORTER ::Assimp::BaseImporter*
+#       define _CGUL_AIIOHANDLER ::Assimp::IOSystem*
+#       define _CGUL_AIPROGRESHANDLER ::Assimp::ProgressHandler*
+#       define _CGUL_AIIMPORTERDESC ::aiImporterDesc*
+#       define _CGUL_AIMEMORYINFO ::aiMemoryInfo
+#       define _CGUL_AIIMPORTER ::Assimp::Importer*
+#       define _CGUL_AIEXPORTER ::Assimp::Exporter*
+#       define _CGUL_AIEXPORTFORMATDESC ::aiExportFormatDesc*
+#       define _CGUL_AIEXPORTDATABLOB ::aiExportDataBlob*
+#       define _CGUL_AIEXPORTFORMATENTRY ::Assimp::Exporter::ExportFormatEntry
 #   endif
 #   ifdef PortAudio_FOUND
-#       define _JATTA_PASTREAM ::PaStream*
-#       define _JATTA_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
-#       define _JATTA_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
-#       define _JATTA_PADEVICE_INFO ::PaDeviceInfo*
-#       define _JATTA_PAHOSTAPI_INFO ::PaHostApiInfo*
-#       define _JATTA_PASTREAM_INFO ::PaStreamInfo*
-#       define _JATTA_PAHOSTERROR_INFO ::PaHostErrorInfo*
+#       define _CGUL_PASTREAM ::PaStream*
+#       define _CGUL_PASTREAM_CALLBACK_TIMEINFO ::PaStreamCallbackTimeInfo*
+#       define _CGUL_PASTREAM_CALLBACK_FLAGS ::PaStreamCallbackFlags
+#       define _CGUL_PADEVICE_INFO ::PaDeviceInfo*
+#       define _CGUL_PAHOSTAPI_INFO ::PaHostApiInfo*
+#       define _CGUL_PASTREAM_INFO ::PaStreamInfo*
+#       define _CGUL_PAHOSTERROR_INFO ::PaHostErrorInfo*
 #   endif
 #   ifdef PCRE_FOUND
-#       define _JATTA_PCRE ::pcre*
-#       define _JATTA_PCRE_EXTRA ::pcre_extra*
+#       define _CGUL_PCRE ::pcre*
+#       define _CGUL_PCRE_EXTRA ::pcre_extra*
 #   endif
 #   ifdef OpenSSL_FOUND
-#       define _JATTA_SSL ::SSL*
-#       define _JATTA_SSL_CTX ::SSL_CTX*
-#       define _JATTA_SSL_BIO ::BIO*
+#       define _CGUL_SSL ::SSL*
+#       define _CGUL_SSL_CTX ::SSL_CTX*
+#       define _CGUL_SSL_BIO ::BIO*
 #   endif
 #endif
 
@@ -180,7 +179,7 @@ CHECK(::pcre_extra*, _JATTA_PCRE_EXTRA);
 #   define NULL 0
 #endif
 
-#ifdef JATTA_BUILD
+#ifdef CGUL_BUILD
 #   define GLCLEAR() { glGetError(); }
 #   define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL: " str); }
 #endif

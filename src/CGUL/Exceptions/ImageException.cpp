@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file ImageException.cpp
  */
 
-#include "ImageException.h"
+#include "ImageException.hpp"
 
-Jatta::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::IMAGE)
+CGUL::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::IMAGE)
 {
 }
 
-Jatta::String Jatta::ImageException::GetString() const
+CGUL::String CGUL::ImageException::GetString() const
 {
     switch (code)
     {
@@ -35,7 +37,7 @@ Jatta::String Jatta::ImageException::GetString() const
     }
 }
 
-Jatta::String Jatta::ImageException::GetReason() const
+CGUL::String CGUL::ImageException::GetReason() const
 {
     switch (reason)
     {

@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Adapter.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Containers/FixedList.h"
-#include "../Network/IPAddress.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Containers/FixedList.hpp"
+#include "../Network/IPAddress.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -34,4 +36,4 @@ namespace Jatta
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

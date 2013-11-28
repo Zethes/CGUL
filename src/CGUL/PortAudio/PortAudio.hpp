@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file PortAudio.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 #undef NO_ERROR
 
-namespace Jatta
+namespace CGUL
 {
     namespace PortAudio
     {
@@ -55,27 +57,27 @@ namespace Jatta
             };
         }
 
-        _JATTA_EXPORT SInt32 Initialize();
-        _JATTA_EXPORT SInt32 Terminate();
+        _CGUL_EXPORT SInt32 Initialize();
+        _CGUL_EXPORT SInt32 Terminate();
 
-        _JATTA_EXPORT SInt32 GetVersion();
-        _JATTA_EXPORT String GetVersionText();
-        _JATTA_EXPORT String GetErrorText(SInt32 error);
+        _CGUL_EXPORT SInt32 GetVersion();
+        _CGUL_EXPORT String GetVersionText();
+        _CGUL_EXPORT String GetErrorText(SInt32 error);
 
-        _JATTA_EXPORT SInt32 GetDeviceCount();
-        _JATTA_EXPORT SInt32 GetDefaultInputDeviceIndex();
-        _JATTA_EXPORT SInt32 GetDefaultOutputDeviceIndex();
-        _JATTA_EXPORT Device GetDefaultInputDevice();
-        _JATTA_EXPORT Device GetDefaultOutputDevice();
-        _JATTA_EXPORT Device GetDevice(SInt32 index);
+        _CGUL_EXPORT SInt32 GetDeviceCount();
+        _CGUL_EXPORT SInt32 GetDefaultInputDeviceIndex();
+        _CGUL_EXPORT SInt32 GetDefaultOutputDeviceIndex();
+        _CGUL_EXPORT Device GetDefaultInputDevice();
+        _CGUL_EXPORT Device GetDefaultOutputDevice();
+        _CGUL_EXPORT Device GetDevice(SInt32 index);
 
-        _JATTA_EXPORT SInt32 GetHostApiCount();
-        _JATTA_EXPORT SInt32 GetDefaultHostApiIndex();
-        _JATTA_EXPORT HostApi GetDefaultHostApi();
-        _JATTA_EXPORT HostApi GetHostApi(SInt32 index);
-        _JATTA_EXPORT HostError GetLastHostError();
+        _CGUL_EXPORT SInt32 GetHostApiCount();
+        _CGUL_EXPORT SInt32 GetDefaultHostApiIndex();
+        _CGUL_EXPORT HostApi GetDefaultHostApi();
+        _CGUL_EXPORT HostApi GetHostApi(SInt32 index);
+        _CGUL_EXPORT HostError GetLastHostError();
 
-        _JATTA_EXPORT void Sleep(UInt32 miliseconds);
+        _CGUL_EXPORT void Sleep(UInt32 miliseconds);
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

@@ -1,21 +1,23 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Window.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "WindowStyle.h"
+#include <CGUL/Config.h>
+#include "WindowStyle.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector4.hpp"
-#if defined(JATTA_BUILD) && defined(JATTA_MACOS)
-#   include "MacOS/WindowDelegate.h"
+#if defined(CGUL_BUILD) && defined(CGUL_MACOS)
+#   include "MacOS/WindowDelegate.hpp"
 #endif
-#include "../External/Defines.h"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
-#   ifdef Jatta_USE_OPENGL
+#   ifdef CGUL_USE_OPENGL
     namespace OpenGL
     {
         class Context;
@@ -28,128 +30,128 @@ namespace Jatta
      *  and other unix platforms.  Each window api is different, and windows behave differently
      *  depending on the desktop environment.  Note also that certain X11 environments may
      *  wrongfully ignore essential messages resulting in some features not working -- this is not
-     *  an issue with Jatta, but instead with the environment itself.
+     *  an issue with CGUL, but instead with the environment itself.
      */
     class Window
     {
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
         friend class OpenGL::Context;
 #       endif
 
-#       ifdef JATTA_WINDOWS
-        _JATTA_HWND handle;
+#       ifdef CGUL_WINDOWS
+        _CGUL_HWND handle;
 
         char className[20];
 
-        _JATTA_HGDIOBJ backgroundBrush;
+        _CGUL_HGDIOBJ backgroundBrush;
 
-        static long __stdcall WindowProcedure(_JATTA_HWND handle, unsigned int message, unsigned int wParam, long int lParam);
+        static long __stdcall WindowProcedure(_CGUL_HWND handle, unsigned int message, unsigned int wParam, long int lParam);
 #       endif
 
-#       ifdef JATTA_LINUX
-        static std::map<_JATTA_WINDOW, Window*> windowMap;
-        static _JATTA_DISPLAY display;
-        _JATTA_WINDOW handle;
+#       ifdef CGUL_LINUX
+        static std::map<_CGUL_WINDOW, Window*> windowMap;
+        static _CGUL_DISPLAY display;
+        _CGUL_WINDOW handle;
         Color backgroundColor;
 
         static Boolean initialized;
 #       endif
 
-#       if defined(JATTA_BUILD) && defined(JATTA_MACOS)
+#       if defined(CGUL_BUILD) && defined(CGUL_MACOS)
         WindowDelegate* handle;
-#       elif defined(JATTA_MACOS)
+#       elif defined(CGUL_MACOS)
         void* handle;
 #       endif
 
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
         OpenGL::Context* context;
 #       endif
 
-        _JATTA_EXPORT static UInt32 TranslateKey(UInt64 key);
+        _CGUL_EXPORT static UInt32 TranslateKey(UInt64 key);
 
-        _JATTA_EXPORT Window(const Window& copy);
+        _CGUL_EXPORT Window(const Window& copy);
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR
-        _JATTA_EXPORT Window(Window&& move);
+        _CGUL_EXPORT Window(Window&& move);
 #       endif
     public:
         // @brief Updates all windows in the current application.
-        _JATTA_EXPORT static void Update();
+        _CGUL_EXPORT static void Update();
 
         // @brief Default constructor.
-        _JATTA_EXPORT Window();
+        _CGUL_EXPORT Window();
         // @brief Deconstructor.
-        _JATTA_EXPORT ~Window();
+        _CGUL_EXPORT ~Window();
 
-#       ifdef JATTA_WINDOWS
-        _JATTA_EXPORT _JATTA_HWND _GetHandle() const;
+#       ifdef CGUL_WINDOWS
+        _CGUL_EXPORT _CGUL_HWND _GetHandle() const;
 #       endif
 
-#       ifdef JATTA_LINUX
-        _JATTA_EXPORT _JATTA_DISPLAY _GetDisplay() const;
-        _JATTA_EXPORT _JATTA_WINDOW _GetHandle() const;
+#       ifdef CGUL_LINUX
+        _CGUL_EXPORT _CGUL_DISPLAY _GetDisplay() const;
+        _CGUL_EXPORT _CGUL_WINDOW _GetHandle() const;
 #       endif
 
-#       if defined(JATTA_BUILD) && defined(JATTA_MACOS)
+#       if defined(CGUL_BUILD) && defined(CGUL_MACOS)
         WindowDelegate* _GetHandle() const;
 #       endif
 
         // @brief Creates a window based on the given style.
-        _JATTA_EXPORT void Create(const WindowStyle& style);
+        _CGUL_EXPORT void Create(const WindowStyle& style);
         // @brief Destroys the window.
-        _JATTA_EXPORT void Close();
+        _CGUL_EXPORT void Close();
 
         // @brief Handles system messages and updates input.
-        _JATTA_EXPORT void HandleMessages();
+        _CGUL_EXPORT void HandleMessages();
 
         // @brief Updates a window's style.
-        _JATTA_EXPORT void SetStyle(const WindowStyle& style);
+        _CGUL_EXPORT void SetStyle(const WindowStyle& style);
         // @brief Gets some information about the window.
-        _JATTA_EXPORT WindowStyle GetStyle() const;
+        _CGUL_EXPORT WindowStyle GetStyle() const;
 
         // @brief Sets the title of the window.
-        _JATTA_EXPORT void SetTitle(const String& title);
+        _CGUL_EXPORT void SetTitle(const String& title);
         // @brief Gets the title of the window.
-        _JATTA_EXPORT String GetTitle() const;
+        _CGUL_EXPORT String GetTitle() const;
 
         // @brief Sets the background color of the window.
-        _JATTA_EXPORT void SetBackgroundColor(const Color& color);
+        _CGUL_EXPORT void SetBackgroundColor(const Color& color);
         // @brief Gets the background color of the window.
-        _JATTA_EXPORT Color GetBackgroundColor() const;
+        _CGUL_EXPORT Color GetBackgroundColor() const;
 
         // @brief Sets the width of the window, excluding the border.
-        _JATTA_EXPORT void SetWidth(UInt32 width);
+        _CGUL_EXPORT void SetWidth(UInt32 width);
         // @brief Gets the width of the window, excluding the border.
-        _JATTA_EXPORT UInt32 GetWidth() const;
+        _CGUL_EXPORT UInt32 GetWidth() const;
         // @brief Sets the height of the window, excluding the border.
-        _JATTA_EXPORT void SetHeight(UInt32 height);
+        _CGUL_EXPORT void SetHeight(UInt32 height);
         // @brief Gets the height of the window, excluding the border.
-        _JATTA_EXPORT UInt32 GetHeight() const;
+        _CGUL_EXPORT UInt32 GetHeight() const;
         // @brief Sets the size of the window, excluding the border.
-        _JATTA_EXPORT void SetSize(const UCoord32& size) const;
+        _CGUL_EXPORT void SetSize(const UCoord32& size) const;
         // @brief Gets the size of the window, excluding the border.
-        _JATTA_EXPORT UCoord32 GetSize() const;
+        _CGUL_EXPORT UCoord32 GetSize() const;
 
         // @brief Sets whether the window is resizable or not.
-        _JATTA_EXPORT void SetResizable(Boolean resizable);
+        _CGUL_EXPORT void SetResizable(Boolean resizable);
         // @brief Gets whether the window is resizable or not.
-        _JATTA_EXPORT Boolean GetResizable() const;
+        _CGUL_EXPORT Boolean GetResizable() const;
 
         // @brief Gets the window's border extents (the frame around the window).
-        _JATTA_EXPORT URect32 GetFrameSize() const;
+        _CGUL_EXPORT URect32 GetFrameSize() const;
 
         // @brief Checks if the window is still open.
-        _JATTA_EXPORT Boolean IsOpen() const;
+        _CGUL_EXPORT Boolean IsOpen() const;
         // @brief Checks if the window currently has focus.
-        _JATTA_EXPORT Boolean IsFocused() const;
+        _CGUL_EXPORT Boolean IsFocused() const;
 
-        _JATTA_EXPORT virtual void OnKeyPress(UInt32 key);
-        _JATTA_EXPORT virtual void OnKeyRelease(UInt32 key);
+        _CGUL_EXPORT virtual void OnKeyPress(UInt32 key);
+        _CGUL_EXPORT virtual void OnKeyRelease(UInt32 key);
 
-        _JATTA_EXPORT virtual void OnMousePress(Byte button);
-        _JATTA_EXPORT virtual void OnMouseRelease(Byte button);
+        _CGUL_EXPORT virtual void OnMousePress(Byte button);
+        _CGUL_EXPORT virtual void OnMouseRelease(Byte button);
 
-        _JATTA_EXPORT virtual void OnMouseMove(UInt32 mouseX, UInt32 mouseY);
+        _CGUL_EXPORT virtual void OnMouseMove(UInt32 mouseX, UInt32 mouseY);
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

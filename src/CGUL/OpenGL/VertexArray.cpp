@@ -1,18 +1,20 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file VertexArray.cpp
  */
 
-#include "VertexArray.h"
+#include "VertexArray.hpp"
 
-_JATTA_EXPORT Jatta::OpenGL::VertexArray::VertexArray()
+_CGUL_EXPORT CGUL::OpenGL::VertexArray::VertexArray()
 {
     vertexArray = 0;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::Create()
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::Create()
 {
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     glGenVertexArraysAPPLE(1, &vertexArray);
 #   else
     glGenVertexArrays(1, &vertexArray);
@@ -20,9 +22,9 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Create()
     GLCHECK("Failed to generate vertex array.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::Delete()
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::Delete()
 {
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     glDeleteVertexArraysAPPLE(1, &vertexArray);
 #   else
     glDeleteVertexArrays(1, &vertexArray);
@@ -30,18 +32,18 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Delete()
     GLCHECK("Failed to delete vertex array.");
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::OpenGL::VertexArray::GetID()
+_CGUL_EXPORT CGUL::UInt32 CGUL::OpenGL::VertexArray::GetID()
 {
     return vertexArray;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::Bind()
 {
     if (vertexArray == 0)
     {
         throw std::runtime_error("Cannot bind invalid vertex array.");
     }
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     glBindVertexArrayAPPLE(vertexArray);
 #   else
     glBindVertexArray(vertexArray);
@@ -49,9 +51,9 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Bind()
     GLCHECK("Failed to bind vertex array.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::Unbind()
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::Unbind()
 {
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     glBindVertexArrayAPPLE(0);
 #   else
     glBindVertexArray(0);
@@ -59,36 +61,36 @@ _JATTA_EXPORT void Jatta::OpenGL::VertexArray::Unbind()
     GLCHECK("Failed to unbind vertex array.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::AttribPointer(UInt32 index, SInt32 size, Enum type, Boolean normalized, Size stride, const void* pointer)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::AttribPointer(UInt32 index, SInt32 size, Enum type, Boolean normalized, Size stride, const void* pointer)
 {
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
     GLCHECK("Failed to defined vertex attribute array data.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::EnableAttribArray(UInt32 index)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::EnableAttribArray(UInt32 index)
 {
     glEnableVertexAttribArray(index);
     GLCHECK("Failed to enable vertex attrib array.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::DisableAttribArray(UInt32 index)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::DisableAttribArray(UInt32 index)
 {
     glDisableVertexAttribArray(index);
     GLCHECK("Failed to disable vertex attrib array.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawArrays(Enum mode, SInt32 first, Size count)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::DrawArrays(Enum mode, SInt32 first, Size count)
 {
     glDrawArrays(mode, first, (GLsizei)count);
     GLCHECK("Failed to draw arrays.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawElements(Enum mode, Size count, Enum type, const void* indices)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::DrawElements(Enum mode, Size count, Enum type, const void* indices)
 {
     glDrawElements(mode, count, type, indices);
     GLCHECK("Failed to draw elements.");
 }
-_JATTA_EXPORT void Jatta::OpenGL::VertexArray::DrawElementsBaseVertex(Enum mode, Size count, Enum type, void* indices, UInt32 baseVertex)
+_CGUL_EXPORT void CGUL::OpenGL::VertexArray::DrawElementsBaseVertex(Enum mode, Size count, Enum type, void* indices, UInt32 baseVertex)
 {
     glDrawElementsBaseVertex(mode, count, type, indices, baseVertex);
     GLCHECK("Failed to draw elements.");

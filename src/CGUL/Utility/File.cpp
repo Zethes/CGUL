@@ -1,10 +1,17 @@
-﻿#include "File.h"
-#include "../Exceptions/FatalException.h"
-#include "../Exceptions/FileException.h"
-#include "../Utility/Encryption.h"
+﻿// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file File.cpp
+ */
+
+#include "File.hpp"
+#include "../Exceptions/FatalException.hpp"
+#include "../Exceptions/FileException.hpp"
+#include "../Utility/Encryption.hpp"
 
 #include <sys/stat.h>
-#ifdef JATTA_WINDOWS
+#ifdef CGUL_WINDOWS
 #   include <direct.h>
 #   ifdef DeleteFile
 #       undef DeleteFile
@@ -17,9 +24,9 @@
 // We'll remove it for now until someone musters up enough motivation to repla--ugh i dont want to type anymore
 //#include <dirent.h>
 
-_JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, String string)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::WriteText(const String& fileName, String string)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"w");
 #   else
@@ -41,9 +48,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteText(const String& fileName, Stri
     return true;
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::WriteData(const CGUL::String& fileName, Byte* buffer, UInt32 size)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"w");
 #   else
@@ -62,9 +69,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::WriteData(const Jatta::String& fileNam
 /** @param fileName The file to read.
  *  @param result A pointer to the string to append the data to.
  */
-_JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::String* result)
+_CGUL_EXPORT void CGUL::File::ReadText(const CGUL::String& fileName, CGUL::String* result)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -74,11 +81,11 @@ _JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::S
     {
         if (!Exists(fileName))
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
         }
         else
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
         }
     }
     // obtain file size:
@@ -103,9 +110,9 @@ _JATTA_EXPORT void Jatta::File::ReadText(const Jatta::String& fileName, Jatta::S
 /** @param fileName The file to read.
  *  @vector A pointer to the vector to append the lines to.
  */
-_JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Jatta::String>* vector)
+_CGUL_EXPORT void CGUL::File::ReadLines(const String& fileName, std::vector<CGUL::String>* vector)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -115,11 +122,11 @@ _JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Ja
     {
         if (!Exists(fileName))
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
         }
         else
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
         }
     }
     // obtain file size:
@@ -157,9 +164,9 @@ _JATTA_EXPORT void Jatta::File::ReadLines(const String& fileName, std::vector<Ja
  *  @param buffer The buffer to copy the bytes into.
  *  @param size The size of the buffer or the max amount of bytes to read.
  */
-_JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* buffer, UInt32 size)
+_CGUL_EXPORT void CGUL::File::ReadData(const CGUL::String& fileName, Byte* buffer, UInt32 size)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"rb");
 #   else
@@ -169,11 +176,11 @@ _JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* bu
     {
         if (!Exists(fileName))
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::FILE_DOESNT_EXIST);
         }
         else
         {
-            throw Jatta::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
+            throw CGUL::FileException(fileName, FileExceptionCode::FAILED_FILE_READ, FileExceptionReason::PERMISSION_DENIED);
         }
     }
 
@@ -187,9 +194,9 @@ _JATTA_EXPORT void Jatta::File::ReadData(const Jatta::String& fileName, Byte* bu
  *  @param fileSize A pointer to an integer to put the size into.
  *  @returns True if the size was successfully obtained, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileName, UInt32* fileSize)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::GetFileSize(const CGUL::String& fileName, UInt32* fileSize)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -217,9 +224,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::GetFileSize(const Jatta::String& fileN
  *  return 0.  Consider using the other GetFileSize function which returns a boolean value if the
  *  size was successfully obtained.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::File::GetFileSize(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::UInt32 CGUL::File::GetFileSize(const CGUL::String& fileName)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     std::wstring file = fileName._ToWideString();
     FILE* stream = _wfopen(file.c_str(), L"r");
 #   else
@@ -239,9 +246,9 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::File::GetFileSize(const Jatta::String& fileNa
 }
 
 // TODO: File::FindFiles
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(Jatta::String dir)
+_CGUL_EXPORT std::vector<CGUL::String> CGUL::File::FindFiles(CGUL::String dir)
 {
-    std::vector<Jatta::String> ret;
+    std::vector<CGUL::String> ret;
 
     /*DIR *dp;
     struct dirent *ep;
@@ -264,9 +271,9 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFiles(Jatta::String di
 }
 
 // TODO: File::FindFolders
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(Jatta::String dir)
+_CGUL_EXPORT std::vector<CGUL::String> CGUL::File::FindFolders(CGUL::String dir)
 {
-    std::vector<Jatta::String> ret;
+    std::vector<CGUL::String> ret;
 
     /*DIR *dp;
     struct dirent *ep;
@@ -291,9 +298,9 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::File::FindFolders(Jatta::String 
 /** @param fileName The name of the file to check for.
  *  @returns True if the file exists, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::Exists(const CGUL::String& fileName)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
     return (attributes != INVALID_FILE_ATTRIBUTES);
 #   else
@@ -305,25 +312,25 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Exists(const Jatta::String& fileName)
  *  file.  Simply checking if a file exists is not enough information to know if that file can be
  *  operated on.
  */
-_JATTA_EXPORT Jatta::Enum Jatta::File::GetAccess(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::Enum CGUL::File::GetAccess(const CGUL::String& fileName)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     return 7; // TODO: File::GetAccess for windows
 #   else
     return ((access(fileName.GetCString(), R_OK) != -1) * Access::READ) | ((access(fileName.GetCString(), W_OK) != -1) * Access::WRITE) | ((access(fileName.GetCString(), X_OK) != -1) * Access::EXECUTE);
 #   endif
 }
 
-_JATTA_EXPORT unsigned long long Jatta::File::CRC32(const Jatta::String& fileName)
+_CGUL_EXPORT unsigned long long CGUL::File::CRC32(const CGUL::String& fileName)
 {
-    Jatta::String str;
+    CGUL::String str;
     ReadText(fileName, &str);
     return Encryption::CRC32::String(str);
 }
 
-_JATTA_EXPORT Jatta::String Jatta::File::MD5(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::String CGUL::File::MD5(const CGUL::String& fileName)
 {
-    Jatta::String str;
+    CGUL::String str;
     ReadText(fileName, &str);
     return Encryption::MD5::String(str);
 }
@@ -331,9 +338,9 @@ _JATTA_EXPORT Jatta::String Jatta::File::MD5(const Jatta::String& fileName)
 /** @param fileName The filename to check.
  *  @returns True if the filename is a directory, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::IsFolder(const CGUL::String& fileName)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES)
     {
@@ -355,12 +362,12 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::IsFolder(const Jatta::String& fileName
 /** @param fileName The filename to check.
  *  @returns True if the filename is a file, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::IsFile(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::IsFile(const CGUL::String& fileName)
 {
     return !IsFolder(fileName);
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& fileName, bool recursive)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::CreateFolder(const CGUL::String& fileName, bool recursive)
 {
     String folderName = fileName;
 
@@ -378,14 +385,14 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::CreateFolder(const Jatta::String& file
         }
     }
 
-#ifdef JATTA_WINDOWS
+#ifdef CGUL_WINDOWS
     return 0 == _wmkdir(folderName._ToWideString().c_str());
 #else
     return 0 == mkdir(folderName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 #endif
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& fileName, bool recursive)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::DeleteFolder(const CGUL::String& fileName, bool recursive)
 {
     if (!IsFolder(fileName))
     {
@@ -394,8 +401,8 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
 
     if (recursive)
     {
-        std::vector<Jatta::String> files = FindFiles(fileName);
-        std::vector<Jatta::String> folders = FindFolders(fileName);
+        std::vector<CGUL::String> files = FindFiles(fileName);
+        std::vector<CGUL::String> folders = FindFolders(fileName);
 
         //Delete each file.
         for (unsigned int i = 0; i < files.size(); i++)
@@ -425,7 +432,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
         }
     }
 
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     return 0 == _wrmdir(fileName._ToWideString().c_str());
 #   else
     return 0 == rmdir(fileName.GetCString());
@@ -435,9 +442,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFolder(const Jatta::String& file
 /** @param fileName The file to delete.
  *  @returns True if the file was successfully deleted, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileName)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::DeleteFile(const CGUL::String& fileName)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     return ::DeleteFileW(fileName._ToWideString().c_str()) != 0;
 #   else
     return 0 == unlink(fileName.GetCString());
@@ -448,9 +455,9 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::DeleteFile(const Jatta::String& fileNa
  *  @param fileTo The destination file.
  *  @returns True if the file was successfully copied, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, const Jatta::String& fileTo)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::Copy(const CGUL::String& fileName, const CGUL::String& fileTo)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     return ::CopyFileW(fileName._ToWideString().c_str(), fileTo._ToWideString().c_str(), false) != 0;
 #   else
     std::ifstream f1( fileName.GetCString(), std::fstream::binary );
@@ -472,7 +479,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::File::Copy(const Jatta::String& fileName, co
  *  @param fileTo The destination file.
  *  @returns True if the file was successfully moved, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::File::Move(const Jatta::String& fileName, const Jatta::String& fileTo)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::Move(const CGUL::String& fileName, const CGUL::String& fileTo)
 {
     bool r = Copy(fileName, fileTo);
     if (r == false)

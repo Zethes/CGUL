@@ -1,21 +1,23 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file FileException.cpp
  */
 
-#include "FileException.h"
+#include "FileException.hpp"
 
-Jatta::FileException::FileException(const Jatta::String& fileName, UInt8 code, UInt8 reason) :
+CGUL::FileException::FileException(const CGUL::String& fileName, UInt8 code, UInt8 reason) :
     Exception(code, reason, ExceptionType::FILE),
     fileName(fileName)
 {
 }
 
-Jatta::FileException::~FileException() throw()
+CGUL::FileException::~FileException() throw()
 {
 }
 
-Jatta::String Jatta::FileException::GetString() const
+CGUL::String CGUL::FileException::GetString() const
 {
     switch (code)
     {
@@ -27,7 +29,7 @@ Jatta::String Jatta::FileException::GetString() const
     }
 }
 
-Jatta::String Jatta::FileException::GetReason() const
+CGUL::String CGUL::FileException::GetReason() const
 {
     switch (reason)
     {

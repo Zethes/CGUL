@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Animation.cpp
  */
 
-#include "MeshAnimation.h"
+#include "MeshAnimation.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::MeshAnimation::MeshAnimation(aiMeshAnim* meshAnim)
+_CGUL_EXPORT CGUL::Assimp::MeshAnimation::MeshAnimation(aiMeshAnim* meshAnim)
 {
     this->meshAnim = meshAnim;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::MeshAnimation::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::MeshAnimation::GetName()
 {
     return String(meshAnim->mName.C_Str());
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::MeshAnimation::GetKeyCount()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::MeshAnimation::GetKeyCount()
 {
     return meshAnim->mNumKeys;
 }
 
-_JATTA_EXPORT Jatta::Assimp::MeshKey* Jatta::Assimp::MeshAnimation::GetKeys()
+_CGUL_EXPORT CGUL::Assimp::MeshKey* CGUL::Assimp::MeshAnimation::GetKeys()
 {
     return reinterpret_cast<MeshKey*>(meshAnim->mKeys);
 }

@@ -1,17 +1,24 @@
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Quaternion_Implement.hpp
+ */
+
 #include "Math.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Matrix.hpp"
 
 template< typename Type >
-Jatta::QuaternionT< Type >::QuaternionT()
+CGUL::QuaternionT< Type >::QuaternionT()
 {
     w = 1;
     x = y = z = 0;
 }
 
 template< typename Type >
-Jatta::QuaternionT< Type >::QuaternionT(Type w, Type x, Type y, Type z)
+CGUL::QuaternionT< Type >::QuaternionT(Type w, Type x, Type y, Type z)
 {
     this->w = w;
     this->x = x;
@@ -27,12 +34,12 @@ Jatta::QuaternionT< Type >::QuaternionT(Type w, Type x, Type y, Type z)
  *  -Professor Nicholson
  */
 template< typename Type >
-void Jatta::QuaternionT< Type >::Normalize()
+void CGUL::QuaternionT< Type >::Normalize()
 {
 }
 
 template< typename Type >
-void Jatta::QuaternionT< Type >::RotateOnAxis(const Vector3T< Type >& axis, Type angle)
+void CGUL::QuaternionT< Type >::RotateOnAxis(const Vector3T< Type >& axis, Type angle)
 {
     w = Math::Cos(angle / 2.0f);
     x = Math::Sin(angle / 2.0f) * axis.x;

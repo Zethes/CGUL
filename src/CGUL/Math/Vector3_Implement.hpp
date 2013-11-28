@@ -1,6 +1,8 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Vector3_Implement.hpp
  */
 
 #include "Vector3.hpp"
@@ -12,42 +14,42 @@
 /**
  */
 template< typename Type >
-const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::zero(0, 0, 0);
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::zero(0, 0, 0);
 
 /**
  */
 template< typename Type >
-const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::one(1, 1, 1);
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::one(1, 1, 1);
 
 /**
  */
 template< typename Type >
-const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitX(1, 0, 0);
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::unitX(1, 0, 0);
 
 /**
  */
 template< typename Type >
-const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitY(0, 1, 0);
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::unitY(0, 1, 0);
 
 /**
  */
 template< typename Type >
-const Jatta::Vector3T< Type > Jatta::Vector3T< Type >::unitZ(0, 0, 1);
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::unitZ(0, 0, 1);
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::DotProduct(const Vector3T& valueA, const Vector3T& valueB)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::DotProduct(const Vector3T& valueA, const Vector3T& valueB)
 {
     return (valueA.x * valueB.x) + (valueA.y * valueB.y) + (valueA.z * valueB.z);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::CrossProduct(const Vector3T& valueA, const Vector3T& valueB)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::CrossProduct(const Vector3T& valueA, const Vector3T& valueB)
 {
     return Vector3T(valueA.y * valueB.z - valueA.z * valueB.y, valueA.z * valueB.x - valueA.x * valueB.z, valueA.x * valueB.y - valueA.y * valueB.x);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Normalized(const Vector3T& value)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Normalized(const Vector3T& value)
 {
     Type inverseMagnitude = 1.0f / value.GetMagnitude();
     return Vector3T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude);
@@ -56,7 +58,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Normali
 /**
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T()
 {
     this->x = 0;
     this->y = 0;
@@ -66,7 +68,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T()
 /** @param copy The vector to copy.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(const Vector3T& copy)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(const Vector3T& copy)
 {
     this->x = copy.x;
     this->y = copy.y;
@@ -76,7 +78,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(const Vector3T& copy)
 /** @param value The value for each component.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type value)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(Type value)
 {
     this->x = value;
     this->y = value;
@@ -88,7 +90,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type value)
  *  @param z The z component.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type x, Type y, Type z)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(Type x, Type y, Type z)
 {
     this->x = x;
     this->y = y;
@@ -99,7 +101,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >::Vector3T(Type x, Type y, Type z
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator=(const Vector3T& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator=(const Vector3T& operand)
 {
     this->x = operand.x;
     this->y = operand.y;
@@ -112,7 +114,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
  *  @returns The value at that index.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type& Jatta::Vector3T< Type >::operator[](UInt32 index)
+_CGUL_INLINE_IMPLEMENT Type& CGUL::Vector3T< Type >::operator[](UInt32 index)
 {
     return m[index];
 }
@@ -124,7 +126,7 @@ _JATTA_INLINE_IMPLEMENT Type& Jatta::Vector3T< Type >::operator[](UInt32 index)
  *  @returns The value at that index.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::operator[](UInt32 index) const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::operator[](UInt32 index) const
 {
     return m[index];
 }
@@ -133,7 +135,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::operator[](UInt32 index) c
  *  @returns The inverse vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator-() const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator-() const
 {
     return Vector3(-this->x, -this->y, -this->z);
 }
@@ -144,7 +146,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operato
  *  @returns True if they are equal, false otherwise.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator==(const Vector3T& operand) const
+_CGUL_INLINE_IMPLEMENT bool CGUL::Vector3T< Type >::operator==(const Vector3T& operand) const
 {
     return (this->x == operand.x &&
             this->y == operand.y &&
@@ -157,7 +159,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator==(const Vector3T&
  *  @returns True if they are not equal, false otherwise.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator!=(const Vector3T& operand) const
+_CGUL_INLINE_IMPLEMENT bool CGUL::Vector3T< Type >::operator!=(const Vector3T& operand) const
 {
     return (this->x != operand.x ||
             this->y != operand.y ||
@@ -168,7 +170,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Vector3T< Type >::operator!=(const Vector3T&
  *  @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator+(const Vector3T& operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator+(const Vector3T& operand) const
 {
     return Vector3T(this->x + operand.x,
                     this->y + operand.y,
@@ -179,7 +181,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operato
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator+=(const Vector3T& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator+=(const Vector3T& operand)
 {
     this->x += operand.x;
     this->y += operand.y;
@@ -191,7 +193,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
  *  @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator-(const Vector3T& operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator-(const Vector3T& operand) const
 {
     return Vector3T(this->x - operand.x,
                     this->y - operand.y,
@@ -202,7 +204,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operato
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator-=(const Vector3T& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator-=(const Vector3T& operand)
 {
     this->x -= operand.x;
     this->y -= operand.y;
@@ -214,7 +216,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
  *  @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator*(Type operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator*(Type operand) const
 {
     return Vector3T(this->x * operand,
                     this->y * operand,
@@ -225,7 +227,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operato
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator*=(Type operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator*=(Type operand)
 {
     this->x *= operand;
     this->y *= operand;
@@ -237,7 +239,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
  *  @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operator/(Type operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator/(Type operand) const
 {
     return Vector3T(this->x / operand,
                     this->y / operand,
@@ -248,7 +250,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::operato
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operator/=(Type operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator/=(Type operand)
 {
     this->x /= operand;
     this->y /= operand;
@@ -260,7 +262,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type >& Jatta::Vector3T< Type >::operat
  *  @returns A reference to the output stream.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector3T< Type >::operator<<(std::ostream& stream) const
+_CGUL_INLINE_IMPLEMENT std::ostream& CGUL::Vector3T< Type >::operator<<(std::ostream& stream) const
 {
     stream << "[" << x << ", " << y << ", " << z << "]";
     return stream;
@@ -270,7 +272,7 @@ _JATTA_INLINE_IMPLEMENT std::ostream& Jatta::Vector3T< Type >::operator<<(std::o
  *  @returns The value at that index.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type& Jatta::Vector3T< Type >::At(UInt32 index)
+_CGUL_INLINE_IMPLEMENT Type& CGUL::Vector3T< Type >::At(UInt32 index)
 {
     return m[index];
 }
@@ -279,7 +281,7 @@ _JATTA_INLINE_IMPLEMENT Type& Jatta::Vector3T< Type >::At(UInt32 index)
  *  @returns The value at that index.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::At(UInt32 index) const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::At(UInt32 index) const
 {
     return m[index];
 }
@@ -287,7 +289,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::At(UInt32 index) const
 /** @param value The value to set all components to.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type value)
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Set(Type value)
 {
     this->x = value;
     this->y = value;
@@ -299,7 +301,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type value)
  *  @param z The z component.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type x, Type y, Type z)
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Set(Type x, Type y, Type z)
 {
     this->x = x;
     this->y = y;
@@ -309,7 +311,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Set(Type x, Type y, Type z
 /**
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Clear()
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Clear()
 {
     this->x = this->y = this->z = 0;
 }
@@ -321,7 +323,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Clear()
  *  @todo Better documentation on swizzle (for now just look it up!)
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y) const
 {
     return Vector2T< Type >(m[x], m[y]);
 }
@@ -334,7 +336,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector2T< Type > Jatta::Vector3T< Type >::Swizzle
  *  @todo Better documentation on swizzle (for now just look it up!)
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
 {
     return Vector3T< Type >(m[x], m[y], m[z]);
 }
@@ -348,7 +350,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Swizzle
  *  @todo Better documentation on swizzle (for now just look it up!)
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type > Jatta::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector3T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
 {
     return Vector4T< Type >(m[x], m[y], m[z], m[w]);
 }
@@ -356,7 +358,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector4T< Type > Jatta::Vector3T< Type >::Swizzle
 /** @warning This method uses sqrt() which can be slow!
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Normalize()
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Normalize()
 {
     Type inverseMagnitude = 1.0f / GetMagnitude();
     this->x *= inverseMagnitude;
@@ -367,7 +369,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Normalize()
 /** @warning This method uses sqrt() which can be slow!
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Boolean Jatta::Vector3T< Type >::IsNormalized(Type epsilon) const
+_CGUL_INLINE_IMPLEMENT CGUL::Boolean CGUL::Vector3T< Type >::IsNormalized(Type epsilon) const
 {
     return Math::InEpsilon(GetMagnitude(), 1, epsilon);
 }
@@ -380,7 +382,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Boolean Jatta::Vector3T< Type >::IsNormalized(Typ
  *  @see GetManhattanMagnitude
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetMagnitude() const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetMagnitude() const
 {
     return Math::Sqrt(x * x + y * y + z * z);
 }
@@ -391,7 +393,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetMagnitude() const
  *  @returns The squared magnitude.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetSquaredMagnitude() const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetSquaredMagnitude() const
 {
     return (x * x + y * y + z * z);
 }
@@ -408,7 +410,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetSquaredMagnitude() cons
  *  @returns The manhattan magnitude.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetManhattanMagnitude() const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetManhattanMagnitude() const
 {
     return Math::Abs(x) + Math::Abs(y) + Math::Abs(z);
 }
@@ -424,7 +426,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetManhattanMagnitude() co
  *  @see GetManhattanDistance
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetDistance(const Vector3T& other) const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetDistance(const Vector3T& other) const
 {
     return Math::Sqrt(Math::Sqr(other.x - x) +
                       Math::Sqr(other.y - y) +
@@ -436,7 +438,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetDistance(const Vector3T
  *  @see GetDistance
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetSquaredDistance(const Vector3T& other) const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetSquaredDistance(const Vector3T& other) const
 {
     return Math::Sqr(other.x - x) +
            Math::Sqr(other.y - y) +
@@ -449,7 +451,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetSquaredDistance(const V
  *  @todo Check the implementation because this is actually slower than the squared distance.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetManhattanDistance(const Vector3T& other) const
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::GetManhattanDistance(const Vector3T& other) const
 {
     return Math::Abs(other.x - x) +
            Math::Abs(other.y - y) +
@@ -459,7 +461,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Vector3T< Type >::GetManhattanDistance(const
 /**
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Floor()
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Floor()
 {
     this->x = Math::Floor(this->x);
     this->y = Math::Floor(this->y);
@@ -469,7 +471,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Floor()
 /**
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Round()
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Round()
 {
     this->x = Math::Round(this->x);
     this->y = Math::Round(this->y);
@@ -479,7 +481,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Round()
 /**
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Ceil()
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Ceil()
 {
     this->x = Math::Ceil(this->x);
     this->y = Math::Ceil(this->y);
@@ -489,7 +491,7 @@ _JATTA_INLINE_IMPLEMENT void Jatta::Vector3T< Type >::Ceil()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Floored()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Floored()
 {
     return Vector3(Math::Floor(this->x),
                    Math::Floor(this->y),
@@ -499,7 +501,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Floored
 /** @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Rounded()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Rounded()
 {
     return Vector3(Math::Round(this->x),
                    Math::Round(this->y),
@@ -509,7 +511,7 @@ _JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Rounded
 /** @returns The resulting vector.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Jatta::Vector3T< Type > Jatta::Vector3T< Type >::Ceiled()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Ceiled()
 {
     return Vector3(Math::Ceil(this->x),
                    Math::Ceil(this->y),

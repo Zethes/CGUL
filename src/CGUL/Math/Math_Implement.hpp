@@ -1,6 +1,8 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Math_Implement.hpp
  */
 
 #include "Vector2.hpp"
@@ -10,21 +12,21 @@
 
 //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
 template< typename Type >
-_JATTA_INLINE_DEFINE Type Jatta::Math::Tau()
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Tau()
 {
     return (Type)6.2831853071795864;
 }
 
 //! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
 template< typename Type >
-_JATTA_INLINE_DEFINE Type Jatta::Math::Pi()
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pi()
 {
     return (Type)3.14159265358979323;
 }
 
 //! @brief The constant e, defined as 2.718281828459045235
 template< typename Type >
-_JATTA_INLINE_DEFINE Type Jatta::Math::E()
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::E()
 {
     return (Type)2.718281828459045235;
 }
@@ -35,10 +37,10 @@ _JATTA_INLINE_DEFINE Type Jatta::Math::E()
  *  @param x The number to get the absolute value of.
  *  @returns The resulting value.
  */
-template< typename ReturnType, typename Type >
-_JATTA_INLINE_IMPLEMENT ReturnType Jatta::Math::Abs(Type x)
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Abs(Type x)
 {
-    return (ReturnType)(x > 0 ? x : -x);
+    return (x > 0 ? x : -x);
 }
 
 /** @details The sign is determined based on if the number is positive, negative, or zero.  A
@@ -47,7 +49,7 @@ _JATTA_INLINE_IMPLEMENT ReturnType Jatta::Math::Abs(Type x)
  *  @returns -1, 0, or 1
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sign(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Sign(Type x)
 {
     return (x > 0 ? 1.0f : (x < 0.0f ? -1 : 0.0f));
 }
@@ -56,7 +58,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sign(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cos(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Cos(Type x)
 {
     return std::cos(x);
 }
@@ -65,7 +67,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cos(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sin(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Sin(Type x)
 {
     return std::sin(x);
 }
@@ -74,7 +76,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sin(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tan(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Tan(Type x)
 {
     return std::tan(x);
 }
@@ -83,7 +85,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tan(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cosh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Cosh(Type x)
 {
     return std::cosh(x);
 }
@@ -92,7 +94,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Cosh(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sinh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Sinh(Type x)
 {
     return std::sinh(x);
 }
@@ -101,7 +103,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sinh(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tanh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Tanh(Type x)
 {
     return std::tanh(x);
 }
@@ -110,7 +112,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Tanh(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACos(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ACos(Type x)
 {
     return std::acos(x);
 }
@@ -119,7 +121,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACos(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASin(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ASin(Type x)
 {
     return std::asin(x);
 }
@@ -128,13 +130,13 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASin(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATan(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ATan(Type x)
 {
     return std::atan(x);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATan2(Type y, Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ATan2(Type y, Type x)
 {
     return std::atan2(y, x);
 }
@@ -144,7 +146,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATan2(Type y, Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACosh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ACosh(Type x)
 {
     return std::acosh(x);
 }
@@ -153,7 +155,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ACosh(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASinh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ASinh(Type x)
 {
     return std::asinh(x);
 }
@@ -162,7 +164,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ASinh(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATanh(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::ATanh(Type x)
 {
     return std::atanh(x);
 }
@@ -172,7 +174,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::ATanh(Type x)
  *  @returns The resulting value in radians.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::DegToRad(Type deg)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::DegToRad(Type deg)
 {
     return deg / 180.0f * Pi< Type >();
 }
@@ -181,19 +183,19 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::DegToRad(Type deg)
  *  @returns The resulting value in degrees.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::RadToDeg(Type rad)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::RadToDeg(Type rad)
 {
     return rad * (180.0f / Pi< Type >());
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Ln(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Ln(Type x)
 {
     return std::log(x);
 }
 
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Log(Type x, Type b)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Log(Type x, Type b)
 {
     return std::log(x) / std::log(b); //Change of base: log(x,b) = ln(x)/ln(b)
 }
@@ -203,7 +205,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Log(Type x, Type b)
  *  @returns The smaller of the two values.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Min(Type a, Type b)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Min(Type a, Type b)
 {
     return (a < b ? a : b);
 }
@@ -213,7 +215,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Min(Type a, Type b)
  *  @returns The larger of the two values.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Max(Type a, Type b)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Max(Type a, Type b)
 {
     return (a > b ? a : b);
 }
@@ -222,7 +224,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Max(Type a, Type b)
  *  @return The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Floor(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Floor(Type x)
 {
     return std::floor(x);
 }
@@ -231,7 +233,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Floor(Type x)
  *  @return The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Round(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Round(Type x)
 {
     return std::floor(x + 0.5f);
 }
@@ -240,7 +242,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Round(Type x)
  *  @return The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Ceil(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Ceil(Type x)
 {
     return std::ceil(x);
 }
@@ -253,7 +255,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Ceil(Type x)
  *  @see Sign
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Mod(Type x, Type div)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Mod(Type x, Type div)
 {
     return Math::Abs(x - Math::Floor(x / div) * div) * Math::Sign(x);
 }
@@ -263,7 +265,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Mod(Type x, Type div)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqr(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Sqr(Type x)
 {
     return x * x;
 }
@@ -273,7 +275,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqr(Type x)
  *  @returns The resulting value.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqrt(Type x)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Sqrt(Type x)
 {
     return std::sqrt(x);
 }
@@ -287,7 +289,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Sqrt(Type x)
  *  @returns True if the two values are within the given epsilon, false otherwise.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Type value, Type compare, Type epsilon)
+_CGUL_INLINE_IMPLEMENT bool CGUL::Math::InEpsilon(Type value, Type compare, Type epsilon)
 {
     return (Math::Abs(value - compare) <= epsilon);
 }
@@ -297,7 +299,7 @@ _JATTA_INLINE_IMPLEMENT bool Jatta::Math::InEpsilon(Type value, Type compare, Ty
  *  @returns x raised to the power of y.
  */
 template< typename Type >
-_JATTA_INLINE_IMPLEMENT Type Jatta::Math::Pow(Type x, Type y)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pow(Type x, Type y)
 {
     return std::pow(x, y);
 }
@@ -306,7 +308,7 @@ _JATTA_INLINE_IMPLEMENT Type Jatta::Math::Pow(Type x, Type y)
  *  @param x Value to check.
  *  @returns True if x is a power of 2, false otherwise.
  */
-_JATTA_INLINE_IMPLEMENT bool Jatta::Math::IsPowerOfTwo(UInt32 x)
+_CGUL_INLINE_IMPLEMENT bool CGUL::Math::IsPowerOfTwo(UInt32 x)
 {
     return (x != 0) && ((x & (x - 1)) == 0);
 }

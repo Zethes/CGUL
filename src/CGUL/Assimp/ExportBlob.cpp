@@ -1,11 +1,13 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file ExportBlog.cpp
  */
 
-#include "ExportBlob.h"
+#include "ExportBlob.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::ExportBlob::ExportBlob(const ::aiExportDataBlob* blob)
+_CGUL_EXPORT CGUL::Assimp::ExportBlob::ExportBlob(const ::aiExportDataBlob* blob)
 {
     this->blob = blob;
     if (this->blob->next == NULL)
@@ -18,27 +20,27 @@ _JATTA_EXPORT Jatta::Assimp::ExportBlob::ExportBlob(const ::aiExportDataBlob* bl
     }
 }
 
-_JATTA_EXPORT void* Jatta::Assimp::ExportBlob::GetData()
+_CGUL_EXPORT void* CGUL::Assimp::ExportBlob::GetData()
 {
     return (void*)blob->data;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::ExportBlob::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::ExportBlob::GetName()
 {
     return String(blob->name.C_Str());
 }
 
-_JATTA_EXPORT Jatta::Assimp::ExportBlob* Jatta::Assimp::ExportBlob::GetNext()
+_CGUL_EXPORT CGUL::Assimp::ExportBlob* CGUL::Assimp::ExportBlob::GetNext()
 {
     return next;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::ExportBlob::GetSize()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::ExportBlob::GetSize()
 {
     return (UInt32)blob->size;
 }
 
-_JATTA_EXPORT void Jatta::Assimp::ExportBlob::Free()
+_CGUL_EXPORT void CGUL::Assimp::ExportBlob::Free()
 {
     if (next != NULL)
     {

@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file BMP.cpp
  */
 
-#include "BMP.h"
-#include "../ImageFormats.h"
-#include "../../Utility/File.h"
+#include "BMP.hpp"
+#include "../ImageFormats.hpp"
+#include "../../Utility/File.hpp"
 #include "../../Math/Math.hpp"
-#include "../../Exceptions/ImageException.h"
+#include "../../Exceptions/ImageException.hpp"
 
-_JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad(const String& file)
+_CGUL_EXPORT bool CGUL::ImageLoaders::BMP::CanLoad(const String& file)
 {
     Byte* buffer = new Byte[2];
     File::ReadData(file, buffer, 2);
@@ -21,13 +23,13 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::BMP::CanLoad(const String& file)
     return false;
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::ReadHeader(Byte* data, UInt32 size)
+_CGUL_EXPORT CGUL::ImageLoaders::BITMAPHEADER CGUL::ImageLoaders::BMP::ReadHeader(Byte* data, UInt32 size)
 {
     BITMAPHEADER header;
 
     if (size < 14)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::NOT_A_BMP_FILE);
     }
 
     memcpy(&header.MagicNumber, &data[0], 2);
@@ -39,7 +41,7 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::ReadHe
     return header;
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::ReadDIBHeader(Byte* data, UInt32 size)
+_CGUL_EXPORT CGUL::ImageLoaders::BITMAPDIBHEADER CGUL::ImageLoaders::BMP::ReadDIBHeader(Byte* data, UInt32 size)
 {
     BITMAPDIBHEADER header;
     header.Length = size;
@@ -48,13 +50,13 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
     //Supported formats: BITMAPCOREHEADER, BITMAPINFOHEADER, BITMAPCOREHEADER2, BITMAPV4HEADER, BITMAPV5HEADER
     if (size != 12 && size != 40 && size != 64 && size != 108 && size != 124)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
 
     //Must atleast be a BITMAPCOREINFO
     if (size < 12)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
 
     if (size == 12) //BITMAPCOREINFO uses shorts for width and height
@@ -140,17 +142,17 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Rea
     return header;
 }
 
-_JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
+_CGUL_EXPORT CGUL::Image* CGUL::ImageLoaders::BMP::Load(const String& file)
 {
     if (!CanLoad(file))
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::NOT_A_BMP_FILE);
     }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::INVALID_DATA_FORMAT);
     }
 
     Byte* buffer = new Byte[fileSize];
@@ -166,21 +168,21 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
     //Check validitiy of the plane count. (Sanity check)
     if (dibHeader.Planes != 1)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_COLOR_PLANE_COUNT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::INVALID_COLOR_PLANE_COUNT);
     }
 
     //Check that there is no compression.  (No support atm)
     //TODO: Add compression support.
     if (dibHeader.Compression != BMPCompressionMethods::RGB)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
 
     //Check for valid pixel format.
     if (dibHeader.BitCount != 1 && dibHeader.BitCount != 2 && dibHeader.BitCount != 4 && dibHeader.BitCount != 8 &&
             dibHeader.BitCount != 16 && dibHeader.BitCount != 24 && dibHeader.BitCount != 32)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
 
     //Load the pixel data
@@ -192,7 +194,7 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
     if (dibHeader.BitCount <= 8)
     {
         //TODO: Images with 8 bpp and less
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::UNSUPPORTED_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
     else
     {
@@ -224,17 +226,17 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::BMP::Load(const String& file)
     }
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHeader(const String& file)
+_CGUL_EXPORT CGUL::ImageLoaders::BITMAPHEADER CGUL::ImageLoaders::BMP::GetHeader(const String& file)
 {
     if (!CanLoad(file))
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::NOT_A_BMP_FILE);
     }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::INVALID_DATA_FORMAT);
     }
 
     Byte* buffer = new Byte[14];
@@ -243,17 +245,17 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPHEADER Jatta::ImageLoaders::BMP::GetHea
     return ReadHeader(&buffer[0], fileSize);
 }
 
-_JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::GetDIBHeader(const String& file)
+_CGUL_EXPORT CGUL::ImageLoaders::BITMAPDIBHEADER CGUL::ImageLoaders::BMP::GetDIBHeader(const String& file)
 {
     if (!CanLoad(file))
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::NOT_A_BMP_FILE);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::NOT_A_BMP_FILE);
     }
 
     unsigned int fileSize = File::GetFileSize(file);
     if (fileSize < 14)
     {
-        throw Jatta::ImageException(Jatta::ImageExceptionCode::BMP, Jatta::ImageExceptionReason::INVALID_DATA_FORMAT);
+        throw CGUL::ImageException(CGUL::ImageExceptionCode::BMP, CGUL::ImageExceptionReason::INVALID_DATA_FORMAT);
     }
 
     Byte* buffer = new Byte[fileSize];
@@ -264,7 +266,7 @@ _JATTA_EXPORT Jatta::ImageLoaders::BITMAPDIBHEADER Jatta::ImageLoaders::BMP::Get
     return ReadDIBHeader(&buffer[18], dibHeaderSize);
 }
 
-_JATTA_EXPORT void Jatta::ImageLoaders::BMP::Save(const String& filename, Jatta::Image* image)
+_CGUL_EXPORT void CGUL::ImageLoaders::BMP::Save(const String& filename, CGUL::Image* image)
 {
     //TODO: BMP Saving.
 }

@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file StreamData.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace PortAudio
     {
@@ -21,8 +23,8 @@ namespace Jatta
             UInt32 NumberOfChannels;
             std::vector<Float32*> OutputChannels;
             Stream* StreamPtr;
-            bool (*inputCallback)(std::vector<Float32*>, Jatta::UInt32, Stream*);
+            bool (*inputCallback)(std::vector<Float32*>, UInt32, Stream*);
         };
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

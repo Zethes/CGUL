@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file AutoRelease.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief An AutoRelease class to help be RAII compliant.
      *  @details It is beneficial for some classes to not automatically release on destruction.
@@ -31,5 +33,5 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
-#include "AutoRelease_Implement.h"
+#include "../External/Undefines.hpp"
+#include "AutoRelease_Implement.hpp"

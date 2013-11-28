@@ -1,10 +1,12 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Timer.cpp
  */
 
-#include "Timer.h"
-#if defined(JATTA_LINUX) || defined(JATTA_MACOS)
+#include "Timer.hpp"
+#if defined(CGUL_LINUX) || defined(CGUL_MACOS)
 #   include <sys/time.h>
 #   include <unistd.h>
 #endif
@@ -17,9 +19,9 @@
  *  that this method will halt the program for @em exactly the amount of milliseconds specified.
  *  @param milliseconds The amount of time to sleep in milliseconds.
  */
-_JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
+_CGUL_EXPORT void CGUL::Timer::Sleep(UInt32 milliseconds)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     ::Sleep(milliseconds);
 #   else
     usleep(milliseconds * 1000);
@@ -28,9 +30,9 @@ _JATTA_EXPORT void Jatta::Timer::Sleep(UInt32 milliseconds)
 
 /**
  */
-_JATTA_EXPORT Jatta::Timer::Timer()
+_CGUL_EXPORT CGUL::Timer::Timer()
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     LARGE_INTEGER li;
     QueryPerformanceFrequency(&li);
     pcFreq = Float32(li.QuadPart) / 1000.0f;
@@ -46,7 +48,7 @@ _JATTA_EXPORT Jatta::Timer::Timer()
  *  @see Stop
  *  @see Reset
  */
-_JATTA_EXPORT void Jatta::Timer::Start()
+_CGUL_EXPORT void CGUL::Timer::Start()
 {
     startTime = GetMilliseconds() - GetElapsedMilliseconds();
     running = true;
@@ -59,7 +61,7 @@ _JATTA_EXPORT void Jatta::Timer::Start()
  *  @see Start
  *  @see Reset
  */
-_JATTA_EXPORT void Jatta::Timer::Stop()
+_CGUL_EXPORT void CGUL::Timer::Stop()
 {
     if (running)
     {
@@ -77,7 +79,7 @@ _JATTA_EXPORT void Jatta::Timer::Stop()
  *  @see Start
  *  @see Stop
  */
-_JATTA_EXPORT void Jatta::Timer::Reset()
+_CGUL_EXPORT void CGUL::Timer::Reset()
 {
     mSeconds = 0;
     startTime = GetMilliseconds();
@@ -87,7 +89,7 @@ _JATTA_EXPORT void Jatta::Timer::Reset()
  *  @see GetMilliseconds
  *  @returns An undefined time in seconds.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetSeconds()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
 {
     return (UInt32)(GetMilliseconds() / 1000);
 }
@@ -99,9 +101,9 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetSeconds()
  *  only purpose of this method is to compare two time stamps to find a delta in time.
  *  @returns An undefined time in milliseconds.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetMilliseconds()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetMilliseconds()
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     LARGE_INTEGER li;
     QueryPerformanceCounter(&li);
     return (UInt32)(li.QuadPart / (UInt32)pcFreq);
@@ -116,7 +118,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetMilliseconds()
  *  @see GetElapsedMilliseconds
  *  @returns Elapsed time in seconds.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedSeconds()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetElapsedSeconds()
 {
     return GetElapsedMilliseconds() / 1000;
 }
@@ -125,7 +127,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedSeconds()
  *  Start method.  If a clock has not been started this method will simply return zero.
  *  @returns Elapsed time in milliseconds.
  */
-_JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedMilliseconds()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetElapsedMilliseconds()
 {
     if (running)
     {
@@ -150,7 +152,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Timer::GetElapsedMilliseconds()
  *  @returns A floating pointer decimal number representing the time in seconds since the last call
  *  to this method.
  */
-_JATTA_EXPORT Jatta::Float32 Jatta::Timer::GetDeltaTime()
+_CGUL_EXPORT CGUL::Float32 CGUL::Timer::GetDeltaTime()
 {
     long time = GetMilliseconds();
     float deltaTime = (time - startTime) / 1000.0f;

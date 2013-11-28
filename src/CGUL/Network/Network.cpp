@@ -1,21 +1,23 @@
-// TODO: networking
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
 
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+/** @file Network.cpp
  */
 
-#include <Jatta/Config.h>
-#include "../Exceptions/NetworkException.h"
-#include "../External/Once.h"
+// TODO: networking
+
+#include <CGUL/Config.hpp>
+#include "../Exceptions/NetworkException.hpp"
+#include "../External/Once.hpp"
 
 #ifndef DOXYGEN
-#ifdef JATTA_WINDOWS
+#ifdef CGUL_WINDOWS
 static bool __jatta_network_initiated = false;
 #endif
 #endif
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief An experimental network namespace.
      */
@@ -24,7 +26,7 @@ namespace Jatta
 #       ifndef DOXYGEN
         void __jatta_network_initiate()
         {
-#           ifdef JATTA_WINDOWS
+#           ifdef CGUL_WINDOWS
             if (!__jatta_network_initiated)
             {
                 WSADATA wsaData;
@@ -39,7 +41,7 @@ namespace Jatta
 
         void __jatta_network_clean()
         {
-#           ifdef JATTA_WINDOWS
+#           ifdef CGUL_WINDOWS
             if (__jatta_network_initiated)
             {
                 WSACleanup();

@@ -1,30 +1,32 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Texture.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Images/Image.h"
-#include "../Images/Color.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Images/Image.hpp"
+#include "../Images/Color.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class Texture
         {
-            _JATTA_AITEXTURE texture;
+            _CGUL_AITEXTURE texture;
         public:
-            _JATTA_EXPORT Texture(_JATTA_AITEXTURE texture);
+            _CGUL_EXPORT Texture(_CGUL_AITEXTURE texture);
 
-            _JATTA_EXPORT UInt32 GetWidth() const;
-            _JATTA_EXPORT UInt32 GetHeight() const;
+            _CGUL_EXPORT UInt32 GetWidth() const;
+            _CGUL_EXPORT UInt32 GetHeight() const;
 
-            _JATTA_EXPORT Image GetImage() const;
+            _CGUL_EXPORT Image GetImage() const;
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

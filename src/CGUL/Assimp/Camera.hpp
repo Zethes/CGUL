@@ -1,24 +1,26 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Camera.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../Math/Vector3.h"
-#include "../Assimp/Assimp.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Assimp/Assimp.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class Camera
         {
-            _JATTA_AICAMERA camera;
+            _CGUL_AICAMERA camera;
         public:
-            _JATTA_EXPORT Camera(_JATTA_AICAMERA camera);
+            _CGUL_EXPORT Camera(_CGUL_AICAMERA camera);
 
             String GetName();
 
@@ -34,4 +36,4 @@ namespace Jatta
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

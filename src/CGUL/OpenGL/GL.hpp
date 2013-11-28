@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file GL.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-/* OpenGL is an experimental namespace in Jatta! */
-namespace Jatta
+/* OpenGL is an experimental namespace in CGUL! */
+namespace CGUL
 {
     /** @brief Contains all of the OpenGL defines.
      */
@@ -852,4 +854,4 @@ namespace Jatta
         static const Enum SHADER_STORAGE_BUFFER       = 0x90d2;
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

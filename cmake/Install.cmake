@@ -1,24 +1,24 @@
-# Add the Jatta target
-set(INSTALL_TARGET_LIST "# Jatta")
-if(Jatta_STATIC)
+# Add the CGUL target
+set(INSTALL_TARGET_LIST "# CGUL")
+if(CGUL_STATIC)
 
-    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nadd_library(Jatta STATIC IMPORTED)")
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nadd_library(CGUL STATIC IMPORTED)")
 
 else()
 
-    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nadd_library(Jatta SHARED IMPORTED)")
-    list(APPEND INSTALL_SHARED_MODULES Jatta)
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nadd_library(CGUL SHARED IMPORTED)")
+    list(APPEND INSTALL_SHARED_MODULES CGUL)
 
 endif()
 
-# Add Jatta import locations
-get_target_property(__LOCATION Jatta LOCATION)
+# Add CGUL import locations
+get_target_property(__LOCATION CGUL LOCATION)
 get_filename_component(__FILENAME "${__LOCATION}" NAME)
-set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_LOCATION \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(CGUL PROPERTIES IMPORTED_LOCATION \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
-if(WIN32 AND Jatta_STATIC)
+if(WIN32 AND CGUL_STATIC)
 
-    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(CGUL PROPERTIES IMPORTED_IMPLIB \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
 endif()
 
@@ -26,16 +26,16 @@ endif()
 foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
 
     string(TOUPPER "${__CONFIGURATION}" __CONFIGURATION)
-    get_target_property(__LOCATION Jatta LOCATION_${__CONFIGURATION})
+    get_target_property(__LOCATION CGUL LOCATION_${__CONFIGURATION})
 
     if(__LOCATION)
 
         get_filename_component(__FILENAME "${__LOCATION}" NAME)
-        set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_LOCATION_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+        set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(CGUL PROPERTIES IMPORTED_LOCATION_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
-        if(WIN32 AND NOT Jatta_STATIC)
+        if(WIN32 AND NOT CGUL_STATIC)
 
-            set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(Jatta PROPERTIES IMPORTED_IMPLIB_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+            set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(CGUL PROPERTIES IMPORTED_IMPLIB_${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
         endif()
 
@@ -44,7 +44,7 @@ foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
 endforeach()
 
 # Add to the list of libraries
-set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND Jatta_LIBRARIES Jatta)")
+set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND CGUL_LIBRARIES CGUL)")
 
 # Iterate through each library that needs to be installed
 foreach(__LIBRARY ${INSTALL_LIBRARIES})
@@ -94,12 +94,12 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
 
                 # Use a directory relative to installation
                 get_filename_component(__FILENAME "${__LOCATION}" NAME)
-                set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_LOCATION${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+                set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_LOCATION${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
                 # Special case for MSVC, need to set IMPORTED_IMPLIB too
                 if(WIN32 AND ${__LIBRARY}_SHARED)
 
-                    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_IMPLIB${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${Jatta_LIB_DIR}/${__FILENAME}\")")
+                    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nset_target_properties(${__LIBRARY} PROPERTIES IMPORTED_IMPLIB${__CONFIGURATION} \"\${CMAKE_CURRENT_LIST_DIR}/../${CGUL_LIB_DIR}/${__FILENAME}\")")
 
                 endif()
 
@@ -129,7 +129,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
     endif()
 
     # Add to the list of libraries
-    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND Jatta_LIBRARIES ${__LIBRARY})")
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND CGUL_LIBRARIES ${__LIBRARY})")
 
 endforeach()
 
@@ -143,23 +143,23 @@ endif()
 # Append each system library
 foreach(__LIBRARY ${INSTALL_LIBRARIES_SYSTEM})
 
-    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND Jatta_LIBRARIES ${__LIBRARY})")
+    set(INSTALL_TARGET_LIST "${INSTALL_TARGET_LIST}\nlist(APPEND CGUL_LIBRARIES ${__LIBRARY})")
 
 endforeach()
 
 # Configure the CMake files
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/JattaConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}Config.cmake" @ONLY)
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/JattaConfigVersion.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}ConfigVersion.cmake" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/CGULConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}Config.cmake" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/CGULConfigVersion.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}ConfigVersion.cmake" @ONLY)
 
-# Install Jatta
-install(DIRECTORY ${CMAKE_BINARY_DIR}/${Jatta_LIB_DIR} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}Config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${Jatta_OUTPUT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
+# Install CGUL
+install(DIRECTORY ${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR} DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}Config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
 
 # Install include files
 string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}" DIR_LENGTH)
 math(EXPR DIR_LENGTH "${DIR_LENGTH} + 1")
-foreach(FILE ${Jatta_INSTALL})
+foreach(FILE ${CGUL_INSTALL})
 
     string(SUBSTRING "${FILE}" ${DIR_LENGTH} -1 INSTALL_FILE)
     get_filename_component(INSTALL_DIR ${INSTALL_FILE} PATH)
@@ -168,7 +168,7 @@ foreach(FILE ${Jatta_INSTALL})
 endforeach()
 
 # Install Config.h
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Jatta/Config.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/Jatta/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/CGUL/)
 
 # Install license
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -205,7 +205,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
                 # Install the library
                 if("${__FIND}" STREQUAL "-1")
 
-                    install(FILES ${__LOCATION} DESTINATION ${CMAKE_INSTALL_PREFIX}/${Jatta_LIB_DIR})
+                    install(FILES ${__LOCATION} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CGUL_LIB_DIR})
 
                 endif()
 
@@ -217,5 +217,5 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
 
 endforeach()
 
-# Installing the "include" directory is a temporary workaround for OpenGL calls in Jatta
+# Installing the "include" directory is a temporary workaround for OpenGL calls in CGUL
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include DESTINATION ${CMAKE_INSTALL_PREFIX})

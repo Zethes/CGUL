@@ -1,116 +1,118 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Mesh.cpp
  */
 
-#include "Mesh.h"
+#include "Mesh.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::Mesh::Mesh(aiMesh* mesh)
+_CGUL_EXPORT CGUL::Assimp::Mesh::Mesh(aiMesh* mesh)
 {
     this->mesh = mesh;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::Mesh::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::Mesh::GetName()
 {
     return String(mesh->mName.C_Str());
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasBones() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasBones() const
 {
     return mesh->HasBones();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasFaces() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasFaces() const
 {
     return mesh->HasFaces();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasNormals() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasNormals() const
 {
     return mesh->HasNormals();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasPositions() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasPositions() const
 {
     return mesh->HasPositions();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasTangentsAndBitangents() const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasTangentsAndBitangents() const
 {
     return mesh->HasTangentsAndBitangents();
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasTextureCoords(UInt32 index) const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasTextureCoords(UInt32 index) const
 {
     return mesh->HasTextureCoords(index);
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Assimp::Mesh::HasVertexColors(UInt32 index) const
+_CGUL_EXPORT CGUL::Boolean CGUL::Assimp::Mesh::HasVertexColors(UInt32 index) const
 {
     return mesh->HasVertexColors(index);
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetBoneCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetBoneCount() const
 {
     return mesh->mNumBones;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetFaceCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetFaceCount() const
 {
     return mesh->mNumFaces;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetUVComponentsCount(UInt32 index) const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetUVComponentsCount(UInt32 index) const
 {
     return mesh->mNumUVComponents[index];
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetVertexCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetVertexCount() const
 {
     return mesh->mNumVertices;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetUVChannelsCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetUVChannelsCount() const
 {
     return mesh->GetNumUVChannels();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetColorChannelsCount() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetColorChannelsCount() const
 {
     return mesh->GetNumColorChannels();
 }
 
-_JATTA_EXPORT Jatta::Vector3* Jatta::Assimp::Mesh::GetPositions() const
+_CGUL_EXPORT CGUL::Vector3* CGUL::Assimp::Mesh::GetPositions() const
 {
     return reinterpret_cast<Vector3*>(mesh->mVertices);
 }
 
-_JATTA_EXPORT Jatta::Vector3* Jatta::Assimp::Mesh::GetNormals() const
+_CGUL_EXPORT CGUL::Vector3* CGUL::Assimp::Mesh::GetNormals() const
 {
     return reinterpret_cast<Vector3*>(mesh->mNormals);
 }
 
-_JATTA_EXPORT Jatta::Vector3* Jatta::Assimp::Mesh::GetTangents() const
+_CGUL_EXPORT CGUL::Vector3* CGUL::Assimp::Mesh::GetTangents() const
 {
     return reinterpret_cast<Vector3*>(mesh->mTangents);
 }
 
-_JATTA_EXPORT Jatta::Vector3* Jatta::Assimp::Mesh::GetBitangents() const
+_CGUL_EXPORT CGUL::Vector3* CGUL::Assimp::Mesh::GetBitangents() const
 {
     return reinterpret_cast<Vector3*>(mesh->mBitangents);
 }
 
-_JATTA_EXPORT Jatta::Color* Jatta::Assimp::Mesh::GetColors(UInt32 index) const
+_CGUL_EXPORT CGUL::Color* CGUL::Assimp::Mesh::GetColors(UInt32 index) const
 {
     return reinterpret_cast<Color*>(mesh->mColors[index]);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Bone* Jatta::Assimp::Mesh::GetBones() const
+_CGUL_EXPORT CGUL::Assimp::Bone* CGUL::Assimp::Mesh::GetBones() const
 {
     return reinterpret_cast<Bone*>(mesh->mBones);
 }
 
-_JATTA_EXPORT Jatta::Assimp::Face* Jatta::Assimp::Mesh::GetFaces() const
+_CGUL_EXPORT CGUL::Assimp::Face* CGUL::Assimp::Mesh::GetFaces() const
 {
     Face* faces = new Face[mesh->mNumFaces];
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -121,17 +123,17 @@ _JATTA_EXPORT Jatta::Assimp::Face* Jatta::Assimp::Mesh::GetFaces() const
     return faces;
 }
 
-_JATTA_EXPORT Jatta::Vector3* Jatta::Assimp::Mesh::GetTextureCoords(UInt32 index) const
+_CGUL_EXPORT CGUL::Vector3* CGUL::Assimp::Mesh::GetTextureCoords(UInt32 index) const
 {
     return reinterpret_cast<Vector3*>(mesh->mTextureCoords[index]);
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetMaterialIndex() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetMaterialIndex() const
 {
     return mesh->mMaterialIndex;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Mesh::GetPrimitiveTypes() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Mesh::GetPrimitiveTypes() const
 {
     if (mesh->mPrimitiveTypes == 0x1)
     {

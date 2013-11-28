@@ -1,29 +1,31 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Array_Implement.hpp
  */
 
 template< typename T >
-Jatta::Array< T >::Array()
+CGUL::Array< T >::Array()
 {
     data = NULL;
     size = 0;
 }
 
 template< typename T >
-Jatta::Array< T >::~Array()
+CGUL::Array< T >::~Array()
 {
     Free();
 }
 
 template< typename T >
-T* Jatta::Array< T >::GetData()
+T* CGUL::Array< T >::GetData()
 {
     return data;
 }
 
 template< typename T >
-void Jatta::Array< T >::SetData(void* data, Size size)
+void CGUL::Array< T >::SetData(void* data, Size size)
 {
     if (this->data != data)
     {
@@ -34,7 +36,7 @@ void Jatta::Array< T >::SetData(void* data, Size size)
 }
 
 template< typename T >
-void Jatta::Array< T >::Free()
+void CGUL::Array< T >::Free()
 {
     if (this->size != 0)
     {
@@ -45,13 +47,13 @@ void Jatta::Array< T >::Free()
 }
 
 template< typename T >
-Jatta::Size Jatta::Array< T >::GetSize() const
+CGUL::Size CGUL::Array< T >::GetSize() const
 {
     return size;
 }
 
 template< typename T >
-void Jatta::Array< T >::SetSize(Size size)
+void CGUL::Array< T >::SetSize(Size size)
 {
     Free();
     data = (T*)new unsigned char[sizeof(T) * size];
@@ -59,14 +61,14 @@ void Jatta::Array< T >::SetSize(Size size)
 }
 
 template< typename T >
-void Jatta::Array< T >::Set(Size index, const T& value)
+void CGUL::Array< T >::Set(Size index, const T& value)
 {
     data[index] = value;
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
 template< typename T >
-void Jatta::Array< T >::Set(Size index, const T&& value)
+void CGUL::Array< T >::Set(Size index, const T&& value)
 {
     data[index] = value;
 }

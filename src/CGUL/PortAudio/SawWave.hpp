@@ -1,24 +1,26 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file SawWave.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "Stream.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "Stream.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace PortAudio
     {
         class SawWave : public Stream
         {
         public:
-            _JATTA_EXPORT SawWave(Device device);
+            _CGUL_EXPORT SawWave(Device device);
 
-            _JATTA_EXPORT virtual bool Update(StreamData* data);
+            _CGUL_EXPORT virtual bool Update(StreamData* data);
         };
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

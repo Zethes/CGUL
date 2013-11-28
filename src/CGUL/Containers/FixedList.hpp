@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file FixedList.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "Container.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "Container.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief A fixed list interface to set a fixed amount of data and fill in the slots of data.
      *  @details This interface creates the assumption that the child data type can be dynamically
@@ -28,4 +30,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

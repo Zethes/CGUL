@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file FileException.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "Exception.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "Exception.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace FileExceptionCode
     {
@@ -29,14 +31,14 @@ namespace Jatta
     }
     struct FileException : public Exception
     {
-        Jatta::String fileName;
+        String fileName;
 
-        FileException(const Jatta::String& fileName, UInt8 code, UInt8 reason);
+        FileException(const String& fileName, UInt8 code, UInt8 reason);
         ~FileException() throw();
 
-        Jatta::String GetString() const;
-        Jatta::String GetReason() const;
+        String GetString() const;
+        String GetReason() const;
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

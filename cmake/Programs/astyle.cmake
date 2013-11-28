@@ -13,9 +13,9 @@ endif()
 add_custom_target("style" COMMAND
   "${astyle_EXECUTABLE}"
   --options=${CMAKE_CURRENT_SOURCE_DIR}/resources/astyle
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta/*.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta/*.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Jatta/*.mm
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL/*.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/CGUL/*.mm
   ${__LINEENDINGS}
   VERBATIM
 )

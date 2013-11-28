@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file HostApi.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace PortAudio
     {
@@ -34,16 +36,16 @@ namespace Jatta
 
         class HostApi
         {
-            const _JATTA_PAHOSTAPI_INFO host;
+            const _CGUL_PAHOSTAPI_INFO host;
         public:
-            _JATTA_EXPORT HostApi(const _JATTA_PAHOSTAPI_INFO host);
+            _CGUL_EXPORT HostApi(const _CGUL_PAHOSTAPI_INFO host);
 
-            _JATTA_EXPORT String GetName();
-            _JATTA_EXPORT SInt32 GetType();
-            _JATTA_EXPORT SInt32 GetDeviceCount();
-            _JATTA_EXPORT Device GetDefaultInputDevice();
-            _JATTA_EXPORT Device GetDefaultOutputDevice();
+            _CGUL_EXPORT String GetName();
+            _CGUL_EXPORT SInt32 GetType();
+            _CGUL_EXPORT SInt32 GetDeviceCount();
+            _CGUL_EXPORT Device GetDefaultInputDevice();
+            _CGUL_EXPORT Device GetDefaultOutputDevice();
         };
     }
 }
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

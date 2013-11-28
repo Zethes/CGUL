@@ -1,27 +1,29 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Face.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class Face
         {
-            _JATTA_AIFACE face;
+            _CGUL_AIFACE face;
         public:
-            _JATTA_EXPORT Face();
-            _JATTA_EXPORT Face(_JATTA_AIFACE face);
+            _CGUL_EXPORT Face();
+            _CGUL_EXPORT Face(_CGUL_AIFACE face);
 
-            _JATTA_EXPORT Jatta::UInt32 GetIndicesCount();
-            _JATTA_EXPORT Jatta::UInt32* GetIndices();
+            _CGUL_EXPORT UInt32 GetIndicesCount();
+            _CGUL_EXPORT UInt32* GetIndices();
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Vector.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "List.h"
-#include "FixedList.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "List.hpp"
+#include "FixedList.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief A vector functionally equivalent to an std::vector but capable of acting as a
      *  FixedList.
@@ -33,5 +35,5 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
-#include "Vector_Implement.h"
+#include "../External/Undefines.hpp"
+#include "Vector_Implement.hpp"

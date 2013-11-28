@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Exporter.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "Assimp.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "Assimp.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
@@ -19,32 +21,32 @@ namespace Jatta
 
         class Exporter
         {
-            _JATTA_AIEXPORTER exporter;
+            _CGUL_AIEXPORTER exporter;
             ExportBlob* blob;
 
-            _JATTA_EXPORT Exporter(const Exporter& exporter);
+            _CGUL_EXPORT Exporter(const Exporter& exporter);
         public:
-            _JATTA_EXPORT Exporter();
-            _JATTA_EXPORT ~Exporter();
+            _CGUL_EXPORT Exporter();
+            _CGUL_EXPORT ~Exporter();
 
-            _JATTA_EXPORT SInt32 Export(Scene* scene, String formatId, String path, UInt32 preprocessing = 0u);
+            _CGUL_EXPORT SInt32 Export(Scene* scene, String formatId, String path, UInt32 preprocessing = 0u);
 
-            _JATTA_EXPORT ExportBlob* ExportToBlob(Scene* scene, String formatId, UInt32 preprocessing = 0u);
-            _JATTA_EXPORT void FreeBlob();
-            _JATTA_EXPORT ExportBlob* GetBlob() const;
+            _CGUL_EXPORT ExportBlob* ExportToBlob(Scene* scene, String formatId, UInt32 preprocessing = 0u);
+            _CGUL_EXPORT void FreeBlob();
+            _CGUL_EXPORT ExportBlob* GetBlob() const;
 
-            _JATTA_EXPORT String GetErrorString() const;
-            _JATTA_EXPORT UInt32 GetExportFormatCount() const;
-            _JATTA_EXPORT ExportFormatDesc GetExportFormatDescription(UInt32 index) const;
+            _CGUL_EXPORT String GetErrorString() const;
+            _CGUL_EXPORT UInt32 GetExportFormatCount() const;
+            _CGUL_EXPORT ExportFormatDesc GetExportFormatDescription(UInt32 index) const;
 
-            _JATTA_EXPORT void SetIOHandler(_JATTA_AIIOHANDLER system) const;
-            _JATTA_EXPORT _JATTA_AIIOHANDLER GetIOHandler() const;
-            _JATTA_EXPORT bool IsDefaultIOHandler() const;
+            _CGUL_EXPORT void SetIOHandler(_CGUL_AIIOHANDLER system) const;
+            _CGUL_EXPORT _CGUL_AIIOHANDLER GetIOHandler() const;
+            _CGUL_EXPORT bool IsDefaultIOHandler() const;
 
-            _JATTA_EXPORT SInt32 RegisterExporter(_JATTA_AIEXPORTFORMATENTRY &desc);
-            _JATTA_EXPORT void UnregisterExporter(String id);
+            _CGUL_EXPORT SInt32 RegisterExporter(_CGUL_AIEXPORTFORMATENTRY &desc);
+            _CGUL_EXPORT void UnregisterExporter(String id);
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

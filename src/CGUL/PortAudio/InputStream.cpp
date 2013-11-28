@@ -1,25 +1,27 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file InputStream.cpp
  */
 
-#include "InputStream.h"
+#include "InputStream.hpp"
 #include <cstdio>
 
 static int paCallbackInput(const void* inputBuffer, void* output, unsigned long fpb, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags flags, void* udata)
 {
-    Jatta::PortAudio::StreamData* data = (Jatta::PortAudio::StreamData*)udata;
+    CGUL::PortAudio::StreamData* data = (CGUL::PortAudio::StreamData*)udata;
     (void) output;
 
     const float *rptr = (const float*)inputBuffer;
-    std::vector<Jatta::Float32*> inputData;
+    std::vector<CGUL::Float32*> inputData;
 
     unsigned int i, j;
     int ret = paContinue;
 
     for (i = 0; i < data->NumberOfChannels; i++)
     {
-        inputData.push_back(new Jatta::Float32[fpb]);
+        inputData.push_back(new CGUL::Float32[fpb]);
     }
 
     if (inputBuffer == NULL)
@@ -57,7 +59,7 @@ static int paCallbackInput(const void* inputBuffer, void* output, unsigned long 
     return ret;
 }
 
-_JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device device)
+_CGUL_EXPORT CGUL::SInt32 CGUL::PortAudio::InputStream::OpenStream(Device device)
 {
     if (sampleRate == 0)
     {
@@ -83,7 +85,7 @@ _JATTA_EXPORT Jatta::SInt32 Jatta::PortAudio::InputStream::OpenStream(Device dev
 }
 
 
-_JATTA_EXPORT Jatta::PortAudio::InputStream::InputStream(Device device, bool (*callback)(std::vector<Float32*>, Jatta::UInt32, Stream*))
+_CGUL_EXPORT CGUL::PortAudio::InputStream::InputStream(Device device, bool (*callback)(std::vector<Float32*>, CGUL::UInt32, Stream*))
 {
     volume = 1.0f;
     streamData.StreamPtr = this;

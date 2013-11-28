@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file MacWindow.hpp
  */
 
-#ifdef JATTA_INCLUDES
+#ifdef CGUL_INCLUDES
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../../External/Defines.hpp"
 
 // Define the cocoa application delegate
 @interface MacWindow : NSWindow
@@ -21,6 +23,6 @@
 
 @end
 
-#include "../../External/Undefines.h"
+#include "../../External/Undefines.hpp"
 
 #endif

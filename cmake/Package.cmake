@@ -1,4 +1,4 @@
-# Script to package Jatta into various formats
+# Script to package CGUL into various formats
 # Officially supported formats:
 #   DEB  - Debian package
 #   NSIS - Nullsoft Installer
@@ -9,17 +9,17 @@
 #   TZ   - UNIX compressed tar package
 #   ZIP  - Compressed zip package
 
-# Set Jatta_PACKAGE_TYPE to one of the above formats then build the package with the generator.
+# Set CGUL_PACKAGE_TYPE to one of the above formats then build the package with the generator.
 # For makefiles this is done with "make package"
 
 # Setup the package info
-set(CPACK_GENERATOR "${Jatta_PACKAGE_TYPE}")
+set(CPACK_GENERATOR "${CGUL_PACKAGE_TYPE}")
 #set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")
 set(CPACK_PACKAGE_VENDOR "Zethes" )
-set(CPACK_PACKAGE_VERSION "${Jatta_VERSION}")
-set(CPACK_PACKAGE_VERSION_MAJOR "${Jatta_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${Jatta_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${Jatta_VERSION_PATCH}")
+set(CPACK_PACKAGE_VERSION "${CGUL_VERSION}")
+set(CPACK_PACKAGE_VERSION_MAJOR "${CGUL_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${CGUL_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${CGUL_VERSION_PATCH}")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/license.txt")
 set(CPACK_SYSTEM_NAME "${System_DISTRO}-${System_BITNESS}bit${Compiler_SUFFIX}")
 

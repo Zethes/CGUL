@@ -1,27 +1,29 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file String.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-#ifndef JATTA_NO_U8
+#ifndef CGUL_NO_U8
 #   ifdef CPP_HAS_U8
-#       define U8(text) Jatta::String(u8##text)
+#       define U8(text) CGUL::String(u8##text)
 #   else
-#       ifdef JATTA_WINDOWS
-#           define U8(text) Jatta::String(L##text)
+#       ifdef CGUL_WINDOWS
+#           define U8(text) CGUL::String(L##text)
 #       else
-#           define U8(text) Jatta::String(text)
+#           define U8(text) CGUL::String(text)
 #       endif
 #   endif
 #endif
 
-namespace Jatta
+namespace CGUL
 {
-#   ifdef Jatta_USE_REGEX
+#   ifdef CGUL_USE_REGEX
     class Regex;
 #   endif
 
@@ -39,38 +41,38 @@ namespace Jatta
     public:
         static const Size none = (Size)-1;
 
-        _JATTA_EXPORT static String FromCodePoint(UInt32 codePoint);
+        _CGUL_EXPORT static String FromCodePoint(UInt32 codePoint);
 
         //! @brief Initializes to "".
-        _JATTA_EXPORT String();
+        _CGUL_EXPORT String();
         //! @brief Copies the contents of the string into a new string.
-        _JATTA_EXPORT String(const String& copy);
+        _CGUL_EXPORT String(const String& copy);
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR
         //! @brief Moves the contents of one string to another.
-        _JATTA_EXPORT String(String&& move);
+        _CGUL_EXPORT String(String&& move);
 #       endif
-#       ifdef JATTA_WINDOWS
+#       ifdef CGUL_WINDOWS
         //! @brief Converts a std::wstring object to a Utf-8 string.
         //! @warning Windows only!
-        _JATTA_EXPORT String(const std::wstring& wideString);
+        _CGUL_EXPORT String(const std::wstring& wideString);
 #       endif
         //! @brief Copies raw character array data in a managed string object.
-        _JATTA_EXPORT String(const char* data);
+        _CGUL_EXPORT String(const char* data);
         //! @brief Copies a raw std::string object.
-        _JATTA_EXPORT String(const std::string& data);
+        _CGUL_EXPORT String(const std::string& data);
 
         //! @brief Copies the contents of a c string into this string.
-        _JATTA_EXPORT String& operator=(const char* operand);
+        _CGUL_EXPORT String& operator=(const char* operand);
         //! @brief Copies the contents of another string into this string.
-        _JATTA_EXPORT String& operator=(const String& operand);
+        _CGUL_EXPORT String& operator=(const String& operand);
         //! @brief Gets an individual byte from the string at the specified index.
-        _JATTA_EXPORT char& operator[](Size operand);
+        _CGUL_EXPORT char& operator[](Size operand);
         //! @brief Gets an individual byte from the string at the specified index.
-        _JATTA_EXPORT const char operator[](Size operand) const;
+        _CGUL_EXPORT const char operator[](Size operand) const;
         //! @brief Checks if two strings are equal.
-        _JATTA_EXPORT bool operator==(const String& operand) const;
+        _CGUL_EXPORT bool operator==(const String& operand) const;
         //! @brief Checks if two strings are not equal.
-        _JATTA_EXPORT bool operator!=(const String& operand) const;
+        _CGUL_EXPORT bool operator!=(const String& operand) const;
         //! @brief Attempts to convert a data type to string and concatinate it to this string,
         //! returning the result.
         template <typename T>
@@ -90,7 +92,7 @@ namespace Jatta
         String& operator+=(const T&& operand);
 #       endif
         //! @brief Checks if this string is lexicographically less than another.
-        _JATTA_EXPORT bool operator<(const String& operand) const;
+        _CGUL_EXPORT bool operator<(const String& operand) const;
         friend std::ostream& operator<<(std::ostream& stream, const String& string)
         {
             if (string.null)
@@ -105,67 +107,67 @@ namespace Jatta
         }
 
         //! @brief Gets the size of the string in bytes.
-        _JATTA_EXPORT Size GetSize() const;
+        _CGUL_EXPORT Size GetSize() const;
         //! @brief Counts the number of code points in the string.
-        _JATTA_EXPORT Size GetLength() const;
+        _CGUL_EXPORT Size GetLength() const;
 
         //! @brief Gets an individual character from the string.
-        _JATTA_EXPORT char GetChar(Size position) const;
+        _CGUL_EXPORT char GetChar(Size position) const;
         //! @brief Gets an individual byte from the string.
-        _JATTA_EXPORT Byte GetByte(Size position) const;
+        _CGUL_EXPORT Byte GetByte(Size position) const;
         //! @brief Gets an individual code point from the string.
-        _JATTA_EXPORT Size GetCodePoint(Size start, UInt32* codePoint) const;
+        _CGUL_EXPORT Size GetCodePoint(Size start, UInt32* codePoint) const;
         //! @brief Checks if the string is empty.
-        _JATTA_EXPORT Boolean IsEmpty() const;
+        _CGUL_EXPORT Boolean IsEmpty() const;
         //! @brief Checks if the string is null.
-        _JATTA_EXPORT Boolean IsNull() const;
+        _CGUL_EXPORT Boolean IsNull() const;
 
         //! @brief An accessor to the wrapped std::string data.
-        _JATTA_EXPORT std::string GetData() const;
+        _CGUL_EXPORT std::string GetData() const;
         //! @brief Accesses the raw character data from the wrapped std::string object.
-        _JATTA_EXPORT const char* GetCString() const;
+        _CGUL_EXPORT const char* GetCString() const;
 
-        _JATTA_EXPORT UInt32 Count(const String& string) const;
+        _CGUL_EXPORT UInt32 Count(const String& string) const;
 
         //! @brief Finds the first occurence of a string.
-        _JATTA_EXPORT Size FindFirstOf(const String& string, Size offset = 0) const;
-#       ifdef Jatta_USE_REGEX
-        _JATTA_EXPORT Size FindFirstOf(const Regex& expression, Size offset = 0) const;
+        _CGUL_EXPORT Size FindFirstOf(const String& string, Size offset = 0) const;
+#       ifdef CGUL_USE_REGEX
+        _CGUL_EXPORT Size FindFirstOf(const Regex& expression, Size offset = 0) const;
 #       endif
         //! @brief Finds the last occurence of a string.
-        _JATTA_EXPORT Size FindLastOf(const String& string, Size offset = 0) const;
-#       ifdef Jatta_USE_REGEX
-        _JATTA_EXPORT Size FindLastOf(const Regex& expression, Size offset = 0) const;
+        _CGUL_EXPORT Size FindLastOf(const String& string, Size offset = 0) const;
+#       ifdef CGUL_USE_REGEX
+        _CGUL_EXPORT Size FindLastOf(const Regex& expression, Size offset = 0) const;
 #       endif
 
         //! @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
-        _JATTA_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;
+        _CGUL_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;
 
         //! @brief Sets the value of the string given a c string.
-        _JATTA_EXPORT String& Set(const char* str);
+        _CGUL_EXPORT String& Set(const char* str);
         //! @brief Sets the value of the string given another string.
-        _JATTA_EXPORT String& Set(const String& str);
+        _CGUL_EXPORT String& Set(const String& str);
 
         //! @brief Trims whitespace at the beginning and end of the string.
-        _JATTA_EXPORT void Trim();
+        _CGUL_EXPORT void Trim();
         //! @brief Trims whitespace at the beginning of the string.
-        _JATTA_EXPORT void TrimStart();
+        _CGUL_EXPORT void TrimStart();
         //! @brief Trims whitespace at the end of the string.
-        _JATTA_EXPORT void TrimEnd();
-        _JATTA_EXPORT std::vector<String> Explode(const String& delimiter, Size limit = none) const;
+        _CGUL_EXPORT void TrimEnd();
+        _CGUL_EXPORT std::vector<String> Explode(const String& delimiter, Size limit = none) const;
 
         //! @brief Converts the entire string to uppercase letters.
-        _JATTA_EXPORT void ToLower();
+        _CGUL_EXPORT void ToLower();
         //! @brief Converts the entire string to lowercase letters.
-        _JATTA_EXPORT void ToUpper();
+        _CGUL_EXPORT void ToUpper();
 
         //! @brief Removes all whitespace from within a string.
-        _JATTA_EXPORT void RemoveWhitespace();
+        _CGUL_EXPORT void RemoveWhitespace();
 
         //! @brief Changes the string to empty if it is null.
-        _JATTA_EXPORT void SetNullToEmpty();
+        _CGUL_EXPORT void SetNullToEmpty();
         //! @brief Changes the string to null if it is empty.
-        _JATTA_EXPORT void SetEmptyToNull();
+        _CGUL_EXPORT void SetEmptyToNull();
 
         //! @brief Checks if the string can be converted to the given data type.
         template <typename T>
@@ -182,9 +184,9 @@ namespace Jatta
         T To(const T&& fallback) const;
 #       endif
 
-#       ifdef JATTA_WINDOWS
-        _JATTA_EXPORT std::wstring _ToWideString() const;
-        _JATTA_EXPORT void _FromWideString(const std::wstring& wideString);
+#       ifdef CGUL_WINDOWS
+        _CGUL_EXPORT std::wstring _ToWideString() const;
+        _CGUL_EXPORT void _FromWideString(const std::wstring& wideString);
 #       endif
 
         // TODO: add in some more common string functions (maybe reference php's string, C#'s string or std::string?)
@@ -196,7 +198,7 @@ namespace Jatta
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
 template <typename T>
-Jatta::String Jatta::String::operator+(const T& operand) const
+CGUL::String CGUL::String::operator+(const T& operand) const
 {
     std::ostringstream ss;
     ss << operand;
@@ -209,7 +211,7 @@ Jatta::String Jatta::String::operator+(const T& operand) const
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
 template <typename T>
-Jatta::String Jatta::String::operator+(const T&& operand) const
+CGUL::String CGUL::String::operator+(const T&& operand) const
 {
     std::ostringstream ss;
     ss << operand;
@@ -222,7 +224,7 @@ Jatta::String Jatta::String::operator+(const T&& operand) const
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
 template <typename T>
-Jatta::String& Jatta::String::operator+=(const T& operand)
+CGUL::String& CGUL::String::operator+=(const T& operand)
 {
     std::ostringstream ss;
     ss << operand;
@@ -236,7 +238,7 @@ Jatta::String& Jatta::String::operator+=(const T& operand)
  *  @details Attempts to convert the value to a string using standard template library streams.
  */
 template <typename T>
-Jatta::String& Jatta::String::operator+=(const T&& operand)
+CGUL::String& CGUL::String::operator+=(const T&& operand)
 {
     std::ostringstream ss;
     ss << operand;
@@ -248,7 +250,7 @@ Jatta::String& Jatta::String::operator+=(const T&& operand)
 /** @returns True if the string can be converted, false otherwise.
  */
 template <typename T>
-bool Jatta::String::Is() const
+bool CGUL::String::Is() const
 {
     std::istringstream test;
     test.str(data);
@@ -268,7 +270,7 @@ bool Jatta::String::Is() const
 /** @returns The string as the given type.
  */
 template <typename T>
-T Jatta::String::To() const
+T CGUL::String::To() const
 {
     std::istringstream convert;
     convert.str(data);
@@ -281,7 +283,7 @@ T Jatta::String::To() const
  *  @returns The string as the given type.
  */
 template <typename T>
-T Jatta::String::To(const T& fallback) const
+T CGUL::String::To(const T& fallback) const
 {
     std::istringstream test;
     test.str(data);
@@ -303,7 +305,7 @@ T Jatta::String::To(const T& fallback) const
  *  @returns The string as the given type.
  */
 template <typename T>
-T Jatta::String::To(const T&& fallback) const
+T CGUL::String::To(const T&& fallback) const
 {
     std::istringstream test;
     test.str(data);
@@ -321,4 +323,4 @@ T Jatta::String::To(const T&& fallback) const
 }
 #endif
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

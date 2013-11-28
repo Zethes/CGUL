@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Regex.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "String.hpp"
+#include "../External/Defines.hpp"
 
-#ifdef Jatta_USE_REGEX
-namespace Jatta
+#ifdef CGUL_USE_REGEX
+namespace CGUL
 {
     /** @brief Regular expressions.
      *  @todo Grab a library for this class, the C++11 one is largely unsupported.
@@ -17,19 +19,19 @@ namespace Jatta
     class Regex
     {
 #       ifdef PCRE_FOUND
-        _JATTA_PCRE pcre;
-        _JATTA_PCRE_EXTRA pcreExtra;
+        _CGUL_PCRE pcre;
+        _CGUL_PCRE_EXTRA pcreExtra;
 #       endif
 
         String expression;
     public:
-        _JATTA_EXPORT Regex();
-        _JATTA_EXPORT Regex(String expression);
-        _JATTA_EXPORT Regex(const Regex& copy);
+        _CGUL_EXPORT Regex();
+        _CGUL_EXPORT Regex(String expression);
+        _CGUL_EXPORT Regex(const Regex& copy);
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR
-        _JATTA_EXPORT Regex(Regex&& move);
+        _CGUL_EXPORT Regex(Regex&& move);
 #       endif
-        _JATTA_EXPORT ~Regex();
+        _CGUL_EXPORT ~Regex();
 
         Regex& operator=(const Regex& operand);
         friend std::ostream& operator<<(std::ostream& stream, const Regex& string)
@@ -38,13 +40,13 @@ namespace Jatta
             return stream;
         }
 
-        _JATTA_EXPORT void SetExpression(const String& expression);
-        _JATTA_EXPORT String GetExpression() const;
+        _CGUL_EXPORT void SetExpression(const String& expression);
+        _CGUL_EXPORT String GetExpression() const;
 
-        _JATTA_EXPORT Boolean Match(const String& test) const;
-        _JATTA_EXPORT Boolean Find(const String& test, Size offset, Size* start, Size* end = NULL) const;
+        _CGUL_EXPORT Boolean Match(const String& test) const;
+        _CGUL_EXPORT Boolean Find(const String& test, Size offset, Size* start, Size* end = NULL) const;
     };
 }
 #endif
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

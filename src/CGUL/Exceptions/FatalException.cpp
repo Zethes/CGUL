@@ -1,33 +1,35 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file FatalException.cpp
  */
 
-#include "FatalException.h"
+#include "FatalException.hpp"
 
-static Jatta::String result;
+static CGUL::String result;
 
-Jatta::FatalException::~FatalException() throw()
+CGUL::FatalException::~FatalException() throw()
 {
 }
 
-Jatta::FatalException::FatalException(const Jatta::String& error, UInt16 code) :
+CGUL::FatalException::FatalException(const CGUL::String& error, UInt16 code) :
     Exception(code, 0, ExceptionType::FATAL),
     error(error)
 {
 }
 
-Jatta::String Jatta::FatalException::GetString() const
+CGUL::String CGUL::FatalException::GetString() const
 {
     return U8("Fatal runtime error: ") + this->error;
 }
 
-Jatta::String Jatta::FatalException::GetReason() const
+CGUL::String CGUL::FatalException::GetReason() const
 {
     return U8("User defined error.");
 }
 
-const char* Jatta::FatalException::what() const throw()
+const char* CGUL::FatalException::what() const throw()
 {
     result = GetString();
     return result.GetCString();

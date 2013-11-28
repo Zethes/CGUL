@@ -1,29 +1,31 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file VertexWeight.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Math/Vector3.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Math/Vector3.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Assimp
     {
         class VertexWeight
         {
         private:
-            _JATTA_AIVERTEXWEIGHT weight;
+            _CGUL_AIVERTEXWEIGHT weight;
         public:
-            _JATTA_EXPORT VertexWeight(_JATTA_AIVERTEXWEIGHT weight);
+            _CGUL_EXPORT VertexWeight(_CGUL_AIVERTEXWEIGHT weight);
 
-            _JATTA_EXPORT Jatta::UInt32 GetVertexId();
-            _JATTA_EXPORT Jatta::Float32 GetWeight();
+            _CGUL_EXPORT UInt32 GetVertexId();
+            _CGUL_EXPORT Float32 GetWeight();
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

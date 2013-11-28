@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Font.cpp
  */
 
-#include "Font.h"
-#include "../Images/ImageFormats.h"
+#include "Font.hpp"
+#include "../Images/ImageFormats.hpp"
 #include <string.h>
 
 static FT_Library __jatta_ttf_library;
 
-_JATTA_EXPORT void __jatta_ttf_initialize()
+_CGUL_EXPORT void __jatta_ttf_initialize()
 {
     static bool initialized = false;
     if (!initialized)
@@ -23,13 +25,13 @@ _JATTA_EXPORT void __jatta_ttf_initialize()
     }
 }
 
-_JATTA_EXPORT Jatta::Font::Font() :
+_CGUL_EXPORT CGUL::Font::Font() :
     size(0)
 {
     __jatta_ttf_initialize();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Font::Load(const std::string& fileName)
+_CGUL_EXPORT CGUL::UInt32 CGUL::Font::Load(const std::string& fileName)
 {
     ::FT_Face face;
     FT_Error error = FT_New_Face(__jatta_ttf_library, fileName.c_str(), 0, &face);
@@ -49,7 +51,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::Load(const std::string& fileName)
     return faces.size()-1;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Font::LoadFromMemory(const unsigned char* data, UInt64 size)
+_CGUL_EXPORT CGUL::UInt32 CGUL::Font::LoadFromMemory(const unsigned char* data, UInt64 size)
 {
     ::FT_Face face;
     FT_Error error = FT_New_Memory_Face(__jatta_ttf_library, data, size, 0, &face);
@@ -69,7 +71,7 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::Font::LoadFromMemory(const unsigned char* dat
     return faces.size()-1;
 }
 
-_JATTA_EXPORT void Jatta::Font::PreloadGlyphs(UInt32 start, UInt32 end)
+_CGUL_EXPORT void CGUL::Font::PreloadGlyphs(UInt32 start, UInt32 end)
 {
     for (unsigned int i = start; i <= end; i++)
     {
@@ -77,7 +79,7 @@ _JATTA_EXPORT void Jatta::Font::PreloadGlyphs(UInt32 start, UInt32 end)
     }
 }
 
-_JATTA_EXPORT void Jatta::Font::ClearCache()
+_CGUL_EXPORT void CGUL::Font::ClearCache()
 {
     for (std::map<UInt32, Glyph*>::iterator i = glyphCache.begin(); i != glyphCache.end(); ++i)
     {
@@ -86,7 +88,7 @@ _JATTA_EXPORT void Jatta::Font::ClearCache()
     glyphCache.clear();
 }
 
-_JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
+_CGUL_EXPORT void CGUL::Font::SetSize(UInt32 size)
 {
     for (unsigned int i = 0; i < faces.size(); i++)
     {
@@ -99,12 +101,12 @@ _JATTA_EXPORT void Jatta::Font::SetSize(UInt32 size)
     this->size = size;
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Font::GetSize()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Font::GetSize()
 {
     return size;
 }
 
-_JATTA_EXPORT void Jatta::Font::SetStyle(UInt32 style)
+_CGUL_EXPORT void CGUL::Font::SetStyle(UInt32 style)
 {
     for (unsigned int i = 0; i < faces.size(); i++)
     {
@@ -112,7 +114,7 @@ _JATTA_EXPORT void Jatta::Font::SetStyle(UInt32 style)
     }
 }
 
-_JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const String& text)
+_CGUL_EXPORT CGUL::Image CGUL::Font::GenerateText(CGUL::Color color, const String& text)
 {
     //Calculate size
     UInt32 width = 0;
@@ -120,7 +122,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
     UInt32 maxWidth = 0;
     UInt32 maxDown = 0;
     UInt32 yOffset = 0;
-    for (Jatta::Size i = 0; i < text.GetSize();)
+    for (CGUL::Size i = 0; i < text.GetSize();)
     {
         UInt32 utf8Character;
         i += text.GetCodePoint(i, &utf8Character);
@@ -158,7 +160,7 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
     Vector2 pen = Vector2(0);
     Color* buffer = reinterpret_cast<Color*>(new char[width*height*sizeof(Color)]);
     memset(buffer, 0, width*height*sizeof(Color));
-    for (Jatta::Size i = 0; i < text.GetSize();)
+    for (CGUL::Size i = 0; i < text.GetSize();)
     {
         UInt32 utf8Character;
         i += text.GetCodePoint(i, &utf8Character);
@@ -225,11 +227,11 @@ _JATTA_EXPORT Jatta::Image Jatta::Font::GenerateText(Jatta::Color color, const S
     return Image(ImageFormats::RGBA8, width, height, buffer);
 }
 
-_JATTA_EXPORT Jatta::UInt64 Jatta::Font::GetCharacterIndex(UInt32 face, UInt64 characterCode)
+_CGUL_EXPORT CGUL::UInt64 CGUL::Font::GetCharacterIndex(UInt32 face, UInt64 characterCode)
 {
     return FT_Get_Char_Index(this->faces[face], (FT_ULong)characterCode);
 }
-_JATTA_EXPORT Jatta::Glyph* Jatta::Font::GetGlyph(UInt32 utf8Character, bool useCache)
+_CGUL_EXPORT CGUL::Glyph* CGUL::Font::GetGlyph(UInt32 utf8Character, bool useCache)
 {
     if (useCache)
     {

@@ -1,35 +1,37 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Context.cpp
  */
 
-#include "Context.h"
+#include "Context.hpp"
 
-static Jatta::OpenGL::Context* currentContext;
+static CGUL::OpenGL::Context* currentContext;
 
-_JATTA_EXPORT Jatta::OpenGL::Context* Jatta::OpenGL::Context::GetCurrent()
+_CGUL_EXPORT CGUL::OpenGL::Context* CGUL::OpenGL::Context::GetCurrent()
 {
     return currentContext;
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Context::Context() :
+_CGUL_EXPORT CGUL::OpenGL::Context::Context() :
     window(NULL)
 {
-#    ifdef JATTA_LINUX
+#    ifdef CGUL_LINUX
     context = NULL;
 #    endif
 }
 
-_JATTA_EXPORT Jatta::OpenGL::Context::~Context()
+_CGUL_EXPORT CGUL::OpenGL::Context::~Context()
 {
     Destroy();
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
+_CGUL_EXPORT void CGUL::OpenGL::Context::Create(Window* window)
 {
     this->window = window;
 
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     // setup the pixel format descriptor
     pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
     pfd.nVersion = 0;
@@ -80,7 +82,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     }
 #   endif
 
-#   ifdef JATTA_LINUX
+#   ifdef CGUL_LINUX
     this->display = window->_GetDisplay();
 
     XWindowAttributes attributes;
@@ -127,7 +129,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     glXMakeCurrent(this->display, window->_GetHandle(), this->context);
 #   endif
 
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     view = [[OpenGLView alloc] init];
 
     // TODO: remove these?
@@ -171,11 +173,11 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Create(Window* window)
     window->context = this;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
+_CGUL_EXPORT void CGUL::OpenGL::Context::MakeCurrent()
 {
     // TODO: error checking
 
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     if (!wglMakeCurrent(deviceContext, renderContext))
     {
         throw std::runtime_error("Failed to make device current.");
@@ -184,7 +186,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
 
     // TODO: Context::MakeCurrent for Linux
 
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [view MakeCurrent];
     [pool drain];
@@ -193,7 +195,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::MakeCurrent()
     currentContext = this;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
+_CGUL_EXPORT void CGUL::OpenGL::Context::Destroy()
 {
     // Check if this is a valid context first.
     if (this->window == NULL)
@@ -203,7 +205,7 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
 
     // TODO: Context::Destroy
 
-#   ifdef JATTA_LINUX
+#   ifdef CGUL_LINUX
     if (this->context != NULL)
     {
         // Release the current context from this thread before deleting it
@@ -219,61 +221,61 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::Destroy()
     this->window = NULL;
 }
 
-_JATTA_EXPORT bool Jatta::OpenGL::Context::IsValid() const
+_CGUL_EXPORT bool CGUL::OpenGL::Context::IsValid() const
 {
     return this->window != NULL;
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Enable(Enum capability)
+_CGUL_EXPORT void CGUL::OpenGL::Context::Enable(Enum capability)
 {
     glEnable(capability);
 }
-_JATTA_EXPORT void Jatta::OpenGL::Context::Disable(Enum capability)
+_CGUL_EXPORT void CGUL::OpenGL::Context::Disable(Enum capability)
 {
     glDisable(capability);
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::DepthMask(bool enabled)
+_CGUL_EXPORT void CGUL::OpenGL::Context::DepthMask(bool enabled)
 {
     glDepthMask(enabled ? GL_TRUE : GL_FALSE);
 }
-_JATTA_EXPORT void Jatta::OpenGL::Context::StencilMask(bool enabled)
+_CGUL_EXPORT void CGUL::OpenGL::Context::StencilMask(bool enabled)
 {
     glStencilMask(enabled ? GL_TRUE : GL_FALSE);
 }
-_JATTA_EXPORT void Jatta::OpenGL::Context::StencilMask(UInt32 mask)
+_CGUL_EXPORT void CGUL::OpenGL::Context::StencilMask(UInt32 mask)
 {
     glStencilMask(mask);
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::StencilFunc(Enum func, SInt32 reference, UInt32 mask)
+_CGUL_EXPORT void CGUL::OpenGL::Context::StencilFunc(Enum func, SInt32 reference, UInt32 mask)
 {
     glStencilFunc(func, reference, mask);
 }
-_JATTA_EXPORT void Jatta::OpenGL::Context::StencilOp(Enum sfail, Enum dpfail, Enum dppass)
+_CGUL_EXPORT void CGUL::OpenGL::Context::StencilOp(Enum sfail, Enum dpfail, Enum dppass)
 {
     glStencilOp(sfail, dpfail, dppass);
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height)
+_CGUL_EXPORT void CGUL::OpenGL::Context::Viewport(SInt32 x, SInt32 y, UInt32 width, UInt32 height)
 {
     glViewport((GLint)x, (GLint)y, (GLsizei)width, (GLsizei)height);
     // TODO: error checking
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::ClearColor(const Color& color)
+_CGUL_EXPORT void CGUL::OpenGL::Context::ClearColor(const Color& color)
 {
     glClearColor((GLfloat)(color.r / 255.0f), (GLfloat)(color.g / 255.0f), (GLfloat)(color.b / 255.0f), (GLfloat)(color.a / 255.0f));
     GLCHECK("Failed to set clear color.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::Clear(Enum mask)
+_CGUL_EXPORT void CGUL::OpenGL::Context::Clear(Enum mask)
 {
     glClear((GLbitfield)mask);
     GLCHECK("Failed to clear context.");
 }
 
-_JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
+_CGUL_EXPORT void CGUL::OpenGL::Context::SwapBuffers()
 {
     // TODO: error checking
 
@@ -282,15 +284,15 @@ _JATTA_EXPORT void Jatta::OpenGL::Context::SwapBuffers()
         throw std::runtime_error("Graphics device not current");
     }
 
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     ::SwapBuffers(deviceContext);
 #   endif
 
-#   ifdef JATTA_LINUX
+#   ifdef CGUL_LINUX
     glXSwapBuffers(this->display, this->window->_GetHandle());
 #   endif
 
-#   ifdef JATTA_MACOS
+#   ifdef CGUL_MACOS
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [view SwapBuffers];
     [pool drain];

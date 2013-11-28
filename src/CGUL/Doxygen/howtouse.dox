@@ -28,7 +28,7 @@ http://www.cmake.org/Wiki/CMake_Generator_Specific_Information for more informat
 
 <b>Building the examples</b>
 
-<b>YOU MUST HAVE BUILT AND INSTALLED JATTA TO BUILD THE EXAMPLES</b>
+<b>YOU MUST HAVE BUILT AND INSTALLED CGUL TO BUILD THE EXAMPLES</b>
 
 At the moment, each example must be built seperately.  These steps are the same for all examples and are very
 similar to building Jatta itself.

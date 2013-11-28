@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file BMP.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../../Utility/String.h"
-#include "../Image.h"
-#include "../../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../../Utility/String.hpp"
+#include "../Image.hpp"
+#include "../../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief Namespace containing every builtin image loader.
     */
@@ -96,17 +98,17 @@ namespace Jatta
          */
         class BMP
         {
-            _JATTA_EXPORT static BITMAPHEADER ReadHeader(Byte* data, UInt32 size);
-            _JATTA_EXPORT static BITMAPDIBHEADER ReadDIBHeader(Byte* data, UInt32 size);
+            _CGUL_EXPORT static BITMAPHEADER ReadHeader(Byte* data, UInt32 size);
+            _CGUL_EXPORT static BITMAPDIBHEADER ReadDIBHeader(Byte* data, UInt32 size);
         public:
-            _JATTA_EXPORT static bool CanLoad(const String& filename);
-            _JATTA_EXPORT static Jatta::Image* Load(const String& filename);
-            _JATTA_EXPORT static void Save(const String& filename, Jatta::Image* image);
+            _CGUL_EXPORT static bool CanLoad(const String& filename);
+            _CGUL_EXPORT static CGUL::Image* Load(const String& filename);
+            _CGUL_EXPORT static void Save(const String& filename, CGUL::Image* image);
 
-            _JATTA_EXPORT static BITMAPHEADER GetHeader(const String& filename);
-            _JATTA_EXPORT static BITMAPDIBHEADER GetDIBHeader(const String& filename);
+            _CGUL_EXPORT static BITMAPHEADER GetHeader(const String& filename);
+            _CGUL_EXPORT static BITMAPDIBHEADER GetDIBHeader(const String& filename);
         };
     }
 }
 
-#include "../../External/Undefines.h"
+#include "../../External/Undefines.hpp"

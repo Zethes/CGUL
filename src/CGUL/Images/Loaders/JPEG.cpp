@@ -1,12 +1,14 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file JPEG.cpp
  */
 
-#include "JPEG.h"
-#include "../../Utility/File.h"
-#include "../ImageFormats.h"
-#include "../../Exceptions/ImageException.h"
+#include "JPEG.hpp"
+#include "../../Utility/File.hpp"
+#include "../ImageFormats.hpp"
+#include "../../Exceptions/ImageException.hpp"
 
 #ifndef XMD_H
 #   define XMD_H
@@ -20,7 +22,7 @@ extern "C"
 #include <setjmp.h>
 #include <stdlib.h>
 
-_JATTA_EXPORT bool Jatta::ImageLoaders::JPEG::CanLoad(const String& file)
+_CGUL_EXPORT bool CGUL::ImageLoaders::JPEG::CanLoad(const String& file)
 {
     struct jpeg_decompress_struct cinfo;
     struct jpeg_error_mgr jerr;
@@ -47,7 +49,7 @@ _JATTA_EXPORT bool Jatta::ImageLoaders::JPEG::CanLoad(const String& file)
     return true;
 }
 
-_JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::JPEG::Load(const String& file)
+_CGUL_EXPORT CGUL::Image* CGUL::ImageLoaders::JPEG::Load(const String& file)
 {
     struct jpeg_decompress_struct cinfo;
     struct jpeg_error_mgr jerr;
@@ -119,7 +121,7 @@ _JATTA_EXPORT Jatta::Image* Jatta::ImageLoaders::JPEG::Load(const String& file)
     return new Image(format, cinfo.output_width, cinfo.output_height, (void*)data);
 }
 
-_JATTA_EXPORT void Jatta::ImageLoaders::JPEG::Save(const String& filename, Jatta::Image* image)
+_CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Save(const String& filename, CGUL::Image* image)
 {
     //TODO: JPEG Saving.
 }

@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file NetworkException.cpp
  */
 
-#include "NetworkException.h"
+#include "NetworkException.hpp"
 
-Jatta::NetworkException::NetworkException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::NETWORK)
+CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::NETWORK)
 {
 }
 
-Jatta::String Jatta::NetworkException::GetString() const
+CGUL::String CGUL::NetworkException::GetString() const
 {
     switch (code)
     {
@@ -39,7 +41,7 @@ Jatta::String Jatta::NetworkException::GetString() const
     }
 }
 
-Jatta::String Jatta::NetworkException::GetReason() const
+CGUL::String CGUL::NetworkException::GetReason() const
 {
     if (code == NetworkExceptionCode::FAILED_DNS_LOOKUP)
     {
@@ -64,9 +66,9 @@ Jatta::String Jatta::NetworkException::GetReason() const
             case NetworkExceptionCode::UNKNOWN:
             default:
             {
-                Jatta::String msgString = "Unknown error occurred. [Error code: ";
+                CGUL::String msgString = "Unknown error occurred. [Error code: ";
                 msgString += reason;
-                msgString += Jatta::String("]");
+                msgString += CGUL::String("]");
                 return msgString;
             }
         }

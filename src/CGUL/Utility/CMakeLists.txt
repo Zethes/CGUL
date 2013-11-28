@@ -1,9 +1,9 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+# C++ General Utility Library (mailto:cgul@zethes.com)
+# Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-set(Jatta_SOURCES
-    ${Jatta_SOURCES}
+set(CGUL_SOURCES
+    ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/CRC32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/JSON.cpp
@@ -16,8 +16,8 @@ set(Jatta_SOURCES
     PARENT_SCOPE
 )
 
-set(Jatta_INSTALL
-    ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.h
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease_Implement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.h

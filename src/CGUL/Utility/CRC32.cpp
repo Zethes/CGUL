@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file CRC32.cpp
  */
 
-#include "Encryption.h"
+#include "Encryption.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /* ========================================================================
  * Table of CRC-32's of all single-byte values (made by make_crc_table)
  */
-static const Jatta::UInt32 crc_table[256] =
+static const CGUL::UInt32 crc_table[256] =
 {
     0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
     0x706af48fL, 0xe963a535L, 0x9e6495a3L, 0x0edb8832L, 0x79dcb8a4L,
@@ -72,7 +74,7 @@ static const Jatta::UInt32 crc_table[256] =
 
 static void crc32 ( const void * key, int len, unsigned long seed, unsigned long * out )
 {
-    Jatta::UInt8 * buf = (Jatta::UInt8*)key;
+    CGUL::UInt8 * buf = (CGUL::UInt8*)key;
     unsigned long crc = seed ^ 0xffffffffL;
 
     while (len >= 8)
@@ -93,13 +95,13 @@ static void crc32 ( const void * key, int len, unsigned long seed, unsigned long
 
 static unsigned long crc32_start ( unsigned long seed )
 {
-    Jatta::UInt32 crc = seed ^ 0xffffffffL;
+    CGUL::UInt32 crc = seed ^ 0xffffffffL;
     return crc;
 }
 
 static void crc32_add ( unsigned long& crc, const void * key, int len )
 {
-    Jatta::UInt8 * buf = (Jatta::UInt8*)key;
+    CGUL::UInt8 * buf = (CGUL::UInt8*)key;
 
     while (len >= 8)
     {
@@ -120,28 +122,28 @@ void crc32_end ( unsigned long& crc )
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-_JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::Data( const void* data, unsigned int length, unsigned long seed)
+_CGUL_EXPORT unsigned long CGUL::Encryption::CRC32::Data( const void* data, unsigned int length, unsigned long seed)
 {
     unsigned long ret = 0;
     crc32(data, length, seed, &ret);
     return ret;
 }
-_JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::String(Jatta::String in, unsigned long seed)
+_CGUL_EXPORT unsigned long CGUL::Encryption::CRC32::String(CGUL::String in, unsigned long seed)
 {
     return Data(in.GetData().c_str(), in.GetLength(), seed);
 }
 
-_JATTA_EXPORT unsigned long Jatta::Encryption::CRC32::Start(unsigned long seed)
+_CGUL_EXPORT unsigned long CGUL::Encryption::CRC32::Start(unsigned long seed)
 {
     return crc32_start(seed);
 }
 
-_JATTA_EXPORT void Jatta::Encryption::CRC32::Add(unsigned long& crc, const void* data, unsigned int length)
+_CGUL_EXPORT void CGUL::Encryption::CRC32::Add(unsigned long& crc, const void* data, unsigned int length)
 {
     crc32_add(crc, data, length);
 }
 
-_JATTA_EXPORT void Jatta::Encryption::CRC32::End(unsigned long& crc)
+_CGUL_EXPORT void CGUL::Encryption::CRC32::End(unsigned long& crc)
 {
     crc32_end(crc);
 }

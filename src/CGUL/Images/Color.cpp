@@ -1,9 +1,11 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Color.cpp
  */
 
-#include "Color.h"
+#include "Color.hpp"
 #include "../Math/Vector3.hpp"
 #include "../Math/Vector4.hpp"
 
@@ -13,7 +15,7 @@
  *  @param alpha Optional alpha value from 0-255.
  *  @returns The resulting color.
  */
-_JATTA_EXPORT Jatta::Color Jatta::Color::MakeHSL(UInt32 hue, Byte saturation, Byte luminance, Byte alpha)
+_CGUL_EXPORT CGUL::Color CGUL::Color::MakeHSL(UInt32 hue, Byte saturation, Byte luminance, Byte alpha)
 {
     Color ret(0, 0, 0, alpha);
 
@@ -70,7 +72,7 @@ _JATTA_EXPORT Jatta::Color Jatta::Color::MakeHSL(UInt32 hue, Byte saturation, By
 
 /**
  */
-_JATTA_EXPORT Jatta::Color::Color()
+_CGUL_EXPORT CGUL::Color::Color()
 {
     this->r = 0;
     this->g = 0;
@@ -80,7 +82,7 @@ _JATTA_EXPORT Jatta::Color::Color()
 
 /** @param copy The color to copy.
  */
-_JATTA_EXPORT Jatta::Color::Color(const Color& copy)
+_CGUL_EXPORT CGUL::Color::Color(const Color& copy)
 {
     this->r = copy.r;
     this->g = copy.g;
@@ -92,7 +94,7 @@ _JATTA_EXPORT Jatta::Color::Color(const Color& copy)
  *  @param g The green value.
  *  @param b The blue value.
  */
-_JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b)
+_CGUL_EXPORT CGUL::Color::Color(unsigned char r, unsigned char g, unsigned char b)
 {
     this->r = r;
     this->g = g;
@@ -105,7 +107,7 @@ _JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned cha
  *  @param b The blue value.
  *  @param a The alpha value.
  */
-_JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+_CGUL_EXPORT CGUL::Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     this->r = r;
     this->g = g;
@@ -116,7 +118,7 @@ _JATTA_EXPORT Jatta::Color::Color(unsigned char r, unsigned char g, unsigned cha
 /** @param operand The other color.
  *  @returns True if the colors are the same, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::Color::operator==(const Color& operand)
+_CGUL_EXPORT CGUL::Boolean CGUL::Color::operator==(const Color& operand)
 {
     return r == operand.r && b == operand.b && g == operand.g && a == operand.a;
 }
@@ -124,7 +126,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Color::operator==(const Color& operand)
 /** @param operand The other color.
  *  @returns True if the colors are not the same, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::Color::operator!=(const Color& operand)
+_CGUL_EXPORT CGUL::Boolean CGUL::Color::operator!=(const Color& operand)
 {
     return r != operand.r || b != operand.b || g != operand.g || a != operand.a;
 }
@@ -132,7 +134,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Color::operator!=(const Color& operand)
 /** @param operand The other color.
  *  @returns A reference to the current object.
  */
-_JATTA_EXPORT Jatta::Color& Jatta::Color::operator=(const Color& operand)
+_CGUL_EXPORT CGUL::Color& CGUL::Color::operator=(const Color& operand)
 {
     this->r = operand.r;
     this->g = operand.g;

@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file AutoRelease_Implement.hpp
  */
 
 template< class T >
-Jatta::AutoRelease< T >::AutoRelease()
+CGUL::AutoRelease< T >::AutoRelease()
 {
     this->release = NULL;
 }
 
 template< class T >
-Jatta::AutoRelease< T >::~AutoRelease()
+CGUL::AutoRelease< T >::~AutoRelease()
 {
     if (release != NULL)
     {
@@ -24,7 +26,7 @@ Jatta::AutoRelease< T >::~AutoRelease()
  *  from the class.
  */
 template< class T >
-void Jatta::AutoRelease< T >::SetRelease(Release release)
+void CGUL::AutoRelease< T >::SetRelease(Release release)
 {
     this->release = release;
 }

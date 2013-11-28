@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Glyph.cpp
  */
 
-#include "Glyph.h"
-#include "../Images/ImageFormats.h"
+#include "Glyph.hpp"
+#include "../Images/ImageFormats.hpp"
 #include "../Math/Math.hpp"
 
-_JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
+_CGUL_EXPORT CGUL::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
 {
     FT_Matrix matrix;
     matrix.xx = (FT_Fixed)(1 * 0x10000L);
@@ -47,34 +49,34 @@ _JATTA_EXPORT Jatta::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
     data = (Byte*)new unsigned char[width*height];
     memcpy(data, face->glyph->bitmap.buffer, width*height);
 }
-_JATTA_EXPORT Jatta::Glyph::~Glyph()
+_CGUL_EXPORT CGUL::Glyph::~Glyph()
 {
 
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Glyph::GetWidth()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Glyph::GetWidth()
 {
     return width;
 }
-_JATTA_EXPORT Jatta::UInt32 Jatta::Glyph::GetHeight()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Glyph::GetHeight()
 {
     return height;
 }
-_JATTA_EXPORT Jatta::Vector2 Jatta::Glyph::GetAdvance()
+_CGUL_EXPORT CGUL::Vector2 CGUL::Glyph::GetAdvance()
 {
     return advance;
 }
-_JATTA_EXPORT Jatta::Vector2 Jatta::Glyph::GetOffset()
+_CGUL_EXPORT CGUL::Vector2 CGUL::Glyph::GetOffset()
 {
     return offset;
 }
 
-_JATTA_EXPORT Jatta::Byte* Jatta::Glyph::GetData()
+_CGUL_EXPORT CGUL::Byte* CGUL::Glyph::GetData()
 {
     return data;
 }
 
-_JATTA_EXPORT Jatta::Image Jatta::Glyph::GetImage(Color color, UInt32 styleFlags)
+_CGUL_EXPORT CGUL::Image CGUL::Glyph::GetImage(Color color, UInt32 styleFlags)
 {
     //TODO: Speed this up.
     Color* buffer = reinterpret_cast<Color*>(new char[width*height*sizeof(Color)]);

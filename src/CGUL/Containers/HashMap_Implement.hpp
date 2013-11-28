@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file HashMap_Implement.hpp
  */
 
 template< typename Type >
-Jatta::Size Jatta::Hash::Integer(const Type& object)
+CGUL::Size CGUL::Hash::Integer(const Type& object)
 {
     return static_cast<Size>(object);
 }
 
 template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType >::HashMap() :
+CGUL::HashMap< KeyType, ValueType >::HashMap() :
     hash(NULL),
     size(0),
     data(NULL)
@@ -18,7 +20,7 @@ Jatta::HashMap< KeyType, ValueType >::HashMap() :
 }
 
 template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy) :
+CGUL::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy) :
     hash(copy.hash),
     size(copy.size),
     data(new Data*[copy.size])
@@ -38,7 +40,7 @@ Jatta::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy) :
 }
 
 template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType >::HashMap(Function hash, Size pool) :
+CGUL::HashMap< KeyType, ValueType >::HashMap(Function hash, Size pool) :
     hash(hash),
     size(pool),
     data(new Data*[pool])
@@ -51,14 +53,14 @@ Jatta::HashMap< KeyType, ValueType >::HashMap(Function hash, Size pool) :
 
 
 template< typename KeyType, typename ValueType >
-Jatta::HashMap< KeyType, ValueType>::~HashMap()
+CGUL::HashMap< KeyType, ValueType>::~HashMap()
 {
     Clear();
     delete[] data;
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::SetSize(Size pool)
+void CGUL::HashMap< KeyType, ValueType >::SetSize(Size pool)
 {
     if (size == 0)
     {
@@ -78,7 +80,7 @@ void Jatta::HashMap< KeyType, ValueType >::SetSize(Size pool)
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::SetHashFunction(Function hash)
+void CGUL::HashMap< KeyType, ValueType >::SetHashFunction(Function hash)
 {
     if (this->hash == NULL)
     {
@@ -92,7 +94,7 @@ void Jatta::HashMap< KeyType, ValueType >::SetHashFunction(Function hash)
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::Insert(KeyType key, ValueType value)
+void CGUL::HashMap< KeyType, ValueType >::Insert(KeyType key, ValueType value)
 {
     if (hash == NULL)
     {
@@ -123,7 +125,7 @@ void Jatta::HashMap< KeyType, ValueType >::Insert(KeyType key, ValueType value)
 }
 
 template< typename KeyType, typename ValueType >
-ValueType Jatta::HashMap< KeyType, ValueType >::Get(KeyType key) const
+ValueType CGUL::HashMap< KeyType, ValueType >::Get(KeyType key) const
 {
     if (hash == NULL)
     {
@@ -149,7 +151,7 @@ ValueType Jatta::HashMap< KeyType, ValueType >::Get(KeyType key) const
 }
 
 template< typename KeyType, typename ValueType >
-bool Jatta::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) const
+bool CGUL::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) const
 {
     if (hash == NULL)
     {
@@ -179,7 +181,7 @@ bool Jatta::HashMap< KeyType, ValueType >::Get(KeyType key, ValueType* value) co
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::GetKeys(List< KeyType >* keys) const
+void CGUL::HashMap< KeyType, ValueType >::GetKeys(List< KeyType >* keys) const
 {
     for (Size i = 0; i < size; i++)
     {
@@ -194,7 +196,7 @@ void Jatta::HashMap< KeyType, ValueType >::GetKeys(List< KeyType >* keys) const
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::GetEntries(List< std::pair< KeyType, ValueType > >* entries) const
+void CGUL::HashMap< KeyType, ValueType >::GetEntries(List< std::pair< KeyType, ValueType > >* entries) const
 {
     for (Size i = 0; i < size; i++)
     {
@@ -209,7 +211,7 @@ void Jatta::HashMap< KeyType, ValueType >::GetEntries(List< std::pair< KeyType, 
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType >::Erase(KeyType key)
+void CGUL::HashMap< KeyType, ValueType >::Erase(KeyType key)
 {
     if (hash == NULL)
     {
@@ -237,7 +239,7 @@ void Jatta::HashMap< KeyType, ValueType >::Erase(KeyType key)
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType>::Clear()
+void CGUL::HashMap< KeyType, ValueType>::Clear()
 {
     for (Size i = 0; i < size; i++)
     {
@@ -255,7 +257,7 @@ void Jatta::HashMap< KeyType, ValueType>::Clear()
 }
 
 template< typename KeyType, typename ValueType >
-void Jatta::HashMap< KeyType, ValueType>::Clear(Size pool)
+void CGUL::HashMap< KeyType, ValueType>::Clear(Size pool)
 {
     Clear();
     delete[] data;
@@ -264,7 +266,7 @@ void Jatta::HashMap< KeyType, ValueType>::Clear(Size pool)
 }
 
 template< typename KeyType, typename ValueType>
-void Jatta::HashMap< KeyType, ValueType>::Debug() const
+void CGUL::HashMap< KeyType, ValueType>::Debug() const
 {
     for (Size i = 0; i < size; i++)
     {

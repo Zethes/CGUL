@@ -1,26 +1,28 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file SocketTCP.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Network/IPAddress.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Network/IPAddress.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
-        /** @class SocketTCP SocketTCP.h <Base/Network/SocketTCP.h>
+        /** @class SocketTCP SocketTCP.hpp <CGUL/Network/SocketTCP.hpp>
          *  @brief A class to connect to or listen on a TCP network.
          */
         class SocketTCP
         {
 #           if defined(MSVC)
             unsigned int __w64 sock;
-#           elif defined(JATTA_WINDOWS)
+#           elif defined(CGUL_WINDOWS)
             unsigned int sock;
 #           else
             int sock;
@@ -28,8 +30,8 @@ namespace Jatta
 
 #           ifdef OpenSSL_FOUND
             bool connectionSecure;
-            _JATTA_SSL sslHandle;
-            _JATTA_SSL_CTX sslContext;
+            _CGUL_SSL sslHandle;
+            _CGUL_SSL_CTX sslContext;
 #           endif
 
             bool MakeNonBlocking();
@@ -73,29 +75,29 @@ namespace Jatta
 }
 
 template <typename T>
-int Jatta::Network::SocketTCP::Send(const T& data)
+int CGUL::Network::SocketTCP::Send(const T& data)
 {
     return Send(&data, sizeof(T));
 }
 
 #ifdef CPP_HAS_DOUBLE_REFERENCE
 template <typename T>
-int Jatta::Network::SocketTCP::Send(const T&& data)
+int CGUL::Network::SocketTCP::Send(const T&& data)
 {
     return Send(&data, sizeof(T));
 }
 #endif
 
 template <typename T>
-int Jatta::Network::SocketTCP::Receive(T* data)
+int CGUL::Network::SocketTCP::Receive(T* data)
 {
     return Receive(data, sizeof(T));
 }
 
 template <typename T>
-int Jatta::Network::SocketTCP::Peek(T* data)
+int CGUL::Network::SocketTCP::Peek(T* data)
 {
     return Peek(data, sizeof(T));
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

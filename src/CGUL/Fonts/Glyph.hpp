@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Glyph.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
+#include <CGUL/Config.hpp>
 #include "../Math/Vector2.hpp"
-#include "../Images/Image.h"
-#include "../Images/Color.h"
-#include "FontStyles.h"
-#include "../External/Defines.h"
+#include "../Images/Image.hpp"
+#include "../Images/Color.hpp"
+#include "FontStyles.hpp"
+#include "../External/Defines.hpp"
 
 /*
  * Glyph metrics:
@@ -44,7 +46,7 @@
  *              |------------- advance_x ---------->|
  */
 
-namespace Jatta
+namespace CGUL
 {
     class Glyph
     {
@@ -56,18 +58,18 @@ namespace Jatta
         Vector2 advance;
         Byte* data;
     public:
-        _JATTA_EXPORT Glyph(_JATTA_FT_FACE face, UInt32 utf8Character);
-        _JATTA_EXPORT ~Glyph();
+        _CGUL_EXPORT Glyph(_CGUL_FT_FACE face, UInt32 utf8Character);
+        _CGUL_EXPORT ~Glyph();
 
-        _JATTA_EXPORT UInt32 GetWidth();
-        _JATTA_EXPORT UInt32 GetHeight();
-        _JATTA_EXPORT Vector2 GetAdvance();
-        _JATTA_EXPORT Vector2 GetOffset();
+        _CGUL_EXPORT UInt32 GetWidth();
+        _CGUL_EXPORT UInt32 GetHeight();
+        _CGUL_EXPORT Vector2 GetAdvance();
+        _CGUL_EXPORT Vector2 GetOffset();
 
-        _JATTA_EXPORT Byte* GetData();
+        _CGUL_EXPORT Byte* GetData();
 
-        _JATTA_EXPORT Image GetImage(Color color, UInt32 styleFlags); //Generates RGBA8888 image.
+        _CGUL_EXPORT Image GetImage(Color color, UInt32 styleFlags); //Generates RGBA8888 image.
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

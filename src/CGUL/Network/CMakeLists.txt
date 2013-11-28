@@ -1,13 +1,13 @@
-# Jatta - General Utility Library
-# Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
+# C++ General Utility Library (mailto:cgul@zethes.com)
+# Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 # All rights reserved.
 
-if(NOT Jatta_USE_NETWORK)
+if(NOT CGUL_USE_NETWORK)
     return()
 endif()
 
-set(Jatta_SOURCES
-    ${Jatta_SOURCES}
+set(CGUL_SOURCES
+    ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Adapter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DNS.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HTTPRequest.cpp
@@ -18,8 +18,8 @@ set(Jatta_SOURCES
     PARENT_SCOPE
 )
 
-set(Jatta_INSTALL
-    ${Jatta_INSTALL}
+set(CGUL_INSTALL
+    ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/Adapter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/DNS.h
     ${CMAKE_CURRENT_SOURCE_DIR}/HTTPEnums.h

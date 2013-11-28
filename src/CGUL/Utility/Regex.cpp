@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Regex.cpp
  */
 
-#include "Regex.h"
-#include "../Utility/Move.h"
+#include "Regex.hpp"
+#include "../Utility/Move.hpp"
 
 #include <iostream>
 #include <string.h>
 
-#ifdef Jatta_USE_REGEX
-_JATTA_EXPORT Jatta::Regex::Regex()
+#ifdef CGUL_USE_REGEX
+_CGUL_EXPORT CGUL::Regex::Regex()
 {
 #   ifdef PCRE_FOUND
     pcre = NULL;
@@ -18,12 +20,12 @@ _JATTA_EXPORT Jatta::Regex::Regex()
 #   endif
 }
 
-_JATTA_EXPORT Jatta::Regex::Regex(String expression)
+_CGUL_EXPORT CGUL::Regex::Regex(String expression)
 {
     SetExpression(expression);
 }
 
-_JATTA_EXPORT Jatta::Regex::Regex(const Regex& copy)
+_CGUL_EXPORT CGUL::Regex::Regex(const Regex& copy)
 {
 #   ifdef PCRE_FOUND
     this->pcre = copy.pcre;
@@ -36,7 +38,7 @@ _JATTA_EXPORT Jatta::Regex::Regex(const Regex& copy)
 }
 
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
-_JATTA_EXPORT Jatta::Regex::Regex(Regex&& move)
+_CGUL_EXPORT CGUL::Regex::Regex(Regex&& move)
 {
 #   ifdef PCRE_FOUND
     this->pcre = move.pcre;
@@ -47,12 +49,12 @@ _JATTA_EXPORT Jatta::Regex::Regex(Regex&& move)
 }
 #endif
 
-_JATTA_EXPORT Jatta::Regex::~Regex()
+_CGUL_EXPORT CGUL::Regex::~Regex()
 {
     SetExpression("");
 }
 
-Jatta::Regex& Jatta::Regex::operator=(const Regex& operand)
+CGUL::Regex& CGUL::Regex::operator=(const Regex& operand)
 {
 #   ifdef PCRE_FOUND
     this->pcre = operand.pcre;
@@ -65,7 +67,7 @@ Jatta::Regex& Jatta::Regex::operator=(const Regex& operand)
     return *this;
 }
 
-_JATTA_EXPORT void Jatta::Regex::SetExpression(const String& expression)
+_CGUL_EXPORT void CGUL::Regex::SetExpression(const String& expression)
 {
     this->expression = expression;
 
@@ -105,12 +107,12 @@ _JATTA_EXPORT void Jatta::Regex::SetExpression(const String& expression)
 #   endif
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Regex::GetExpression() const
+_CGUL_EXPORT CGUL::String CGUL::Regex::GetExpression() const
 {
     return this->expression;
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Regex::Match(const String& test) const
+_CGUL_EXPORT CGUL::Boolean CGUL::Regex::Match(const String& test) const
 {
 #   ifdef PCRE_FOUND
     if (!pcre)
@@ -123,7 +125,7 @@ _JATTA_EXPORT Jatta::Boolean Jatta::Regex::Match(const String& test) const
 #   endif
 }
 
-_JATTA_EXPORT Jatta::Boolean Jatta::Regex::Find(const String& test, Size offset, Size* start, Size* count) const
+_CGUL_EXPORT CGUL::Boolean CGUL::Regex::Find(const String& test, Size offset, Size* start, Size* count) const
 {
 #   ifdef PCRE_FOUND
     if (!pcre)

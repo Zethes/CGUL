@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file DNS.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace Network
     {
@@ -27,9 +29,9 @@ namespace Jatta
             DNS();
             ~DNS();
 
-            _JATTA_EXPORT static std::vector<Jatta::String> Lookup(const Jatta::String& host, Filter filter = ANY);
+            _CGUL_EXPORT static std::vector<CGUL::String> Lookup(const CGUL::String& host, Filter filter = ANY);
         };
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

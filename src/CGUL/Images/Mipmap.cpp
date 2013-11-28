@@ -1,17 +1,19 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Mipmap.cpp
  */
 
-#include "Mipmap.h"
+#include "Mipmap.hpp"
 
 // TODO: remove this? it's not used
-/*_JATTA_EXPORT bool Jatta::Mipmap::IsValid()
+/*_CGUL_EXPORT bool CGUL::Mipmap::IsValid()
 {
     return (width != 0 && height != 0);
 }*/
 
-_JATTA_EXPORT Jatta::Mipmap::Mipmap() :
+_CGUL_EXPORT CGUL::Mipmap::Mipmap() :
     data(NULL),
     format(ImageFormats::NONE),
     width(0),
@@ -19,7 +21,7 @@ _JATTA_EXPORT Jatta::Mipmap::Mipmap() :
 {
 }
 
-_JATTA_EXPORT Jatta::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data) :
+_CGUL_EXPORT CGUL::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 height, void* data) :
     data(data),
     format(format),
     width(width),
@@ -27,12 +29,12 @@ _JATTA_EXPORT Jatta::Mipmap::Mipmap(ImageFormat format, UInt32 width, UInt32 hei
 {
 }
 
-_JATTA_EXPORT Jatta::Mipmap::~Mipmap()
+_CGUL_EXPORT CGUL::Mipmap::~Mipmap()
 {
     //Free();
 }
 
-_JATTA_EXPORT void Jatta::Mipmap::Free()
+_CGUL_EXPORT void CGUL::Mipmap::Free()
 {
     free(data);
     data = NULL;
@@ -41,11 +43,11 @@ _JATTA_EXPORT void Jatta::Mipmap::Free()
     format = ImageFormats::NONE;
 }
 
-_JATTA_EXPORT const void* Jatta::Mipmap::GetData()
+_CGUL_EXPORT const void* CGUL::Mipmap::GetData()
 {
     return data;
 }
-_JATTA_EXPORT Jatta::ImageFormat Jatta::Mipmap::GetFormat() const
+_CGUL_EXPORT CGUL::ImageFormat CGUL::Mipmap::GetFormat() const
 {
     return format;
 }

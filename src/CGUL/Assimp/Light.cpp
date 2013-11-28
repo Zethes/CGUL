@@ -1,71 +1,73 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Light.cpp
  */
 
-#include "Light.h"
+#include "Light.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::Light::Light(aiLight* light)
+_CGUL_EXPORT CGUL::Assimp::Light::Light(aiLight* light)
 {
     this->light = light;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::Assimp::Light::GetName()
+_CGUL_EXPORT CGUL::String CGUL::Assimp::Light::GetName()
 {
     return String(light->mName.C_Str());
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::Assimp::Light::GetType()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Light::GetType()
 {
     return light->mType;
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Assimp::Light::GetPosition()
+_CGUL_EXPORT CGUL::Vector3 CGUL::Assimp::Light::GetPosition()
 {
     return Vector3(light->mPosition.x, light->mPosition.y, light->mPosition.z);
 }
 
-_JATTA_EXPORT Jatta::Vector3 Jatta::Assimp::Light::GetDirection()
+_CGUL_EXPORT CGUL::Vector3 CGUL::Assimp::Light::GetDirection()
 {
     return Vector3(light->mDirection.x, light->mDirection.y, light->mDirection.z);
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAngleInnerCone()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::Light::GetAngleInnerCone()
 {
     return light->mAngleInnerCone;
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAngleOuterCone()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::Light::GetAngleOuterCone()
 {
     return light->mAngleOuterCone;
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAttenuationConstant()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::Light::GetAttenuationConstant()
 {
     return light->mAttenuationConstant;
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAttenuationLinear()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::Light::GetAttenuationLinear()
 {
     return light->mAttenuationLinear;
 }
 
-_JATTA_EXPORT Jatta::Float32 Jatta::Assimp::Light::GetAttenuationQuadratic()
+_CGUL_EXPORT CGUL::Float32 CGUL::Assimp::Light::GetAttenuationQuadratic()
 {
     return light->mAttenuationQuadratic;
 }
 
-_JATTA_EXPORT Jatta::Color Jatta::Assimp::Light::GetColorDiffuse()
+_CGUL_EXPORT CGUL::Color CGUL::Assimp::Light::GetColorDiffuse()
 {
     return Color(light->mColorDiffuse.r, light->mColorDiffuse.g, light->mColorDiffuse.b);
 }
 
-_JATTA_EXPORT Jatta::Color Jatta::Assimp::Light::GetColorSpecular()
+_CGUL_EXPORT CGUL::Color CGUL::Assimp::Light::GetColorSpecular()
 {
     return Color(light->mColorSpecular.r, light->mColorSpecular.g, light->mColorSpecular.b);
 }
 
-_JATTA_EXPORT Jatta::Color Jatta::Assimp::Light::GetColorAmbient()
+_CGUL_EXPORT CGUL::Color CGUL::Assimp::Light::GetColorAmbient()
 {
     return Color(light->mColorAmbient.r, light->mColorAmbient.g, light->mColorAmbient.b);
 }

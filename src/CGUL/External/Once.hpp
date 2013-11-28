@@ -1,27 +1,29 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Once.hpp
  */
 
 #pragma once
 
 // Operating System Detection
-#if !defined(JATTA_WINDOWS) & !defined(JATTA_LINUX) & !defined(JATTA_MACOS)
+#if !defined(CGUL_WINDOWS) & !defined(CGUL_LINUX) & !defined(CGUL_MACOS)
 #   if defined(_WIN32)
-#       define JATTA_WINDOWS
+#       define CGUL_WINDOWS
 #   elif defined(__APPLE__)
-#       define JATTA_MACOS
+#       define CGUL_MACOS
 #   elif defined(__GNUC__)
-#       define JATTA_LINUX
+#       define CGUL_LINUX
 #   else
-#       error Failed to automatically detected operating system.  Must define JATTA_WINDOWS, JATTA_LINUX, or JATTA_MACOS on the command line.
+#       error Failed to automatically detected operating system.  Must define CGUL_WINDOWS, CGUL_LINUX, or CGUL_MACOS on the command line.
 #   endif
 #endif
 
-#ifdef JATTA_WINDOWS
-namespace Jatta
+#ifdef CGUL_WINDOWS
+namespace CGUL
 {
-    struct _JATTA_PIXELFORMATDESCRIPTOR
+    struct _CGUL_PIXELFORMATDESCRIPTOR
     {
         char padding[40];
     };
@@ -76,15 +78,15 @@ namespace Jatta
 #   include <stddef.h>
 #endif
 
-// Jatta Type Defines
+// CGUL Type Defines
 #ifdef CPP_HAS_STATIC_ASSERT
-#   define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change Jatta.h to fix this error.")
+#   define TYPE(oldType, newType, size) typedef oldType newType; static_assert(sizeof(oldType) == size, #oldType " must be a size of " #size ". Please change CGUL.hpp to fix this error.")
 #else
 #   define TYPE(oldType, newType, size) typedef oldType newType
 #endif
 /** @brief General utility library.
  */
-namespace Jatta
+namespace CGUL
 {
     /** @brief A 32 bit (4 bytes) floating point number.
      */
@@ -217,7 +219,7 @@ namespace Jatta
     typedef unsigned short UShort;
 
     /** @brief System dependent signed integer.
-     *  @details Jatta redefines some of the standard integers in C and C++ for explicitness.  It is
+     *  @details CGUL redefines some of the standard integers in C and C++ for explicitness.  It is
      *  clear that using "SInt" rather than "SInt32" that the user wants a system-dependent (and
      *  usually "faster") integer rather than a fixed size integer.  Short integers will be less
      *  than or equal in size as "normal" integers (SInt and UInt) and long integers will be
@@ -271,41 +273,41 @@ namespace Jatta
 
 // DLL Exports
 #ifdef MSVC
-#   ifdef JATTA_BUILD
-#       define _JATTA_EXPORT __declspec(dllexport)
+#   ifdef CGUL_BUILD
+#       define _CGUL_EXPORT __declspec(dllexport)
 #   else
-#       define _JATTA_EXPORT __declspec(dllimport)
+#       define _CGUL_EXPORT __declspec(dllimport)
 #   endif
 #else
-#   define _JATTA_EXPORT
+#   define _CGUL_EXPORT
 #endif
 
-#if defined(JATTA_INCLUDES)
-#   ifdef JATTA_WINDOWS
+#if defined(CGUL_INCLUDES)
+#   ifdef CGUL_WINDOWS
 #       define UNICODE
 #       define _UNICODE
-#       ifdef Jatta_USE_NETWORK
+#       ifdef CGUL_USE_NETWORK
 #           define _WIN32_WINNT 0x501
 #           include <winsock2.h>
 #           include <ws2tcpip.h>
 #       endif
 #       include <windows.h>
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
 #           include <GL/glew.h>
 #       endif
 #   endif
-#   ifdef JATTA_LINUX
+#   ifdef CGUL_LINUX
 #       include <setjmp.h>
 #       include <X11/Xlib.h>
 #       include <X11/Xatom.h>
 #       include <X11/Xutil.h>
-#       ifdef Jatta_USE_OPENGL
+#       ifdef CGUL_USE_OPENGL
 #           include <GL/glxew.h>
 #           include <GL/glew.h>
 #       endif
 #   endif
-#   ifdef JATTA_MACOS
-#       ifdef Jatta_USE_OPENGL
+#   ifdef CGUL_MACOS
+#       ifdef CGUL_USE_OPENGL
 #           include <GL/glew.h>cstddef
 #       endif
 #       import <Cocoa/Cocoa.h>
@@ -336,7 +338,7 @@ namespace Jatta
 #       include <openssl/ssl.h>
 #       include <openssl/err.h>
 #   endif
-#   if defined(JATTA_LINUX) | defined(JATTA_MACOS)
+#   if defined(CGUL_LINUX) | defined(CGUL_MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>
 #       include <fcntl.h>
@@ -356,13 +358,13 @@ namespace Jatta
 #   endif
 #endif
 
-#if defined(JATTA_WINDOWS) && !defined(_WIN32_WINNT)
+#if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
 #   define _WIN32_WINNT 0x0501
 #endif
 
 // Regex support
 #if defined(PCRE_FOUND) || defined(CPP_HAS_STD_REGEX)
-#   define Jatta_USE_REGEX
+#   define CGUL_USE_REGEX
 #endif
 
 // Deprecated code tag

@@ -1,13 +1,15 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Move.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
 #   if defined(CPP_HAS_STD_MOVE)
     template< class T >
@@ -21,5 +23,5 @@ namespace Jatta
 #   endif
 }
 
-#include "../External/Undefines.h"
-#include "Move_Implement.h"
+#include "../External/Undefines.hpp"
+#include "Move_Implement.hpp"

@@ -1,24 +1,26 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Exception.cpp
  */
 
-#include "Exception.h"
+#include "Exception.hpp"
 
-static Jatta::String result;
+static CGUL::String result;
 
-Jatta::Exception::~Exception() throw()
+CGUL::Exception::~Exception() throw()
 {
 }
 
-const char* Jatta::Exception::what() const throw()
+const char* CGUL::Exception::what() const throw()
 {
     result = GetString();
     result += U8(" (Reason: ") + GetReason() + U8(")");
     return result.GetCString();
 }
 
-Jatta::Exception::Exception(UInt16 code, UInt16 reason, UInt32 type)
+CGUL::Exception::Exception(UInt16 code, UInt16 reason, UInt32 type)
 {
     this->code = code;
     this->reason = reason;

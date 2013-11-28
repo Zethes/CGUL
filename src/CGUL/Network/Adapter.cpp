@@ -1,11 +1,13 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Adapter.cpp
  */
 
-#include "Adapter.h"
+#include "Adapter.hpp"
 
-#ifdef JATTA_WINDOWS
+#ifdef CGUL_WINDOWS
 #   include <winsock2.h>
 #   include <iphlpapi.h>
 #else
@@ -25,9 +27,9 @@
  *  user and differs from each operating system and network interface.
  *  @todo finish documenting GetAdapters and fixed windows version
  */
-void Jatta::Network::GetAdapters(FixedList<Adapter>* adapters)
+void CGUL::Network::GetAdapters(FixedList<Adapter>* adapters)
 {
-#   ifdef JATTA_WINDOWS
+#   ifdef CGUL_WINDOWS
     // TODO: this wont work correctly right now (?)
     PIP_ADAPTER_INFO adapterInfo;
     ULONG adapterLength = sizeof(IP_ADAPTER_INFO);

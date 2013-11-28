@@ -1,129 +1,131 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file JSON.cpp
  */
 
 #include "JSON.hpp"
 
-_JATTA_EXPORT Jatta::JSON::Object::Object()
+_CGUL_EXPORT CGUL::JSON::Object::Object()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Object::~Object()
+_CGUL_EXPORT CGUL::JSON::Object::~Object()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Object::Object(const Object& o) :
+_CGUL_EXPORT CGUL::JSON::Object::Object(const Object& o) :
     pairs(o.pairs)
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Object& Jatta::JSON::Object::operator=(const Object& o)
+_CGUL_EXPORT CGUL::JSON::Object& CGUL::JSON::Object::operator=(const Object& o)
 {
     pairs = o.pairs;
     return *this;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value& Jatta::JSON::Object::operator[] (const String& key)
+_CGUL_EXPORT CGUL::JSON::Value& CGUL::JSON::Object::operator[] (const String& key)
 {
     return pairs[key];
 }
 
-_JATTA_EXPORT std::map<Jatta::String, Jatta::JSON::Value>::const_iterator Jatta::JSON::Object::Begin() const
+_CGUL_EXPORT std::map<CGUL::String, CGUL::JSON::Value>::const_iterator CGUL::JSON::Object::Begin() const
 {
     return pairs.begin();
 }
 
-_JATTA_EXPORT std::map<Jatta::String, Jatta::JSON::Value>::const_iterator Jatta::JSON::Object::End() const
+_CGUL_EXPORT std::map<CGUL::String, CGUL::JSON::Value>::const_iterator CGUL::JSON::Object::End() const
 {
     return pairs.end();
 }
 
-_JATTA_EXPORT std::map<Jatta::String, Jatta::JSON::Value>::iterator Jatta::JSON::Object::Begin()
+_CGUL_EXPORT std::map<CGUL::String, CGUL::JSON::Value>::iterator CGUL::JSON::Object::Begin()
 {
     return pairs.begin();
 }
 
-_JATTA_EXPORT std::map<Jatta::String, Jatta::JSON::Value>::iterator Jatta::JSON::Object::End()
+_CGUL_EXPORT std::map<CGUL::String, CGUL::JSON::Value>::iterator CGUL::JSON::Object::End()
 {
     return pairs.end();
 }
 
-_JATTA_EXPORT std::pair<std::map<Jatta::String, Jatta::JSON::Value>::iterator, bool> Jatta::JSON::Object::Insert(String key, Value v)
+_CGUL_EXPORT std::pair<std::map<CGUL::String, CGUL::JSON::Value>::iterator, bool> CGUL::JSON::Object::Insert(String key, Value v)
 {
     return pairs.insert(std::pair<String,Value>(key,v));
 }
 
-_JATTA_EXPORT Jatta::Size Jatta::JSON::Object::Size() const
+_CGUL_EXPORT CGUL::Size CGUL::JSON::Object::Size() const
 {
     return pairs.size();
 }
 
-_JATTA_EXPORT Jatta::JSON::Array::Array()
+_CGUL_EXPORT CGUL::JSON::Array::Array()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Array::~Array()
+_CGUL_EXPORT CGUL::JSON::Array::~Array()
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Array::Array(const Array& a) :
+_CGUL_EXPORT CGUL::JSON::Array::Array(const Array& a) :
     items(a.items)
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Array& Jatta::JSON::Array::operator=(const Array& a)
+_CGUL_EXPORT CGUL::JSON::Array& CGUL::JSON::Array::operator=(const Array& a)
 {
     items = a.items;
     return *this;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value& Jatta::JSON::Array::operator[] (Jatta::Size i)
+_CGUL_EXPORT CGUL::JSON::Value& CGUL::JSON::Array::operator[] (CGUL::Size i)
 {
     return items[i];
 }
 
-_JATTA_EXPORT std::vector<Jatta::JSON::Value>::const_iterator Jatta::JSON::Array::Begin() const
+_CGUL_EXPORT std::vector<CGUL::JSON::Value>::const_iterator CGUL::JSON::Array::Begin() const
 {
     return items.begin();
 }
 
-_JATTA_EXPORT std::vector<Jatta::JSON::Value>::const_iterator Jatta::JSON::Array::End() const
+_CGUL_EXPORT std::vector<CGUL::JSON::Value>::const_iterator CGUL::JSON::Array::End() const
 {
     return items.end();
 }
 
-_JATTA_EXPORT std::vector<Jatta::JSON::Value>::iterator Jatta::JSON::Array::Begin()
+_CGUL_EXPORT std::vector<CGUL::JSON::Value>::iterator CGUL::JSON::Array::Begin()
 {
     return items.begin();
 }
 
-_JATTA_EXPORT std::vector<Jatta::JSON::Value>::iterator Jatta::JSON::Array::End()
+_CGUL_EXPORT std::vector<CGUL::JSON::Value>::iterator CGUL::JSON::Array::End()
 {
     return items.end();
 }
 
-_JATTA_EXPORT void Jatta::JSON::Array::PushBack(const Value& v)
+_CGUL_EXPORT void CGUL::JSON::Array::PushBack(const Value& v)
 {
     items.push_back(v);
 }
 
-_JATTA_EXPORT void Jatta::JSON::Array::PopBack()
+_CGUL_EXPORT void CGUL::JSON::Array::PopBack()
 {
     items.pop_back();
 }
 
-_JATTA_EXPORT void Jatta::JSON::Array::Erase(std::vector<Value>::iterator i)
+_CGUL_EXPORT void CGUL::JSON::Array::Erase(std::vector<Value>::iterator i)
 {
     items.erase(i);
 }
 
-_JATTA_EXPORT Jatta::Size Jatta::JSON::Array::Size() const
+_CGUL_EXPORT CGUL::Size CGUL::JSON::Array::Size() const
 {
     return items.size();
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value() :
+_CGUL_EXPORT CGUL::JSON::Value::Value() :
     type(ValueType::NIL),
     valueInt(0),
     valueFloat(0.0f),
@@ -131,7 +133,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value() :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const SInt32 v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const SInt32 v) :
     type(ValueType::INT),
     valueInt(v),
     valueFloat(0.0f),
@@ -139,7 +141,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const SInt32 v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const UInt32 v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const UInt32 v) :
     type(ValueType::INT),
     valueInt(v),
     valueFloat(0.0f),
@@ -147,7 +149,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const UInt32 v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const double v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const double v) :
     type(ValueType::FLOAT),
     valueInt(0),
     valueFloat(v),
@@ -155,7 +157,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const double v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Float32 v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const Float32 v) :
     type(ValueType::FLOAT),
     valueInt(0),
     valueFloat(v),
@@ -163,7 +165,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const Float32 v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const bool v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const bool v) :
     type(ValueType::BOOL),
     valueInt(0),
     valueFloat(0.0f),
@@ -171,7 +173,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const bool v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const String& v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const String& v) :
     type(ValueType::STRING),
     valueInt(0),
     valueFloat(0.0f),
@@ -180,7 +182,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const String& v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Object& v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const Object& v) :
     type(ValueType::OBJECT),
     valueInt(0),
     valueFloat(0.0f),
@@ -189,7 +191,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const Object& v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const Array& v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const Array& v) :
     type(ValueType::ARRAY),
     valueInt(0),
     valueFloat(0.0f),
@@ -198,7 +200,7 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const Array& v) :
 {
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::Value(const JSON::Value& v) :
+_CGUL_EXPORT CGUL::JSON::Value::Value(const JSON::Value& v) :
     type(ValueType::NIL),
     valueInt(0),
     valueFloat(0.0f),
@@ -250,12 +252,12 @@ _JATTA_EXPORT Jatta::JSON::Value::Value(const JSON::Value& v) :
     }
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::JSON::Value::Type() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::JSON::Value::Type() const
 {
     return type;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value& Jatta::JSON::Value::operator=(const Value& v)
+_CGUL_EXPORT CGUL::JSON::Value& CGUL::JSON::Value::operator=(const Value& v)
 {
     switch (v.Type())
     {
@@ -309,9 +311,9 @@ _JATTA_EXPORT Jatta::JSON::Value& Jatta::JSON::Value::operator=(const Value& v)
 }
 
 
-_JATTA_EXPORT Jatta::String Jatta::JSON::__Indent()
+_CGUL_EXPORT CGUL::String CGUL::JSON::__Indent()
 {
-    Jatta::String ret = "";
+    CGUL::String ret = "";
     for (UInt32 i = 0; i < ind; i++)
     {
         ret += "\t";
@@ -319,31 +321,31 @@ _JATTA_EXPORT Jatta::String Jatta::JSON::__Indent()
     return ret;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::JSON::Array::ToString()
+_CGUL_EXPORT CGUL::String CGUL::JSON::Array::ToString()
 {
-    Jatta::String ret = "[\n";
-    Jatta::JSON::ind++;
-    for (std::vector<Jatta::JSON::Value>::iterator e = Begin(); e != End();)
+    CGUL::String ret = "[\n";
+    CGUL::JSON::ind++;
+    for (std::vector<CGUL::JSON::Value>::iterator e = Begin(); e != End();)
     {
-        ret += Jatta::JSON::__Indent();
+        ret += CGUL::JSON::__Indent();
         ret += (*e).ToString();
         if (++e != End())
             ret += ',';
         ret += "\n";
     }
-    Jatta::JSON::ind--;
-    ret += Jatta::JSON::__Indent();
+    CGUL::JSON::ind--;
+    ret += CGUL::JSON::__Indent();
     ret += "]";
     return ret;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::JSON::Object::ToString()
+_CGUL_EXPORT CGUL::String CGUL::JSON::Object::ToString()
 {
-    Jatta::String ret = "{\n";
-    Jatta::JSON::ind++;
-    for (std::map<Jatta::String, Jatta::JSON::Value>::iterator e = Begin(); e != End();)
+    CGUL::String ret = "{\n";
+    CGUL::JSON::ind++;
+    for (std::map<CGUL::String, CGUL::JSON::Value>::iterator e = Begin(); e != End();)
     {
-        ret += Jatta::JSON::__Indent();
+        ret += CGUL::JSON::__Indent();
         ret += '"';
         ret += e->first;
         ret += "\": ";
@@ -352,48 +354,48 @@ _JATTA_EXPORT Jatta::String Jatta::JSON::Object::ToString()
             ret += ',';
         ret += "\n";
     }
-    Jatta::JSON::ind--;
-    ret += Jatta::JSON::__Indent();
+    CGUL::JSON::ind--;
+    ret += CGUL::JSON::__Indent();
     ret += "}";
     return ret;
 }
 
-_JATTA_EXPORT Jatta::String Jatta::JSON::Value::ToString()
+_CGUL_EXPORT CGUL::String CGUL::JSON::Value::ToString()
 {
     switch (type)
     {
-        case Jatta::JSON::ValueType::INT:
+        case CGUL::JSON::ValueType::INT:
         {
-            Jatta::String ret = "";
+            CGUL::String ret = "";
             ret += valueInt;
             return ret;
         }
-        case Jatta::JSON::ValueType::FLOAT:
+        case CGUL::JSON::ValueType::FLOAT:
         {
-            Jatta::String ret = "";
+            CGUL::String ret = "";
             ret += valueFloat;
             return ret;
         }
-        case Jatta::JSON::ValueType::BOOL:
+        case CGUL::JSON::ValueType::BOOL:
         {
             return (valueBool ? "true" : "false");
         }
-        case Jatta::JSON::ValueType::STRING:
+        case CGUL::JSON::ValueType::STRING:
         {
-            Jatta::String ret = "\"";
+            CGUL::String ret = "\"";
             ret += valueString;
             ret += "\"";
             return ret;
         }
-        case Jatta::JSON::ValueType::ARRAY:
+        case CGUL::JSON::ValueType::ARRAY:
         {
             return valueArray.ToString();
         }
-        case Jatta::JSON::ValueType::OBJECT:
+        case CGUL::JSON::ValueType::OBJECT:
         {
             return valueObject.ToString();
         }
-        case Jatta::JSON::ValueType::NIL:
+        case CGUL::JSON::ValueType::NIL:
         default:
         {
             return U8("null");
@@ -401,37 +403,37 @@ _JATTA_EXPORT Jatta::String Jatta::JSON::Value::ToString()
     }
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator Float32() const
+_CGUL_EXPORT CGUL::JSON::Value::operator Float32() const
 {
     return valueFloat;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator SInt32() const
+_CGUL_EXPORT CGUL::JSON::Value::operator SInt32() const
 {
     return valueInt;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator bool() const
+_CGUL_EXPORT CGUL::JSON::Value::operator bool() const
 {
     return valueBool;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator String() const
+_CGUL_EXPORT CGUL::JSON::Value::operator String() const
 {
     return valueString;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator Object() const
+_CGUL_EXPORT CGUL::JSON::Value::operator Object() const
 {
     return valueObject;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value::operator Array() const
+_CGUL_EXPORT CGUL::JSON::Value::operator Array() const
 {
     return valueArray;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseNumber(String str)
+_CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseNumber(String str)
 {
     bool negate = (str[0] == JSON::Grammar::Numbers::MINUS);
 
@@ -578,9 +580,9 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseNumber(String str)
     }
 }
 
-_JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseString(String str)
+_CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseString(String str)
 {
-    Jatta::String ret;
+    CGUL::String ret;
 
     UInt32 i = 0;
     if (str[0] == Grammar::Structural::STRING_DELIMITOR)
@@ -644,7 +646,7 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseString(String str)
                 }
                 case Grammar::Strings::Escape::BEGIN_UNICODE:
                 {
-                    Jatta::String copy = str;
+                    CGUL::String copy = str;
                     copy.ToLower();
                     if (i + 5 >= str.GetLength()) //Need 4 hexadecimal digits
                     {
@@ -687,7 +689,7 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseString(String str)
     return JSON::Value(ret);
 }
 
-_JATTA_EXPORT Jatta::JSON::Array Jatta::JSON::ParseArray(Jatta::String str)
+_CGUL_EXPORT CGUL::JSON::Array CGUL::JSON::ParseArray(CGUL::String str)
 {
     Array ret;
 
@@ -739,7 +741,7 @@ _JATTA_EXPORT Jatta::JSON::Array Jatta::JSON::ParseArray(Jatta::String str)
         }
         else if (str[i] == Grammar::Structural::VALUE_SEPERATOR)
         {
-            ret.PushBack(Jatta::JSON::ParseValue(value));
+            ret.PushBack(CGUL::JSON::ParseValue(value));
             value.Set("");
         }
         else
@@ -750,13 +752,13 @@ _JATTA_EXPORT Jatta::JSON::Array Jatta::JSON::ParseArray(Jatta::String str)
 
     if (value.GetLength() > 0)
     {
-        ret.PushBack(Jatta::JSON::ParseValue(value));
+        ret.PushBack(CGUL::JSON::ParseValue(value));
     }
 
     return ret;
 }
 
-_JATTA_EXPORT Jatta::JSON::Object Jatta::JSON::ParseObject(Jatta::String str)
+_CGUL_EXPORT CGUL::JSON::Object CGUL::JSON::ParseObject(CGUL::String str)
 {
     Object ret;
 
@@ -823,7 +825,7 @@ _JATTA_EXPORT Jatta::JSON::Object Jatta::JSON::ParseObject(Jatta::String str)
     {
         bool insideString = false;
 
-        Jatta::String key;
+        CGUL::String key;
         for (UInt32 j = 0; j < i->GetLength(); j++)
         {
             if (insideString)
@@ -856,21 +858,21 @@ _JATTA_EXPORT Jatta::JSON::Object Jatta::JSON::ParseObject(Jatta::String str)
     return ret;
 }
 
-_JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseValue(Jatta::String str)
+_CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseValue(CGUL::String str)
 {
     String strLower = str;
     strLower.ToLower();
     if (strLower == Grammar::Literals::FALSE_STRING)
     {
-        return Jatta::JSON::Value(false);
+        return CGUL::JSON::Value(false);
     }
     else if (strLower == Grammar::Literals::TRUE_STRING)
     {
-        return Jatta::JSON::Value(true);
+        return CGUL::JSON::Value(true);
     }
     else if (strLower == Grammar::Literals::NULL_STRING)
     {
-        return Jatta::JSON::Value();
+        return CGUL::JSON::Value();
     }
     //Is it a number?
     else if (str[0] == Grammar::Numbers::MINUS || (str[0] >= '0' && str[0] <= '9'))
@@ -886,7 +888,7 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseValue(Jatta::String str)
     {
         //Get the code.
         int ind = 0;
-        Jatta::String code;
+        CGUL::String code;
         for (UInt32 i = 0; i < str.GetLength(); i++)
         {
             if (str[i] == Grammar::Structural::BEGIN_ARRAY)
@@ -912,7 +914,7 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseValue(Jatta::String str)
             //ERROR
         }
 
-        return Jatta::JSON::Value(Jatta::JSON::ParseArray(code));
+        return CGUL::JSON::Value(CGUL::JSON::ParseArray(code));
     }
     else if (str[0] == Grammar::Structural::BEGIN_OBJECT) //Object
     {
@@ -944,15 +946,15 @@ _JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::ParseValue(Jatta::String str)
             //ERROR
         }
 
-        return Jatta::JSON::Value(Jatta::JSON::ParseObject(code));
+        return CGUL::JSON::Value(CGUL::JSON::ParseObject(code));
     }
     else
     {
-        return Jatta::JSON::Value();
+        return CGUL::JSON::Value();
     }
 }
 
-_JATTA_EXPORT Jatta::JSON::Value Jatta::JSON::Parse(Jatta::String str)
+_CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::Parse(CGUL::String str)
 {
     //Remove the unnecessary whitespacing.
     String newStr;

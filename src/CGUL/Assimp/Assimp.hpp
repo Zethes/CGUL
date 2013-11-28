@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Assimp.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     /** @brief Assimp wrapper.
      */
@@ -63,12 +65,12 @@ namespace Jatta
         static const Enum CFLAGS_NOBOOST = 0x8;
         static const Enum CFLAGS_SINGLETHREADED = 0x10;
 
-        _JATTA_EXPORT String GetLegalString();
-        _JATTA_EXPORT UInt32 GetVersionMinor();
-        _JATTA_EXPORT UInt32 GetVersionMajor();
-        _JATTA_EXPORT UInt32 GetVersionRevision();
-        _JATTA_EXPORT UInt32 GetCompileFlags();
+        _CGUL_EXPORT String GetLegalString();
+        _CGUL_EXPORT UInt32 GetVersionMinor();
+        _CGUL_EXPORT UInt32 GetVersionMajor();
+        _CGUL_EXPORT UInt32 GetVersionRevision();
+        _CGUL_EXPORT UInt32 GetCompileFlags();
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

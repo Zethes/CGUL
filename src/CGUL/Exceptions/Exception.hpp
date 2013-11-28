@@ -1,14 +1,16 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Exception.hpp
  */
 
 #pragma once
-#include <Jatta/Config.h>
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
-namespace Jatta
+namespace CGUL
 {
     namespace ExceptionType
     {
@@ -37,8 +39,8 @@ namespace Jatta
 
         ~Exception() throw();
 
-        virtual Jatta::String GetString() const = 0;
-        virtual Jatta::String GetReason() const = 0;
+        virtual String GetString() const = 0;
+        virtual String GetReason() const = 0;
 
         virtual const char* what() const throw();
     protected:
@@ -46,4 +48,4 @@ namespace Jatta
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

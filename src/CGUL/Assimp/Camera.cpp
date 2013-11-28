@@ -1,51 +1,53 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file Camera.cpp
  */
 
-#include "Camera.h"
+#include "Camera.hpp"
 
-_JATTA_EXPORT Jatta::Assimp::Camera::Camera(aiCamera* camera)
+_CGUL_EXPORT CGUL::Assimp::Camera::Camera(aiCamera* camera)
 {
     this->camera = camera;
 }
 
-Jatta::String Jatta::Assimp::Camera::GetName()
+CGUL::String CGUL::Assimp::Camera::GetName()
 {
     return String(camera->mName.C_Str());
 }
 
-Jatta::Vector3 Jatta::Assimp::Camera::GetLookAt()
+CGUL::Vector3 CGUL::Assimp::Camera::GetLookAt()
 {
     return Vector3(camera->mLookAt.x, camera->mLookAt.y, camera->mLookAt.z);
 }
 
-Jatta::Vector3 Jatta::Assimp::Camera::GetPosition()
+CGUL::Vector3 CGUL::Assimp::Camera::GetPosition()
 {
     return Vector3(camera->mPosition.x, camera->mPosition.y, camera->mPosition.z);
 }
 
-Jatta::Vector3 Jatta::Assimp::Camera::GetUp()
+CGUL::Vector3 CGUL::Assimp::Camera::GetUp()
 {
     return Vector3(camera->mUp.x, camera->mUp.y, camera->mUp.z);
 }
 
-Jatta::Float32 Jatta::Assimp::Camera::GetAspectRatio()
+CGUL::Float32 CGUL::Assimp::Camera::GetAspectRatio()
 {
     return camera->mAspect;
 }
 
-Jatta::Float32 Jatta::Assimp::Camera::GetClipPlaneFar()
+CGUL::Float32 CGUL::Assimp::Camera::GetClipPlaneFar()
 {
     return camera->mClipPlaneFar;
 }
 
-Jatta::Float32 Jatta::Assimp::Camera::GetClipPlaneNear()
+CGUL::Float32 CGUL::Assimp::Camera::GetClipPlaneNear()
 {
     return camera->mClipPlaneNear;
 }
 
-Jatta::Float32 Jatta::Assimp::Camera::GetFieldOfView()
+CGUL::Float32 CGUL::Assimp::Camera::GetFieldOfView()
 {
     return camera->mHorizontalFOV;
 }

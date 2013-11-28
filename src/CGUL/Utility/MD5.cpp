@@ -1,9 +1,11 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file MD5.cpp
  */
 
-#include "Encryption.h"
+#include "Encryption.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
@@ -292,7 +294,7 @@ std::string hexdigest()
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-_JATTA_EXPORT Jatta::String Jatta::Encryption::MD5::Data(const char* data, unsigned int length)
+_CGUL_EXPORT CGUL::String CGUL::Encryption::MD5::Data(const char* data, unsigned int length)
 {
     init();
     update(data, length);
@@ -300,7 +302,7 @@ _JATTA_EXPORT Jatta::String Jatta::Encryption::MD5::Data(const char* data, unsig
 
     return hexdigest();
 }
-_JATTA_EXPORT Jatta::String Jatta::Encryption::MD5::String(Jatta::String in)
+_CGUL_EXPORT CGUL::String CGUL::Encryption::MD5::String(CGUL::String in)
 {
     return Data(in.GetData().c_str(), in.GetLength());
 }

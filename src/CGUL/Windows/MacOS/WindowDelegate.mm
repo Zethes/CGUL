@@ -1,20 +1,22 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file WindowDelegate.mm
  */
 
 #ifndef DOXYGEN
 
-#import "WindowDelegate.h"
-#import "Application.h"
-#include "../../Math/Vector4.h"
+#import "WindowDelegate.hpp"
+#import "Application.hpp"
+#include "../../Math/Vector4.hpp"
 
 // leaving this here for future reference:
 // http://stackoverflow.com/questions/4312338/how-to-use-the-object-property-of-nsnotificationcenter
 
 @implementation WindowDelegate : NSObject
 
-- (id)init: (Jatta::WindowStyle)style
+- (id)init: (CGUL::WindowStyle)style
 {
     // Initialize the base application and make sure it's not nil
     if ((self = [super init]))
@@ -131,7 +133,7 @@
 {
 }*/
 
-- (void) setTitle:(const Jatta::String&)title
+- (void) setTitle:(const CGUL::String&)title
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSString* str = [NSString stringWithCString:title.GetData().c_str() encoding:NSUTF8StringEncoding];
@@ -139,31 +141,31 @@
     [pool drain];
 }
 
-- (Jatta::String) getTitle
+- (CGUL::String) getTitle
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    Jatta::String ret([[window title] UTF8String]);
+    CGUL::String ret([[window title] UTF8String]);
     [pool drain];
     return ret;
 }
 
-- (void) setBackgroundColor: (const Jatta::Color&)color
+- (void) setBackgroundColor: (const CGUL::Color&)color
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [window setBackgroundColor: [NSColor colorWithCalibratedRed: color.r / 255.0 green: color.g / 255.0 blue: color.b / 255.0 alpha: 1.0]];
     [pool drain];
 }
 
-- (Jatta::Color) getBackgroundColor
+- (CGUL::Color) getBackgroundColor
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSColor* color = [window backgroundColor];
-    Jatta::Color ret([color redComponent] * 255, [color greenComponent] * 255, [color blueComponent] * 255, 255);
+    CGUL::Color ret([color redComponent] * 255, [color greenComponent] * 255, [color blueComponent] * 255, 255);
     [pool drain];
     return ret;
 }
 
-- (void) setWidth: (Jatta::UInt32)width
+- (void) setWidth: (CGUL::UInt32)width
 {
     NSRect frame = [window frame];
     frame.size.width = width;
@@ -173,14 +175,14 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (Jatta::UInt32) getWidth
+- (CGUL::UInt32) getWidth
 {
     //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
     NSRect rect = [[window contentView] frame];
     return rect.size.width;
 }
 
-- (void) setHeight: (Jatta::UInt32)height
+- (void) setHeight: (CGUL::UInt32)height
 {
     NSRect frame = [window frame];
     frame.size.width = [self getWidth];
@@ -190,14 +192,14 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (Jatta::UInt32) getHeight
+- (CGUL::UInt32) getHeight
 {
     //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
     NSRect rect = [[window contentView] frame];
     return rect.size.height;
 }
 
-- (void) setSize: (const Jatta::Vector2&)size // TODO: use something other than Vector2
+- (void) setSize: (const CGUL::Vector2&)size // TODO: use something other than Vector2
 {
     NSRect frame = [window frame];
     frame.size.width = size.x;
@@ -207,14 +209,14 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (Jatta::Vector2) getSize
+- (CGUL::Vector2) getSize
 {
     //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
     NSRect rect = [[window contentView] frame];
-    return Jatta::Vector2(rect.size.width, rect.size.height);
+    return CGUL::Vector2(rect.size.width, rect.size.height);
 }
 
-- (void) setResizable: (Jatta::Boolean)resizable
+- (void) setResizable: (CGUL::Boolean)resizable
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSUInteger styleMask = [window styleMask];
@@ -230,7 +232,7 @@
     [pool drain];
 }
 
-- (Jatta::Boolean) getResizable
+- (CGUL::Boolean) getResizable
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSUInteger styleMask = [window styleMask];
@@ -238,7 +240,7 @@
     return (styleMask & NSResizableWindowMask) > 0;
 }
 
-- (Jatta::Vector4) getFrameSize
+- (CGUL::Vector4) getFrameSize
 {
     // Define the size of the window
     NSRect frame = NSMakeRect(0, 0, 0, 0);
@@ -248,14 +250,14 @@
 
     NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
 
-    return Jatta::Vector4(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
+    return CGUL::Vector4(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
 }
 
-/*- (Jatta::Boolean) IsOpen2
+/*- (CGUL::Boolean) IsOpen2
 {
 }*/
 
-- (Jatta::Boolean) isFocused
+- (CGUL::Boolean) isFocused
 {
     return [window isKeyWindow];
 }

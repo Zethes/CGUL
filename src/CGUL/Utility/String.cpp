@@ -1,16 +1,18 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file String.cpp
  */
 
-#include "String.h"
-#include "Regex.h"
+#include "String.hpp"
+#include "Regex.hpp"
 #include "../Math/Math.hpp"
 #include <cstring>
 
-_JATTA_EXPORT Jatta::String Jatta::String::FromCodePoint(UInt32 codePoint)
+_CGUL_EXPORT CGUL::String CGUL::String::FromCodePoint(UInt32 codePoint)
 {
-    Jatta::String result;
+    CGUL::String result;
     if ((codePoint & 0xFC000000) > 0) // 27 - 31 bits (6 bytes)
     {
         result = "      ";
@@ -61,14 +63,14 @@ _JATTA_EXPORT Jatta::String Jatta::String::FromCodePoint(UInt32 codePoint)
 
 /**
  */
-_JATTA_EXPORT Jatta::String::String() : data()
+_CGUL_EXPORT CGUL::String::String() : data()
 {
     null = false;
 }
 
 /** @param copy The string to copy.
  */
-_JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
+_CGUL_EXPORT CGUL::String::String(const String& copy) : data(copy.data)
 {
     null = false;
 }
@@ -76,14 +78,14 @@ _JATTA_EXPORT Jatta::String::String(const String& copy) : data(copy.data)
 #ifdef CPP_HAS_MOVE_CONSTRUCTOR
 /** @param move The string to move.
  */
-_JATTA_EXPORT Jatta::String::String(String&& move) : data(std::move(move.data))
+_CGUL_EXPORT CGUL::String::String(String&& move) : data(std::move(move.data))
 {
     null = false;
 }
 #endif
 
-#ifdef JATTA_WINDOWS
-_JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
+#ifdef CGUL_WINDOWS
+_CGUL_EXPORT CGUL::String::String(const std::wstring& wideString)
 {
     _FromWideString(wideString);
     null = false;
@@ -92,7 +94,7 @@ _JATTA_EXPORT Jatta::String::String(const std::wstring& wideString)
 
 /** @param data A character pointer to a null-terminated string.
  */
-_JATTA_EXPORT Jatta::String::String(const char* data)
+_CGUL_EXPORT CGUL::String::String(const char* data)
 {
     if (data == NULL)
     {
@@ -108,7 +110,7 @@ _JATTA_EXPORT Jatta::String::String(const char* data)
 
 /** @param An std::string value.
  */
-_JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
+_CGUL_EXPORT CGUL::String::String(const std::string& data) : data(data)
 {
     null = false;
 }
@@ -116,7 +118,7 @@ _JATTA_EXPORT Jatta::String::String(const std::string& data) : data(data)
 /** @param operand The c string or null.
  *  @returns A reference to this object.
  */
-_JATTA_EXPORT Jatta::String& Jatta::String::operator=(const char* operand)
+_CGUL_EXPORT CGUL::String& CGUL::String::operator=(const char* operand)
 {
     if (operand == NULL)
     {
@@ -133,7 +135,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const char* operand)
 /** @param operand The other string.
  *  @returns A reference to this object.
  */
-_JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
+_CGUL_EXPORT CGUL::String& CGUL::String::operator=(const String& operand)
 {
     this->data = operand.data;
     this->null = operand.null;
@@ -142,14 +144,14 @@ _JATTA_EXPORT Jatta::String& Jatta::String::operator=(const String& operand)
 
 /**
  */
-_JATTA_EXPORT char& Jatta::String::operator[](Size operand)
+_CGUL_EXPORT char& CGUL::String::operator[](Size operand)
 {
     return data[operand];
 }
 
 /**
  */
-_JATTA_EXPORT const char Jatta::String::operator[](Size operand) const
+_CGUL_EXPORT const char CGUL::String::operator[](Size operand) const
 {
     return data[operand];
 }
@@ -157,7 +159,7 @@ _JATTA_EXPORT const char Jatta::String::operator[](Size operand) const
 /** @param operand The other string.
  *  @returns True if they're equal, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
+_CGUL_EXPORT bool CGUL::String::operator==(const String& operand) const
 {
     return (data == operand.data) && (null == operand.null);
 }
@@ -165,7 +167,7 @@ _JATTA_EXPORT bool Jatta::String::operator==(const String& operand) const
 /** @param operand The other string.
  *  @returns False if they're equal, true otherwise.
  */
-_JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
+_CGUL_EXPORT bool CGUL::String::operator!=(const String& operand) const
 {
     return (data != operand.data) || (null != operand.null);
 }
@@ -173,21 +175,21 @@ _JATTA_EXPORT bool Jatta::String::operator!=(const String& operand) const
 /** @param operand The other string.
  *  @returns True if this string is lexicographically less than the other, false otherwise.
  */
-_JATTA_EXPORT bool Jatta::String::operator<(const String& operand) const
+_CGUL_EXPORT bool CGUL::String::operator<(const String& operand) const
 {
     return this->data < operand.data;
 }
 
 /** @returns Number of bytes.
  */
-_JATTA_EXPORT Jatta::Size Jatta::String::GetSize() const
+_CGUL_EXPORT CGUL::Size CGUL::String::GetSize() const
 {
     return data.length();
 }
 
 /** @returns Number of code points.
  */
-_JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
+_CGUL_EXPORT CGUL::Size CGUL::String::GetLength() const
 {
     Size len = 0;
     const char* str = this->data.c_str();
@@ -204,7 +206,7 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetLength() const
 /** @param position The index of the character.
  *  @returns The character in the string.
  */
-_JATTA_EXPORT char Jatta::String::GetChar(Size position) const
+_CGUL_EXPORT char CGUL::String::GetChar(Size position) const
 {
     return (char)data.at(position);
 }
@@ -212,7 +214,7 @@ _JATTA_EXPORT char Jatta::String::GetChar(Size position) const
 /** @param position The index of the byte.
  *  @returns The byte in the string.
  */
-_JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
+_CGUL_EXPORT CGUL::Byte CGUL::String::GetByte(Size position) const
 {
     return (Byte)data.at(position);
 }
@@ -222,9 +224,9 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
  *  @details
  *  @b Example
  *  @code
- *  #include <Jatta.h>
+ *  #include <CGUL.hpp>
  *  #include <iostream>
- *  using namespace Jatta;
+ *  using namespace CGUL;
  *
  *  int main()
  *  {
@@ -248,7 +250,7 @@ _JATTA_EXPORT Jatta::Byte Jatta::String::GetByte(Size position) const
  *  }
  *  @endcode
  */
-_JATTA_EXPORT Jatta::Size Jatta::String::GetCodePoint(Size start, UInt32* codePoint) const
+_CGUL_EXPORT CGUL::Size CGUL::String::GetCodePoint(Size start, UInt32* codePoint) const
 {
     if (codePoint)
     {
@@ -325,28 +327,28 @@ _JATTA_EXPORT Jatta::Size Jatta::String::GetCodePoint(Size start, UInt32* codePo
 
 /** @returns True if the string is empty, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::String::IsEmpty() const
+_CGUL_EXPORT CGUL::Boolean CGUL::String::IsEmpty() const
 {
     return data.empty();
 }
 
 /** @returns True if the string is null, false otherwise.
  */
-_JATTA_EXPORT Jatta::Boolean Jatta::String::IsNull() const
+_CGUL_EXPORT CGUL::Boolean CGUL::String::IsNull() const
 {
     return null;
 }
 
 /** @returns The std::string variable.
  */
-_JATTA_EXPORT std::string Jatta::String::GetData() const
+_CGUL_EXPORT std::string CGUL::String::GetData() const
 {
     return data;
 }
 
 /** @returns A constant character pointer of the data.
  */
-_JATTA_EXPORT const char* Jatta::String::GetCString() const
+_CGUL_EXPORT const char* CGUL::String::GetCString() const
 {
     if (null)
     {
@@ -355,7 +357,7 @@ _JATTA_EXPORT const char* Jatta::String::GetCString() const
     return data.c_str();
 }
 
-_JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
+_CGUL_EXPORT CGUL::UInt32 CGUL::String::Count(const String& string) const
 {
     UInt32 count = 0;
     Size offset = 0;
@@ -371,9 +373,9 @@ _JATTA_EXPORT Jatta::UInt32 Jatta::String::Count(const String& string) const
  *  @param offset An offset to start looking for the string.
  *  @returns The index of the first character of the string.
  */
-_JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const String& string, Size offset) const
+_CGUL_EXPORT CGUL::Size CGUL::String::FindFirstOf(const String& string, Size offset) const
 {
-    Jatta::Size result = offset;
+    CGUL::Size result = offset;
     for (std::string::const_iterator i = data.begin() + offset; i != data.end(); ++i)
     {
         std::string::const_iterator k = i;
@@ -395,8 +397,8 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const String& string, Size 
     return none;
 }
 
-#ifdef Jatta_USE_REGEX
-_JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Size offset) const
+#ifdef CGUL_USE_REGEX
+_CGUL_EXPORT CGUL::Size CGUL::String::FindFirstOf(const Regex& expression, Size offset) const
 {
     // TODO: this
     return none;
@@ -407,9 +409,9 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindFirstOf(const Regex& expression, Si
  *  @param offset A backwards offset to start looking for the string.
  *  @returns The index of the first character of the string.
  */
-_JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const String& string, Size offset) const
+_CGUL_EXPORT CGUL::Size CGUL::String::FindLastOf(const String& string, Size offset) const
 {
-    Jatta::Size result = offset;
+    CGUL::Size result = offset;
     for (std::string::const_reverse_iterator i = data.rbegin() + offset; i != data.rend(); ++i)
     {
         std::string::const_reverse_iterator k = i;
@@ -431,8 +433,8 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const String& string, Size o
     return none;
 }
 
-#ifdef Jatta_USE_REGEX
-_JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Size offset) const
+#ifdef CGUL_USE_REGEX
+_CGUL_EXPORT CGUL::Size CGUL::String::FindLastOf(const Regex& expression, Size offset) const
 {
     // TODO: this
     return none;
@@ -445,9 +447,9 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *  @details This method does not support backwards counting (supplying a negative start) like php's substr() and others.
  *  @n@n@b Example
  *  @code
- *  #include <Jatta.h>
+ *  #include <CGUL.hpp>
  *  #include <iostream>
- *  using namespace Jatta;
+ *  using namespace CGUL;
  *
  *  // Note: this example only works in terminals with unicode support
  *  int main()
@@ -465,11 +467,11 @@ _JATTA_EXPORT Jatta::Size Jatta::String::FindLastOf(const Regex& expression, Siz
  *  }
  *  @endcode
  */
-_JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, bool bytes) const
+_CGUL_EXPORT CGUL::String CGUL::String::SubString(Size start, Size count, bool bytes) const
 {
     if (bytes)
     {
-        return Jatta::String(data.substr(start, count));
+        return CGUL::String(data.substr(start, count));
     }
     else
     {
@@ -492,14 +494,14 @@ _JATTA_EXPORT Jatta::String Jatta::String::SubString(Size start, Size count, boo
                 size += codePointSize;
             }
         }
-        return Jatta::String(data.substr(offset, size));
+        return CGUL::String(data.substr(offset, size));
     }
 }
 
 /** @param str The c string.
  *  @returns A reference to this object.
  */
-_JATTA_EXPORT Jatta::String& Jatta::String::Set(const char* str)
+_CGUL_EXPORT CGUL::String& CGUL::String::Set(const char* str)
 {
     if (str == NULL)
     {
@@ -516,7 +518,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::Set(const char* str)
 /** @param str The c string.
  *  @returns A reference to this object.
  */
-_JATTA_EXPORT Jatta::String& Jatta::String::Set(const String& str)
+_CGUL_EXPORT CGUL::String& CGUL::String::Set(const String& str)
 {
     this->data = str.data;
     this->null = str.null;
@@ -526,9 +528,9 @@ _JATTA_EXPORT Jatta::String& Jatta::String::Set(const String& str)
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
- *  #include <Jatta.h>
+ *  #include <CGUL.hpp>
  *  #include <iostream>
- *  using namespace Jatta;
+ *  using namespace CGUL;
  *
  *  int main()
  *  {
@@ -542,7 +544,7 @@ _JATTA_EXPORT Jatta::String& Jatta::String::Set(const String& str)
  *  }
  *  @endcode
  */
-_JATTA_EXPORT void Jatta::String::Trim()
+_CGUL_EXPORT void CGUL::String::Trim()
 {
     unsigned int trimStart = 0;
     for (std::string::iterator i = data.begin(); i != data.end() && isspace(*i); ++i, ++trimStart);
@@ -554,9 +556,9 @@ _JATTA_EXPORT void Jatta::String::Trim()
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
- *  #include <Jatta.h>
+ *  #include <CGUL.hpp>
  *  #include <iostream>
- *  using namespace Jatta;
+ *  using namespace CGUL;
  *
  *  int main()
  *  {
@@ -570,7 +572,7 @@ _JATTA_EXPORT void Jatta::String::Trim()
  *  }
  *  @endcode
  */
-_JATTA_EXPORT void Jatta::String::TrimStart()
+_CGUL_EXPORT void CGUL::String::TrimStart()
 {
     unsigned int trimStart = 0;
     for (std::string::iterator i = data.begin(); i != data.end() && isspace(*i); ++i, ++trimStart);
@@ -580,9 +582,9 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  *  @n@n@b Example
  *  @code
- *  #include <Jatta.h>
+ *  #include <CGUL.hpp>
  *  #include <iostream>
- *  using namespace Jatta;
+ *  using namespace CGUL;
  *
  *  int main()
  *  {
@@ -596,16 +598,16 @@ _JATTA_EXPORT void Jatta::String::TrimStart()
  *  }
  *  @endcode
  */
-_JATTA_EXPORT void Jatta::String::TrimEnd()
+_CGUL_EXPORT void CGUL::String::TrimEnd()
 {
     unsigned int trimEnd = 0;
     for (std::string::reverse_iterator i = data.rbegin(); i != data.rend() && isspace(*i); ++i, ++trimEnd);
     data = data.substr(0, data.length() - trimEnd);
 }
 
-_JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& delimiter, Size limit) const
+_CGUL_EXPORT std::vector<CGUL::String> CGUL::String::Explode(const String& delimiter, Size limit) const
 {
-    std::vector<Jatta::String> result;
+    std::vector<CGUL::String> result;
     Size find = 0;
     Size from = 0;
     do
@@ -625,7 +627,7 @@ _JATTA_EXPORT std::vector<Jatta::String> Jatta::String::Explode(const String& de
 
 /**
  */
-_JATTA_EXPORT void Jatta::String::ToLower()
+_CGUL_EXPORT void CGUL::String::ToLower()
 {
     for (std::string::iterator it = data.begin(); it != data.end(); ++it)
     {
@@ -635,7 +637,7 @@ _JATTA_EXPORT void Jatta::String::ToLower()
 
 /**
  */
-_JATTA_EXPORT void Jatta::String::ToUpper()
+_CGUL_EXPORT void CGUL::String::ToUpper()
 {
     for (std::string::iterator it = data.begin(); it != data.end(); ++it)
     {
@@ -645,14 +647,14 @@ _JATTA_EXPORT void Jatta::String::ToUpper()
 
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  */
-_JATTA_EXPORT void Jatta::String::RemoveWhitespace()
+_CGUL_EXPORT void CGUL::String::RemoveWhitespace()
 {
     data.erase(std::remove_if(data.begin(), data.end(), (int(*)(int))isspace), data.end());
 }
 
 /**
  */
-_JATTA_EXPORT void Jatta::String::SetNullToEmpty()
+_CGUL_EXPORT void CGUL::String::SetNullToEmpty()
 {
     if (IsNull())
     {
@@ -662,7 +664,7 @@ _JATTA_EXPORT void Jatta::String::SetNullToEmpty()
 
 /**
  */
-_JATTA_EXPORT void Jatta::String::SetEmptyToNull()
+_CGUL_EXPORT void CGUL::String::SetEmptyToNull()
 {
     if (IsEmpty())
     {
@@ -670,8 +672,8 @@ _JATTA_EXPORT void Jatta::String::SetEmptyToNull()
     }
 }
 
-#ifdef JATTA_WINDOWS
-_JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
+#ifdef CGUL_WINDOWS
+_CGUL_EXPORT std::wstring CGUL::String::_ToWideString() const
 {
     int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, data.c_str(), -1, 0, 0);
     wchar_t* buffer = new wchar_t[size];
@@ -682,7 +684,7 @@ _JATTA_EXPORT std::wstring Jatta::String::_ToWideString() const
     return wideString;
 }
 
-_JATTA_EXPORT void Jatta::String::_FromWideString(const std::wstring& wideString)
+_CGUL_EXPORT void CGUL::String::_FromWideString(const std::wstring& wideString)
 {
     int size = WideCharToMultiByte(CP_UTF8, 0, wideString.c_str(), -1, 0, 0, NULL, NULL);
     char* buffer = new char[size];

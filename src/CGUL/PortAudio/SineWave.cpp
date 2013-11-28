@@ -1,15 +1,17 @@
-/* Jatta - General Utility Library
- * Copyright (C) 2012-2013, Joshua Brookover and Amber Thrall
- * All rights reserved.
+// C++ General Utility Library (mailto:cgul@zethes.com)
+// Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
+// All rights reserved.
+
+/** @file SineWave.cpp
  */
 
-#include "SineWave.h"
+#include "SineWave.hpp"
 
-_JATTA_EXPORT Jatta::PortAudio::SineWave::SineWave(Device device) : Stream()
+_CGUL_EXPORT CGUL::PortAudio::SineWave::SineWave(Device device) : Stream()
 {
     for (unsigned int i = 0; i < 200; i++)
     {
-        sine[i] = (float)Jatta::Math::Sin(((double)i/200.0)*Jatta::Math::pi * 2.0);
+        sine[i] = (float)CGUL::Math::Sin(((double)i/200.0)*CGUL::Math::pi * 2.0);
     }
     position = 0;
 
@@ -18,7 +20,7 @@ _JATTA_EXPORT Jatta::PortAudio::SineWave::SineWave(Device device) : Stream()
     OpenStream(device);
 }
 
-_JATTA_EXPORT bool Jatta::PortAudio::SineWave::Update(StreamData* data)
+_CGUL_EXPORT bool CGUL::PortAudio::SineWave::Update(StreamData* data)
 {
     data->Channels[0] = sine[position];
     data->Channels[1] = sine[position];
