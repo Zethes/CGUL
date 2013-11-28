@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <Jatta.h>
+#include <CGUL.hpp>
 using namespace std;
-using namespace Jatta;
+using namespace CGUL;
 
 int main()
 {

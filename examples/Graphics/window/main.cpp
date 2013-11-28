@@ -1,12 +1,12 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 
 #include <iostream>
 
 int main()
 {
     WindowStyle style;
-    style.title = U8("Jatta Window");
+    style.title = U8("CGUL Window");
     style.width = 640;
     style.height = 480;
     style.backgroundColor = Colors::red;
@@ -19,7 +19,7 @@ int main()
     std::cout << window.GetStyle() << std::endl;
     std::cout << std::endl;
 
-    Vector4 frameExtents = window.GetFrameSize();
+    URect32 frameExtents = window.GetFrameSize();
     std::cout << "== Frame Extents ==" << std::endl;
     std::cout << "Left Border:      " << frameExtents.x << std::endl;
     std::cout << "Top Border:       " << frameExtents.y << std::endl;
@@ -46,6 +46,6 @@ int main()
             hue -= 360;
         }
 
-        Jatta::Timer::Sleep(1);
+        CGUL::Timer::Sleep(1);
     }
 }

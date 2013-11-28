@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 2.8.7)
 cmake_policy(VERSION 2.8.7)
 project(Window CXX)
 
-find_package(Jatta 0.1.0 REQUIRED)
+find_package(CGUL 0.1.0 REQUIRED)
 
-include_directories(${Jatta_INCLUDE_DIRS})
+include_directories(${CGUL_INCLUDE_DIRS})
 add_executable(window MACOSX_BUNDLE main.cpp)
-target_link_libraries(window ${Jatta_LIBRARIES})
-jatta_bake_rpath(window "$ORIGIN")
+target_link_libraries(window ${CGUL_LIBRARIES})
+cgul_bake_rpath(window "$ORIGIN")
 
 install(TARGETS window DESTINATION .)
 set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}")

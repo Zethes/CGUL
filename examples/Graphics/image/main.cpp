@@ -1,5 +1,5 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 
 #include <GL/glew.h>
 
@@ -30,14 +30,14 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        String log;
         GL::GetShaderInfoLog(vertexShader, &log);
         throw FatalException(U8("Failed to compile shader:\n") + log);
     }
     GL::GetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        String log;
         GL::GetShaderInfoLog(fragmentShader, &log);
         throw FatalException(U8("Failed to compile shader:\n") + log);
     }
@@ -56,7 +56,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetProgramiv(program, GL_LINK_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        String log;
         GL::GetProgramInfoLog(program, &log);
         throw FatalException(U8("Failed to link program:\n") + log);
     }
@@ -64,7 +64,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetProgramiv(program, GL_VALIDATE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        String log;
         GL::GetProgramInfoLog(program, &log);
         throw FatalException(U8("Failed to validate program:\n") + log);
     }
@@ -160,7 +160,7 @@ int main()
             context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
             GL::UseProgram(program);
-            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho(0, 1, 1, 0).GetData());
+            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho2D(0, 1, 1, 0).GetData());
             GL::UniformMatrix4fv(GL::GetUniformLocation(program, "modelMatrix"), 1, false, Matrix::Identity().GetData());
             GL::Uniform1i(GL::GetUniformLocation(program, "texture"), 0);
             GL::ActiveTexture(GL_TEXTURE0);

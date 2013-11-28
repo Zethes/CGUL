@@ -1,5 +1,5 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 #include <iostream>
 
 int main(int argc, char* argv[])
@@ -79,13 +79,13 @@ int main(int argc, char* argv[])
         std::cout << "  -a, --all      output all matches, one line at a time" << std::endl;
         std::cout << "  -o, --oneline  modifies output to all be on one line" << std::endl;
         std::cout << std::endl;
-        std::cout << "Part of the Jatta (General Utility Library) examples." << std::endl;
+        std::cout << "Part of the CGUL (C++ General Utility Library) examples." << std::endl;
         std::cout << "See http://jatta.zethes.com/ for acknowledgements and licensing." << std::endl;
         return -1;
     }
     if (flags & VERSION)
     {
-        std::cout << "Regex 1.0" << " using Jatta-" << GetJattaVersion() << "-" << GetJattaCompilerName() << std::endl;
+        std::cout << "Regex 1.0" << " using CGUL-" << GetCGULVersion() << "-" << GetCGULCompilerName() << std::endl;
         return 0;
     }
 

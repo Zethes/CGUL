@@ -1,5 +1,5 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 #include <iostream>
 
 int main(int argc, char* argv[])
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     std::cout << "-----------------------------------------------------------------" << std::endl;
     std::cout << std::endl;
 
-    std::cout << Jatta::JSON::Parse(object.ToString()).ToString() << std::endl;
+    std::cout << JSON::Parse(object.ToString()).ToString() << std::endl;
 
     return 0;
 }
