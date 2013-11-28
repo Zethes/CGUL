@@ -1,0 +1,8 @@
+# Image files
+*.ico
+*.png
+*.jpg
+*.bmp
+
+# Temporary include file
+include/
