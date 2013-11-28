@@ -14,11 +14,11 @@ set(CGUL_SOURCES
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Color.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Color_Implement.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Colors.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Image.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ImageFormats.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Mipmap.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Colors.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Image.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ImageFormats.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Mipmap.hpp
     PARENT_SCOPE
 )

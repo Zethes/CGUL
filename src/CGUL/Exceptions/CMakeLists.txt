@@ -15,11 +15,11 @@ set(CGUL_SOURCES
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Exception.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/FatalException.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/FileException.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ImageException.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/NetworkException.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGLException.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exception.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FatalException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FileException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ImageException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/NetworkException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OpenGLException.hpp
     PARENT_SCOPE
 )

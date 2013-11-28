@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include <CGUL/Config.h>
+#include <CGUL/Config.hpp>
 #include "WindowStyle.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector4.hpp"

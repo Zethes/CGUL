@@ -10,7 +10,7 @@ if (PNG_FOUND)
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-        ${CMAKE_CURRENT_SOURCE_DIR}/PNG.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/PNG.hpp
     )
 endif()
 
@@ -22,7 +22,7 @@ if (JPEG_FOUND)
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.hpp
     )
 endif()
 
@@ -34,6 +34,6 @@ set(CGUL_SOURCES
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/BMP.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/BMP.hpp
     PARENT_SCOPE
 )

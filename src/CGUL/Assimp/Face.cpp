@@ -5,7 +5,7 @@
 /** @file Face.cpp
  */
 
-#include "Face.h"
+#include "Face.hpp"
 
 _CGUL_EXPORT CGUL::Assimp::Face::Face()
 {

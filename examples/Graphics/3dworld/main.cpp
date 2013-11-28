@@ -1,5 +1,5 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 
 #include <GL/glew.h>
 
@@ -30,14 +30,14 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        CGUL::String log;
         GL::GetShaderInfoLog(vertexShader, &log);
         throw FatalException(U8("Failed to compile shader:\n") + log);
     }
     GL::GetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        CGUL::String log;
         GL::GetShaderInfoLog(fragmentShader, &log);
         throw FatalException(U8("Failed to compile shader:\n") + log);
     }
@@ -56,7 +56,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetProgramiv(program, GL_LINK_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        CGUL::String log;
         GL::GetProgramInfoLog(program, &log);
         throw FatalException(U8("Failed to link program:\n") + log);
     }
@@ -64,7 +64,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::GetProgramiv(program, GL_VALIDATE_STATUS, &status);
     if (status != GL_TRUE)
     {
-        Jatta::String log;
+        CGUL::String log;
         GL::GetProgramInfoLog(program, &log);
         throw FatalException(U8("Failed to validate program:\n") + log);
     }
@@ -127,7 +127,7 @@ int main()
         Image* image = loader.Load("resources/jattabox.png");
 
         WindowStyle style;
-        style.title = U8("Jatta - 3D World");
+        style.title = U8("CGUL - 3D World");
         style.width = 640;
         style.height = 480;
         style.backgroundColor = Colors::black;

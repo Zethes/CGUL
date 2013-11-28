@@ -116,7 +116,7 @@ endif()
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_DEFINITIONS})
 
 # Look for libraries
-set(CGUL_REFRESH_CAPABILITIES OFF CACHE BOOL "Forces CGUL to refresh c++ capabilities in Config.h")
+set(CGUL_REFRESH_CAPABILITIES OFF CACHE BOOL "Forces CGUL to refresh c++ capabilities in Config.hpp")
 mark_as_advanced(CGUL_REFRESH_CAPABILITIES)
 include(cmake/Libraries/Libraries.cmake)
 

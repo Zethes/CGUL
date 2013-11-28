@@ -5,7 +5,7 @@
 /** @file UVTransform.cpp
  */
 
-#include "UVTransform.h"
+#include "UVTransform.hpp"
 
 _CGUL_EXPORT CGUL::Assimp::UVTransform::UVTransform(::aiUVTransform* uvTransform)
 {

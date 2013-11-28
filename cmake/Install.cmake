@@ -167,8 +167,8 @@ foreach(FILE ${CGUL_INSTALL})
 
 endforeach()
 
-# Install Config.h
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/CGUL/)
+# Install Config.hpp
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp DESTINATION ${CMAKE_INSTALL_PREFIX}/include/CGUL/)
 
 # Install license
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION ${CMAKE_INSTALL_PREFIX})

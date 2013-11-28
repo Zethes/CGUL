@@ -4,7 +4,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Config/Config.hpp.in ${CMAKE_CURRENT_
 
 # Include the source tree
 add_subdirectory(CGUL)
-set(CGUL_INSTALL ${CGUL_INSTALL} ${CMAKE_CURRENT_SOURCE_DIR}/CGUL.h)
+set(CGUL_INSTALL ${CGUL_INSTALL} ${CMAKE_CURRENT_SOURCE_DIR}/CGUL.hpp)
 
 # Determine dependencies
 include(dependencies.cmake)
@@ -26,7 +26,7 @@ if(APPLE)
 
 endif()
 add_definitions(-DCGUL_BUILD -DCGUL_INCLUDES ${CMAKE_REQUIRED_FLAGS})
-add_library(CGUL ${CGUL_LIBRARY_TYPE} ${CGUL_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.h)
+add_library(CGUL ${CGUL_LIBRARY_TYPE} ${CGUL_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp)
 
 set_property(TARGET CGUL PROPERTY OUTPUT_NAME "${CGUL_OUTPUT_NAME}")
 set_property(TARGET CGUL PROPERTY ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR}")

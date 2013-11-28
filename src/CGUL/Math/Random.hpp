@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#include <CGUL/Config.h>
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "../External/Defines.hpp"
 
 namespace CGUL
 {
@@ -47,4 +47,4 @@ namespace CGUL
     };
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"

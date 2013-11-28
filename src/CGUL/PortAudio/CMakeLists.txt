@@ -21,14 +21,14 @@ set(CGUL_SOURCES
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Device.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/HostApi.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/HostError.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/InputStream.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/OutputStream.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/PortAudio.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Stream.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/StreamData.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/StreamInfo.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Device.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HostApi.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HostError.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/InputStream.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OutputStream.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PortAudio.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Stream.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StreamData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StreamInfo.hpp
     PARENT_SCOPE
 )

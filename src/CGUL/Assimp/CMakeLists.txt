@@ -33,32 +33,32 @@ set(CGUL_SOURCES
 
 set(CGUL_INSTALL
     ${CGUL_INSTALL}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Animation.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/AnimationStates.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Assimp.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Bone.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Camera.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ExportBlob.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ExportFormatDesc.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Exporter.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Face.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Importer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Light.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/LightTypes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Material.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialEnums.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialProperty.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Mesh.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/MeshAnimation.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/MeshKey.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Node.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/NodeAnimation.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/QuatKey.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Scene.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/SceneFlags.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/UVTransform.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/VectorKey.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/VertexWeight.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Animation.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AnimationStates.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Assimp.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Bone.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Camera.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportBlob.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportFormatDesc.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exporter.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Face.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Importer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Light.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LightTypes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Material.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialEnums.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MaterialProperty.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Mesh.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MeshAnimation.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MeshKey.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Node.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/NodeAnimation.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/QuatKey.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scene.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SceneFlags.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Texture.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UVTransform.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VectorKey.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/VertexWeight.hpp
     PARENT_SCOPE
 )

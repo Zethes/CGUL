@@ -6,10 +6,10 @@
  */
 
 #pragma once
-#include <CGUL/Config.h>
-#include "Assimp.h"
-#include "../Utility/String.h"
-#include "../External/Defines.h"
+#include <CGUL/Config.hpp>
+#include "Assimp.hpp"
+#include "../Utility/String.hpp"
+#include "../External/Defines.hpp"
 
 namespace CGUL
 {
@@ -31,4 +31,4 @@ namespace CGUL
     }
 }
 
-#include "../External/Undefines.h"
+#include "../External/Undefines.hpp"
