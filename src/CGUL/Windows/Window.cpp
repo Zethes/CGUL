@@ -382,9 +382,9 @@ _CGUL_EXPORT void CGUL::Window::HandleMessages()
     }
 
 #   ifdef CGUL_LINUX
-    ::Window root, child;
-    int rootX, rootY, winX, winY;
-    unsigned int mask;
+    //::Window root, child;
+    //int rootX, rootY, winX, winY;
+    //unsigned int mask;
 
     /*XQueryPointer(display, handle, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
     GetInput()->mousePos.x = winX;

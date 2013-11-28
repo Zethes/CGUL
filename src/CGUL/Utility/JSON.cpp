@@ -474,7 +474,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseNumber(String str)
     float place = 1;
 
     // Start with the left side (> 0)
-    for (SInt32 i = splitLoc - 1; i >= 0; i--)
+    for (UInt32 i = splitLoc - 1; i >= 0; i--)
     {
         if (str[i] == JSON::Grammar::Numbers::MINUS && i == 0)
         {
@@ -531,20 +531,23 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseNumber(String str)
         float notationAmount = 0;
         bool negativeNotate = true;
         place = 1;
-        for (SInt32 i = str.GetLength() - 1; i >= 0 && i > expLoc; i--)
+        if (!str.IsEmpty())
         {
-            if (str[i] >= '0' && str[i] <= '9')
+            for (UInt32 i = str.GetLength() - 1; i >= 0 && i > expLoc; i--)
             {
-                notationAmount += (str[i] - '0') * place;
-                place *= 10;
-            }
-            else if (i == expLoc+1 && str[i] == Grammar::Numbers::MINUS || str[i] == Grammar::Numbers::PLUS)
-            {
-                negativeNotate = (str[i] == Grammar::Numbers::MINUS);
-            }
-            else
-            {
-                //ERROR unknown Char
+                if (str[i] >= '0' && str[i] <= '9')
+                {
+                    notationAmount += (str[i] - '0') * place;
+                    place *= 10;
+                }
+                else if ((i == expLoc + 1 && str[i] == Grammar::Numbers::MINUS) || str[i] == Grammar::Numbers::PLUS)
+                {
+                    negativeNotate = (str[i] == Grammar::Numbers::MINUS);
+                }
+                else
+                {
+                    //ERROR unknown Char
+                }
             }
         }
         place = 1;
@@ -590,7 +593,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseString(String str)
         i++;
     }
 
-    for (i; i < str.GetLength(); i++)
+    for (; i < str.GetLength(); i++)
     {
         if (str[i] == Grammar::Structural::STRING_DELIMITOR)
         {
@@ -655,7 +658,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseString(String str)
 
                     UInt32 charCode = 0;
                     UInt32 place = 1;
-                    for (SInt32 j = i + 4; j >= i + 1; j--)
+                    for (UInt32 j = i + 4; j >= i + 1; j--)
                     {
                         if (copy[j] >= '0' && copy[j] <= '9')
                         {
