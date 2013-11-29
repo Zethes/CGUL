@@ -19,11 +19,15 @@ void CGUL::Memory::FreeBulk(T* data)
 
 _CGUL_INLINE_IMPLEMENT void CGUL::Memory::ZeroData(void* data, Size count)
 {
-    //memset(data, 0, count);
+    // Note the best implementation(?), but will do for now
+    for (Size i = 0; i < count; i++)
+    {
+        *((char*)data + i) = 0;
+    }
 }
 
 template< typename T >
 void CGUL::Memory::ZeroArray(T* data, Size count)
 {
-    //memset(data, 0, sizeof(T) * count);
+    ZeroData(data, sizeof(T) * count);
 }
