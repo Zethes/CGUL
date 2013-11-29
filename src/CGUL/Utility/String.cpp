@@ -10,6 +10,8 @@
 #include "../Math/Math.hpp"
 #include <cstring>
 
+char CGUL::String::internalBuffer[2048];
+
 _CGUL_EXPORT CGUL::String CGUL::String::FromCodePoint(UInt32 codePoint)
 {
     CGUL::String result;
@@ -110,7 +112,8 @@ _CGUL_EXPORT CGUL::String::String(const char* data)
 
 /** @param An std::string value.
  */
-_CGUL_EXPORT CGUL::String::String(const std::string& data) : data(data)
+_CGUL_EXPORT CGUL::String::String(const std::string& data) :
+    data(data)
 {
     null = false;
 }
@@ -523,6 +526,35 @@ _CGUL_EXPORT CGUL::String& CGUL::String::Set(const String& str)
     this->data = str.data;
     this->null = str.null;
     return *this;
+}
+
+/** @param str Printf-like string.
+ *  @param ... Values.
+ *  @returns A reference to this object.
+ */
+_CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const String& str, ...)
+{
+    va_list argptr;
+    va_start(argptr, str);
+    int length = vsnprintf(NULL, 0, str.GetCString(), argptr);
+    if (length < 0)
+    {
+        throw std::runtime_error("Invalid string format.");
+    }
+    length += 1; // One for null terminator
+    char* buffer = internalBuffer;
+    if (length > sizeof(internalBuffer))
+    {
+        buffer = new char[length];
+    }
+    vsnprintf(buffer, length, str.GetCString(), argptr);
+    data = buffer;
+    if (buffer != internalBuffer)
+    {
+        delete[] buffer;
+    }
+    va_end(argptr);
+    null = false;
 }
 
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r

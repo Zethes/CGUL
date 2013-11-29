@@ -31,6 +31,10 @@ namespace CGUL
      */
     class String
     {
+        /** @brief A buffer for quick operations of strings under 2048 characters.
+         */
+        static char internalBuffer[2048];
+
         /** @brief Internal string object to manage the data.
          */
         std::string data;
@@ -147,6 +151,9 @@ namespace CGUL
         _CGUL_EXPORT String& Set(const char* str);
         //! @brief Sets the value of the string given another string.
         _CGUL_EXPORT String& Set(const String& str);
+
+        //! @brief Sets to a printf like format.
+        _CGUL_EXPORT String& SetFormat(const String& str, ...);
 
         //! @brief Trims whitespace at the beginning and end of the string.
         _CGUL_EXPORT void Trim();
