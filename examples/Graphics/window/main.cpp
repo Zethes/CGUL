@@ -7,8 +7,7 @@ int main()
 {
     WindowStyle style;
     style.title = U8("CGUL Window");
-    style.width = 640;
-    style.height = 480;
+    style.size = UCoord32(640, 480);
     style.backgroundColor = Colors::red;
     style.resizable = false;
 

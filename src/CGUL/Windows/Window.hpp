@@ -130,6 +130,10 @@ namespace CGUL
         _CGUL_EXPORT void SetSize(const UCoord32& size) const;
         // @brief Gets the size of the window, excluding the border.
         _CGUL_EXPORT UCoord32 GetSize() const;
+        // @brief Sets the position of the window on the screen.
+        _CGUL_EXPORT void SetPosition(const SCoord32& position);
+        // @brief Gets the position of the window on the screen.
+        _CGUL_EXPORT SCoord32 GetPosition() const;
 
         // @brief Sets whether the window is resizable or not.
         _CGUL_EXPORT void SetResizable(Boolean resizable);
@@ -143,6 +147,11 @@ namespace CGUL
         _CGUL_EXPORT Boolean IsOpen() const;
         // @brief Checks if the window currently has focus.
         _CGUL_EXPORT Boolean IsFocused() const;
+
+        // @brief Sets the mouse position relative to the window.
+        _CGUL_EXPORT void SetMousePosition(SCoord32 mousePosition);
+        // @brief Sets if the mouse is visible in the window or not.
+        _CGUL_EXPORT void SetMouseShow(bool show);
 
         _CGUL_EXPORT virtual void OnKeyPress(UInt32 key);
         _CGUL_EXPORT virtual void OnKeyRelease(UInt32 key);

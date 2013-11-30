@@ -19,21 +19,35 @@ namespace CGUL
     {
         String title;
         Color backgroundColor;
-        UInt32 width;
-        UInt32 height;
+        UCoord32 size;
         Boolean resizable;
+        Boolean centerWindow;
+        SCoord32 position;
 
         _CGUL_EXPORT WindowStyle();
         _CGUL_EXPORT WindowStyle(const WindowStyle& style);
-        _CGUL_EXPORT WindowStyle(const std::string& title, Color backgroundColor, UInt32 width, UInt32 height, Boolean resizable);
+        _CGUL_EXPORT WindowStyle(const std::string& title,
+                                 Color backgroundColor,
+                                 UCoord32 size,
+                                 Boolean resizable,
+                                 Boolean centerWindow,
+                                 SCoord32 position);
 
         friend std::ostream& operator<<(std::ostream& stream, const WindowStyle& style)
         {
             stream << "Title:            " << style.title << std::endl;
             stream << "Background Color: " << style.backgroundColor << std::endl;
-            stream << "Width:            " << style.width << std::endl;
-            stream << "Height:           " << style.height << std::endl;
-            stream << "Resizable:        " << style.resizable;
+            stream << "Size:             " << style.size << std::endl;
+            stream << "Resizable:        " << style.resizable << std::endl;;
+            stream << "Window Centered:  " << (style.centerWindow ? "true" : "false") << std::endl;
+            if (style.centerWindow)
+            {
+                stream << "Offset:           " << style.position;
+            }
+            else
+            {
+                stream << "Position:         " << style.position;
+            }
             return stream;
         }
     };

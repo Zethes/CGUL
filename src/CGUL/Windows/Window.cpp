@@ -6,6 +6,7 @@
  */
 
 #include "Window.hpp"
+#include "../Utility/Memory.hpp"
 #include <cstdio>
 #include <sstream>
 
@@ -266,11 +267,43 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     DWORD windowStyle = WS_TILEDWINDOW;//WS_OVERLAPPEDWINDOW;
 
     // Adjust the window rectangle to account for border sizes
-    RECT windowRect = {0, 0, (long)style.width, (long)style.height};
+    RECT windowRect = {0, 0, (long)style.size.x, (long)style.size.y};
     AdjustWindowRectEx(&windowRect, windowStyle, false, WS_EX_CLIENTEDGE);
 
     // Create the window
-    handle = CreateWindowEx(WS_EX_CLIENTEDGE, wc.lpszClassName, style.title._ToWideString().c_str(), windowStyle, GetSystemMetrics(SM_CXSCREEN)/2-style.width/2,  GetSystemMetrics(SM_CYSCREEN)/2-style.height/2, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, NULL, NULL, GetModuleHandle(NULL), NULL);
+    if (style.centerWindow)
+    {
+        SCoord32 screenMiddle = SCoord32(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)) / 2;
+        SCoord32 windowHalfSize = SCoord32((SInt32)style.size.x / 2, (SInt32)style.size.y / 2);
+        SCoord32 windowPos = screenMiddle - windowHalfSize + style.position;
+        handle = CreateWindowEx(WS_EX_CLIENTEDGE,
+                                wc.lpszClassName,
+                                style.title._ToWideString().c_str(),
+                                windowStyle,
+                                windowPos.x,
+                                windowPos.y,
+                                windowRect.right - windowRect.left,
+                                windowRect.bottom - windowRect.top,
+                                NULL,
+                                NULL,
+                                GetModuleHandle(NULL),
+                                NULL);
+    }
+    else
+    {
+        handle = CreateWindowEx(WS_EX_CLIENTEDGE,
+                                wc.lpszClassName,
+                                style.title._ToWideString().c_str(),
+                                windowStyle,
+                                style.position.x,
+                                style.position.y,
+                                windowRect.right - windowRect.left,
+                                windowRect.bottom - windowRect.top,
+                                NULL,
+                                NULL,
+                                GetModuleHandle(NULL),
+                                NULL);
+    }
 
     // Check for errors
     if (handle == NULL)
@@ -407,8 +440,7 @@ _CGUL_EXPORT void CGUL::Window::SetStyle(const WindowStyle& style)
 
     SetTitle(style.title);
     SetBackgroundColor(style.backgroundColor);
-    SetWidth(style.width);
-    SetHeight(style.height);
+    SetSize(style.size);
     SetResizable(style.resizable);
 }
 
@@ -419,8 +451,7 @@ _CGUL_EXPORT CGUL::WindowStyle CGUL::Window::GetStyle() const
     WindowStyle style;
     style.title = GetTitle();
     style.backgroundColor = GetBackgroundColor();
-    style.width = GetWidth();
-    style.height = GetHeight();
+    style.size = GetSize();
     style.resizable = GetResizable();
     return style;
 }
@@ -730,6 +761,30 @@ _CGUL_EXPORT CGUL::UCoord32 CGUL::Window::GetSize() const
 #   endif
 }
 
+/** @param position The new position of the window.
+ */
+_CGUL_EXPORT void CGUL::Window::SetPosition(const SCoord32& position)
+{
+#   ifdef CGUL_WINDOWS
+    // TODO
+#   endif
+}
+
+/** @returns The position of the window.
+ */
+#include <iostream>
+_CGUL_EXPORT CGUL::SCoord32 CGUL::Window::GetPosition() const
+{
+#   ifdef CGUL_WINDOWS
+    RECT rect, borderSize;
+    GetWindowRect(handle, &rect);
+    Memory::ZeroData(&borderSize, sizeof(borderSize));
+    AdjustWindowRectEx(&borderSize, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
+
+    return SCoord32((SInt32)(rect.left - borderSize.left), (SInt32)(rect.top - borderSize.top));
+#   endif
+}
+
 /** @param resizable True for resizable, false otherwise.
  */
 _CGUL_EXPORT void CGUL::Window::SetResizable(Boolean resizable)
@@ -913,6 +968,23 @@ _CGUL_EXPORT CGUL::Boolean CGUL::Window::IsFocused() const
 
 #   ifdef CGUL_MACOS
     return [handle isFocused];
+#   endif
+}
+
+_CGUL_EXPORT void CGUL::Window::SetMousePosition(SCoord32 mousePosition)
+{
+#   ifdef CGUL_WINDOWS
+    SCoord32 pos = GetPosition() + mousePosition;
+    SetCursorPos(pos.x, pos.y);
+#   endif
+}
+
+// @brief Sets if the mouse is visible in the window or not.
+_CGUL_EXPORT void CGUL::Window::SetMouseShow(bool show)
+{
+#   ifdef CGUL_WINDOWS
+    // TODO: make this per-window?
+    ShowCursor(show);
 #   endif
 }
 
