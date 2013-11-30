@@ -267,7 +267,7 @@ _CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, cons
 
 template< typename Type >
 template< typename OtherType >
-_CGUL_INLINE_DEFINE CGUL::Vector3T< Type >::operator CGUL::Vector3T< OtherType >()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::operator CGUL::Vector3T< OtherType >()
 {
     return Vector3T< OtherType >((OtherType)x, (OtherType)y, (OtherType)z);
 }
