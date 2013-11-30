@@ -223,13 +223,10 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >& CGUL::Vector2T< Type >::operator/
     return *this;
 }
 
-/** @param stream The output stream.
- *  @returns A reference to the output stream.
- */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT std::ostream& CGUL::Vector2T< Type >::operator<<(std::ostream& stream) const
+_CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector2T< Type >& vector)
 {
-    stream << "[" << x << ", " << y << "]";
+    stream << "[" << vector.x << ", " << vector.y << "]";
     return stream;
 }
 

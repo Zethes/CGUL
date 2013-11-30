@@ -9,6 +9,15 @@
 #include <CGUL/Config.hpp>
 #include "../External/Defines.hpp"
 
+// Without this here you would need a human sacrifice each time you wanted to use operator<<
+namespace CGUL
+{
+    template< typename Type >
+    class Vector2T;
+    template< typename Type >
+    _CGUL_INLINE_DEFINE std::ostream& operator<<(std::ostream&, const CGUL::Vector2T< Type >&);
+}
+
 namespace CGUL
 {
     template< typename Type >
@@ -89,7 +98,7 @@ namespace CGUL
         //! components.
         _CGUL_INLINE_DEFINE Vector2T& operator/=(Type operand);
         //! @brief An operator to output this vector on an output stream.
-        _CGUL_INLINE_DEFINE std::ostream& operator<<(std::ostream& stream) const;
+        _CGUL_INLINE_DEFINE friend std::ostream& operator<< <>(std::ostream& stream, const Vector2T< Type >& vector);
 
         //! @brief Accesses an individual component in this vector.
         _CGUL_INLINE_DEFINE Type& At(UInt32 index);
@@ -150,9 +159,9 @@ namespace CGUL
 
     typedef Vector2T< Float32 > Vector2;
     typedef Vector2T< Float64 > Vector2D;
-    typedef Vector2T< SInt16  > Coord16;
-    typedef Vector2T< SInt32  > Coord32;
-    typedef Vector2T< SInt64  > Coord64;
+    typedef Vector2T< SInt16  > SCoord16;
+    typedef Vector2T< SInt32  > SCoord32;
+    typedef Vector2T< SInt64  > SCoord64;
     typedef Vector2T< UInt16  > UCoord16;
     typedef Vector2T< UInt32  > UCoord32;
     typedef Vector2T< UInt64  > UCoord64;
