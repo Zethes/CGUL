@@ -97,6 +97,8 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Vector3T& operator/=(Type operand);
         //! @brief An operator to output this vector on an output stream.
         _CGUL_INLINE_DEFINE friend std::ostream& operator<< <>(std::ostream& stream, const Vector3T< Type >& vector);
+        template< typename OtherType >
+        _CGUL_INLINE_DEFINE operator Vector3T< OtherType >();
 
         //! @brief Accesses an individual component in this vector.
         _CGUL_INLINE_DEFINE Type& At(UInt32 index);

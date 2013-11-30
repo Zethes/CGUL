@@ -230,6 +230,13 @@ _CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, cons
     return stream;
 }
 
+template< typename Type >
+template< typename OtherType >
+_CGUL_INLINE_DEFINE CGUL::Vector2T< Type >::operator CGUL::Vector2T< OtherType >()
+{
+    return Vector2T< OtherType >((OtherType)x, (OtherType)y);
+}
+
 /** @param index The component index, so 0 for x, and 1 for y.
  *  @returns The value at that index.
  */

@@ -265,6 +265,13 @@ _CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, cons
     return stream;
 }
 
+template< typename Type >
+template< typename OtherType >
+_CGUL_INLINE_DEFINE CGUL::Vector3T< Type >::operator CGUL::Vector3T< OtherType >()
+{
+    return Vector3T< OtherType >((OtherType)x, (OtherType)y, (OtherType)z);
+}
+
 /** @param index The component index, so 0 for x, 1 for y, and 2 for z.
  *  @returns The value at that index.
  */
