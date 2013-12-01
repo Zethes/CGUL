@@ -416,6 +416,12 @@ bool CGUL::Network::SocketTCP::IsConnected()
 
 CGUL::Network::IPAddress CGUL::Network::SocketTCP::GetIP()
 {
+    if (!IsConnected())
+    {
+        // Return an invalid IP address
+        return IPAddress();
+    }
+
     struct sockaddr_storage _Addr;
     socklen_t _Length = sizeof(_Addr);
     getpeername(sock, (struct sockaddr*)&_Addr, &_Length);
