@@ -8,43 +8,49 @@
 #pragma once
 #include <CGUL/Config.hpp>
 #include "../Utility/String.hpp"
-#include "ImageFormats.hpp"
-#include "Mipmap.hpp"
+#include "../Math/Vector2.hpp"
+#include "Format.hpp"
+#include "ImageHandler.hpp"
+#include "Loader.hpp"
 #include "../External/Defines.hpp"
 
 namespace CGUL
 {
     /** @brief A container capable of loading and manipulating RGBA images.
-     *  @todo Support other types of images besides just RGBA.
+     *  @todo Support more image modifying/transforming.
      */
     class Image
     {
         ImageFormat format;
         UInt32 width;
         UInt32 height;
+        Size pixelSize;
 
-        std::vector<Mipmap> mipmaps;
-
-        _CGUL_EXPORT bool IsValid();
+        Size dataSize;
+        void* data;
     public:
         _CGUL_EXPORT Image();
-        _CGUL_EXPORT Image(ImageFormat format, UInt32 width, UInt32 height, const void* data);
+        _CGUL_EXPORT Image(ImageFormat format, UInt32 width, UInt32 height);
+        _CGUL_EXPORT Image(ImageFormat format, UInt32 width, UInt32 height, void * data);
         _CGUL_EXPORT ~Image();
 
-        _CGUL_EXPORT void Free();
+        _CGUL_EXPORT bool CanLoad(const String& file);
+        _CGUL_EXPORT bool Load(const String& file);
+        //_CGUL_EXPORT Save(const String& file, );
 
-        _CGUL_EXPORT bool GenerateMipmaps();
+        /*template <typename T>
+        _CGUL_EXPORT T* GetPixel(UInt32 x, UInt32 y);
+        template <typename T>
+        _CGUL_EXPORT void SetPixel(UInt32 x, UInt32 y, T* pixel);*/
 
-        _CGUL_EXPORT Mipmap& GetBaseMipmap();
-        _CGUL_EXPORT Mipmap& GetMipmap(UInt32 index);
-        _CGUL_EXPORT const void* GetData();
-        _CGUL_EXPORT ImageFormat GetFormat() const;
-        _CGUL_EXPORT int GetMipmapCount() const;
-        _CGUL_EXPORT int GetWidth() const;
-        _CGUL_EXPORT int GetHeight() const;
+        _CGUL_EXPORT void* GetData();
 
-        _CGUL_EXPORT void PushMipmap(UInt32 width, UInt32 height, const void* data);
-        _CGUL_EXPORT void PopMipmap();
+        _CGUL_EXPORT ImageFormat GetFormat();
+        _CGUL_EXPORT UInt32 GetWidth();
+        _CGUL_EXPORT UInt32 GetHeight();
+
+        _CGUL_EXPORT Size GetPixelSize();
+        _CGUL_EXPORT Size GetDataSize();
     };
 }
 

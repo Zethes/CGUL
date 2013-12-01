@@ -96,15 +96,12 @@
 
 #include "CGUL/Images/Color.hpp"
 #include "CGUL/Images/Colors.hpp"
+#include "CGUL/Images/Format.hpp"
 #include "CGUL/Images/Image.hpp"
-#include "CGUL/Images/ImageFormats.hpp"
-#include "CGUL/Images/Mipmap.hpp"
-#include "CGUL/Images/Loaders/BMP.hpp"
+#include "CGUL/Images/ImageHandler.hpp"
+#include "CGUL/Images/Loader.hpp"
 #ifdef PNG_FOUND
-#   include "CGUL/Images/Loaders/PNG.hpp"
-#endif
-#ifdef JPEG_FOUND
-#   include "CGUL/Images/Loaders/JPEG.hpp"
+#   include "CGUL/Images/PNG.hpp"
 #endif
 
 #include "CGUL/Math/Math.hpp"

@@ -8,115 +8,110 @@
 #include "Image.hpp"
 #include "../Exceptions/ImageException.hpp"
 
-_CGUL_EXPORT bool CGUL::Image::IsValid()
-{
-    return (width != 0 && height != 0);
-}
-
-_CGUL_EXPORT CGUL::Image::Image() :
-    format(ImageFormats::NONE),
-    width(0),
-    height(0)
+_CGUL_EXPORT CGUL::Image::Image()
 {
 }
-
-_CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UInt32 width, UInt32 height, const void* data) :
-    format(format),
-    width(width),
-    height(height)
+_CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UInt32 width, UInt32 height)
 {
-    PushMipmap(width, height, data);
+    this->format = format;
+    this->width = width;
+    this->height = height;
+    this->pixelSize = (format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8;
+
+    switch (format.dataType)
+    {
+        case DataTypes::UNSIGNED_CHAR:
+            this->data = new unsigned char[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::SIGNED_CHAR:
+            this->data = new char[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::FLOAT32:
+            this->data = new Float32[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::FLOAT64:
+            this->data = new Float64[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::UINT32:
+            this->data = new UInt32[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::UINT64:
+            this->data = new UInt64[this->width * this->height * this->pixelSize];
+        break;
+        case DataTypes::SINT32:
+            this->data = new SInt32[this->width * this->height * this->pixelSize];
+        break; 
+        case DataTypes::SINT64:
+            this->data = new SInt64[this->width * this->height * this->pixelSize];
+        break; 
+    }
+}
+
+_CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UInt32 width, UInt32 height, void * data)
+{
+    this->format = format;
+    this->width = width;
+    this->height = height;
+    this->pixelSize = (format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8;
+    this->data = data;
 }
 
 _CGUL_EXPORT CGUL::Image::~Image()
 {
-    Free();
+    free(this->data);
 }
 
-_CGUL_EXPORT void CGUL::Image::Free()
+_CGUL_EXPORT bool CGUL::Image::CanLoad(const String& file)
 {
-    this->format = ImageFormats::NONE;
-    this->width = 0;
-    this->height = 0;
-
-    for (UInt32 i = 0; i < mipmaps.size(); i++)
-    {
-        mipmaps[i].Free();
-    }
-    mipmaps.clear();
+    return (ImageHandler::GetInstance()->GetLoaderByFile(file) != NULL);
 }
 
-_CGUL_EXPORT bool CGUL::Image::GenerateMipmaps()
+_CGUL_EXPORT bool CGUL::Image::Load(const String& file)
 {
-    if (!IsValid())
-    {
-        throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::IMAGE_IS_NOT_VALID);
-    }
-    if (mipmaps.size() <= 0)
-    {
-        throw ImageException(ImageExceptionCode::GENERATE_MIPMAPS, ImageExceptionReason::NO_BASE_MIPMAP);
-    }
+    ImageLoader* loader = ImageHandler::GetInstance()->GetLoaderByFile(file);
+    if (loader == NULL)
+        return false;
 
-    //TODO: Mipmap generation.
-    return false;
+    Image* img = loader->Load(file);
+    if (img == NULL)
+        return false;
+
+    this->format = img->GetFormat();
+    this->width = img->GetWidth();
+    this->height = img->GetHeight();
+    this->pixelSize = img->GetPixelSize();
+    this->dataSize = img->GetDataSize();
+    this->data = img->GetData();
+
+    return true;
 }
 
-_CGUL_EXPORT CGUL::Mipmap& CGUL::Image::GetBaseMipmap()
+_CGUL_EXPORT void* CGUL::Image::GetData()
 {
-    if (mipmaps.size() <= 0)
-    {
-        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
-    }
-
-    return mipmaps[0];
+    return data;
 }
 
-_CGUL_EXPORT CGUL::Mipmap& CGUL::Image::GetMipmap(UInt32 index)
+_CGUL_EXPORT CGUL::ImageFormat CGUL::Image::GetFormat()
 {
-    if (mipmaps.size() <= index)
-    {
-        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::INDEX_OUT_OF_RANGE);
-    }
-
-    return mipmaps[index];
+    return this->format;
 }
 
-_CGUL_EXPORT const void* CGUL::Image::GetData()
+_CGUL_EXPORT CGUL::UInt32 CGUL::Image::GetWidth()
 {
-    if (mipmaps.size() <= 0)
-    {
-        throw ImageException(ImageExceptionCode::GET_MIPMAP, ImageExceptionReason::NO_BASE_MIPMAP);
-    }
-
-    return mipmaps[0].GetData();
+    return this->width;
 }
 
-_CGUL_EXPORT CGUL::ImageFormat CGUL::Image::GetFormat() const
+_CGUL_EXPORT CGUL::UInt32 CGUL::Image::GetHeight()
 {
-    return format;
+    return this->height;
 }
 
-_CGUL_EXPORT int CGUL::Image::GetMipmapCount() const
+_CGUL_EXPORT CGUL::Size CGUL::Image::GetPixelSize()
 {
-    return mipmaps.size();
+    return this->pixelSize;    
 }
 
-_CGUL_EXPORT int CGUL::Image::GetWidth() const
+_CGUL_EXPORT CGUL::Size CGUL::Image::GetDataSize()
 {
-    return width;
-}
-
-_CGUL_EXPORT int CGUL::Image::GetHeight() const
-{
-    return height;
-}
-
-_CGUL_EXPORT void CGUL::Image::PushMipmap(UInt32 width, UInt32 height, const void* data)
-{
-    mipmaps.push_back(Mipmap(format, width, height, (void*)data));
-}
-
-_CGUL_EXPORT void CGUL::Image::PopMipmap()
-{
-    mipmaps.pop_back();
+    return this->dataSize;
 }

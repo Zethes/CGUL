@@ -6,7 +6,7 @@
  */
 
 #include "Font.hpp"
-#include "../Images/ImageFormats.hpp"
+#include "../Images/Format.hpp"
 #include <string.h>
 
 static FT_Library __jatta_ttf_library;

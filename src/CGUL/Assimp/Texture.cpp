@@ -6,7 +6,7 @@
  */
 
 #include "Texture.hpp"
-#include "../Images/ImageFormats.hpp"
+#include "../Images/Format.hpp"
 
 _CGUL_EXPORT CGUL::Assimp::Texture::Texture(aiTexture* texture)
 {

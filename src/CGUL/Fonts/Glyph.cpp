@@ -6,7 +6,7 @@
  */
 
 #include "Glyph.hpp"
-#include "../Images/ImageFormats.hpp"
+#include "../Images/Format.hpp"
 #include "../Math/Math.hpp"
 
 _CGUL_EXPORT CGUL::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
