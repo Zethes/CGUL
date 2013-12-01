@@ -260,6 +260,25 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Mod(Type x, Type div)
     return Math::Abs(x - Math::Floor(x / div) * div) * Math::Sign(x);
 }
 
+/** @param x The input value.
+ *  @param min Minimum value.
+ *  @param max Maximum value.
+ *  @returns The clamped value, or x if not clamped.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Clamp(Type x, Type min, Type max)
+{
+    if (x > max)
+    {
+        x = max;
+    }
+    if (x < min)
+    {
+        x = min;
+    }
+    return x;
+}
+
 /** @details The square of a number is simply that number multiplied by itself.
  *  @param x The number to square.
  *  @returns The resulting value.

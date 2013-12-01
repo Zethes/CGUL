@@ -121,6 +121,10 @@ namespace CGUL
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Mod(Type x, Type div);
 
+        //! @brief Clamps the value between a minimum and maximum range.
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Clamp(Type x, Type min, Type max);
+
         //! @brief Calculates the square of a number.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Sqr(Type x);
