@@ -51,8 +51,8 @@
 - (CGUL::UInt32) getWidth;
 - (void) setHeight: (UInt32)height;
 - (CGUL::UInt32) getHeight;
-- (void) setSize: (const CGUL::Vector2&)size; // TODO: use something other than Vector2
-- (CGUL::Vector2) getSize;
+- (void) setSize: (const CGUL::UCoord32&)size;
+- (CGUL::UCoord32) getSize;
 
 - (void) setResizable: (CGUL::Boolean)resizable;
 - (CGUL::Boolean) getResizable;

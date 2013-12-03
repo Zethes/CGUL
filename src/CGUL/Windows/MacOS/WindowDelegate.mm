@@ -24,7 +24,7 @@
         windowOpen = 1;
 
         // Define the size of the window
-        NSRect frame = NSMakeRect(200, 200, style.width, style.height);
+        NSRect frame = NSMakeRect(200, 200, style.size.x, style.size.y);
 
         // Define the style masks to be a titled window with close, max and min
         NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
@@ -199,7 +199,7 @@
     return rect.size.height;
 }
 
-- (void) setSize: (const CGUL::Vector2&)size // TODO: use something other than Vector2
+- (void) setSize: (const CGUL::UCoord32&)size
 {
     NSRect frame = [window frame];
     frame.size.width = size.x;
@@ -209,11 +209,10 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (CGUL::Vector2) getSize
+- (CGUL::UCoord32) getSize
 {
-    //NSRect rect = [NSWindow contentRectForFrameRect: [[window contentView] frame] styleMask: [window styleMask]];
     NSRect rect = [[window contentView] frame];
-    return CGUL::Vector2(rect.size.width, rect.size.height);
+    return CGUL::UCoord32(rect.size.width, rect.size.height);
 }
 
 - (void) setResizable: (CGUL::Boolean)resizable

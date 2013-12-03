@@ -119,7 +119,7 @@
             _CGUL_EXPORT void PushBack(const Value& v);
             _CGUL_EXPORT void PopBack();
             _CGUL_EXPORT void Erase(std::vector<Value>::iterator i);
-            _CGUL_EXPORT CGUL::Size Size() const;
+            _CGUL_EXPORT Size GetSize() const;
 
             _CGUL_EXPORT String ToString();
         };
