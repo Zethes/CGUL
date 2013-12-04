@@ -128,8 +128,7 @@ int main()
 
         WindowStyle style;
         style.title = U8("CGUL - 3D World");
-        style.width = 640;
-        style.height = 480;
+        style.size = UCoord32(640, 480);
         style.backgroundColor = Colors::black;
         style.resizable = true;
 
