@@ -979,8 +979,8 @@ _CGUL_EXPORT void CGUL::Window::SetMousePosition(SCoord32 mousePosition)
 #   endif
 }
 
-// @brief Sets if the mouse is visible in the window or not.
-_CGUL_EXPORT void CGUL::Window::SetMouseShow(bool show)
+// @brief Sets if the cursor is visible in the window or not.
+_CGUL_EXPORT void CGUL::Window::SetCursorShow(bool show)
 {
 #   ifdef CGUL_WINDOWS
     // TODO: make this per-window?

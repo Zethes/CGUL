@@ -151,7 +151,7 @@ namespace CGUL
         // @brief Sets the mouse position relative to the window.
         _CGUL_EXPORT void SetMousePosition(SCoord32 mousePosition);
         // @brief Sets if the mouse is visible in the window or not.
-        _CGUL_EXPORT void SetMouseShow(bool show);
+        _CGUL_EXPORT void SetCursorShow(bool show);
 
         _CGUL_EXPORT virtual void OnKeyPress(UInt32 key);
         _CGUL_EXPORT virtual void OnKeyRelease(UInt32 key);
