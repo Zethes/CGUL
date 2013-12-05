@@ -501,11 +501,17 @@ _CGUL_EXPORT CGUL::String CGUL::String::SubString(Size start, Size count, bool b
     }
 }
 
+/** @param string String to check for.
+ *  @returns True if the string was found.
+ */
 _CGUL_EXPORT bool CGUL::String::Contains(const String& string) const
 {
     return (FindFirstOf(string) != none);
 }
 
+/** @param string String to check for.
+ *  @returns True if the string was found at the beginning.
+ */
 _CGUL_EXPORT bool CGUL::String::BeginsWith(const String& string) const
 {
     std::string::const_iterator i = data.begin();
@@ -519,6 +525,9 @@ _CGUL_EXPORT bool CGUL::String::BeginsWith(const String& string) const
     return true;
 }
 
+/** @param string String to check for.
+ *  @returns True if the string was found at the end.
+ */
 _CGUL_EXPORT bool CGUL::String::EndsWith(const String& string) const
 {
     std::string::const_reverse_iterator i = data.rbegin();
