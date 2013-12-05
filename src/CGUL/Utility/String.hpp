@@ -147,6 +147,10 @@ namespace CGUL
         //! @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
         _CGUL_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;
 
+        _CGUL_EXPORT bool Contains(const String& string) const;
+        _CGUL_EXPORT bool BeginsWith(const String& string) const;
+        _CGUL_EXPORT bool EndsWith(const String& string) const;
+
         //! @brief Sets the value of the string given a c string.
         _CGUL_EXPORT String& Set(const char* str);
         //! @brief Sets the value of the string given another string.
