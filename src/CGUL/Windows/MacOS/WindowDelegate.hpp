@@ -39,28 +39,24 @@
 
 - (void) close;
 
-//- (void) updateInput;
+- (void)setTitle: (const CGUL::String&)title;
+- (CGUL::String)getTitle;
 
-- (void) setTitle: (const CGUL::String&)title;
-- (CGUL::String) getTitle;
+- (void)setBackgroundColor: (const CGUL::Color&)color;
+- (CGUL::Color)getBackgroundColor;
 
-- (void) setBackgroundColor: (const CGUL::Color&)color;
-- (CGUL::Color) getBackgroundColor;
-
-- (void) setWidth: (UInt32)width;
-- (CGUL::UInt32) getWidth;
-- (void) setHeight: (UInt32)height;
-- (CGUL::UInt32) getHeight;
-- (void) setSize: (const CGUL::UCoord32&)size;
+- (void)setWidth: (UInt32)width;
+- (CGUL::UInt32)getWidth;
+- (void)setHeight: (UInt32)height;
+- (CGUL::UInt32)getHeight;
+- (void)setSize:(const CGUL::UCoord32&)size;
 - (CGUL::UCoord32) getSize;
 
-- (void) setResizable: (CGUL::Boolean)resizable;
-- (CGUL::Boolean) getResizable;
+- (void)setResizable: (CGUL::Boolean)resizable;
+- (CGUL::Boolean)getResizable;
 
-- (CGUL::Vector4) getFrameSize;
-/*
-- (CGUL::Boolean) isOpen2;*/
-- (CGUL::Boolean) isFocused;
+- (CGUL::Vector4)getFrameSize;
+- (CGUL::Boolean)isFocused;
 
 @end
 
