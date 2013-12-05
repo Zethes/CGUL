@@ -9,6 +9,7 @@
 #include "../Exceptions/FatalException.hpp"
 #include "../Exceptions/FileException.hpp"
 #include "../Utility/Encryption.hpp"
+#include "../Containers/Vector.hpp"
 
 #include <sys/stat.h>
 #ifdef CGUL_WINDOWS
@@ -20,9 +21,9 @@
 #   include <unistd.h>
 #endif
 
-// Visual Studio doesn't have this file
-// We'll remove it for now until someone musters up enough motivation to repla--ugh i dont want to type anymore
-//#include <dirent.h>
+#ifdef CPP_HEADER_DIRENT_H
+#   include <dirent.h>
+#endif
 
 _CGUL_EXPORT CGUL::Boolean CGUL::File::WriteText(const String& fileName, String string)
 {
@@ -245,54 +246,107 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::File::GetFileSize(const CGUL::String& fileName)
     return fileSize;
 }
 
-// TODO: File::FindFiles
-_CGUL_EXPORT std::vector<CGUL::String> CGUL::File::FindFiles(CGUL::String dir)
+#include <iostream>
+_CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >* files)
 {
-    std::vector<CGUL::String> ret;
-
-    /*DIR *dp;
-    struct dirent *ep;
-
-    dp = opendir(dir.c_str());
-    if (dp != NULL)
+#   ifdef CPP_HEADER_DIRENT_H
+    String fixedPath = path;
+    if (!fixedPath.EndsWith("/") && !fixedPath.BeginsWith("\\"))
     {
-        while (ep = readdir(dp))
+        // Prefer unix style paths, since windows accepts it (for the most part)
+        if (fixedPath.Contains("/"))
         {
-            String path = dir;
-            std::string fileName = ep->d_name;
-            path += "/" + fileName;
-            if (IsFile(path.GetData()))
-                ret.push_back(fileName);
+            fixedPath += "/";
         }
-        closedir (dp);
-    }*/
-
-    return ret;
+        else
+        {
+            fixedPath += "\\";
+        }
+    }
+    struct dirent* entry = NULL;
+    DIR* directory = NULL;
+    directory = opendir(fixedPath.GetCString());
+    if (directory == NULL)
+    {
+        return;
+    }
+    Size count = 0;
+    while (entry = readdir(directory))
+    {
+        String entryName(entry->d_name);
+        if (IsFile(fixedPath + entryName))
+        {
+            count++;
+        }
+    }
+    files->SetSize(count);
+    rewinddir(directory);
+    count = 0;
+    while (entry = readdir(directory))
+    {
+        String entryName(entry->d_name);
+        if (IsFile(fixedPath + entryName))
+        {
+            files->Set(count++, entryName);
+        }
+    }
+    closedir(directory);
+#   elif CGUL_WINDOWS
+    // TODO: handle FindFiles on windows without dirent
+#   else
+    // TODO: panic?
+#   endif
 }
 
-// TODO: File::FindFolders
-_CGUL_EXPORT std::vector<CGUL::String> CGUL::File::FindFolders(CGUL::String dir)
+_CGUL_EXPORT void CGUL::File::FindDirectories(const String& path, FixedList< String >* directories)
 {
-    std::vector<CGUL::String> ret;
-
-    /*DIR *dp;
-    struct dirent *ep;
-
-    dp = opendir(dir.c_str());
-    if (dp != NULL)
+#   ifdef CPP_HEADER_DIRENT_H
+    String fixedPath = path;
+    if (!fixedPath.EndsWith("/") && !fixedPath.BeginsWith("\\"))
     {
-        while (ep = readdir(dp))
+        // Prefer unix style paths, since windows accepts it (for the most part)
+        if (fixedPath.Contains("/"))
         {
-            String path = dir;
-            std::string fileName = ep->d_name;
-            path += "/" + fileName;
-            if (IsFolder(path.GetData()))
-                ret.push_back(fileName);
+            fixedPath += "/";
         }
-        closedir (dp);
-    }*/
-
-    return ret;
+        else
+        {
+            fixedPath += "\\";
+        }
+    }
+    struct dirent* entry = NULL;
+    DIR* directory = NULL;
+    directory = opendir(path.GetCString());
+    if (directory == NULL)
+    {
+        return;
+    }
+    Size count = 0;
+    while (entry = readdir(directory))
+    {
+        String entryName(entry->d_name);
+        if (IsDirectory(fixedPath + entryName) && entryName != "." && entryName != "..")
+        {
+            count++;
+        }
+    }
+    directories->SetSize(count);
+    rewinddir(directory);
+    count = 0;
+    while (entry = readdir(directory))
+    {
+        String entryName(entry->d_name);
+        if (IsDirectory(fixedPath + entryName) && entryName != "." && entryName != "..")
+        {
+            directories->Set(count++, entryName);
+        }
+    }
+    closedir(directory);
+#   elif CGUL_WINDOWS
+    // TODO: handle FindFiles on windows without dirent
+#   else
+    // TODO: panic?
+#   endif
 }
 
 /** @param fileName The name of the file to check for.
@@ -338,7 +392,7 @@ _CGUL_EXPORT CGUL::String CGUL::File::MD5(const CGUL::String& fileName)
 /** @param fileName The filename to check.
  *  @returns True if the filename is a directory, false otherwise.
  */
-_CGUL_EXPORT CGUL::Boolean CGUL::File::IsFolder(const CGUL::String& fileName)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::IsDirectory(const CGUL::String& fileName)
 {
 #   ifdef CGUL_WINDOWS
     DWORD attributes = ::GetFileAttributesW(fileName._ToWideString().c_str());
@@ -352,7 +406,7 @@ _CGUL_EXPORT CGUL::Boolean CGUL::File::IsFolder(const CGUL::String& fileName)
     int err = stat(fileName.GetCString(), &fileStat);
     if (err != 0)
     {
-        return 0;
+        return false;
     }
 
     return (fileStat.st_mode & S_IFMT) == S_IFDIR;
@@ -364,45 +418,47 @@ _CGUL_EXPORT CGUL::Boolean CGUL::File::IsFolder(const CGUL::String& fileName)
  */
 _CGUL_EXPORT CGUL::Boolean CGUL::File::IsFile(const CGUL::String& fileName)
 {
-    return !IsFolder(fileName);
+    return !IsDirectory(fileName);
 }
 
-_CGUL_EXPORT CGUL::Boolean CGUL::File::CreateFolder(const CGUL::String& fileName, bool recursive)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::CreateDirectory(const CGUL::String& fileName, bool recursive)
 {
-    String folderName = fileName;
+    String directoryName = fileName;
 
-    if (IsFolder(folderName.GetData())) //Folder exists
+    if (IsDirectory(directoryName.GetData())) //Directory exists
     {
         return false;
     }
 
     if (recursive)
     {
-        String up = folderName.SubString(0,folderName.FindLastOf("/"));
-        if (up != folderName)
+        String up = directoryName.SubString(0, directoryName.FindLastOf("/"));
+        if (up != directoryName)
         {
-            CreateFolder(up.GetData(), recursive);
+            CreateDirectory(up.GetData(), recursive);
         }
     }
 
 #ifdef CGUL_WINDOWS
-    return 0 == _wmkdir(folderName._ToWideString().c_str());
+    return 0 == _wmkdir(directoryName._ToWideString().c_str());
 #else
-    return 0 == mkdir(folderName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+    return 0 == mkdir(directoryName.GetData().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 #endif
 }
 
-_CGUL_EXPORT CGUL::Boolean CGUL::File::DeleteFolder(const CGUL::String& fileName, bool recursive)
+_CGUL_EXPORT CGUL::Boolean CGUL::File::DeleteDirectory(const CGUL::String& fileName, bool recursive)
 {
-    if (!IsFolder(fileName))
+    if (!IsDirectory(fileName))
     {
         return false;
     }
 
     if (recursive)
     {
-        std::vector<CGUL::String> files = FindFiles(fileName);
-        std::vector<CGUL::String> folders = FindFolders(fileName);
+        Vector< CGUL::String > files;
+        FindFiles(fileName, &files);
+        Vector< CGUL::String > directories;
+        FindDirectories(fileName, &directories);
 
         //Delete each file.
         for (unsigned int i = 0; i < files.size(); i++)
@@ -416,15 +472,15 @@ _CGUL_EXPORT CGUL::Boolean CGUL::File::DeleteFolder(const CGUL::String& fileName
             }
         }
 
-        //Delete each folder.
-        for (unsigned int i = 0; i < folders.size(); i++)
+        //Delete each directory.
+        for (unsigned int i = 0; i < directories.size(); i++)
         {
-            if (folders[i] != "." && folders[i] != "..")
+            if (directories[i] != "." && directories[i] != "..")
             {
                 String path = fileName;
                 path += "/";
-                path += folders[i];
-                if (DeleteFolder(path.GetData(), true) == false)
+                path += directories[i];
+                if (DeleteDirectory(path.GetData(), true) == false)
                 {
                     return false;
                 }
@@ -460,13 +516,13 @@ _CGUL_EXPORT CGUL::Boolean CGUL::File::Copy(const CGUL::String& fileName, const 
 #   ifdef CGUL_WINDOWS
     return ::CopyFileW(fileName._ToWideString().c_str(), fileTo._ToWideString().c_str(), false) != 0;
 #   else
-    std::ifstream f1( fileName.GetCString(), std::fstream::binary );
-    if ( !f1.is_open() )
+    std::ifstream f1(fileName.GetCString(), std::fstream::binary);
+    if (!f1.is_open())
     {
         return false;
     }
-    std::ofstream f2( fileTo.GetCString(), std::fstream::trunc|std::fstream::binary );
-    if ( !f2.is_open() )
+    std::ofstream f2(fileTo.GetCString(), std::fstream::trunc|std::fstream::binary);
+    if (!f2.is_open())
     {
         return false;
     }
