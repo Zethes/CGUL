@@ -677,24 +677,43 @@ _CGUL_EXPORT void CGUL::String::TrimEnd()
     data = data.substr(0, data.length() - trimEnd);
 }
 
-_CGUL_EXPORT std::vector<CGUL::String> CGUL::String::Explode(const String& delimiter, Size limit) const
+_CGUL_EXPORT void CGUL::String::Explode(const String& delimiter, FixedList< String >* debris) const
 {
-    std::vector<CGUL::String> result;
+    Explode(delimiter, none, debris);
+}
+
+_CGUL_EXPORT void CGUL::String::Explode(const String& delimiter, Size limit, FixedList< String >* debris) const
+{
     Size find = 0;
     Size from = 0;
+    Size count = 0;
     do
     {
         if (limit-- == 0)
         {
-            result.push_back(SubString(from));
             break;
         }
         find = FindFirstOf(delimiter, from);
-        result.push_back(SubString(from, find - from, true));
+        count++;
         from = find + 1;
     }
     while (find != none);
-    return result;
+    debris->SetSize(count);
+    find = 0;
+    from = 0;
+    count = 0;
+    do
+    {
+        if (limit-- == 0)
+        {
+            debris->Set(count++, SubString(from));
+            break;
+        }
+        find = FindFirstOf(delimiter, from);
+        debris->Set(count++, SubString(from, find - from, true));
+        from = find + 1;
+    }
+    while (find != none);
 }
 
 /**

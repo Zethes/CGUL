@@ -7,6 +7,7 @@
 
 #pragma once
 #include <CGUL/Config.hpp>
+#include "../Containers/FixedList.hpp"
 #include "../External/Defines.hpp"
 
 #ifndef CGUL_NO_U8
@@ -168,7 +169,8 @@ namespace CGUL
         _CGUL_EXPORT void TrimStart();
         //! @brief Trims whitespace at the end of the string.
         _CGUL_EXPORT void TrimEnd();
-        _CGUL_EXPORT std::vector<String> Explode(const String& delimiter, Size limit = none) const;
+        _CGUL_EXPORT void Explode(const String& delimiter, FixedList< String >* debris) const;
+        _CGUL_EXPORT void Explode(const String& delimiter, Size limit, FixedList< String >* debris) const;
 
         //! @brief Converts the entire string to uppercase letters.
         _CGUL_EXPORT void ToLower();
