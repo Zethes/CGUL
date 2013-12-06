@@ -174,6 +174,10 @@ namespace CGUL
         _CGUL_EXPORT void ToLower();
         //! @brief Converts the entire string to lowercase letters.
         _CGUL_EXPORT void ToUpper();
+        //! @brief Gets the string as all lowercase letters.
+        _CGUL_EXPORT String GetLower() const;
+        //! @brief Gets the string as all uppercase letters.
+        _CGUL_EXPORT String GetUpper() const;
 
         //! @brief Removes all whitespace from within a string.
         _CGUL_EXPORT void RemoveWhitespace();

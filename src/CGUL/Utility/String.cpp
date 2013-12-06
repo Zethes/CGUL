@@ -717,6 +717,22 @@ _CGUL_EXPORT void CGUL::String::ToUpper()
     }
 }
 
+//! @brief Gets the string as all lowercase letters.
+_CGUL_EXPORT CGUL::String CGUL::String::GetLower() const
+{
+    String ret(*this);
+    ret.ToLower();
+    return ret;
+}
+
+//! @brief Gets the string as all uppercase letters.
+_CGUL_EXPORT CGUL::String CGUL::String::GetUpper() const
+{
+    String ret(*this);
+    ret.ToUpper();
+    return ret;
+}
+
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r
  */
 _CGUL_EXPORT void CGUL::String::RemoveWhitespace()
