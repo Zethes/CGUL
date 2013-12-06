@@ -48,9 +48,13 @@ _CGUL_EXPORT CGUL::ImageLoader* CGUL::ImageHandler::GetLoaderByName(const String
 
 _CGUL_EXPORT CGUL::ImageLoader* CGUL::ImageHandler::GetLoaderByExtension(const String& ext)
 {
+    String e = ext;
+    e.ToLower();
     for (UInt32 i = 0; i < loaders.size(); i++)
     {
-        if (loaders[i]->GetExtension() == ext)
+        String oe = loaders[i]->GetExtension();
+        oe.ToLower(); 
+        if (oe == e)
             return loaders[i];
     }
     return NULL;

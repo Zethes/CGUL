@@ -108,7 +108,7 @@ int main()
 {
     try
     {
-        std::cout << "Suported file formats (Reading): " << std::endl;
+        std::cout << "Suported image file formats: " << std::endl;
         CGUL::Vector<ImageLoader*> loaders = CGUL::ImageHandler::GetInstance()->GetAllLoaders();
         for (UInt32 i = 0; i < loaders.size(); i++)
         {
@@ -122,6 +122,10 @@ int main()
         }
 
         image->Load("resources/logo.png");
+        if (!image->Save("out", "png"))
+        {
+            throw FatalException("Cannot save PNG images.");
+        }
 
         WindowStyle style;
         style.title = U8("logo.png (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");

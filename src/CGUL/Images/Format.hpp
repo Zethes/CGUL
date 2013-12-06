@@ -37,11 +37,13 @@ namespace CGUL
         UInt32 dataType;                                   //How should data be stored?
         UInt32 redBits, greenBits, blueBits, alphaBits;    //Bitdepth per component.
         Enum glFormat;                                     //How does OpenGL see this?
+
+        _CGUL_EXPORT bool operator==(const ImageFormat& o);
     };
 
     /** @brief Method for creating image formats.
      */
-    ImageFormat CreateImageFormat(String name, UInt32 redBits, UInt32 blueBits, UInt32 greenBits, UInt32 alphaBits = 0, UInt32 type = DataTypes::UNSIGNED_CHAR, Enum glFormat = 0);
+    _CGUL_EXPORT ImageFormat CreateImageFormat(String name, UInt32 redBits, UInt32 blueBits, UInt32 greenBits, UInt32 alphaBits = 0, UInt32 type = DataTypes::UNSIGNED_CHAR, Enum glFormat = 0);
 
     /** @brief Namespace full of pre-defined image formats.  They are named using the same system as OpenGL.  See: http://www.opengl.org/wiki/Image_Format
      *  @todo Add other than Unsigned Char data types.
