@@ -10,23 +10,24 @@
 
 _CGUL_EXPORT CGUL::ImageLoader::ImageLoader()
 {
-    name = extension = "";
 }
-_CGUL_EXPORT CGUL::ImageLoader::ImageLoader(const String& name, const String& ext)
+
+_CGUL_EXPORT CGUL::ImageLoader::ImageLoader(const String& name, const String& extension)
 {
     this->name = name;
-    this->extension = ext;
+    this->extension = extension;
 }
+
 _CGUL_EXPORT CGUL::ImageLoader::~ImageLoader()
 {
 
 }
 
-
 _CGUL_EXPORT CGUL::String CGUL::ImageLoader::GetName()
 {
     return this->name;
 }
+
 _CGUL_EXPORT CGUL::String CGUL::ImageLoader::GetExtension()
 {
     return this->extension;

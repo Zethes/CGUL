@@ -16,16 +16,16 @@ namespace CGUL
 {
     class ImageLoader;
 
-    /** @brief Singleton class that holds the registers loaders/writers.
+    /** @brief Singleton class that registers image loaders/writers.
      */
     class ImageHandler
     {
-        Vector<ImageLoader*> loaders;
-        static ImageHandler* instance;
+        Vector< ImageLoader* > loaders;
 
         _CGUL_EXPORT ImageHandler();
-        _CGUL_EXPORT ImageHandler(ImageHandler const&);
-        _CGUL_EXPORT void operator=(ImageHandler const&);
+        _CGUL_EXPORT ImageHandler(const ImageHandler& copy);
+        _CGUL_EXPORT ~ImageHandler();
+        _CGUL_EXPORT void operator=(const ImageHandler& operand);
     public:
         _CGUL_EXPORT static ImageHandler* GetInstance();
 
@@ -34,7 +34,7 @@ namespace CGUL
         _CGUL_EXPORT ImageLoader* GetLoaderByExtension(const String& ext);
         _CGUL_EXPORT ImageLoader* GetLoaderByFile(const String& file);
 
-        _CGUL_EXPORT Vector<ImageLoader*> GetAllLoaders();
+        _CGUL_EXPORT void GetAllLoaders(FixedList< ImageLoader* >* loaders);
     };
 }
 

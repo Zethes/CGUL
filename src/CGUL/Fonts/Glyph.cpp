@@ -125,5 +125,5 @@ _CGUL_EXPORT CGUL::Image CGUL::Glyph::GetImage(Color color, UInt32 styleFlags)
         }
     }
 
-    return Image(ImageFormats::RGBA8, width, height, buffer);
+    return Image(ImageFormats::RGBA8, UCoord32(width, height), buffer);
 }

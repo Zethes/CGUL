@@ -16,7 +16,7 @@ namespace CGUL
     */
     namespace DataTypes
     {
-        enum 
+        enum
         {
             UNSIGNED_CHAR,
             SIGNED_CHAR,
@@ -32,7 +32,7 @@ namespace CGUL
     /** @brief A struct that defines an image format and how to treat it.
      */
     struct ImageFormat
-    {  
+    {
         String name;
         UInt32 dataType;                                   //How should data be stored?
         UInt32 redBits, greenBits, blueBits, alphaBits;    //Bitdepth per component.

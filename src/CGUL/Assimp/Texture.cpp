@@ -36,5 +36,5 @@ _CGUL_EXPORT CGUL::Image CGUL::Assimp::Texture::GetImage() const
         colors[i].a = texture->pcData[i].a;
     }
 
-    return Image(ImageFormats::RGBA8, texture->mWidth, texture->mHeight, colors);
+    return Image(ImageFormats::RGBA8, UCoord32(texture->mWidth, texture->mHeight), colors);
 }

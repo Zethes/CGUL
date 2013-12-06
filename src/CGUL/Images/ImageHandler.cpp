@@ -12,23 +12,26 @@
 #   include "PNG.hpp"
 #endif
 
-CGUL::ImageHandler* CGUL::ImageHandler::instance = 0;
-
 _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 {
+    // Add default image loaders
+#   ifdef PNG_FOUND
+    Register(new ImageLoaders::PNG());
+#   endif
+}
 
+_CGUL_EXPORT CGUL::ImageHandler::~ImageHandler()
+{
+    for (Vector< ImageLoader* >::iterator itr = loaders.begin(), itrEnd = loaders.end(); itr != itrEnd; itr++)
+    {
+        delete *itr;
+    }
 }
 
 _CGUL_EXPORT CGUL::ImageHandler* CGUL::ImageHandler::GetInstance()
 {
-    if (instance == NULL)
-    {
-        instance = new ImageHandler();
-#       ifdef PNG_FOUND
-        instance->Register(new ImageLoaders::PNG());
-#       endif
-    }
-    return instance;
+    static CGUL::ImageHandler instance;
+    return &instance;
 }
 
 _CGUL_EXPORT void CGUL::ImageHandler::Register(ImageLoader* loader)
@@ -41,37 +44,43 @@ _CGUL_EXPORT CGUL::ImageLoader* CGUL::ImageHandler::GetLoaderByName(const String
     for (UInt32 i = 0; i < loaders.size(); i++)
     {
         if (loaders[i]->GetName() == name)
+        {
             return loaders[i];
+        }
     }
     return NULL;
 }
 
 _CGUL_EXPORT CGUL::ImageLoader* CGUL::ImageHandler::GetLoaderByExtension(const String& ext)
 {
-    String e = ext;
-    e.ToLower();
     for (UInt32 i = 0; i < loaders.size(); i++)
     {
-        String oe = loaders[i]->GetExtension();
-        oe.ToLower(); 
-        if (oe == e)
+        if (loaders[i]->GetExtension().GetLower() == ext.GetLower())
+        {
             return loaders[i];
+        }
     }
     return NULL;
 }
-
 
 _CGUL_EXPORT CGUL::ImageLoader* CGUL::ImageHandler::GetLoaderByFile(const String& file)
 {
     for (UInt32 i = 0; i < loaders.size(); i++)
     {
         if (loaders[i]->CanLoad(file))
+        {
             return loaders[i];
+        }
     }
     return NULL;
 }
 
-_CGUL_EXPORT CGUL::Vector<CGUL::ImageLoader*> CGUL::ImageHandler::GetAllLoaders()
+_CGUL_EXPORT void CGUL::ImageHandler::GetAllLoaders(FixedList< ImageLoader* >* loaders)
 {
-    return loaders;
+    loaders->SetSize(this->loaders.size());
+    Size count = 0;
+    for (Vector< ImageLoader* >::iterator itr = this->loaders.begin(), itrEnd = this->loaders.end(); itr != itrEnd; itr++)
+    {
+        loaders->Set(count++, *itr);
+    }
 }

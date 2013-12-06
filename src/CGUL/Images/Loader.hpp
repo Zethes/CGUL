@@ -25,13 +25,13 @@ namespace CGUL
         String extension;
     public:
         _CGUL_EXPORT ImageLoader();
-        _CGUL_EXPORT ImageLoader(const String& name, const String& ext);
+        _CGUL_EXPORT ImageLoader(const String& name, const String& extension);
         _CGUL_EXPORT ~ImageLoader();
 
         _CGUL_EXPORT virtual bool CanLoad(const String& file) = 0;
-        _CGUL_EXPORT virtual Image* Load(const String& file) = 0;
+        _CGUL_EXPORT virtual void Load(const String& file, Image* image) = 0;
 
-        _CGUL_EXPORT virtual bool Save(const String& file, Image* img) = 0;
+        _CGUL_EXPORT virtual void Save(const String& file, const Image* image) const = 0;
 
         _CGUL_EXPORT String GetName();
         _CGUL_EXPORT String GetExtension();
