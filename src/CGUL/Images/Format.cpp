@@ -9,7 +9,13 @@
 
 namespace CGUL
 {
-    ImageFormat CreateImageFormat(String name, UInt32 redBits, UInt32 blueBits, UInt32 greenBits, UInt32 alphaBits, UInt32 type, Enum glFormat) 
+    _CGUL_EXPORT bool ImageFormat::operator==(const ImageFormat& o)
+    {
+        return (o.name == name && o.dataType == dataType && o.redBits == redBits && 
+            o.greenBits == greenBits && o.blueBits == blueBits && o.alphaBits == alphaBits && o.glFormat == glFormat);
+    }
+
+    _CGUL_EXPORT ImageFormat CreateImageFormat(String name, UInt32 redBits, UInt32 blueBits, UInt32 greenBits, UInt32 alphaBits, UInt32 type, Enum glFormat) 
     {
         ImageFormat ret;
         ret.name = name;

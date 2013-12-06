@@ -86,6 +86,20 @@ _CGUL_EXPORT bool CGUL::Image::Load(const String& file)
     return true;
 }
 
+_CGUL_EXPORT bool CGUL::Image::Save(const String& file, const String& ext)
+{
+    String f = file + U8(".");
+    String e = ext;
+    e.ToLower();
+    f += e;
+
+    ImageLoader* loader = ImageHandler::GetInstance()->GetLoaderByExtension(e);
+    if (loader == NULL)
+        return false;
+
+    return loader->Save(f, this);
+}
+
 _CGUL_EXPORT void* CGUL::Image::GetData()
 {
     return data;

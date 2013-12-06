@@ -31,6 +31,8 @@ namespace CGUL
         _CGUL_EXPORT virtual bool CanLoad(const String& file) = 0;
         _CGUL_EXPORT virtual Image* Load(const String& file) = 0;
 
+        _CGUL_EXPORT virtual bool Save(const String& file, Image* img) = 0;
+
         _CGUL_EXPORT String GetName();
         _CGUL_EXPORT String GetExtension();
     };

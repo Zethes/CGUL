@@ -36,7 +36,7 @@ namespace CGUL
 
         _CGUL_EXPORT bool CanLoad(const String& file);
         _CGUL_EXPORT bool Load(const String& file);
-        //_CGUL_EXPORT Save(const String& file, );
+        _CGUL_EXPORT bool Save(const String& file, const String& ext);
 
         /*template <typename T>
         _CGUL_EXPORT T* GetPixel(UInt32 x, UInt32 y);

@@ -160,3 +160,97 @@ _CGUL_EXPORT CGUL::Image* CGUL::ImageLoaders::PNG::Load(const String& file)
     delete[] rows;
     return new Image(format, width, height, (void*)data);
 }
+
+_CGUL_EXPORT bool CGUL::ImageLoaders::PNG::Save(const String& file, Image* img)
+{
+    if (img == NULL)
+        return false;
+
+    //Open up file.
+#   ifdef MSVC
+    FILE* fp;
+    fopen_s(&fp, file.GetCString(), "wb");
+#   else
+    FILE* fp = fopen(file.GetCString(), "wb");
+#   endif
+
+    if (fp == NULL)
+        return false;
+
+    //Setup structs.
+    png_structp png_ptr = NULL;
+    png_infop info_ptr = NULL;
+    png_byte ** row_pointers = NULL;
+
+    png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (png_ptr == NULL)
+        return false;
+
+    info_ptr = png_create_info_struct(png_ptr);
+    if (info_ptr == NULL)
+        return false;
+
+    //Get depth and type.
+    UInt32 depth, type;
+    if (img->GetFormat() == ImageFormats::RGB8)
+    {
+        depth = 8;
+        type = PNG_COLOR_TYPE_RGB;
+    }
+    else if (img->GetFormat() == ImageFormats::RGB16)
+    {
+        depth = 16;
+        type = PNG_COLOR_TYPE_RGB;
+    }
+    else if (img->GetFormat() == ImageFormats::RGBA8)
+    {
+        depth = 8;
+        type = PNG_COLOR_TYPE_RGB_ALPHA;
+    }
+    else if (img->GetFormat() == ImageFormats::RGBA16)
+    {
+        depth = 16;
+        type = PNG_COLOR_TYPE_RGB_ALPHA;
+    }
+    else
+    {
+        //TODO: Support PNG_COLOR_TYPE_GRAY, PNG_COLOR_TYPE_GRAY_ALPHA, PNG_COLOR_TYPE_PALLETTE, PNG_COLOR_MASK_PALLETTE, PNG_COLOR_MASK_COLOR, PNG_COLOR_MASK_ALPHA
+        //See http://refspecs.linuxbase.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libpng12.png.set.ihdr.1.html for more information.
+        //As well as non-byte data storage.
+        return false;
+    }
+
+    png_set_IHDR(png_ptr, info_ptr, img->GetWidth(), img->GetHeight(), depth, type, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+
+    //Save the data.
+    unsigned char* data = (unsigned char*)img->GetData();
+    UInt32 pixelSize = img->GetPixelSize();
+    row_pointers = (png_byte **)png_malloc(png_ptr, img->GetHeight() * sizeof(png_byte *));
+    for (UInt32 y = 0; y < img->GetHeight(); ++y)
+    {
+        png_byte * row = (png_byte *)png_malloc(png_ptr, sizeof(uint8_t) * img->GetWidth() * pixelSize);
+        row_pointers[y] = row;
+        for (UInt32 x = 0; x < img->GetWidth(); ++x)
+        {
+            for (UInt32 i = 0; i < pixelSize; ++i)
+            {
+                *row++ = data[(y*pixelSize*img->GetWidth())+(x*pixelSize)+i];
+            }
+        }
+    }
+
+    png_init_io(png_ptr, fp);
+    png_set_rows(png_ptr, info_ptr, row_pointers);
+    png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+
+    //Clean up
+    for (UInt32 y = 0; y < img->GetHeight(); ++y)
+    {
+        png_free(png_ptr, row_pointers[y]);
+    }
+    png_free(png_ptr, row_pointers);
+    png_destroy_write_struct(&png_ptr, &info_ptr);
+    fclose(fp);
+
+    return true;
+}

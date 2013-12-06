@@ -27,6 +27,8 @@ namespace CGUL
 
             _CGUL_EXPORT bool CanLoad(const String& file);
             _CGUL_EXPORT Image* Load(const String& file);
+
+            _CGUL_EXPORT bool Save(const String& file, Image* img);
         };
     }
 }
