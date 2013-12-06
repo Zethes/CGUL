@@ -1,5 +1,5 @@
-#include <Jatta.h>
-using namespace Jatta;
+#include <CGUL.hpp>
+using namespace CGUL;
 
 #include <iostream>
 

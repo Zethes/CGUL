@@ -32,7 +32,7 @@ namespace CGUL
             IPAddress netmask;
         };
 
-        void GetAdapters(FixedList<Adapter>* adapters);
+        _CGUL_EXPORT void GetAdapters(FixedList<Adapter>* adapters);
     }
 }
 

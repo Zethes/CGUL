@@ -27,7 +27,7 @@
  *  user and differs from each operating system and network interface.
  *  @todo finish documenting GetAdapters and fixed windows version
  */
-void CGUL::Network::GetAdapters(FixedList<Adapter>* adapters)
+_CGUL_EXPORT void CGUL::Network::GetAdapters(FixedList<Adapter>* adapters)
 {
 #   ifdef CGUL_WINDOWS
     // TODO: this wont work correctly right now (?)
