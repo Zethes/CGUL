@@ -8,6 +8,7 @@
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
+#include "../Exceptions/FatalException.hpp"
 #include <cmath>
 
 //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
@@ -292,6 +293,31 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT bool CGUL::Math::InEpsilon(Type value, Type compare, Type epsilon)
 {
     return (Math::Abs(value - compare) <= epsilon);
+}
+
+/** @param x Value to clamp.
+ *  @param min Minimum value for x.
+ *  @param max Maximum value for x.
+ *  @returns x or the clamped value.
+ */
+template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+_CGUL_INLINE_DEFINE Type CGUL::Math::Clamp(Type x, Type min, Type max)
+{
+#   ifdef CGUL_SANITY_CHECK
+    if (min > max)
+    {
+        throw FatalException(U8("Min value is greater than max for Math::Clamp."));
+    }
+#   endif
+    if (x < min)
+    {
+        return min;
+    }
+    if (x > max)
+    {
+        return max;
+    }
+    return x;
 }
 
 /** @param x The base value.

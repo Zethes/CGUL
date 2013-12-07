@@ -132,6 +132,10 @@ namespace CGUL
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE bool InEpsilon(Type value, Type compare, Type epsilon);
 
+        // @brief Clamps x between two values.
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Clamp(Type x, Type min, Type max);
+
         //! @brief Raises x to the power of y.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Pow(Type x, Type y);
