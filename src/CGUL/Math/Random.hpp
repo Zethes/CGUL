@@ -19,32 +19,33 @@ namespace CGUL
      */
     class Random
     {
-        unsigned int seed;
-        unsigned int multiplier;
-        unsigned int addition;
-        unsigned int modulus;
+        UInt32 seed;
+        UInt32 multiplier;
+        UInt32 addition;
+        UInt32 modulus;
     public:
-        _CGUL_INLINE_DEFINE static float UniformDist(float a, float b, float u);
-        _CGUL_INLINE_DEFINE static float ExponentialDist(float beta, float u);
-        _CGUL_INLINE_DEFINE static float WeibullDist(float a, float b, float c, float u);
-        _CGUL_INLINE_DEFINE static float TriangularDist(float xmin, float xmax, float c, float u);
-        _CGUL_INLINE_DEFINE static float Normal(float mean, float variance, float x);
+        _CGUL_INLINE_DEFINE static Float32 UniformDist(Float32 a, Float32 b, Float32 u);
+        _CGUL_INLINE_DEFINE static Float32 ExponentialDist(Float32 beta, Float32 u);
+        _CGUL_INLINE_DEFINE static Float32 WeibullDist(Float32 a, Float32 b, Float32 c, Float32 u);
+        _CGUL_INLINE_DEFINE static Float32 TriangularDist(Float32 xmin, Float32 xmax, Float32 c, Float32 u);
+        _CGUL_INLINE_DEFINE static Float32 Normal(Float32 mean, Float32 variance, Float32 x);
 
         _CGUL_INLINE_DEFINE Random();
-        _CGUL_INLINE_DEFINE Random(unsigned int seed);
-        _CGUL_INLINE_DEFINE Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus);
+        _CGUL_INLINE_DEFINE Random(UInt32 seed);
+        _CGUL_INLINE_DEFINE Random(UInt32 seed, UInt32 multiplier, UInt32 addition, UInt32 modulus);
 
-        _CGUL_INLINE_DEFINE void SetSeed(unsigned int seed);
+        _CGUL_INLINE_DEFINE void SetSeed(UInt32 seed);
 
-        _CGUL_INLINE_DEFINE unsigned int GetInteger();
-        _CGUL_INLINE_DEFINE float GetDecimal();
+        _CGUL_INLINE_DEFINE UInt32 GetInteger();
+        _CGUL_INLINE_DEFINE Float32 GetDecimal();
 
-        _CGUL_INLINE_DEFINE float GetUniform(float a, float b);
-        _CGUL_INLINE_DEFINE float GetExponential(float beta);
-        _CGUL_INLINE_DEFINE float GetWeibull(float a, float b, float c);
+        _CGUL_INLINE_DEFINE Float32 GetUniform(Float32 a, Float32 b);
+        _CGUL_INLINE_DEFINE Float32 GetExponential(Float32 beta);
+        _CGUL_INLINE_DEFINE Float32 GetWeibull(Float32 a, Float32 b, Float32 c);
 
         // TODO: clean this up and maybe add functionality
     };
 }
 
 #include "../External/Undefines.hpp"
+#include "Random_Implement.hpp"
