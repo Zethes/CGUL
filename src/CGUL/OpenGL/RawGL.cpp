@@ -411,11 +411,27 @@ _CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, Float32 v0, Float32 v1)
     GLCHECK("Failed to set shader uniform.");
 }
 
+_CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, const Vector2& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform2f);
+    glUniform2f(location, v.x, v.y);
+    GLCHECK("Failed to set shader uniform.");
+}
+
 _CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Float32* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform2fv);
     glUniform2fv(location, count, value);
+    GLCHECK("Failed to set shader uniform.");
+}
+
+_CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Vector2* value)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform2fv);
+    glUniform2fv(location, count, (float*)value);
     GLCHECK("Failed to set shader uniform.");
 }
 
@@ -443,6 +459,22 @@ _CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, Float32 v0, Float32 v1, Flo
     GLCHECK("Failed to set shader uniform.");
 }
 
+_CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Vector3& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform3f);
+    glUniform3f(location, v.x, v.y, v.z);
+    GLCHECK("Failed to set shader uniform.");
+}
+
+_CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Color& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform3f);
+    glUniform3f(location, v.GetRed(), v.GetGreen(), v.GetBlue());
+    GLCHECK("Failed to set shader uniform.");
+}
+
 _CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Float32* value)
 {
     GLCLEAR();
@@ -451,11 +483,27 @@ _CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.");
 }
 
+_CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Vector3* value)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform3fv);
+    glUniform3fv(location, count, (float*)value);
+    GLCHECK("Failed to set shader uniform.");
+}
+
 _CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, SInt v0, SInt v1, SInt v2)
 {
     GLCLEAR();
     GLVERIFY(glUniform3i);
     glUniform3i(location, v0, v1, v2);
+    GLCHECK("Failed to set shader uniform.");
+}
+
+_CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, const Color& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform3i);
+    glUniform3i(location, v.r, v.g, v.b);
     GLCHECK("Failed to set shader uniform.");
 }
 
@@ -475,6 +523,22 @@ _CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, Float32 v0, Float32 v1, Flo
     GLCHECK("Failed to set shader uniform.");
 }
 
+_CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Vector4& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform4f);
+    glUniform4f(location, v.x, v.y, v.z, v.w);
+    GLCHECK("Failed to set shader uniform.");
+}
+
+_CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Color& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform4f);
+    glUniform4f(location, v.GetRed(), v.GetGreen(), v.GetBlue(), v.GetAlpha());
+    GLCHECK("Failed to set shader uniform.");
+}
+
 _CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Float32* value)
 {
     GLCLEAR();
@@ -483,11 +547,27 @@ _CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.");
 }
 
+_CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Vector4* value)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform4fv);
+    glUniform4fv(location, count, (float*)value);
+    GLCHECK("Failed to set shader uniform.");
+}
+
 _CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, SInt v0, SInt v1, SInt v2, SInt v3)
 {
     GLCLEAR();
     GLVERIFY(glUniform4i);
     glUniform4i(location, v0, v1, v2, v3);
+    GLCHECK("Failed to set shader uniform.");
+}
+
+_CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, const Color& v)
+{
+    GLCLEAR();
+    GLVERIFY(glUniform4i);
+    glUniform4i(location, v.r, v.g, v.b, v.a);
     GLCHECK("Failed to set shader uniform.");
 }
 

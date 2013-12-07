@@ -9,6 +9,10 @@
 #include <CGUL/Config.hpp>
 #include "GL.hpp"
 #include "../Utility/String.hpp"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
+#include "../Images/Color.hpp"
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -75,16 +79,26 @@ namespace CGUL
         _CGUL_EXPORT void Uniform1i(SInt location, SInt v0);
         _CGUL_EXPORT void Uniform1iv(SInt location, SignedSize count, const SInt* value);
         _CGUL_EXPORT void Uniform2f(SInt location, Float32 v0, Float32 v1);
+        _CGUL_EXPORT void Uniform2f(SInt location, const Vector2& v);
         _CGUL_EXPORT void Uniform2fv(SInt location, SignedSize count, const Float32* value);
+        _CGUL_EXPORT void Uniform2fv(SInt location, SignedSize count, const Vector2* value);
         _CGUL_EXPORT void Uniform2i(SInt location, SInt v0, SInt v1);
         _CGUL_EXPORT void Uniform2iv(SInt location, SignedSize count, const SInt* value);
         _CGUL_EXPORT void Uniform3f(SInt location, Float32 v0, Float32 v1, Float32 v2);
+        _CGUL_EXPORT void Uniform3f(SInt location, const Vector3& v);
+        _CGUL_EXPORT void Uniform3f(SInt location, const Color& v);
         _CGUL_EXPORT void Uniform3fv(SInt location, SignedSize count, const Float32* value);
+        _CGUL_EXPORT void Uniform3fv(SInt location, SignedSize count, const Vector3* value);
         _CGUL_EXPORT void Uniform3i(SInt location, SInt v0, SInt v1, SInt v2);
+        _CGUL_EXPORT void Uniform3i(SInt location, const Color& color);
         _CGUL_EXPORT void Uniform3iv(SInt location, SignedSize count, const SInt* value);
         _CGUL_EXPORT void Uniform4f(SInt location, Float32 v0, Float32 v1, Float32 v2, Float32 v3);
+        _CGUL_EXPORT void Uniform4f(SInt location, const Vector4& v);
+        _CGUL_EXPORT void Uniform4f(SInt location, const Color& v);
         _CGUL_EXPORT void Uniform4fv(SInt location, SignedSize count, const Float32* value);
+        _CGUL_EXPORT void Uniform4fv(SInt location, SignedSize count, const Vector4* value);
         _CGUL_EXPORT void Uniform4i(SInt location, SInt v0, SInt v1, SInt v2, SInt v3);
+        _CGUL_EXPORT void Uniform4i(SInt location, const Color& color);
         _CGUL_EXPORT void Uniform4iv(SInt location, SignedSize count, const SInt* value);
         _CGUL_EXPORT void UniformMatrix2fv(SInt location, SignedSize count, bool transpose, const Float32* value);
         _CGUL_EXPORT void UniformMatrix3fv(SInt location, SignedSize count, bool transpose, const Float32* value);
