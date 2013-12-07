@@ -471,7 +471,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform3f);
-    glUniform3f(location, v.GetRed(), v.GetGreen(), v.GetBlue());
+    glUniform3f(location, v.GetRedFloat(), v.GetGreenFloat(), v.GetBlueFloat());
     GLCHECK("Failed to set shader uniform.");
 }
 
@@ -535,7 +535,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform4f);
-    glUniform4f(location, v.GetRed(), v.GetGreen(), v.GetBlue(), v.GetAlpha());
+    glUniform4f(location, v.GetRedFloat(), v.GetGreenFloat(), v.GetBlueFloat(), v.GetAlphaFloat());
     GLCHECK("Failed to set shader uniform.");
 }
 
