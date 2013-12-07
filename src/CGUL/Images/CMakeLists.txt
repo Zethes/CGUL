@@ -16,7 +16,6 @@ endif()
 
 set(CGUL_SOURCES
     ${CGUL_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageHandler.cpp
