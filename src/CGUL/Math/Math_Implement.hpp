@@ -213,12 +213,34 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Min(Type a, Type b)
 
 /** @param a The first value.
  *  @param b The second value.
+ *  @param c The third value.
+ *  @returns The smaller of the three values.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Min(Type a, Type b, Type c)
+{
+    return (a < b && a < c ? a : (b < c ? b : c));
+}
+
+/** @param a The first value.
+ *  @param b The second value.
  *  @returns The larger of the two values.
  */
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Max(Type a, Type b)
 {
     return (a > b ? a : b);
+}
+
+/** @param a The first value.
+ *  @param b The second value.
+ *  @param c The third value.
+ *  @returns The larger of the three values.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Max(Type a, Type b, Type c)
+{
+    return (a > b && a > c ? a : (b > c ? b : c));
 }
 
 /** @param x The number to round.
@@ -300,7 +322,7 @@ _CGUL_INLINE_IMPLEMENT bool CGUL::Math::InEpsilon(Type value, Type compare, Type
  *  @param max Maximum value for x.
  *  @returns x or the clamped value.
  */
-template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+template< typename Type >
 _CGUL_INLINE_DEFINE Type CGUL::Math::Clamp(Type x, Type min, Type max)
 {
 #   ifdef CGUL_SANITY_CHECK
