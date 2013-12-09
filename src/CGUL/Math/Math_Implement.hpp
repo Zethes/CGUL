@@ -283,21 +283,27 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Mod(Type x, Type div)
     return Math::Abs(x - Math::Floor(x / div) * div) * Math::Sign(x);
 }
 
-/** @param x The input value.
- *  @param min Minimum value.
- *  @param max Maximum value.
- *  @returns The clamped value, or x if not clamped.
+/** @param x Value to clamp.
+ *  @param min Minimum value for x.
+ *  @param max Maximum value for x.
+ *  @returns x or the clamped value.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Clamp(Type x, Type min, Type max)
+_CGUL_INLINE_DEFINE Type CGUL::Math::Clamp(Type x, Type min, Type max)
 {
-    if (x > max)
+#   ifdef CGUL_SANITY_CHECK
+    if (min > max)
     {
-        x = max;
+        throw FatalException(U8("Min value is greater than max for Math::Clamp."));
     }
+#   endif
     if (x < min)
     {
-        x = min;
+        return min;
+    }
+    if (x > max)
+    {
+        return max;
     }
     return x;
 }
@@ -334,31 +340,6 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT bool CGUL::Math::InEpsilon(Type value, Type compare, Type epsilon)
 {
     return (Math::Abs(value - compare) <= epsilon);
-}
-
-/** @param x Value to clamp.
- *  @param min Minimum value for x.
- *  @param max Maximum value for x.
- *  @returns x or the clamped value.
- */
-template< typename Type >
-_CGUL_INLINE_DEFINE Type CGUL::Math::Clamp(Type x, Type min, Type max)
-{
-#   ifdef CGUL_SANITY_CHECK
-    if (min > max)
-    {
-        throw FatalException(U8("Min value is greater than max for Math::Clamp."));
-    }
-#   endif
-    if (x < min)
-    {
-        return min;
-    }
-    if (x > max)
-    {
-        return max;
-    }
-    return x;
 }
 
 /** @param x The base value.
