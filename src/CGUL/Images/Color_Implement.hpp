@@ -9,67 +9,122 @@
 #include "../Math/Vector3.hpp"
 #include "../Math/Vector4.hpp"
 
-/** @param hue Hue value from 0-360.
- *  @param saturation Saturation value from 0-255.
- *  @param luminance Luminance value from 0-255.
- *  @param alpha Optional alpha value from 0-255.
+static CGUL::Float32 HueToRGB(CGUL::Float32 p, CGUL::Float32 q, CGUL::Float32 t)
+{
+    if (t < 0.0f)
+    {
+        t += 1;
+    }
+    if (t > 1.0f)
+    {
+        t -= 1;
+    }
+    if (t < 1.0f / 6.0f)
+    {
+        return p + (q - p) * 6.0f * t;
+    }
+    if (t < 1.0f / 2.0f)
+    {
+        return q;
+    }
+    if (t < 2.0f / 3.0f)
+    {
+        return p + (q - p) * (2.0f / 3.0f - t) * 6.0f;
+    }
+    return p;
+}
+
+/** @param hue Hue value from 0-1.
+ *  @param saturation Saturation value from 0-1.
+ *  @param luminance Luminance value from 0-1.
+ *  @param alpha Optional alpha value from 0-MAX.
  *  @returns The resulting color.
  */
 template< typename Type >
 _CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSL(Float32 hue, Float32 saturation, Float32 luminance, Type alpha)
 {
-    /*Color ret(0, 0, 0, alpha);
-
-    int f, p, q, t, h;
+    Float32 r, g, b;
 
     if (saturation == 0)
     {
-        ret.r = ret.g = ret.b = luminance;
-        return ret;
+        r = g = b = luminance;
+    }
+    else
+    {
+        Float32 q = luminance < 0.5 ? luminance * (1 + saturation) : luminance + saturation - luminance * saturation;
+        Float32 p = 2.0f * luminance - q;
+        r = HueToRGB(p, q, hue + 1.0f / 3.0f);
+        g = HueToRGB(p, q, hue);
+        b = HueToRGB(p, q, hue - 1.0f / 3.0f) ;
     }
 
-    f = ((hue % 60) * 255) / 60;
-    h = (hue % 360) / 60;
+    return ColorT((Type)(r * maxValue), (Type)(g * maxValue), (Type)(b * maxValue), alpha);
+}
 
-    p = (luminance * (256 - saturation)) / 256;
-    q = (luminance * (256 - (saturation * f) / 256 )) / 256;
-    t = (luminance * (256 - (saturation * (256 - f)) / 256)) / 256;
+/** @param hue Hue value from 0-1.
+ *  @param saturation Saturation value from 0-1.
+ *  @param value Color value from 0-1.
+ *  @param alpha Optional alpha value from 0-MAX.
+ *  @returns The resulting color.
+ */
+template< typename Type >
+_CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSV(Float32 hue, Float32 saturation, Float32 value, Type alpha)
+{
+    Float32 r, g, b;
 
-    switch (h)
+    Float32 i = Math::Floor(hue * 6.0f);
+    Float32 f = hue * 6.0f - i;
+    Float32 p = value * (1.0f - saturation);
+    Float32 q = value * (1.0f - f * saturation);
+    Float32 t = value * (1.0f - (1.0f - f) * saturation);
+
+    switch ((UInt32)Math::Mod(i, 6.0f))
     {
         case 0:
-            ret.r = luminance;
-            ret.g = t;
-            ret.b = p;
+        {
+            r = value;
+            g = t;
+            b = p;
             break;
+        }
         case 1:
-            ret.r = q;
-            ret.g = luminance;
-            ret.b = p;
+        {
+            r = q;
+            g = value;
+            b = p;
             break;
+        }
         case 2:
-            ret.r = p;
-            ret.g = luminance;
-            ret.b = t;
+        {
+            r = p;
+            g = value;
+            b = t;
             break;
+        }
         case 3:
-            ret.r = p;
-            ret.g = q;
-            ret.b = luminance;
+        {
+            r = p;
+            g = q;
+            b = value;
             break;
+        }
         case 4:
-            ret.r = t;
-            ret.g = p;
-            ret.b = luminance;
+        {
+            r = t;
+            g = p;
+            b = value;
             break;
-        default:
-            ret.r = luminance;
-            ret.g = p;
-            ret.b = q;
+        }
+        case 5:
+        {
+            r = value;
+            g = p;
+            b = q;
             break;
+        }
     }
-    return ret;*/
-    return ColorT(0, 0, 0, 0);
+
+    return ColorT((Type)(r * maxValue), (Type)(g * maxValue), (Type)(b * maxValue), alpha);
 }
 
 /**
@@ -152,7 +207,7 @@ _CGUL_EXPORT CGUL::ColorT< Type >& CGUL::ColorT< Type >::operator=(const ColorT&
     return *this;
 }
 
-/** @details Each element is calculated by taking their respective values and dividing by 255.0f.
+/** @details Each element is calculated by taking their respective values and dividing by MAX.
  *  This is useful when colors need to be represented as floating point numbers rather than byte
  *  values, as is the case in a lot of API's (especially graphical ones, such as OpenGL).
  *  @returns A vector containing the r, g, b values as floating point x, y, z.
@@ -161,7 +216,7 @@ template< typename Type >
 template< typename VectorType >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< VectorType > CGUL::ColorT< Type >::ToVector3() const
 {
-    return Vector3T< Type >(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f);
+    return Vector3T< Type >(this->r / (Float32)maxValue, this->g / (Float32)maxValue, this->b / (Float32)maxValue);
 }
 
 /** @details Same as @ref ToVector3 except it contains the alpha value as well.
@@ -171,7 +226,7 @@ template< typename Type >
 template< typename VectorType >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< VectorType > CGUL::ColorT< Type >::ToVector4() const
 {
-    return Vector4T< VectorType >(this->r / 255.0f, this->g / 255.0f, this->b / 255.0f, this->a / 255.0f);
+    return Vector4T< VectorType >(this->r / (Float32)maxValue, this->g / (Float32)maxValue, this->b / (Float32)maxValue, this->a / (Float32)maxValue);
 }
 
 template< typename Type >
@@ -221,3 +276,86 @@ _CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::ColorT< Type >::GetAlphaFloat() const
 {
     return a / (Float32)maxValue;
 }
+
+template< typename Type >
+_CGUL_INLINE_DEFINE void CGUL::ColorT< Type >::SetHSL(Float32 hue, Float32 saturation, Float32 luminance)
+{
+    *this = MakeHSL(hue, saturation, luminance);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE void CGUL::ColorT< Type >::SetHSV(Float32 hue, Float32 saturation, Float32 value)
+{
+    *this = MakeHSV(hue, saturation, value);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE void CGUL::ColorT< Type >::GetHSL(Float32* hue, Float32* saturation, Float32* luminance) const
+{
+    Float32 red = r / (Float32)maxValue;
+    Float32 green = g / (Float32)maxValue;
+    Float32 blue = b / (Float32)maxValue;
+    Float32 max = Math::Max(red, green, blue);
+    Float32 min = Math::Min(red, green, blue);
+    *luminance = (max + min) / 2.0f;
+
+    if(max == min)
+    {
+        *hue = 0.0f;
+        *saturation = 0.0f;
+    }
+    else
+    {
+        Float32 d = max - min;
+        *saturation = *luminance > 0.5f ? d / (2.0f - max - min) : d / (max + min);
+        if (max == red)
+        {
+            *hue = (green - blue) / d + (green < blue ? 6.0f : 0.0f);
+        }
+        else if (max == green)
+        {
+            *hue = (blue - red) / d + 2.0f;
+        }
+        else
+        {
+            *hue = (red - green) / d + 4.0f;
+        }
+        *hue = *hue / 6.0f;
+    }
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE void CGUL::ColorT< Type >::GetHSV(Float32* hue, Float32* saturation, Float32* value) const
+{
+    Float32 red = r / (Float32)maxValue;
+    Float32 green = g / (Float32)maxValue;
+    Float32 blue = b / (Float32)maxValue;
+    Float32 max = Math::Max(red, green, blue);
+    Float32 min = Math::Min(red, green, blue);
+    *value = max;
+
+    Float32 d = max - min;
+    *saturation = max == 0.0f ? 0.0f : d / (Float32)max;
+
+    if (max == min)
+    {
+        *hue = 0.0f;
+    }
+    else
+    {
+        if (max == red)
+        {
+            *hue = (green - blue) / d + (green < blue ? 6.0f : 0.0f);
+        }
+        else if (max == green)
+        {
+            *hue = (blue - red) / d + 2.0f;
+        }
+        else
+        {
+            *hue = (red - green) / d + 4.0f;
+        }
+        *hue = *hue / 6.0f;
+    }
+}
+

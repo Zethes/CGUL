@@ -25,6 +25,7 @@ namespace CGUL
 
         //! @brief Creates a color given a hue, saturation, luminance, and (optionally) alpha.
         _CGUL_INLINE_DEFINE static ColorT MakeHSL(Float32 hue, Float32 saturation, Float32 luminance, Type alpha = maxValue);
+        //! @brief Creates a color given a hue, saturation, value, and (optionally) alpha.
         _CGUL_INLINE_DEFINE static ColorT MakeHSV(Float32 hue, Float32 saturation, Float32 value, Type alpha = maxValue);
 
         //! @brief The red value.
@@ -74,6 +75,11 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Float32 GetGreenFloat() const;
         _CGUL_INLINE_DEFINE Float32 GetBlueFloat() const;
         _CGUL_INLINE_DEFINE Float32 GetAlphaFloat() const;
+
+        _CGUL_INLINE_DEFINE void SetHSV(Float32 hue, Float32 saturation, Float32 luminance);
+        _CGUL_INLINE_DEFINE void SetHSL(Float32 hue, Float32 saturation, Float32 value);
+        _CGUL_INLINE_DEFINE void GetHSL(Float32* hue, Float32* saturation, Float32* luminance) const;
+        _CGUL_INLINE_DEFINE void GetHSV(Float32* hue, Float32* saturation, Float32* value) const;
     };
 
     typedef ColorT< Byte > Color;
