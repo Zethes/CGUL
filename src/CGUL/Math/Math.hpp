@@ -103,9 +103,15 @@ namespace CGUL
         //! @brief Finds the smaller of the two values.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Min(Type a, Type b);
+        //! @brief Finds the smaller of the three values.
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Min(Type a, Type b, Type c);
         //! @brief Finds the larger of the two values.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Max(Type a, Type b);
+        //! @brief Finds the larger of the three values.
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Max(Type a, Type b, Type c);
 
         //! @brief Rounds the number down.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
@@ -135,6 +141,10 @@ namespace CGUL
         //! @brief Checks if two values are equal within a given epsilon.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE bool InEpsilon(Type value, Type compare, Type epsilon);
+
+        // @brief Clamps x between two values.
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Clamp(Type x, Type min, Type max);
 
         //! @brief Raises x to the power of y.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >

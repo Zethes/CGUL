@@ -4,6 +4,7 @@
 
 set(CGUL_SOURCES
     ${CGUL_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Check.cpp
     PARENT_SCOPE
 )
 

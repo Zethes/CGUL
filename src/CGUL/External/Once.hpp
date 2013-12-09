@@ -264,9 +264,9 @@ namespace CGUL
 #if defined(CPP_HEADER_CSTDDEF)
     typedef std::ptrdiff_t PtrDiff;
 #elif defined(CPP_HEADER_STDDEF_H)
-#   typedef ptrdiff_t PtrDiff;
+    typedef ptrdiff_t PtrDiff;
 #else
-    typedef SignedSize PtrDiff
+    typedef SignedSize PtrDiff;
 #endif
 }
 #undef TYPE

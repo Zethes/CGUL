@@ -18,8 +18,8 @@
 
 - (id)init;
 
-- (void) keyUp: (NSEvent *)event;
-- (void) keyDown: (NSEvent *)event;
+- (void)keyUp: (NSEvent *)event;
+- (void)keyDown: (NSEvent *)event;
 
 @end
 

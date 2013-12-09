@@ -17,13 +17,15 @@ namespace CGUL
     namespace Memory
     {
         template< typename T >
-        T* AllocateBulk(Size count);
+        _CGUL_INLINE_DEFINE T* AllocateBulk(Size count);
         template< typename T >
-        void FreeBulk(T* data);
+        _CGUL_INLINE_DEFINE void FreeBulk(T* data);
 
         _CGUL_INLINE_DEFINE void ZeroData(void* data, Size count);
         template< typename T >
-        void ZeroArray(T* data, Size count);
+        _CGUL_INLINE_DEFINE void ZeroArray(T* data, Size count);
+
+        _CGUL_INLINE_DEFINE void Copy(void* destination, void* source, Size count);
     }
 }
 

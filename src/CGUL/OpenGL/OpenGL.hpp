@@ -24,16 +24,16 @@ namespace CGUL
         _CGUL_EXPORT void Enable(Enum cap);
         _CGUL_EXPORT void Disable(Enum cap);
 
-        _CGUL_EXPORT std::string GetString(Enum name);
-        _CGUL_EXPORT std::string GetStringi(Enum name, unsigned int index);
-        _CGUL_EXPORT std::vector<CGUL::String> GetSupportedExtensions();
-        _CGUL_EXPORT bool SupportsExtension(CGUL::String ext);
+        _CGUL_EXPORT String GetString(Enum name);
+        _CGUL_EXPORT String GetStringi(Enum name, unsigned int index);
+        _CGUL_EXPORT void GetSupportedExtensions(FixedList< String >* extensions);
+        _CGUL_EXPORT bool SupportsExtension(String ext);
         _CGUL_EXPORT int GetOpenGLVersionMajor();
         _CGUL_EXPORT int GetOpenGLVersionMinor();
-        _CGUL_EXPORT std::string GetOpenGLVersion();
-        _CGUL_EXPORT std::string GetGLSLVersion();
-        _CGUL_EXPORT std::string GetOpenGLVendor();
-        _CGUL_EXPORT std::string GetOpenGLRenderer();
+        _CGUL_EXPORT String GetOpenGLVersion();
+        _CGUL_EXPORT String GetGLSLVersion();
+        _CGUL_EXPORT String GetOpenGLVendor();
+        _CGUL_EXPORT String GetOpenGLRenderer();
 
         _CGUL_EXPORT void BlendFunc(Enum sfactor, Enum dfactor);
         _CGUL_EXPORT void BlendFunci(UInt32 buf, Enum sfactor, Enum dfactor);

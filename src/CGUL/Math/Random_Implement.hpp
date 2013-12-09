@@ -8,7 +8,7 @@
 #include <ctime>
 #include <cmath>
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::UniformDist(float a, float b, float u)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::UniformDist(Float32 a, Float32 b, Float32 u)
 {
     if (u < 0)
     {
@@ -21,7 +21,7 @@ _CGUL_INLINE_IMPLEMENT float CGUL::Random::UniformDist(float a, float b, float u
     return u * (b - a) + a;
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::ExponentialDist(float beta, float u)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::ExponentialDist(Float32 beta, Float32 u)
 {
     if (u < 0)
     {
@@ -35,7 +35,7 @@ _CGUL_INLINE_IMPLEMENT float CGUL::Random::ExponentialDist(float beta, float u)
     return beta * std::log(-1 / (u - 1));
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::WeibullDist(float a, float b, float c, float u)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::WeibullDist(Float32 a, Float32 b, Float32 c, Float32 u)
 {
     if (u < 0)
     {
@@ -48,7 +48,7 @@ _CGUL_INLINE_IMPLEMENT float CGUL::Random::WeibullDist(float a, float b, float c
     return b * std::pow(std::log(-1 / (u - 1)), 1 / c) + a;
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::TriangularDist(float xmin, float xmax, float c, float u)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::TriangularDist(Float32 xmin, Float32 xmax, Float32 c, Float32 u)
 {
     if (u < 0)
     {
@@ -68,20 +68,20 @@ _CGUL_INLINE_IMPLEMENT float CGUL::Random::TriangularDist(float xmin, float xmax
     }
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::Normal(float mean, float variance, float x)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::Normal(Float32 mean, Float32 variance, Float32 x)
 {
-    return (1 / (float)std::sqrt(2 * 3.14159 * variance)) * std::exp(-(std::pow(x - mean, 2) / (2 * variance)));
+    return (1 / (Float32)std::sqrt(2 * 3.14159 * variance)) * std::exp(-(std::pow(x - mean, 2) / (2 * variance)));
 }
 
 _CGUL_INLINE_IMPLEMENT CGUL::Random::Random()
 {
-    this->seed = (unsigned int)std::time(0);
+    this->seed = (UInt32)std::time(0);
     this->multiplier = 16807;
     this->addition = 0;
     this->modulus = 2147483647;
 }
 
-_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed)
+_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(UInt32 seed)
 {
     this->seed = seed;
     this->multiplier = 16807;
@@ -89,7 +89,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed)
     this->modulus = 2147483647;
 }
 
-_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed, unsigned int multiplier, unsigned int addition, unsigned int modulus)
+_CGUL_INLINE_IMPLEMENT CGUL::Random::Random(UInt32 seed, UInt32 multiplier, UInt32 addition, UInt32 modulus)
 {
     this->seed = seed;
     this->multiplier = multiplier;
@@ -97,33 +97,33 @@ _CGUL_INLINE_IMPLEMENT CGUL::Random::Random(unsigned int seed, unsigned int mult
     this->modulus = modulus;
 }
 
-_CGUL_INLINE_IMPLEMENT void CGUL::Random::SetSeed(unsigned int seed)
+_CGUL_INLINE_IMPLEMENT void CGUL::Random::SetSeed(UInt32 seed)
 {
     this->seed = seed;
 }
 
-_CGUL_INLINE_IMPLEMENT unsigned int CGUL::Random::GetInteger()
+_CGUL_INLINE_IMPLEMENT CGUL::UInt32 CGUL::Random::GetInteger()
 {
     seed = (multiplier * seed + addition) % modulus;
     return seed;
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetDecimal()
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetDecimal()
 {
-    return GetInteger() / float(modulus);
+    return GetInteger() / Float32(modulus);
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetUniform(float a, float b)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetUniform(Float32 a, Float32 b)
 {
     return GetDecimal() * (b - a) + a;
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetExponential(float beta)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetExponential(Float32 beta)
 {
     return ExponentialDist(beta, GetDecimal());
 }
 
-_CGUL_INLINE_IMPLEMENT float CGUL::Random::GetWeibull(float a, float b, float c)
+_CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetWeibull(Float32 a, Float32 b, Float32 c)
 {
     return WeibullDist(a, b, c, GetDecimal());
 }

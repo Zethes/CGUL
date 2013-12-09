@@ -501,6 +501,46 @@ _CGUL_EXPORT CGUL::String CGUL::String::SubString(Size start, Size count, bool b
     }
 }
 
+/** @param string String to check for.
+ *  @returns True if the string was found.
+ */
+_CGUL_EXPORT bool CGUL::String::Contains(const String& string) const
+{
+    return (FindFirstOf(string) != none);
+}
+
+/** @param string String to check for.
+ *  @returns True if the string was found at the beginning.
+ */
+_CGUL_EXPORT bool CGUL::String::BeginsWith(const String& string) const
+{
+    std::string::const_iterator i = data.begin();
+    for (std::string::const_iterator k = string.data.begin(); k != string.data.end(); k++, i++)
+    {
+        if (i == data.end() || *i != *k)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+/** @param string String to check for.
+ *  @returns True if the string was found at the end.
+ */
+_CGUL_EXPORT bool CGUL::String::EndsWith(const String& string) const
+{
+    std::string::const_reverse_iterator i = data.rbegin();
+    for (std::string::const_reverse_iterator k = string.data.rbegin(); k != string.data.rend(); k++, i++)
+    {
+        if (i == data.rend() || *i != *k)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 /** @param str The c string.
  *  @returns A reference to this object.
  */
@@ -637,24 +677,43 @@ _CGUL_EXPORT void CGUL::String::TrimEnd()
     data = data.substr(0, data.length() - trimEnd);
 }
 
-_CGUL_EXPORT std::vector<CGUL::String> CGUL::String::Explode(const String& delimiter, Size limit) const
+_CGUL_EXPORT void CGUL::String::Explode(const String& delimiter, FixedList< String >* debris) const
 {
-    std::vector<CGUL::String> result;
+    Explode(delimiter, none, debris);
+}
+
+_CGUL_EXPORT void CGUL::String::Explode(const String& delimiter, Size limit, FixedList< String >* debris) const
+{
     Size find = 0;
     Size from = 0;
+    Size count = 0;
     do
     {
         if (limit-- == 0)
         {
-            result.push_back(SubString(from));
             break;
         }
         find = FindFirstOf(delimiter, from);
-        result.push_back(SubString(from, find - from, true));
+        count++;
         from = find + 1;
     }
     while (find != none);
-    return result;
+    debris->SetSize(count);
+    find = 0;
+    from = 0;
+    count = 0;
+    do
+    {
+        if (limit-- == 0)
+        {
+            debris->Set(count++, SubString(from));
+            break;
+        }
+        find = FindFirstOf(delimiter, from);
+        debris->Set(count++, SubString(from, find - from, true));
+        from = find + 1;
+    }
+    while (find != none);
 }
 
 /**
@@ -675,6 +734,22 @@ _CGUL_EXPORT void CGUL::String::ToUpper()
     {
         *it = toupper(*it);
     }
+}
+
+//! @brief Gets the string as all lowercase letters.
+_CGUL_EXPORT CGUL::String CGUL::String::GetLower() const
+{
+    String ret(*this);
+    ret.ToLower();
+    return ret;
+}
+
+//! @brief Gets the string as all uppercase letters.
+_CGUL_EXPORT CGUL::String CGUL::String::GetUpper() const
+{
+    String ret(*this);
+    ret.ToUpper();
+    return ret;
 }
 
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r

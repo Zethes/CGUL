@@ -38,12 +38,9 @@ void CGUL::Array< T >::SetData(void* data, Size size)
 template< typename T >
 void CGUL::Array< T >::Free()
 {
-    if (this->size != 0)
-    {
-        delete[] (unsigned char*)this->data;
-        this->data = NULL;
-        this->size = 0;
-    }
+    delete[] (unsigned char*)this->data;
+    this->data = NULL;
+    this->size = 0;
 }
 
 template< typename T >

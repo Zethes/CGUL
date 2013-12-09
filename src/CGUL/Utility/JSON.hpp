@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "String.hpp"
+
+// CGUL Includes
+#include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
  namespace CGUL
@@ -119,7 +125,7 @@
             _CGUL_EXPORT void PushBack(const Value& v);
             _CGUL_EXPORT void PopBack();
             _CGUL_EXPORT void Erase(std::vector<Value>::iterator i);
-            _CGUL_EXPORT CGUL::Size Size() const;
+            _CGUL_EXPORT Size GetSize() const;
 
             _CGUL_EXPORT String ToString();
         };
@@ -191,3 +197,6 @@
         _CGUL_EXPORT Value Parse(String str);
     }
  }
+
+// Undefines
+#include "../External/Undefines.hpp"

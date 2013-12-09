@@ -7,6 +7,7 @@
 
 #pragma once
 #include <CGUL/Config.hpp>
+#include "../Containers/FixedList.hpp"
 #include "../External/Defines.hpp"
 
 #ifndef CGUL_NO_U8
@@ -147,6 +148,13 @@ namespace CGUL
         //! @brief Gets a part of the string.  Supports both Utf-8 and individual bytes.
         _CGUL_EXPORT String SubString(Size offset, Size count = none, bool bytes = false) const;
 
+        //! @brief Checks if the string contains another string.
+        _CGUL_EXPORT bool Contains(const String& string) const;
+        //! @brief Checks if the string begins with another string.
+        _CGUL_EXPORT bool BeginsWith(const String& string) const;
+        //! @brief Checks if the string ends with another string.
+        _CGUL_EXPORT bool EndsWith(const String& string) const;
+
         //! @brief Sets the value of the string given a c string.
         _CGUL_EXPORT String& Set(const char* str);
         //! @brief Sets the value of the string given another string.
@@ -161,12 +169,17 @@ namespace CGUL
         _CGUL_EXPORT void TrimStart();
         //! @brief Trims whitespace at the end of the string.
         _CGUL_EXPORT void TrimEnd();
-        _CGUL_EXPORT std::vector<String> Explode(const String& delimiter, Size limit = none) const;
+        _CGUL_EXPORT void Explode(const String& delimiter, FixedList< String >* debris) const;
+        _CGUL_EXPORT void Explode(const String& delimiter, Size limit, FixedList< String >* debris) const;
 
         //! @brief Converts the entire string to uppercase letters.
         _CGUL_EXPORT void ToLower();
         //! @brief Converts the entire string to lowercase letters.
         _CGUL_EXPORT void ToUpper();
+        //! @brief Gets the string as all lowercase letters.
+        _CGUL_EXPORT String GetLower() const;
+        //! @brief Gets the string as all uppercase letters.
+        _CGUL_EXPORT String GetUpper() const;
 
         //! @brief Removes all whitespace from within a string.
         _CGUL_EXPORT void RemoveWhitespace();

@@ -180,8 +180,21 @@ CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA);
 #endif
 
 #ifdef CGUL_BUILD
-#   define GLCLEAR() { glGetError(); }
-#   define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL: " str); }
+#   ifdef CGUL_SAFE
+#       define GLCLEAR() { glGetError(); }
+#   else
+#       define GLCLEAR()
+#   endif
+#   ifdef CGUL_CAUTIOUS
+#       define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL: " str); }
+#   else
+#       define GLCHECK(str)
+#   endif
+#   ifdef CGUL_SAFE
+#       define GLVERIFY(command) if ((void*)command == 0) { throw std::runtime_error("OpenGL command " #command " is not available."); }
+#   else
+#       define GLVERIFY(command)
+#   endif
 #endif
 
 #endif

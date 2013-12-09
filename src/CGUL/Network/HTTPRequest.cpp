@@ -10,6 +10,7 @@
 #include "HTTPRequest.hpp"
 #include "HTTPEnums.hpp"
 #include "../Exceptions/NetworkException.hpp"
+#include "../Containers/Vector.hpp"
 #include "../Utility/Timer.hpp"
 
 CGUL::Network::Header::Header() :
@@ -201,10 +202,12 @@ void CGUL::Network::HTTPRequest::ParseResponseHead()
     header.transferEncoding = HTTPTransferEncoding::CONTENT_LENGTH;
 
     //Split the lines to parse one by one.
-    std::vector<String> lines = responseHead.Explode("\n");
+    Vector< String > lines;
+    responseHead.Explode("\n", &lines);
     for (unsigned int i = 0; i < lines.size(); i++)
     {
-        std::vector<String> parts = lines[i].Explode(" ");
+        Vector< String > parts;
+        lines[i].Explode(" ", &parts);
         for (unsigned int j = 0; j < parts.size(); j++)
         {
             parts[j].Trim();

@@ -28,6 +28,35 @@ _CGUL_EXPORT void CGUL::Timer::Sleep(UInt32 milliseconds)
 #   endif
 }
 
+/** @details Same as the @ref GetMilliseconds method but in seconds.
+ *  @see GetMilliseconds
+ *  @returns An undefined time in seconds.
+ */
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
+{
+    return (UInt32)(GetMilliseconds() / 1000);
+}
+
+/** @details Gets a time from the operating system in milliseconds.  The time acquired is not
+ *  guaranteed to represent any significance aside from being incremental from a previous
+ *  @ref GetMilliseconds or @ref GetSeconds call.  In other words, this time does not represent the
+ *  current time of day, the time the operating system has been up, or any other such data.  The
+ *  only purpose of this method is to compare two time stamps to find a delta in time.
+ *  @returns An undefined time in milliseconds.
+ */
+_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetMilliseconds()
+{
+#   ifdef CGUL_WINDOWS
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    return (UInt32)(li.QuadPart / (UInt32)pcFreq);
+#   else
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    return ((t.tv_sec) * 1000 + t.tv_usec / 1000.0) + 0.5f;
+#   endif
+}
+
 /**
  */
 _CGUL_EXPORT CGUL::Timer::Timer()
@@ -83,35 +112,6 @@ _CGUL_EXPORT void CGUL::Timer::Reset()
 {
     mSeconds = 0;
     startTime = GetMilliseconds();
-}
-
-/** @details Same as the @ref GetMilliseconds method but in seconds.
- *  @see GetMilliseconds
- *  @returns An undefined time in seconds.
- */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
-{
-    return (UInt32)(GetMilliseconds() / 1000);
-}
-
-/** @details Gets a time from the operating system in milliseconds.  The time acquired is not
- *  guaranteed to represent any significance aside from being incremental from a previous
- *  @ref GetMilliseconds or @ref GetSeconds call.  In other words, this time does not represent the
- *  current time of day, the time the operating system has been up, or any other such data.  The
- *  only purpose of this method is to compare two time stamps to find a delta in time.
- *  @returns An undefined time in milliseconds.
- */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetMilliseconds()
-{
-#   ifdef CGUL_WINDOWS
-    LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return (UInt32)(li.QuadPart / (UInt32)pcFreq);
-#   else
-    struct timeval t;
-    gettimeofday(&t, NULL);
-    return ((t.tv_sec) * 1000 + t.tv_usec / 1000.0) + 0.5f;
-#   endif
 }
 
 /** @details Same as @ref GetElapsedMilliseconds method but in seconds.

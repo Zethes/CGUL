@@ -120,7 +120,7 @@ _CGUL_EXPORT void CGUL::JSON::Array::Erase(std::vector<Value>::iterator i)
     items.erase(i);
 }
 
-_CGUL_EXPORT CGUL::Size CGUL::JSON::Array::Size() const
+_CGUL_EXPORT CGUL::Size CGUL::JSON::Array::GetSize() const
 {
     return items.size();
 }

@@ -518,7 +518,7 @@ _CGUL_INLINE_IMPLEMENT void CGUL::Vector4T< Type >::Ceil()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Floored()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Floored() const
 {
     return Vector4(Math::Floor(this->x),
                    Math::Floor(this->y),
@@ -529,7 +529,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Floored()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Rounded()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Rounded() const
 {
     return Vector4(Math::Round(this->x),
                    Math::Round(this->y),
@@ -540,10 +540,26 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Rounded()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Ceiled()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Ceiled() const
 {
     return Vector4(Math::Ceil(this->x),
                    Math::Ceil(this->y),
                    Math::Ceil(this->z),
                    Math::Ceil(this->w));
+}
+
+/** @returns x + y + z + w
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::SumComponents() const
+{
+    return x + y + z + w;
+}
+
+/** @returns x * y * z * w
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::MultiplyComponents() const
+{
+    return x * y * z * w;
 }

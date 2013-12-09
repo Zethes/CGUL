@@ -55,6 +55,8 @@ fast_check_include_file(stdint.h CPP_HEADER_STDINT_H)
 fast_check_include_file(cstddef CPP_HEADER_CSTDDEF)
 fast_check_include_file(stddef.h CPP_HEADER_STDDEF_H)
 
+fast_check_include_file(dirent.h CPP_HEADER_DIRENT_H)
+
 # C++ standard checks
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_FUNCTION_TEMPLATE_DEFAULT function_template_default.cpp)

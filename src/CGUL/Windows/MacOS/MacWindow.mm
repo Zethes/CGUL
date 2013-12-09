@@ -23,11 +23,11 @@
     return self;
 }
 
-- (void) keyUp: (NSEvent *)event
+- (void)keyUp: (NSEvent *)event
 {
 }
 
-- (void) keyDown: (NSEvent *)event
+- (void)keyDown: (NSEvent *)event
 {
 }
 

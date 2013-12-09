@@ -6,7 +6,7 @@
  */
 
 #include "Font.hpp"
-#include "../Images/ImageFormats.hpp"
+#include "../Images/Format.hpp"
 #include <string.h>
 
 static FT_Library __jatta_ttf_library;
@@ -224,7 +224,7 @@ _CGUL_EXPORT CGUL::Image CGUL::Font::GenerateText(CGUL::Color color, const Strin
         }
     }
 
-    return Image(ImageFormats::RGBA8, width, height, buffer);
+    return Image(ImageFormats::RGBA8, UCoord32(width, height), buffer);
 }
 
 _CGUL_EXPORT CGUL::UInt64 CGUL::Font::GetCharacterIndex(UInt32 face, UInt64 characterCode)

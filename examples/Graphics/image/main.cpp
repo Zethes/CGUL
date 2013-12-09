@@ -108,17 +108,28 @@ int main()
 {
     try
     {
-        ImageLoaders::PNG loader;
-        if (!loader.CanLoad("resources/logo.png"))
+        std::cout << "Suported image file formats: " << std::endl;
+        CGUL::Vector<ImageLoader*> loaders = CGUL::ImageHandler::GetInstance()->GetAllLoaders();
+        for (UInt32 i = 0; i < loaders.size(); i++)
+        {
+            std::cout << (i+1) << ". " << loaders[i]->GetName() << " (" << loaders[i]->GetExtension() << ")" << std::endl;
+        }
+
+        Image* image = new Image();
+        if (!image->CanLoad("resources/logo.png"))
         {
             throw FatalException("Cannot load PNG images.");
         }
-        Image* image = loader.Load("resources/logo.png");
+
+        image->Load("resources/logo.png");
+        if (!image->Save("out", "png"))
+        {
+            throw FatalException("Cannot save PNG images.");
+        }
 
         WindowStyle style;
         style.title = U8("logo.png (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
-        style.width = image->GetWidth();
-        style.height = image->GetHeight();
+        style.size = UCoord32(image->GetWidth(), image->GetHeight());
         style.backgroundColor = Colors::black;
         style.resizable = false;
 

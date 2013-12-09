@@ -145,11 +145,16 @@ namespace CGUL
         _CGUL_INLINE_DEFINE void Ceil();
 
         //! @brief Returns a vector with each component rounded down.
-        _CGUL_INLINE_DEFINE Vector3T Floored();
+        _CGUL_INLINE_DEFINE Vector3T Floored() const;
         //! @brief Returns a vector with each component rounded.
-        _CGUL_INLINE_DEFINE Vector3T Rounded();
+        _CGUL_INLINE_DEFINE Vector3T Rounded() const;
         //! @brief Returns a vector with each component rounded up.
-        _CGUL_INLINE_DEFINE Vector3T Ceiled();
+        _CGUL_INLINE_DEFINE Vector3T Ceiled() const;
+
+        //! @brief Gets the sum of the elements.
+        _CGUL_INLINE_DEFINE Type SumComponents() const;
+        //! @brief Gets the product of the elements.
+        _CGUL_INLINE_DEFINE Type MultiplyComponents() const;
     };
 
     typedef Vector3T< Float32 > Vector3;

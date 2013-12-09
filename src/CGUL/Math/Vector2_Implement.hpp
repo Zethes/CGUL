@@ -42,6 +42,19 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::FromAngle(
     return CGUL::Vector2(Math::Cos(angle) * magnitude, Math::Sin(angle) * magnitude);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::DotProduct(const Vector2T& valueA, const Vector2T& valueB)
+{
+    return (valueA.x * valueB.x) + (valueA.y * valueB.y);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Normalized(const Vector2T& value)
+{
+    Type inverseMagnitude = 1.0f / value.GetMagnitude();
+    return Vector2T(value.x * inverseMagnitude, value.y * inverseMagnitude);
+}
+
 /**
  */
 template< typename Type >
@@ -471,7 +484,7 @@ _CGUL_INLINE_IMPLEMENT void CGUL::Vector2T< Type >::Ceil()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Floored()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Floored() const
 {
     return Vector2(Math::Floor(this->x), Math::Floor(this->y));
 }
@@ -479,7 +492,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Floored()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Rounded()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Rounded() const
 {
     return Vector2(Math::Round(this->x), Math::Round(this->y));
 }
@@ -487,7 +500,23 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Rounded()
 /** @returns The resulting vector.
  */
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Ceiled()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Ceiled() const
 {
     return Vector2(Math::Ceil(this->x), Math::Ceil(this->y));
+}
+
+/** @returns x + y
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::SumComponents() const
+{
+    return x + y;
+}
+
+/** @returns x * y
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::MultiplyComponents() const
+{
+    return x * y;
 }
