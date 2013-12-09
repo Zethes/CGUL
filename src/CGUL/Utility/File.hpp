@@ -6,9 +6,15 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "../Utility/String.hpp"
+
+// CGUL Includes
 #include "../Containers/FixedList.hpp"
+#include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 // TODO: remove this hack, favor a "File" class with a "Delete" method
@@ -73,4 +79,5 @@ namespace CGUL
     }
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

@@ -150,6 +150,7 @@
 
 #include "CGUL/Utility/AutoRelease.hpp"
 #include "CGUL/Utility/Encryption.hpp"
+#include "CGUL/Utility/Event.hpp"
 #include "CGUL/Utility/File.hpp"
 #include "CGUL/Utility/JSON.hpp"
 #include "CGUL/Utility/Memory.hpp"

@@ -5,12 +5,16 @@
 /** @file File.cpp
  */
 
+// Header
 #include "File.hpp"
+
+// CGUL Includes
+#include "../Containers/Vector.hpp"
 #include "../Exceptions/FatalException.hpp"
 #include "../Exceptions/FileException.hpp"
 #include "../Utility/Encryption.hpp"
-#include "../Containers/Vector.hpp"
 
+// System Includes
 #include <sys/stat.h>
 #ifdef CGUL_WINDOWS
 #   include <direct.h>
@@ -20,7 +24,6 @@
 #else
 #   include <unistd.h>
 #endif
-
 #ifdef CPP_HEADER_DIRENT_H
 #   include <dirent.h>
 #endif

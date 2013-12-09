@@ -26,7 +26,7 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::Assimp::Texture::GetHeight() const
 _CGUL_EXPORT CGUL::Image CGUL::Assimp::Texture::GetImage() const
 {
     // Image is stored as ARGB8888, convert it to RGBA8888
-    Color*colors = new CGUL::Color[texture->mWidth*texture->mHeight];
+    Color* colors = new CGUL::Color[texture->mWidth*texture->mHeight];
 
     for (unsigned int i = 0; i < texture->mWidth*texture->mHeight; i++)
     {
