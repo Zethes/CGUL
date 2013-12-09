@@ -119,12 +119,8 @@ int main()
 {
     try
     {
-        ImageLoaders::PNG loader;
-        if (!loader.CanLoad("resources/jattabox.png"))
-        {
-            throw FatalException("Cannot load PNG images.");
-        }
-        Image* image = loader.Load("resources/jattabox.png");
+        Image image;
+        image.Load("resources/jattabox.png");
 
         WindowStyle style;
         style.title = U8("CGUL - 3D World");
@@ -159,7 +155,7 @@ int main()
         GL::TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GL::TexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         GL::PixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        GL::TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->GetWidth(), image->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->GetData());
+        GL::TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetData< void >());
         GL::BindTexture(GL_TEXTURE_2D, 0);
 
         Timer timer;
@@ -168,8 +164,8 @@ int main()
         {
             Float32 deltaTime = timer.GetDeltaTime();
             Timer::Sleep(1);
-            hue = Math::Mod(hue + deltaTime * 45, 360.0f);
-            context.ClearColor(Color::MakeHSL(hue, 40, 255));
+            hue = Math::Mod(hue + deltaTime * 0.125f, 1.0f);
+            context.ClearColor(Color::MakeHSV(hue, 0.156862745098039f, 1.0f));
 
             Float32 movement = 1 + Math::Cos(hue / 10.0f);
             static Float32 rot = 0;
