@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "String.hpp"
+
+// CGUL Includes
+#include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
  namespace CGUL
@@ -191,3 +197,6 @@
         _CGUL_EXPORT Value Parse(String str);
     }
  }
+
+// Undefines
+#include "../External/Undefines.hpp"
