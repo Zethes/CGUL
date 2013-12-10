@@ -515,7 +515,7 @@ _CGUL_EXPORT bool CGUL::String::Contains(const String& string) const
 _CGUL_EXPORT bool CGUL::String::BeginsWith(const String& string) const
 {
     std::string::const_iterator i = data.begin();
-    for (std::string::const_iterator k = string.data.begin(); k != string.data.end(); k++, i++)
+    for (std::string::const_iterator k = string.data.begin(); k != string.data.end(); ++k, ++i)
     {
         if (i == data.end() || *i != *k)
         {
@@ -531,7 +531,7 @@ _CGUL_EXPORT bool CGUL::String::BeginsWith(const String& string) const
 _CGUL_EXPORT bool CGUL::String::EndsWith(const String& string) const
 {
     std::string::const_reverse_iterator i = data.rbegin();
-    for (std::string::const_reverse_iterator k = string.data.rbegin(); k != string.data.rend(); k++, i++)
+    for (std::string::const_reverse_iterator k = string.data.rbegin(); k != string.data.rend(); ++k, ++i)
     {
         if (i == data.rend() || *i != *k)
         {

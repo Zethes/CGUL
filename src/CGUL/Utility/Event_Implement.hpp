@@ -19,7 +19,7 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator+=(EventFunction function)
 {
     bool found = false;
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; itr++)
+    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
         if (*itr == function)
         {
@@ -44,7 +44,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator+=(Even
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator-=(EventFunction function)
 {
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; itr++)
+    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
         if (*itr == function)
         {
@@ -60,7 +60,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator-=(Even
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Event< Type >::Trigger(const Type& event)
 {
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; itr++)
+    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
         (*itr)(event);
     }

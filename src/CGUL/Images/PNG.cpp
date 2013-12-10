@@ -191,12 +191,14 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& file, const Image*
     png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (png_ptr == NULL)
     {
+        fclose(fp);
         throw std::runtime_error("Failed to create libpng pointer.");
     }
 
     info_ptr = png_create_info_struct(png_ptr);
     if (info_ptr == NULL)
     {
+        fclose(fp);
         throw std::runtime_error("Failed to create png info struct.");
     }
 
@@ -227,6 +229,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& file, const Image*
         //TODO: Support PNG_COLOR_TYPE_GRAY, PNG_COLOR_TYPE_GRAY_ALPHA, PNG_COLOR_TYPE_PALLETTE, PNG_COLOR_MASK_PALLETTE, PNG_COLOR_MASK_COLOR, PNG_COLOR_MASK_ALPHA
         //See http://refspecs.linuxbase.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libpng12.png.set.ihdr.1.html for more information.
         //As well as non-byte data storage.
+        fclose(fp);
         throw std::runtime_error("PNG image format not supported.");
     }
 

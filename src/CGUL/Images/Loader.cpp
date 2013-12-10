@@ -12,10 +12,10 @@ _CGUL_EXPORT CGUL::ImageLoader::ImageLoader()
 {
 }
 
-_CGUL_EXPORT CGUL::ImageLoader::ImageLoader(const String& name, const String& extension)
+_CGUL_EXPORT CGUL::ImageLoader::ImageLoader(const String& name, const String& extension) :
+    name(name),
+    extension(extension)
 {
-    this->name = name;
-    this->extension = extension;
 }
 
 _CGUL_EXPORT CGUL::ImageLoader::~ImageLoader()

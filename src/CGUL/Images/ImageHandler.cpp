@@ -22,7 +22,7 @@ _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 
 _CGUL_EXPORT CGUL::ImageHandler::~ImageHandler()
 {
-    for (Vector< ImageLoader* >::iterator itr = loaders.begin(), itrEnd = loaders.end(); itr != itrEnd; itr++)
+    for (Vector< ImageLoader* >::iterator itr = loaders.begin(), itrEnd = loaders.end(); itr != itrEnd; ++itr)
     {
         delete *itr;
     }
@@ -79,7 +79,7 @@ _CGUL_EXPORT void CGUL::ImageHandler::GetAllLoaders(FixedList< ImageLoader* >* l
 {
     loaders->SetSize(this->loaders.size());
     Size count = 0;
-    for (Vector< ImageLoader* >::iterator itr = this->loaders.begin(), itrEnd = this->loaders.end(); itr != itrEnd; itr++)
+    for (Vector< ImageLoader* >::iterator itr = this->loaders.begin(), itrEnd = this->loaders.end(); itr != itrEnd; ++itr)
     {
         loaders->Set(count++, *itr);
     }
