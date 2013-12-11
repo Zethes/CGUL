@@ -20,6 +20,8 @@
 #   include "../OpenGL/Context.hpp"
 #endif
 
+CGUL::Vector< CGUL::Window* > CGUL::Window::windows;
+
 #ifdef CGUL_WINDOWS
 LRESULT CALLBACK CGUL::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -32,41 +34,87 @@ LRESULT CALLBACK CGUL::Window::WindowProcedure(HWND handle, UINT message, WPARAM
     switch (message)
     {
         case WM_CLOSE:
-            if (window != 0)
-            {
-                window->Close();
-            }
+        if (window != 0)
+        {
+            window->Close();
             return 0;
+        }
         case WM_MOUSEMOVE:
-            window->OnMouseMove(LOWORD(lParam), HIWORD(lParam));
+        {
+            WindowMouseMoveEvent event;
+            event.location = UCoord32(LOWORD(lParam), HIWORD(lParam));
+            window->onMouseMove.Trigger(event);
             return 0;
+        }
         case WM_KEYDOWN:
-            window->OnKeyPress(TranslateKey(wParam));
+        {
+            WindowKeyButtonEvent event;
+            event.pressed = true;
+            event.key = TranslateKey(wParam);
+            window->onKeyButton.Trigger(event);
             return 0;
+        }
         case WM_KEYUP:
-            window->OnKeyRelease(TranslateKey(wParam));
+        {
+            WindowKeyButtonEvent event;
+            event.pressed = false;
+            event.key = TranslateKey(wParam);
+            window->onKeyButton.Trigger(event);
             return 0;
+        }
         case WM_LBUTTONDOWN:
-            window->OnMousePress(0);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = true;
+            event.button = 0;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_LBUTTONUP:
-            window->OnMouseRelease(0);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = false;
+            event.button = 0;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_RBUTTONDOWN:
-            window->OnMousePress(1);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = true;
+            event.button = 1;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_RBUTTONUP:
-            window->OnMouseRelease(1);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = false;
+            event.button = 1;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_MBUTTONDOWN:
-            window->OnMousePress(2);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = true;
+            event.button = 2;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_MBUTTONUP:
-            window->OnMouseRelease(2);
+        {
+            WindowMouseButtonEvent event;
+            event.pressed = false;
+            event.button = 2;
+            window->onMouseButton.Trigger(event);
             return 0;
+        }
         case WM_DESTROY:
+        {
             PostQuitMessage(0);
             return 0;
+        }
     }
     return DefWindowProc(handle, message, wParam, lParam);
 }
@@ -95,6 +143,13 @@ _CGUL_EXPORT CGUL::Window::Window(Window&& move)
     /* deleted */
 }
 #endif
+
+_CGUL_EXPORT void CGUL::Window::InternalUpdate()
+{
+#   ifdef CGUL_MACOS
+    [handle internalUpdate: this];
+#   endif
+}
 
 /** @details The operating system usually handles windows under the same application in bulk.  For
  *  this reason, it is only necessary to call update once for every window.  It is still important
@@ -166,6 +221,12 @@ _CGUL_EXPORT void CGUL::Window::Update()
     // Free anything we've autoreleased on the Obj-C side
     [pool drain];
 #   endif
+
+    // Update each window
+    for (Vector< Window* >::iterator itr = windows.begin(), itrEnd = windows.end(); itr != itrEnd; itr++)
+    {
+        (*itr)->InternalUpdate();
+    }
 }
 
 /**
@@ -188,12 +249,23 @@ _CGUL_EXPORT CGUL::Window::Window()
 #   ifdef CGUL_MACOS
     handle = [WindowDelegate alloc];
 #   endif
+
+    windows.push_back(this);
 }
 
 /**
  */
 _CGUL_EXPORT CGUL::Window::~Window()
 {
+    for (Vector< Window* >::iterator itr = windows.begin(), itrEnd = windows.end(); itr != itrEnd; itr++)
+    {
+        if (*itr == this)
+        {
+            windows.erase(itr);
+            break;
+        }
+    }
+
     Close();
 #   ifdef CGUL_MACOS
     //[handle release];
@@ -768,6 +840,10 @@ _CGUL_EXPORT void CGUL::Window::SetPosition(const SCoord32& position)
 #   ifdef CGUL_WINDOWS
     // TODO
 #   endif
+
+#   ifdef CGUL_MACOS
+    [handle setPosition: position];
+#   endif
 }
 
 /** @returns The position of the window.
@@ -782,6 +858,10 @@ _CGUL_EXPORT CGUL::SCoord32 CGUL::Window::GetPosition() const
     AdjustWindowRectEx(&borderSize, GetWindowLongPtr(this->handle, GWL_STYLE), false, WS_EX_CLIENTEDGE);
 
     return SCoord32((SInt32)(rect.left - borderSize.left), (SInt32)(rect.top - borderSize.top));
+#   endif
+
+#   ifdef CGUL_MACOS
+    return [handle getPosition];
 #   endif
 }
 
@@ -927,7 +1007,7 @@ _CGUL_EXPORT bool CGUL::Window::IsOpen() const
         return false;
     }
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    bool result = [handle IsOpen] == 1;
+    bool result = ([handle isOpen] == 1);
     [pool drain];
     return result;
 #   endif
@@ -986,24 +1066,4 @@ _CGUL_EXPORT void CGUL::Window::SetCursorShow(bool show)
     // TODO: make this per-window?
     ShowCursor(show);
 #   endif
-}
-
-_CGUL_EXPORT void CGUL::Window::OnKeyPress(UInt32 key)
-{
-}
-
-_CGUL_EXPORT void CGUL::Window::OnKeyRelease(UInt32 key)
-{
-}
-
-_CGUL_EXPORT void CGUL::Window::OnMousePress(Byte key)
-{
-}
-
-_CGUL_EXPORT void CGUL::Window::OnMouseRelease(Byte key)
-{
-}
-
-_CGUL_EXPORT void CGUL::Window::OnMouseMove(UInt32 mouseX, UInt32 mouseY)
-{
 }

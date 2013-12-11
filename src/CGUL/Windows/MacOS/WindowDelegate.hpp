@@ -16,6 +16,11 @@
 #include "../../OpenGL/MacOS/OpenGLView.hpp"
 #include "../../External/Defines.hpp"
 
+namespace CGUL
+{
+    class Window;
+}
+
 // Define the cocoa application delegate
 @interface WindowDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
@@ -29,34 +34,40 @@
     id defaultContent;
 
     int windowOpen;
+
+    CGUL::SCoord32 lastMousePos;
 }
 
-- (id)init: (CGUL::WindowStyle)style;
+- (id) init: (CGUL::WindowStyle) style;
 
-- (MacWindow*)Window;
-- (int)IsOpen;
-- (void)SetContent: (OpenGLView*)content;
+- (void) internalUpdate: (CGUL::Window*) cgulWindow;
+
+- (MacWindow*) Window;
+- (int) isOpen;
+- (void) setContent: (OpenGLView*) content;
 
 - (void) close;
 
-- (void)setTitle: (const CGUL::String&)title;
-- (CGUL::String)getTitle;
+- (void) setTitle: (const CGUL::String&) title;
+- (CGUL::String) getTitle;
 
-- (void)setBackgroundColor: (const CGUL::Color&)color;
-- (CGUL::Color)getBackgroundColor;
+- (void) setBackgroundColor: (const CGUL::Color&) color;
+- (CGUL::Color) getBackgroundColor;
 
-- (void)setWidth: (UInt32)width;
-- (CGUL::UInt32)getWidth;
-- (void)setHeight: (UInt32)height;
-- (CGUL::UInt32)getHeight;
-- (void)setSize:(const CGUL::UCoord32&)size;
+- (void) setWidth: (UInt32) width;
+- (CGUL::UInt32) getWidth;
+- (void) setHeight: (UInt32) height;
+- (CGUL::UInt32) getHeight;
+- (void) setSize: (const CGUL::UCoord32&) size;
 - (CGUL::UCoord32) getSize;
+- (void) setPosition: (const CGUL::SCoord32&) position;
+- (CGUL::SCoord32) getPosition;
 
-- (void)setResizable: (CGUL::Boolean)resizable;
-- (CGUL::Boolean)getResizable;
+- (void) setResizable: (CGUL::Boolean) resizable;
+- (CGUL::Boolean) getResizable;
 
-- (CGUL::Vector4)getFrameSize;
-- (CGUL::Boolean)isFocused;
+- (CGUL::Vector4) getFrameSize;
+- (CGUL::Boolean) isFocused;
 
 @end
 

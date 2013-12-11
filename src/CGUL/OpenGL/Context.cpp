@@ -137,7 +137,7 @@ _CGUL_EXPORT void CGUL::OpenGL::Context::Create(Window* window)
     //id content = [window contentView];
 
     // Set the content of the window to the OpenGL view we created
-    [window->_GetHandle() SetContent: view];
+    [window->_GetHandle() setContent: view];
 #   endif
 
     if (currentContext == NULL)

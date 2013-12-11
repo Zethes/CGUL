@@ -10,13 +10,14 @@
 #import "WindowDelegate.hpp"
 #import "Application.hpp"
 #include "../../Math/Vector4.hpp"
+#include "../Window.hpp"
 
 // leaving this here for future reference:
 // http://stackoverflow.com/questions/4312338/how-to-use-the-object-property-of-nsnotificationcenter
 
 @implementation WindowDelegate : NSObject
 
-- (id)init: (CGUL::WindowStyle)style
+- (id) init: (CGUL::WindowStyle)style
 {
     // Initialize the base application and make sure it's not nil
     if ((self = [super init]))
@@ -58,17 +59,19 @@
         //[window setContentView: view];
 
         // (TEMPORARILY) Make the window above all other windows
-        //[window setLevel: NSFloatingWindowLevel];
+        [window setLevel: NSFloatingWindowLevel];
 
         view = nil;
 
         [window makeKeyAndOrderFront: self];
+
+        lastMousePos = CGUL::SCoord32(0, 0);
     }
 
     return self;
 }
 
-- (void)windowWillClose: (NSNotification*)aNotification
+- (void) windowWillClose: (NSNotification*) notification
 {
     windowOpen = 0;
     /*if (window != nil)
@@ -85,12 +88,12 @@
     }*/
 }
 
-- (void)windowDidResize: (NSNotification*)aNotification
+- (void) windowDidResize: (NSNotification*) notification
 {
     [view update];
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     // Release the window and dealloc the super class
@@ -103,17 +106,33 @@
     [pool drain];
 }
 
-- (MacWindow*)Window
+- (void) internalUpdate: (CGUL::Window*) cgulWindow
+{
+    // Get mouse position
+    NSPoint mouseLoc;
+    mouseLoc = [NSEvent mouseLocation]; //get current mouse position
+    CGUL::SCoord32 mousePosition(mouseLoc.x, mouseLoc.y);
+    mousePosition -= [self getPosition];
+    CGUL::WindowMouseMoveEvent event;
+    event.location = mousePosition;
+    if (lastMousePos != mousePosition)
+    {
+        cgulWindow->onMouseMove.Trigger(event);
+        lastMousePos = mousePosition;
+    }
+}
+
+- (MacWindow*) Window
 {
     return window;
 }
 
-- (int)IsOpen
+- (int) isOpen
 {
     return windowOpen;
 }
 
-- (void)SetContent: (OpenGLView*)content
+- (void) setContent: (OpenGLView*) content
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [window setContentView: content];
@@ -121,7 +140,7 @@
     [pool drain];
 }
 
-- (void)close
+- (void) close
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [window close];
@@ -129,7 +148,7 @@
     [pool drain];
 }
 
-- (void)setTitle:(const CGUL::String&)title
+- (void) setTitle:(const CGUL::String&) title
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSString* str = [NSString stringWithCString:title.GetData().c_str() encoding:NSUTF8StringEncoding];
@@ -137,7 +156,7 @@
     [pool drain];
 }
 
-- (CGUL::String)getTitle
+- (CGUL::String) getTitle
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     CGUL::String ret([[window title] UTF8String]);
@@ -145,14 +164,14 @@
     return ret;
 }
 
-- (void)setBackgroundColor: (const CGUL::Color&)color
+- (void) setBackgroundColor: (const CGUL::Color&) color
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     [window setBackgroundColor: [NSColor colorWithCalibratedRed: color.r / 255.0 green: color.g / 255.0 blue: color.b / 255.0 alpha: 1.0]];
     [pool drain];
 }
 
-- (CGUL::Color)getBackgroundColor
+- (CGUL::Color) getBackgroundColor
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSColor* color = [window backgroundColor];
@@ -161,7 +180,7 @@
     return ret;
 }
 
-- (void)setWidth: (CGUL::UInt32)width
+- (void) setWidth: (CGUL::UInt32) width
 {
     NSRect frame = [window frame];
     frame.size.width = width;
@@ -171,13 +190,13 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (CGUL::UInt32)getWidth
+- (CGUL::UInt32) getWidth
 {
     NSRect rect = [[window contentView] frame];
     return rect.size.width;
 }
 
-- (void)setHeight: (CGUL::UInt32)height
+- (void) setHeight: (CGUL::UInt32) height
 {
     NSRect frame = [window frame];
     frame.size.width = [self getWidth];
@@ -187,13 +206,13 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (CGUL::UInt32)getHeight
+- (CGUL::UInt32) getHeight
 {
     NSRect rect = [[window contentView] frame];
     return rect.size.height;
 }
 
-- (void)setSize: (const CGUL::UCoord32&)size
+- (void) setSize: (const CGUL::UCoord32&) size
 {
     NSRect frame = [window frame];
     frame.size.width = size.x;
@@ -203,13 +222,24 @@
     [window setFrame: rect display: YES animate: NO];
 }
 
-- (CGUL::UCoord32)getSize
+- (CGUL::UCoord32) getSize
 {
     NSRect rect = [[window contentView] frame];
     return CGUL::UCoord32(rect.size.width, rect.size.height);
 }
 
-- (void)setResizable: (CGUL::Boolean)resizable
+- (void) setPosition: (const CGUL::SCoord32&) position
+{
+    // TODO
+}
+
+- (CGUL::SCoord32) getPosition
+{
+    // TODO
+    return CGUL::SCoord32(100, 100);
+}
+
+- (void) setResizable: (CGUL::Boolean) resizable
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSUInteger styleMask = [window styleMask];
@@ -225,7 +255,7 @@
     [pool drain];
 }
 
-- (CGUL::Boolean)getResizable
+- (CGUL::Boolean) getResizable
 {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSUInteger styleMask = [window styleMask];
@@ -233,7 +263,7 @@
     return (styleMask & NSResizableWindowMask) > 0;
 }
 
-- (CGUL::Vector4)getFrameSize
+- (CGUL::Vector4) getFrameSize
 {
     // Define the size of the window
     NSRect frame = NSMakeRect(0, 0, 0, 0);
@@ -246,7 +276,7 @@
     return CGUL::Vector4(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
 }
 
-- (CGUL::Boolean)isFocused
+- (CGUL::Boolean) isFocused
 {
     return [window isKeyWindow];
 }

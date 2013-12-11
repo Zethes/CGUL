@@ -6,13 +6,21 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "WindowStyle.hpp"
+
+// CGUL Includes
+#include "../Containers/Vector.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector4.hpp"
+#include "../Utility/Event.hpp"
+#include "../Windows/WindowStyle.hpp"
 #if defined(CGUL_BUILD) && defined(CGUL_MACOS)
 #   include "MacOS/WindowDelegate.hpp"
 #endif
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -23,6 +31,23 @@ namespace CGUL
         class Context;
     }
 #   endif
+
+    struct WindowKeyButtonEvent
+    {
+        Boolean pressed;
+        UInt32 key;
+    };
+
+    struct WindowMouseButtonEvent
+    {
+        Boolean pressed;
+        Byte button;
+    };
+
+    struct WindowMouseMoveEvent
+    {
+        SCoord32 location;
+    };
 
     /** @brief A class capable of creating windows and manipulating them.
      *  @details Internally this class can work very differently depending on the operating system.
@@ -37,6 +62,8 @@ namespace CGUL
 #       ifdef CGUL_USE_OPENGL
         friend class OpenGL::Context;
 #       endif
+
+        static Vector< Window* > windows;
 
 #       ifdef CGUL_WINDOWS
         _CGUL_HWND handle;
@@ -73,13 +100,20 @@ namespace CGUL
 #       ifdef CPP_HAS_MOVE_CONSTRUCTOR
         _CGUL_EXPORT Window(Window&& move);
 #       endif
+
+        //! @brief Internal update logic for each window when Update() is called.
+        _CGUL_EXPORT void InternalUpdate();
     public:
-        // @brief Updates all windows in the current application.
+        //! @brief Updates all windows in the current application.
         _CGUL_EXPORT static void Update();
 
-        // @brief Default constructor.
+        Event< WindowKeyButtonEvent > onKeyButton;
+        Event< WindowMouseButtonEvent > onMouseButton;
+        Event< WindowMouseMoveEvent > onMouseMove;
+
+        //! @brief Default constructor.
         _CGUL_EXPORT Window();
-        // @brief Deconstructor.
+        //! @brief Deconstructor.
         _CGUL_EXPORT ~Window();
 
 #       ifdef CGUL_WINDOWS
@@ -95,72 +129,65 @@ namespace CGUL
         WindowDelegate* _GetHandle() const;
 #       endif
 
-        // @brief Creates a window based on the given style.
+        //! @brief Creates a window based on the given style.
         _CGUL_EXPORT void Create(const WindowStyle& style);
-        // @brief Destroys the window.
+        //! @brief Destroys the window.
         _CGUL_EXPORT void Close();
 
-        // @brief Handles system messages and updates input.
+        //! @brief Handles system messages and updates input.
         _CGUL_EXPORT void HandleMessages();
 
-        // @brief Updates a window's style.
+        //! @brief Updates a window's style.
         _CGUL_EXPORT void SetStyle(const WindowStyle& style);
-        // @brief Gets some information about the window.
+        //! @brief Gets some information about the window.
         _CGUL_EXPORT WindowStyle GetStyle() const;
 
-        // @brief Sets the title of the window.
+        //! @brief Sets the title of the window.
         _CGUL_EXPORT void SetTitle(const String& title);
-        // @brief Gets the title of the window.
+        //! @brief Gets the title of the window.
         _CGUL_EXPORT String GetTitle() const;
 
-        // @brief Sets the background color of the window.
+        //! @brief Sets the background color of the window.
         _CGUL_EXPORT void SetBackgroundColor(const Color& color);
-        // @brief Gets the background color of the window.
+        //! @brief Gets the background color of the window.
         _CGUL_EXPORT Color GetBackgroundColor() const;
 
-        // @brief Sets the width of the window, excluding the border.
+        //! @brief Sets the width of the window, excluding the border.
         _CGUL_EXPORT void SetWidth(UInt32 width);
-        // @brief Gets the width of the window, excluding the border.
+        //! @brief Gets the width of the window, excluding the border.
         _CGUL_EXPORT UInt32 GetWidth() const;
-        // @brief Sets the height of the window, excluding the border.
+        //! @brief Sets the height of the window, excluding the border.
         _CGUL_EXPORT void SetHeight(UInt32 height);
-        // @brief Gets the height of the window, excluding the border.
+        //! @brief Gets the height of the window, excluding the border.
         _CGUL_EXPORT UInt32 GetHeight() const;
-        // @brief Sets the size of the window, excluding the border.
+        //! @brief Sets the size of the window, excluding the border.
         _CGUL_EXPORT void SetSize(const UCoord32& size) const;
-        // @brief Gets the size of the window, excluding the border.
+        //! @brief Gets the size of the window, excluding the border.
         _CGUL_EXPORT UCoord32 GetSize() const;
-        // @brief Sets the position of the window on the screen.
+        //! @brief Sets the position of the window on the screen.
         _CGUL_EXPORT void SetPosition(const SCoord32& position);
-        // @brief Gets the position of the window on the screen.
+        //! @brief Gets the position of the window on the screen.
         _CGUL_EXPORT SCoord32 GetPosition() const;
 
-        // @brief Sets whether the window is resizable or not.
+        //! @brief Sets whether the window is resizable or not.
         _CGUL_EXPORT void SetResizable(Boolean resizable);
-        // @brief Gets whether the window is resizable or not.
+        //! @brief Gets whether the window is resizable or not.
         _CGUL_EXPORT Boolean GetResizable() const;
 
-        // @brief Gets the window's border extents (the frame around the window).
+        //! @brief Gets the window's border extents (the frame around the window).
         _CGUL_EXPORT URect32 GetFrameSize() const;
 
-        // @brief Checks if the window is still open.
+        //! @brief Checks if the window is still open.
         _CGUL_EXPORT Boolean IsOpen() const;
-        // @brief Checks if the window currently has focus.
+        //! @brief Checks if the window currently has focus.
         _CGUL_EXPORT Boolean IsFocused() const;
 
-        // @brief Sets the mouse position relative to the window.
+        //! @brief Sets the mouse position relative to the window.
         _CGUL_EXPORT void SetMousePosition(SCoord32 mousePosition);
-        // @brief Sets if the mouse is visible in the window or not.
+        //! @brief Sets if the mouse is visible in the window or not.
         _CGUL_EXPORT void SetCursorShow(bool show);
-
-        _CGUL_EXPORT virtual void OnKeyPress(UInt32 key);
-        _CGUL_EXPORT virtual void OnKeyRelease(UInt32 key);
-
-        _CGUL_EXPORT virtual void OnMousePress(Byte button);
-        _CGUL_EXPORT virtual void OnMouseRelease(Byte button);
-
-        _CGUL_EXPORT virtual void OnMouseMove(UInt32 mouseX, UInt32 mouseY);
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
