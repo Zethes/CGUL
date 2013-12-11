@@ -72,6 +72,8 @@ namespace CGUL
 
         _CGUL_HGDIOBJ backgroundBrush;
 
+        SCoord32 lastMousePosition;
+
         static long __stdcall WindowProcedure(_CGUL_HWND handle, unsigned int message, unsigned int wParam, long int lParam);
 #       endif
 

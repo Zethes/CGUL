@@ -39,13 +39,6 @@ LRESULT CALLBACK CGUL::Window::WindowProcedure(HWND handle, UINT message, WPARAM
             window->Close();
             return 0;
         }
-        case WM_MOUSEMOVE:
-        {
-            WindowMouseMoveEvent event;
-            event.location = UCoord32(LOWORD(lParam), HIWORD(lParam));
-            window->onMouseMove.Trigger(event);
-            return 0;
-        }
         case WM_KEYDOWN:
         {
             WindowKeyButtonEvent event;
@@ -146,6 +139,23 @@ _CGUL_EXPORT CGUL::Window::Window(Window&& move)
 
 _CGUL_EXPORT void CGUL::Window::InternalUpdate()
 {
+#   ifdef CGUL_WINDOWS
+    POINT cursor;
+    GetCursorPos(&cursor);
+
+    SCoord32 mousePosition(cursor.x, cursor.y);
+    mousePosition -= GetPosition();
+    mousePosition.y = GetHeight() - mousePosition.y;
+
+    if (mousePosition != lastMousePosition)
+    {
+        WindowMouseMoveEvent event;
+        event.location = mousePosition;
+        onMouseMove.Trigger(event);
+        lastMousePosition = mousePosition;
+    }
+#   endif
+
 #   ifdef CGUL_MACOS
     [handle internalUpdate: this];
 #   endif
