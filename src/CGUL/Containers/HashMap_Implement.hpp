@@ -30,7 +30,6 @@ CGUL::HashMap< KeyType, ValueType>::HashMap(const HashMap& copy) :
         data[i] = NULL;
 
         Data* slot = copy.data[i];
-        Size it = 0;
         while (slot)
         {
             Insert(slot->key, slot->value);
@@ -186,7 +185,6 @@ void CGUL::HashMap< KeyType, ValueType >::GetKeys(List< KeyType >* keys) const
     for (Size i = 0; i < size; i++)
     {
         Data* slot = data[i];
-        Size it = 0;
         while (slot)
         {
             keys->Push(slot->key);
@@ -201,7 +199,6 @@ void CGUL::HashMap< KeyType, ValueType >::GetEntries(List< std::pair< KeyType, V
     for (Size i = 0; i < size; i++)
     {
         Data* slot = data[i];
-        Size it = 0;
         while (slot)
         {
             entries->Push(std::make_pair(slot->key, slot->value));
@@ -244,10 +241,9 @@ void CGUL::HashMap< KeyType, ValueType>::Clear()
     for (Size i = 0; i < size; i++)
     {
         Data** slot = &data[i];
-        Data** last;
-        Size it = 0;
         while (*slot)
         {
+            Data** last;
             last = slot;
             slot = &((*slot)->next);
             delete *last;

@@ -31,6 +31,7 @@ _CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UCoord32 size) :
     format(format),
     size(size),
     pixelSize((format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8),
+    dataSize(0),
     data(NULL)
 {
     switch (format.dataType)
@@ -82,6 +83,7 @@ _CGUL_EXPORT CGUL::Image::Image(ImageFormat format, UCoord32 size, void* data) :
     format(format),
     size(size),
     pixelSize((format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8),
+    dataSize(0), // TODO: set this to something meaningful?
     data(data)
 {
 }

@@ -47,9 +47,12 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
 _CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetMilliseconds()
 {
 #   ifdef CGUL_WINDOWS
+    // TODO only need to calculate this once, also why is it a float?
+    Float32 frequency;
     LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return (UInt32)(li.QuadPart / (UInt32)pcFreq);
+    QueryPerformanceFrequency(&li);
+    frequency = Float32(li.QuadPart) / 1000.0f;
+    return (UInt32)(li.QuadPart / (UInt32)frequency);
 #   else
     struct timeval t;
     gettimeofday(&t, NULL);
