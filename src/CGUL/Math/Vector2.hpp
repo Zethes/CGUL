@@ -24,6 +24,8 @@ namespace CGUL
     struct Vector3T;
     template< typename Type >
     struct Vector4T;
+    template< typename Type >
+    struct MatrixT;
 
     /** @brief A two dimensional 32 bit floating point vector.
      *  @todo Template this to allow 64 bit floating point or integer as well?
@@ -92,9 +94,11 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Vector2T& operator-=(const Vector2T& operand);
         //! @brief Performs component-based multiplication on two vectors.
         _CGUL_INLINE_DEFINE Vector2T operator*(Type operand) const;
+        _CGUL_INLINE_DEFINE Vector2T operator*(const MatrixT< Type >& operand) const;
         //! @brief Multiplies the individual components of another vector onto this vector's
         //! components.
         _CGUL_INLINE_DEFINE Vector2T& operator*=(Type operand);
+        _CGUL_INLINE_DEFINE Vector2T& operator*=(const MatrixT< Type >& operand);
         //! @brief Performs component-based division on two vectors.
         _CGUL_INLINE_DEFINE Vector2T operator/(Type operand) const;
         //! @brief Divides the individual components of another vector onto this vector's

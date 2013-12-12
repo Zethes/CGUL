@@ -205,6 +205,15 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::operator*(
     return Vector2T(this->x * operand, this->y * operand);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::operator*(const MatrixT< Type >& operand) const
+{
+    Vector2T result;
+    result.x = Vector4T< Type >::DotProduct(Vector4T< Type >(operand.m[0][0], operand.m[1][0], operand.m[2][0], operand.m[3][0]), Vector4T< Type >(x, y, 1, 1));
+    result.y = Vector4T< Type >::DotProduct(Vector4T< Type >(operand.m[0][1], operand.m[1][1], operand.m[2][1], operand.m[3][1]), Vector4T< Type >(x, y, 1, 1));
+    return result;
+}
+
 /** @param operand A scalar value.
  *  @returns A reference to the current object.
  */
@@ -214,6 +223,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >& CGUL::Vector2T< Type >::operator*
     this->x *= operand;
     this->y *= operand;
     return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >& CGUL::Vector2T< Type >::operator*=(const MatrixT< Type >& operand)
+{
+    return *this = *this * operand;
 }
 
 /** @param operand The other vector.

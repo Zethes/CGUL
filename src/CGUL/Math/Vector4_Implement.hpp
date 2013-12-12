@@ -42,6 +42,19 @@ const CGUL::Vector4T< Type > CGUL::Vector4T< Type >::unitZ(0, 0, 1, 0);
 template< typename Type >
 const CGUL::Vector4T< Type > CGUL::Vector4T< Type >::unitW(0, 0, 0, 1);
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::DotProduct(const Vector4T& valueA, const Vector4T& valueB)
+{
+    return (valueA.x * valueB.x) + (valueA.y * valueB.y) + (valueA.z * valueB.z) + (valueA.w * valueB.w);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Normalized(const Vector4T& value)
+{
+    Type inverseMagnitude = 1.0f / value.GetMagnitude();
+    return Vector4T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude, value.w * inverseMagnitude);
+}
+
 /**
  */
 template< typename Type >
@@ -223,6 +236,17 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::operator*(
                     this->w * operand);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::operator*(const MatrixT< Type >& operand) const
+{
+    Vector4T result;
+    result.x = DotProduct(Vector4T(operand.m[0][0], operand.m[1][0], operand.m[2][0], operand.m[3][0]), *this);
+    result.y = DotProduct(Vector4T(operand.m[0][1], operand.m[1][1], operand.m[2][1], operand.m[3][1]), *this);
+    result.z = DotProduct(Vector4T(operand.m[0][2], operand.m[1][2], operand.m[2][2], operand.m[3][2]), *this);
+    result.w = DotProduct(Vector4T(operand.m[0][3], operand.m[1][3], operand.m[2][3], operand.m[3][3]), *this);
+    return result;
+}
+
 /** @param operand A scalar value.
  *  @returns A reference to the current object.
  */
@@ -237,13 +261,9 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type >& CGUL::Vector4T< Type >::operator*
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::operator*(const MatrixT< Type >& operand) const
+_CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type >& CGUL::Vector4T< Type >::operator*=(const MatrixT< Type >& operand)
 {
-    // TODO: check, is this still correct? matrices all moved around
-    return Vector4(x * operand.m[0][0] + y * operand.m[1][0] + z * operand.m[2][0] + w * operand.m[3][0],
-                   x * operand.m[0][1] + y * operand.m[1][1] + z * operand.m[2][1] + w * operand.m[3][1],
-                   x * operand.m[0][2] + y * operand.m[1][2] + z * operand.m[2][2] + w * operand.m[3][2],
-                   x * operand.m[0][3] + y * operand.m[1][3] + z * operand.m[2][3] + w * operand.m[3][3]);
+    return *this = *this * operand;
 }
 
 /** @param operand The other vector.

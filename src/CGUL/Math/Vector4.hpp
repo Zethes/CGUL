@@ -55,6 +55,9 @@ namespace CGUL
         //! @brief Unit Y vector, defined as (0, 0, 0, 1).
         static const Vector4T unitW;
 
+        _CGUL_INLINE_DEFINE static Type DotProduct(const Vector4T& valueA, const Vector4T& valueB);
+        _CGUL_INLINE_DEFINE static Vector4T Normalized(const Vector4T& value);
+
         //! @brief Initializes to (0, 0, 0, 0).
         _CGUL_INLINE_DEFINE Vector4T();
         //! @brief Copies a vector into this vector.
@@ -87,10 +90,11 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Vector4T& operator-=(const Vector4T& operand);
         //! @brief Performs component-based multiplication on two vectors.
         _CGUL_INLINE_DEFINE Vector4T operator*(Type operand) const;
+        _CGUL_INLINE_DEFINE Vector4T operator*(const MatrixT< Type >& operand) const;
         //! @brief Multiplies the individual components of another vector onto this vector's
         //! components.
         _CGUL_INLINE_DEFINE Vector4T& operator*=(Type operand);
-        _CGUL_INLINE_DEFINE Vector4T< Type > operator*(const MatrixT< Type >& operand) const;
+        _CGUL_INLINE_DEFINE Vector4T& operator*=(const MatrixT< Type >& operand);
         //! @brief Performs component-based division on two vectors.
         _CGUL_INLINE_DEFINE Vector4T operator/(Type operand) const;
         //! @brief Divides the individual components of another vector onto this vector's

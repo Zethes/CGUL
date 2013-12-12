@@ -223,6 +223,16 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator*(
                     this->z * operand);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator*(const MatrixT< Type >& operand) const
+{
+    Vector3T result;
+    result.x = Vector4T< Type >::DotProduct(Vector4T< Type >(operand.m[0][0], operand.m[1][0], operand.m[2][0], operand.m[3][0]), Vector4T< Type >(x, y, z, 1));
+    result.y = Vector4T< Type >::DotProduct(Vector4T< Type >(operand.m[0][1], operand.m[1][1], operand.m[2][1], operand.m[3][1]), Vector4T< Type >(x, y, z, 1));
+    result.z = Vector4T< Type >::DotProduct(Vector4T< Type >(operand.m[0][2], operand.m[1][2], operand.m[2][2], operand.m[3][2]), Vector4T< Type >(x, y, z, 1));
+    return result;
+}
+
 /** @param operand A scalar value.
  *  @returns A reference to the current object.
  */
@@ -233,6 +243,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator*
     this->y *= operand;
     this->z *= operand;
     return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator*=(const MatrixT< Type >& operand)
+{
+    return *this = *this * operand;
 }
 
 /** @param operand The other vector.
@@ -536,4 +552,25 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::MultiplyComponents() const
 {
     return x * y * z;
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::MakeOrthonormalBasis(Vector3T< Type >* vectorB, Vector3T< Type >* vectorC)
+{
+    Vector3T< Type > vectorA(*this);
+    if (vectorA.GetManhattanMagnitude() == 0)
+    {
+        return;
+    }
+    vectorA.Normalize();
+    vectorB->Set(1, 0, 0);
+    *vectorC = CrossProduct(vectorA, *vectorB);
+    if (vectorC->GetManhattanMagnitude() == 0)
+    {
+        vectorB->Set(0, 1, 0);
+        *vectorC = CrossProduct(vectorA, *vectorB);
+    }
+    *vectorB = CrossProduct(vectorA, *vectorC);
+    vectorB->Normalize();
+    vectorC->Normalize();
 }
