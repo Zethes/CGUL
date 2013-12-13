@@ -23,7 +23,7 @@ CGUL::Float64 CGUL::Timer::GetFrequency()
     }
     return (Float64)cachedFrequency;
 #   else
-    return 1000.0; // TODO: unix implementation
+    return 1000000.0;
 #   endif
 }
 
@@ -34,7 +34,9 @@ CGUL::UInt64 CGUL::Timer::GetTime()
     QueryPerformanceCounter(&counter);
     return counter.QuadPart;
 #   else
-    return 0; // TODO: unix implementation
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    return time.tv_sec * 1000000 + time.tv_usec;
 #   endif
 }
 
