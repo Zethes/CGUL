@@ -13,7 +13,7 @@ set(CGUL_VERSION_MINOR 1)
 # The PATCH version can be incremented whenever it is necessary.  The patch version should be
 # incremented whenever there is a "release" in any form, but can also be incremented periodically
 # for testing purposes.
-set(CGUL_VERSION_PATCH 5)
+set(CGUL_VERSION_PATCH 6)
 
 # Combined version
 set(CGUL_VERSION ${CGUL_VERSION_MAJOR}.${CGUL_VERSION_MINOR}.${CGUL_VERSION_PATCH})
