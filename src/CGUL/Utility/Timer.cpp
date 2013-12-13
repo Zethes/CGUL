@@ -11,6 +11,33 @@
 #   include <unistd.h>
 #endif
 
+CGUL::Float64 CGUL::Timer::GetFrequency()
+{
+#   ifdef CGUL_WINDOWS
+    static UInt64 cachedFrequency = 0;
+    if (cachedFrequency == 0)
+    {
+        LARGE_INTEGER frequency;
+        QueryPerformanceFrequency(&frequency);
+        cachedFrequency = frequency.QuadPart;
+    }
+    return (Float64)cachedFrequency;
+#   else
+    return 1000.0; // TODO: unix implementation
+#   endif
+}
+
+CGUL::UInt64 CGUL::Timer::GetTime()
+{
+#   ifdef CGUL_WINDOWS
+    LARGE_INTEGER counter;
+    QueryPerformanceCounter(&counter);
+    return counter.QuadPart;
+#   else
+    return 0; // TODO: unix implementation
+#   endif
+}
+
 /** @details A program that never sleeps can cause CPU thrashing so its a good idea to call sleep
  *  and let the CPU take care of other things for a short while.  Sleeping will cause the currently
  *  active thread to halt for the given amount of time.  As little as 1 millisecond is enough to
@@ -32,9 +59,9 @@ _CGUL_EXPORT void CGUL::Timer::Sleep(UInt32 milliseconds)
  *  @see GetMilliseconds
  *  @returns An undefined time in seconds.
  */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetSeconds()
 {
-    return (UInt32)(GetMilliseconds() / 1000);
+    return (GetMilliseconds() / 1000.0);
 }
 
 /** @details Gets a time from the operating system in milliseconds.  The time acquired is not
@@ -44,35 +71,18 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetSeconds()
  *  only purpose of this method is to compare two time stamps to find a delta in time.
  *  @returns An undefined time in milliseconds.
  */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetMilliseconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetMilliseconds()
 {
-#   ifdef CGUL_WINDOWS
-    // TODO only need to calculate this once, also why is it a float?
-    Float32 frequency;
-    LARGE_INTEGER li;
-    QueryPerformanceFrequency(&li);
-    frequency = Float32(li.QuadPart) / 1000.0f;
-    return (UInt32)(li.QuadPart / (UInt32)frequency);
-#   else
-    struct timeval t;
-    gettimeofday(&t, NULL);
-    return ((t.tv_sec) * 1000 + t.tv_usec / 1000.0) + 0.5f;
-#   endif
+    return (GetTime() / GetFrequency());
 }
 
 /**
  */
 _CGUL_EXPORT CGUL::Timer::Timer()
 {
-#   ifdef CGUL_WINDOWS
-    LARGE_INTEGER li;
-    QueryPerformanceFrequency(&li);
-    pcFreq = Float32(li.QuadPart) / 1000.0f;
-#   endif
-
     running = false;
-    mSeconds = 0;
-    startTime = GetMilliseconds();
+    startTime = GetTime();
+    storedTime = 0;
 }
 
 /** @details Acts just as the start would on a stop watch.  If the clock is currently stopped it
@@ -82,7 +92,7 @@ _CGUL_EXPORT CGUL::Timer::Timer()
  */
 _CGUL_EXPORT void CGUL::Timer::Start()
 {
-    startTime = GetMilliseconds() - GetElapsedMilliseconds();
+    startTime = GetTime() - storedTime;
     running = true;
 }
 
@@ -97,8 +107,8 @@ _CGUL_EXPORT void CGUL::Timer::Stop()
 {
     if (running)
     {
-        long end = GetMilliseconds();
-        mSeconds = end - startTime;
+        UInt64 end = GetTime();
+        storedTime = end - startTime;
         running = false;
     }
 }
@@ -113,33 +123,33 @@ _CGUL_EXPORT void CGUL::Timer::Stop()
  */
 _CGUL_EXPORT void CGUL::Timer::Reset()
 {
-    mSeconds = 0;
-    startTime = GetMilliseconds();
+    startTime = GetTime();
+    storedTime = 0;
 }
 
 /** @details Same as @ref GetElapsedMilliseconds method but in seconds.
  *  @see GetElapsedMilliseconds
  *  @returns Elapsed time in seconds.
  */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetElapsedSeconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedSeconds()
 {
-    return GetElapsedMilliseconds() / 1000;
+    return GetElapsedMilliseconds() / 1000.0;
 }
 
 /** @details Represents the time currently recorded by this clock some time after a call to the
  *  Start method.  If a clock has not been started this method will simply return zero.
  *  @returns Elapsed time in milliseconds.
  */
-_CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetElapsedMilliseconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedMilliseconds()
 {
     if (running)
     {
-        long end = GetMilliseconds();
-        return end - startTime;
+        UInt64 end = GetTime();
+        return (end - startTime) / GetFrequency();
     }
     else
     {
-        return mSeconds;
+        return storedTime / GetFrequency();
     }
 }
 
@@ -155,10 +165,10 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::Timer::GetElapsedMilliseconds()
  *  @returns A floating pointer decimal number representing the time in seconds since the last call
  *  to this method.
  */
-_CGUL_EXPORT CGUL::Float32 CGUL::Timer::GetDeltaTime()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetDeltaTime()
 {
-    long time = GetMilliseconds();
-    float deltaTime = (time - startTime) / 1000.0f;
+    UInt64 time = GetTime();
+    Float64 deltaTime = (time - startTime) / GetFrequency();
     startTime = time;
     return deltaTime;
 }

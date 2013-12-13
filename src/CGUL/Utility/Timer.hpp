@@ -16,18 +16,22 @@ namespace CGUL
     class Timer
     {
     private:
-        Float32 pcFreq;
-        long startTime;
-        long mSeconds;
+        UInt64 startTime;
+        UInt64 storedTime;
         bool running;
+
+        static Float64 GetFrequency();
+        static UInt64 GetTime();
+
+        // TODO: make Get functions templated to support 64 or 32 bit precision
     public:
         //! @brief Causes the current thread to idle for the given amount of time (in millseconds).
         _CGUL_EXPORT static void Sleep(UInt32 milliseconds);
 
         //! @brief Get a system time in seconds.
-        _CGUL_EXPORT static UInt32 GetSeconds();
+        _CGUL_EXPORT static Float64 GetSeconds();
         //! @brief Get a system time in milliseconds.
-        _CGUL_EXPORT static UInt32 GetMilliseconds();
+        _CGUL_EXPORT static Float64 GetMilliseconds();
 
         //! @brief Default constructor.
         _CGUL_EXPORT Timer();
@@ -39,12 +43,12 @@ namespace CGUL
         _CGUL_EXPORT void Reset();
 
         //! @brief Get the elapsed time (in seconds) from when the timer was started.
-        _CGUL_EXPORT UInt32 GetElapsedSeconds();
+        _CGUL_EXPORT Float64 GetElapsedSeconds();
         //! @brief Get the elapsed time (in milliseconds) from when the timer was started.
-        _CGUL_EXPORT UInt32 GetElapsedMilliseconds();
+        _CGUL_EXPORT Float64 GetElapsedMilliseconds();
 
         //! @brief A quick utility function for calculating delta time.
-        _CGUL_EXPORT Float32 GetDeltaTime();
+        _CGUL_EXPORT Float64 GetDeltaTime();
     };
 }
 
