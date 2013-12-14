@@ -57,6 +57,10 @@ namespace CGUL
         _CGUL_INLINE_DEFINE static Vector3T CrossProduct(const Vector3T& valueA, const Vector3T& valueB);
         _CGUL_INLINE_DEFINE static Vector3T Normalized(const Vector3T& value);
 
+        _CGUL_INLINE_DEFINE static Type Distance(const Vector3T& vectorA, const Vector3T& vectorB);
+        _CGUL_INLINE_DEFINE static Type DistanceSquared(const Vector3T& valueA, const Vector3T& vectorB);
+        _CGUL_INLINE_DEFINE static Type DistanceManhattan(const Vector3T& valueA, const Vector3T& vectorB);
+
         //! @brief Initializes to (0, 0, 0).
         _CGUL_INLINE_DEFINE Vector3T();
         //! @brief Copies a vector into this vector.

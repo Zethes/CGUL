@@ -55,6 +55,24 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Normalized
     return Vector4T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude, value.w * inverseMagnitude);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::Distance(const Vector4T& vectorA, const Vector4T& vectorB)
+{
+    return Math::Sqrt(Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y) + Math::Sqr(vectorA.z - vectorB.z) + Math::Sqr(vectorA.w - vectorB.w));
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::DistanceSquared(const Vector4T& vectorA, const Vector4T& vectorB)
+{
+    return Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y) + Math::Sqr(vectorA.z - vectorB.z) + Math::Sqr(vectorA.w - vectorB.w);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::DistanceManhattan(const Vector4T& vectorA, const Vector4T& vectorB)
+{
+    return Math::Abs(vectorA.x - vectorB.x) + Math::Abs(vectorA.y - vectorB.y) + Math::Abs(vectorA.z - vectorB.z) + Math::Abs(vectorA.w - vectorB.w);
+}
+
 /**
  */
 template< typename Type >

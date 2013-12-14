@@ -55,6 +55,24 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Normalized
     return Vector2T(value.x * inverseMagnitude, value.y * inverseMagnitude);
 }
 
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::Distance(const Vector2T& vectorA, const Vector2T& vectorB)
+{
+    return Math::Sqrt(Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y));
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::DistanceSquared(const Vector2T& vectorA, const Vector2T& vectorB)
+{
+    return Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::DistanceManhattan(const Vector2T& vectorA, const Vector2T& vectorB)
+{
+    return Math::Abs(vectorA.x - vectorB.x) + Math::Abs(vectorA.y - vectorB.y);
+}
+
 /**
  */
 template< typename Type >

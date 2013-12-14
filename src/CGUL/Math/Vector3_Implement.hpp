@@ -49,6 +49,24 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::CrossProdu
 }
 
 template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::Distance(const Vector3T& vectorA, const Vector3T& vectorB)
+{
+    return Math::Sqrt(Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y) + Math::Sqr(vectorA.z - vectorB.z));
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::DistanceSquared(const Vector3T& vectorA, const Vector3T& vectorB)
+{
+    return Math::Sqr(vectorA.x - vectorB.x) + Math::Sqr(vectorA.y - vectorB.y) + Math::Sqr(vectorA.z - vectorB.z);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::DistanceManhattan(const Vector3T& vectorA, const Vector3T& vectorB)
+{
+    return Math::Abs(vectorA.x - vectorB.x) + Math::Abs(vectorA.y - vectorB.y) + Math::Abs(vectorA.z - vectorB.z);
+}
+
+template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Normalized(const Vector3T& value)
 {
     Type inverseMagnitude = 1.0f / value.GetMagnitude();

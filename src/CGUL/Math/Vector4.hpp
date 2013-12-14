@@ -58,6 +58,10 @@ namespace CGUL
         _CGUL_INLINE_DEFINE static Type DotProduct(const Vector4T& valueA, const Vector4T& valueB);
         _CGUL_INLINE_DEFINE static Vector4T Normalized(const Vector4T& value);
 
+        _CGUL_INLINE_DEFINE static Type Distance(const Vector4T& vectorA, const Vector4T& vectorB);
+        _CGUL_INLINE_DEFINE static Type DistanceSquared(const Vector4T& valueA, const Vector4T& vectorB);
+        _CGUL_INLINE_DEFINE static Type DistanceManhattan(const Vector4T& valueA, const Vector4T& vectorB);
+
         //! @brief Initializes to (0, 0, 0, 0).
         _CGUL_INLINE_DEFINE Vector4T();
         //! @brief Copies a vector into this vector.
