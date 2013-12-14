@@ -109,7 +109,8 @@ int main()
     try
     {
         std::cout << "Suported image file formats: " << std::endl;
-        CGUL::Vector<ImageLoader*> loaders = CGUL::ImageHandler::GetInstance()->GetAllLoaders();
+        CGUL::Vector<ImageLoader*> loaders;
+        CGUL::ImageHandler::GetInstance()->GetAllLoaders(&loaders);
         for (UInt32 i = 0; i < loaders.size(); i++)
         {
             std::cout << (i+1) << ". " << loaders[i]->GetName() << " (" << loaders[i]->GetExtension() << ")" << std::endl;
@@ -122,10 +123,7 @@ int main()
         }
 
         image->Load("resources/logo.png");
-        if (!image->Save("out", "png"))
-        {
-            throw FatalException("Cannot save PNG images.");
-        }
+        image->Save("out", "png");
 
         WindowStyle style;
         style.title = U8("logo.png (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
@@ -157,7 +155,7 @@ int main()
         GL::TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GL::TexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         GL::PixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        GL::TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->GetWidth(), image->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->GetData());
+        GL::TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->GetWidth(), image->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->GetData<void>());
         GL::BindTexture(GL_TEXTURE_2D, 0);
 
         Timer timer;
@@ -165,7 +163,7 @@ int main()
         while (window.IsOpen())
         {
             Timer::Sleep(1);
-            hue = Math::Mod(hue + timer.GetDeltaTime() * 45, 360.0f);
+            hue = Math::Mod<Float64>(hue + timer.GetDeltaTime() * 45.0f, 360.0f);
             context.ClearColor(Color::MakeHSL(hue, 40, 255));
 
             context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
