@@ -14,10 +14,6 @@
 #   define XMD_H
 #endif
 
-#ifdef HAVE_BOOLEAN //Removes a warning.
-#   undef HAVE_BOOLEAN
-#endif
-
 extern "C"
 {
 #   include <jpeglib.h>
