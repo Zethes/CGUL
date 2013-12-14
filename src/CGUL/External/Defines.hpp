@@ -186,9 +186,9 @@ CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA);
 #       define GLCLEAR()
 #   endif
 #   ifdef CGUL_CAUTIOUS
-#       define GLCHECK(str) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL: " str); }
+#       define GLCHECK(str, command) if (glGetError() != GL_NO_ERROR) { throw std::runtime_error("OpenGL (" #command "): " str); }
 #   else
-#       define GLCHECK(str)
+#       define GLCHECK(str, command)
 #   endif
 #   ifdef CGUL_SAFE
 #       define GLVERIFY(command) if ((void*)command == 0) { throw std::runtime_error("OpenGL command " #command " is not available."); }

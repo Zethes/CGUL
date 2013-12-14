@@ -27,14 +27,14 @@ _CGUL_EXPORT CGUL::OpenGL::RenderBuffer::~RenderBuffer()
 _CGUL_EXPORT void CGUL::OpenGL::RenderBuffer::Create(Enum type)
 {
     glGenRenderbuffers(1, &renderBuffer);
-    GLCHECK("Failed to generate render buffer.");
+    GLCHECK("Failed to generate render buffer.", glGenRenderbuffers);
     this->type = type;
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::RenderBuffer::Delete()
 {
     glDeleteFramebuffers(1, &renderBuffer);
-    GLCHECK("Failed to delete frame buffer.");
+    GLCHECK("Failed to delete frame buffer.", glDeleteFramebuffers);
     renderBuffer = 0;
 }
 
@@ -46,17 +46,17 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::OpenGL::RenderBuffer::GetID() const
 _CGUL_EXPORT void CGUL::OpenGL::RenderBuffer::Bind()
 {
     glBindRenderbuffer(type, renderBuffer);
-    GLCHECK("Failed to bind frame buffer.");
+    GLCHECK("Failed to bind frame buffer.", glBindRenderbuffer);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::RenderBuffer::Unbind()
 {
     glBindRenderbuffer(type, 0);
-    GLCHECK("Failed to unbind frame buffer.");
+    GLCHECK("Failed to unbind frame buffer.", glBindRenderbuffer);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::RenderBuffer::Storage(Enum internalFormat, Size width, Size height)
 {
     glRenderbufferStorage(type, internalFormat, width, height);
-    GLCHECK("Failed to attach texture 2D to frame buffer.");
+    GLCHECK("Failed to attach texture 2D to frame buffer.", glRenderbufferStorage);
 }

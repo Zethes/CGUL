@@ -17,13 +17,13 @@ _CGUL_EXPORT void CGUL::OpenGL::Buffer::Create(Enum type)
 {
     glGenBuffers(1, &this->buffer);
     this->type = type;
-    GLCHECK("Failed to generate buffer.");
+    GLCHECK("Failed to generate buffer.", glGenBuffers);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Buffer::Delete()
 {
     glDeleteBuffers(1, &this->buffer);
-    GLCHECK("Failed to delete buffer.");
+    GLCHECK("Failed to delete buffer.", glDeleteBuffers);
 }
 
 _CGUL_EXPORT CGUL::UInt32 CGUL::OpenGL::Buffer::GetID()
@@ -34,17 +34,17 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::OpenGL::Buffer::GetID()
 _CGUL_EXPORT void CGUL::OpenGL::Buffer::Bind()
 {
     glBindBuffer(this->type, this->buffer);
-    GLCHECK("Failed to bind buffer.");
+    GLCHECK("Failed to bind buffer.", glBindBuffer);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Buffer::Unbind()
 {
     glBindBuffer(this->type, 0);
-    GLCHECK("Failed to unbind buffer.");
+    GLCHECK("Failed to unbind buffer.", glBindBuffer);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Buffer::Data(Size size, void* data, Enum usage)
 {
     glBufferData(this->type, size, data, usage);
-    GLCHECK("Failed to set buffer data.");
+    GLCHECK("Failed to set buffer data.", glBufferData);
 }

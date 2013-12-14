@@ -26,7 +26,7 @@ _CGUL_EXPORT CGUL::OpenGL::Shader::~Shader()
 _CGUL_EXPORT void CGUL::OpenGL::Shader::Create(Enum type)
 {
     shader = glCreateShader((GLenum)type);
-    GLCHECK("Failed to create shader.");
+    GLCHECK("Failed to create shader.", glCreateShader);
 }
 
 /** @brief Equivalent to
@@ -35,7 +35,7 @@ _CGUL_EXPORT void CGUL::OpenGL::Shader::Create(Enum type)
 _CGUL_EXPORT void CGUL::OpenGL::Shader::Delete()
 {
     glDeleteShader((GLuint)shader);
-    GLCHECK("Failed to delete shader.");
+    GLCHECK("Failed to delete shader.", glDeleteShader);
     shader = 0;
 }
 
@@ -50,25 +50,25 @@ _CGUL_EXPORT void CGUL::OpenGL::Shader::SetSource(const CGUL::String& source)
     const GLchar** data = &characters;
     GLint count = (GLint)source.GetSize();
     glShaderSource((GLuint)shader, (GLsizei)1, data, &count);
-    GLCHECK("Failed to set shader source.");
+    GLCHECK("Failed to set shader source.", glShaderSource);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Shader::Compile()
 {
     GLint status;
     glCompileShader(shader);
-    GLCHECK("Failed to compile shader.");
+    GLCHECK("Failed to compile shader.", glCompileShader);
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    GLCHECK("Failed to get shader compile status.");
+    GLCHECK("Failed to get shader compile status.", glGetShaderiv);
     if (status != GL_TRUE)
     {
         GLint size;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &size);
-        GLCHECK("Failed to get shader info log length.");
+        GLCHECK("Failed to get shader info log length.", glGetShaderiv);
         GLsizei length;
         GLchar* buffer = new GLchar[size];
         glGetShaderInfoLog(shader, (GLsizei)size, &length, buffer);
-        GLCHECK("Failed to get shader info log.");
+        GLCHECK("Failed to get shader info log.", glGetShaderInfoLog);
         String log((char*)buffer);
         delete[] buffer;
         log.Trim();
@@ -86,7 +86,7 @@ _CGUL_EXPORT CGUL::Boolean CGUL::OpenGL::Shader::GetDeleteStatus()
 {
     GLint status;
     glGetShaderiv(shader, GL_DELETE_STATUS, &status);
-    GLCHECK("Failed to get delete status of shader.");
+    GLCHECK("Failed to get delete status of shader.", glGetShaderiv);
     return status == GL_TRUE;
 }
 
@@ -94,11 +94,11 @@ _CGUL_EXPORT CGUL::String CGUL::OpenGL::Shader::GetSource()
 {
     GLint size;
     glGetShaderiv(shader, GL_SHADER_SOURCE_LENGTH, &size);
-    GLCHECK("Failed to get shader source length.");
+    GLCHECK("Failed to get shader source length.", glGetShaderiv);
     GLsizei length;
     GLchar* buffer = new GLchar[size];
     glGetShaderSource(shader, (GLsizei)size, &length, buffer);
-    GLCHECK("Failed to get shader source.");
+    GLCHECK("Failed to get shader source.", glGetShaderSource);
     String source((char*)buffer);
     delete[] buffer;
     return source;

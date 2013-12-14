@@ -36,33 +36,33 @@ _CGUL_EXPORT void CGUL::OpenGL::Test()
 _CGUL_EXPORT void CGUL::OpenGL::Enable(Enum cap)
 {
     glEnable(cap);
-    GLCHECK("Failed to enable OpenGL capability.");
+    GLCHECK("Failed to enable OpenGL capability.", glEnable);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Disable(Enum cap)
 {
     glDisable(cap);
-    GLCHECK("Failed to disable OpenGL capability.");
+    GLCHECK("Failed to disable OpenGL capability.", glDisable);
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetString(Enum name)
 {
     String ret = String((const char *)glGetString(name));
-    GLCHECK("Failed to get OpenGL string.");
+    GLCHECK("Failed to get OpenGL string.", glGetString);
     return ret;
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetStringi(Enum name, unsigned int index)
 {
     String ret = String((const char *)glGetStringi(name, index));
-    GLCHECK("Failed to get OpenGL string.");
+    GLCHECK("Failed to get OpenGL string.", glGetStringi);
     return ret;
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::GetSupportedExtensions(FixedList< String >* extensions)
 {
     String ret = String((const char *)glGetString(GL::EXTENSIONS));
-    GLCHECK("Failed to get OpenGL extensions.");
+    GLCHECK("Failed to get OpenGL extensions.", glGetString);
     ret.Explode(" ", extensions);
 }
 
@@ -84,7 +84,7 @@ _CGUL_EXPORT int CGUL::OpenGL::GetOpenGLVersionMajor()
 {
     int v;
     glGetIntegerv(GL::MAJOR_VERSION, &v);
-    GLCHECK("Failed to get OpenGL major version.");
+    GLCHECK("Failed to get OpenGL major version.", glGetIntegerv);
     return v;
 }
 
@@ -92,58 +92,58 @@ _CGUL_EXPORT int CGUL::OpenGL::GetOpenGLVersionMinor()
 {
     int v;
     glGetIntegerv(GL::MINOR_VERSION, &v);
-    GLCHECK("Failed to get OpenGL minor version.");
+    GLCHECK("Failed to get OpenGL minor version.", glGetIntegerv);
     return v;
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetOpenGLVersion()
 {
     String ret = String((const char*)glGetString(GL::VERSION));
-    GLCHECK("Failed to get OpenGL version.");
+    GLCHECK("Failed to get OpenGL version.", glGetString);
     return ret;
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetGLSLVersion()
 {
     String ret = String((const char*)glGetString(GL::GLSL_VERSION));
-    GLCHECK("Failed to get GLSL version.");
+    GLCHECK("Failed to get GLSL version.", glGetString);
     return ret;
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetOpenGLVendor()
 {
     String ret = ((const char*)glGetString(GL::VENDOR));
-    GLCHECK("Failed to get OpenGL vendor.");
+    GLCHECK("Failed to get OpenGL vendor.", glGetString);
     return ret;
 }
 
 _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetOpenGLRenderer()
 {
     String ret = String((const char*)glGetString(GL::RENDERER));
-    GLCHECK("Failed to get OpenGL renderer.");
+    GLCHECK("Failed to get OpenGL renderer.", glGetString);
     return ret;
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFunc(Enum sfactor, Enum dfactor)
 {
     glBlendFunc(sfactor, dfactor);
-    GLCHECK("Failed to set blend function.");
+    GLCHECK("Failed to set blend function.", glBlendFunc);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFunci(UInt32 buf, Enum sfactor, Enum dfactor)
 {
     glBlendFunci(buf, sfactor, dfactor);
-    GLCHECK("Failed to set blend function.");
+    GLCHECK("Failed to set blend function.", glBlendFunci);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFuncSeparate(Enum srcrgb, Enum dstrgb, Enum srca, Enum dsta)
 {
     glBlendFuncSeparate(srcrgb, dstrgb, srca, dsta);
-    GLCHECK("Failed to set blend function separate.");
+    GLCHECK("Failed to set blend function separate.", glBlendFuncSeparate);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFuncSeparatei(UInt32 buf, Enum srcrgb, Enum dstrgb, Enum srca, Enum dsta)
 {
     glBlendFuncSeparatei(buf, srcrgb, dstrgb, srca, dsta);
-    GLCHECK("Failed to set blend function separate.");
+    GLCHECK("Failed to set blend function separate.", glBlendFundSeparatei);
 }

@@ -266,13 +266,13 @@ _CGUL_EXPORT void CGUL::OpenGL::Context::Viewport(SInt32 x, SInt32 y, UInt32 wid
 _CGUL_EXPORT void CGUL::OpenGL::Context::ClearColor(const Color& color)
 {
     glClearColor((GLfloat)(color.r / 255.0f), (GLfloat)(color.g / 255.0f), (GLfloat)(color.b / 255.0f), (GLfloat)(color.a / 255.0f));
-    GLCHECK("Failed to set clear color.");
+    GLCHECK("Failed to set clear color.", glClearColor);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Context::Clear(Enum mask)
 {
     glClear((GLbitfield)mask);
-    GLCHECK("Failed to clear context.");
+    GLCHECK("Failed to clear context.", glClear);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::Context::SwapBuffers()
