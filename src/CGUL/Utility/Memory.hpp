@@ -25,7 +25,7 @@ namespace CGUL
         template< typename T >
         _CGUL_INLINE_DEFINE void ZeroArray(T* data, Size count);
 
-        _CGUL_INLINE_DEFINE void Copy(void* destination, void* source, Size count);
+        _CGUL_INLINE_DEFINE void Copy(void* destination, const void* source, Size count);
     }
 }
 
