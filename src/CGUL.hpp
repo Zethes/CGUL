@@ -100,6 +100,9 @@
 #include "CGUL/Images/Image.hpp"
 #include "CGUL/Images/ImageHandler.hpp"
 #include "CGUL/Images/Loader.hpp"
+#ifdef JPEG_FOUND
+#   include "CGUL/Images/JPEG.hpp"
+#endif
 #ifdef PNG_FOUND
 #   include "CGUL/Images/PNG.hpp"
 #endif

@@ -12,11 +12,16 @@
 #   include "PNG.hpp"
 #endif
 
+#ifdef JPEG_FOUND
+#   include "JPEG.hpp"
+#endif
+
 _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 {
     // Add default image loaders
 #   ifdef PNG_FOUND
     Register(new ImageLoaders::PNG());
+    Register(new ImageLoaders::JPEG());
 #   endif
 }
 

@@ -117,16 +117,16 @@ int main()
         }
 
         Image* image = new Image();
-        if (!image->CanLoad("resources/logo.png"))
+        if (!image->CanLoad("resources/logo.jpg"))
         {
-            throw FatalException("Cannot load PNG images.");
+            throw FatalException("Cannot load JPEG images.");
         }
 
-        image->Load("resources/logo.png");
-        image->Save("out", "png");
+        image->Load("resources/logo.jpg");
+        image->Save("out.jpg", "jpg");
 
         WindowStyle style;
-        style.title = U8("logo.png (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.title = U8("logo.jpg (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
         style.size = UCoord32(image->GetWidth(), image->GetHeight());
         style.backgroundColor = Colors::black;
         style.resizable = false;
@@ -155,7 +155,8 @@ int main()
         GL::TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GL::TexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         GL::PixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        GL::TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->GetWidth(), image->GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image->GetData<void>());
+        ImageFormat format = image->GetFormat();
+        GL::TexImage2D(GL_TEXTURE_2D, 0, format.glFormat, image->GetWidth(), image->GetHeight(), 0, format.glFormat, GL_UNSIGNED_BYTE, image->GetData<void>());
         GL::BindTexture(GL_TEXTURE_2D, 0);
 
         Timer timer;

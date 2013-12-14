@@ -141,6 +141,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
             throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::UNSUPPORTED_FORMAT);
         }
     }
+    format.dataType = DataTypes::UNSIGNED_CHAR;
 
     //Read pixels.
     if (setjmp(png_jmpbuf(png_ptr)))
@@ -204,7 +205,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& file, const Image*
 
     //Get depth and type.
     UInt32 depth, type;
-    if (image->GetFormat() == ImageFormats::RGB8)
+    if (image->GetFormat() == ImageFormats::RGB8 || image->GetFormat() == ImageFormats::RGB)
     {
         depth = 8;
         type = PNG_COLOR_TYPE_RGB;
@@ -214,7 +215,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& file, const Image*
         depth = 16;
         type = PNG_COLOR_TYPE_RGB;
     }
-    else if (image->GetFormat() == ImageFormats::RGBA8)
+    else if (image->GetFormat() == ImageFormats::RGBA8 || image->GetFormat() == ImageFormats::RGBA)
     {
         depth = 8;
         type = PNG_COLOR_TYPE_RGB_ALPHA;
@@ -230,7 +231,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Save(const String& file, const Image*
         //See http://refspecs.linuxbase.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libpng12.png.set.ihdr.1.html for more information.
         //As well as non-byte data storage.
         fclose(fp);
-        throw std::runtime_error("PNG image format not supported.");
+        throw std::runtime_error("Image's format not supported.");
     }
 
     png_set_IHDR(png_ptr, info_ptr, image->GetWidth(), image->GetHeight(), depth, type, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);

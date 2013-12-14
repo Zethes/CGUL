@@ -14,6 +14,18 @@ if (PNG_FOUND)
     )
 endif()
 
+if (JPEG_FOUND)
+    set(CGUL_SOURCES
+        ${CGUL_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.cpp
+    )
+
+    set(CGUL_INSTALL
+        ${CGUL_INSTALL}
+        ${CMAKE_CURRENT_SOURCE_DIR}/JPEG.hpp
+    )
+endif()
+
 set(CGUL_SOURCES
     ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp

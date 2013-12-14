@@ -50,7 +50,10 @@ namespace CGUL
      */
     namespace ImageFormats
     {
-        extern ImageFormat R8,
+        extern ImageFormat 
+        RGB,
+        RGBA,
+        R8,
         R16,
         RG8,
         RG16,

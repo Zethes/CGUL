@@ -32,6 +32,8 @@ namespace CGUL
     {
 #       ifdef CGUL_USE_OPENGL
 
+        ImageFormat RGB        = CreateImageFormat("RGB", 8, 8, 8, 0, DataTypes::UNSIGNED_CHAR, GL_RGB);
+        ImageFormat RGBA        = CreateImageFormat("RGBA", 8, 8, 8, 0, DataTypes::UNSIGNED_CHAR, GL_RGBA);
         ImageFormat R8          = CreateImageFormat("R8", 8, 0, 0, 0, DataTypes::UNSIGNED_CHAR, GL_R8);
         ImageFormat R16         = CreateImageFormat("R16", 16, 0, 0, 0, DataTypes::UNSIGNED_CHAR, GL_R16);
         ImageFormat RG8         = CreateImageFormat("RG8", 8, 8, 0, 0, DataTypes::UNSIGNED_CHAR, GL_RG8);
@@ -53,6 +55,8 @@ namespace CGUL
 
 #       else
 
+        ImageFormat RGB        = CreateImageFormat("RGB", 8, 8, 8, 0);
+        ImageFormat RGBA        = CreateImageFormat("RGBA", 8, 8, 8, 0);
         ImageFormat R8          = CreateImageFormat("R8", 8, 0, 0);
         ImageFormat R16         = CreateImageFormat("R16", 16, 0, 0);
         ImageFormat RG8         = CreateImageFormat("RG8", 8, 8, 0);
