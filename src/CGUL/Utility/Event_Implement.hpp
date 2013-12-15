@@ -16,12 +16,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >::~Event()
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator+=(EventFunction function)
+_CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::AddEvent(EventFunction function, void* userData)
 {
     bool found = false;
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
+    for (typename Vector< std::pair< EventFunction, void* > >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
-        if (*itr == function)
+        if (itr->first == function)
         {
             found = true;
             break;
@@ -30,7 +30,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator+=(Even
 
     if (!found)
     {
-        hooks.push_back(function);
+        hooks.push_back(std::make_pair(function, userData));
         return *this;
     }
     else
@@ -42,11 +42,11 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator+=(Even
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator-=(EventFunction function)
+_CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::RemoveEvent(EventFunction function, void* userData)
 {
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
+    for (typename Vector< std::pair< EventFunction, void* > >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
-        if (*itr == function)
+        if (itr->second == function)
         {
             hooks.erase(itr);
             return *this;
@@ -60,8 +60,8 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::operator-=(Even
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Event< Type >::Trigger(const Type& event)
 {
-    for (typename Vector< EventFunction >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
+    for (typename Vector< std::pair< EventFunction, void* > >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)
     {
-        (*itr)(event);
+        (*itr->first)(event, itr->second);
     }
 }

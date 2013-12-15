@@ -23,15 +23,15 @@ namespace CGUL
     template< typename Type >
     class Event
     {
-        typedef void(*EventFunction)(const Type& event);
+        typedef void(*EventFunction)(const Type& event, void* userData);
 
-        std::vector< EventFunction > hooks;
+        Vector< std::pair< EventFunction, void* > > hooks;
     public:
         _CGUL_INLINE_DEFINE Event();
         _CGUL_INLINE_DEFINE ~Event();
 
-        _CGUL_INLINE_DEFINE Event& operator+=(EventFunction function);
-        _CGUL_INLINE_DEFINE Event& operator-=(EventFunction function);
+        _CGUL_INLINE_DEFINE Event& AddEvent(EventFunction function, void* userData = NULL);
+        _CGUL_INLINE_DEFINE Event& RemoveEvent(EventFunction function, void* userData = NULL);
 
         _CGUL_INLINE_DEFINE void Trigger(const Type& event);
     };
