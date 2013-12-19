@@ -21,7 +21,9 @@ namespace CGUL
     template< typename Type >
     struct ColorT
     {
-        static const Type maxValue = (Type)((2LLU << (sizeof(Type) * 8LLU)) - 1LLU);
+        // TODO: this should really be LLU instead of LU for 64bit support, but visual studio
+        // doesn't like that
+        static const Type maxValue = (Type)((2LU << (sizeof(Type) * 8LU)) - 1LU);
 
         //! @brief Creates a color given a hue, saturation, luminance, and (optionally) alpha.
         _CGUL_INLINE_DEFINE static ColorT MakeHSL(Float32 hue, Float32 saturation, Float32 luminance, Type alpha = maxValue);

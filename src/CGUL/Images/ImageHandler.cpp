@@ -21,6 +21,8 @@ _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
     // Add default image loaders
 #   ifdef PNG_FOUND
     Register(new ImageLoaders::PNG());
+#   endif
+#   ifdef JPEG_FOUND
     Register(new ImageLoaders::JPEG());
 #   endif
 }

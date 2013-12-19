@@ -41,7 +41,7 @@ static CGUL::Float32 HueToRGB(CGUL::Float32 p, CGUL::Float32 q, CGUL::Float32 t)
  *  @returns The resulting color.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSL(Float32 hue, Float32 saturation, Float32 luminance, Type alpha)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSL(Float32 hue, Float32 saturation, Float32 luminance, Type alpha)
 {
     Float32 r, g, b;
 
@@ -68,7 +68,7 @@ _CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSL(Float32 hue, Flo
  *  @returns The resulting color.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSV(Float32 hue, Float32 saturation, Float32 value, Type alpha)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSV(Float32 hue, Float32 saturation, Float32 value, Type alpha)
 {
     Float32 r, g, b;
 
@@ -130,7 +130,7 @@ _CGUL_EXPORT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSV(Float32 hue, Flo
 /**
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type >::ColorT()
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type >::ColorT()
 {
     this->r = 0;
     this->g = 0;
@@ -141,7 +141,7 @@ _CGUL_EXPORT CGUL::ColorT< Type >::ColorT()
 /** @param copy The color to copy.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type >::ColorT(const ColorT& copy)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type >::ColorT(const ColorT& copy)
 {
     this->r = copy.r;
     this->g = copy.g;
@@ -154,7 +154,7 @@ _CGUL_EXPORT CGUL::ColorT< Type >::ColorT(const ColorT& copy)
  *  @param b The blue value.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b)
 {
     this->r = r;
     this->g = g;
@@ -168,7 +168,7 @@ _CGUL_EXPORT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b)
  *  @param a The alpha value.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b, Type a)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b, Type a)
 {
     this->r = r;
     this->g = g;
@@ -180,7 +180,7 @@ _CGUL_EXPORT CGUL::ColorT< Type >::ColorT(Type r, Type g, Type b, Type a)
  *  @returns True if the colors are the same, false otherwise.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::Boolean CGUL::ColorT< Type >::operator==(const ColorT& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Boolean CGUL::ColorT< Type >::operator==(const ColorT& operand)
 {
     return r == operand.r && b == operand.b && g == operand.g && a == operand.a;
 }
@@ -189,7 +189,7 @@ _CGUL_EXPORT CGUL::Boolean CGUL::ColorT< Type >::operator==(const ColorT& operan
  *  @returns True if the colors are not the same, false otherwise.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::Boolean CGUL::ColorT< Type >::operator!=(const ColorT& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Boolean CGUL::ColorT< Type >::operator!=(const ColorT& operand)
 {
     return r != operand.r || b != operand.b || g != operand.g || a != operand.a;
 }
@@ -198,7 +198,7 @@ _CGUL_EXPORT CGUL::Boolean CGUL::ColorT< Type >::operator!=(const ColorT& operan
  *  @returns A reference to the current object.
  */
 template< typename Type >
-_CGUL_EXPORT CGUL::ColorT< Type >& CGUL::ColorT< Type >::operator=(const ColorT& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type >& CGUL::ColorT< Type >::operator=(const ColorT& operand)
 {
     this->r = operand.r;
     this->g = operand.g;

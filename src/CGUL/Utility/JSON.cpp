@@ -403,12 +403,12 @@ _CGUL_EXPORT CGUL::String CGUL::JSON::Value::ToString()
     }
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::operator Float32() const
+_CGUL_EXPORT CGUL::JSON::Value::operator CGUL::Float32() const
 {
     return valueFloat;
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::operator SInt32() const
+_CGUL_EXPORT CGUL::JSON::Value::operator CGUL::SInt32() const
 {
     return valueInt;
 }
@@ -418,17 +418,17 @@ _CGUL_EXPORT CGUL::JSON::Value::operator bool() const
     return valueBool;
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::operator String() const
+_CGUL_EXPORT CGUL::JSON::Value::operator CGUL::String() const
 {
     return valueString;
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::operator Object() const
+_CGUL_EXPORT CGUL::JSON::Value::operator CGUL::JSON::Object() const
 {
     return valueObject;
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::operator Array() const
+_CGUL_EXPORT CGUL::JSON::Value::operator CGUL::JSON::Array() const
 {
     return valueArray;
 }

@@ -100,7 +100,7 @@
         }
 
         static UInt32 ind;
-        _CGUL_EXPORT static CGUL::String __Indent();
+        _CGUL_EXPORT CGUL::String __Indent();
 
         class Array;
         class Object;
@@ -179,12 +179,12 @@
 
             _CGUL_EXPORT Value& operator=(const Value& v);
 
-            operator Float32() const;
-            operator SInt32() const;
-            operator bool() const;
-            operator String() const;
-            operator Object() const;
-            operator Array() const;
+            _CGUL_EXPORT operator Float32() const;
+            _CGUL_EXPORT operator SInt32() const;
+            _CGUL_EXPORT operator bool() const;
+            _CGUL_EXPORT operator String() const;
+            _CGUL_EXPORT operator Object() const;
+            _CGUL_EXPORT operator Array() const;
 
             _CGUL_EXPORT String ToString();
         };
