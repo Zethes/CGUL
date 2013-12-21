@@ -595,6 +595,7 @@ _CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const String& str, ...)
     }
     va_end(argptr);
     null = false;
+    return *this;
 }
 
 /** @details Removes spaces, tabs and the following whitespaces: \\n \\v \\f \\r

@@ -13,7 +13,7 @@
 namespace CGUL
 {
     template< typename Type >
-    class Vector2T;
+    struct Vector2T;
     template< typename Type >
     _CGUL_INLINE_DEFINE std::ostream& operator<<(std::ostream&, const CGUL::Vector2T< Type >&);
 }
@@ -109,7 +109,7 @@ namespace CGUL
         //! components.
         _CGUL_INLINE_DEFINE Vector2T& operator/=(Type operand);
         //! @brief An operator to output this vector on an output stream.
-        _CGUL_INLINE_DEFINE friend std::ostream& operator<< <>(std::ostream& stream, const Vector2T< Type >& vector);
+        friend std::ostream& operator<< <>(std::ostream& stream, const Vector2T< Type >& vector);
         template< typename OtherType >
         _CGUL_INLINE_DEFINE operator Vector2T< OtherType >();
 

@@ -344,9 +344,9 @@ _CGUL_EXPORT void CGUL::GL::TexEnvf(Enum target, Enum pname, Float32 param)
 _CGUL_EXPORT void CGUL::GL::TexEnvi(Enum target, Enum pname, SInt param)
 {
     GLCLEAR();
-    GLVERIFY(glTexEnvf);
-    glTexEnvf(target, pname, param);
-    GLCHECK("Failed to set texture environment parameters.", glTexEnvf);
+    GLVERIFY(glTexEnvi);
+    glTexEnvi(target, pname, param);
+    GLCHECK("Failed to set texture environment parameters.", glTexEnvi);
 }
 
 _CGUL_EXPORT void CGUL::GL::TexImage2D(Enum target, SInt level, SInt internalFormat, SignedSize width, SignedSize height, SInt border, Enum format, Enum type, const void* data)

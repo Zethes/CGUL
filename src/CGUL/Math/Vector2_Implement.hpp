@@ -270,7 +270,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >& CGUL::Vector2T< Type >::operator/
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector2T< Type >& vector)
+std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector2T< Type >& vector)
 {
     stream << "[" << vector.x << ", " << vector.y << "]";
     return stream;

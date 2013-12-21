@@ -149,14 +149,6 @@ _CGUL_EXPORT CGUL::JSON::Value::Value(const UInt32 v) :
 {
 }
 
-_CGUL_EXPORT CGUL::JSON::Value::Value(const double v) :
-    type(ValueType::FLOAT),
-    valueInt(0),
-    valueFloat(v),
-    valueBool(false)
-{
-}
-
 _CGUL_EXPORT CGUL::JSON::Value::Value(const Float32 v) :
     type(ValueType::FLOAT),
     valueInt(0),
@@ -510,7 +502,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseNumber(String str)
 
     if (!isInt) //It's a decimal!
     {
-        place = 0.1;
+        place = 0.1f;
         for (UInt32 i = splitLoc + 1; i < str.GetLength() && i < expLoc; i++)
         {
             if (str[i] >= '0' && str[i] <= '9')
@@ -558,7 +550,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseNumber(String str)
 
         if (negativeNotate)
         {
-            place = 0.1;
+            place = 0.1f;
             for (UInt32 i = 0; i < notationAmount - 1; i++)
             {
                 place /= 10;

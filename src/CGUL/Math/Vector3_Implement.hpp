@@ -293,7 +293,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator/
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector3T< Type >& vector)
+std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector3T< Type >& vector)
 {
     stream << "[" << vector.x << ", " << vector.y << ", " << vector.z << "]";
     return stream;

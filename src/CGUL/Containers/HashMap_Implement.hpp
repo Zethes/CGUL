@@ -8,7 +8,7 @@
 template< typename Type >
 CGUL::Size CGUL::Hash::Integer(const Type& object)
 {
-    return static_cast<Size>(object);
+    return static_cast< Size >(object);
 }
 
 template< typename KeyType, typename ValueType >

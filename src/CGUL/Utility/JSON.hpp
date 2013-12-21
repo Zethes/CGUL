@@ -169,7 +169,6 @@
             _CGUL_EXPORT Value(const SInt32 v);
             _CGUL_EXPORT Value(const UInt32 v);
             _CGUL_EXPORT Value(const Float32 v);
-            _CGUL_EXPORT Value(const double v);
             _CGUL_EXPORT Value(const bool v);
             _CGUL_EXPORT Value(const String& v);
             _CGUL_EXPORT Value(const Object& v);
