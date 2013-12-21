@@ -26,11 +26,44 @@ if(APPLE)
 
 endif()
 add_definitions(-DCGUL_BUILD -DCGUL_INCLUDES ${CMAKE_REQUIRED_FLAGS})
-add_library(CGUL ${CGUL_LIBRARY_TYPE} ${CGUL_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp)
+add_library(CGUL ${CGUL_LIBRARY_TYPE} ${CGUL_SOURCES} ${CGUL_INSTALL} ${CGUL_PROJECT_FILES} ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp)
+
+# Organize the files for IDE's
+string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" __PATHLENGTH)
+foreach(__FILE ${CGUL_SOURCES} ${CGUL_INSTALL} ${CGUL_PROJECT_FILES})
+
+    get_filename_component(__FILEPATH "${__FILE}" PATH)
+    set(__FILEPATH "${__FILEPATH}/")
+    string(SUBSTRING ${__FILEPATH} ${__PATHLENGTH} -1 __GROUP)
+
+    get_filename_component(__SOURCE_NAME "${__FILE}" NAME)
+    string(REGEX MATCHALL "\\.hpp" __IS_HEADER "${__SOURCE_NAME}")
+    string(REGEX MATCH "\\_Implement.hpp" __IS_IMPLEMENTATION "${__SOURCE_NAME}")
+    string(REGEX MATCH "\\.((cpp)|(mm))" __IS_SOURCE "${__SOURCE_NAME}")
+    string(REGEX MATCH "CMakeLists.txt" __IS_CMAKE "${__SOURCE_NAME}")
+    if(__IS_IMPLEMENTATION)
+        set(__GROUP "Implementation Files/${__GROUP}")
+    elseif(__IS_HEADER)
+        set(__GROUP "Header Files/${__GROUP}")
+    elseif(__IS_SOURCE)
+        set(__GROUP "Source Files/${__GROUP}")
+    elseif(__IS_CMAKE)
+        set(__GROUP "CMake Files/${__GROUP}")
+    else()
+        set(__GROUP "Resource Files/${__GROUP}")
+    endif()
+
+    string(REPLACE "CGUL/" "" __GROUP ${__GROUP})
+    string(REPLACE "/" "\\\\" __GROUP ${__GROUP})
+
+    source_group(${__GROUP} FILES ${__FILE})
+
+endforeach()
 
 set_property(TARGET CGUL PROPERTY OUTPUT_NAME "${CGUL_OUTPUT_NAME}")
 set_property(TARGET CGUL PROPERTY ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR}")
 set_property(TARGET CGUL PROPERTY LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR}")
+set_property(TARGET CGUL PROPERTY RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR}")
 foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
 
     string(TOUPPER "${__CONFIGURATION}" __CONFIGURATION)
@@ -40,10 +73,9 @@ foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})
 
 endforeach()
 
-
 string(STRIP "${CGUL_LIBRARIES}" CGUL_LIBRARIES)
 string(REPLACE " " ";" LIBRARY_LIST "${CGUL_LIBRARIES}")
-target_link_libraries(CGUL ${LIBRARY_LIST})
+target_link_libraries(CGUL ${LIBRARY_LIST} ${INSTALL_LIBRARIES_SYSTEM})
 
 # Get information about the library
 if(${DEFINE_DEBUG})

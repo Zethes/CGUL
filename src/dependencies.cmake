@@ -10,6 +10,7 @@ macro(use_library NAME SYSTEM)
         else()
 
             list(APPEND INSTALL_LIBRARIES_SYSTEM "${NAME}")
+
         endif()
 
     else()
