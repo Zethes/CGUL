@@ -30,6 +30,7 @@ examples/*/build/
 # Misc Files
 *.directory
 *.swp
+*.swo
 
 # Backup Files
 *~
