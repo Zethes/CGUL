@@ -14,12 +14,14 @@
 #   define XMD_H
 #endif
 
+#define boolean bool
 extern "C"
 {
 #   include <jpeglib.h>
 }
+#undef boolean
 
-struct jpegErrorMgr 
+struct jpegErrorMgr
 {
     struct jpeg_error_mgr pub;
     jmp_buf setjmpBuffer;
@@ -49,7 +51,7 @@ _CGUL_EXPORT bool CGUL::ImageLoaders::JPEG::CanLoad(const String& file)
 
     return (header[0] == 0xFF && header[1] == 0xD8);
 }
- 
+
 _CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Load(const String& file, Image* image)
 {
     jpegErrorMgr jerr;
