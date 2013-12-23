@@ -49,6 +49,12 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::DotProduct(const Vector2T& v
 }
 
 template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::CrossProduct(const Vector2T& valueA, const Vector2T& valueB)
+{
+    return valueA.y * valueB.x - valueA.x * valueB.y;
+}
+
+template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Normalized(const Vector2T& value)
 {
     Type inverseMagnitude = 1.0f / value.GetMagnitude();

@@ -60,6 +60,7 @@ namespace CGUL
         _CGUL_INLINE_DEFINE static Vector2T FromAngle(Type angle, Type magnitude = 1.0f);
 
         _CGUL_INLINE_DEFINE static Type DotProduct(const Vector2T& valueA, const Vector2T& valueB);
+        _CGUL_INLINE_DEFINE static Type CrossProduct(const Vector2T& valueA, const Vector2T& valueB);
         _CGUL_INLINE_DEFINE static Vector2T Normalized(const Vector2T& value);
 
         _CGUL_INLINE_DEFINE static Type Distance(const Vector2T& vectorA, const Vector2T& vectorB);
