@@ -254,7 +254,7 @@ _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >*
 {
 #   ifdef CPP_HEADER_DIRENT_H
     String fixedPath = path;
-    if (!fixedPath.EndsWith("/") && !fixedPath.BeginsWith("\\"))
+    if (!fixedPath.EndsWith("/") && !fixedPath.EndsWith("\\"))
     {
         // Prefer unix style paths, since windows accepts it (for the most part)
         if (fixedPath.Contains("/"))
