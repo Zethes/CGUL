@@ -196,11 +196,18 @@ _CGUL_EXPORT void CGUL::Window::Update()
                 case 33:
                     XDestroyWindow(display, handle);
                 case DestroyNotify:
+                {
                     window->Close();
                     return;
+                }
                 case KeyPress:
-                    window->OnKeyPress(TranslateKey(event.xkey.keycode));
+                {
+                    WindowKeyButtonEvent cgulEvent;
+                    cgulEvent.pressed = true;
+                    cgulEvent.key = TranslateKey(event.xkey.keycode);
+                    window->onKeyButton.Trigger(cgulEvent);
                     break;
+                }
                 case KeyRelease:
                     bool released = true;
                     if (XEventsQueued(display, QueuedAfterReading))
@@ -214,7 +221,10 @@ _CGUL_EXPORT void CGUL::Window::Update()
                     }
                     if (released)
                     {
-                        window->OnKeyRelease(TranslateKey(event.xkey.keycode));
+                        WindowKeyButtonEvent cgulEvent;
+                        cgulEvent.pressed = false;
+                        cgulEvent.key = TranslateKey(event.xkey.keycode);
+                        window->onKeyButton.Trigger(cgulEvent);
                     }
                     break;
             }
@@ -408,7 +418,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     attributes.background_pixel = style.backgroundColor.b | (style.backgroundColor.g << 8) | (style.backgroundColor.r << 16);//XWhitePixel(display, screen);
     attributes.border_pixel = XBlackPixel(display, screen);
     attributes.override_redirect = 0;
-    this->handle = XCreateWindow(display, XRootWindow(display, screen), 200, 200, style.width, style.height, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
+    this->handle = XCreateWindow(display, XRootWindow(display, screen), 200, 200, style.size.x, style.size.y, 5, depth, InputOutput, visual, CWBackPixel | CWBorderPixel | CWOverrideRedirect, &attributes);
     Atom wmDelete = XInternAtom(display, "WM_DELETE_WINDOW", true);
     XSetWMProtocols(display, this->handle, &wmDelete, 1);
     XSelectInput(display, this->handle, ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
