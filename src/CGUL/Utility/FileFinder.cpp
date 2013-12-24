@@ -104,12 +104,12 @@ bool CGUL::FileFinder::Next(String* next)
 
 void CGUL::FileFinder::Rewind()
 {
+#   ifdef CPP_HEADER_DIRENT_H
     if (directory == NULL)
     {
         throw std::runtime_error("File finder not open.");
     }
 
-#   ifdef CPP_HEADER_DIRENT_H
     rewinddir((DIR*)directory);
 #   endif
 }
