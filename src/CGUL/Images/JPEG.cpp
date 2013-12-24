@@ -20,6 +20,8 @@ extern "C"
 #   include <jpeglib.h>
 }
 #undef boolean
+#include <setjmp.h>
+#include <stdlib.h>
 
 struct jpegErrorMgr
 {
