@@ -1,4 +1,4 @@
-**C++ General Utility Library**  
+![alt text](https://raw.github.com/Zethes/CGUL/master/resources/logo.png "CGUL Logo")  
 Celebrating a  year on GitHub :tada:
 
 What is it?
