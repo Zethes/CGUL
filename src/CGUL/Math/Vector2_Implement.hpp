@@ -493,6 +493,14 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::GetAngle() const
     return Math::ATan2(y, x);
 }
 
+/** @returns A vector perpendicular to this one.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::GetPerpendicular() const
+{
+    return Vector2T(-y, x);
+}
+
 /**
  */
 template< typename Type >

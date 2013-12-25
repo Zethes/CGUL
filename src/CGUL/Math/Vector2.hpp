@@ -156,6 +156,9 @@ namespace CGUL
         //! @brief Gets the two dimensional angle of the vector.
         _CGUL_INLINE_DEFINE Type GetAngle() const;
 
+        //! @brief Gets a vector perpendicular to this one.
+        _CGUL_INLINE_DEFINE Vector2T GetPerpendicular() const;
+
         //! @brief Rounds down each component to the nearest whole number.
         _CGUL_INLINE_DEFINE void Floor();
         //! @brief Rounds each component to the nearest whole number.
