@@ -129,7 +129,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Save(const String& file, const Image
 {
      if (image == NULL)
     {
-        throw std::runtime_error("No image provided to save.");
+        throw ImageException(ImageExceptionCode::JPEG_WRITE, ImageExceptionReason::IMAGE_IS_NOT_VALID);
     }
 
     //Open up file.
@@ -142,7 +142,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Save(const String& file, const Image
 
     if (fp == NULL)
     {
-        throw std::runtime_error("Failed to open PNG file for saving.");
+        throw ImageException(ImageExceptionCode::JPEG_WRITE, ImageExceptionReason::FAILED_TO_OPEN);
     }
 
     struct jpeg_error_mgr jerr;
@@ -160,7 +160,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Save(const String& file, const Image
     {
         //TODO: Support more?
         fclose(fp);
-        throw std::runtime_error("Image's format not supported.");
+        throw ImageException(ImageExceptionCode::JPEG_WRITE, ImageExceptionReason::UNSUPPORTED_FORMAT);
     }
 
     cinfo.err = jpeg_std_error(&jerr);

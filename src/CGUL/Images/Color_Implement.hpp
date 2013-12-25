@@ -51,12 +51,13 @@ _CGUL_INLINE_IMPLEMENT CGUL::ColorT< Type > CGUL::ColorT< Type >::MakeHSL(Float3
     }
     else
     {
-        Float32 q = luminance < 0.5 ? luminance * (1 + saturation) : luminance + saturation - luminance * saturation;
+        hue /= 360.0f;
+        Float32 q = luminance < 0.5 ? luminance * (1.0f + saturation) : luminance + saturation - luminance * saturation;
         Float32 p = 2.0f * luminance - q;
         r = HueToRGB(p, q, hue + 1.0f / 3.0f);
         g = HueToRGB(p, q, hue);
         b = HueToRGB(p, q, hue - 1.0f / 3.0f) ;
-    }
+    }  
 
     return ColorT((Type)(r * maxValue), (Type)(g * maxValue), (Type)(b * maxValue), alpha);
 }

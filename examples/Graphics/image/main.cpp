@@ -116,17 +116,18 @@ int main()
             std::cout << (i+1) << ". " << loaders[i]->GetName() << " (" << loaders[i]->GetExtension() << ")" << std::endl;
         }
 
+        String fileName = "resources/logo.png";
         Image* image = new Image();
-        if (!image->CanLoad("resources/logo.jpg"))
+        if (!image->CanLoad(fileName))
         {
             throw FatalException("Cannot load JPEG images.");
         }
 
-        image->Load("resources/logo.jpg");
-        image->Save("out.jpg", "jpg");
+        image->Load(fileName);
+        image->Save("out.png", "png");
 
         WindowStyle style;
-        style.title = U8("logo.jpg (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
+        style.title = fileName + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
         style.size = UCoord32(image->GetWidth(), image->GetHeight());
         style.backgroundColor = Colors::black;
         style.resizable = false;
@@ -165,7 +166,7 @@ int main()
         {
             Timer::Sleep(1);
             hue = Math::Mod<Float64>(hue + timer.GetDeltaTime() * 45.0f, 360.0f);
-            context.ClearColor(Color::MakeHSL(hue, 40, 255));
+            context.ClearColor(Color::MakeHSL(hue, 0.4f, 0.5f));
 
             context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
