@@ -37,6 +37,7 @@ _CGUL_EXPORT bool CGUL::ImageLoaders::PNG::CanLoad(const String& file)
     return (png_sig_cmp((png_bytep)data, 0, PNGSIGSIZE) == 0);
 }
 
+#include <iostream>
 _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image)
 {
     if (!CanLoad(file))
@@ -93,19 +94,20 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
     png_read_update_info(png_ptr, info_ptr);
 
     //Get format information
+    std::cout << "Colortype: (" << (2|4) << ")" << (int)colorType << ", bitDepth: " << (int)bitDepth << std::endl;
     ImageFormat format = ImageFormats::RGBA8;
     int pixelSize = 0;
-    switch (colorType)
+    /*switch (colorType)
     {
-        case PNG_COLOR_TYPE_RGBA:
+        case PNG_COLOR_TYPE_RGB_ALPHA:
         {
             if (bitDepth == 8)
             {
-                format = ImageFormats::RGBA8;
+                format = ImageFormats::RGBA;
             }
             else if (bitDepth == 16)
             {
-                format = ImageFormats::RGBA16;
+                format = ImageFormats::RGBA4;
             }
             else
             {
@@ -120,11 +122,11 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
         {
             if (bitDepth == 8)
             {
-                format = ImageFormats::RGB8;
+                format = ImageFormats::R3_G3_B2;
             }
             else if (bitDepth == 16)
             {
-                format = ImageFormats::RGB16;
+                format = ImageFormats::RGB4;
             }
             else
             {
@@ -137,10 +139,22 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
         }
         default:
         {
+            //TODO: Support more formats.
+            //See http://refspecs.linuxbase.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libpng12.png.set.ihdr.1.html for a full list.
             fclose(fp);
             throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::UNSUPPORTED_FORMAT);
         }
+    }*/
+    if (colorType & PNG_COLOR_MASK_ALPHA)
+    {
+        format = ImageFormats::RGBA;
+        pixelSize = 4;
     }
+    else
+    {
+        format = ImageFormats::RGB;
+        pixelSize = 3;
+    } 
     format.dataType = DataTypes::UNSIGNED_CHAR;
 
     //Read pixels.
