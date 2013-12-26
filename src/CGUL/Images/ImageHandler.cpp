@@ -15,7 +15,7 @@
 #ifdef JPEG_FOUND
 #   include "JPEG.hpp"
 #endif
-#include "BMP.hpp"
+//#include "BMP.hpp"
 
 _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 {
@@ -26,7 +26,7 @@ _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 #   ifdef JPEG_FOUND
     Register(new ImageLoaders::JPEG());
 #   endif
-    Register(new ImageLoaders::BMP());
+    //Register(new ImageLoaders::BMP());
 }
 
 _CGUL_EXPORT CGUL::ImageHandler::~ImageHandler()
