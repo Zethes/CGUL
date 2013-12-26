@@ -38,6 +38,7 @@ namespace CGUL
 
         _CGUL_INLINE_DEFINE UInt32 GetInteger();
         _CGUL_INLINE_DEFINE Float32 GetDecimal();
+        _CGUL_INLINE_DEFINE String GetString(const String& characters, UInt32 count);
 
         _CGUL_INLINE_DEFINE Float32 GetUniform(Float32 a, Float32 b);
         _CGUL_INLINE_DEFINE Float32 GetExponential(Float32 beta);

@@ -33,6 +33,9 @@ namespace CGUL
         //! @brief Get a system time in milliseconds.
         _CGUL_EXPORT static Float64 GetMilliseconds();
 
+        //! @brief Gets a high precision timestamp.
+        _CGUL_EXPORT static UInt64 GetRawTime();
+
         //! @brief Default constructor.
         _CGUL_EXPORT Timer();
         //! @brief Starts the timer causing time to elapse.

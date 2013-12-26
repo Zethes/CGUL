@@ -75,7 +75,16 @@ _CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetSeconds()
  */
 _CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetMilliseconds()
 {
-    return (GetTime() / GetFrequency());
+    return (GetTime() / (GetFrequency() / 1000.0));
+}
+
+/** @details The value here is practically guaranteed to be different everytime it's called.  The
+ *  value is primarily useful for seeding random numbers.
+ *  @returns A high precision timestamp of little value to anyone.
+ */
+_CGUL_EXPORT CGUL::UInt64 CGUL::Timer::GetRawTime()
+{
+    return GetTime();
 }
 
 /**

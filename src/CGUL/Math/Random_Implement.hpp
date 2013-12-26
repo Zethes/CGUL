@@ -5,8 +5,8 @@
 /** @file Random_Implement.hpp
  */
 
-#include <ctime>
 #include <cmath>
+#include "../Utility/Timer.hpp"
 
 _CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::UniformDist(Float32 a, Float32 b, Float32 u)
 {
@@ -75,7 +75,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::Normal(Float32 mean, Float32 
 
 _CGUL_INLINE_IMPLEMENT CGUL::Random::Random()
 {
-    this->seed = (UInt32)std::time(0);
+    this->seed = (UInt32)Timer::GetRawTime();
     this->multiplier = 16807;
     this->addition = 0;
     this->modulus = 2147483647;
@@ -111,6 +111,17 @@ _CGUL_INLINE_IMPLEMENT CGUL::UInt32 CGUL::Random::GetInteger()
 _CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetDecimal()
 {
     return GetInteger() / Float32(modulus);
+}
+
+_CGUL_INLINE_IMPLEMENT CGUL::String CGUL::Random::GetString(const String& characters, UInt32 count)
+{
+    String result;
+    Size length = characters.GetSize();
+    for (UInt32 c = 0; c < count; c++)
+    {
+        result += characters[GetInteger() % length];
+    }
+    return result;
 }
 
 _CGUL_INLINE_IMPLEMENT CGUL::Float32 CGUL::Random::GetUniform(Float32 a, Float32 b)
