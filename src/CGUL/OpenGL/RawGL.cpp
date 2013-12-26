@@ -120,6 +120,22 @@ _CGUL_EXPORT CGUL::UInt CGUL::GL::CreateShader(Enum shaderType)
     return ret;
 }
 
+_CGUL_EXPORT void CGUL::GL::DeleteBuffers(SignedSize n, const UInt* buffers)
+{
+    GLCLEAR();
+    GLVERIFY(glDeleteBuffers);
+    glDeleteBuffers(n, buffers);
+    GLCHECK("Failed to delete buffers.", glDeleteBuffers);
+}
+
+_CGUL_EXPORT void CGUL::GL::DeleteVertexArrays(SignedSize n, const UInt* arrays)
+{
+    GLCLEAR();
+    GLVERIFY(glDeleteVertexArrays);
+    glDeleteBuffers(n, arrays);
+    GLCHECK("Failed to delete vertex arrays.", glDeleteVertexArrays);
+}
+
 _CGUL_EXPORT void CGUL::GL::Disable(Enum cap)
 {
     GLCLEAR();

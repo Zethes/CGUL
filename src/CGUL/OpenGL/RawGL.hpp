@@ -39,6 +39,8 @@ namespace CGUL
         _CGUL_EXPORT UInt CreateProgram();
         _CGUL_EXPORT UInt CreateShader(Enum shaderType);
 
+        _CGUL_EXPORT void DeleteBuffers(SignedSize n, const UInt* buffers);
+        _CGUL_EXPORT void DeleteVertexArrays(SignedSize n, const UInt* arrays);
         _CGUL_EXPORT void Disable(Enum cap);
         _CGUL_EXPORT void DisableVertexAttribArray(UInt index);
         _CGUL_EXPORT void DrawArrays(Enum mode, SInt first, SignedSize count);
