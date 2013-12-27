@@ -37,7 +37,6 @@ _CGUL_EXPORT bool CGUL::ImageLoaders::PNG::CanLoad(const String& file)
     return (png_sig_cmp((png_bytep)data, 0, PNGSIGSIZE) == 0);
 }
 
-#include <iostream>
 _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image)
 {
     if (!CanLoad(file))
@@ -59,7 +58,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
     }
     fread(header, 1, 8, fp);
 
-    //Inititialize structs
+    //Initialize structs
     png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!png_ptr)
     {
@@ -94,7 +93,6 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
     png_read_update_info(png_ptr, info_ptr);
 
     //Get format information
-    std::cout << "Colortype: (" << (2|4) << ")" << (int)colorType << ", bitDepth: " << (int)bitDepth << std::endl;
     ImageFormat format = ImageFormats::RGBA8;
     int pixelSize = 0;
     /*switch (colorType)

@@ -8,7 +8,6 @@
 #include "Regex.hpp"
 #include "../Utility/Move.hpp"
 
-#include <iostream>
 #include <string.h>
 
 #ifdef CGUL_USE_REGEX

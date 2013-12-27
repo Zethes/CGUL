@@ -283,7 +283,6 @@ bool CGUL::Network::SocketTCP::Accept(SocketTCP* socket)
 
 
 #ifdef OpenSSL_FOUND
-#include <iostream>
 void CGUL::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short port)
 {
     sslHandle = NULL;
@@ -561,7 +560,6 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
     }
 }
 
-#include <iostream>
 int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
 {
 #   ifdef OpenSSL_FOUND

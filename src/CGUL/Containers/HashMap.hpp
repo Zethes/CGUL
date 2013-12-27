@@ -10,7 +10,14 @@
 #include "List.hpp"
 #include "../External/Defines.hpp"
 
-#include <iostream>
+namespace CGUL
+{
+    template< typename KeyType, typename ValueType >
+    class HashMap;
+    template< typename KeyType, typename ValueType >
+    _CGUL_INLINE_DEFINE std::ostream& operator<<(std::ostream&, const CGUL::HashMap< KeyType, ValueType >&);
+}
+
 namespace CGUL
 {
     namespace Hash
@@ -41,6 +48,8 @@ namespace CGUL
         HashMap(Function hash, Size pool);
         ~HashMap();
 
+        friend std::ostream& operator<< <>(std::ostream& stream, const HashMap< KeyType, ValueType >& hashMap);
+
         void SetSize(Size pool);
         void SetHashFunction(Function hash);
 
@@ -56,8 +65,6 @@ namespace CGUL
 
         void Clear();
         void Clear(Size pool);
-
-        void Debug() const;
     };
 }
 

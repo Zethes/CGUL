@@ -249,7 +249,6 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::File::GetFileSize(const CGUL::String& fileName)
     return fileSize;
 }
 
-#include <iostream>
 _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >* files)
 {
 #   ifdef CPP_HEADER_DIRENT_H

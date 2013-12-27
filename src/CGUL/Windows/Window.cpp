@@ -545,6 +545,8 @@ _CGUL_EXPORT CGUL::WindowStyle CGUL::Window::GetStyle() const
     style.backgroundColor = GetBackgroundColor();
     style.size = GetSize();
     style.resizable = GetResizable();
+    style.centerWindow = false;
+    style.position = GetPosition();
     return style;
 }
 
@@ -868,7 +870,6 @@ _CGUL_EXPORT void CGUL::Window::SetPosition(const SCoord32& position)
 
 /** @returns The position of the window.
  */
-#include <iostream>
 _CGUL_EXPORT CGUL::SCoord32 CGUL::Window::GetPosition() const
 {
 #   ifdef CGUL_WINDOWS

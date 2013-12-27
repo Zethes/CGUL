@@ -59,6 +59,28 @@ CGUL::HashMap< KeyType, ValueType>::~HashMap()
 }
 
 template< typename KeyType, typename ValueType >
+std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::HashMap< KeyType, ValueType >& hashMap)
+{
+    bool first = true;
+    for (Size i = 0; i < hashMap.size; i++)
+    {
+        const typename HashMap< KeyType, ValueType >::Data* slot = slot = hashMap.data[i];
+        Size it = 0;
+        while (slot)
+        {
+            if (!first)
+            {
+                stream << std::endl;
+            }
+            stream << "[" << i << " - " << (it++) << "] " << slot->key << " -> " << slot->value;
+            slot = slot->next;
+            first = false;
+        }
+    }
+    return stream;
+}
+
+template< typename KeyType, typename ValueType >
 void CGUL::HashMap< KeyType, ValueType >::SetSize(Size pool)
 {
     if (size == 0)
@@ -259,19 +281,4 @@ void CGUL::HashMap< KeyType, ValueType>::Clear(Size pool)
     delete[] data;
     data = new Data*[pool];
     this->size = pool;
-}
-
-template< typename KeyType, typename ValueType>
-void CGUL::HashMap< KeyType, ValueType>::Debug() const
-{
-    for (Size i = 0; i < size; i++)
-    {
-        Data* slot = data[i];
-        Size it = 0;
-        while (slot)
-        {
-            std::cout << "[" << i << " - " << (it++) << "] " << slot->key << " -> " << slot->value << std::endl;
-            slot = slot->next;
-        }
-    }
 }
