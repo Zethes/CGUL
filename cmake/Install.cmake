@@ -152,9 +152,9 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/CGULConfig.cmake.in" "$
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../resources/CGULConfigVersion.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}ConfigVersion.cmake" @ONLY)
 
 # Install CGUL
-install(DIRECTORY ${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}Config.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake/)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/${CGUL_LIB_DIR} DESTINATION .)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}Config.cmake DESTINATION cmake/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../cmakescripts/${CGUL_OUTPUT_NAME}ConfigVersion.cmake DESTINATION cmake/)
 
 # Install include files
 string(LENGTH "${CMAKE_CURRENT_SOURCE_DIR}" DIR_LENGTH)
@@ -163,16 +163,16 @@ foreach(FILE ${CGUL_INSTALL})
 
     string(SUBSTRING "${FILE}" ${DIR_LENGTH} -1 INSTALL_FILE)
     get_filename_component(INSTALL_DIR ${INSTALL_FILE} PATH)
-    install(FILES ${FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${INSTALL_DIR}/)
+    install(FILES ${FILE} DESTINATION include/${INSTALL_DIR}/)
 
 endforeach()
 
 # Install Config.hpp
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp DESTINATION ${CMAKE_INSTALL_PREFIX}/include/CGUL/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CGUL/Config.hpp DESTINATION include/CGUL/)
 
 # Install license
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/acknowledgements.txt DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../license.txt DESTINATION .)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/acknowledgements.txt DESTINATION .)
 
 # Install other libraries
 foreach(__LIBRARY ${INSTALL_LIBRARIES})
@@ -205,7 +205,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
                 # Install the library
                 if("${__FIND}" STREQUAL "-1")
 
-                    install(FILES ${__LOCATION} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CGUL_LIB_DIR})
+                    #install(FILES ${__LOCATION} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CGUL_LIB_DIR})
 
                 endif()
 
@@ -218,4 +218,4 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
 endforeach()
 
 # Installing the "include" directory is a temporary workaround for OpenGL calls in CGUL
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../include DESTINATION .)
