@@ -68,6 +68,9 @@ namespace CGUL
         //! @brief Copies a vector2 into this vector3's 
 		//! first two components and Initializes z to 0.
         _CGUL_INLINE_DEFINE Vector3T(const Vector2T< Type >& copy);
+        //! @brief Copies a vector2 into this vector3's first two components
+		//! and Initializes z with the individual component value.
+        _CGUL_INLINE_DEFINE Vector3T(const Vector2T< Type >& copy, Type z);
         //! @brief Initializes all components to a given value.
         _CGUL_INLINE_DEFINE Vector3T(Type value);
         //! @brief Initializes the vector with individual component values.

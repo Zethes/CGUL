@@ -103,6 +103,17 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(const Vector2T< Type >& 
     this->z = 0;
 }
 
+/** @param copy The vector to copy.
+ *  @param z The z component.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(const Vector2T< Type >& copy, Type value)
+{
+    this->x = copy.x;
+    this->y = copy.y;
+    this->z = value;
+}
+
 /** @param value The value for each component.
  */
 template< typename Type >
