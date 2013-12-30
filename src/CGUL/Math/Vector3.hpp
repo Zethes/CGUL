@@ -65,6 +65,9 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Vector3T();
         //! @brief Copies a vector into this vector.
         _CGUL_INLINE_DEFINE Vector3T(const Vector3T& copy);
+        //! @brief Copies a vector2 into this vector3's 
+		//! first two components and Initializes z to 0.
+        _CGUL_INLINE_DEFINE Vector3T(const Vector2T< Type >& copy);
         //! @brief Initializes all components to a given value.
         _CGUL_INLINE_DEFINE Vector3T(Type value);
         //! @brief Initializes the vector with individual component values.
@@ -86,11 +89,16 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Vector3T operator+(const Vector3T& operand) const;
         //! @brief Adds the individual components of another vector to this vector's components.
         _CGUL_INLINE_DEFINE Vector3T& operator+=(const Vector3T& operand);
+        //! @brief Adds the individual components of a vector2 to this vector3's first two components.
+        _CGUL_INLINE_DEFINE Vector3T& operator+=(const Vector2T< Type >& operand);
         //! @brief Performs component-based subtraction on two vectors.
         _CGUL_INLINE_DEFINE Vector3T operator-(const Vector3T& operand) const;
         //! @brief Subtracts the individual components of another vector from this vector's
         //! components.
         _CGUL_INLINE_DEFINE Vector3T& operator-=(const Vector3T& operand);
+        //! @brief Subtracts the individual components of a vector2 to this vector3's 
+		//! first two components.
+        _CGUL_INLINE_DEFINE Vector3T& operator-=(const Vector2T< Type >& operand);
         //! @brief Performs component-based multiplication on two vectors.
         _CGUL_INLINE_DEFINE Vector3T operator*(Type operand) const;
         _CGUL_INLINE_DEFINE Vector3T operator*(const MatrixT< Type >& operand) const;

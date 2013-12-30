@@ -93,6 +93,16 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(const Vector3T& copy)
     this->z = copy.z;
 }
 
+/** @param copy The vector to copy.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::Vector3T(const Vector2T< Type >& copy)
+{
+    this->x = copy.x;
+    this->y = copy.y;
+    this->z = 0;
+}
+
 /** @param value The value for each component.
  */
 template< typename Type >
@@ -207,6 +217,17 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator+
     return *this;
 }
 
+/** @param operand The other operand.
+ *  @returns A reference to the current object.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator+=(const Vector2T< Type >& operand)
+{
+    this->x += operand.x;
+    this->y += operand.y;
+    return *this;
+}
+
 /** @param operand The other vector.
  *  @returns The resulting vector.
  */
@@ -227,6 +248,17 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator-
     this->x -= operand.x;
     this->y -= operand.y;
     this->z -= operand.z;
+    return *this;
+}
+
+/** @param operand The other operand.
+ *  @returns A reference to the current object.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >& CGUL::Vector3T< Type >::operator-=(const Vector2T< Type >& operand)
+{
+    this->x -= operand.x;
+    this->y -= operand.y;
     return *this;
 }
 
