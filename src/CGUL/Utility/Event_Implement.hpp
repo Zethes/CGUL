@@ -58,6 +58,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::RemoveEvent(Eve
 }
 
 template< typename Type >
+_CGUL_INLINE_IMPLEMENT bool CGUL::Event< Type >::HasEvents() const
+{
+    return !hooks.empty();
+}
+
+template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Event< Type >::Trigger(const Type& event)
 {
     for (typename Vector< std::pair< EventFunction, void* > >::iterator itr = hooks.begin(), itrEnd = hooks.end(); itr != itrEnd; ++itr)

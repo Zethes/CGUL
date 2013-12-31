@@ -41,66 +41,90 @@ LRESULT CALLBACK CGUL::Window::WindowProcedure(HWND handle, UINT message, WPARAM
         }
         case WM_KEYDOWN:
         {
-            WindowKeyButtonEvent event;
-            event.pressed = true;
-            event.key = TranslateKey(wParam);
-            window->onKeyButton.Trigger(event);
+            if (window->onKeyButton.HasEvents())
+            {
+                WindowKeyButtonEvent event;
+                event.pressed = true;
+                event.key = TranslateKey(wParam);
+                window->onKeyButton.Trigger(event);
+            }
             return 0;
         }
         case WM_KEYUP:
         {
-            WindowKeyButtonEvent event;
-            event.pressed = false;
-            event.key = TranslateKey(wParam);
-            window->onKeyButton.Trigger(event);
+            if (window->onKeyButton.HasEvents())
+            {
+                WindowKeyButtonEvent event;
+                event.pressed = false;
+                event.key = TranslateKey(wParam);
+                window->onKeyButton.Trigger(event);
+            }
             return 0;
         }
         case WM_LBUTTONDOWN:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = true;
-            event.button = 0;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = true;
+                event.button = 0;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_LBUTTONUP:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = false;
-            event.button = 0;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = false;
+                event.button = 0;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_RBUTTONDOWN:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = true;
-            event.button = 1;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = true;
+                event.button = 1;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_RBUTTONUP:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = false;
-            event.button = 1;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = false;
+                event.button = 1;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_MBUTTONDOWN:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = true;
-            event.button = 2;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = true;
+                event.button = 2;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_MBUTTONUP:
         {
-            WindowMouseButtonEvent event;
-            event.pressed = false;
-            event.button = 2;
-            window->onMouseButton.Trigger(event);
+            if (window->onMouseButton.HasEvents())
+            {
+                WindowMouseButtonEvent event;
+                event.pressed = false;
+                event.button = 2;
+                window->onMouseButton.Trigger(event);
+            }
             return 0;
         }
         case WM_DESTROY:
