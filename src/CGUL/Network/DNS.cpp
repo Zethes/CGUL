@@ -27,7 +27,12 @@ CGUL::Network::DNS::~DNS()
 {
 }
 
-std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, Filter filter)
+void CGUL::Network::DNS::Lookup(const CGUL::String& host, List< IPAddress >* addresses)
+{
+    Lookup(host, UNSPECIFIED, addresses);
+}
+
+void CGUL::Network::DNS::Lookup(const CGUL::String& host, Filter filter, List< IPAddress >* addresses)
 {
     __jatta_network_initiate();
 
@@ -36,15 +41,22 @@ std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, F
 
     addrinfo hints;
     memset(&hints, 0, sizeof(addrinfo));
-    // FIXME: this shit sucks
-    hints.ai_family = AF_INET; //hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_UNSPEC;
+    if (filter == IPV4)
+    {
+        hints.ai_family = AF_INET;
+    }
+    if (filter == IPV6)
+    {
+        hints.ai_family = AF_INET6;
+    }
     hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
 
     addrinfo* result;
     if ((status = getaddrinfo(host.GetCString(), NULL, &hints, &result)) != 0)
     {
         throw NetworkException(NetworkExceptionCode::FAILED_DNS_LOOKUP, status);
-        return std::vector<CGUL::String>();
     }
 
     unsigned int count = 0;
@@ -53,7 +65,6 @@ std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, F
         count++;
     }
 
-    std::vector<CGUL::String> list;
     char ipstr[INET6_ADDRSTRLEN + 1];
     memset(ipstr, 0, INET6_ADDRSTRLEN + 1);
     ipstr[INET6_ADDRSTRLEN - 1] = 0;
@@ -65,7 +76,7 @@ std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, F
         // Determine if the address is an IPv4 or IPv6 address
         if (p->ai_family == AF_INET)
         {
-            struct sockaddr_in *ipv4 = reinterpret_cast<sockaddr_in*>(p->ai_addr);
+            struct sockaddr_in *ipv4 = reinterpret_cast< sockaddr_in* >(p->ai_addr);
             addr = &(ipv4->sin_addr);
             struct sockaddr_in in;
             memset(&in, 0, sizeof(in));
@@ -73,9 +84,9 @@ std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, F
             memcpy(&in.sin_addr, addr, sizeof(struct in_addr));
             getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in), ipstr, INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST);
         }
-        else
+        else if (p->ai_family == AF_INET6)
         {
-            struct sockaddr_in6 *ipv6 = reinterpret_cast<sockaddr_in6*>(p->ai_addr);
+            struct sockaddr_in6 *ipv6 = reinterpret_cast< sockaddr_in6* >(p->ai_addr);
             addr = &(ipv6->sin6_addr);
             struct sockaddr_in6 in;
             memset(&in, 0, sizeof(in));
@@ -84,12 +95,9 @@ std::vector<CGUL::String> CGUL::Network::DNS::Lookup(const CGUL::String& host, F
             getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in6), ipstr, INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST);
         }
 
-        list.push_back(std::string(ipstr));
+        addresses->Push(IPAddress(ipstr));
     }
 
     // Free the linked list
     freeaddrinfo(result);
-
-    //return std::move(list);
-    return list;
 }
