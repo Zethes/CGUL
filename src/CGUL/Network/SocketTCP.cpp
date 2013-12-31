@@ -341,7 +341,19 @@ void CGUL::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short po
 }
 void CGUL::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int backlog)
 {
+    SSL_METHOD * method;
+    SSL_CTX * ctx;
 
+    SSL_library_init();
+    OpenSSL_add_all_algorithms();
+    SSL_load_error_strings();
+    method = (SSL_METHOD*)SSLv23_server_method();
+    ctx = SSL_CTX_new(method);
+    if (ctx == NULL)
+    {
+        throw NetworkException(NetworkExceptionCode::FAILED_SSL_SETUP, NetworkExceptionReason::FAILED_CTX_NEW);
+    }
+    Listen(port, ipv4, backlog);
 }
 #endif
 
