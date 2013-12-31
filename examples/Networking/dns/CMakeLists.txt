@@ -5,7 +5,7 @@ project(DNS CXX)
 find_package(CGUL 0.1.8 REQUIRED)
 
 include_directories(${CGUL_INCLUDE_DIRS})
-add_executable(dns MACOSX_BUNDLE main.cpp)
+add_executable(dns main.cpp)
 target_link_libraries(dns ${CGUL_LIBRARIES})
 cgul_bake_rpath(dns "$ORIGIN")
 
