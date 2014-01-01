@@ -897,7 +897,8 @@ void CGUL::Network::HTTPRequest::Https(const String& url)
     host = url;
 
     DNS dns;
-    std::vector<CGUL::String> lookup = dns.Lookup(url);
+    Vector< Network::IPAddress > lookup;
+    dns.Lookup(url, &lookup);
     if (lookup.size() == 0)
     {
         return;
