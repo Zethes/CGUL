@@ -10,9 +10,9 @@
 #include "../Exceptions/NetworkException.hpp"
 
 #ifdef OpenSSL_FOUND
-#include <openssl/rand.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
+#   include <openssl/rand.h>
+#   include <openssl/ssl.h>
+#   include <openssl/err.h>
 #endif
 
 #ifndef DOXYGEN

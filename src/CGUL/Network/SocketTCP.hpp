@@ -6,9 +6,15 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
 #include "../Network/IPAddress.hpp"
 #include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -74,30 +80,8 @@ namespace CGUL
     }
 }
 
-template <typename T>
-int CGUL::Network::SocketTCP::Send(const T& data)
-{
-    return Send(&data, sizeof(T));
-}
-
-#ifdef CPP_HAS_DOUBLE_REFERENCE
-template <typename T>
-int CGUL::Network::SocketTCP::Send(const T&& data)
-{
-    return Send(&data, sizeof(T));
-}
-#endif
-
-template <typename T>
-int CGUL::Network::SocketTCP::Receive(T* data)
-{
-    return Receive(data, sizeof(T));
-}
-
-template <typename T>
-int CGUL::Network::SocketTCP::Peek(T* data)
-{
-    return Peek(data, sizeof(T));
-}
-
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
+#include "SocketTCP_Implement.hpp"
