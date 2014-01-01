@@ -205,7 +205,7 @@ foreach(__LIBRARY ${INSTALL_LIBRARIES})
                 # Install the library
                 if("${__FIND}" STREQUAL "-1")
 
-                    #install(FILES ${__LOCATION} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CGUL_LIB_DIR})
+                    install(FILES ${__LOCATION} DESTINATION ${CGUL_LIB_DIR})
 
                 endif()
 
