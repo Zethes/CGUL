@@ -46,9 +46,9 @@ namespace CGUL
         _CGUL_EXPORT void Reset();
 
         //! @brief Get the elapsed time (in seconds) from when the timer was started.
-        _CGUL_EXPORT Float64 GetElapsedSeconds();
+        _CGUL_EXPORT Float64 GetElapsedSeconds() const;
         //! @brief Get the elapsed time (in milliseconds) from when the timer was started.
-        _CGUL_EXPORT Float64 GetElapsedMilliseconds();
+        _CGUL_EXPORT Float64 GetElapsedMilliseconds() const;
 
         //! @brief A quick utility function for calculating delta time.
         _CGUL_EXPORT Float64 GetDeltaTime();

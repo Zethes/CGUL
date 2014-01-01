@@ -142,7 +142,7 @@ _CGUL_EXPORT void CGUL::Timer::Reset()
  *  @see GetElapsedMilliseconds
  *  @returns Elapsed time in seconds.
  */
-_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedSeconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedSeconds() const
 {
     return GetElapsedMilliseconds() / 1000.0;
 }
@@ -151,7 +151,7 @@ _CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedSeconds()
  *  Start method.  If a clock has not been started this method will simply return zero.
  *  @returns Elapsed time in milliseconds.
  */
-_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedMilliseconds()
+_CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedMilliseconds() const
 {
     if (running)
     {
