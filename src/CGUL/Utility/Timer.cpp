@@ -156,11 +156,11 @@ _CGUL_EXPORT CGUL::Float64 CGUL::Timer::GetElapsedMilliseconds() const
     if (running)
     {
         UInt64 end = GetTime();
-        return (end - startTime) / GetFrequency();
+        return (end - startTime) / (GetFrequency() / 1000.0);
     }
     else
     {
-        return storedTime / GetFrequency();
+        return storedTime / (GetFrequency() / 1000.0);
     }
 }
 
