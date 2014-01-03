@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
 #include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 // TODO: research endian-ness and what of this will break on a big-endian system
@@ -36,6 +42,9 @@ namespace CGUL
             UInt32 type;
             UInt64 address[2];
         public:
+            //! @brief Returns an invalid IP address.
+            _CGUL_EXPORT static IPAddress Invalid();
+
             //! @brief Calculates the broadcast address of a network given an address and netmask.
             _CGUL_EXPORT static IPAddress CalculateBroadcast(const IPAddress& ip, const IPAddress& netmask);
             //! @brief Calculates the network address given an address and netmask.
@@ -54,6 +63,8 @@ namespace CGUL
             //! @brief Attempts to parse a string based on the given type but may result in invalid.
             _CGUL_EXPORT IPAddress(const CGUL::String& ip, UInt32 type);
 
+            //! @brief Converts this IP address to an invalid one, useful to reset a variable.
+            _CGUL_EXPORT void MakeInvalid();
             //! @brief Creates an IPv4 address from a 32 bit unsigned integer.
             _CGUL_EXPORT void Set(UInt32 address); // ipv4
             //! @brief Creates an IPv6 address from a 128 bit unsigned integer, defined as an array
@@ -86,4 +97,5 @@ namespace CGUL
     }
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

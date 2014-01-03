@@ -5,9 +5,13 @@
 /** @file IPAddress.cpp
  */
 
+// Header
 #include "IPAddress.hpp"
+
+// CGUL Includes
 #include "../Exceptions/NetworkException.hpp"
 
+// System Includes
 #ifdef CGUL_WINDOWS
 #   include <winsock2.h>
 #   include <iphlpapi.h>
@@ -31,6 +35,15 @@ namespace CGUL
     }
 }
 #endif
+
+/** @details The constructor gets the same thing (an invalid IP address). The purpose of this
+ *  method is for explicitness in the code to allow self-documenting code to be written.
+ *  @returns An invalid IP address.
+ */
+_CGUL_EXPORT CGUL::Network::IPAddress CGUL::Network::IPAddress::Invalid()
+{
+    return IPAddress();
+}
 
 /** @details The broadcast address can only be calculated on a IPv4 network.  While it is
  *  technically possible to calculate an IPv6 broadcast address, the IPv6 protocol has dropped
@@ -198,6 +211,15 @@ _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip, UInt32 
         }
 #       endif
     }
+}
+
+/**
+ */
+_CGUL_EXPORT void CGUL::Network::IPAddress::MakeInvalid()
+{
+    this->type = IPAddressType::INVALID;
+    this->address[0] = 0;
+    this->address[1] = 0;
 }
 
 /** @param address The 32 bit unsigned integer.
