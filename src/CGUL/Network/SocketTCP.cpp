@@ -653,6 +653,7 @@ int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
         int error = WSAGetLastError();
         if (error == WSAEWOULDBLOCK)
 #       else
+        int error = errno;
         if (error == EWOULDBLOCK)
 #       endif
         {
