@@ -54,16 +54,21 @@ namespace CGUL
             FAILED_SSL_CONNECT,
             FAILED_LOADING_CERTIFICATE,
             INVALID_CERTIFICATE,
+            SOCKET_NOT_CONNECTED,
             UNKNOWN_TRANSFER_ENCODING,
             TIMEOUT,
         };
     }
     struct NetworkException : public Exception
     {
-        NetworkException(UInt8 code, UInt8 reason);
+        NetworkException(UInt8 code, UInt8 reason, SInt networkCode = 99999);
+
+        SInt networkCode;
 
         String GetString() const;
         String GetReason() const;
+
+        virtual const char* what() const throw();
     };
 }
 

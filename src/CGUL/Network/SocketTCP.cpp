@@ -251,16 +251,18 @@ bool CGUL::Network::SocketTCP::Accept(SocketTCP* socket)
     if ((socket->sock = ::accept(sock, NULL, NULL)) == INVALID_SOCKET)
     {
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        int error = errno;
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return false;
         }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::UNKNOWN);
+            throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::UNKNOWN, error);
         }
     }
 
@@ -478,12 +480,24 @@ int CGUL::Network::SocketTCP::Send(const void* data, unsigned int size)
         throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    // Pizza delivery!
-    int amount;
     //Send normally
+    int amount;
     if ((amount = ::send(sock, (const char*)data, size, 0)) == SOCKET_ERROR)
     {
-        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN);
+#       ifdef CGUL_WINDOWS
+        int error = WSAGetLastError();
+        if (error == WSAENOTCONN)
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, error);
+        }
+#       else
+        int error = errno;
+        if (error == ENOTCONN)
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, error);
+        }
+#       endif
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN, error);
     }
     return amount;
 }
@@ -527,7 +541,7 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
             }
             else
             {
-                throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
+                throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN, error);
             }
         }
     }
@@ -539,27 +553,39 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
         throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    // Pizza delivery!
-    int amount;
-
     //Receive normally.
+    int amount;
     if ((amount = ::recv(sock, (char*)data, size, 0)) == SOCKET_ERROR)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        int error = errno;
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return 0;
         }
+#       ifdef CGUL_WINDOWS
+        else if (error == WSAECONNRESET)
+#       else
+        else if (error == ECONNRESET)
+#       endif
+        {
+            // On a connection reset, the socket died. There's no point in complaining about this,
+            // because the user can check IsConnected() to tell when the connection died.
+            Close();
+            return 0;
+        }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN);
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN, error);
         }
     }
+
     // Check if recv returned 0, if so, the remove socket disconnected gracefully.
     if (amount == 0)
     {
@@ -606,7 +632,7 @@ int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
             }
             else
             {
-                throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
+                throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, error);
             }
         }
     }
@@ -617,24 +643,24 @@ int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
         throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    // Pizza delivery!
-    int amount;
     //Peek normally
+    int amount;
     if ((amount = ::recv(sock, (char*)data, size, MSG_PEEK)) == SOCKET_ERROR)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return 0;
         }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN);
+            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, error);
         }
     }
 

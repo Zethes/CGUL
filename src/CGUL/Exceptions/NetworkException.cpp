@@ -7,7 +7,11 @@
 
 #include "NetworkException.hpp"
 
-CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::NETWORK)
+static CGUL::String result;
+
+CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason, SInt networkCode) :
+    Exception(code, reason, ExceptionType::NETWORK),
+    networkCode(networkCode)
 {
 }
 
@@ -22,9 +26,9 @@ CGUL::String CGUL::NetworkException::GetString() const
         case NetworkExceptionCode::FAILED_ACCEPT:
             return U8("Failed to accept connection.");
         case NetworkExceptionCode::FAILED_SEND:
-            return U8("Failed to send connection.");
+            return U8("Failed to send message.");
         case NetworkExceptionCode::FAILED_RECEIVE:
-            return U8("Failed to receive connection.");
+            return U8("Failed to receive message.");
         case NetworkExceptionCode::FAILED_PEEK:
             return U8("Failed to peek message.");
         case NetworkExceptionCode::FAILED_CALCULATE_ADDRESS:
@@ -116,8 +120,35 @@ CGUL::String CGUL::NetworkException::GetReason() const
             return U8("Unknown transfer encoding method.");
         case NetworkExceptionReason::TIMEOUT:
             return U8("The request timed out.");
+        case NetworkExceptionReason::SOCKET_NOT_CONNECTED:
+            return U8("The socket is not connected.");
         case NetworkExceptionReason::UNKNOWN:
         default:
             return U8("Unknown.");
     }
+}
+
+const char* CGUL::NetworkException::what() const throw()
+{
+    result = GetString();
+    if (reason == NetworkExceptionReason::UNKNOWN)
+    {
+        if (networkCode == 99999)
+        {
+            // The cause isn't known, and no network code was provided. This is bad.
+            // CGUL should always know at least the network error code, if not this is a bug.
+            result += U8(" (Reason: ") + GetReason() + U8(" NetCode: Unknown.)");
+        }
+        else
+        {
+            // Supply the network error code if the actual cause was unknown
+            result += U8(" (Reason: ") + GetReason() + U8(" NetCode: ") + networkCode + U8(")");
+        }
+    }
+    else
+    {
+        // If the reason for failure is known, the network code may not be provided, and will be excluded
+        result += U8(" (Reason: ") + GetReason() + U8(")");
+    }
+    return result.GetCString();
 }
