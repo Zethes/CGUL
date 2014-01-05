@@ -265,11 +265,11 @@ void CGUL::HashMap< KeyType, ValueType>::Clear()
         Data** slot = &data[i];
         while (*slot)
         {
-            Data** last;
-            last = slot;
-            slot = &((*slot)->next);
-            delete *last;
-            *last = NULL;
+            Data* last;
+            last = *slot;
+            *slot = ((*slot)->next);
+            delete last;
+            last = NULL;
         }
     }
 }
