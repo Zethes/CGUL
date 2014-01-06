@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "List.hpp"
+
+// CGUL Includes
+#include "../Containers/List.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -68,5 +74,8 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
 #include "HashMap_Implement.hpp"

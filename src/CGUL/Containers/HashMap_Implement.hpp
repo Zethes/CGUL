@@ -269,7 +269,6 @@ void CGUL::HashMap< KeyType, ValueType>::Clear()
             last = *slot;
             *slot = ((*slot)->next);
             delete last;
-            last = NULL;
         }
     }
 }
