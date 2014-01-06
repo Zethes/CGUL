@@ -6,7 +6,11 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -38,12 +42,21 @@ namespace CGUL
 
         //! @brief Default constructor.
         _CGUL_EXPORT Timer();
+
+        //! @brief Copies data from one timer into another.
+        _CGUL_EXPORT Timer& operator=(const Timer& operand);
+
         //! @brief Starts the timer causing time to elapse.
         _CGUL_EXPORT void Start();
         //! @brief Stops the timer, freezing it at the current time.
         _CGUL_EXPORT void Stop();
         //! @brief Resets the timer to zero without stopping or starting it.
         _CGUL_EXPORT void Reset();
+
+        // @brief Sets the elapsed time (in seconds) for the timer.
+        _CGUL_EXPORT void SetElapsedSeconds(Float64 seconds);
+        // @brief Sets the elapsed time (in milliseconds) for the timer.
+        _CGUL_EXPORT void SetElapsedMilliseconds(Float64 milliseconds);
 
         //! @brief Get the elapsed time (in seconds) from when the timer was started.
         _CGUL_EXPORT Float64 GetElapsedSeconds() const;
@@ -55,4 +68,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

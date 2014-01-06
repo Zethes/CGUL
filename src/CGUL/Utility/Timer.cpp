@@ -5,7 +5,10 @@
 /** @file Timer.cpp
  */
 
+// Header
 #include "Timer.hpp"
+
+// System Includes
 #if defined(CGUL_LINUX) || defined(CGUL_MACOS)
 #   include <sys/time.h>
 #   include <unistd.h>
@@ -96,6 +99,16 @@ _CGUL_EXPORT CGUL::Timer::Timer()
     storedTime = 0;
 }
 
+/** @details Copies over whatever data is in the right-hand-side timer, including time and whether
+ *  or not its running.
+ */
+_CGUL_EXPORT CGUL::Timer& CGUL::Timer::operator=(const Timer& operand)
+{
+    this->startTime = operand.startTime;
+    this->storedTime = operand.storedTime;
+    this->running = operand.running;
+}
+
 /** @details Acts just as the start would on a stop watch.  If the clock is currently stopped it
  *  will resume the last time recorded.  If the clock is already started, it will do nothing.
  *  @see Stop
@@ -103,8 +116,11 @@ _CGUL_EXPORT CGUL::Timer::Timer()
  */
 _CGUL_EXPORT void CGUL::Timer::Start()
 {
-    startTime = GetTime() - storedTime;
-    running = true;
+    if (!running)
+    {
+        startTime = GetTime() - storedTime;
+        running = true;
+    }
 }
 
 /** @details Acts just as the stop would on a stop watch.  The current time will be recorded and
@@ -121,6 +137,28 @@ _CGUL_EXPORT void CGUL::Timer::Stop()
         UInt64 end = GetTime();
         storedTime = end - startTime;
         running = false;
+    }
+}
+
+/** @param seconds Number of seconds on the clock.
+ */
+_CGUL_EXPORT void CGUL::Timer::SetElapsedSeconds(Float64 seconds)
+{
+    SetElapsedMilliseconds(seconds * 1000.0);
+}
+
+/** @param milliseconds Number of milliseconds on the clock.
+ */
+_CGUL_EXPORT void CGUL::Timer::SetElapsedMilliseconds(Float64 milliseconds)
+{
+    if (running)
+    {
+        UInt64 end = GetTime();
+        startTime = end - (milliseconds * (GetFrequency() / 1000.0));
+    }
+    else
+    {
+        storedTime = milliseconds * (GetFrequency() /1000.0);
     }
 }
 
