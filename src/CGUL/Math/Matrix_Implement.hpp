@@ -215,20 +215,20 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT(const QuaternionT< Type >& quaternion)
 {
     this->m[0][0] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.y) + Type(2.0) * Math::Sqr(quaternion.z));
-    this->m[1][0] = Type(2.0) * quaternion.x * quaternion.y - Type(2.0) * quaternion.z * quaternion.w;
-    this->m[2][0] = Type(2.0) * quaternion.x * quaternion.z + Type(2.0) * quaternion.y * quaternion.w;
-    this->m[3][0] = Type(0.0);
-    this->m[0][1] = Type(2.0) * quaternion.x * quaternion.y + Type(2.0) * quaternion.z * quaternion.w;
-    this->m[1][1] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.x) + Type(2.0) * Math::Sqr(quaternion.z));
-    this->m[2][1] = Type(2.0) * quaternion.y * quaternion.z - Type(2.0) * quaternion.x * quaternion.w;
-    this->m[3][1] = Type(0.0);
-    this->m[0][2] = Type(2.0) * quaternion.x * quaternion.z - Type(2.0) * quaternion.y * quaternion.w;
-    this->m[1][2] = Type(2.0) * quaternion.y * quaternion.z + Type(2.0) * quaternion.x * quaternion.w;
-    this->m[2][2] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.x) + Type(2.0) * Math::Sqr(quaternion.y));
-    this->m[3][2] = Type(0.0);
+    this->m[0][1] = Type(2.0) * quaternion.x * quaternion.y - Type(2.0) * quaternion.z * quaternion.w;
+    this->m[0][2] = Type(2.0) * quaternion.x * quaternion.z + Type(2.0) * quaternion.y * quaternion.w;
     this->m[0][3] = Type(0.0);
+    this->m[1][0] = Type(2.0) * quaternion.x * quaternion.y + Type(2.0) * quaternion.z * quaternion.w;
+    this->m[1][1] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.x) + Type(2.0) * Math::Sqr(quaternion.z));
+    this->m[1][2] = Type(2.0) * quaternion.y * quaternion.z - Type(2.0) * quaternion.x * quaternion.w;
     this->m[1][3] = Type(0.0);
+    this->m[2][0] = Type(2.0) * quaternion.x * quaternion.z - Type(2.0) * quaternion.y * quaternion.w;
+    this->m[2][1] = Type(2.0) * quaternion.y * quaternion.z + Type(2.0) * quaternion.x * quaternion.w;
+    this->m[2][2] = Type(1.0) - (Type(2.0) * Math::Sqr(quaternion.x) + Type(2.0) * Math::Sqr(quaternion.y));
     this->m[2][3] = Type(0.0);
+    this->m[3][0] = Type(0.0);
+    this->m[3][1] = Type(0.0);
+    this->m[3][2] = Type(0.0);
     this->m[3][3] = Type(1.0);
 }
 

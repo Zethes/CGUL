@@ -6,7 +6,11 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -26,20 +30,17 @@ namespace CGUL
     template< typename Type >
     struct QuaternionT
     {
-        union
+        struct
         {
-            struct
-            {
-                Type r, i, j, k;
-            };
-            struct
-            {
-                Type w, x, y, z;
-            };
-            Type m[4];
+            Type w, x, y, z;
         };
+        Type m[4];
         QuaternionT();
         QuaternionT(Type w, Type x, Type y, Type z);
+
+        QuaternionT< Type > operator*(const QuaternionT< Type >& operand) const;
+        QuaternionT< Type >& operator*=(const QuaternionT< Type >& operand);
+
         /*Quaternion(double, const jVector3&);
         Quaternion(const jVector3&, double);
         jQuaternion operator+(const jQuaternion);
@@ -53,12 +54,10 @@ namespace CGUL
         void Normalize();
 
         void RotateOnAxis(const Vector3T< Type >& axis, Type angle);
-
-        // TODO: finish the quaternion class, reference DirectX's D3DXQUATERNION
     };
 
-    typedef QuaternionT<Float32> Quaternion;
-    typedef QuaternionT<Float64> QuaternionD;
+    typedef QuaternionT< Float32 > Quaternion;
+    typedef QuaternionT< Float64 > QuaternionD;
 }
 
 #include "../External/Undefines.hpp"
