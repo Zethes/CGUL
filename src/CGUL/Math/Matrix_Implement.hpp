@@ -11,7 +11,7 @@
 #include "Quaternion.hpp"
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Identity()
+_CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::MakeIdentity()
 {
     return MatrixT(Type(1.0), Type(0.0), Type(0.0), Type(0.0),
                    Type(0.0), Type(1.0), Type(0.0), Type(0.0),

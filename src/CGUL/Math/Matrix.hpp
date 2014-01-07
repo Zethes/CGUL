@@ -52,7 +52,7 @@ namespace CGUL
         };
 
         //! @brief The identity matrix.
-        _CGUL_INLINE_DEFINE static MatrixT< Type > Identity();
+        _CGUL_INLINE_DEFINE static MatrixT< Type > MakeIdentity();
 
         //! @brief Creates a 2D rotation matrix.
         _CGUL_INLINE_DEFINE static MatrixT< Type > MakeRotation(Type angle);
