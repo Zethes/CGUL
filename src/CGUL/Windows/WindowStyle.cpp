@@ -16,6 +16,7 @@
  *  resizable = true;
  *  centerWindow = true;
  *  position = SCoord32(0, 0);
+ *  alwaysOnTop = false
  *  @endcode
  */
 _CGUL_EXPORT CGUL::WindowStyle::WindowStyle() :
@@ -24,7 +25,8 @@ _CGUL_EXPORT CGUL::WindowStyle::WindowStyle() :
     size(640, 480),
     resizable(true),
     centerWindow(true),
-    position(0, 0)
+    position(0, 0),
+    alwaysOnTop(false)
 {
 }
 
@@ -36,8 +38,9 @@ _CGUL_EXPORT CGUL::WindowStyle::WindowStyle(const WindowStyle& style) :
     backgroundColor(style.backgroundColor),
     size(style.size),
     resizable(style.resizable),
-    centerWindow(true),
-    position(style.position)
+    centerWindow(style.centerWindow),
+    position(style.position),
+    alwaysOnTop(style.alwaysOnTop)
 {
 }
 
@@ -51,19 +54,21 @@ _CGUL_EXPORT CGUL::WindowStyle::WindowStyle(const WindowStyle& style) :
  *  @param closeable Whether the close button is enabled or not.
  *  @param centerWindow Whether the window should be in the center of the screen or not.
  *  @param position The position of the window on screen.  If centerWindow is set to true this
- *  becomes an offset of the window from the center of the screen.
+ *  @param alwaysOnTop Whether the windows is above all others even when not focused.
  */
 _CGUL_EXPORT CGUL::WindowStyle::WindowStyle(const std::string& title,
                                             Color backgroundColor,
                                             UCoord32 size,
                                             Boolean resizable,
                                             Boolean centerWindow,
-                                            SCoord32 position) :
+                                            SCoord32 position,
+                                            Boolean alwaysOnTop) :
     title(title),
     backgroundColor(backgroundColor),
     size(size),
     resizable(resizable),
     centerWindow(centerWindow),
-    position(position)
+    position(position),
+    alwaysOnTop(alwaysOnTop)
 {
 }

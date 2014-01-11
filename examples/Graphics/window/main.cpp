@@ -43,6 +43,7 @@ int main()
     window.onKeyButton.AddEvent(KeyButtonEvent, &input);
 
     std::cout << "Controls:" << std::endl;
+    std::cout << "A - Toggle always on top mode" << std::endl;
     std::cout << "P - Print window information" << std::endl;
     std::cout << "R - Toggle window resizability" << std::endl;
     std::cout << "T - Give window a random title" << std::endl;
@@ -73,6 +74,11 @@ int main()
         {
             switch (input)
             {
+                case 'A':
+                {
+                    window.SetAlwaysOnTop(!window.GetAlwaysOnTop());
+                    break;
+                }
                 case 'P':
                 {
                     PrintWindowInformation(&window);

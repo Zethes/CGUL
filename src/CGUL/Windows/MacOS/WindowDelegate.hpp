@@ -66,6 +66,9 @@ namespace CGUL
 - (void) setResizable: (CGUL::Boolean) resizable;
 - (CGUL::Boolean) getResizable;
 
+- (void) setAlwaysOnTop: (CGUL::Boolean) alwaysOnTop;
+- (CGUL::Boolean) getAlwaysOnTop;
+
 - (CGUL::Vector4) getFrameSize;
 - (CGUL::Boolean) isFocused;
 

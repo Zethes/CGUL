@@ -58,9 +58,6 @@
         // Set the content of the window to the OpenGL view we created
         //[window setContentView: view];
 
-        // (TEMPORARILY) Make the window above all other windows
-        [window setLevel: NSFloatingWindowLevel];
-
         view = nil;
 
         [window makeKeyAndOrderFront: self];
@@ -261,6 +258,23 @@
     NSUInteger styleMask = [window styleMask];
     [pool drain];
     return (styleMask & NSResizableWindowMask) > 0;
+}
+
+- (void) setAlwaysOnTop: (CGUL::Boolean) alwaysOnTop
+{
+    if (alwaysOnTop)
+    {
+        [window setLevel: NSFloatingWindowLevel];
+    }
+    else
+    {
+        [window setLevel: NSNormalWindowLevel];
+    }
+}
+
+- (CGUL::Boolean) getAlwaysOnTop
+{
+    return ([window level] == NSFloatingWindowLevel);
 }
 
 - (CGUL::Vector4) getFrameSize

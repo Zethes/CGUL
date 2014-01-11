@@ -995,6 +995,30 @@ _CGUL_EXPORT CGUL::Boolean CGUL::Window::GetResizable() const
     return false;
 }
 
+/** @param alwaysOnTop True for always on top, false otherwise.
+ */
+_CGUL_EXPORT void CGUL::Window::SetAlwaysOnTop(Boolean alwaysOnTop)
+{
+    // TODO: Window::SetAlwaysOnTop for Linux and Windows
+
+#   ifdef CGUL_MACOS
+    [handle setAlwaysOnTop: alwaysOnTop];
+#   endif
+}
+
+/** @returns True if always on top, false otherwise.
+ */
+_CGUL_EXPORT CGUL::Boolean CGUL::Window::GetAlwaysOnTop() const
+{
+    // TODO: Window::GetAlwaysOnTop for Linux and Windows
+
+#   ifdef CGUL_MACOS
+    return [handle getAlwaysOnTop];
+#   endif
+
+    return false;
+}
+
 /** @returns A vector containing the border extents.
  */
 _CGUL_EXPORT CGUL::URect32 CGUL::Window::GetFrameSize() const

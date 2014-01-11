@@ -176,6 +176,11 @@ namespace CGUL
         //! @brief Gets whether the window is resizable or not.
         _CGUL_EXPORT Boolean GetResizable() const;
 
+        //! @brief Sets whether the window is always on top.
+        _CGUL_EXPORT void SetAlwaysOnTop(Boolean alwaysOnTop);
+        //! @brief Gets whether the window is always on top.
+        _CGUL_EXPORT Boolean GetAlwaysOnTop() const;
+
         //! @brief Gets the window's border extents (the frame around the window).
         _CGUL_EXPORT URect32 GetFrameSize() const;
 
