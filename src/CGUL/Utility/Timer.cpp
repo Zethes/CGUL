@@ -107,6 +107,7 @@ _CGUL_EXPORT CGUL::Timer& CGUL::Timer::operator=(const Timer& operand)
     this->startTime = operand.startTime;
     this->storedTime = operand.storedTime;
     this->running = operand.running;
+    return *this;
 }
 
 /** @details Acts just as the start would on a stop watch.  If the clock is currently stopped it

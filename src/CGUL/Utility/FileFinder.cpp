@@ -59,7 +59,6 @@ void CGUL::FileFinder::Open(const String& path)
         }
     }
 
-    struct dirent* entry = NULL;
     directory = (void*)opendir(fixedPath.GetCString());
     if (directory == NULL)
     {

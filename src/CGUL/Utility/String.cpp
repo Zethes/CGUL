@@ -583,7 +583,7 @@ _CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const String& str, ...)
     }
     length += 1; // One for null terminator
     char* buffer = internalBuffer;
-    if (length > sizeof(internalBuffer))
+    if ((size_t)length > sizeof(internalBuffer))
     {
         buffer = new char[length];
     }

@@ -7,6 +7,8 @@
 
 #include "JSON.hpp"
 
+static UInt32 _cgul_json_ind;
+
 _CGUL_EXPORT CGUL::JSON::Object::Object()
 {
 }
@@ -306,7 +308,7 @@ _CGUL_EXPORT CGUL::JSON::Value& CGUL::JSON::Value::operator=(const Value& v)
 _CGUL_EXPORT CGUL::String CGUL::JSON::__Indent()
 {
     CGUL::String ret = "";
-    for (UInt32 i = 0; i < ind; i++)
+    for (UInt32 i = 0; i < _cgul_json_ind; i++)
     {
         ret += "\t";
     }
@@ -316,7 +318,7 @@ _CGUL_EXPORT CGUL::String CGUL::JSON::__Indent()
 _CGUL_EXPORT CGUL::String CGUL::JSON::Array::ToString()
 {
     CGUL::String ret = "[\n";
-    CGUL::JSON::ind++;
+    _cgul_json_ind++;
     for (std::vector<CGUL::JSON::Value>::iterator e = Begin(); e != End();)
     {
         ret += CGUL::JSON::__Indent();
@@ -325,7 +327,7 @@ _CGUL_EXPORT CGUL::String CGUL::JSON::Array::ToString()
             ret += ',';
         ret += "\n";
     }
-    CGUL::JSON::ind--;
+    _cgul_json_ind--;
     ret += CGUL::JSON::__Indent();
     ret += "]";
     return ret;
@@ -334,7 +336,7 @@ _CGUL_EXPORT CGUL::String CGUL::JSON::Array::ToString()
 _CGUL_EXPORT CGUL::String CGUL::JSON::Object::ToString()
 {
     CGUL::String ret = "{\n";
-    CGUL::JSON::ind++;
+    _cgul_json_ind++;
     for (std::map<CGUL::String, CGUL::JSON::Value>::iterator e = Begin(); e != End();)
     {
         ret += CGUL::JSON::__Indent();
@@ -346,7 +348,7 @@ _CGUL_EXPORT CGUL::String CGUL::JSON::Object::ToString()
             ret += ',';
         ret += "\n";
     }
-    CGUL::JSON::ind--;
+    _cgul_json_ind--;
     ret += CGUL::JSON::__Indent();
     ret += "}";
     return ret;

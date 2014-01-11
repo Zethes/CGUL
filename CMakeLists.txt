@@ -41,7 +41,7 @@ include(cmake/System.cmake)
 # Determine compiler
 include(cmake/Compiler.cmake)
 
-# Determine compiler
+# Setup compiler
 include(cmake/CompilerSettings.cmake)
 
 # Determine lib directory name
@@ -127,6 +127,10 @@ include(cmake/Libraries/Libraries.cmake)
 # Compile the library
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_DEFINITIONS})
 add_subdirectory(src)
+
+# Finialize compiler settings, now that the target exists
+set(CGUL_TARGET_EXISTS ON)
+include(cmake/CompilerSettings.cmake)
 
 # Add external program support
 include(cmake/Programs/Programs.cmake)

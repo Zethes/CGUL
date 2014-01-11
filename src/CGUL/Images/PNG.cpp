@@ -87,7 +87,7 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
     UInt32 width = (UInt32)png_get_image_width(png_ptr, info_ptr);
     UInt32 height = (UInt32)png_get_image_height(png_ptr, info_ptr);
     int colorType = png_get_color_type(png_ptr, info_ptr);
-    int bitDepth = png_get_bit_depth(png_ptr, info_ptr); // TODO: remove this? unused
+    //int bitDepth = png_get_bit_depth(png_ptr, info_ptr); // TODO: remove this? unused
 
     //int numberOfPasses = png_set_interlace_handling(png_ptr); // TODO: remove this? unused
     png_read_update_info(png_ptr, info_ptr);

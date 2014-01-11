@@ -39,6 +39,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::AddEvent(EventF
         throw std::runtime_error("Event function already added.");
 #       endif
     }
+    return *this;
 }
 
 template< typename Type >
@@ -55,6 +56,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Event< Type >& CGUL::Event< Type >::RemoveEvent(Eve
 #   ifdef CGUL_SANITY_CHECK
     throw std::runtime_error("Event function doesn't exist and therefore cannot be removed.");
 #   endif
+    return *this;
 }
 
 template< typename Type >

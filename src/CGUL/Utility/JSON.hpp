@@ -99,7 +99,6 @@
             }
         }
 
-        static UInt32 ind;
         _CGUL_EXPORT CGUL::String __Indent();
 
         class Array;
