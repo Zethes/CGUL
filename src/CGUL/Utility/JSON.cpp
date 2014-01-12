@@ -7,7 +7,7 @@
 
 #include "JSON.hpp"
 
-static UInt32 _cgul_json_ind;
+static CGUL::UInt32 _cgul_json_ind;
 
 _CGUL_EXPORT CGUL::JSON::Object::Object()
 {
