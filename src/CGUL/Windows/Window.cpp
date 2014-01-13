@@ -558,6 +558,7 @@ _CGUL_EXPORT void CGUL::Window::SetStyle(const WindowStyle& style)
     SetBackgroundColor(style.backgroundColor);
     SetSize(style.size);
     SetResizable(style.resizable);
+    SetAlwaysOnTop(style.alwaysOnTop);
 }
 
 /** @returns A WindowStyle structure.
@@ -571,6 +572,7 @@ _CGUL_EXPORT CGUL::WindowStyle CGUL::Window::GetStyle() const
     style.resizable = GetResizable();
     style.centerWindow = false;
     style.position = GetPosition();
+    style.alwaysOnTop = GetAlwaysOnTop();
     return style;
 }
 
@@ -999,7 +1001,11 @@ _CGUL_EXPORT CGUL::Boolean CGUL::Window::GetResizable() const
  */
 _CGUL_EXPORT void CGUL::Window::SetAlwaysOnTop(Boolean alwaysOnTop)
 {
-    // TODO: Window::SetAlwaysOnTop for Linux and Windows
+    // TODO: Window::SetAlwaysOnTop for Linux
+
+#   ifdef CGUL_WINDOWS
+    SetWindowPos(this->handle, (alwaysOnTop ? HWND_TOPMOST : HWND_NOTOPMOST), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+#   endif
 
 #   ifdef CGUL_MACOS
     [handle setAlwaysOnTop: alwaysOnTop];
@@ -1010,7 +1016,12 @@ _CGUL_EXPORT void CGUL::Window::SetAlwaysOnTop(Boolean alwaysOnTop)
  */
 _CGUL_EXPORT CGUL::Boolean CGUL::Window::GetAlwaysOnTop() const
 {
-    // TODO: Window::GetAlwaysOnTop for Linux and Windows
+    // TODO: Window::GetAlwaysOnTop for Linux
+
+#   ifdef CGUL_WINDOWS
+    DWORD style = ::GetWindowLong(this->handle, GWL_EXSTYLE);
+    return ((style & WS_EX_TOPMOST) != 0);
+#   endif
 
 #   ifdef CGUL_MACOS
     return [handle getAlwaysOnTop];
