@@ -6,9 +6,15 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "List.hpp"
-#include "FixedList.hpp"
+
+// CGUL Includes
+#include "../Containers/FixedList.hpp"
+#include "../Containers/List.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -32,8 +38,14 @@ namespace CGUL
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
         void Set(Size index, const T&& value);
 #       endif
+        Size GetSize() const;
+        T& Get(Size index);
+        const T& Get(Size index) const;
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
 #include "Vector_Implement.hpp"

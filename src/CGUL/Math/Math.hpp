@@ -6,7 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
+#include "../Containers/FixedList.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 //#ifdef CPP_HAS_FUNCTION_TEMPLATE_DEFAULT
@@ -149,10 +156,15 @@ namespace CGUL
         //! @brief Checks if the value is a power of two.
         _CGUL_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);
 
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type StandardDeviation(const FixedList< Type >& values, Type* mean = NULL);
+
         // TODO: add some more frequently used math functions (maybe reference .NET's math lib?)
     }
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
 
+// Implementation
 #include "Math_Implement.hpp"
