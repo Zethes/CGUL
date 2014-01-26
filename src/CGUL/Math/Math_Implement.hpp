@@ -365,7 +365,7 @@ _CGUL_INLINE_IMPLEMENT bool CGUL::Math::IsPowerOfTwo(UInt32 x)
 }
 
 template< typename Type >
-_CGUL_INLINE_IMPLEMENT Type CGUL::Math::StandardDeviation(const FixedList< Type >& values, Type* mean = NULL)
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::StandardDeviation(const FixedList< Type >& values, Type* mean)
 {
     Type average = 0;
     for (Size i = 0, iEnd = values.GetSize(); i < iEnd; ++i)
