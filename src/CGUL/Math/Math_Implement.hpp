@@ -5,10 +5,13 @@
 /** @file Math_Implement.hpp
  */
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+// CGUL Includes
 #include "../Exceptions/FatalException.hpp"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector3.hpp"
+#include "../Math/Vector4.hpp"
+
+// System Includes
 #include <cmath>
 
 //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
@@ -359,4 +362,28 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pow(Type x, Type y)
 _CGUL_INLINE_IMPLEMENT bool CGUL::Math::IsPowerOfTwo(UInt32 x)
 {
     return (x != 0) && ((x & (x - 1)) == 0);
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::StandardDeviation(const FixedList< Type >& values, Type* mean = NULL)
+{
+    Type average = 0;
+    for (Size i = 0, iEnd = values.GetSize(); i < iEnd; ++i)
+    {
+        average += values.Get(i);
+    }
+    average /= values.GetSize();
+
+    if (mean != NULL)
+    {
+        *mean = average;
+    }
+
+    Type variance = 0;
+    for (Size i = 0, iEnd = values.GetSize(); i < iEnd; ++i)
+    {
+        variance += Math::Sqr(values.Get(i) - average);
+    }
+    variance /= values.GetSize();
+    return Math::Sqrt(variance);
 }
