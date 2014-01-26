@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "Container.hpp"
+
+// CGUL Includes
+#include "../Containers/Container.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -27,7 +33,11 @@ namespace CGUL
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
         virtual void Set(Size index, const T&& value) = 0;
 #       endif
+        virtual Size GetSize() const = 0;
+        virtual T& Get(Size index) = 0;
+        virtual const T& Get(Size index) const = 0;
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
