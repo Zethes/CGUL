@@ -52,8 +52,8 @@ namespace CGUL
         _CGUL_EXPORT void GenBuffers(SignedSize n, UInt* buffers);
         _CGUL_EXPORT void GenTextures(SignedSize n, UInt* textures);
         _CGUL_EXPORT void GenVertexArrays(SignedSize n, UInt* arrays);
-        _CGUL_EXPORT void GetProgramInfoLog(UInt shader, SignedSize maxLength, SignedSize* length, char* infoLog);
-        _CGUL_EXPORT void GetProgramInfoLog(UInt shader, String* infoLog);
+        _CGUL_EXPORT void GetProgramInfoLog(UInt program, SignedSize maxLength, SignedSize* length, char* infoLog);
+        _CGUL_EXPORT void GetProgramInfoLog(UInt program, String* infoLog);
         _CGUL_EXPORT void GetProgramiv(UInt program, Enum pname, SInt* params);
         _CGUL_EXPORT void GetShaderInfoLog(UInt shader, SignedSize maxLength, SignedSize* length, char* infoLog);
         _CGUL_EXPORT void GetShaderInfoLog(UInt shader, String* infoLog);
