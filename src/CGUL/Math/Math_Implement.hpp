@@ -160,7 +160,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::ATanh(Type x)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::DegToRad(Type deg)
 {
-    return deg / 180.0f * ((Type)Constants::Pi);
+    return deg / 180.0f * ((Type)Pi);
 }
 
 /** @param deg A value in radians.
@@ -169,7 +169,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::DegToRad(Type deg)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::RadToDeg(Type rad)
 {
-    return rad * (180.0f / ((Type)Constants::Pi));
+    return rad * (180.0f / ((Type)Pi));
 }
 
 template< typename Type >
@@ -341,7 +341,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pow(Type x, Type y)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Exp(Type x)
 {
-    return Pow(((Type)Constants::E), x);
+    return Pow(((Type)E), x);
 }
 
 /** @details The zero case is handled correctly.  Passing in zero for x will result in false.
