@@ -158,6 +158,7 @@
 #include "CGUL/Utility/File.hpp"
 #include "CGUL/Utility/FileFinder.hpp"
 #include "CGUL/Utility/JSON.hpp"
+#include "CGUL/Utility/Logger.hpp"
 #include "CGUL/Utility/Memory.hpp"
 #include "CGUL/Utility/Move.hpp"
 #include "CGUL/Utility/Regex.hpp"
