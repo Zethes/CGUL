@@ -10,30 +10,10 @@
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector3.hpp"
 #include "../Math/Vector4.hpp"
+#include "Constants.hpp"
 
 // System Includes
 #include <cmath>
-
-//! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
-template< typename Type >
-_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Tau()
-{
-    return (Type)6.2831853071795864;
-}
-
-//! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
-template< typename Type >
-_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pi()
-{
-    return (Type)3.14159265358979323;
-}
-
-//! @brief The constant e, defined as 2.718281828459045235
-template< typename Type >
-_CGUL_INLINE_IMPLEMENT Type CGUL::Math::E()
-{
-    return (Type)2.718281828459045235;
-}
 
 /** @details The absolute value is defined as the one dimensional distance of a value from 0.  In
  *  other words, the value is always positive.  A value of 5 results in 5, while a value of -4
@@ -180,7 +160,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::ATanh(Type x)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::DegToRad(Type deg)
 {
-    return deg / 180.0f * Pi< Type >();
+    return deg / 180.0f * ((Type)Constants::Pi);
 }
 
 /** @param deg A value in radians.
@@ -189,7 +169,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::DegToRad(Type deg)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::RadToDeg(Type rad)
 {
-    return rad * (180.0f / Pi< Type >());
+    return rad * (180.0f / ((Type)Constants::Pi));
 }
 
 template< typename Type >
@@ -353,6 +333,15 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::Pow(Type x, Type y)
 {
     return std::pow(x, y);
+}
+
+/** @param x The exponent value
+ *  @returns e raised to the power of x.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Math::Exp(Type x)
+{
+    return Pow(((Type)Constants::E), x);
 }
 
 /** @details The zero case is handled correctly.  Passing in zero for x will result in false.

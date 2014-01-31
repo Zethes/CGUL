@@ -31,18 +31,6 @@ namespace CGUL
      */
     namespace Math
     {
-        //! @brief The constant Tau, defined as 6.2831853071795864 (or 2 * pi)
-        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
-        _CGUL_INLINE_DEFINE Type Tau();
-
-        //! @brief The constant Pi, defined as 3.14159265358979323 (or tau / 2)
-        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
-        _CGUL_INLINE_DEFINE Type Pi();
-
-        //! @brief The constant e, defined as 2.718281828459045235
-        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
-        _CGUL_INLINE_DEFINE Type E();
-
         //! @brief Calculates the absolute value of x.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Abs(Type x);
@@ -151,7 +139,10 @@ namespace CGUL
 
         //! @brief Raises x to the power of y.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
-        _CGUL_INLINE_DEFINE Type Pow(Type x, Type y);
+        _CGUL_INLINE_DEFINE Type Pow(Type x, Type y);    
+
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Exp(Type x);
 
         //! @brief Checks if the value is a power of two.
         _CGUL_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);

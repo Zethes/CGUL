@@ -108,6 +108,7 @@
 #endif
 
 #include "CGUL/Math/Angle.hpp"
+#include "CGUL/Math/Constants.hpp"
 #include "CGUL/Math/Math.hpp"
 #include "CGUL/Math/Matrix.hpp"
 #include "CGUL/Math/Random.hpp"
