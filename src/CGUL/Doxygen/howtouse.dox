@@ -1,21 +1,21 @@
 /*!
 @page howtouse How to Use
-Jatta is currently undergoing a lot of development and has no official builds,
+CGUL is currently undergoing a lot of development and has no official builds,
 and the following is subject to change and only covers rather broad setup instructions.
 
-<b>Building and installing Jatta</b>
+<b>Building and installing CGUL</b>
 
 First we need to obtain the latest source code from github (some functionality may be missing)
 <code>
-git clone https://github.com/Zethes/Jatta
-cd Jatta
+git clone https://github.com/Zethes/CGUL
+cd CGUL
 </code>
 
-Jatta uses third-party libraries and those must be handled before we can build.  Luckily for you, we
+CGUL uses third-party libraries and those must be handled before we can build.  Luckily for you, we
 have provided several choices for you to download pre-built libraries on the Download page.  Just download
-the dependency of your choosing and extract the archive into Jatta's directory  (Above the 'src' directory).
+the dependency of your choosing and extract the archive into CGUL's directory  (Above the 'src' directory).
 
-Jatta's build process is powered by CMake and we recommend you build outside of the source directory.
+CGUL's build process is powered by CMake and we recommend you build outside of the source directory.
 <code>
 mkdir build && cd build
 cmake -G <BUILD_TYPE> ..
@@ -31,17 +31,17 @@ http://www.cmake.org/Wiki/CMake_Generator_Specific_Information for more informat
 <b>YOU MUST HAVE BUILT AND INSTALLED CGUL TO BUILD THE EXAMPLES</b>
 
 At the moment, each example must be built seperately.  These steps are the same for all examples and are very
-similar to building Jatta itself.
+similar to building CGUL itself.
 
 Begin by simply navigating to the desired example's directory inside the terminal of your choosing.
 For this example we'll be using the window example.
 <code>
-git clone https://github.com/Zethes/Jatta
-cd Jatta/examples
+git clone https://github.com/Zethes/CGUL
+cd CGUL/examples
 cd Graphics/window
 </code>
 
-Similar to building Jatta, we recommend building outside of the source directory.
+Similar to building CGUL, we recommend building outside of the source directory.
 <code>
 mkdir build && cd build
 cmake -G <BUILD_TYPE> ..

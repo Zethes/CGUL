@@ -7,10 +7,11 @@
 
 #include "Angle.hpp"
 #include "Math.hpp"
+#include "Constants.hpp"
 
 CGUL::Angle CGUL::Angle::Inverse(const Angle& angle)
 {
-    return Angle(angle.GetRadians() + Math::Tau< CGUL::Float32 >());
+    return Angle(angle.GetRadians() + (Float32)Math::Tau);
 }
 
 CGUL::Angle CGUL::Angle::Difference(const Angle& a, const Angle& b)
@@ -52,14 +53,14 @@ CGUL::Angle::Angle(const Vector2& direction)
 
 void CGUL::Angle::SetRadians(Float32 radians)
 {
-    this->radians = radians - Math::Floor(radians / Math::Tau< Float32 >()) * (Math::Tau< Float32 >());
+    this->radians = radians - Math::Floor(radians / (Float32)Math::Tau) * ((Float32)Math::Tau);
 }
 
 CGUL::Float32 CGUL::Angle::GetRadians() const
 {
-    if (this->radians > Math::Pi< Float32 >())
+    if (this->radians > (Float32)Math::Pi)
     {
-        return -(Math::Tau< Float32 >() - radians);
+        return -((Float32)Math::Tau - radians);
     }
     else
     {

@@ -41,7 +41,7 @@ Features
 - **Easy to use PortAudio wrapper**
 - **A very liberal [license](https://github.com/Zethes/CGUL/blob/master/license.md)***
 
-<i>* CGUL and the libraries required to build CGUL are released under very unrestricting licenses for your convenience and freedom as a developer. Please consider uprooting all your improvements to the [respective developers](http://jatta.zethes.com/acknowledgements.html).  Thanks!</i>
+<i>* CGUL and the libraries required to build CGUL are released under very unrestricting licenses for your convenience and freedom as a developer. Please consider uprooting all your improvements to the [respective developers](http://www.zethes.com/cgul/doxygen/acknowledgements.html).  Thanks!</i>
 
 Ubuntu Packages
 =====

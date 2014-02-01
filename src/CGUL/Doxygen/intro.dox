@@ -1,20 +1,20 @@
 /*!
-@mainpage Jatta
+@mainpage CGUL
 
 @section intro Introduction
-Jatta is an object oriented General Utility Library.  Jatta simplifies the process of creating
+CGUL is an object oriented General Utility Library.  CGUL simplifies the process of creating
 windows, working with OpenGL, networking, loading in images and models, and much more.
 
-The library does not depend on OpenGL, and optionally it can be disabled when building Jatta.
+The library does not depend on OpenGL, and optionally it can be disabled when building CGUL.
 All tools included can be used in any project for any purpose, including commercial.  Please see
 the @ref license for more information.
 
 @page downloads Downloads
-While Jatta is in development we do not have binary releases and require that you build the
+While CGUL is in development we do not have binary releases and require that you build the
 library form source.  You can grab the source from Github: @n
-https://github.com/Zethes/Jatta
+https://github.com/Zethes/CGUL
 
-You can grab the pre-built libraries that Jatta relies on below.
+You can grab the pre-built libraries that CGUL relies on below.
 
 <b>Windows (Visual Studio) 32bit</b> @n
 COMING EVENTUALLY

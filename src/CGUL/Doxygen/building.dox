@@ -1,28 +1,28 @@
 /*!
-@page building Building Jatta
+@page building Building CGUL
 @tableofcontents
-Jatta is still in development so the contents of this page are expected to change.
+CGUL is still in development so the contents of this page are expected to change.
 @section requirements Requirements
-In order to build Jatta you will need <a href="http://www.cmake.org/">CMake</a> and the libraries
-that Jatta depends on.
+In order to build CGUL you will need <a href="http://www.cmake.org/">CMake</a> and the libraries
+that CGUL depends on.
 @subsection cmake CMake
 The minimum version of CMake required is CMake 2.8.7.
 @subsection libraries Libraries
 A link to each library necessary is on the @ref acknowledgements page.  Note, however, that you can
-build Jatta without any of these libraries and you will simply lack the functionality that they
+build CGUL without any of these libraries and you will simply lack the functionality that they
 provide.  In the future we will provide pre-built binaries but for now you are on your own.
 @section get_source Getting the Source
 The latest source code is available over at our Github page.@n
-There are no official releases of Jatta at this time.@n
-http://www.github.com/Zethes/Jatta
+There are no official releases of CGUL at this time.@n
+http://www.github.com/Zethes/CGUL
 @section compatibility Compatibility
 @subsection windows Windows
-Jatta has been tested with Windows 7 but should work with Vista.  No testing has been done on XP.
+CGUL has been tested with Windows 7 but should work with Vista.  No testing has been done on XP.
 @subsection macos Mac OS
-Jatta has been tested with Mac OS 10.6 and should work with anything newer.  Jatta may work with
+CGUL has been tested with Mac OS 10.6 and should work with anything newer.  CGUL may work with
 Mac OS 10.5 but it has not been tested.
 @subsection linux Linux
-Jatta is primarily tested on Ubuntu and Arch Linux but should work with any distro.  Jatta requires
+CGUL is primarily tested on Ubuntu and Arch Linux but should work with any distro.  CGUL requires
 X11 for window systems and ALSA for audio, but those can optionally be excluded from the build.
 @section generators CMake Generators
 CMake offers a wide variety of build system generators and there is a continued effort to support
@@ -36,7 +36,7 @@ tested and are recommended:
 
 <i>* no other versions of Visual Studio have been tested but may work</i>
 @section compiler Compiler Requirements
-Jatta will attempt to exclude any features not supported by a compiler so older compilers are still
+CGUL will attempt to exclude any features not supported by a compiler so older compilers are still
 supported.  Tests have included GCC versions as old as 4.4.  Many C++11 features have found their
 way into the code base and to take full advantage of them we recommend using a newer GCC or Clang
 compiler.  If you are on Windows we recommend both MinGW and Visual Studio compilers.
@@ -44,33 +44,33 @@ compiler.  If you are on Windows we recommend both MinGW and Visual Studio compi
 Now that the requirements are out of the way, and CMake is installed on your machine, we can begin
 building the library.  The first step is to generate a build system with CMake (from the list of
 generators above, or another unsupported generator).  Open up a terminal and charge directory to
-the Jatta source directory and make a directory called build, then run the CMake command:@n
+the CGUL source directory and make a directory called build, then run the CMake command:@n
 @code
-cd /dir/to/Jatta/
+cd /dir/to/CGUL/
 mkdir build
 cd build
 cmake -G "GENERATOR" ..
 @endcode
 Replace @em GENERATOR with the preferred generator.  This may take some time depending on the
-generator but once it completes you will be able to build Jatta with the preferred build system.
+generator but once it completes you will be able to build CGUL with the preferred build system.
 For instance if you used a makefile, you can simply type "make" to start the build.
 @section customize Customizing the Build
 @subsection cmake_cache CMake Cache Editors
-The build process for Jatta is designed to be easily customized and troubleshooted.  We recommend
+The build process for CGUL is designed to be easily customized and troubleshooted.  We recommend
 using either cmake-gui or ccmake to customize the build.  Depending on your installation of cmake
 you may have received both, only one, or neither of these tools.  If you do not have cmake-gui or
 ccmake you will need to research how to obtain either of them on your system.  cmake-gui is a gui
 version while ccmake uses ncurses and runs through a terminal.  To check if you have either of
 these type "cmake-gui" or "ccmake" in a terminal followed by the directory of the build.
 @code
-cd /dir/to/Jatta/build
+cd /dir/to/CGUL/build
 ccmake .
 cmake-gui .
 @endcode
-@section installing Installing Jatta
-It is recommended that you install Jatta in the default location already defined in the CMake code.
-<b>If Jatta is not installed in the correct place then CMake will not know where to find it.</b>
-If you do not wish to use CMake for your application then it does not matter where Jatta is
+@section installing Installing CGUL
+It is recommended that you install CGUL in the default location already defined in the CMake code.
+<b>If CGUL is not installed in the correct place then CMake will not know where to find it.</b>
+If you do not wish to use CMake for your application then it does not matter where CGUL is
 installed so long as you link against the propery libraries and includes.@n
 If you do not wish to install you can create a package instead.  Each generator has its own method
 for installing and packaging.  For makefiles you can type "make install" to install or "make
@@ -79,83 +79,83 @@ can be created.
 @subsection modifying_cache Modifying Cache
 If you have used CMake before then you probably know how this works already.  A CMake build process
 uses a variety of variables that can be adjusted to change how the application is built.  The goal
-with Jatta is to create a cache variable out of everyone important aspect of the build so that they
+with CGUL is to create a cache variable out of everyone important aspect of the build so that they
 can be modified as desired.  If you have opened ccmake or cmake-gui you will see this list
 yourself.  Take a moment to familiarize yourself with the software if you haven't done so already.@n
 The remainder of this page will be dedicated to documenting every CMake variable defined in the
-Jatta build process, so lets start with a simple example to get started.  Locate the variable
-"Jatta_STATIC" and, if it is OFF, flip it to ON.  Now configure and generate the build (with "c"
+CGUL build process, so lets start with a simple example to get started.  Locate the variable
+"CGUL_STATIC" and, if it is OFF, flip it to ON.  Now configure and generate the build (with "c"
 and "g" in ccmake or using the buttons in the gui).  Once the build has generated, rebuild the
-library.  The result should be a static library instead of the shared library that Jatta is usually
-built as.  In addition, the CMake scripts generated to import Jatta are modified to better suite a
-static library, and, ideally, Jatta can be imported smoothly into another CMake project.
+library.  The result should be a static library instead of the shared library that CGUL is usually
+built as.  In addition, the CMake scripts generated to import CGUL are modified to better suite a
+static library, and, ideally, CGUL can be imported smoothly into another CMake project.
 @subsection cache_variables Cache Variables
 <table cellspacing="0" cellmargin="0">
 <tr><td>Name</td><td style="width:100%">
 Description
 </td></tr>
-<tr><td>Jatta_STATIC</td><td style="width:100%">
+<tr><td>CGUL_STATIC</td><td style="width:100%">
 Generates a static library instead of a shared library.  A static library does not have any concept
-of linkage so the libraries required to build Jatta must be linked against in the final application
-as well.  For this reason, the CMake scripts generated capable of finding Jatta and using it in
+of linkage so the libraries required to build CGUL must be linked against in the final application
+as well.  For this reason, the CMake scripts generated capable of finding CGUL and using it in
 another CMake application will contain special logic to find and link against those libraries as
 well.
 </td></tr>
-<tr><td>Jatta_DEPENDENCY_INCLUDE_DIRS</td><td style="width:100%">
+<tr><td>CGUL_DEPENDENCY_INCLUDE_DIRS</td><td style="width:100%">
 By default this cache variable will be differently on each operating system to point to a
-dependencies directory in the Jatta source folder.  The folder will be named "deps-SYSTEM" where
+dependencies directory in the CGUL source folder.  The folder will be named "deps-SYSTEM" where
 SYSTEM is the current system name.  The system name will be windows, mingw, linux or darwin (mac).
 After the dependency directory there will be a /include to specify the include directory for this
-system's include files.  The main purpose of this cache variable is to allow the Jatta build
+system's include files.  The main purpose of this cache variable is to allow the CGUL build
 process to look in a specified directory for dependencies, which different from one operating
 system to the next.
 </td></tr>
-<tr><td>Jatta_DEPENDENCY_LIBRARY_DIRS</td><td style="width:100%">
-See Jatta_DEPENDENCY_INCLUDE_DIRS.  This cache variable serves the same purpose as the include
+<tr><td>CGUL_DEPENDENCY_LIBRARY_DIRS</td><td style="width:100%">
+See CGUL_DEPENDENCY_INCLUDE_DIRS.  This cache variable serves the same purpose as the include
 directory, except it specifies a library directory for the libraries.  On a 32bit system the
 library directory will simply be "lib" and on non-32bit systems it will be "libX" where X is the
 bitness of the system (for example, "lib64").
 </td></tr>
-<tr><td>Jatta_LIBRARY_INCLUDE_DIRS</td><td style="width:100%">
-Specifies additional include directories for Jatta.  This cache variable may be set by default in
+<tr><td>CGUL_LIBRARY_INCLUDE_DIRS</td><td style="width:100%">
+Specifies additional include directories for CGUL.  This cache variable may be set by default in
 an attempt to find libraries in non-standard locations (for instance freetype2 is often in a non
 standard location).
 </td></tr>
-<tr><td>Jatta_OUTPUT_NAME</td><td style="width:100%">
-Changes several output files to use the name specified instead of simply "Jatta."  There are a
+<tr><td>CGUL_OUTPUT_NAME</td><td style="width:100%">
+Changes several output files to use the name specified instead of simply "CGUL."  There are a
 variety of reasons why you may want the library to be labelled differently since the library is so
-customizable.  It is useful, for instance, to rename the output name to "JattaD" for a debug
+customizable.  It is useful, for instance, to rename the output name to "CGULD" for a debug
 version of the library.  Changing this variable does not change the code at all (for instance
-everything is still namespaced with "Jatta") however it does change the CMake scripts used to
-locate Jatta and the installation path, both of which will use this name instead.
+everything is still namespaced with "CGUL") however it does change the CMake scripts used to
+locate CGUL and the installation path, both of which will use this name instead.
 </td></tr>
-<tr><td>Jatta_USE_NETWORK</td><td style="width:100%">
+<tr><td>CGUL_USE_NETWORK</td><td style="width:100%">
 Change to OFF to exclude network functionality from the build.  The network code uses system
 libraries which should always be present on the system.
 </td></tr>
-<tr><td>Jatta_USE_OPENGL</td><td style="width:100%">
+<tr><td>CGUL_USE_OPENGL</td><td style="width:100%">
 Change to OFF to exclude OpenGL functionality from the build.  This defaults to OFF if glew was not
 found.
 </td></tr>
-<tr><td>Jatta_FIX_INSTALL_PATH <i>(advanced)</i></td><td style="width:100%">
-(Only works on first generation) Fixes up the installation path of Jatta on first generation.  This
-variable can be specified at first generation with "cmake -DJatta_FIX_INSTALL_PATH=OFF" to use
+<tr><td>CGUL_FIX_INSTALL_PATH <i>(advanced)</i></td><td style="width:100%">
+(Only works on first generation) Fixes up the installation path of CGUL on first generation.  This
+variable can be specified at first generation with "cmake -DCGUL_FIX_INSTALL_PATH=OFF" to use
 default CMake installation directories.  Not recommended.
 </td></tr>
-<tr><td>Jatta_INLINE_DEFINE <i>(advanced)</i></td><td style="width:100%">
+<tr><td>CGUL_INLINE_DEFINE <i>(advanced)</i></td><td style="width:100%">
 The C++ keyword to use for inline functions and methods defined in a header file.  This is usually
 blank since inline keywords are not required in declarations.
 </td></tr>
-<tr><td>Jatta_INSTALL_ESSENTIALS_ONLY <i>(advanced)</i></td><td style="width:100%">
-Only installs or packages files essential to using Jatta.  Excludes any documentation or CMake
-files.  When this is specified Jatta is installed in /usr/ instead of /usr/lib/Jatta-VERSION on
+<tr><td>CGUL_INSTALL_ESSENTIALS_ONLY <i>(advanced)</i></td><td style="width:100%">
+Only installs or packages files essential to using CGUL.  Excludes any documentation or CMake
+files.  When this is specified CGUL is installed in /usr/ instead of /usr/lib/CGUL-VERSION on
 unix systems.  This installation change causes libraries to install in /usr/lib (or /usr/lib64) and
 headers to install in /usr/include.
 </td></tr>
-<tr><td>Jatta_PRETEND_BITNESS <i>(advanced)</i></td><td style="width:100%">
+<tr><td>CGUL_PRETEND_BITNESS <i>(advanced)</i></td><td style="width:100%">
 The bitness of the system (32 or 64).  This can be changed to pretend it is a different bitness.
 </td></tr>
-<tr><td>Jatta_REFRESH_LIBRARIES <i>(advanced)</i></td><td style="width:100%">
+<tr><td>CGUL_REFRESH_LIBRARIES <i>(advanced)</i></td><td style="width:100%">
 If changes are made to a library cache variable (see below) then this should be temporary switched
 to ON to properly refresh them.  To speed up generation library settings are cached and will not be
 checked again unless this is ON.
@@ -167,7 +167,7 @@ Generates Doxygen docs are part of the build process.  Off by default.
 Set to ON to see Doxygen warnings in the build process or OFF to supress them.
 </td></tr>
 </table>
-The following cache variables relate to libraries required by Jatta.  <b>NAME</b> is used to denote
+The following cache variables relate to libraries required by CGUL.  <b>NAME</b> is used to denote
 a library name.  See the cache variables in cmake-gui or ccmake to see all libraries.
 <table cellspacing="0" cellmargin="0">
 <tr><td>Name</td><td style="width:100%">
@@ -193,10 +193,10 @@ Used internally and automatically detected via file extension.  This variable sh
 library is a shared library or OFF if it is a static library.
 </td></tr>
 <tr><td><b>NAME</b>_PACKAGE</td><td style="width:100%">
-Packages the library along with Jatta when it is packaged or installed.  This is on by default for
+Packages the library along with CGUL when it is packaged or installed.  This is on by default for
 static libraries and off by default for shared libraries.  Additionally, changing this to ON will
-cause the CMake scripts generated by Jatta to load in those libraries and link against them when
-importing Jatta into another CMake project.
+cause the CMake scripts generated by CGUL to load in those libraries and link against them when
+importing CGUL into another CMake project.
 </td></tr>
 </table>
 @note There are many other CMake variables defined but most of them are predefined by CMake.  Look

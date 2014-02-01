@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <Jatta.h>
+#include <CGUL.hpp>
 using namespace std;
-using namespace Jatta;
+using namespace CGUL;
 
 int main()
 {
@@ -56,7 +56,7 @@ int main()
         cout << "-- Connected!" << endl;
 
         cout << "-- Performing basic GET..." << endl;
-        http.Get("/repos/Zethes/Jatta", 5000);
+        http.Get("/repos/Zethes/CGUL", 5000);
         cout << "Request: " << endl << "---------------\n" << http.GetRequest() << "---------------" << endl << endl;
         cout << "Response Head: " << endl << "---------------\n" << http.GetResponseHead() << "---------------" << endl << endl;
         cout << "Response Body: " << endl << "---------------\n" << http.GetResponseBody() << "\n---------------" << endl << endl;
@@ -67,7 +67,7 @@ int main()
             http.Http("api.tumblr.com");
         }
 
-        Jatta::String content = "{\r\n";
+        CGUL::String content = "{\r\n";
         content += "\t\"name\": \"Hello-World\",\r\n";
         content += "\t\"homepage\": \"https://github.com\",\r\n";
         content += "\t\"public\": true,\r\n";
