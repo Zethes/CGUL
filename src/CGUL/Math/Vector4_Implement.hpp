@@ -5,12 +5,10 @@
 /** @file Vector4_Implement.hpp
  */
 
-#include "Vector4.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Matrix.hpp"
-
-#include <cmath>
+// CGUL Includes
+#include "../Math/Matrix.hpp"
+#include "../Math/Vector2.hpp"
+#include "../Math/Vector3.hpp"
 
 /**
  */

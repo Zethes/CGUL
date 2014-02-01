@@ -6,7 +6,11 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// Defines
 #include "../External/Defines.hpp"
 
 // Without this here you would need a human sacrifice each time you wanted to use operator<<
@@ -189,5 +193,8 @@ namespace CGUL
     typedef Vector2T< UInt64  > UCoord64;
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
 #include "Vector2_Implement.hpp"

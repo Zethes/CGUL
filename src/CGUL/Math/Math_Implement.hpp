@@ -7,10 +7,10 @@
 
 // CGUL Includes
 #include "../Exceptions/FatalException.hpp"
+#include "../Math/Constants.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector3.hpp"
 #include "../Math/Vector4.hpp"
-#include "Constants.hpp"
 
 // System Includes
 #include <cmath>

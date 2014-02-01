@@ -60,5 +60,8 @@ namespace CGUL
     typedef QuaternionT< Float64 > QuaternionD;
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
 #include "Quaternion_Implement.hpp"

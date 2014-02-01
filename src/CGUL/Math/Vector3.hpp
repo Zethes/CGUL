@@ -6,7 +6,11 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// Defines
 #include "../External/Defines.hpp"
 
 // Without this here you would need a human sacrifice each time you wanted to use operator<<
@@ -182,5 +186,8 @@ namespace CGUL
     typedef Vector3T< Float64 > Vector3D;
 }
 
+// Undefines
 #include "../External/Undefines.hpp"
+
+// Implementation
 #include "Vector3_Implement.hpp"

@@ -2,7 +2,7 @@
 // Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 // All rights reserved.
 
-/** @file Endian.cpp
+/** @file Endian_Implement.hpp
  */
 
 // Header
