@@ -23,6 +23,8 @@ set(CGUL_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease_Implement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Endian.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Endian_Implement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Event.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Event_Implement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/File.hpp
