@@ -37,18 +37,10 @@ namespace CGUL
     template< typename Type >
     struct Vector2T
     {
-        union
-        {
-            struct
-            {
-                //! @brief The x component.
-                Type x;
-                //! @brief The y component.
-                Type y;
-            };
-            //! @brief An array containing raw data to the components.
-            Type m[2];
-        };
+        //! @brief The x component.
+        Type x;
+        //! @brief The y component.
+        Type y;
 
         //! @brief Zero vector, defined as (0, 0).
         static const Vector2T zero;

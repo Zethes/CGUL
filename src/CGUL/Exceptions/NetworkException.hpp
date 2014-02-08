@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "Exception.hpp"
+
+// CGUL Includes
+#include "../Exceptions/Exception.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -27,7 +33,7 @@ namespace CGUL
             FAILED_CALCULATE_ADDRESS,
             FAILED_DNS_LOOKUP,
             FAILED_SSL_SETUP,
-            FAILED_HTTP_REQUEST,
+            FAILED_HTTP_REQUEST
         };
     }
     namespace NetworkExceptionReason
@@ -56,7 +62,7 @@ namespace CGUL
             INVALID_CERTIFICATE,
             SOCKET_NOT_CONNECTED,
             UNKNOWN_TRANSFER_ENCODING,
-            TIMEOUT,
+            TIMEOUT
         };
     }
     struct NetworkException : public Exception
@@ -72,4 +78,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

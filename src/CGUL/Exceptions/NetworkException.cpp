@@ -5,6 +5,7 @@
 /** @file NetworkException.cpp
  */
 
+// Header
 #include "NetworkException.hpp"
 
 static CGUL::String result;
@@ -17,7 +18,7 @@ CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason, SInt networkC
 
 CGUL::String CGUL::NetworkException::GetString() const
 {
-    switch (code)
+    switch (info.code)
     {
         case NetworkExceptionCode::FAILED_LISTEN:
             return U8("Failed to listen on socket.");
@@ -47,9 +48,9 @@ CGUL::String CGUL::NetworkException::GetString() const
 
 CGUL::String CGUL::NetworkException::GetReason() const
 {
-    if (code == NetworkExceptionCode::FAILED_DNS_LOOKUP)
+    if (info.code == NetworkExceptionCode::FAILED_DNS_LOOKUP)
     {
-        switch (reason)
+        switch (info.reason)
         {
             case 8:
                 return U8("Insufficient memory available.");
@@ -71,14 +72,14 @@ CGUL::String CGUL::NetworkException::GetReason() const
             default:
             {
                 CGUL::String msgString = "Unknown error occurred. [Error code: ";
-                msgString += reason;
+                msgString += info.reason;
                 msgString += CGUL::String("]");
                 return msgString;
             }
         }
     }
 
-    switch (reason)
+    switch (info.reason)
     {
         case NetworkExceptionReason::NO_NETWORK_INTERFACE:
             return U8("Unable to find a valid network interface.");
@@ -131,7 +132,7 @@ CGUL::String CGUL::NetworkException::GetReason() const
 const char* CGUL::NetworkException::what() const throw()
 {
     result = GetString();
-    if (reason == NetworkExceptionReason::UNKNOWN)
+    if (info.reason == NetworkExceptionReason::UNKNOWN)
     {
         if (networkCode == 99999)
         {

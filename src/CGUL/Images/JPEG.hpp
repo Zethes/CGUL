@@ -6,11 +6,17 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
+#include "../Images/Image.hpp"
+#include "../Images/Format.hpp"
+#include "../Images/Loader.hpp"
 #include "../Utility/String.hpp"
-#include "Image.hpp"
-#include "Format.hpp"
-#include "Loader.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -33,4 +39,5 @@ namespace CGUL
     }
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

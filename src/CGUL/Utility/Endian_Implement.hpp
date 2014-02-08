@@ -78,13 +78,15 @@ namespace CGUL
             SwapBytes((CGUL::UInt32*)value);
         }
 
+#       ifdef CPP_HAS_LL_SUFFIX
         template< >
         _CGUL_INLINE_IMPLEMENT void SwapBytes< CGUL::UInt64 >(CGUL::UInt64* value)
         {
-            *value = (*value & 0x00000000FFFFFFFF) << 32 | (*value & 0xFFFFFFFF00000000) >> 32;
-            *value = (*value & 0x0000FFFF0000FFFF) << 16 | (*value & 0xFFFF0000FFFF0000) >> 16;
-            *value = (*value & 0x00FF00FF00FF00FF) << 8 | (*value & 0xFF00FF00FF00FF00) >> 8;
+            *value = (*value & 0x00000000FFFFFFFFLL) << 32 | (*value & 0xFFFFFFFF00000000LL) >> 32;
+            *value = (*value & 0x0000FFFF0000FFFFLL) << 16 | (*value & 0xFFFF0000FFFF0000LL) >> 16;
+            *value = (*value & 0x00FF00FF00FF00FFLL) << 8 | (*value & 0xFF00FF00FF00FF00LL) >> 8;
         }
+#       endif
 
         template< >
         _CGUL_INLINE_IMPLEMENT void SwapBytes< CGUL::SInt64 >(CGUL::SInt64* value)

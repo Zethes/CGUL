@@ -19,7 +19,7 @@ CGUL::FileException::~FileException() throw()
 
 CGUL::String CGUL::FileException::GetString() const
 {
-    switch (code)
+    switch (info.code)
     {
         case FileExceptionCode::FAILED_FILE_READ:
             return U8("Failed to read file \"") + fileName + U8("\".");
@@ -31,7 +31,7 @@ CGUL::String CGUL::FileException::GetString() const
 
 CGUL::String CGUL::FileException::GetReason() const
 {
-    switch (reason)
+    switch (info.reason)
     {
         case FileExceptionReason::FILE_DOESNT_EXIST:
             return U8("File doesn't exist.");

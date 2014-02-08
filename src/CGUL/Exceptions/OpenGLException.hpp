@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "Exception.hpp"
+
+// CGUL Includes
+#include "../Exceptions/Exception.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -17,14 +23,14 @@ namespace CGUL
         enum
         {
             UNKNOWN,
-            FAILED_CREATE_SHADER,
+            FAILED_CREATE_SHADER
         };
     }
     namespace OpenGLExceptionReason
     {
         enum
         {
-            UNKNOWN,
+            UNKNOWN
         };
     }
     struct OpenGLException : public Exception
@@ -36,4 +42,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

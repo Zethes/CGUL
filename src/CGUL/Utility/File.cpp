@@ -273,7 +273,7 @@ _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >*
         return;
     }
     Size count = 0;
-    while (entry = readdir(directory))
+    while ((entry = readdir(directory)))
     {
         String entryName(entry->d_name);
         if (IsFile(fixedPath + entryName))
@@ -284,7 +284,7 @@ _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >*
     files->SetSize(count);
     rewinddir(directory);
     count = 0;
-    while (entry = readdir(directory))
+    while ((entry = readdir(directory)))
     {
         String entryName(entry->d_name);
         if (IsFile(fixedPath + entryName))
@@ -324,7 +324,7 @@ _CGUL_EXPORT void CGUL::File::FindDirectories(const String& path, FixedList< Str
         return;
     }
     Size count = 0;
-    while (entry = readdir(directory))
+    while ((entry = readdir(directory)))
     {
         String entryName(entry->d_name);
         if (IsDirectory(fixedPath + entryName) && entryName != "." && entryName != "..")
@@ -335,7 +335,7 @@ _CGUL_EXPORT void CGUL::File::FindDirectories(const String& path, FixedList< Str
     directories->SetSize(count);
     rewinddir(directory);
     count = 0;
-    while (entry = readdir(directory))
+    while ((entry = readdir(directory)))
     {
         String entryName(entry->d_name);
         if (IsDirectory(fixedPath + entryName) && entryName != "." && entryName != "..")
@@ -377,7 +377,7 @@ _CGUL_EXPORT CGUL::Enum CGUL::File::GetAccess(const CGUL::String& fileName)
 #   endif
 }
 
-_CGUL_EXPORT unsigned long long CGUL::File::CRC32(const CGUL::String& fileName)
+_CGUL_EXPORT CGUL::UInt32 CGUL::File::CRC32(const CGUL::String& fileName)
 {
     CGUL::String str;
     ReadText(fileName, &str);

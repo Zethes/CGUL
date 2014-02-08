@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
 #include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -21,7 +27,7 @@ namespace CGUL
             IMAGE,
             NETWORK,
             FILE,
-            OPENGL,
+            OPENGL
         };
     }
     struct Exception : public std::exception
@@ -33,7 +39,7 @@ namespace CGUL
                 UInt16 reason;
                 UInt16 code;
                 UInt32 type;
-            };
+            } info;
             UInt64 unique;
         };
 
@@ -48,4 +54,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

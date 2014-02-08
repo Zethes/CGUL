@@ -5,6 +5,7 @@
 /** @file OpenGLException.cpp
  */
 
+// Header
 #include "OpenGLException.hpp"
 
 CGUL::OpenGLException::OpenGLException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::OPENGL)
@@ -13,7 +14,7 @@ CGUL::OpenGLException::OpenGLException(UInt8 code, UInt8 reason) : Exception(cod
 
 CGUL::String CGUL::OpenGLException::GetString() const
 {
-    switch (code)
+    switch (info.code)
     {
         case OpenGLExceptionCode::UNKNOWN:
         default:
@@ -23,7 +24,7 @@ CGUL::String CGUL::OpenGLException::GetString() const
 
 CGUL::String CGUL::OpenGLException::GetReason() const
 {
-    switch (reason)
+    switch (info.reason)
     {
         case OpenGLExceptionReason::UNKNOWN:
         default:

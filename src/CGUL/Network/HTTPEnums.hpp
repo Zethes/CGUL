@@ -25,7 +25,7 @@ namespace CGUL
                 MIN_FRESH,
                 NO_TRANSFORM,
                 ONLY_IF_CACHED,
-                CACHE_EXTENSION,
+                CACHE_EXTENSION
             };
         }
 
@@ -49,7 +49,7 @@ namespace CGUL
                 ISO_2022_JP_2,
                 ISO_2022_KR,
                 UTF_8,
-                UTF_16,
+                UTF_16
             };
         }
 
@@ -59,7 +59,7 @@ namespace CGUL
             {
                 UNKNOWN,
                 KEEP_ALIVE,
-                CLOSE,
+                CLOSE
             };
         }
 
@@ -77,7 +77,7 @@ namespace CGUL
                 SDCH,
                 BZIP2,
                 PEERDIST,
-                LZMA,
+                LZMA
             };
         }
 
@@ -134,7 +134,7 @@ namespace CGUL
                 GATEWAY_TIMEOUT,
                 HTTP_VERSION_NOT_SUPPORTED,
                 INSUFFICIENT_sTORAGE = 507,
-                NOT_EXTENDED = 510,
+                NOT_EXTENDED = 510
             };
         }
 
@@ -148,7 +148,7 @@ namespace CGUL
                 COMPRESS,
                 DEFLATE,
                 GZIP,
-                IDENTITY,
+                IDENTITY
             };
         }
     }

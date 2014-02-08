@@ -17,7 +17,7 @@ namespace CGUL
         enum
         {
             UNKNOWN,
-            FAILED_FILE_READ,
+            FAILED_FILE_READ
         };
     }
     namespace FileExceptionReason
@@ -26,7 +26,7 @@ namespace CGUL
         {
             UNKNOWN,
             FILE_DOESNT_EXIST,
-            PERMISSION_DENIED,
+            PERMISSION_DENIED
         };
     }
     struct FileException : public Exception

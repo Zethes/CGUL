@@ -203,10 +203,12 @@ namespace CGUL
     const UInt32 UInt32Min = 0;
     const UInt32 UInt32Max = 4294967295U;
 
-    const SInt64 SInt64Min = -(9223372036854775807LL) - 1;
+#   ifdef CPP_HAS_LL_SUFFIX
+    const SInt64 SInt64Min = (-9223372036854775807LL - 1);
     const SInt64 SInt64Max = 9223372036854775807LL;
     const UInt64 UInt64Min = 0ULL;
     const UInt64 UInt64Max = 18446744073709551615ULL;
+#   endif
 
     /** @brief System dependent signed short integer.
      *  @see SInt
@@ -375,5 +377,5 @@ namespace CGUL
 #elif defined(CPP_DEPRECATED_MSVC)
 #   define DEPRECATED(func, str) __declspec(deprecated) func
 #else
-#   define DEPRECATED(func, src)
+#   define DEPRECATED(func, src) func
 #endif

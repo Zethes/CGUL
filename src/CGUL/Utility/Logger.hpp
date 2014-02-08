@@ -43,7 +43,7 @@ namespace CGUL
 
         Logger(std::ostringstream* stream, int counter, Callback callback);
     };
-};
+}
 
 // Undefines
 #include "../External/Undefines.hpp"

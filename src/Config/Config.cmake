@@ -16,8 +16,8 @@ macro(check_feature VARIABLE FILE)
             message(STATUS "Checking C++ capability ${VARIABLE} - passed")
         else()
             file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
-              "Unable to compile config test script ${FILE}!"
-              "The test file ${FILE} failed to compile:"
+              "Unable to compile config test script ${FILE}!\n"
+              "The test file ${FILE} failed to compile:\n"
               "${OUTPUT}\n\n"
             )
             set(${VARIABLE} OFF CACHE INTERNAL "Feature")
@@ -61,6 +61,7 @@ fast_check_include_file(dirent.h CPP_HEADER_DIRENT_H)
 check_feature(CPP_HAS_DOUBLE_REFERENCE double_reference.cpp)
 check_feature(CPP_HAS_FUNCTION_TEMPLATE_DEFAULT function_template_default.cpp)
 check_feature(CPP_HAS_HYPERBOLIC_ARC hyperbolic_arc.cpp)
+check_feature(CPP_HAS_LL_SUFFIX ll_suffix.cpp)
 check_feature(CPP_HAS_MOVE_CONSTRUCTOR move_constructor.cpp)
 check_feature(CPP_HAS_PTHREAD pthread.cpp)
 check_feature(CPP_HAS_STATIC_ASSERT static_assert.cpp)

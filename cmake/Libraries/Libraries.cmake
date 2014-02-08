@@ -147,8 +147,8 @@ foreach(__LIBRARY ${CGUL_LIBRARY_LIST})
 
             # Write compilation error to the cmake error log
             file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
-              "Unable to compile package test script for ${__LIBRARY}!"
-              "The test file ${__LIBRARY}.cpp failed to compile:"
+              "Unable to compile package test script for ${__LIBRARY}!\n"
+              "The test file ${__LIBRARY}.cpp failed to compile:\n"
               "${__OUTPUT}\n\n"
             )
 

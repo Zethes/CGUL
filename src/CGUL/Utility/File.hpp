@@ -62,7 +62,7 @@ namespace CGUL
         //! @brief Checks the permissions on a file.
         _CGUL_EXPORT Enum GetAccess(const String& fileName);
 
-        _CGUL_EXPORT unsigned long long CRC32(const String& fileName);
+        _CGUL_EXPORT UInt32 CRC32(const String& fileName);
         _CGUL_EXPORT String MD5(const String& fileName);
         //! @brief Checks if the specified filename is a directory.
         _CGUL_EXPORT Boolean IsDirectory(const String& fileName);

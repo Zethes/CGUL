@@ -5,6 +5,7 @@
 /** @file Exception.cpp
  */
 
+// Header
 #include "Exception.hpp"
 
 static CGUL::String result;
@@ -22,7 +23,7 @@ const char* CGUL::Exception::what() const throw()
 
 CGUL::Exception::Exception(UInt16 code, UInt16 reason, UInt32 type)
 {
-    this->code = code;
-    this->reason = reason;
-    this->type = type;
+    this->info.code = code;
+    this->info.reason = reason;
+    this->info.type = type;
 }

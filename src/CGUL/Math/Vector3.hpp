@@ -37,14 +37,12 @@ namespace CGUL
     template< typename Type >
     struct Vector3T
     {
-        union
-        {
-            struct
-            {
-                Type x, y, z;
-            };
-            Type m[3];
-        };
+        //! @brief The x component.
+        Type x;
+        //! @brief The y component.
+        Type y;
+        //! @brief The z component.
+        Type z;
 
         //! @brief Zero vector, defined as (0, 0, 0).
         static const Vector3T zero;

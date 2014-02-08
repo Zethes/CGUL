@@ -5,6 +5,7 @@
 /** @file ImageException.cpp
  */
 
+// Header
 #include "ImageException.hpp"
 
 CGUL::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::IMAGE)
@@ -13,7 +14,7 @@ CGUL::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code,
 
 CGUL::String CGUL::ImageException::GetString() const
 {
-    switch (code)
+    switch (info.code)
     {
         case ImageExceptionCode::GENERATE_MIPMAPS:
             return U8("Failed to generate mipmaps.");
@@ -39,7 +40,7 @@ CGUL::String CGUL::ImageException::GetString() const
 
 CGUL::String CGUL::ImageException::GetReason() const
 {
-    switch (reason)
+    switch (info.reason)
     {
         case ImageExceptionReason::IMAGE_IS_NOT_VALID:
             return U8("Image is invalid/not loaded.");

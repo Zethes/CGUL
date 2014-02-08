@@ -5,6 +5,7 @@
 /** @file FatalException.cpp
  */
 
+// Header
 #include "FatalException.hpp"
 
 static CGUL::String result;

@@ -213,21 +213,21 @@ namespace CGUL
         //! @brief The Newtonian Constant of Gravitation, defined as 6.67429e-11 [m^3/(kg*s^2)]
         const Float64 GravitationalConstant = 0.0000000000667429;
         //! @brief The SI prefix factor corresponding to 1000000000000000000
-        const Float64 Exa =   1000000000000000000;
+        const Float64 Exa =   1000000000000000000.0;
         //! @brief The SI prefix factor corresponding to 1000000000000000
-        const Float64 Peta =  1000000000000000;
+        const Float64 Peta =  1000000000000000.0;
         //! @brief The SI prefix factor corresponding to 1000000000000
-        const Float64 Tera =  1000000000000;
+        const Float64 Tera =  1000000000000.0;
         //! @brief The SI prefix factor corresponding to 1000000000
-        const Float64 Giga =  1000000000;
+        const Float64 Giga =  1000000000.0;
         //! @brief The SI prefix factor corresponding to 1000000
-        const Float64 Mega =  1000000;
+        const Float64 Mega =  1000000.0;
         //! @brief The SI prefix factor corresponding to 1000
-        const Float64 Kilo =  1000;
+        const Float64 Kilo =  1000.0;
         //! @brief The SI prefix factor corresponding to 100
-        const Float64 Hecto = 100;
+        const Float64 Hecto = 100.0;
         //! @brief The SI prefix factor corresponding to 10
-        const Float64 Deca =  10;
+        const Float64 Deca =  10.0;
         //! @brief The SI prefix factor corresponding to 0.1
         const Float64 Deci =  0.1;
         //! @brief The SI prefix factor corresponding to 0.01

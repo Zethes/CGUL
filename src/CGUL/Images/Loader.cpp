@@ -5,7 +5,10 @@
 /** @file Loader.cpp
  */
 
+// Header
 #include "Loader.hpp"
+
+// CGUL Includes
 #include "../Exceptions/ImageException.hpp"
 
 _CGUL_EXPORT CGUL::ImageLoader::ImageLoader()

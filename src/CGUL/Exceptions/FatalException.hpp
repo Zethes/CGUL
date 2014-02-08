@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "Exception.hpp"
+
+// CGUL Includes
+#include "../Exceptions/Exception.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -26,4 +32,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

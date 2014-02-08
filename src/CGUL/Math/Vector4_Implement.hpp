@@ -138,7 +138,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type >& CGUL::Vector4T< Type >::operator=
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type& CGUL::Vector4T< Type >::operator[](UInt32 index)
 {
-    return m[index];
+    return operator[](index);
 }
 
 /** @details Unlike the other operator[], this one works on constant vectors and returns a value
@@ -150,7 +150,7 @@ _CGUL_INLINE_IMPLEMENT Type& CGUL::Vector4T< Type >::operator[](UInt32 index)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::operator[](UInt32 index) const
 {
-    return m[index];
+    return operator[](index);
 }
 
 /** @details The inverse is defined as (-x, -y, -z, -w) of the original vector.
@@ -327,7 +327,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type >::operator CGUL::Vector4T< OtherTyp
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type& CGUL::Vector4T< Type >::At(UInt32 index)
 {
-    return m[index];
+    return operator[](index);
 }
 
 /** @param index The component index, so 0 for x, 1 for y, 2 for z, and 3 for w.
@@ -336,7 +336,7 @@ _CGUL_INLINE_IMPLEMENT Type& CGUL::Vector4T< Type >::At(UInt32 index)
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::At(UInt32 index) const
 {
-    return m[index];
+    return operator[](index);
 }
 
 /** @param value The value to set all components to.
@@ -381,7 +381,7 @@ _CGUL_INLINE_IMPLEMENT void CGUL::Vector4T< Type >::Clear()
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector4T< Type >::Swizzle(UInt32 x, UInt32 y) const
 {
-    return Vector2(m[x], m[y]);
+    return Vector2(operator[](x), operator[](y));
 }
 
 /** @details Swizzles the vector allowing the components to be re-arranged into a new vector.
@@ -394,7 +394,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector4T< Type >::Swizzle(UI
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector4T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z) const
 {
-    return Vector3(m[x], m[y], m[z]);
+    return Vector3(operator[](x), operator[](y), operator[](z));
 }
 
 /** @details Swizzles the vector allowing the components to be re-arranged into a new vector.
@@ -408,7 +408,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector4T< Type >::Swizzle(UI
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Swizzle(UInt32 x, UInt32 y, UInt32 z, UInt32 w) const
 {
-    return Vector4(m[x], m[y], m[z], m[w]);
+    return Vector4(operator[](x), operator[](y), operator[](z), operator[](w));
 }
 
 /** @warning This method uses sqrt() which can be slow!

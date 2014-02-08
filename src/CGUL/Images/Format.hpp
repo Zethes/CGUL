@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
 #include "../Utility/String.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -27,7 +33,7 @@ namespace CGUL
             SINT32,
             SINT64
         };
-    };
+    }
 
     /** @brief A struct that defines an image format and how to treat it.
      */
@@ -50,7 +56,7 @@ namespace CGUL
      */
     namespace ImageFormats
     {
-        extern ImageFormat 
+        extern ImageFormat
         RGB,
         RGBA,
         R8,
@@ -71,7 +77,8 @@ namespace CGUL
         RGBA10_A2,
         RGBA12,
         RGBA16;
-    };
+    }
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

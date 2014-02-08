@@ -6,8 +6,14 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
-#include "Exception.hpp"
+
+// CGUL Includes
+#include "../Exceptions/Exception.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -24,7 +30,7 @@ namespace CGUL
             JPEG,
             BMP_WRITE,
             PNG_WRITE,
-            JPEG_WRITE,
+            JPEG_WRITE
         };
     }
     namespace ImageExceptionReason
@@ -49,7 +55,7 @@ namespace CGUL
             JPEG_FAILED_TO_START_DECOMPRESSOR,
             NULL_POINTER,
             FAILED_WRITE_HEADER,
-            FAILED_WRITE_IMAGE,
+            FAILED_WRITE_IMAGE
         };
     }
     struct ImageException : public Exception
@@ -61,4 +67,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

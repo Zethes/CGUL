@@ -5,12 +5,16 @@
 /** @file JPEG.cpp
  */
 
+// Header
 #include "JPEG.hpp"
+
+// CGUL Includes
 #include "../Exceptions/ImageException.hpp"
 #include "../Utility/File.hpp"
 #include "../Utility/Memory.hpp"
 
-#ifndef XMD_H //Fixes broken shit.
+// libjpeg is weird and requires a bunch of hacks
+#ifndef XMD_H
 #   define XMD_H
 #endif
 
@@ -94,16 +98,13 @@ _CGUL_EXPORT void CGUL::ImageLoaders::JPEG::Load(const String& file, Image* imag
     buffer = (*cinfo.mem->alloc_sarray)((j_common_ptr) &cinfo, JPOOL_IMAGE, rowStride, 1);
 
     ImageFormat format;
-    int pixelSize = 0;
     if (cinfo.output_components == 3)
     {
         format = ImageFormats::RGB;
-        pixelSize = 3;
     }
     else if (cinfo.output_components == 4)
     {
         format = ImageFormats::RGBA;
-        pixelSize = 4;
     }
     format.dataType = DataTypes::UNSIGNED_CHAR;
 

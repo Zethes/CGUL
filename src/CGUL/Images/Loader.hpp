@@ -6,10 +6,16 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// CGUL Includes
+#include "../Images/Image.hpp"
+#include "../Images/Format.hpp"
 #include "../Utility/String.hpp"
-#include "Image.hpp"
-#include "Format.hpp"
+
+// Defines
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -26,7 +32,7 @@ namespace CGUL
     public:
         _CGUL_EXPORT ImageLoader();
         _CGUL_EXPORT ImageLoader(const String& name, const String& extension);
-        _CGUL_EXPORT ~ImageLoader();
+        _CGUL_EXPORT virtual ~ImageLoader();
 
         _CGUL_EXPORT virtual bool CanLoad(const String& file) = 0;
         _CGUL_EXPORT virtual void Load(const String& file, Image* image) = 0;
@@ -38,4 +44,5 @@ namespace CGUL
     };
 }
 
+// Undefines
 #include "../External/Undefines.hpp"

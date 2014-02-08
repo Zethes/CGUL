@@ -33,14 +33,14 @@ namespace CGUL
     template< typename Type >
     struct Vector4T
     {
-        union
-        {
-            struct
-            {
-                Type x, y, z, w;
-            };
-            Type m[4];
-        };
+        //! @brief The x component.
+        Type x;
+        //! @brief The y component.
+        Type y;
+        //! @brief The z component.
+        Type z;
+        //! @brief The w component.
+        Type w;
 
         //! @brief Zero vector, defined as (0, 0, 0, 0).
         static const Vector4T zero;

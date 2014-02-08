@@ -30,11 +30,15 @@ namespace CGUL
     template< typename Type >
     struct QuaternionT
     {
-        struct
-        {
-            Type w, x, y, z;
-        };
-        Type m[4];
+        //! @brief The w component.
+        Type w;
+        //! @brief The x component.
+        Type x;
+        //! @brief The y component.
+        Type y;
+        //! @brief The z component.
+        Type z;
+
         QuaternionT();
         QuaternionT(Type w, Type x, Type y, Type z);
 
