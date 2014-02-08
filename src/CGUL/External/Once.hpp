@@ -310,7 +310,7 @@ namespace CGUL
 #   endif
 #   ifdef CGUL_MACOS
 #       ifdef CGUL_USE_OPENGL
-#           include <GL/glew.h>cstddef
+#           include <GL/glew.h>
 #       endif
 #       import <Cocoa/Cocoa.h>
 #   endif
