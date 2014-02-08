@@ -1,5 +1,5 @@
 ![alt text](https://raw.github.com/Zethes/CGUL/master/resources/logo.png "CGUL Logo")  
-Celebrating a  year on GitHub :tada:
+Thanks to [Mordi](http://mordi.ziphoid.com/) for the sweet logo
 
 What is it?
 =====
