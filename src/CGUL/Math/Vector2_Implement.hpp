@@ -79,6 +79,12 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::DistanceManhattan(const Vect
     return Math::Abs(vectorA.x - vectorB.x) + Math::Abs(vectorA.y - vectorB.y);
 }
 
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Lerp(const Vector2T& from, const Vector2T& to, Type t)
+{
+    return from + (to - from) * t;
+}
+
 /**
  */
 template< typename Type >

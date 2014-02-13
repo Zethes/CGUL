@@ -87,6 +87,9 @@ namespace CGUL
         //! @brief Gets the transpose of a matrix.
         _CGUL_INLINE_DEFINE static MatrixT< Type > Transpose(const MatrixT& matrix);
 
+        //! @brief Performs linear interpolation on a matrix       
+        _CGUL_INLINE_DEFINE static MatrixT< Type > Lerp(const MatrixT& from, const MatrixT& to, Type t);
+
         //! @brief Default constructor, creates an identity matrix.
         _CGUL_INLINE_DEFINE MatrixT();
         //! @brief Copies another matrix.
@@ -115,6 +118,14 @@ namespace CGUL
         _CGUL_INLINE_DEFINE MatrixT operator*(Type operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator*=(Type operand);
         _CGUL_INLINE_DEFINE MatrixT& operator/=(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+=(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-=(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+=(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-=(Type operand);
         friend std::ostream& operator<<(std::ostream& stream, const MatrixT& matrix)
         {
             stream << "[" << matrix.data[0] << ", " << matrix.data[4] << ", " << matrix.data[ 8] << ", " << matrix.data[12] << "]" << std::endl;

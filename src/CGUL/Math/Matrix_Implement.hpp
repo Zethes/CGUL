@@ -156,6 +156,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Transpose(co
 }
 
 template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type > CGUL::MatrixT< Type >::Lerp(const MatrixT& from, const MatrixT& to, Type t)
+{
+    return from + (to - from) * t;
+}
+
+template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >::MatrixT()
 {
     this->m[0][0] = Type(1); this->m[1][0] = Type(0); this->m[2][0] = Type(0); this->m[3][0] = Type(0);
@@ -340,6 +346,82 @@ _CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator/=(
     m[0][1] *= inverse; m[1][1] *= inverse; m[2][1] *= inverse; m[3][1] *= inverse;
     m[0][2] *= inverse; m[1][2] *= inverse; m[2][2] *= inverse; m[3][2] *= inverse;
     m[0][3] *= inverse; m[1][3] *= inverse; m[2][3] *= inverse; m[3][3] *= inverse;
+    return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(Type operand)
+{
+    return MatrixT(this->m[0][0] + operand, this->m[1][0] + operand, this->m[2][0] + operand, this->m[3][0] + operand,
+                   this->m[0][1] + operand, this->m[1][1] + operand, this->m[2][1] + operand, this->m[3][1] + operand,
+                   this->m[0][2] + operand, this->m[1][2] + operand, this->m[2][2] + operand, this->m[3][2] + operand,
+                   this->m[0][3] + operand, this->m[1][3] + operand, this->m[2][3] + operand, this->m[3][3] + operand);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+=(Type operand)
+{
+    m[0][0] += operand; m[1][0] += operand; m[2][0] += operand; m[3][0] += operand;
+    m[0][1] += operand; m[1][1] += operand; m[2][1] += operand; m[3][1] += operand;
+    m[0][2] += operand; m[1][2] += operand; m[2][2] += operand; m[3][2] += operand;
+    m[0][3] += operand; m[1][3] += operand; m[2][3] += operand; m[3][3] += operand;
+    return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(Type operand)
+{
+    return MatrixT(this->m[0][0] - operand, this->m[1][0] - operand, this->m[2][0] - operand, this->m[3][0] - operand,
+                   this->m[0][1] - operand, this->m[1][1] - operand, this->m[2][1] - operand, this->m[3][1] - operand,
+                   this->m[0][2] - operand, this->m[1][2] - operand, this->m[2][2] - operand, this->m[3][2] - operand,
+                   this->m[0][3] - operand, this->m[1][3] - operand, this->m[2][3] - operand, this->m[3][3] - operand);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-=(Type operand)
+{
+    m[0][0] -= operand; m[1][0] -= operand; m[2][0] -= operand; m[3][0] -= operand;
+    m[0][1] -= operand; m[1][1] -= operand; m[2][1] -= operand; m[3][1] -= operand;
+    m[0][2] -= operand; m[1][2] -= operand; m[2][2] -= operand; m[3][2] -= operand;
+    m[0][3] -= operand; m[1][3] -= operand; m[2][3] -= operand; m[3][3] -= operand;
+    return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(const MatrixT& operand)
+{
+    return MatrixT(this->m[0][0] + operand.m[0][0], this->m[1][0] + operand.m[1][0], this->m[2][0] + operand.m[2][0], this->m[3][0] + operand.m[3][0],
+                   this->m[0][1] + operand.m[0][1], this->m[1][1] + operand.m[1][1], this->m[2][1] + operand.m[2][1], this->m[3][1] + operand.m[3][1],
+                   this->m[0][2] + operand.m[0][2], this->m[1][2] + operand.m[1][2], this->m[2][2] + operand.m[2][2], this->m[3][2] + operand.m[3][2],
+                   this->m[0][3] + operand.m[0][3], this->m[1][3] + operand.m[1][3], this->m[2][3] + operand.m[2][3], this->m[3][3] + operand.m[3][3]);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+=(const MatrixT& operand)
+{
+    m[0][0] += operand.m[0][0]; m[1][0] += operand.m[1][0]; m[2][0] += operand.m[2][0]; m[3][0] += operand.m[3][0];
+    m[0][1] += operand.m[0][1]; m[1][1] += operand.m[1][1]; m[2][1] += operand.m[2][1]; m[3][1] += operand.m[3][1];
+    m[0][2] += operand.m[0][2]; m[1][2] += operand.m[1][2]; m[2][2] += operand.m[2][2]; m[3][2] += operand.m[3][2];
+    m[0][3] += operand.m[0][3]; m[1][3] += operand.m[1][3]; m[2][3] += operand.m[2][3]; m[3][3] += operand.m[3][3];
+    return *this;
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(const MatrixT& operand)
+{
+    return MatrixT(this->m[0][0] - operand.m[0][0], this->m[1][0] - operand.m[1][0], this->m[2][0] - operand.m[2][0], this->m[3][0] - operand.m[3][0],
+                   this->m[0][1] - operand.m[0][1], this->m[1][1] - operand.m[1][1], this->m[2][1] - operand.m[2][1], this->m[3][1] - operand.m[3][1],
+                   this->m[0][2] - operand.m[0][2], this->m[1][2] - operand.m[1][2], this->m[2][2] - operand.m[2][2], this->m[3][2] - operand.m[3][2],
+                   this->m[0][3] - operand.m[0][3], this->m[1][3] - operand.m[1][3], this->m[2][3] - operand.m[2][3], this->m[3][3] - operand.m[3][3]);
+}
+
+template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-=(const MatrixT& operand)
+{
+    m[0][0] -= operand.m[0][0]; m[1][0] -= operand.m[1][0]; m[2][0] -= operand.m[2][0]; m[3][0] -= operand.m[3][0];
+    m[0][1] -= operand.m[0][1]; m[1][1] -= operand.m[1][1]; m[2][1] -= operand.m[2][1]; m[3][1] -= operand.m[3][1];
+    m[0][2] -= operand.m[0][2]; m[1][2] -= operand.m[1][2]; m[2][2] -= operand.m[2][2]; m[3][2] -= operand.m[3][2];
+    m[0][3] -= operand.m[0][3]; m[1][3] -= operand.m[1][3]; m[2][3] -= operand.m[2][3]; m[3][3] -= operand.m[3][3];
     return *this;
 }
 

@@ -65,6 +65,12 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::DistanceManhattan(const Vect
 }
 
 template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Lerp(const Vector3T& from, const Vector3T& to, Type t)
+{
+    return from + (to - from) * t;
+}
+
+template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Normalized(const Vector3T& value)
 {
     Type inverseMagnitude = 1.0f / value.GetMagnitude();

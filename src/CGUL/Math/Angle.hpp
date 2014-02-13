@@ -17,6 +17,7 @@ public:
         static Angle Difference(const Angle& a, const Angle& b);
         static Angle Center(const Angle& a, const Angle& b);
         static Angle InverseCenter(const Angle& a, const Angle& b);
+        static Angle Lerp(const Angle& from, const Angle& to, CGUL::Float32 t);
 
         Angle();
         Angle(CGUL::Float32 radians);

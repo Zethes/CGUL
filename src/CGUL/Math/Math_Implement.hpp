@@ -376,3 +376,9 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Math::StandardDeviation(const FixedList< Type 
     variance /= values.GetSize();
     return Math::Sqrt(variance);
 }
+
+template< typename Type >
+_CGUL_INLINE_DEFINE Type Lerp(Type from, Type to, Type t)
+{
+    return from+(to-from)*t;
+}

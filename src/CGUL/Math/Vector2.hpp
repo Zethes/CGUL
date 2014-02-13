@@ -63,6 +63,9 @@ namespace CGUL
         _CGUL_INLINE_DEFINE static Type DistanceSquared(const Vector2T& valueA, const Vector2T& vectorB);
         _CGUL_INLINE_DEFINE static Type DistanceManhattan(const Vector2T& valueA, const Vector2T& vectorB);
 
+        //! @brief Performs linear interpolation on a vector2      
+        _CGUL_INLINE_DEFINE static Vector2T Lerp(const Vector2T& from, const Vector2T& to, Type t);
+
         //! @brief Initializes to (0, 0).
         _CGUL_INLINE_DEFINE Vector2T();
         //! @brief Copies a vector into this vector.

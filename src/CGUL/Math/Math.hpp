@@ -150,6 +150,10 @@ namespace CGUL
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type StandardDeviation(const FixedList< Type >& values, Type* mean = NULL);
 
+        //! @brief Performs linear interpolation  
+        template< typename Type _CGUL_DEFAULT_MATH_TYPE >
+        _CGUL_INLINE_DEFINE Type Lerp(Type from, Type to, Type t);
+
         // TODO: add some more frequently used math functions (maybe reference .NET's math lib?)
     }
 }
