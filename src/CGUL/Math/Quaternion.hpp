@@ -39,25 +39,30 @@ namespace CGUL
         //! @brief The z component.
         Type z;
 
+        //! @brief Performs linear interpolation on a quaternion and normalizes it.       
+        _CGUL_INLINE_DEFINE static QuaternionT< Type > Lerp(const QuaternionT& from, const QuaternionT& to, Type t);
+
         QuaternionT();
+        QuaternionT(const Vector3T< Type >& euler);
         QuaternionT(Type w, Type x, Type y, Type z);
 
-        QuaternionT< Type > operator*(const QuaternionT< Type >& operand) const;
+        QuaternionT< Type >& operator*(const QuaternionT< Type >& operand) const;
         QuaternionT< Type >& operator*=(const QuaternionT< Type >& operand);
+        QuaternionT< Type >& operator*(Type operand) const;
+        QuaternionT< Type >& operator*=(Type operand);
+        QuaternionT< Type >& operator+(const QuaternionT< Type >& operand) const;
+        QuaternionT< Type >& operator+=(const QuaternionT< Type >& operand);
+        QuaternionT< Type >& operator-(const QuaternionT< Type >& operand) const;
+        QuaternionT< Type >& operator-=(const QuaternionT< Type >& operand);
 
-        /*Quaternion(double, const jVector3&);
-        Quaternion(const jVector3&, double);
-        jQuaternion operator+(const jQuaternion);
-        void operator+=(const jQuaternion&);
-        jQuaternion operator*(const double);
-        jQuaternion operator*(const jQuaternion&);
-        void operator*=(const jQuaternion&);
-        jQuaternion operator*(const jVector3&);
-        void operator*= (const jVector3&);
-        void CreateBasis(jVector3*, jVector3*, jVector3*);*/
         void Normalize();
 
         void RotateOnAxis(const Vector3T< Type >& axis, Type angle);
+
+        void Set(Type w, Type x, Type y, Type z);
+
+        void FromEuler(const Vector3T< Type >& euler);
+        Vector3T< Type > ToEuler();
     };
 
     typedef QuaternionT< Float32 > Quaternion;

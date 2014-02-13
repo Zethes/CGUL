@@ -118,13 +118,13 @@ namespace CGUL
         _CGUL_INLINE_DEFINE MatrixT operator*(Type operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator*=(Type operand);
         _CGUL_INLINE_DEFINE MatrixT& operator/=(Type operand);
-        _CGUL_INLINE_DEFINE MatrixT& operator+(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+(const MatrixT& operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator+=(const MatrixT& operand);
-        _CGUL_INLINE_DEFINE MatrixT& operator-(const MatrixT& operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-(const MatrixT& operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator-=(const MatrixT& operand);
-        _CGUL_INLINE_DEFINE MatrixT& operator+(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator+(Type operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator+=(Type operand);
-        _CGUL_INLINE_DEFINE MatrixT& operator-(Type operand);
+        _CGUL_INLINE_DEFINE MatrixT& operator-(Type operand) const;
         _CGUL_INLINE_DEFINE MatrixT& operator-=(Type operand);
         friend std::ostream& operator<<(std::ostream& stream, const MatrixT& matrix)
         {

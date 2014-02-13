@@ -12,10 +12,28 @@
 #include "../Math/Vector3.hpp"
 
 template< typename Type >
+_CGUL_INLINE_DEFINE CGUL::QuaternionT< Type > CGUL::QuaternionT< Type >::Lerp(const QuaternionT& from, const QuaternionT& to, Type t)
+{
+    QuaternionT< Type > q = from + (to - from) * t;
+    q.Normalize();
+    return q;
+}
+
+template< typename Type >
 CGUL::QuaternionT< Type >::QuaternionT()
 {
     w = 1;
     x = y = z = 0;
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >::QuaternionT(const Vector3T< Type >& euler)
+{
+    w = Math::Cos(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) + Math::Sin(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    x = Math::Sin(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) - Math::Cos(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    y = Math::Cos(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) + Math::Sin(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    z = Math::Cos(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0)) - Math::Sin(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0));
+    Normalize();
 }
 
 template< typename Type >
@@ -28,7 +46,7 @@ CGUL::QuaternionT< Type >::QuaternionT(Type w, Type x, Type y, Type z)
 }
 
 template< typename Type >
-CGUL::QuaternionT< Type > CGUL::QuaternionT< Type >::operator*(const QuaternionT< Type >& operand) const
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator*(const QuaternionT< Type >& operand) const
 {
     return QuaternionT< Type >(w * operand.w - x * operand.x - y * operand.y - z * operand.z,
                                w * operand.x + x * operand.w + y * operand.z - z * operand.y,
@@ -40,6 +58,51 @@ template< typename Type >
 CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator*=(const QuaternionT& operand)
 {
     *this = (*this) * operand;
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator*(Type operand) const
+{
+    return QuaternionT< Type >(w * operand,
+                               x * operand,
+                               y * operand,
+                               z * operand);    
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator*=(Type operand)
+{
+    *this = (*this) * operand;
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator+(const QuaternionT< Type >& operand) const
+{
+    return QuaternionT< Type >(w + operand.w,
+                               x + operand.x,
+                               y + operand.y,
+                               z + operand.z);
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator+=(const QuaternionT< Type >& operand)
+{
+    *this = (*this) + operand;
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator-(const QuaternionT< Type >& operand) const
+{
+    return QuaternionT< Type >(w - operand.w,
+                               x - operand.x,
+                               y - operand.y,
+                               z - operand.z);
+}
+
+template< typename Type >
+CGUL::QuaternionT< Type >& CGUL::QuaternionT< Type >::operator-=(const QuaternionT< Type >& operand)
+{
+    *this = (*this) - operand;
 }
 
 /** @brief Normalizes the quaternion.
@@ -74,4 +137,36 @@ void CGUL::QuaternionT< Type >::RotateOnAxis(const Vector3T< Type >& axis, Type 
     y = Math::Sin(angle / Type(2.0)) * axis.y;
     z = Math::Sin(angle / Type(2.0)) * axis.z;
     w = Math::Cos(angle / Type(2.0));
+}
+
+
+template< typename Type >
+void CGUL::QuaternionT< Type >::Set(Type w, Type x, Type y, Type z)
+{
+    this->w = w;
+    this->x = x;
+    this->y = y;
+    this->z = z;   
+}
+
+template< typename Type >
+void CGUL::QuaternionT< Type >::FromEuler(const Vector3T< Type >& euler)
+{
+    w = Math::Cos(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) + Math::Sin(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    x = Math::Sin(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) - Math::Cos(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    y = Math::Cos(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0)) + Math::Sin(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0));
+    z = Math::Cos(euler.x / Type(2.0)) * Math::Cos(euler.y / Type(2.0)) * Math::Sin(euler.z / Type(2.0)) - Math::Sin(euler.x / Type(2.0)) * Math::Sin(euler.y / Type(2.0)) * Math::Cos(euler.z / Type(2.0));
+    Normalize();
+}
+
+template< typename Type >
+CGUL::Vector3T< Type > CGUL::QuaternionT< Type >::ToEuler()
+{
+    Type x, y, z;
+
+    x = Math::ASin(Type(2.0) * (x * z - w * y));
+    y = Math::ATan2(Type(2.0) * x * w + Type(2.0) * y * z, Type(1.0) - Type(2.0) * (z*z + w*w));
+    z = Math::ATan2(Type(2.0) * x * y + Type(2.0) * z * w, Type(1.0) - Type(2.0) * (y*y + z*z));
+
+    return Vector3T< Type >(x, y, z);
 }

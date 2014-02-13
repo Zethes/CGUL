@@ -350,7 +350,7 @@ _CGUL_INLINE_IMPLEMENT CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator/=(
 }
 
 template< typename Type >
-_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(Type operand)
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(Type operand) const
 {
     return MatrixT(this->m[0][0] + operand, this->m[1][0] + operand, this->m[2][0] + operand, this->m[3][0] + operand,
                    this->m[0][1] + operand, this->m[1][1] + operand, this->m[2][1] + operand, this->m[3][1] + operand,
@@ -369,7 +369,7 @@ _CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+=(Typ
 }
 
 template< typename Type >
-_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(Type operand)
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(Type operand) const
 {
     return MatrixT(this->m[0][0] - operand, this->m[1][0] - operand, this->m[2][0] - operand, this->m[3][0] - operand,
                    this->m[0][1] - operand, this->m[1][1] - operand, this->m[2][1] - operand, this->m[3][1] - operand,
@@ -388,7 +388,7 @@ _CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-=(Typ
 }
 
 template< typename Type >
-_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(const MatrixT& operand)
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+(const MatrixT& operand) const
 {
     return MatrixT(this->m[0][0] + operand.m[0][0], this->m[1][0] + operand.m[1][0], this->m[2][0] + operand.m[2][0], this->m[3][0] + operand.m[3][0],
                    this->m[0][1] + operand.m[0][1], this->m[1][1] + operand.m[1][1], this->m[2][1] + operand.m[2][1], this->m[3][1] + operand.m[3][1],
@@ -407,7 +407,7 @@ _CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator+=(con
 }
 
 template< typename Type >
-_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(const MatrixT& operand)
+_CGUL_INLINE_DEFINE CGUL::MatrixT< Type >& CGUL::MatrixT< Type >::operator-(const MatrixT& operand) const
 {
     return MatrixT(this->m[0][0] - operand.m[0][0], this->m[1][0] - operand.m[1][0], this->m[2][0] - operand.m[2][0], this->m[3][0] - operand.m[3][0],
                    this->m[0][1] - operand.m[0][1], this->m[1][1] - operand.m[1][1], this->m[2][1] - operand.m[2][1], this->m[3][1] - operand.m[3][1],
