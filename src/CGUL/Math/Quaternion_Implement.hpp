@@ -162,11 +162,11 @@ void CGUL::QuaternionT< Type >::FromEuler(const Vector3T< Type >& euler)
 template< typename Type >
 CGUL::Vector3T< Type > CGUL::QuaternionT< Type >::ToEuler()
 {
-    Type x, y, z;
+    Type xx, yy, zz;
 
-    x = Math::ASin(Type(2.0) * (x * z - w * y));
-    y = Math::ATan2(Type(2.0) * x * w + Type(2.0) * y * z, Type(1.0) - Type(2.0) * (z*z + w*w));
-    z = Math::ATan2(Type(2.0) * x * y + Type(2.0) * z * w, Type(1.0) - Type(2.0) * (y*y + z*z));
+    xx = Math::ASin(Type(2.0) * (x * z - w * y));
+    yy = Math::ATan2(Type(2.0) * x * w + Type(2.0) * y * z, Type(1.0) - Type(2.0) * (z*z + w*w));
+    zz = Math::ATan2(Type(2.0) * x * y + Type(2.0) * z * w, Type(1.0) - Type(2.0) * (y*y + z*z));
 
-    return Vector3T< Type >(x, y, z);
+    return Vector3T< Type >(xx, yy, zz);
 }
