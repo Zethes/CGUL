@@ -123,6 +123,10 @@ CGUL::String CGUL::NetworkException::GetReason() const
             return U8("The request timed out.");
         case NetworkExceptionReason::SOCKET_NOT_CONNECTED:
             return U8("The socket is not connected.");
+        case NetworkExceptionReason::CONNECTION_ABORTED:
+            return U8("The connection was aborted (ECONNABORTED).");
+        case NetworkExceptionReason::CONNECTION_RESET:
+            return U8("Connection reset by peer (ECONNRESET).");
         case NetworkExceptionReason::UNKNOWN:
         default:
             return U8("Unknown.");

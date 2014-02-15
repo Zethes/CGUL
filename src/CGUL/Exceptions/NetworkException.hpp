@@ -62,6 +62,8 @@ namespace CGUL
             INVALID_CERTIFICATE,
             SOCKET_NOT_CONNECTED,
             UNKNOWN_TRANSFER_ENCODING,
+            CONNECTION_ABORTED,
+            CONNECTION_RESET,
             TIMEOUT
         };
     }

@@ -30,8 +30,8 @@ namespace CGUL
 {
     namespace Network
     {
-        void __jatta_network_initiate();
-        void __jatta_network_clean();
+        void __cgul_network_initiate();
+        void __cgul_network_clean();
     }
 }
 #endif
@@ -96,7 +96,7 @@ _CGUL_EXPORT CGUL::Network::IPAddress CGUL::Network::IPAddress::CalculateNetwork
  */
 _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress()
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
     this->type = IPAddressType::INVALID;
     this->address[0] = 0;
     this->address[1] = 0;
@@ -106,7 +106,7 @@ _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress()
  */
 _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt32 address)
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
     this->type = IPAddressType::IPV4;
     this->address[0] = address;
     this->address[1] = 0;
@@ -116,7 +116,7 @@ _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt32 address)
  */
 _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt64* address)
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
     this->type = IPAddressType::IPV6;
     this->address[0] = address[0];
     this->address[1] = address[1];
@@ -130,7 +130,7 @@ _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(UInt64* address)
  */
 _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip)
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
     this->type = IPAddressType::INVALID;
 #   ifdef CGUL_WINDOWS
     sockaddr_in addr4;
@@ -174,7 +174,7 @@ _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip)
  */
 _CGUL_EXPORT CGUL::Network::IPAddress::IPAddress(const CGUL::String& ip, UInt32 type)
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
     this->type = IPAddressType::INVALID;
     if (type == IPAddressType::IPV4)
     {

@@ -20,8 +20,9 @@ namespace CGUL
 {
     namespace Network
     {
-        void __jatta_network_initiate();
-        void __jatta_network_clean();
+        void __cgul_network_initiate();
+        void __cgul_network_clean();
+        UInt8 __cgul_network_error_reason();
     }
 }
 #endif
@@ -57,7 +58,7 @@ bool CGUL::Network::SocketTCP::MakeNoDelay()
 CGUL::Network::SocketTCP::SocketTCP()
 {
     sock = INVALID_SOCKET;
-    __jatta_network_initiate();
+    __cgul_network_initiate();
 
 #   ifdef OpenSSL_FOUND
     connectionSecure = false;
@@ -341,6 +342,7 @@ void CGUL::Network::SocketTCP::ConnectSSL(const IPAddress& ip, unsigned short po
 
     connectionSecure = true;
 }
+
 void CGUL::Network::SocketTCP::ListenSSL(unsigned short port, bool ipv4, int backlog)
 {
     SSL_METHOD * method;
@@ -569,20 +571,22 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
         {
             return 0;
         }
-#       ifdef CGUL_WINDOWS
-        else if (error == WSAECONNRESET)
-#       else
-        else if (error == ECONNRESET)
-#       endif
-        {
-            // On a connection reset, the socket died. There's no point in complaining about this,
-            // because the user can check IsConnected() to tell when the connection died.
-            Close();
-            return 0;
-        }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN, error);
+            UInt8 errorReason = __cgul_network_error_reason();
+
+            // Certain errors result in the connection being lost.
+            // Need to kill the connection in those cases.
+            switch (errorReason)
+            {
+                case NetworkExceptionReason::CONNECTION_ABORTED:
+                case NetworkExceptionReason::CONNECTION_RESET:
+                {
+                    Close();
+                    break;
+                }
+            }
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, errorReason, error);
         }
     }
 

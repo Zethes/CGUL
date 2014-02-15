@@ -13,7 +13,7 @@
 
 #ifndef DOXYGEN
 #ifdef CGUL_WINDOWS
-static bool __jatta_network_initiated = false;
+static bool __cgul_network_initiated = false;
 #endif
 #endif
 
@@ -24,30 +24,59 @@ namespace CGUL
     namespace Network
     {
 #       ifndef DOXYGEN
-        void __jatta_network_initiate()
+        void __cgul_network_initiate()
         {
 #           ifdef CGUL_WINDOWS
-            if (!__jatta_network_initiated)
+            if (!__cgul_network_initiated)
             {
                 WSADATA wsaData;
                 if (WSAStartup(MAKEWORD(1,1), &wsaData) != 0)
                 {
                     throw NetworkException(NetworkExceptionCode::FAILED_STARTUP, NetworkExceptionReason::FAILED_WINSOCK_INITIALIZE);
                 }
-                __jatta_network_initiated = true;
+                __cgul_network_initiated = true;
             }
 #           endif
         }
 
-        void __jatta_network_clean()
+        void __cgul_network_clean()
         {
 #           ifdef CGUL_WINDOWS
-            if (__jatta_network_initiated)
+            if (__cgul_network_initiated)
             {
                 WSACleanup();
-                __jatta_network_initiated = false;
+                __cgul_network_initiated = false;
             }
 #           endif
+        }
+
+        UInt8 __cgul_network_error_reason()
+        {
+#           ifdef CGUL_WINDOWS
+            int error = WSAGetLastError();
+#           else
+            int error = errno;
+#           endif
+
+#           ifdef CGUL_WINDOWS
+            if (error == WSAECONNABORTED)
+#           else
+            if (error == ECONNABORTED)
+#           endif
+            {
+                return NetworkExceptionReason::CONNECTION_ABORTED;
+            }
+
+#           ifdef CGUL_WINDOWS
+            if (error == WSAECONNRESET)
+#           else
+            if (error == ECONNRESET)
+#           endif
+            {
+                return NetworkExceptionReason::CONNECTION_RESET;
+            }
+
+            return NetworkExceptionReason::UNKNOWN;
         }
 #       endif
     }

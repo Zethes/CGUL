@@ -13,8 +13,8 @@ namespace CGUL
 {
     namespace Network
     {
-        void __jatta_network_initiate();
-        void __jatta_network_clean();
+        void __cgul_network_initiate();
+        void __cgul_network_clean();
     }
 }
 #endif
@@ -34,7 +34,7 @@ void CGUL::Network::DNS::Lookup(const CGUL::String& host, List< IPAddress >* add
 
 void CGUL::Network::DNS::Lookup(const CGUL::String& host, Filter filter, List< IPAddress >* addresses)
 {
-    __jatta_network_initiate();
+    __cgul_network_initiate();
 
     // For error checking
     int status;

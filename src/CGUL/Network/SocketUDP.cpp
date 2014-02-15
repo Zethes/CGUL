@@ -13,8 +13,8 @@ namespace CGUL
 {
     namespace Network
     {
-        void __jatta_network_initiate();
-        void __jatta_network_clean();
+        void __cgul_network_initiate();
+        void __cgul_network_clean();
     }
 }
 #endif
@@ -37,7 +37,7 @@ void CGUL::Network::SocketUDP::MakeNonBlocking()
 CGUL::Network::SocketUDP::SocketUDP()
 {
     sock = INVALID_SOCKET;
-    __jatta_network_initiate();
+    __cgul_network_initiate();
 }
 
 CGUL::Network::SocketUDP::~SocketUDP()
