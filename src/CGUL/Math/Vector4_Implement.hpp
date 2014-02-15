@@ -49,8 +49,12 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::DotProduct(const Vector4T& v
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Normalized(const Vector4T& value)
 {
-    Type inverseMagnitude = 1.0f / value.GetMagnitude();
-    return Vector4T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude, value.w * inverseMagnitude);
+    if (value.GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / value.GetMagnitude();
+        return Vector4T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude, value.w * inverseMagnitude);
+    }
+    return Vector4T(0, 0, 0, 0);
 }
 
 template< typename Type >
@@ -422,11 +426,14 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::Swizzle(UI
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Vector4T< Type >::Normalize()
 {
-    Type inverseMagnitude = 1.0f / GetMagnitude();
-    this->x *= inverseMagnitude;
-    this->y *= inverseMagnitude;
-    this->z *= inverseMagnitude;
-    this->w *= inverseMagnitude;
+    if (GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / GetMagnitude();
+        this->x *= inverseMagnitude;
+        this->y *= inverseMagnitude;
+        this->z *= inverseMagnitude;
+        this->w *= inverseMagnitude;
+    }
 }
 
 /** @warning This method uses sqrt() which can be slow!

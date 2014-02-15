@@ -73,8 +73,12 @@ _CGUL_INLINE_DEFINE CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Lerp(const Ve
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::Normalized(const Vector3T& value)
 {
-    Type inverseMagnitude = 1.0f / value.GetMagnitude();
-    return Vector3T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude);
+    if (value.GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / value.GetMagnitude();
+        return Vector3T(value.x * inverseMagnitude, value.y * inverseMagnitude, value.z * inverseMagnitude);
+    }
+    return Vector3T(0, 0);
 }
 
 /**
@@ -445,10 +449,13 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector3T< Type >::Swizzle(UI
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::Normalize()
 {
-    Type inverseMagnitude = 1.0f / GetMagnitude();
-    this->x *= inverseMagnitude;
-    this->y *= inverseMagnitude;
-    this->z *= inverseMagnitude;
+    if (GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / GetMagnitude();
+        this->x *= inverseMagnitude;
+        this->y *= inverseMagnitude;
+        this->z *= inverseMagnitude;
+    }
 }
 
 /** @warning This method uses sqrt() which can be slow!

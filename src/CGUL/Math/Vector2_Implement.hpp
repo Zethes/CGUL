@@ -57,8 +57,12 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::CrossProduct(const Vector2T&
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::Normalized(const Vector2T& value)
 {
-    Type inverseMagnitude = 1.0f / value.GetMagnitude();
-    return Vector2T(value.x * inverseMagnitude, value.y * inverseMagnitude);
+    if (value.GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / value.GetMagnitude();
+        return Vector2T(value.x * inverseMagnitude, value.y * inverseMagnitude);
+    }
+    return Vector2T(0, 0);
 }
 
 template< typename Type >
@@ -382,9 +386,12 @@ _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector2T< Type >::Swizzle(UI
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT void CGUL::Vector2T< Type >::Normalize()
 {
-    Type inverseMagnitude = 1.0f / GetMagnitude();
-    x *= inverseMagnitude;
-    y *= inverseMagnitude;
+    if (GetSquaredMagnitude() != 0)
+    {
+        Type inverseMagnitude = 1.0f / GetMagnitude();
+        x *= inverseMagnitude;
+        y *= inverseMagnitude;
+    }
 }
 
 /** @warning This method uses sqrt() which can be slow!
