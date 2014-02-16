@@ -85,7 +85,7 @@ if(NOT DEFINED Compiler_NAME        OR
         string(REPLACE "\n" "" Compiler_VERSION ${Compiler_VERSION})
 
         # Specify compatibility check
-        set(Compiler_CHECK "\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"Clang\")")
+        set(Compiler_CHECK "\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"Clang\"")
 
     endif()
 
