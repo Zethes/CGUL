@@ -23,14 +23,14 @@ namespace CGUL
         String fixedPath;
 #       endif
     public:
-        FileFinder();
-        ~FileFinder();
+        _CGUL_EXPORT FileFinder();
+        _CGUL_EXPORT ~FileFinder();
 
-        void Open(const String& path);
-        void Close();
+        _CGUL_EXPORT void Open(const String& path);
+        _CGUL_EXPORT void Close();
 
-        bool Next(String* next);
-        void Rewind();
+        _CGUL_EXPORT bool Next(String* next);
+        _CGUL_EXPORT void Rewind();
     };
 }
 

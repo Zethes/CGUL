@@ -23,21 +23,21 @@
 #endif
 
 #   ifdef CPP_HEADER_DIRENT_H
-CGUL::FileFinder::FileFinder() :
+_CGUL_EXPORT CGUL::FileFinder::FileFinder() :
     directory(NULL)
 {
 }
 #   else
-CGUL::FileFinder::FileFinder()
+_CGUL_EXPORT CGUL::FileFinder::FileFinder()
 {
 }
 #   endif
 
-CGUL::FileFinder::~FileFinder()
+_CGUL_EXPORT CGUL::FileFinder::~FileFinder()
 {
 }
 
-void CGUL::FileFinder::Open(const String& path)
+_CGUL_EXPORT void CGUL::FileFinder::Open(const String& path)
 {
 #   ifdef CPP_HEADER_DIRENT_H
     if (directory != NULL)
@@ -69,7 +69,7 @@ void CGUL::FileFinder::Open(const String& path)
 #   endif
 }
 
-void CGUL::FileFinder::Close()
+_CGUL_EXPORT void CGUL::FileFinder::Close()
 {
 #   ifdef CPP_HEADER_DIRENT_H
     if (directory == NULL)
@@ -81,7 +81,7 @@ void CGUL::FileFinder::Close()
 #   endif
 }
 
-bool CGUL::FileFinder::Next(String* next)
+_CGUL_EXPORT bool CGUL::FileFinder::Next(String* next)
 {
 #   ifdef CPP_HEADER_DIRENT_H
     if (directory == NULL)
@@ -101,7 +101,7 @@ bool CGUL::FileFinder::Next(String* next)
     return "";
 }
 
-void CGUL::FileFinder::Rewind()
+_CGUL_EXPORT void CGUL::FileFinder::Rewind()
 {
 #   ifdef CPP_HEADER_DIRENT_H
     if (directory == NULL)

@@ -6,7 +6,7 @@
  */
 
 template< typename Type >
-CGUL::Logger CGUL::Logger::operator<<(const Type& operand)
+_CGUL_INLINE_IMPLEMENT CGUL::Logger CGUL::Logger::operator<<(const Type& operand)
 {
     if (!callback)
     {
