@@ -6,6 +6,7 @@
  */
 
 // CGUL Includes
+#include "../Math/Constants.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector4.hpp"
 
@@ -33,6 +34,11 @@ const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::unitY(0, 1, 0);
  */
 template< typename Type >
 const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::unitZ(0, 0, 1);
+
+/**
+ */
+template< typename Type >
+const CGUL::Vector3T< Type > CGUL::Vector3T< Type >::nan(Math::Nan, Math::Nan, Math::Nan);
 
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::DotProduct(const Vector3T& valueA, const Vector3T& valueB)
@@ -645,4 +651,12 @@ _CGUL_INLINE_IMPLEMENT void CGUL::Vector3T< Type >::MakeOrthonormalBasis(Vector3
     *vectorB = CrossProduct(vectorA, *vectorC);
     vectorB->Normalize();
     vectorC->Normalize();
+}
+
+/** @returns True if the vector contains NaN values, false otherwise.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::IsNaN() const
+{
+    return (x != x) || (y != y) || (z != z);
 }

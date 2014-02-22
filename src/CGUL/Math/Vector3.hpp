@@ -54,6 +54,8 @@ namespace CGUL
         static const Vector3T unitY;
         //! @brief Unit Y vector, defined as (0, 0, 1).
         static const Vector3T unitZ;
+        //! @brief NaN vector, defined as (NaN, NaN, NaN).
+        static const Vector3T nan;
 
         _CGUL_INLINE_DEFINE static Type DotProduct(const Vector3T& valueA, const Vector3T& valueB);
         _CGUL_INLINE_DEFINE static Vector3T CrossProduct(const Vector3T& valueA, const Vector3T& valueB);
@@ -181,6 +183,9 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type MultiplyComponents() const;
 
         _CGUL_INLINE_DEFINE void MakeOrthonormalBasis(Vector3T< Type >* vectorB, Vector3T< Type >* vectorC);
+
+        // @brief Checks if this vector contains NaN values.
+        _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
     typedef Vector3T< Float32 > Vector3;

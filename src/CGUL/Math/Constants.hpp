@@ -244,6 +244,8 @@ namespace CGUL
         const Float64 Femto = 0.000000000000001;
         //! @brief The SI prefix factor corresponding to 0.000000000000000001
         const Float64 Atto =  0.000000000000000001;
+        //! @brief Not a number.
+        const Float64 Nan = std::numeric_limits<double>::quiet_NaN();
     }
 }
 

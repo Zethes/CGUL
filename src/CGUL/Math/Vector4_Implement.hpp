@@ -6,6 +6,7 @@
  */
 
 // CGUL Includes
+#include "../Math/Constants.hpp"
 #include "../Math/Matrix.hpp"
 #include "../Math/Vector2.hpp"
 #include "../Math/Vector3.hpp"
@@ -39,6 +40,11 @@ const CGUL::Vector4T< Type > CGUL::Vector4T< Type >::unitZ(0, 0, 1, 0);
  */
 template< typename Type >
 const CGUL::Vector4T< Type > CGUL::Vector4T< Type >::unitW(0, 0, 0, 1);
+
+/**
+ */
+template< typename Type >
+const CGUL::Vector4T< Type > CGUL::Vector4T< Type >::nan(Math::Nan, Math::Nan, Math::Nan, Math::Nan);
 
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::DotProduct(const Vector4T& valueA, const Vector4T& valueB)
@@ -611,4 +617,12 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::MultiplyComponents() const
 {
     return x * y * z * w;
+}
+
+/** @returns True if the vector contains NaN values, false otherwise.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::IsNaN() const
+{
+    return (x != x) || (y != y) || (z != z) || (w != w);
 }

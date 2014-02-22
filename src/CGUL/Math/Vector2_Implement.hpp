@@ -6,6 +6,7 @@
  */
 
 // CGUL Includes
+#include "../Math/Constants.hpp"
 #include "../Math/Math.hpp"
 #include "../Math/Vector3.hpp"
 #include "../Math/Vector4.hpp"
@@ -29,6 +30,11 @@ const CGUL::Vector2T< Type > CGUL::Vector2T< Type >::unitX(1, 0);
  */
 template< typename Type >
 const CGUL::Vector2T< Type > CGUL::Vector2T< Type >::unitY(0, 1);
+
+/**
+ */
+template< typename Type >
+const CGUL::Vector2T< Type > CGUL::Vector2T< Type >::nan(Math::Nan, Math::Nan);
 
 /** @details Defined as (cos(angle) * magnitude, sin(angle) * magnitude).  If no magnitude is given
  *  it will default to one.
@@ -579,4 +585,12 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::MultiplyComponents() const
 {
     return x * y;
+}
+
+/** @returns True if the vector contains NaN values, false otherwise.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT Type CGUL::Vector2T< Type >::IsNaN() const
+{
+    return (x != x) || (y != y);
 }
