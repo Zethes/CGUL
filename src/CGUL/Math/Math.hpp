@@ -139,7 +139,7 @@ namespace CGUL
 
         //! @brief Raises x to the power of y.
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
-        _CGUL_INLINE_DEFINE Type Pow(Type x, Type y);    
+        _CGUL_INLINE_DEFINE Type Pow(Type x, Type y);
 
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Exp(Type x);
@@ -150,7 +150,7 @@ namespace CGUL
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type StandardDeviation(const FixedList< Type >& values, Type* mean = NULL);
 
-        //! @brief Performs linear interpolation  
+        //! @brief Performs linear interpolation
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type Lerp(Type from, Type to, Type t);
 

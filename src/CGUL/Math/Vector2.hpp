@@ -50,6 +50,8 @@ namespace CGUL
         static const Vector2T unitX;
         //! @brief Unit Y vector, defined as (0, 1).
         static const Vector2T unitY;
+        //! @brief NaN vector, defined as (NaN, NaN).
+        static const Vector2T nan;
 
         //! @brief Creates a vector based on a given two dimensional angle with an optional
         //! magnitude.
@@ -63,7 +65,7 @@ namespace CGUL
         _CGUL_INLINE_DEFINE static Type DistanceSquared(const Vector2T& valueA, const Vector2T& vectorB);
         _CGUL_INLINE_DEFINE static Type DistanceManhattan(const Vector2T& valueA, const Vector2T& vectorB);
 
-        //! @brief Performs linear interpolation on a vector2      
+        //! @brief Performs linear interpolation on a vector2
         _CGUL_INLINE_DEFINE static Vector2T Lerp(const Vector2T& from, const Vector2T& to, Type t);
 
         //! @brief Initializes to (0, 0).
@@ -176,6 +178,9 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type SumComponents() const;
         //! @brief Gets the product of the elements.
         _CGUL_INLINE_DEFINE Type MultiplyComponents() const;
+
+        // @brief Checks if this vector contains NaN values.
+        _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
     typedef Vector2T< Float32 > Vector2;

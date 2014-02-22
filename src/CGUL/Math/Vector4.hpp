@@ -54,6 +54,8 @@ namespace CGUL
         static const Vector4T unitZ;
         //! @brief Unit Y vector, defined as (0, 0, 0, 1).
         static const Vector4T unitW;
+        //! @brief NaN vector, defined as (NaN, NaN, NaN, NaN).
+        static const Vector4T nan;
 
         _CGUL_INLINE_DEFINE static Type DotProduct(const Vector4T& valueA, const Vector4T& valueB);
         _CGUL_INLINE_DEFINE static Vector4T Normalized(const Vector4T& value);
@@ -167,6 +169,9 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type SumComponents() const;
         //! @brief Gets the product of the elements.
         _CGUL_INLINE_DEFINE Type MultiplyComponents() const;
+
+        // @brief Checks if this vector contains NaN values.
+        _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
     typedef Vector4T< Float32 > Vector4;
