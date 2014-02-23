@@ -572,11 +572,11 @@ _CGUL_EXPORT CGUL::String& CGUL::String::Set(const String& str)
  *  @param ... Values.
  *  @returns A reference to this object.
  */
-_CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const String& str, ...)
+_CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const char* str, ...)
 {
     va_list argptr;
     va_start(argptr, str);
-    int length = vsnprintf(NULL, 0, str.GetCString(), argptr);
+    int length = vsnprintf(NULL, 0, str, argptr);
     if (length < 0)
     {
         throw std::runtime_error("Invalid string format.");
@@ -587,7 +587,7 @@ _CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const String& str, ...)
     {
         buffer = new char[length];
     }
-    vsnprintf(buffer, length, str.GetCString(), argptr);
+    vsnprintf(buffer, length, str, argptr);
     data = buffer;
     if (buffer != internalBuffer)
     {

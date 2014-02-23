@@ -164,7 +164,7 @@ namespace CGUL
         _CGUL_EXPORT String& Set(const String& str);
 
         //! @brief Sets to a printf like format.
-        _CGUL_EXPORT String& SetFormat(const String& str, ...);
+        _CGUL_EXPORT String& SetFormat(const char* str, ...);
 
         //! @brief Trims whitespace at the beginning and end of the string.
         _CGUL_EXPORT void Trim();
