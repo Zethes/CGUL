@@ -23,25 +23,25 @@ namespace CGUL
     public:
         typedef void (*Callback)(const String& result);
 
-        Logger();
-        Logger(Callback callback);
-        ~Logger();
+        _CGUL_EXPORT Logger();
+        _CGUL_EXPORT Logger(Callback callback);
+        _CGUL_EXPORT ~Logger();
 
-        void SetCallback(Callback callback);
-        void CopyFormat(const std::ostream& stream);
-        void CopyFormat(const Logger& logger);
-        void Manipulate(std::ios_base& (*manipulator)(std::ios_base&));
+        _CGUL_EXPORT void SetCallback(Callback callback);
+        _CGUL_EXPORT void CopyFormat(const std::ostream& stream);
+        _CGUL_EXPORT void CopyFormat(const Logger& logger);
+        _CGUL_EXPORT void Manipulate(std::ios_base& (*manipulator)(std::ios_base&));
 
         template< typename Type >
-        Logger operator<<(const Type& operand);
+        _CGUL_INLINE_DEFINE Logger operator<<(const Type& operand);
 
-        Logger operator<<(std::ostream& (*manipulator)(std::ostream&));
+        _CGUL_EXPORT Logger operator<<(std::ostream& (*manipulator)(std::ostream&));
     private:
         std::ostringstream* stream;
         int counter;
         Callback callback;
 
-        Logger(std::ostringstream* stream, int counter, Callback callback);
+        _CGUL_EXPORT Logger(std::ostringstream* stream, int counter, Callback callback);
     };
 }
 

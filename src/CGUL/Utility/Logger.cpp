@@ -8,21 +8,21 @@
 // Header
 #include "Logger.hpp"
 
-CGUL::Logger::Logger() :
+_CGUL_EXPORT CGUL::Logger::Logger() :
     stream(new std::ostringstream),
     counter(0),
     callback(NULL)
 {
 }
 
-CGUL::Logger::Logger(Callback callback) :
+_CGUL_EXPORT CGUL::Logger::Logger(Callback callback) :
     stream(new std::ostringstream),
     counter(0),
     callback(callback)
 {
 }
 
-CGUL::Logger::~Logger()
+_CGUL_EXPORT CGUL::Logger::~Logger()
 {
     if (stream != NULL && counter == 1)
     {
@@ -46,12 +46,12 @@ CGUL::Logger::~Logger()
     }
 }
 
-void CGUL::Logger::SetCallback(Callback callback)
+_CGUL_EXPORT void CGUL::Logger::SetCallback(Callback callback)
 {
     this->callback = callback;
 }
 
-void CGUL::Logger::CopyFormat(const std::ostream& stream)
+_CGUL_EXPORT void CGUL::Logger::CopyFormat(const std::ostream& stream)
 {
     if (counter == 0)
     {
@@ -59,7 +59,7 @@ void CGUL::Logger::CopyFormat(const std::ostream& stream)
     }
 }
 
-void CGUL::Logger::CopyFormat(const Logger& logger)
+_CGUL_EXPORT void CGUL::Logger::CopyFormat(const Logger& logger)
 {
     if (counter == 0 && logger.counter == 0)
     {
@@ -67,7 +67,7 @@ void CGUL::Logger::CopyFormat(const Logger& logger)
     }
 }
 
-void CGUL::Logger::Manipulate(std::ios_base& (*manipulator)(std::ios_base&))
+_CGUL_EXPORT void CGUL::Logger::Manipulate(std::ios_base& (*manipulator)(std::ios_base&))
 {
     if (counter == 0)
     {
@@ -75,7 +75,7 @@ void CGUL::Logger::Manipulate(std::ios_base& (*manipulator)(std::ios_base&))
     }
 }
 
-CGUL::Logger CGUL::Logger::operator<<(std::ostream& (*manipulator)(std::ostream&))
+_CGUL_EXPORT CGUL::Logger CGUL::Logger::operator<<(std::ostream& (*manipulator)(std::ostream&))
 {
     if (!callback)
     {
@@ -95,7 +95,7 @@ CGUL::Logger CGUL::Logger::operator<<(std::ostream& (*manipulator)(std::ostream&
     }
 }
 
-CGUL::Logger::Logger(std::ostringstream* stream, int counter, Callback callback) :
+_CGUL_EXPORT CGUL::Logger::Logger(std::ostringstream* stream, int counter, Callback callback) :
     stream(stream),
     counter(counter),
     callback(callback)

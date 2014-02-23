@@ -20,7 +20,7 @@
 #   include "../OpenGL/Context.hpp"
 #endif
 
-CGUL::Vector< CGUL::Window* > CGUL::Window::windows;
+static CGUL::Vector< CGUL::Window* >* __windows = NULL;
 
 #ifdef CGUL_WINDOWS
 LRESULT CALLBACK CGUL::Window::WindowProcedure(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
@@ -267,7 +267,7 @@ _CGUL_EXPORT void CGUL::Window::Update()
 #   endif
 
     // Update each window
-    for (Vector< Window* >::iterator itr = windows.begin(), itrEnd = windows.end(); itr != itrEnd; itr++)
+    for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
     {
         (*itr)->InternalUpdate();
     }
@@ -294,19 +294,31 @@ _CGUL_EXPORT CGUL::Window::Window()
     handle = [WindowDelegate alloc];
 #   endif
 
-    windows.push_back(this);
+    if (__windows == NULL)
+    {
+        __windows = new CGUL::Vector< CGUL::Window* >;
+    }
+    __windows->push_back(this);
 }
 
 /**
  */
 _CGUL_EXPORT CGUL::Window::~Window()
 {
-    for (Vector< Window* >::iterator itr = windows.begin(), itrEnd = windows.end(); itr != itrEnd; itr++)
+    if (__windows)
     {
-        if (*itr == this)
+        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
         {
-            windows.erase(itr);
-            break;
+            if (*itr == this)
+            {
+                __windows->erase(itr);
+                break;
+            }
+        }
+        if (__windows->size() == 0)
+        {
+            delete __windows;
+            __windows = NULL;
         }
     }
 

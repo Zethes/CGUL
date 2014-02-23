@@ -6,6 +6,11 @@
  */
 
 template< typename T, typename Allocator >
+CGUL::Vector< T, Allocator >::~Vector()
+{
+}
+
+template< typename T, typename Allocator >
 void CGUL::Vector< T, Allocator >::Push(const T& value)
 {
     std::vector< T, Allocator >::push_back(value);
