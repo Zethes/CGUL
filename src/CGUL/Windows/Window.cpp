@@ -301,11 +301,11 @@ _CGUL_EXPORT CGUL::Window::Window()
  */
 _CGUL_EXPORT CGUL::Window::~Window()
 {
-    for (Vector< Window* >::iterator itr = windows.begin(), itrEnd = windows.end(); itr != itrEnd; itr++)
+    for (unsigned int i = 0; i < windows.size(); i++)
     {
-        if (*itr == this)
+        if (windows[i] == this)
         {
-            windows.erase(itr);
+            windows.erase(windows.begin() + i);
             break;
         }
     }
