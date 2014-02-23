@@ -48,6 +48,9 @@ namespace CGUL
 
         _CGUL_EXPORT static String FromCodePoint(UInt32 codePoint);
 
+        template< typename Type >
+        static String From(Type value);
+
         //! @brief Initializes to "".
         _CGUL_EXPORT String();
         //! @brief Copies the contents of the string into a new string.
@@ -211,6 +214,14 @@ namespace CGUL
 
         // TODO: add in some more common string functions (maybe reference php's string, C#'s string or std::string?)
     };
+}
+
+template< typename Type >
+CGUL::String CGUL::String::From(Type value)
+{
+    std::ostringstream ss;
+    ss << value;
+    return CGUL::String(ss.str());
 }
 
 /** @param operand The value to concatenate.
