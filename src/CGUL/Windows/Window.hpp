@@ -63,8 +63,6 @@ namespace CGUL
         friend class OpenGL::Context;
 #       endif
 
-        static Vector< Window* > windows;
-
 #       ifdef CGUL_WINDOWS
         _CGUL_HWND handle;
 
@@ -116,7 +114,7 @@ namespace CGUL
         //! @brief Default constructor.
         _CGUL_EXPORT Window();
         //! @brief Deconstructor.
-        _CGUL_EXPORT ~Window();
+        _CGUL_EXPORT virtual ~Window();
 
 #       ifdef CGUL_WINDOWS
         _CGUL_EXPORT _CGUL_HWND _GetHandle() const;

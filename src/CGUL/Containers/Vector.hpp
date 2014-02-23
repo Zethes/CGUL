@@ -26,6 +26,8 @@ namespace CGUL
     class Vector : public std::vector< T, Allocator >, public List< T >
     {
     public:
+        virtual ~Vector();
+
         // List
         void Push(const T& value);
 #       ifdef CPP_HAS_DOUBLE_REFERENCE
