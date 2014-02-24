@@ -11,6 +11,8 @@
 
 #ifdef CGUL_WINDOWS
 #   undef _CGUL_HWND
+#   undef _CGUL_HANDLE
+#   undef _CGUL_CRITICAL_SECTION
 #   undef _CGUL_DWORD
 #   undef _CGUL_PIXELFORMATDESCRIPTOR
 #   undef _CGUL_HDC

@@ -163,6 +163,7 @@
 #include "CGUL/Utility/Logger.hpp"
 #include "CGUL/Utility/Memory.hpp"
 #include "CGUL/Utility/Move.hpp"
+#include "CGUL/Utility/Mutex.hpp"
 #include "CGUL/Utility/Regex.hpp"
 #include "CGUL/Utility/String.hpp"
 #include "CGUL/Utility/Timer.hpp"

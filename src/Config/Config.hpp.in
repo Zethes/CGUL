@@ -53,6 +53,7 @@
 #cmakedefine CPP_HAS_STD_REGEX
 #cmakedefine CPP_HAS_STD_THREAD
 #cmakedefine CPP_HAS_U8
+#cmakedefine CPP_HAS_WINTHREAD
 
 #cmakedefine PCRE_HAS_FREE_STUDY
 

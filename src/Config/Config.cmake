@@ -69,6 +69,7 @@ check_feature(CPP_HAS_STD_MOVE std_move.cpp)
 check_feature(CPP_HAS_STD_REGEX std_regex.cpp)
 check_feature(CPP_HAS_STD_THREAD std_thread.cpp)
 check_feature(CPP_HAS_U8 u8.cpp)
+check_feature(CPP_HAS_WINTHREAD winthread.cpp)
 
 # Library specific checks
 check_feature(PCRE_HAS_FREE_STUDY pcre_free_study.cpp)

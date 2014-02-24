@@ -23,9 +23,14 @@
 #ifdef CGUL_WINDOWS
 namespace CGUL
 {
+    // We should really use CMake to determine the sizes of these
     struct _CGUL_PIXELFORMATDESCRIPTOR
     {
         char padding[40];
+    };
+    struct _CGUL_CRITICAL_SECTION
+    {
+        char padding[24];
     };
 }
 #endif
