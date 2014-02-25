@@ -11,15 +11,20 @@
 #if defined(CPP_HAS_WINTHREAD) || defined(CPP_HAS_STD_THREAD) || defined(CPP_HAS_PTHREAD)
 
 #if defined(CPP_HAS_WINTHREAD)
-DWORD WINAPI MyThread(LPVOID ptr)
+static DWORD WINAPI __WinThread(LPVOID ptr)
 {
     ((CGUL::Thread*)ptr)->Main();
     return 0;
 }
-#else
-static void runThread(CGUL::Thread* ptr)
+#elif defined(CPP_HAS_STD_THREAD)
+static void __StdThread(void* ptr)
 {
-    ptr->Main();
+    ((CGUL::Thread*)ptr)->Main();
+}
+#elif defined(CPP_HAS_PTHREAD)
+static void* __PThread(void* ptr)
+{
+    ((CGUL::Thread*)ptr)->Main();
 }
 #endif
 
@@ -40,11 +45,11 @@ _CGUL_EXPORT CGUL::Thread::~Thread()
 _CGUL_EXPORT void CGUL::Thread::Run()
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    thread = CreateThread(0, 0, MyThread, this, 0, NULL);
+    thread = CreateThread(0, 0, __WinThread, this, 0, NULL);
 #   elif defined(CPP_HAS_STD_THREAD)
-    thread = new std::thread(runThread, this);
+    thread = new std::thread(__StdThread, this);
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_create(&thread, NULL, mythread, this);
+    pthread_create(&thread, NULL, __PThread, this);
 #   endif
 }
 
@@ -55,7 +60,7 @@ _CGUL_EXPORT void CGUL::Thread::Join()
 #   elif defined(CPP_HAS_STD_THREAD)
     thread->join();
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_join(thread);
+    pthread_join(thread, NULL);
 #   endif
 }
 
