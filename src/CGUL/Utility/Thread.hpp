@@ -25,7 +25,7 @@ namespace CGUL
 #       elif defined(CPP_HAS_STD_THREAD)
         std::thread* thread;
 #       elif defined(CPP_HAS_PTHREAD)
-        pthread_t thread;
+        _CGUL_PTHREAD_T thread;
 #       endif
     public:
         _CGUL_EXPORT Thread();

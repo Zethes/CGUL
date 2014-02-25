@@ -16,6 +16,7 @@
 #cmakedefine PortAudio_FOUND
 #cmakedefine zlib_FOUND
 #cmakedefine OpenSSL_FOUND
+#cmakedefine pthread_FOUND
 
 #cmakedefine CGUL_STATIC
 #cmakedefine CGUL_USE_NETWORK

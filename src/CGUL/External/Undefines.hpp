@@ -80,6 +80,12 @@
 #   undef _CGUL_SSL_BIO
 #endif
 
+#ifdef pthread_FOUND
+#   undef _CGUL_PTHREAD_T
+#   undef _CGUL_PTHREAD_MUTEX_T
+#   undef _CGUL_PTHREAD_COND_T
+#endif
+
 #ifdef _CGUL_OBJC
 #   undef _CGUL_OBJC
 #endif

@@ -2,15 +2,18 @@
 // Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 // All rights reserved.
 
-/** @file Mutex.cpp
+/** @file ConditionVariable.cpp
  */
 
 // Header
-#include "Mutex.hpp"
+#include "ConditionVariable.hpp"
+
+// CGUL Includes
+#include "../Utility/Mutex.hpp"
 
 #if defined(CPP_HAS_WINTHREAD) || defined(CPP_HAS_STD_THREAD) || defined(CPP_HAS_PTHREAD)
 
-CGUL::Mutex::Mutex()
+CGUL::ConditionVariable::ConditionVariable()
 {
 #   if defined(CPP_HAS_WINTHREAD)
     criticalSection = new CRITICAL_SECTION;
@@ -18,11 +21,11 @@ CGUL::Mutex::Mutex()
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Mutex() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_mutex_init(&mutex, NULL);
+    pthread_cond_init(&conditionVariable, NULL);
 #   endif
 }
 
-CGUL::Mutex::~Mutex()
+CGUL::ConditionVariable::~ConditionVariable()
 {
 #   if defined(CPP_HAS_WINTHREAD)
     DeleteCriticalSection(criticalSection);
@@ -30,29 +33,29 @@ CGUL::Mutex::~Mutex()
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::~Mutex() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_mutex_destroy(&mutex);
+    pthread_cond_destroy(&conditionVariable);
 #   endif
 }
 
-_CGUL_EXPORT void CGUL::Mutex::Lock()
+_CGUL_EXPORT void CGUL::ConditionVariable::Wait(CGUL::Mutex* mutex)
 {
 #   if defined(CPP_HAS_WINTHREAD)
     EnterCriticalSection(criticalSection);
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Lock() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_mutex_lock(&mutex);
+    pthread_cond_wait(&conditionVariable, &mutex->mutex);
 #   endif
 }
 
-_CGUL_EXPORT void CGUL::Mutex::Unlock()
+_CGUL_EXPORT void CGUL::ConditionVariable::Signal()
 {
 #   if defined(CPP_HAS_WINTHREAD)
     LeaveCriticalSection(criticalSection);
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Unlock() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_mutex_unlock(&mutex);
+    pthread_cond_signal(&conditionVariable);
 #   endif
 }
 

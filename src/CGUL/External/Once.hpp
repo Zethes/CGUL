@@ -20,10 +20,9 @@
 #   endif
 #endif
 
-#ifdef CGUL_WINDOWS
 namespace CGUL
 {
-    // We should really use CMake to determine the sizes of these
+    // TODO: absolute TERRIBLE solution here, need to automate these values with CMake ASAP!
     struct _CGUL_PIXELFORMATDESCRIPTOR
     {
         char padding[40];
@@ -32,8 +31,15 @@ namespace CGUL
     {
         char padding[24];
     };
+    struct _CGUL_PTHREAD_MUTEX_T
+    {
+        char padding[40];
+    };
+    struct _CGUL_PTHREAD_COND_T
+    {
+        char padding[48];
+    };
 }
-#endif
 
 // Standard Template Library Includes
 #ifdef CPP_HEADER_ALGORITHM

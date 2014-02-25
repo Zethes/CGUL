@@ -4,6 +4,7 @@
 
 set(CGUL_SOURCES
     ${CGUL_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConditionVariable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CRC32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FileFinder.cpp
@@ -23,6 +24,7 @@ set(CGUL_INSTALL
     ${CGUL_INSTALL}
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease_Implement.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConditionVariable.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Endian.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Endian_Implement.hpp

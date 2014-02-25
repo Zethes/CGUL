@@ -2,7 +2,7 @@
 // Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 // All rights reserved.
 
-/** @file Mutex.hpp
+/** @file ConditionVariable.hpp
  */
 
 #pragma once
@@ -17,25 +17,24 @@
 
 namespace CGUL
 {
-    class Mutex
+    class Mutex;
+
+    class ConditionVariable
     {
-        friend class ConditionVariable;
     private:
 #       if defined(CPP_HAS_WINTHREAD)
-        _CGUL_CRITICAL_SECTION* criticalSection;
+        //
 #       elif defined(CPP_HAS_STD_THREAD)
         //
 #       elif defined(CPP_HAS_PTHREAD)
-        _CGUL_PTHREAD_MUTEX_T mutex;
+        _CGUL_PTHREAD_COND_T conditionVariable;
 #       endif
     public:
-        _CGUL_EXPORT Mutex();
-        _CGUL_EXPORT ~Mutex();
+        _CGUL_EXPORT ConditionVariable();
+        _CGUL_EXPORT ~ConditionVariable();
 
-        _CGUL_EXPORT void Lock();
-        _CGUL_EXPORT void Unlock();
-
-        _CGUL_EXPORT bool Check();
+        _CGUL_EXPORT void Wait(CGUL::Mutex* mutex);
+        _CGUL_EXPORT void Signal();
     };
 }
 
