@@ -24,6 +24,7 @@
 #cmakedefine CPP_HEADER_ALGORITHM
 #cmakedefine CPP_HEADER_CCTYPE
 #cmakedefine CPP_HEADER_FSTREAM
+#cmakedefine CPP_HEADER_LIMITS
 #cmakedefine CPP_HEADER_LIST
 #cmakedefine CPP_HEADER_MAP
 #cmakedefine CPP_HEADER_MEMORY

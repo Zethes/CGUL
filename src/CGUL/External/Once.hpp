@@ -45,6 +45,9 @@ namespace CGUL
 #ifdef CPP_HEADER_FSTREAM
 #   include <fstream>
 #endif
+#ifdef CPP_HEADER_LIMITS
+#   include <limits>
+#endif
 #ifdef CPP_HEADER_LIST
 #   include <list>
 #endif
