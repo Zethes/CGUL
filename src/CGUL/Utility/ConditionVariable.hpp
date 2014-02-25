@@ -23,7 +23,7 @@ namespace CGUL
     {
     private:
 #       if defined(CPP_HAS_WINTHREAD)
-        //
+        _CGUL_CONDITION_VARIABLE conditionVariable;
 #       elif defined(CPP_HAS_STD_THREAD)
         //
 #       elif defined(CPP_HAS_PTHREAD)

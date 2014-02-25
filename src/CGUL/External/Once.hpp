@@ -298,12 +298,19 @@ namespace CGUL
 #   define _CGUL_EXPORT
 #endif
 
+#if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
+#   define _WIN32_WINNT 0x0600
+#endif
+
+#if defined(CGUL_WINDOWS) && !defined(WINVER)
+#   define WINVER 0x0600
+#endif
+
 #if defined(CGUL_INCLUDES)
 #   ifdef CGUL_WINDOWS
 #       define UNICODE
 #       define _UNICODE
 #       ifdef CGUL_USE_NETWORK
-#           define _WIN32_WINNT 0x501
 #           include <winsock2.h>
 #           include <ws2tcpip.h>
 #       endif
@@ -372,10 +379,6 @@ namespace CGUL
 #       define INVALID_SOCKET ~0
 #       define SOCKET_ERROR -1
 #   endif
-#endif
-
-#if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
-#   define _WIN32_WINNT 0x0501
 #endif
 
 // Regex support

@@ -16,8 +16,7 @@
 CGUL::ConditionVariable::ConditionVariable()
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    criticalSection = new CRITICAL_SECTION;
-    InitializeCriticalSection(criticalSection);
+    InitializeConditionVariable(&conditionVariable);
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Mutex() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
@@ -28,8 +27,7 @@ CGUL::ConditionVariable::ConditionVariable()
 CGUL::ConditionVariable::~ConditionVariable()
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    DeleteCriticalSection(criticalSection);
-    delete criticalSection;
+    // do nothing
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::~Mutex() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
@@ -40,7 +38,7 @@ CGUL::ConditionVariable::~ConditionVariable()
 _CGUL_EXPORT void CGUL::ConditionVariable::Wait(CGUL::Mutex* mutex)
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    EnterCriticalSection(criticalSection);
+    SleepConditionVariableCS(&conditionVariable, mutex->criticalSection, INFINITE);
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Lock() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
@@ -51,7 +49,7 @@ _CGUL_EXPORT void CGUL::ConditionVariable::Wait(CGUL::Mutex* mutex)
 _CGUL_EXPORT void CGUL::ConditionVariable::Signal()
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    LeaveCriticalSection(criticalSection);
+    WakeConditionVariable(&conditionVariable);
 #   elif defined(CPP_HAS_STD_THREAD)
     // TODO: Mutex::Unlock() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
