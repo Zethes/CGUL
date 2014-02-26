@@ -1,5 +1,6 @@
 include(CheckIncludeFileCXX)
 include(CheckCXXCompilerFlag)
+include(CheckTypeSize)
 
 macro(check_feature VARIABLE FILE)
     if(CGUL_REFRESH_CAPABILITIES)
@@ -31,6 +32,7 @@ macro(fast_check_include_file FILE VARIABLE)
         unset(${VARIABLE} CACHE)
     endif()
     if(NOT DEFINED ${VARIABLE})
+        set(CMAKE_REQUIRED_FLAGS "${CMAKE_CXX_FLAGS}")
         check_include_file_cxx(${FILE} ${VARIABLE})
         set(${VARIABLE} ${${VARIABLE}} CACHE INTERNAL "Include")
     endif()
@@ -98,6 +100,9 @@ set(CGUL_INLINE_DEFINE "" CACHE STRING "The inline to use for a function define.
 mark_as_advanced(CGUL_INLINE_DEFINE)
 set(CGUL_INLINE_IMPLEMENT "inline" CACHE STRING "The inline to use for a function implementation.")
 mark_as_advanced(CGUL_INLINE_IMPLEMENT)
+
+set(CMAKE_EXTRA_INCLUDE_FILES ${CMAKE_CURRENT_LIST_DIR}/sizeof_includes.h)
+check_type_size("CRITICAL_SECTION" CGUL_SIZEOF_CRITICAL_SECTION)
 
 # MinGW
 if (MINGW)

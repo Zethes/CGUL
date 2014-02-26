@@ -28,9 +28,15 @@ static void* __PThread(void* ptr)
 }
 #endif
 
+#if defined(CPP_HAS_PTHREAD)
+_CGUL_EXPORT CGUL::Thread::Thread() :
+    created(false)
+#else
 _CGUL_EXPORT CGUL::Thread::Thread()
+#endif
 {
 }
+
 _CGUL_EXPORT CGUL::Thread::~Thread()
 {
 #   if defined(CPP_HAS_WINTHREAD)
@@ -38,7 +44,10 @@ _CGUL_EXPORT CGUL::Thread::~Thread()
 #   elif defined(CPP_HAS_STD_THREAD)
     delete thread;
 #   elif defined(CPP_HAS_PTHREAD)
-    pthread_cancel(thread);
+    if (created)
+    {
+        pthread_cancel(thread);
+    }
 #   endif
 }
 
@@ -50,6 +59,7 @@ _CGUL_EXPORT void CGUL::Thread::Run()
     thread = new std::thread(__StdThread, this);
 #   elif defined(CPP_HAS_PTHREAD)
     pthread_create(&thread, NULL, __PThread, this);
+    created = true;
 #   endif
 }
 

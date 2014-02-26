@@ -25,6 +25,7 @@ namespace CGUL
 #       elif defined(CPP_HAS_STD_THREAD)
         std::thread* thread;
 #       elif defined(CPP_HAS_PTHREAD)
+        bool created;
         _CGUL_PTHREAD_T thread;
 #       endif
     public:

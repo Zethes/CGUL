@@ -27,10 +27,12 @@ namespace CGUL
     {
         char padding[40];
     };
+#   ifdef CGUL_SIZEOF_CRITICAL_SECTION
     struct _CGUL_CRITICAL_SECTION
     {
-        char padding[24];
+        char padding[CGUL_SIZEOF_CRITICAL_SECTION];
     };
+#   endif
     struct _CGUL_PTHREAD_MUTEX_T
     {
         char padding[40];
@@ -298,11 +300,21 @@ namespace CGUL
 #   define _CGUL_EXPORT
 #endif
 
-#if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
+#if 0
+#   if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
+#       define _WIN32_WINNT 0x0600
+#   endif
+#   if defined(CGUL_WINDOWS) && !defined(WINVER)
+#       define WINVER 0x0600
+#   endif
+#else // UTTER BOLLOCKS
+#   if defined(_WIN32_WINNT)
+#       undef _WIN32_WINNT
+#   endif
+#   if defined(WINVER)
+#       undef WINVER
+#   endif
 #   define _WIN32_WINNT 0x0600
-#endif
-
-#if defined(CGUL_WINDOWS) && !defined(WINVER)
 #   define WINVER 0x0600
 #endif
 
