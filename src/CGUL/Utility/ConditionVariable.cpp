@@ -46,6 +46,35 @@ _CGUL_EXPORT void CGUL::ConditionVariable::Wait(CGUL::Mutex* mutex)
 #   endif
 }
 
+// timeout is in milliseconds
+_CGUL_EXPORT void CGUL::ConditionVariable::WaitFor(CGUL::Mutex* mutex, UInt32 timeout)
+{
+#   if defined(CPP_HAS_WINTHREAD)
+    SleepConditionVariableCS(&conditionVariable, mutex->criticalSection, timeout);
+#   elif defined(CPP_HAS_STD_THREAD)
+    // TODO: Mutex::Lock() for std::thread
+#   elif defined(CPP_HAS_PTHREAD)
+    timeval currentTime;
+    timespec waitTime;
+
+    gettimeofday(&currentTime, NULL);
+
+    waitTime.tv_sec = currentTime.tv_sec;
+    waitTime.tv_nsec = currentTime.tv_usec * 1000;
+
+    waitTime.tv_sec += timeout / 1000;
+    waitTime.tv_nsec += (timeout % 1000) * 1000000;
+
+    if (waitTime.tv_nsec > 1000000000)
+    {
+        waitTime.tv_sec++;
+        waitTime.tv_nsec -= 1000000000;
+    }
+
+    pthread_cond_timedwait(&conditionVariable, &mutex->mutex, &waitTime);
+#   endif
+}
+
 _CGUL_EXPORT void CGUL::ConditionVariable::Signal()
 {
 #   if defined(CPP_HAS_WINTHREAD)

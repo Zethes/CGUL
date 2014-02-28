@@ -34,6 +34,7 @@ namespace CGUL
         _CGUL_EXPORT ~ConditionVariable();
 
         _CGUL_EXPORT void Wait(CGUL::Mutex* mutex);
+        _CGUL_EXPORT void WaitFor(CGUL::Mutex* mutex, UInt32 timeout);
         _CGUL_EXPORT void Signal();
     };
 }
