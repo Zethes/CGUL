@@ -18,7 +18,7 @@ CGUL::ConditionVariable::ConditionVariable()
 #   if defined(CPP_HAS_WINTHREAD)
     InitializeConditionVariable(&conditionVariable);
 #   elif defined(CPP_HAS_STD_THREAD)
-    // TODO: Mutex::Mutex() for std::thread
+    // TODO: ConditionVariable::ConditionVariable() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
     pthread_cond_init(&conditionVariable, NULL);
 #   endif
@@ -29,7 +29,7 @@ CGUL::ConditionVariable::~ConditionVariable()
 #   if defined(CPP_HAS_WINTHREAD)
     // do nothing
 #   elif defined(CPP_HAS_STD_THREAD)
-    // TODO: Mutex::~Mutex() for std::thread
+    // TODO: ConditionVariable::~ConditionVariable() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
     pthread_cond_destroy(&conditionVariable);
 #   endif
@@ -40,19 +40,20 @@ _CGUL_EXPORT void CGUL::ConditionVariable::Wait(CGUL::Mutex* mutex)
 #   if defined(CPP_HAS_WINTHREAD)
     SleepConditionVariableCS(&conditionVariable, mutex->criticalSection, INFINITE);
 #   elif defined(CPP_HAS_STD_THREAD)
-    // TODO: Mutex::Lock() for std::thread
+    // TODO: ConditionVariable::Wait() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
     pthread_cond_wait(&conditionVariable, &mutex->mutex);
 #   endif
 }
 
 // timeout is in milliseconds
-_CGUL_EXPORT void CGUL::ConditionVariable::WaitFor(CGUL::Mutex* mutex, UInt32 timeout)
+// returns true if a signal was received, false if an error occurred (such as timeout)
+_CGUL_EXPORT bool CGUL::ConditionVariable::WaitFor(CGUL::Mutex* mutex, UInt32 timeout)
 {
 #   if defined(CPP_HAS_WINTHREAD)
-    SleepConditionVariableCS(&conditionVariable, mutex->criticalSection, timeout);
+    return SleepConditionVariableCS(&conditionVariable, mutex->criticalSection, timeout) != 0;
 #   elif defined(CPP_HAS_STD_THREAD)
-    // TODO: Mutex::Lock() for std::thread
+    // TODO: ConditionVariable::WaitFor() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
     timeval currentTime;
     timespec waitTime;
@@ -71,7 +72,7 @@ _CGUL_EXPORT void CGUL::ConditionVariable::WaitFor(CGUL::Mutex* mutex, UInt32 ti
         waitTime.tv_nsec -= 1000000000;
     }
 
-    pthread_cond_timedwait(&conditionVariable, &mutex->mutex, &waitTime);
+    return pthread_cond_timedwait(&conditionVariable, &mutex->mutex, &waitTime) == 0;
 #   endif
 }
 
@@ -80,7 +81,7 @@ _CGUL_EXPORT void CGUL::ConditionVariable::Signal()
 #   if defined(CPP_HAS_WINTHREAD)
     WakeConditionVariable(&conditionVariable);
 #   elif defined(CPP_HAS_STD_THREAD)
-    // TODO: Mutex::Unlock() for std::thread
+    // TODO: ConditionVariable::Signal() for std::thread
 #   elif defined(CPP_HAS_PTHREAD)
     pthread_cond_signal(&conditionVariable);
 #   endif
