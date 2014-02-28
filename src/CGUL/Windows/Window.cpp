@@ -360,11 +360,9 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 {
 #   ifdef CGUL_WINDOWS
     // Generate a unique class name for this window
-    std::wostringstream ss;
     static int windowCounter = 0;
-    strcpy(className, "CGUL_");
-    sprintf(className + 6, "%d", windowCounter++);
-    ss << className;
+    wcscpy(className, L"CGUL_");
+    wsprintf(className + 5, L"%d", windowCounter++);
 
     // Create the window class
     WNDCLASSEX wc;
@@ -378,8 +376,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     //wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = new wchar_t[ss.str().length() + 1];
-    memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
+    wc.lpszClassName = className;
     wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
     backgroundBrush = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
