@@ -69,6 +69,7 @@ namespace CGUL
         _CGUL_EXPORT void ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length);
         _CGUL_EXPORT void ShaderSource(UInt shader, const char* string);
         _CGUL_EXPORT void ShaderSource(UInt shader, const String& string);
+        _CGUL_EXPORT void SwapInterval(bool enable);
 
         _CGUL_EXPORT void TexEnvf(Enum target, Enum pname, Float32 param);
         _CGUL_EXPORT void TexEnvi(Enum target, Enum pname, SInt param);

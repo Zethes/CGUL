@@ -349,6 +349,24 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, const CGUL::String& string
     GLCHECK("Failed to set the shader source.", glShaderSource);
 }
 
+_CGUL_EXPORT void CGUL::GL::SwapInterval(bool enable)
+{
+#   ifdef CGUL_WINDOWS
+    GLCLEAR();
+    GLVERIFY(wglSwapIntervalEXT);
+    wglSwapIntervalEXT(enable ? 1 : 0);
+    GLCHECK("Failed to set swap interval.", wglSwapIntervalEXT);
+#   endif
+
+#   ifdef CGUL_LINUX
+    // TODO: SwapInterval on Linux
+#   endif
+
+#   ifdef CGUL_MACOS
+    // TODO: SwapInterval on MacOS
+#   endif
+}
+
 _CGUL_EXPORT void CGUL::GL::TexEnvf(Enum target, Enum pname, Float32 param)
 {
     GLCLEAR();

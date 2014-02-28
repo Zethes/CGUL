@@ -329,6 +329,7 @@ namespace CGUL
 #       include <windows.h>
 #       ifdef CGUL_USE_OPENGL
 #           include <GL/glew.h>
+#           include <GL/wglew.h>
 #       endif
 #   endif
 #   ifdef CGUL_LINUX
