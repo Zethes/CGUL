@@ -282,7 +282,9 @@ _CGUL_EXPORT CGUL::String CGUL::SystemCode::GetInfo() const
             case EAI_FAIL:       reason = "EAI_FAIL";       break;
             case EAI_FAMILY:     reason = "EAI_FAMILY";     break;
             case EAI_MEMORY:     reason = "EAI_MEMORY";     break;
+#           ifndef CGUL_WINDOWS
             case EAI_NODATA:     reason = "EAI_NODATA";     break;
+#           endif
             case EAI_NONAME:     reason = "EAI_NONAME";     break;
             case EAI_SERVICE:    reason = "EAI_SERVICE";    break;
             case EAI_SOCKTYPE:   reason = "EAI_SOCKTYPE";   break;
