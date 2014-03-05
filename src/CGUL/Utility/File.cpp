@@ -251,7 +251,7 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::File::GetFileSize(const CGUL::String& fileName)
 
 _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >* files)
 {
-#   ifdef CPP_HEADER_DIRENT_H
+#   if defined(CPP_HEADER_DIRENT_H)
     String fixedPath = path;
     if (!fixedPath.EndsWith("/") && !fixedPath.EndsWith("\\"))
     {
@@ -293,7 +293,7 @@ _CGUL_EXPORT void CGUL::File::FindFiles(const String& path, FixedList< String >*
         }
     }
     closedir(directory);
-#   elif CGUL_WINDOWS
+#   elif defined(CGUL_WINDOWS)
     // TODO: handle FindFiles on windows without dirent
 #   else
     // TODO: panic?
