@@ -587,6 +587,8 @@ _CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const char* str, ...)
     {
         buffer = new char[length];
     }
+    va_end(argptr);
+    va_start(argptr, str);
     vsnprintf(buffer, length, str, argptr);
     data = buffer;
     if (buffer != internalBuffer)
