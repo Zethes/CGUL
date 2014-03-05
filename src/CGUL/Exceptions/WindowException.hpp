@@ -2,7 +2,7 @@
 // Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 // All rights reserved.
 
-/** @file OpenGLException.hpp
+/** @file WindowException.hpp
  */
 
 #pragma once
@@ -18,24 +18,28 @@
 
 namespace CGUL
 {
-    namespace OpenGLExceptionCode
+    namespace WindowExceptionCode
     {
         enum
         {
             UNKNOWN,
-            FAILED_CREATE_SHADER
+            FAILED_CREATE_WINDOW
         };
     }
-    namespace OpenGLExceptionReason
+    namespace WindowExceptionReason
     {
         enum
         {
-            UNKNOWN
+            UNKNOWN,
+            FAILED_REGISTER_CLASS,
+            FAILED_CREATE_WINDOW_CALL,
+            FAILED_OPEN_X_DISPLAY
         };
     }
-    struct OpenGLException : public Exception
+    struct WindowException : public Exception
     {
-        _CGUL_EXPORT OpenGLException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT WindowException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT WindowException(UInt8 code, UInt8 reason, const SystemCode& systemCode);
 
         _CGUL_EXPORT String GetString() const;
         _CGUL_EXPORT String GetReason() const;

@@ -7,6 +7,7 @@
 
 #include "Window.hpp"
 #include "../Utility/Memory.hpp"
+#include "../Exceptions/WindowException.hpp"
 #include <cstdio>
 #include <sstream>
 
@@ -285,7 +286,6 @@ _CGUL_EXPORT CGUL::Window::Window()
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
-        display = XOpenDisplay(NULL);
         initialized = true;
     }
 #   endif
@@ -293,35 +293,12 @@ _CGUL_EXPORT CGUL::Window::Window()
 #   ifdef CGUL_MACOS
     handle = [WindowDelegate alloc];
 #   endif
-
-    if (__windows == NULL)
-    {
-        __windows = new CGUL::Vector< CGUL::Window* >;
-    }
-    __windows->push_back(this);
 }
 
 /**
  */
 _CGUL_EXPORT CGUL::Window::~Window()
 {
-    if (__windows)
-    {
-        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
-        {
-            if (*itr == this)
-            {
-                __windows->erase(itr);
-                break;
-            }
-        }
-        if (__windows->size() == 0)
-        {
-            delete __windows;
-            __windows = NULL;
-        }
-    }
-
     Close();
 #   ifdef CGUL_MACOS
     //[handle release];
@@ -385,7 +362,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     // Register the window class
     if (!RegisterClassEx(&wc))
     {
-        throw std::runtime_error("Failed to register the window class.");
+        throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_REGISTER_CLASS);
     }
 
     // Setup the window style
@@ -433,7 +410,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     // Check for errors
     if (handle == NULL)
     {
-        throw std::runtime_error("Failed to create the window!");
+        throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_CREATE_WINDOW_CALL);
     }
 
     // Set the window's user-data to a pointer to this object
@@ -444,6 +421,15 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 #   endif
 
 #   ifdef CGUL_LINUX
+    if (!display)
+    {
+        display = XOpenDisplay(NULL);
+        if (!display)
+        {
+            throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_OPEN_X_DISPLAY);
+        }
+    }
+
     int screen = DefaultScreen(display);
     Visual* visual = DefaultVisual(display, screen);
     int depth = DefaultDepth(display, screen);
@@ -490,12 +476,41 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 #   endif
 
     SetStyle(style);
+
+    if (__windows == NULL)
+    {
+        __windows = new CGUL::Vector< CGUL::Window* >;
+    }
+    __windows->push_back(this);
 }
 
 /**
  */
 _CGUL_EXPORT void CGUL::Window::Close()
 {
+    if (__windows)
+    {
+        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+        {
+            if (*itr == this)
+            {
+                __windows->erase(itr);
+                break;
+            }
+        }
+        if (__windows->size() == 0)
+        {
+            delete __windows;
+            __windows = NULL;
+
+#           ifdef CGUL_LINUX
+            XDestroyWindow(display, handle);
+            XCloseDisplay(display);
+            display = NULL;
+#           endif
+        }
+    }
+
 #   ifdef CGUL_USE_OPENGL
     if (context)
     {
@@ -512,13 +527,7 @@ _CGUL_EXPORT void CGUL::Window::Close()
 #   endif
 
 #   ifdef CGUL_LINUX
-    if (IsOpen())
-    {
-        XDestroyWindow(display, handle);
-        XCloseDisplay(display);
-    }
     handle = 0;
-    display = NULL;
 #   endif
 
 #   ifdef CGUL_MACOS

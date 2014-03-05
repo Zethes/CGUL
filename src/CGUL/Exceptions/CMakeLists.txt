@@ -10,6 +10,9 @@ set(CGUL_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NetworkException.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGLException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StringException.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SystemCode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/WindowException.cpp
     PARENT_SCOPE
 )
 
@@ -21,6 +24,9 @@ set(CGUL_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NetworkException.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OpenGLException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StringException.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SystemCode.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/WindowException.hpp
     PARENT_SCOPE
 )
 

@@ -15,22 +15,22 @@ namespace CGUL
     {
         void __cgul_network_initiate();
         void __cgul_network_clean();
+        UInt8 __cgul_network_error_reason();
     }
 }
 #endif
 
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
+ *  @returns True if successful, false otherwise.
  */
-void CGUL::Network::SocketUDP::MakeNonBlocking()
+bool CGUL::Network::SocketUDP::MakeNonBlocking()
 {
-    // TODO: error checking?
-
 #   ifdef CGUL_WINDOWS
     u_long uNonBlocking = 1;
-    ioctlsocket(sock, FIONBIO, &uNonBlocking);
+    return (ioctlsocket(sock, FIONBIO, &uNonBlocking) == 0);
 #   else
-    fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK);
+    return (fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK) != -1);
 #   endif
 }
 
@@ -73,10 +73,11 @@ void CGUL::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
 #   endif
 
     // Get the address info using the hints.
+    int status;
     addrinfo* result;
-    if (getaddrinfo(NULL, portString, &hints, &result) != 0)
+    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
     {
-        throw std::runtime_error("bind failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_BIND, NetworkExceptionReason::NO_NETWORK_INTERFACE, SystemCode::UseAddrInfo(status));
     }
 
     // Create the socket.  Because our hints are so strict, we don't have to worry about looping
@@ -85,7 +86,7 @@ void CGUL::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw std::runtime_error("bind failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_BIND, NetworkExceptionReason::FAILED_CREATE_SOCKET, SystemCode::CheckNetwork());
     }
 
     // Bind the socket to the port.
@@ -93,11 +94,16 @@ void CGUL::Network::SocketUDP::Bind(unsigned short port, bool ipv4)
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("Failed to bind socket.");
+        throw NetworkException(NetworkExceptionCode::FAILED_BIND, NetworkExceptionReason::FAILED_BIND_PORT, SystemCode::CheckNetwork());
     }
 
     // Make a non-blocking socket.
-    MakeNonBlocking();
+    if (!MakeNonBlocking())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_BIND, NetworkExceptionReason::FAILED_NONBLOCKING, SystemCode::CheckNetwork());
+    }
 
     // Free up the address info linked list.
     freeaddrinfo(result);
@@ -130,10 +136,11 @@ void CGUL::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
 #   endif
 
     // Get the address info using the hints.
+    int status;
     addrinfo* result;
-    if (getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result) != 0)
+    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
     {
-        throw std::runtime_error("Failed to get address info.");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::UNKNOWN, SystemCode::UseAddrInfo(status));
     }
 
     // Create the socket.
@@ -141,7 +148,7 @@ void CGUL::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw std::runtime_error("Failed to create socket.");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CREATE_SOCKET, SystemCode::CheckNetwork());
     }
 
     // Make the connection.
@@ -149,11 +156,16 @@ void CGUL::Network::SocketUDP::Connect(const IPAddress& ip, unsigned short port)
     {
         freeaddrinfo(result);
         sock = INVALID_SOCKET;
-        throw std::runtime_error("connect failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CONNECT_CALL, SystemCode::CheckNetwork());
     }
 
     // Make a non-blocking socket.
-    MakeNonBlocking();
+    if (!MakeNonBlocking())
+    {
+        freeaddrinfo(result);
+        Close();
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NONBLOCKING, SystemCode::CheckNetwork());
+    }
 
     // Free up the address info linked list.
     freeaddrinfo(result);
@@ -188,14 +200,24 @@ int CGUL::Network::SocketUDP::Send(const void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("send failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    // Pizza delivery!
+    // Send normally
     int amount;
     if ((amount = ::send(sock, (const char*)data, size, 0)) == SOCKET_ERROR)
     {
-        throw std::runtime_error("send failed");
+#       ifdef CGUL_WINDOWS
+        int error = WSAGetLastError();
+        if (error == WSAENOTCONN)
+#       else
+        int error = errno;
+        if (error == ENOTCONN)
+#       endif
+        {
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, SystemCode::UseNetwork(error));
+        }
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN, SystemCode::UseNetwork(error));
     }
     return amount;
 }
@@ -209,30 +231,45 @@ int CGUL::Network::SocketUDP::Receive(void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("receive failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    // Pizza delivery!
+    // Receive normally.
     int amount;
     if ((amount = ::recv(sock, (char*)data, size, 0)) == SOCKET_ERROR)
     {
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        int error = errno;
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return 0;
         }
         else
         {
-            throw std::runtime_error("receive failed");
+            UInt8 errorReason = __cgul_network_error_reason();
+
+            // Certain errors result in the connection being lost.
+            // Need to kill the connection in those cases.
+            switch (errorReason)
+            {
+                case NetworkExceptionReason::CONNECTION_ABORTED:
+                case NetworkExceptionReason::CONNECTION_RESET:
+                {
+                    Close();
+                    break;
+                }
+            }
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, errorReason, SystemCode::UseNetwork(error));
         }
     }
 
-    // Check if recv returned 0, if so, the remove socket disconnected gracefully.
+    // Check if recv returned 0, if so, the remote socket disconnected gracefully.
     if (amount == 0)
     {
         Close();
@@ -255,7 +292,7 @@ int CGUL::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, v
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("receive failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE_FROM, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Setup an address storage class to get information about the remote socket.
@@ -269,16 +306,31 @@ int CGUL::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, v
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        int error = errno;
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return 0;
         }
         else
         {
-            throw std::runtime_error("receive failed");
+            UInt8 errorReason = __cgul_network_error_reason();
+
+            // Certain errors result in the connection being lost.
+            // Need to kill the connection in those cases.
+            switch (errorReason)
+            {
+                case NetworkExceptionReason::CONNECTION_ABORTED:
+                case NetworkExceptionReason::CONNECTION_RESET:
+                {
+                    Close();
+                    break;
+                }
+            }
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE_FROM, errorReason, SystemCode::UseNetwork(error));
         }
     }
 
@@ -294,7 +346,7 @@ int CGUL::Network::SocketUDP::ReceiveFrom(IPAddress* ip, unsigned short* port, v
         *ip = IPAddress(address);
     }
 
-    // Check if recvfrom returned 0, if so, the remove socket disconnected gracefully.
+    // Check if recvfrom returned 0, if so, the remote socket disconnected gracefully.
     if (amount == 0)
     {
         Close();
@@ -311,7 +363,7 @@ int CGUL::Network::SocketUDP::Peek(void* data, unsigned int size)
     // Check if the socket is valid before we continue.
     if (sock == INVALID_SOCKET)
     {
-        throw std::runtime_error("peek failed");
+        throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::SOCKET_INVALID);
     }
 
     // Pizza delivery!
@@ -321,20 +373,35 @@ int CGUL::Network::SocketUDP::Peek(void* data, unsigned int size)
         // Check if recv failed because of a WOULDBLOCK error.  This basically means that there was
         // nothing to be received.  In that case, just return 0.  Otherwise, there was an error.
 #       ifdef CGUL_WINDOWS
-        if (WSAGetLastError() == WSAEWOULDBLOCK)
+        int error = WSAGetLastError();
+        if (error == WSAEWOULDBLOCK)
 #       else
-        if (errno == EWOULDBLOCK)
+        int error = errno;
+        if (error == EWOULDBLOCK)
 #       endif
         {
             return 0;
         }
         else
         {
-            throw std::runtime_error("peek failed");
+            UInt8 errorReason = __cgul_network_error_reason();
+
+            // Certain errors result in the connection being lost.
+            // Need to kill the connection in those cases.
+            switch (errorReason)
+            {
+                case NetworkExceptionReason::CONNECTION_ABORTED:
+                case NetworkExceptionReason::CONNECTION_RESET:
+                {
+                    Close();
+                    break;
+                }
+            }
+            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, errorReason, SystemCode::UseNetwork(error));
         }
     }
 
-    // Check if recv returned 0, if so, the remove socket disconnected gracefully.
+    // Check if recv returned 0, if so, the remote socket disconnected gracefully.
     if (amount == 0)
     {
         Close();

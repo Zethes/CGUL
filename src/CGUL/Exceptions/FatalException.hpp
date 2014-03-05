@@ -22,13 +22,13 @@ namespace CGUL
     {
         String error;
 
-        FatalException(const String& error, UInt16 code = 0);
-        ~FatalException() throw();
+        _CGUL_EXPORT FatalException(const String& error, UInt16 code = 0);
+        _CGUL_EXPORT ~FatalException() throw();
 
-        String GetString() const;
-        String GetReason() const;
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
 
-        virtual const char* what() const throw();
+        _CGUL_EXPORT virtual const char* what() const throw();
     };
 }
 

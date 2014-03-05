@@ -39,11 +39,11 @@ CGUL::Angle CGUL::Angle::InverseCenter(const Angle& a, const Angle& b)
 CGUL::Angle CGUL::Angle::Lerp(const Angle& from, const Angle& to, CGUL::Float32 t)
 {
     CGUL::Float32 v = from.GetDegrees() + (to.GetDegrees() - from.GetDegrees()) * t;
-    while (v >= 360) 
+    while (v >= 360)
     {
         v -= 360;
     }
-    while (v < 0) 
+    while (v < 0)
     {
         v += 360;
     }

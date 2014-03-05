@@ -51,6 +51,8 @@ namespace CGUL
         template< typename Type >
         static String From(Type value);
 
+        _CGUL_EXPORT static String Format(const char* str, ...);
+
         //! @brief Initializes to "".
         _CGUL_EXPORT String();
         //! @brief Copies the contents of the string into a new string.

@@ -5,9 +5,16 @@
 /** @file String.cpp
  */
 
+// Header
 #include "String.hpp"
-#include "Regex.hpp"
+
+
+// CGUL Includes
+#include "../Exceptions/StringException.hpp"
 #include "../Math/Math.hpp"
+#include "../Utility/Regex.hpp"
+
+// System Includes
 #include <cstring>
 
 char CGUL::String::internalBuffer[2048];
@@ -61,6 +68,35 @@ _CGUL_EXPORT CGUL::String CGUL::String::FromCodePoint(UInt32 codePoint)
         result[0] = codePoint & 0x7F;
     }
     return result;
+}
+
+_CGUL_EXPORT CGUL::String CGUL::String::Format(const char* str, ...)
+{
+    String newString;
+
+    va_list argptr;
+    va_start(argptr, str);
+    int length = vsnprintf(NULL, 0, str, argptr);
+    if (length < 0)
+    {
+        throw StringException(StringExceptionCode::INVALID_PRINTF_FORMAT, StringExceptionReason::BAD_FORMAT);
+    }
+    length += 1; // One for null terminator
+    char* buffer = internalBuffer;
+    if ((size_t)length > sizeof(internalBuffer))
+    {
+        buffer = new char[length];
+    }
+    va_end(argptr);
+    va_start(argptr, str);
+    vsnprintf(buffer, length, str, argptr);
+    newString = buffer;
+    if (buffer != internalBuffer)
+    {
+        delete[] buffer;
+    }
+    va_end(argptr);
+    return newString;
 }
 
 /**
@@ -579,7 +615,7 @@ _CGUL_EXPORT CGUL::String& CGUL::String::SetFormat(const char* str, ...)
     int length = vsnprintf(NULL, 0, str, argptr);
     if (length < 0)
     {
-        throw std::runtime_error("Invalid string format.");
+        throw StringException(StringExceptionCode::INVALID_PRINTF_FORMAT, StringExceptionReason::BAD_FORMAT);
     }
     length += 1; // One for null terminator
     char* buffer = internalBuffer;

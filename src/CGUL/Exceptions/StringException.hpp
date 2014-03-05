@@ -2,7 +2,7 @@
 // Copyright (C) 2012-2014, Joshua Brookover and Amber Thrall
 // All rights reserved.
 
-/** @file OpenGLException.hpp
+/** @file StringException.hpp
  */
 
 #pragma once
@@ -18,24 +18,26 @@
 
 namespace CGUL
 {
-    namespace OpenGLExceptionCode
+    namespace StringExceptionCode
     {
         enum
         {
             UNKNOWN,
-            FAILED_CREATE_SHADER
+            INVALID_PRINTF_FORMAT
         };
     }
-    namespace OpenGLExceptionReason
+    namespace StringExceptionReason
     {
         enum
         {
-            UNKNOWN
+            UNKNOWN,
+            BAD_FORMAT
         };
     }
-    struct OpenGLException : public Exception
+    struct StringException : public Exception
     {
-        _CGUL_EXPORT OpenGLException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT StringException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT StringException(UInt8 code, UInt8 reason, const SystemCode& systemCode);
 
         _CGUL_EXPORT String GetString() const;
         _CGUL_EXPORT String GetReason() const;

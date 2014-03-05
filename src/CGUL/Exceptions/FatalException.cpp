@@ -10,27 +10,27 @@
 
 static CGUL::String result;
 
-CGUL::FatalException::~FatalException() throw()
+_CGUL_EXPORT CGUL::FatalException::~FatalException() throw()
 {
 }
 
-CGUL::FatalException::FatalException(const CGUL::String& error, UInt16 code) :
+_CGUL_EXPORT CGUL::FatalException::FatalException(const CGUL::String& error, UInt16 code) :
     Exception(code, 0, ExceptionType::FATAL),
     error(error)
 {
 }
 
-CGUL::String CGUL::FatalException::GetString() const
+_CGUL_EXPORT CGUL::String CGUL::FatalException::GetString() const
 {
     return U8("Fatal runtime error: ") + this->error;
 }
 
-CGUL::String CGUL::FatalException::GetReason() const
+_CGUL_EXPORT CGUL::String CGUL::FatalException::GetReason() const
 {
     return U8("User defined error.");
 }
 
-const char* CGUL::FatalException::what() const throw()
+_CGUL_EXPORT const char* CGUL::FatalException::what() const throw()
 {
     result = GetString();
     return result.GetCString();

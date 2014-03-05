@@ -8,11 +8,11 @@
 // Header
 #include "ImageException.hpp"
 
-CGUL::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::IMAGE)
+_CGUL_EXPORT CGUL::ImageException::ImageException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::IMAGE)
 {
 }
 
-CGUL::String CGUL::ImageException::GetString() const
+_CGUL_EXPORT CGUL::String CGUL::ImageException::GetString() const
 {
     switch (info.code)
     {
@@ -38,7 +38,7 @@ CGUL::String CGUL::ImageException::GetString() const
     }
 }
 
-CGUL::String CGUL::ImageException::GetReason() const
+_CGUL_EXPORT CGUL::String CGUL::ImageException::GetReason() const
 {
     switch (info.reason)
     {

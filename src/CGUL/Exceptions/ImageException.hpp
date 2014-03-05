@@ -60,10 +60,10 @@ namespace CGUL
     }
     struct ImageException : public Exception
     {
-        ImageException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT ImageException(UInt8 code, UInt8 reason);
 
-        String GetString() const;
-        String GetReason() const;
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
     };
 }
 

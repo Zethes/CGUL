@@ -10,9 +10,8 @@
 
 static CGUL::String result;
 
-CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason, SInt networkCode) :
-    Exception(code, reason, ExceptionType::NETWORK),
-    networkCode(networkCode)
+CGUL::NetworkException::NetworkException(UInt8 code, UInt8 reason, const SystemCode& systemCode) :
+    Exception(code, reason, systemCode, ExceptionType::NETWORK)
 {
 }
 
@@ -48,37 +47,6 @@ CGUL::String CGUL::NetworkException::GetString() const
 
 CGUL::String CGUL::NetworkException::GetReason() const
 {
-    if (info.code == NetworkExceptionCode::FAILED_DNS_LOOKUP)
-    {
-        switch (info.reason)
-        {
-            case 8:
-                return U8("Insufficient memory available.");
-            case 11001:
-                return U8("Host not found.");
-            case 11002:
-                return U8("Nonauthoritative host not found.");
-            case 11003:
-                return U8("This is a nonrecoverable error.");
-            case 11004:
-                return U8("Valid name, but no data record of requested type was found.");
-            case 11022:
-                return U8("Invalid argument.");
-            case 11044:
-                return U8("Socket type not supported.");
-            case 11047:
-                return U8("Address family is not supported by protocol family.");
-            case NetworkExceptionCode::UNKNOWN:
-            default:
-            {
-                CGUL::String msgString = "Unknown error occurred. [Error code: ";
-                msgString += info.reason;
-                msgString += CGUL::String("]");
-                return msgString;
-            }
-        }
-    }
-
     switch (info.reason)
     {
         case NetworkExceptionReason::NO_NETWORK_INTERFACE:
@@ -119,41 +87,18 @@ CGUL::String CGUL::NetworkException::GetReason() const
             return U8("Failed to validate a trust certificate.");
         case NetworkExceptionReason::UNKNOWN_TRANSFER_ENCODING:
             return U8("Unknown transfer encoding method.");
-        case NetworkExceptionReason::TIMEOUT:
-            return U8("The request timed out.");
         case NetworkExceptionReason::SOCKET_NOT_CONNECTED:
             return U8("The socket is not connected.");
         case NetworkExceptionReason::CONNECTION_ABORTED:
             return U8("The connection was aborted (ECONNABORTED).");
         case NetworkExceptionReason::CONNECTION_RESET:
             return U8("Connection reset by peer (ECONNRESET).");
+        case NetworkExceptionReason::TIMEOUT:
+            return U8("The request timed out.");
+        case NetworkExceptionReason::NODE_SERVICE_UNKNOWN:
+            return U8("The node or service is unknown.");
         case NetworkExceptionReason::UNKNOWN:
         default:
             return U8("Unknown.");
     }
-}
-
-const char* CGUL::NetworkException::what() const throw()
-{
-    result = GetString();
-    if (info.reason == NetworkExceptionReason::UNKNOWN)
-    {
-        if (networkCode == 99999)
-        {
-            // The cause isn't known, and no network code was provided. This is bad.
-            // CGUL should always know at least the network error code, if not this is a bug.
-            result += U8(" (Reason: ") + GetReason() + U8(" NetCode: Unknown.)");
-        }
-        else
-        {
-            // Supply the network error code if the actual cause was unknown
-            result += U8(" (Reason: ") + GetReason() + U8(" NetCode: ") + networkCode + U8(")");
-        }
-    }
-    else
-    {
-        // If the reason for failure is known, the network code may not be provided, and will be excluded
-        result += U8(" (Reason: ") + GetReason() + U8(")");
-    }
-    return result.GetCString();
 }
