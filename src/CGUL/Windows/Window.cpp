@@ -268,9 +268,12 @@ _CGUL_EXPORT void CGUL::Window::Update()
 #   endif
 
     // Update each window
-    for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+    if (__windows)
     {
-        (*itr)->InternalUpdate();
+        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+        {
+            (*itr)->InternalUpdate();
+        }
     }
 }
 
@@ -488,6 +491,13 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
  */
 _CGUL_EXPORT void CGUL::Window::Close()
 {
+#   ifdef CGUL_USE_OPENGL
+    if (context)
+    {
+        context->Destroy();
+    }
+#   endif
+
     if (__windows)
     {
         for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
@@ -510,13 +520,6 @@ _CGUL_EXPORT void CGUL::Window::Close()
 #           endif
         }
     }
-
-#   ifdef CGUL_USE_OPENGL
-    if (context)
-    {
-        context->Destroy();
-    }
-#   endif
 
 #   ifdef CGUL_WINDOWS
     if (IsWindow(handle))
