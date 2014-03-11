@@ -15,18 +15,19 @@
 #ifdef JPEG_FOUND
 #   include "JPEG.hpp"
 #endif
-//#include "BMP.hpp"
+#include "PPM.hpp"
 
 _CGUL_EXPORT CGUL::ImageHandler::ImageHandler()
 {
-    // Add default image loaders
+    // Add default image loaders    
+    Register(new ImageLoaders::PPM());
+    
 #   ifdef PNG_FOUND
     Register(new ImageLoaders::PNG());
 #   endif
 #   ifdef JPEG_FOUND
     Register(new ImageLoaders::JPEG());
 #   endif
-    //Register(new ImageLoaders::BMP());
 }
 
 _CGUL_EXPORT CGUL::ImageHandler::~ImageHandler()

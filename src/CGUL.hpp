@@ -106,6 +106,7 @@
 #ifdef PNG_FOUND
 #   include "CGUL/Images/PNG.hpp"
 #endif
+#include "CGUL/Images/PPM.hpp"
 
 #include "CGUL/Math/Angle.hpp"
 #include "CGUL/Math/Constants.hpp"

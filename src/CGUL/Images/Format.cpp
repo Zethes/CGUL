@@ -53,6 +53,7 @@ namespace CGUL
         ImageFormat RGB10_A2    = CreateImageFormat("RGB10_A2", 10, 10, 10, 2, DataTypes::UNSIGNED_CHAR, GL_RGB10_A2);
         ImageFormat RGBA12      = CreateImageFormat("RGBA12", 12, 12, 12, 12, DataTypes::UNSIGNED_CHAR, GL_RGBA12);
         ImageFormat RGBA16      = CreateImageFormat("RGBA16", 16, 16, 16, 16, DataTypes::UNSIGNED_CHAR, GL_RGBA16);
+        ImageFormat GRAYSCALE   = CreateImageFormat("GRAYSCALE", 1, 0, 0, 0, DataTypes::UNSIGNED_CHAR, GL_LUMINANCE); 
 
 #       else
 
@@ -76,6 +77,7 @@ namespace CGUL
         ImageFormat RGBA10_A2   = CreateImageFormat("RGBA10_A2", 10, 10, 10, 2);
         ImageFormat RGBA12      = CreateImageFormat("RGBA12", 12, 12, 12, 12);
         ImageFormat RGBA16      = CreateImageFormat("RGBA16", 16, 16, 16, 16);
+        ImageFormat GRAYSCALE   = CreateImageFormat("GRAYSCALE", 1, 0, 0, 0, DataTypes::UNSIGNED_CHAR, GL_RGBA16); 
 
 #       endif
     }

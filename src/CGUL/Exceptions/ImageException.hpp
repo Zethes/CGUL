@@ -30,7 +30,10 @@ namespace CGUL
             JPEG,
             BMP_WRITE,
             PNG_WRITE,
-            JPEG_WRITE
+            JPEG_WRITE,
+            PPM,
+            PPM_WRITE,
+            PPM_READ
         };
     }
     namespace ImageExceptionReason

@@ -32,6 +32,10 @@ _CGUL_EXPORT CGUL::String CGUL::ImageException::GetString() const
             return U8("Failed to save PNG file.");
         case ImageExceptionCode::JPEG_WRITE:
             return U8("Failed to save JPEG file.");
+        case ImageExceptionCode::PPM:
+            return U8("Failed to load PPM file.");
+        case ImageExceptionCode::PPM_WRITE:
+            return U8("Failed to save JPEG file.");
         case ImageExceptionCode::UNKNOWN:
         default:
             return U8("Unknown error occurred.");
