@@ -96,6 +96,7 @@
 
 #include "CGUL/Images/Color.hpp"
 #include "CGUL/Images/Colors.hpp"
+#include "CGUL/Images/Filter.hpp"
 #include "CGUL/Images/Format.hpp"
 #include "CGUL/Images/Image.hpp"
 #include "CGUL/Images/ImageHandler.hpp"

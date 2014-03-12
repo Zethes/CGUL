@@ -125,8 +125,25 @@ int main()
 
         image->Load(fileName);
         std::cout << "Successfully loaded." << std::endl;
-        image->Save("out.ppm", "ppm");
+        image->Save("out.png", "png");
         std::cout << "Successfully saved." << std::endl;
+
+        Float32 ** filter = new Float32*[3];
+        for (UInt32 i = 0; i < 3; ++i)
+        { filter[i] = new Float32[3]; }
+        for (UInt32 x = 0; x < 3; ++x)
+        {
+            for (UInt32 y = 0; y < 3; ++y)
+            {
+                if (x == 1 && y == 1)
+                { filter[x][y] = 9; }
+                else
+                { filter[x][y] = -1; }
+            }
+        }
+
+        ImageFilter imageFilter(3,3, filter, 1.0, 0.0);
+        imageFilter.Apply(image, image);
 
         WindowStyle style;
         style.title = fileName + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");

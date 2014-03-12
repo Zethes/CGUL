@@ -117,6 +117,7 @@ _CGUL_EXPORT void CGUL::Image::Setup(ImageFormat format, UCoord32 size, void* da
     this->size = size;
     this->pixelSize = (format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8;
     this->data = data;
+    this->dataSize = size.x * size.y * pixelSize;
 }
 
 _CGUL_EXPORT void CGUL::Image::Save(const String& file, const String& extension) const
