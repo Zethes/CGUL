@@ -23,8 +23,8 @@ namespace CGUL
         enum
         {
             UNKNOWN,
-            GENERATE_MIPMAPS,
-            GET_MIPMAP,
+            MIX_IMAGES,
+            TRANSFORM,
             BMP,
             PNG,
             JPEG,
@@ -58,7 +58,8 @@ namespace CGUL
             JPEG_FAILED_TO_START_DECOMPRESSOR,
             NULL_POINTER,
             FAILED_WRITE_HEADER,
-            FAILED_WRITE_IMAGE
+            FAILED_WRITE_IMAGE,
+            INVALID_MIXING_METHOD
         };
     }
     struct ImageException : public Exception
