@@ -130,17 +130,9 @@
 #endif
 
 #ifdef CGUL_USE_OPENGL
-#   include "CGUL/OpenGL/Buffer.hpp"
 #   include "CGUL/OpenGL/Context.hpp"
-#   include "CGUL/OpenGL/FrameBuffer.hpp"
 #   include "CGUL/OpenGL/GL.hpp"
 #   include "CGUL/OpenGL/OpenGL.hpp"
-#   include "CGUL/OpenGL/Program.hpp"
-#   include "CGUL/OpenGL/RawGL.hpp"
-#   include "CGUL/OpenGL/RenderBuffer.hpp"
-#   include "CGUL/OpenGL/Shader.hpp"
-#   include "CGUL/OpenGL/Texture.hpp"
-#   include "CGUL/OpenGL/VertexArray.hpp"
 #endif
 
 #ifdef PortAudio_FOUND
