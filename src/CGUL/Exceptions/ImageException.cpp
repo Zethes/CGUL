@@ -16,10 +16,10 @@ _CGUL_EXPORT CGUL::String CGUL::ImageException::GetString() const
 {
     switch (info.code)
     {
-        case ImageExceptionCode::GENERATE_MIPMAPS:
-            return U8("Failed to generate mipmaps.");
-        case ImageExceptionCode::GET_MIPMAP:
-            return U8("Failed to get mipmap.");
+        case ImageExceptionCode::MIX_IMAGES:
+            return U8("Failed to mix images together.");
+        case ImageExceptionCode::TRANSFORM:
+            return U8("Failed to transform image.");
         case ImageExceptionCode::BMP:
             return U8("Failed to load BMP file.");
         case ImageExceptionCode::PNG:
@@ -31,6 +31,10 @@ _CGUL_EXPORT CGUL::String CGUL::ImageException::GetString() const
         case ImageExceptionCode::PNG_WRITE:
             return U8("Failed to save PNG file.");
         case ImageExceptionCode::JPEG_WRITE:
+            return U8("Failed to save JPEG file.");
+        case ImageExceptionCode::PPM:
+            return U8("Failed to load PPM file.");
+        case ImageExceptionCode::PPM_WRITE:
             return U8("Failed to save JPEG file.");
         case ImageExceptionCode::UNKNOWN:
         default:
@@ -78,6 +82,8 @@ _CGUL_EXPORT CGUL::String CGUL::ImageException::GetReason() const
             return U8("Failed to write header.");
         case ImageExceptionReason::FAILED_WRITE_IMAGE:
             return U8("Failed to write image data.");
+        case ImageExceptionReason::INVALID_MIXING_METHOD:
+            return U8("Invalid image mixing method.");
         case ImageExceptionReason::UNKNOWN:
         default:
             return U8("Unknown.");

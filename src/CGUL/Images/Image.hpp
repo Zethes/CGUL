@@ -12,12 +12,34 @@
 #include "Format.hpp"
 #include "ImageHandler.hpp"
 #include "Loader.hpp"
+#include "Color.hpp"
 #include "../External/Defines.hpp"
 
 namespace CGUL
 {
+    /** @brief Enum holding the supported image mixing methods.
+    */
+    namespace ImageMixMethods
+    {
+        enum
+        {
+            ADD,
+            AMPLITUDE,
+            AND,
+            AVERAGE,
+            CROSS_FADING,
+            DIFF,
+            MAX,
+            MIN,
+            MULTIPLY,
+            OR,
+            SUBTRACT,
+            XOR
+        };
+    };
+
     /** @brief A container capable of loading and manipulating RGBA images.
-     *  @todo Support more image modifying/transforming.
+     *  @todo Rotation, scaling, mirroring.
      */
     class Image
     {
@@ -28,6 +50,13 @@ namespace CGUL
         Size dataSize;
         void* data;
     public:
+        _CGUL_EXPORT static Image* AdjustBrightness(Image* img, Float32 amt);
+        _CGUL_EXPORT static Image* GetNegative(Image* img);
+        _CGUL_EXPORT static Image* GetGrayscale(Image* img);
+        _CGUL_EXPORT static Image* SwapColors(Image* img, Color pre, Color post);
+
+        _CGUL_EXPORT static Image* Mix(Image* one, Image* two, UInt32 method = ImageMixMethods::AVERAGE);
+
         _CGUL_EXPORT Image();
         _CGUL_EXPORT Image(const Image& copy);
         _CGUL_EXPORT Image(ImageFormat format, UCoord32 size);
@@ -40,15 +69,15 @@ namespace CGUL
 
         _CGUL_EXPORT void Setup(ImageFormat format, UCoord32 size, void* data);
 
-        /*template <typename T>
-        _CGUL_EXPORT T* GetPixel(UInt32 x, UInt32 y);
-        template <typename T>
-        _CGUL_EXPORT void SetPixel(UInt32 x, UInt32 y, T* pixel);*/
+        _CGUL_EXPORT Color GetPixel(UInt32 x, UInt32 y);
+        _CGUL_EXPORT void SetPixel(UInt32 x, UInt32 y, Color pixel);
 
         template< typename Type >
         _CGUL_INLINE_DEFINE Type* GetData();
         template< typename Type >
         _CGUL_INLINE_DEFINE const Type* GetData() const;
+        template< typename Type >
+        _CGUL_INLINE_DEFINE void SetData(Type* data);
 
         _CGUL_EXPORT ImageFormat GetFormat()const ;
         _CGUL_EXPORT UCoord32 GetSize() const;
@@ -73,6 +102,12 @@ template< typename Type >
 _CGUL_INLINE_IMPLEMENT const Type* CGUL::Image::GetData() const
 {
     return (const Type*)this->data;
+}
+
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT void CGUL::Image::SetData(Type* data)
+{
+    this->data = data;
 }
 
 #include "../External/Undefines.hpp"

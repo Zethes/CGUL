@@ -9,6 +9,205 @@
 #include "../Utility/Memory.hpp"
 #include "../Exceptions/ImageException.hpp"
 
+_CGUL_EXPORT CGUL::Image* CGUL::Image::AdjustBrightness(Image* img, Float32 amt)
+{
+    Image* out = new Image(*img);
+
+    Byte* data = new Byte[img->dataSize];
+    data = img->GetData<Byte>();
+
+    for (UInt32 i = 0; i < img->dataSize; i += img->pixelSize)
+    {
+        for (UInt32 j = 0; j < img->pixelSize; ++j)
+        {
+            if (j < 4) //Ignore alpha channel
+            {
+                ((Byte*)out->data)[i+j] = Math::Max(Math::Min(data[i+j] * amt, 255.0f), 0.0f);
+            }
+        }
+    }
+
+    return out;
+}
+
+_CGUL_EXPORT CGUL::Image* CGUL::Image::GetNegative(Image* img)
+{
+    Image* out = new Image(*img);
+
+    Byte* data = new Byte[img->dataSize];
+    data = img->GetData<Byte>();
+
+    for (UInt32 i = 0; i < img->dataSize; i += img->pixelSize)
+    {
+        for (UInt32 j = 0; j < img->pixelSize; ++j)
+        {
+            if (j < 4) //Ignore alpha channel
+            {
+                ((Byte*)out->data)[i+j] = Math::Max(Math::Min(255.0f - data[i+j], 255.0f), 0.0f);
+            }
+        }
+    }
+
+    return out;
+}
+
+_CGUL_EXPORT CGUL::Image* CGUL::Image::GetGrayscale(Image* img)
+{
+    Image* out = new Image();
+
+    Byte* data = new Byte[img->dataSize];
+    data = img->GetData<Byte>();
+
+    Byte* newdata = new Byte[img->GetWidth() * img->GetHeight()];
+    UInt32 writeIndex = 0;
+
+    for (UInt32 i = 0; i < img->dataSize; i += img->pixelSize)
+    {
+        Float32 c = 0;
+        Float32 total = 0;
+        for (UInt32 j = 0; j < img->pixelSize; ++j)
+        {
+            if (j < 4) //Ignore alpha channel
+            {
+                total += data[i+j];
+                c++;
+            }
+        }
+        newdata[writeIndex++] = (Byte)Math::Max(Math::Min((total / c), 255.0f), 0.0f);
+    }
+
+    out->Setup(ImageFormats::GRAYSCALE, UCoord32(img->GetWidth(), img->GetHeight()), newdata);
+    return out;
+}
+
+_CGUL_EXPORT CGUL::Image* CGUL::Image::SwapColors(Image* img, Color pre, Color post)
+{
+    Image* out = new Image(*img);
+
+    Byte* data = new Byte[img->dataSize];
+    data = img->GetData<Byte>();
+
+    Byte* oldColor = new Byte[img->pixelSize];
+    Byte* newColor = new Byte[img->pixelSize];
+    oldColor[0] = pre.r;
+    newColor[0] = post.r;
+    if (img->pixelSize == 2)
+    {
+        //?
+    }
+    else if (img->pixelSize >= 3)
+    {
+        oldColor[1] = pre.g;
+        oldColor[2] = pre.b;
+        newColor[1] = post.g;
+        newColor[2] = post.b;
+    }
+
+    if (img->pixelSize >= 4)
+    {
+        oldColor[3] = pre.a;
+        newColor[3] = post.a;
+    }
+
+    for (UInt32 i = 0; i < img->dataSize; i += img->pixelSize)
+    {
+        Float32 c = 0;
+        Float32 total = 0;
+        bool good = true;
+        for (UInt32 j = 0; j < img->pixelSize; ++j)
+        {
+            if (oldColor[j] != data[i+j])
+            {
+                good = false;
+                break;
+            }
+        }
+        if (good)
+        {
+            for (UInt32 j = 0; j < img->pixelSize; ++j)
+            {
+                ((Byte*)out->data)[i+j] = newColor[j];
+            }
+        }
+    }
+
+    return out;
+}
+
+_CGUL_EXPORT CGUL::Image* CGUL::Image::Mix(Image* one, Image* two, UInt32 method)
+{
+    if (one->pixelSize != two->pixelSize)
+    {
+        //Adjust to work with it?
+        return NULL;
+    }
+
+    Image* out = new Image(*one);
+
+    Byte* data1 = new Byte[one->dataSize];
+    data1 = one->GetData<Byte>();
+    Byte* data2 = new Byte[two->dataSize];
+    data2 = two->GetData<Byte>();
+
+    for (UInt32 i = 0; i < one->dataSize && i < two->dataSize;  i += one->pixelSize)
+    {
+        for (UInt32 j = 0; j < one->pixelSize; ++j)
+        {
+            if (j < 4) //Ignore alpha channel
+            {
+                Byte x = data1[i+j];
+                Byte y = data2[i+j];
+                Byte res = 0;
+                switch (method)
+                {
+                    case ImageMixMethods::ADD:
+                        res = Math::Min(x + y, 255);
+                    break;
+                    case ImageMixMethods::AMPLITUDE:
+                        res = Math::Floor(Math::Sqrt(Float32(x * x + x * x)) / (Float32)Math::Sqrt2);
+                    break;
+                    case ImageMixMethods::AND:
+                        res = x & y;
+                    break;
+                    case ImageMixMethods::AVERAGE:
+                        res = (x + y) / 2;
+                    break;
+                    case ImageMixMethods::CROSS_FADING:
+                        res = Math::Floor(Float32(x) * 0.75f + Float32(y) * 0.25f);
+                    break;
+                    case ImageMixMethods::DIFF:
+                        res = Math::Abs(Float32(x) - Float32(y));
+                    break;
+                    case ImageMixMethods::MAX:
+                        res = Math::Max(x, y);
+                    break;
+                    case ImageMixMethods::MIN:
+                        res = Math::Min(x, y);
+                    break;
+                    case ImageMixMethods::MULTIPLY:
+                        res = Math::Floor(255.0f * (Float32(x) / 255.0f * Float32(y) / 255.0f));
+                    break;
+                    case ImageMixMethods::OR:
+                        res = x | y;
+                    break;
+                    case ImageMixMethods::SUBTRACT:
+                        res = Math::Max(Float32(x) - Float32(y), 0.0f);
+                    break;
+                    case ImageMixMethods::XOR:
+                        res = x ^ y;
+                    break;
+                    default:
+                        res = (x + y) / 2;
+                }
+
+                ((Byte*)out->data)[i+j] = res;
+            }
+        }
+    }
+
+    return out;
+}
+
 _CGUL_EXPORT CGUL::Image::Image() :
     size(0, 0),
     pixelSize(0),
@@ -117,6 +316,78 @@ _CGUL_EXPORT void CGUL::Image::Setup(ImageFormat format, UCoord32 size, void* da
     this->size = size;
     this->pixelSize = (format.redBits + format.blueBits + format.greenBits + format.alphaBits) / 8;
     this->data = data;
+    this->dataSize = size.x * size.y * pixelSize;
+}
+
+_CGUL_INLINE_IMPLEMENT CGUL::Color CGUL::Image::GetPixel(UInt32 x, UInt32 y)
+{
+    if (y*size.x*pixelSize + x*pixelSize + pixelSize-1 > dataSize)
+    {
+        return Color(0,0,0,0);
+    }
+
+    Byte* v = new Byte[pixelSize];
+    for (UInt32 i = 0; i < pixelSize; ++i)
+    {
+        v[i] = ((Byte*)data)[y*size.x*pixelSize + x*pixelSize + i];
+    }
+
+    Color ret(0,0,0,255);
+    ret.r = v[0];
+    if (pixelSize == 1)
+    {
+        ret.g = v[0];
+    }
+    else if (pixelSize == 2)
+    {
+        //?
+    }
+    else if (pixelSize >= 3)
+    {
+        ret.g = v[1];
+        ret.b = v[2];
+    }
+
+    if (pixelSize >= 4)
+    {
+        ret.a = v[3];
+    }
+
+    return ret;
+}
+
+_CGUL_INLINE_IMPLEMENT void CGUL::Image::SetPixel(UInt32 x, UInt32 y, Color pixel)
+{
+    if (y*size.x*pixelSize + x*pixelSize + pixelSize-1 > dataSize)
+    {
+        return;
+    }
+
+    Byte * v = new Byte[pixelSize];
+    if (pixelSize == 1)
+    {
+        v[0] = pixel.r;
+    }
+    else if (pixelSize == 2)
+    {
+        //?
+    }
+    else if (pixelSize >= 3)
+    {
+        v[0] = pixel.r;
+        v[1] = pixel.g;
+        v[2] = pixel.b;
+    }
+
+    if (pixelSize >= 4)
+    {
+        v[3] = pixel.a;
+    }
+
+    for (UInt32 i = 0; i < pixelSize; ++i)
+    {
+        ((Byte*)data)[y*size.x*pixelSize + x*pixelSize + i] = v[i];
+    }
 }
 
 _CGUL_EXPORT void CGUL::Image::Save(const String& file, const String& extension) const

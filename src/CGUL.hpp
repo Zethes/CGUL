@@ -96,6 +96,7 @@
 
 #include "CGUL/Images/Color.hpp"
 #include "CGUL/Images/Colors.hpp"
+#include "CGUL/Images/Filter.hpp"
 #include "CGUL/Images/Format.hpp"
 #include "CGUL/Images/Image.hpp"
 #include "CGUL/Images/ImageHandler.hpp"
@@ -106,6 +107,7 @@
 #ifdef PNG_FOUND
 #   include "CGUL/Images/PNG.hpp"
 #endif
+#include "CGUL/Images/PPM.hpp"
 
 #include "CGUL/Math/Angle.hpp"
 #include "CGUL/Math/Constants.hpp"

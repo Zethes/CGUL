@@ -116,15 +116,19 @@ int main()
             std::cout << (i+1) << ". " << loaders[i]->GetName() << " (" << loaders[i]->GetExtension() << ")" << std::endl;
         }
 
-        String fileName = "resources/logo.png";
+        String fileName = "resources/photo3.jpg";
         Image* image = new Image();
         if (!image->CanLoad(fileName))
         {
-            throw FatalException("Cannot load JPEG images.");
+            throw FatalException("Cannot load image.");
         }
 
         image->Load(fileName);
-        image->Save("out.png", "png");
+        std::cout << "Successfully loaded." << std::endl;
+        //image->Save("out.png", "png");
+        //std::cout << "Successfully saved." << std::endl;
+
+        image = Image::GetGrayscale(image);
 
         WindowStyle style;
         style.title = fileName + U8(" (") + image->GetWidth() + U8(", ") + image->GetHeight() + U8(")");
@@ -172,7 +176,7 @@ int main()
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
             GL::UseProgram(program);
             GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho2D(0, 1, 1, 0).GetData());
-            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "modelMatrix"), 1, false, Matrix::Identity().GetData());
+            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "modelMatrix"), 1, false, Matrix::MakeIdentity().GetData());
             GL::Uniform1i(GL::GetUniformLocation(program, "texture"), 0);
             GL::ActiveTexture(GL_TEXTURE0);
             GL::BindTexture(GL_TEXTURE_2D, texture);
