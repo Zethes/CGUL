@@ -8,7 +8,7 @@
 #include "RawGL.hpp"
 #include "../Math/Matrix.hpp"
 
-_CGUL_EXPORT void CGUL::GL::ActiveTexture(Enum target)
+_CGUL_EXPORT void CGUL::GL::ActiveTexture(GL::Enum target)
 {
     GLCLEAR();
     GLVERIFY(glActiveTexture);
@@ -16,7 +16,7 @@ _CGUL_EXPORT void CGUL::GL::ActiveTexture(Enum target)
     GLCHECK("Failed to set active texture.", glActiveTexture);
 }
 
-_CGUL_EXPORT void CGUL::GL::AttachShader(UInt program, UInt shader)
+_CGUL_EXPORT void CGUL::GL::AttachShader(GL::UInt program, GL::UInt shader)
 {
     GLCLEAR();
     GLVERIFY(glAttachShader);
@@ -24,7 +24,7 @@ _CGUL_EXPORT void CGUL::GL::AttachShader(UInt program, UInt shader)
     GLCHECK("Failed to attach shader.", glAttachShader);
 }
 
-_CGUL_EXPORT void CGUL::GL::BindAttribLocation(UInt program, UInt index, const char* name)
+_CGUL_EXPORT void CGUL::GL::BindAttribLocation(GL::UInt program, GL::UInt index, const GL::Char* name)
 {
     GLCLEAR();
     GLVERIFY(glBindAttribLocation);
@@ -32,7 +32,7 @@ _CGUL_EXPORT void CGUL::GL::BindAttribLocation(UInt program, UInt index, const c
     GLCHECK("Failed to bind attribute location.", glBindAttribLocation);
 }
 
-_CGUL_EXPORT void CGUL::GL::BindAttribLocation(UInt program, UInt index, const String& name)
+_CGUL_EXPORT void CGUL::GL::BindAttribLocation(GL::UInt program, GL::UInt index, const String& name)
 {
     GLCLEAR();
     GLVERIFY(glBindAttribLocation);
@@ -40,7 +40,7 @@ _CGUL_EXPORT void CGUL::GL::BindAttribLocation(UInt program, UInt index, const S
     GLCHECK("Failed to bind attribute location.", glBindAttribLocation);
 }
 
-_CGUL_EXPORT void CGUL::GL::BindBuffer(Enum target, UInt buffer)
+_CGUL_EXPORT void CGUL::GL::BindBuffer(GL::Enum target, GL::UInt buffer)
 {
     GLCLEAR();
     GLVERIFY(glBindBuffer);
@@ -48,7 +48,7 @@ _CGUL_EXPORT void CGUL::GL::BindBuffer(Enum target, UInt buffer)
     GLCHECK("Failed to bind buffer.", glBindBuffer);
 }
 
-_CGUL_EXPORT void CGUL::GL::BindTexture(Enum target, UInt texture)
+_CGUL_EXPORT void CGUL::GL::BindTexture(GL::Enum target, GL::UInt texture)
 {
     GLCLEAR();
     GLVERIFY(glBindTexture);
@@ -56,7 +56,7 @@ _CGUL_EXPORT void CGUL::GL::BindTexture(Enum target, UInt texture)
     GLCHECK("Failed to bind texture.", glBindTexture);
 }
 
-_CGUL_EXPORT void CGUL::GL::BindVertexArray(UInt array)
+_CGUL_EXPORT void CGUL::GL::BindVertexArray(GL::UInt array)
 {
     GLCLEAR();
 #   ifdef CGUL_MACOS
@@ -70,7 +70,7 @@ _CGUL_EXPORT void CGUL::GL::BindVertexArray(UInt array)
 #   endif
 }
 
-_CGUL_EXPORT void CGUL::GL::BlendFunc(Enum sfactor, Enum dfactor)
+_CGUL_EXPORT void CGUL::GL::BlendFunc(GL::Enum sfactor, GL::Enum dfactor)
 {
     GLCLEAR();
     GLVERIFY(glBlendFunc);
@@ -78,7 +78,7 @@ _CGUL_EXPORT void CGUL::GL::BlendFunc(Enum sfactor, Enum dfactor)
     GLCHECK("Failed to set blend function.", glBlendFunc);
 }
 
-_CGUL_EXPORT void CGUL::GL::BlendFunci(UInt buf, Enum sfactor, Enum dfactor)
+_CGUL_EXPORT void CGUL::GL::BlendFunci(GL::UInt buf, GL::Enum sfactor, GL::Enum dfactor)
 {
     GLCLEAR();
     GLVERIFY(glBlendFunci);
@@ -86,7 +86,7 @@ _CGUL_EXPORT void CGUL::GL::BlendFunci(UInt buf, Enum sfactor, Enum dfactor)
     GLCHECK("Failed to set blend function.", glBlendFunci);
 }
 
-_CGUL_EXPORT void CGUL::GL::BufferData(Enum target, PtrDiff size, const void* data, Enum usage)
+_CGUL_EXPORT void CGUL::GL::BufferData(GL::Enum target, GL::SizeIPtr size, const GL::Void* data, GL::Enum usage)
 {
     GLCLEAR();
     GLVERIFY(glBufferData);
@@ -94,7 +94,7 @@ _CGUL_EXPORT void CGUL::GL::BufferData(Enum target, PtrDiff size, const void* da
     GLCHECK("Failed to set buffer data.", glBufferData);
 }
 
-_CGUL_EXPORT void CGUL::GL::CompileShader(UInt shader)
+_CGUL_EXPORT void CGUL::GL::CompileShader(GL::UInt shader)
 {
     GLCLEAR();
     GLVERIFY(glCompileShader);
@@ -111,7 +111,7 @@ _CGUL_EXPORT CGUL::UInt CGUL::GL::CreateProgram()
     return ret;
 }
 
-_CGUL_EXPORT CGUL::UInt CGUL::GL::CreateShader(Enum shaderType)
+_CGUL_EXPORT CGUL::UInt CGUL::GL::CreateShader(GL::Enum shaderType)
 {
     GLCLEAR();
     GLVERIFY(glCreateShader);
@@ -120,7 +120,7 @@ _CGUL_EXPORT CGUL::UInt CGUL::GL::CreateShader(Enum shaderType)
     return ret;
 }
 
-_CGUL_EXPORT void CGUL::GL::DeleteBuffers(SignedSize n, const UInt* buffers)
+_CGUL_EXPORT void CGUL::GL::DeleteBuffers(GL::SizeI n, const GL::UInt* buffers)
 {
     GLCLEAR();
     GLVERIFY(glDeleteBuffers);
@@ -128,7 +128,7 @@ _CGUL_EXPORT void CGUL::GL::DeleteBuffers(SignedSize n, const UInt* buffers)
     GLCHECK("Failed to delete buffers.", glDeleteBuffers);
 }
 
-_CGUL_EXPORT void CGUL::GL::DeleteVertexArrays(SignedSize n, const UInt* arrays)
+_CGUL_EXPORT void CGUL::GL::DeleteVertexArrays(GL::SizeI n, const GL::UInt* arrays)
 {
     GLCLEAR();
     GLVERIFY(glDeleteVertexArrays);
@@ -136,7 +136,7 @@ _CGUL_EXPORT void CGUL::GL::DeleteVertexArrays(SignedSize n, const UInt* arrays)
     GLCHECK("Failed to delete vertex arrays.", glDeleteVertexArrays);
 }
 
-_CGUL_EXPORT void CGUL::GL::Disable(Enum cap)
+_CGUL_EXPORT void CGUL::GL::Disable(GL::Enum cap)
 {
     GLCLEAR();
     GLVERIFY(glDisable);
@@ -144,7 +144,7 @@ _CGUL_EXPORT void CGUL::GL::Disable(Enum cap)
     GLCHECK("Failed to disable capability.", glDisable);
 }
 
-_CGUL_EXPORT void CGUL::GL::DisableVertexAttribArray(UInt index)
+_CGUL_EXPORT void CGUL::GL::DisableVertexAttribArray(GL::UInt index)
 {
     GLCLEAR();
     GLVERIFY(glDisableVertexAttribArray);
@@ -152,7 +152,7 @@ _CGUL_EXPORT void CGUL::GL::DisableVertexAttribArray(UInt index)
     GLCHECK("Failed to disable vertex attribute array.", glDisableVertexAttribArray);
 }
 
-_CGUL_EXPORT void CGUL::GL::DrawArrays(Enum mode, SInt first, SignedSize count)
+_CGUL_EXPORT void CGUL::GL::DrawArrays(GL::Enum mode, GL::Int first, GL::SizeI count)
 {
     GLCLEAR();
     GLVERIFY(glDrawArrays);
@@ -160,7 +160,7 @@ _CGUL_EXPORT void CGUL::GL::DrawArrays(Enum mode, SInt first, SignedSize count)
     GLCHECK("Failed to draw arrays.", glDrawArrays);
 }
 
-_CGUL_EXPORT void CGUL::GL::DrawElements(Enum mode, SignedSize count, Enum type, const void* indices)
+_CGUL_EXPORT void CGUL::GL::DrawElements(GL::Enum mode, GL::SizeI count, GL::Enum type, const GL::Void* indices)
 {
     GLCLEAR();
     GLVERIFY(glDrawElements);
@@ -168,7 +168,7 @@ _CGUL_EXPORT void CGUL::GL::DrawElements(Enum mode, SignedSize count, Enum type,
     GLCHECK("Failed to draw elements.", glDrawElements);
 }
 
-_CGUL_EXPORT void CGUL::GL::Enable(Enum cap)
+_CGUL_EXPORT void CGUL::GL::Enable(GL::Enum cap)
 {
     GLCLEAR();
     GLVERIFY(glEnable);
@@ -176,7 +176,7 @@ _CGUL_EXPORT void CGUL::GL::Enable(Enum cap)
     GLCHECK("Failed to enable capability.", glEnable);
 }
 
-_CGUL_EXPORT void CGUL::GL::EnableVertexAttribArray(UInt index)
+_CGUL_EXPORT void CGUL::GL::EnableVertexAttribArray(GL::UInt index)
 {
     GLCLEAR();
     GLVERIFY(glEnableVertexAttribArray);
@@ -184,7 +184,7 @@ _CGUL_EXPORT void CGUL::GL::EnableVertexAttribArray(UInt index)
     GLCHECK("Failed to enable vertex attribute array.", glEnableVertexAttribArray);
 }
 
-_CGUL_EXPORT void CGUL::GL::GenBuffers(SignedSize n, UInt* buffers)
+_CGUL_EXPORT void CGUL::GL::GenBuffers(GL::SizeI n, GL::UInt* buffers)
 {
     GLCLEAR();
     GLVERIFY(glGenBuffers);
@@ -192,7 +192,7 @@ _CGUL_EXPORT void CGUL::GL::GenBuffers(SignedSize n, UInt* buffers)
     GLCHECK("Failed to generate buffers.", glGenBuffers);
 }
 
-_CGUL_EXPORT void CGUL::GL::GenTextures(SignedSize n, UInt* textures)
+_CGUL_EXPORT void CGUL::GL::GenTextures(GL::SizeI n, GL::UInt* textures)
 {
     GLCLEAR();
     GLVERIFY(glGenTextures);
@@ -200,7 +200,7 @@ _CGUL_EXPORT void CGUL::GL::GenTextures(SignedSize n, UInt* textures)
     GLCHECK("Failed to generate textures.", glGenTextures);
 }
 
-_CGUL_EXPORT void CGUL::GL::GenVertexArrays(SignedSize n, UInt* arrays)
+_CGUL_EXPORT void CGUL::GL::GenVertexArrays(GL::SizeI n, GL::UInt* arrays)
 {
     GLCLEAR();
 #   ifdef CGUL_MACOS
@@ -214,7 +214,7 @@ _CGUL_EXPORT void CGUL::GL::GenVertexArrays(SignedSize n, UInt* arrays)
 #   endif
 }
 
-_CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(UInt program, SignedSize maxLength, SignedSize* length, char* infoLog)
+_CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(GL::UInt program, GL::SizeI maxLength, GL::SizeI* length, GL::Char* infoLog)
 {
     GLCLEAR();
     GLVERIFY(glGetProgramInfoLog);
@@ -222,7 +222,7 @@ _CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(UInt program, SignedSize maxLength
     GLCHECK("Failed to get shader info log.", glGetProgramInfoLog);
 }
 
-_CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(UInt program, String* infoLog)
+_CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(GL::UInt program, String* infoLog)
 {
     GLCLEAR();
     SInt maxLength;
@@ -238,7 +238,7 @@ _CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(UInt program, String* infoLog)
     GLCHECK("Failed to get shader info log.", glGetProgramInfoLog);
 }
 
-_CGUL_EXPORT void CGUL::GL::GetProgramiv(UInt program, Enum pname, SInt* params)
+_CGUL_EXPORT void CGUL::GL::GetProgramiv(GL::UInt program, GL::Enum pname, GL::Int* params)
 {
     GLCLEAR();
     GLVERIFY(glGetProgramiv);
@@ -246,7 +246,7 @@ _CGUL_EXPORT void CGUL::GL::GetProgramiv(UInt program, Enum pname, SInt* params)
     GLCHECK("Failed to get program parameter.", glGetProgramiv);
 }
 
-_CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(UInt shader, SignedSize maxLength, SignedSize* length, char* infoLog)
+_CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(GL::UInt shader, GL::SizeI maxLength, GL::SizeI* length, GL::Char* infoLog)
 {
     GLCLEAR();
     GLVERIFY(glGetShaderInfoLog);
@@ -254,7 +254,7 @@ _CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(UInt shader, SignedSize maxLength, 
     GLCHECK("Failed to get shader info log.", glGetShaderInfoLog);
 }
 
-_CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(UInt shader, String* infoLog)
+_CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(GL::UInt shader, String* infoLog)
 {
     GLCLEAR();
     SInt maxLength;
@@ -270,7 +270,7 @@ _CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(UInt shader, String* infoLog)
     GLCHECK("Failed to get shader info log.", glGetShaderInfoLog);
 }
 
-_CGUL_EXPORT void CGUL::GL::GetShaderiv(UInt shader, Enum pname, SInt* params)
+_CGUL_EXPORT void CGUL::GL::GetShaderiv(GL::UInt shader, GL::Enum pname, GL::Int* params)
 {
     GLCLEAR();
     GLVERIFY(glGetShaderiv);
@@ -278,7 +278,7 @@ _CGUL_EXPORT void CGUL::GL::GetShaderiv(UInt shader, Enum pname, SInt* params)
     GLCHECK("Failed to get shader parameter.", glGetShaderiv);
 }
 
-_CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(UInt program, const char* name)
+_CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(GL::UInt program, const GL::Char* name)
 {
     GLCLEAR();
     GLVERIFY(glGetUniformLocation);
@@ -287,7 +287,7 @@ _CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(UInt program, const char* n
     return ret;
 }
 
-_CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(UInt program, String& name)
+_CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(GL::UInt program, String& name)
 {
     GLCLEAR();
     GLVERIFY(glGetUniformLocation);
@@ -296,7 +296,7 @@ _CGUL_EXPORT CGUL::SInt CGUL::GL::GetUniformLocation(UInt program, String& name)
     return ret;
 }
 
-_CGUL_EXPORT void CGUL::GL::LinkProgram(UInt program)
+_CGUL_EXPORT void CGUL::GL::LinkProgram(GL::UInt program)
 {
     GLCLEAR();
     GLVERIFY(glLinkProgram);
@@ -304,7 +304,7 @@ _CGUL_EXPORT void CGUL::GL::LinkProgram(UInt program)
     GLCHECK("Failed to link program.", glLinkProgram);
 }
 
-_CGUL_EXPORT void CGUL::GL::PixelStoref(Enum pname, Float32 param)
+_CGUL_EXPORT void CGUL::GL::PixelStoref(GL::Enum pname, GL::Float param)
 {
     GLCLEAR();
     GLVERIFY(glPixelStoref);
@@ -312,7 +312,7 @@ _CGUL_EXPORT void CGUL::GL::PixelStoref(Enum pname, Float32 param)
     GLCHECK("Failed to set pixel store.", glPixelStoref);
 }
 
-_CGUL_EXPORT void CGUL::GL::PixelStorei(Enum pname, SInt param)
+_CGUL_EXPORT void CGUL::GL::PixelStorei(GL::Enum pname, GL::Int param)
 {
     GLCLEAR();
     GLVERIFY(glPixelStorei);
@@ -320,7 +320,7 @@ _CGUL_EXPORT void CGUL::GL::PixelStorei(Enum pname, SInt param)
     GLCHECK("Failed to set pixel store.", glPixelStorei);
 }
 
-_CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length)
+_CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, GL::SizeI count, const GL::Char** string, const GL::Int* length)
 {
     GLCLEAR();
     GLVERIFY(glShaderSource);
@@ -328,7 +328,7 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, SignedSize count, const ch
     GLCHECK("Failed to set the shader source.", glShaderSource);
 }
 
-_CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, const char* string)
+_CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, const GL::Char* string)
 {
     GLCLEAR();
     const char** data = &string;
@@ -338,7 +338,7 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, const char* string)
     GLCHECK("Failed to set the shader source.", glShaderSource);
 }
 
-_CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, const CGUL::String& string)
+_CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, const CGUL::String& string)
 {
     GLCLEAR();
     const char* cstr = string.GetCString();
@@ -349,7 +349,7 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(UInt shader, const CGUL::String& string
     GLCHECK("Failed to set the shader source.", glShaderSource);
 }
 
-_CGUL_EXPORT void CGUL::GL::SwapInterval(bool enable)
+_CGUL_EXPORT void CGUL::GL::SwapInterval(GL::Boolean enable)
 {
 #   ifdef CGUL_WINDOWS
     GLCLEAR();
@@ -367,7 +367,7 @@ _CGUL_EXPORT void CGUL::GL::SwapInterval(bool enable)
 #   endif
 }
 
-_CGUL_EXPORT void CGUL::GL::TexEnvf(Enum target, Enum pname, Float32 param)
+_CGUL_EXPORT void CGUL::GL::TexEnvf(GL::Enum target, GL::Enum pname, GL::Float param)
 {
     GLCLEAR();
     GLVERIFY(glTexEnvf);
@@ -375,7 +375,7 @@ _CGUL_EXPORT void CGUL::GL::TexEnvf(Enum target, Enum pname, Float32 param)
     GLCHECK("Failed to set texture environment parameters.", glTexEnvf);
 }
 
-_CGUL_EXPORT void CGUL::GL::TexEnvi(Enum target, Enum pname, SInt param)
+_CGUL_EXPORT void CGUL::GL::TexEnvi(GL::Enum target, GL::Enum pname, GL::Int param)
 {
     GLCLEAR();
     GLVERIFY(glTexEnvi);
@@ -383,7 +383,7 @@ _CGUL_EXPORT void CGUL::GL::TexEnvi(Enum target, Enum pname, SInt param)
     GLCHECK("Failed to set texture environment parameters.", glTexEnvi);
 }
 
-_CGUL_EXPORT void CGUL::GL::TexImage2D(Enum target, SInt level, SInt internalFormat, SignedSize width, SignedSize height, SInt border, Enum format, Enum type, const void* data)
+_CGUL_EXPORT void CGUL::GL::TexImage2D(GL::Enum target, GL::Int level, GL::Int internalFormat, GL::SizeI width, GL::SizeI height, GL::Int border, GL::Enum format, GL::Enum type, const GL::Void* data)
 {
     GLCLEAR();
     GLVERIFY(glTexImage2D);
@@ -391,7 +391,7 @@ _CGUL_EXPORT void CGUL::GL::TexImage2D(Enum target, SInt level, SInt internalFor
     GLCHECK("Failed to set texture 2D image.", glTexImage2D);
 }
 
-_CGUL_EXPORT void CGUL::GL::TexParameterf(Enum target, Enum pname, Float32 param)
+_CGUL_EXPORT void CGUL::GL::TexParameterf(GL::Enum target, GL::Enum pname, GL::Float param)
 {
     GLCLEAR();
     GLVERIFY(glTexParameterf);
@@ -399,7 +399,7 @@ _CGUL_EXPORT void CGUL::GL::TexParameterf(Enum target, Enum pname, Float32 param
     GLCHECK("Failed to set texture parameter.", glTexParamterf);
 }
 
-_CGUL_EXPORT void CGUL::GL::TexParameteri(Enum target, Enum pname, SInt param)
+_CGUL_EXPORT void CGUL::GL::TexParameteri(GL::Enum target, GL::Enum pname, GL::Int param)
 {
     GLCLEAR();
     GLVERIFY(glTexParameteri);
@@ -407,7 +407,7 @@ _CGUL_EXPORT void CGUL::GL::TexParameteri(Enum target, Enum pname, SInt param)
     GLCHECK("Failed to set texture parameter.", glTexParameteri);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform1f(SInt location, Float32 v0)
+_CGUL_EXPORT void CGUL::GL::Uniform1f(GL::Int location, GL::Float v0)
 {
     GLCLEAR();
     GLVERIFY(glUniform1f);
@@ -415,7 +415,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform1f(SInt location, Float32 v0)
     GLCHECK("Failed to set shader uniform.", glUniform1f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform1fv(SInt location, SignedSize count, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::Uniform1fv(GL::Int location, GL::SizeI count, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform1fv);
@@ -423,7 +423,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform1fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.", glUniform1fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform1i(SInt location, SInt v0)
+_CGUL_EXPORT void CGUL::GL::Uniform1i(GL::Int location, GL::Int v0)
 {
     GLCLEAR();
     GLVERIFY(glUniform1i);
@@ -431,7 +431,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform1i(SInt location, SInt v0)
     GLCHECK("Failed to set shader uniform.", glUniform1i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform1iv(SInt location, SignedSize count, const SInt* value)
+_CGUL_EXPORT void CGUL::GL::Uniform1iv(GL::Int location, GL::SizeI count, const GL::Int* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform1iv);
@@ -439,7 +439,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform1iv(SInt location, SignedSize count, const SI
     GLCHECK("Failed to set shader uniform.", glUniform1iv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, Float32 v0, Float32 v1)
+_CGUL_EXPORT void CGUL::GL::Uniform2f(GL::Int location, GL::Float v0, GL::Float v1)
 {
     GLCLEAR();
     GLVERIFY(glUniform2f);
@@ -447,7 +447,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, Float32 v0, Float32 v1)
     GLCHECK("Failed to set shader uniform.", glUniform2f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, const Vector2& v)
+_CGUL_EXPORT void CGUL::GL::Uniform2f(GL::Int location, const Vector2T< GL::Float >& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform2f);
@@ -455,7 +455,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2f(SInt location, const Vector2& v)
     GLCHECK("Failed to set shader uniform.", glUniform2f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::Uniform2fv(GL::Int location, GL::SizeI count, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform2fv);
@@ -463,7 +463,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.", glUniform2fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Vector2* value)
+_CGUL_EXPORT void CGUL::GL::Uniform2fv(GL::Int location, GL::SizeI count, const Vector2T< GL::Float >* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform2fv);
@@ -471,7 +471,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2fv(SInt location, SignedSize count, const Ve
     GLCHECK("Failed to set shader uniform.", glUniform2fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2i(SInt location, SInt v0, SInt v1)
+_CGUL_EXPORT void CGUL::GL::Uniform2i(GL::Int location, GL::Int v0, GL::Int v1)
 {
     GLCLEAR();
     GLVERIFY(glUniform2i);
@@ -479,7 +479,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2i(SInt location, SInt v0, SInt v1)
     GLCHECK("Failed to set shader uniform.", glUniform2i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform2iv(SInt location, SignedSize count, const SInt* value)
+_CGUL_EXPORT void CGUL::GL::Uniform2iv(GL::Int location, GL::SizeI count, const GL::Int* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform2iv);
@@ -487,7 +487,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform2iv(SInt location, SignedSize count, const SI
     GLCHECK("Failed to set shader uniform.", glUniform2iv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, Float32 v0, Float32 v1, Float32 v2)
+_CGUL_EXPORT void CGUL::GL::Uniform3f(GL::Int location, GL::Float v0, GL::Float v1, GL::Float v2)
 {
     GLCLEAR();
     GLVERIFY(glUniform3f);
@@ -495,7 +495,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, Float32 v0, Float32 v1, Flo
     GLCHECK("Failed to set shader uniform.", glUniform3f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Vector3& v)
+_CGUL_EXPORT void CGUL::GL::Uniform3f(GL::Int location, const Vector3T< GL::Float >& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform3f);
@@ -503,7 +503,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Vector3& v)
     GLCHECK("Failed to set shader uniform.", glUniform3f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Color& v)
+_CGUL_EXPORT void CGUL::GL::Uniform3f(GL::Int location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform3f);
@@ -511,7 +511,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3f(SInt location, const Color& v)
     GLCHECK("Failed to set shader uniform.", glUniform3f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::Uniform3fv(GL::Int location, GL::SizeI count, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform3fv);
@@ -519,7 +519,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.", glUniform3fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Vector3* value)
+_CGUL_EXPORT void CGUL::GL::Uniform3fv(GL::Int location, GL::SizeI count, const Vector3T< GL::Float >* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform3fv);
@@ -527,7 +527,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3fv(SInt location, SignedSize count, const Ve
     GLCHECK("Failed to set shader uniform.", glUniform3fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, SInt v0, SInt v1, SInt v2)
+_CGUL_EXPORT void CGUL::GL::Uniform3i(GL::Int location, GL::Int v0, GL::Int v1, GL::Int v2)
 {
     GLCLEAR();
     GLVERIFY(glUniform3i);
@@ -535,7 +535,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, SInt v0, SInt v1, SInt v2)
     GLCHECK("Failed to set shader uniform.", glUniform3i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, const Color& v)
+_CGUL_EXPORT void CGUL::GL::Uniform3i(GL::Int location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform3i);
@@ -543,7 +543,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3i(SInt location, const Color& v)
     GLCHECK("Failed to set shader uniform.", glUniform3i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform3iv(SInt location, SignedSize count, const SInt* value)
+_CGUL_EXPORT void CGUL::GL::Uniform3iv(GL::Int location, GL::SizeI count, const GL::Int* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform3iv);
@@ -551,7 +551,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform3iv(SInt location, SignedSize count, const SI
     GLCHECK("Failed to set shader uniform.", glUniform3iv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, Float32 v0, Float32 v1, Float32 v2, Float32 v3)
+_CGUL_EXPORT void CGUL::GL::Uniform4f(GL::Int location, GL::Float v0, GL::Float v1, GL::Float v2, GL::Float v3)
 {
     GLCLEAR();
     GLVERIFY(glUniform4f);
@@ -559,7 +559,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, Float32 v0, Float32 v1, Flo
     GLCHECK("Failed to set shader uniform.", glUniform4f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Vector4& v)
+_CGUL_EXPORT void CGUL::GL::Uniform4f(GL::Int location, const Vector4T< GL::Float >& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform4f);
@@ -567,7 +567,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Vector4& v)
     GLCHECK("Failed to set shader uniform.", glUniform4f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Color& v)
+_CGUL_EXPORT void CGUL::GL::Uniform4f(GL::Int location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform4f);
@@ -575,7 +575,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4f(SInt location, const Color& v)
     GLCHECK("Failed to set shader uniform.", glUniform4f);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::Uniform4fv(GL::Int location, GL::SizeI count, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform4fv);
@@ -583,7 +583,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Fl
     GLCHECK("Failed to set shader uniform.", glUniform4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Vector4* value)
+_CGUL_EXPORT void CGUL::GL::Uniform4fv(GL::Int location, GL::SizeI count, const Vector4T< GL::Float >* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform4fv);
@@ -591,7 +591,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4fv(SInt location, SignedSize count, const Ve
     GLCHECK("Failed to set shader uniform.", glUniform4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, SInt v0, SInt v1, SInt v2, SInt v3)
+_CGUL_EXPORT void CGUL::GL::Uniform4i(GL::Int location, GL::Int v0, GL::Int v1, GL::Int v2, GL::Int v3)
 {
     GLCLEAR();
     GLVERIFY(glUniform4i);
@@ -599,7 +599,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, SInt v0, SInt v1, SInt v2, 
     GLCHECK("Failed to set shader uniform.", glUniform4i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, const Color& v)
+_CGUL_EXPORT void CGUL::GL::Uniform4i(GL::Int location, const Color& v)
 {
     GLCLEAR();
     GLVERIFY(glUniform4i);
@@ -607,7 +607,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4i(SInt location, const Color& v)
     GLCHECK("Failed to set shader uniform.", glUniform4i);
 }
 
-_CGUL_EXPORT void CGUL::GL::Uniform4iv(SInt location, SignedSize count, const SInt* value)
+_CGUL_EXPORT void CGUL::GL::Uniform4iv(GL::Int location, GL::SizeI count, const GL::Int* value)
 {
     GLCLEAR();
     GLVERIFY(glUniform4iv);
@@ -615,7 +615,7 @@ _CGUL_EXPORT void CGUL::GL::Uniform4iv(SInt location, SignedSize count, const SI
     GLCHECK("Failed to set shader uniform.", glUniform4iv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix2fv(SInt location, SignedSize count, bool transpose, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix2fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix2fv);
@@ -623,7 +623,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix2fv(SInt location, SignedSize count, bo
     GLCHECK("Failed to set shader uniform.", glUniformMatrix2fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix3fv(SInt location, SignedSize count, bool transpose, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix3fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix3fv);
@@ -631,7 +631,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix3fv(SInt location, SignedSize count, bo
     GLCHECK("Failed to set shader uniform.", glUnofirmMatrix3fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix4f(SInt location, bool transpose, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix4f(GL::Int location, GL::Boolean transpose, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix4fv);
@@ -639,7 +639,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix4f(SInt location, bool transpose, const
     GLCHECK("Failed to set shader uniform.", glUniformMatrix4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix4f(SInt location, bool transpose, const MatrixT< Float32 >& value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix4f(GL::Int location, GL::Boolean transpose, const MatrixT< GL::Float >& value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix4fv);
@@ -647,7 +647,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix4f(SInt location, bool transpose, const
     GLCHECK("Failed to set shader uniform.", glUniformMatrix4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const Float32* value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix4fv);
@@ -655,7 +655,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(SInt location, SignedSize count, bo
     GLCHECK("Failed to set shader uniform.", glUniformMatrix4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const Matrix* value)
+_CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const MatrixT< GL::Float >* value)
 {
     GLCLEAR();
     GLVERIFY(glUniformMatrix4fv);
@@ -663,7 +663,7 @@ _CGUL_EXPORT void CGUL::GL::UniformMatrix4fv(SInt location, SignedSize count, bo
     GLCHECK("Failed to set shader uniform.", glUniformMatrix4fv);
 }
 
-_CGUL_EXPORT void CGUL::GL::UseProgram(UInt program)
+_CGUL_EXPORT void CGUL::GL::UseProgram(GL::UInt program)
 {
     GLCLEAR();
     GLVERIFY(glUseProgram);
@@ -671,7 +671,7 @@ _CGUL_EXPORT void CGUL::GL::UseProgram(UInt program)
     GLCHECK("Failed to use program.", glUseProgram);
 }
 
-_CGUL_EXPORT void CGUL::GL::ValidateProgram(UInt program)
+_CGUL_EXPORT void CGUL::GL::ValidateProgram(GL::UInt program)
 {
     GLCLEAR();
     GLVERIFY(glValidateProgram);
@@ -679,7 +679,7 @@ _CGUL_EXPORT void CGUL::GL::ValidateProgram(UInt program)
     GLCHECK("Failed to validate program.", glValidateProgram);
 }
 
-_CGUL_EXPORT void CGUL::GL::VertexAttribIPointer(UInt index, SInt size, Enum type, SignedSize stride, const void* pointer)
+_CGUL_EXPORT void CGUL::GL::VertexAttribIPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer)
 {
     GLCLEAR();
     GLVERIFY(glVertexAttribIPointer);
@@ -687,7 +687,7 @@ _CGUL_EXPORT void CGUL::GL::VertexAttribIPointer(UInt index, SInt size, Enum typ
     GLCHECK("Failed to set vertex attribute pointer.", glVertexAttribIPointer);
 }
 
-_CGUL_EXPORT void CGUL::GL::VertexAttribLPointer(UInt index, SInt size, Enum type, SignedSize stride, const void* pointer)
+_CGUL_EXPORT void CGUL::GL::VertexAttribLPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer)
 {
     GLCLEAR();
     GLVERIFY(glVertexAttribLPointer);
@@ -695,7 +695,7 @@ _CGUL_EXPORT void CGUL::GL::VertexAttribLPointer(UInt index, SInt size, Enum typ
     GLCHECK("Failed to set vertex attribute pointer.", glVertexAttribLPointer);
 }
 
-_CGUL_EXPORT void CGUL::GL::VertexAttribPointer(UInt index, SInt size, Enum type, bool normalized, SignedSize stride, const void* pointer)
+_CGUL_EXPORT void CGUL::GL::VertexAttribPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::Boolean normalized, GL::SizeI stride, const GL::Void* pointer)
 {
     GLCLEAR();
     GLVERIFY(glVertexAttribPointer);

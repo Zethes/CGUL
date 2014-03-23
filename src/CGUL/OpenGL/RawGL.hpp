@@ -23,98 +23,121 @@ namespace CGUL
     // Nitpick: For convenience, these should be in alphabetical order
     namespace GL
     {
-        _CGUL_EXPORT void ActiveTexture(Enum target);
-        _CGUL_EXPORT void AttachShader(UInt program, UInt shader);
+        typedef unsigned int Enum;
+        typedef unsigned int Bitfield;
+        typedef unsigned int UInt;
+        typedef int Int;
+        typedef int SizeI;
+        typedef unsigned char Boolean;
+        typedef signed char Byte;
+        typedef short Short;
+        typedef unsigned char UByte;
+        typedef unsigned short UShort;
+        typedef unsigned long ULong;
+        typedef float Float;
+        typedef float ClampF;
+        typedef double Double;
+        typedef double ClampD;
+        typedef void Void;
+        typedef CGUL::SInt64 GLint64EXT;
+        typedef CGUL::UInt64 GLuint64EXT;
+        typedef char Char;
 
-        _CGUL_EXPORT void BindAttribLocation(UInt program, UInt index, const char* name);
-        _CGUL_EXPORT void BindAttribLocation(UInt program, UInt index, const String& name);
-        _CGUL_EXPORT void BindBuffer(Enum target, UInt buffer);
-        _CGUL_EXPORT void BindTexture(Enum target, UInt texture);
-        _CGUL_EXPORT void BindVertexArray(UInt array);
-        _CGUL_EXPORT void BlendFunc(Enum sfactor, Enum dfactor);
-        _CGUL_EXPORT void BlendFunci(UInt buf, Enum sfactor, Enum dfactor);
-        _CGUL_EXPORT void BufferData(Enum target, PtrDiff size, const void* data, Enum usage);
+        typedef CGUL::PtrDiff IntPtr;
+        typedef CGUL::PtrDiff SizeIPtr;
 
-        _CGUL_EXPORT void CompileShader(UInt shader);
+        _CGUL_EXPORT void ActiveTexture(GL::Enum target);
+        _CGUL_EXPORT void AttachShader(GL::UInt program, GL::UInt shader);
+
+        _CGUL_EXPORT void BindAttribLocation(GL::UInt program, GL::UInt index, const GL::Char* name);
+        _CGUL_EXPORT void BindAttribLocation(GL::UInt program, GL::UInt index, const String& name);
+        _CGUL_EXPORT void BindBuffer(GL::Enum target, GL::UInt buffer);
+        _CGUL_EXPORT void BindTexture(GL::Enum target, GL::UInt texture);
+        _CGUL_EXPORT void BindVertexArray(GL::UInt array);
+        _CGUL_EXPORT void BlendFunc(GL::Enum sfactor, GL::Enum dfactor);
+        _CGUL_EXPORT void BlendFunci(GL::UInt buf, GL::Enum sfactor, GL::Enum dfactor);
+        _CGUL_EXPORT void BufferData(GL::Enum target, GL::SizeIPtr size, const GL::Void* data, GL::Enum usage);
+
+        _CGUL_EXPORT void CompileShader(GL::UInt shader);
         _CGUL_EXPORT UInt CreateProgram();
-        _CGUL_EXPORT UInt CreateShader(Enum shaderType);
+        _CGUL_EXPORT UInt CreateShader(GL::Enum shaderType);
 
-        _CGUL_EXPORT void DeleteBuffers(SignedSize n, const UInt* buffers);
-        _CGUL_EXPORT void DeleteVertexArrays(SignedSize n, const UInt* arrays);
-        _CGUL_EXPORT void Disable(Enum cap);
-        _CGUL_EXPORT void DisableVertexAttribArray(UInt index);
-        _CGUL_EXPORT void DrawArrays(Enum mode, SInt first, SignedSize count);
-        _CGUL_EXPORT void DrawElements(Enum mode, SignedSize count, Enum type, const void* indices);
+        _CGUL_EXPORT void DeleteBuffers(GL::SizeI n, const GL::UInt* buffers);
+        _CGUL_EXPORT void DeleteVertexArrays(GL::SizeI n, const GL::UInt* arrays);
+        _CGUL_EXPORT void Disable(GL::Enum cap);
+        _CGUL_EXPORT void DisableVertexAttribArray(GL::UInt index);
+        _CGUL_EXPORT void DrawArrays(GL::Enum mode, GL::Int first, GL::SizeI count);
+        _CGUL_EXPORT void DrawElements(GL::Enum mode, GL::SizeI count, GL::Enum type, const GL::Void* indices);
 
-        _CGUL_EXPORT void Enable(Enum cap);
-        _CGUL_EXPORT void EnableVertexAttribArray(UInt index);
+        _CGUL_EXPORT void Enable(GL::Enum cap);
+        _CGUL_EXPORT void EnableVertexAttribArray(GL::UInt index);
 
-        _CGUL_EXPORT void GenBuffers(SignedSize n, UInt* buffers);
-        _CGUL_EXPORT void GenTextures(SignedSize n, UInt* textures);
-        _CGUL_EXPORT void GenVertexArrays(SignedSize n, UInt* arrays);
-        _CGUL_EXPORT void GetProgramInfoLog(UInt program, SignedSize maxLength, SignedSize* length, char* infoLog);
-        _CGUL_EXPORT void GetProgramInfoLog(UInt program, String* infoLog);
-        _CGUL_EXPORT void GetProgramiv(UInt program, Enum pname, SInt* params);
-        _CGUL_EXPORT void GetShaderInfoLog(UInt shader, SignedSize maxLength, SignedSize* length, char* infoLog);
-        _CGUL_EXPORT void GetShaderInfoLog(UInt shader, String* infoLog);
-        _CGUL_EXPORT void GetShaderiv(UInt shader, Enum pname, SInt* params);
-        _CGUL_EXPORT SInt GetUniformLocation(UInt program, const char* name);
-        _CGUL_EXPORT SInt GetUniformLocation(UInt program, String& name);
+        _CGUL_EXPORT void GenBuffers(GL::SizeI n, GL::UInt* buffers);
+        _CGUL_EXPORT void GenTextures(GL::SizeI n, GL::UInt* textures);
+        _CGUL_EXPORT void GenVertexArrays(GL::SizeI n, UInt* arrays);
+        _CGUL_EXPORT void GetProgramInfoLog(GL::UInt program, GL::SizeI maxLength, GL::SizeI* length, GL::Char* infoLog);
+        _CGUL_EXPORT void GetProgramInfoLog(GL::UInt program, String* infoLog);
+        _CGUL_EXPORT void GetProgramiv(GL::UInt program, Enum pname, GL::Int* params);
+        _CGUL_EXPORT void GetShaderInfoLog(GL::UInt shader, GL::SizeI maxLength, GL::SizeI* length, GL::Char* infoLog);
+        _CGUL_EXPORT void GetShaderInfoLog(GL::UInt shader, String* infoLog);
+        _CGUL_EXPORT void GetShaderiv(GL::UInt shader, GL::Enum pname, GL::Int* params);
+        _CGUL_EXPORT SInt GetUniformLocation(GL::UInt program, const GL::Char* name);
+        _CGUL_EXPORT SInt GetUniformLocation(GL::UInt program, String& name);
 
-        _CGUL_EXPORT void LinkProgram(UInt program);
+        _CGUL_EXPORT void LinkProgram(GL::UInt program);
 
-        _CGUL_EXPORT void PixelStoref(Enum pname, Float32 param);
-        _CGUL_EXPORT void PixelStorei(Enum pname, SInt param);
+        _CGUL_EXPORT void PixelStoref(GL::Enum pname, GL::Float param);
+        _CGUL_EXPORT void PixelStorei(GL::Enum pname, GL::Int param);
 
-        _CGUL_EXPORT void ShaderSource(UInt shader, SignedSize count, const char** string, const SInt* length);
-        _CGUL_EXPORT void ShaderSource(UInt shader, const char* string);
-        _CGUL_EXPORT void ShaderSource(UInt shader, const String& string);
-        _CGUL_EXPORT void SwapInterval(bool enable);
+        _CGUL_EXPORT void ShaderSource(GL::UInt shader, SignedSize count, const char** string, const SInt* length);
+        _CGUL_EXPORT void ShaderSource(GL::UInt shader, const GL::Char* string);
+        _CGUL_EXPORT void ShaderSource(GL::UInt shader, const String& string);
+        _CGUL_EXPORT void SwapInterval(GL::Boolean enable);
 
-        _CGUL_EXPORT void TexEnvf(Enum target, Enum pname, Float32 param);
-        _CGUL_EXPORT void TexEnvi(Enum target, Enum pname, SInt param);
-        _CGUL_EXPORT void TexImage2D(Enum target, SInt level, SInt internalFormat, SignedSize width, SignedSize height, SInt border, Enum format, Enum type, const void* data);
-        _CGUL_EXPORT void TexParameterf(Enum target, Enum pname, Float32 param);
-        _CGUL_EXPORT void TexParameteri(Enum target, Enum pname, SInt param);
+        _CGUL_EXPORT void TexEnvf(GL::Enum target, GL::Enum pname, GL::Float param);
+        _CGUL_EXPORT void TexEnvi(GL::Enum target, GL::Enum pname, GL::Int param);
+        _CGUL_EXPORT void TexImage2D(GL::Enum target, GL::Int level, GL::Int internalFormat, GL::SizeI width, GL::SizeI height, GL::Int border, GL::Enum format, GL::Enum type, const GL::Void* data);
+        _CGUL_EXPORT void TexParameterf(GL::Enum target, GL::Enum pname, GL::Float param);
+        _CGUL_EXPORT void TexParameteri(GL::Enum target, GL::Enum pname, GL::Int param);
 
-        _CGUL_EXPORT void Uniform1f(SInt location, Float32 v0);
-        _CGUL_EXPORT void Uniform1fv(SInt location, SignedSize count, const Float32* value);
-        _CGUL_EXPORT void Uniform1i(SInt location, SInt v0);
-        _CGUL_EXPORT void Uniform1iv(SInt location, SignedSize count, const SInt* value);
-        _CGUL_EXPORT void Uniform2f(SInt location, Float32 v0, Float32 v1);
-        _CGUL_EXPORT void Uniform2f(SInt location, const Vector2& v);
-        _CGUL_EXPORT void Uniform2fv(SInt location, SignedSize count, const Float32* value);
-        _CGUL_EXPORT void Uniform2fv(SInt location, SignedSize count, const Vector2* value);
-        _CGUL_EXPORT void Uniform2i(SInt location, SInt v0, SInt v1);
-        _CGUL_EXPORT void Uniform2iv(SInt location, SignedSize count, const SInt* value);
-        _CGUL_EXPORT void Uniform3f(SInt location, Float32 v0, Float32 v1, Float32 v2);
-        _CGUL_EXPORT void Uniform3f(SInt location, const Vector3& v);
-        _CGUL_EXPORT void Uniform3f(SInt location, const Color& v);
-        _CGUL_EXPORT void Uniform3fv(SInt location, SignedSize count, const Float32* value);
-        _CGUL_EXPORT void Uniform3fv(SInt location, SignedSize count, const Vector3* value);
-        _CGUL_EXPORT void Uniform3i(SInt location, SInt v0, SInt v1, SInt v2);
-        _CGUL_EXPORT void Uniform3i(SInt location, const Color& color);
-        _CGUL_EXPORT void Uniform3iv(SInt location, SignedSize count, const SInt* value);
-        _CGUL_EXPORT void Uniform4f(SInt location, Float32 v0, Float32 v1, Float32 v2, Float32 v3);
-        _CGUL_EXPORT void Uniform4f(SInt location, const Vector4& v);
-        _CGUL_EXPORT void Uniform4f(SInt location, const Color& v);
-        _CGUL_EXPORT void Uniform4fv(SInt location, SignedSize count, const Float32* value);
-        _CGUL_EXPORT void Uniform4fv(SInt location, SignedSize count, const Vector4* value);
-        _CGUL_EXPORT void Uniform4i(SInt location, SInt v0, SInt v1, SInt v2, SInt v3);
-        _CGUL_EXPORT void Uniform4i(SInt location, const Color& color);
-        _CGUL_EXPORT void Uniform4iv(SInt location, SignedSize count, const SInt* value);
-        _CGUL_EXPORT void UniformMatrix2fv(SInt location, SignedSize count, bool transpose, const Float32* value);
-        _CGUL_EXPORT void UniformMatrix3fv(SInt location, SignedSize count, bool transpose, const Float32* value);
-        _CGUL_EXPORT void UniformMatrix4f(SInt location, bool transpose, const Float32* value);
-        _CGUL_EXPORT void UniformMatrix4f(SInt location, bool transpose, const MatrixT< Float32 >& value);
-        _CGUL_EXPORT void UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const Float32* value);
-        _CGUL_EXPORT void UniformMatrix4fv(SInt location, SignedSize count, bool transpose, const MatrixT< Float32 >* value);
-        _CGUL_EXPORT void UseProgram(UInt program);
+        _CGUL_EXPORT void Uniform1f(GL::Int location, GL::Float v0);
+        _CGUL_EXPORT void Uniform1fv(GL::Int location, GL::SizeI count, const GL::Float* value);
+        _CGUL_EXPORT void Uniform1i(GL::Int location, GL::Int v0);
+        _CGUL_EXPORT void Uniform1iv(GL::Int location, GL::SizeI count, const GL::Int* value);
+        _CGUL_EXPORT void Uniform2f(GL::Int location, GL::Float v0, GL::Float v1);
+        _CGUL_EXPORT void Uniform2f(GL::Int location, const Vector2T< GL::Float >& v);
+        _CGUL_EXPORT void Uniform2fv(GL::Int location, GL::SizeI count, const GL::Float* value);
+        _CGUL_EXPORT void Uniform2fv(GL::Int location, GL::SizeI count, const Vector2T< GL::Float >* value);
+        _CGUL_EXPORT void Uniform2i(GL::Int location, GL::Int v0, GL::Int v1);
+        _CGUL_EXPORT void Uniform2iv(GL::Int location, GL::SizeI count, const GL::Int* value);
+        _CGUL_EXPORT void Uniform3f(GL::Int location, GL::Float v0, GL::Float v1, GL::Float v2);
+        _CGUL_EXPORT void Uniform3f(GL::Int location, const Vector3T< GL::Float >& v);
+        _CGUL_EXPORT void Uniform3f(GL::Int location, const Color& v);
+        _CGUL_EXPORT void Uniform3fv(GL::Int location, GL::SizeI count, const GL::Float* value);
+        _CGUL_EXPORT void Uniform3fv(GL::Int location, GL::SizeI count, const Vector3T< GL::Float >* value);
+        _CGUL_EXPORT void Uniform3i(GL::Int location, GL::Int v0, GL::Int v1, GL::Int v2);
+        _CGUL_EXPORT void Uniform3i(GL::Int location, const Color& color);
+        _CGUL_EXPORT void Uniform3iv(GL::Int location, GL::SizeI count, const GL::Int* value);
+        _CGUL_EXPORT void Uniform4f(GL::Int location, GL::Float v0, GL::Float v1, GL::Float v2, GL::Float v3);
+        _CGUL_EXPORT void Uniform4f(GL::Int location, const Vector4T< GL::Float >& v);
+        _CGUL_EXPORT void Uniform4f(GL::Int location, const Color& v);
+        _CGUL_EXPORT void Uniform4fv(GL::Int location, GL::SizeI count, const GL::Float* value);
+        _CGUL_EXPORT void Uniform4fv(GL::Int location, GL::SizeI count, const Vector4T< GL::Float >* value);
+        _CGUL_EXPORT void Uniform4i(GL::Int location, GL::Int v0, GL::Int v1, GL::Int v2, GL::Int v3);
+        _CGUL_EXPORT void Uniform4i(GL::Int location, const Color& color);
+        _CGUL_EXPORT void Uniform4iv(GL::Int location, GL::SizeI count, const GL::Int* value);
+        _CGUL_EXPORT void UniformMatrix2fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value);
+        _CGUL_EXPORT void UniformMatrix3fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value);
+        _CGUL_EXPORT void UniformMatrix4f(GL::Int location, GL::Boolean transpose, const GL::Float* value);
+        _CGUL_EXPORT void UniformMatrix4f(GL::Int location, GL::Boolean transpose, const MatrixT< GL::Float >& value);
+        _CGUL_EXPORT void UniformMatrix4fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const GL::Float* value);
+        _CGUL_EXPORT void UniformMatrix4fv(GL::Int location, GL::SizeI count, GL::Boolean transpose, const MatrixT< GL::Float >* value);
+        _CGUL_EXPORT void UseProgram(GL::UInt program);
 
-        _CGUL_EXPORT void ValidateProgram(UInt program);
-        _CGUL_EXPORT void VertexAttribIPointer(UInt index, SInt size, Enum type, SignedSize stride, const void* pointer);
-        _CGUL_EXPORT void VertexAttribLPointer(UInt index, SInt size, Enum type, SignedSize stride, const void* pointer);
-        _CGUL_EXPORT void VertexAttribPointer(UInt index, SInt size, Enum type, bool normalized, SignedSize stride, const void* pointer);
+        _CGUL_EXPORT void ValidateProgram(GL::UInt program);
+        _CGUL_EXPORT void VertexAttribIPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer);
+        _CGUL_EXPORT void VertexAttribLPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer);
+        _CGUL_EXPORT void VertexAttribPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::Boolean normalized, SignedSize stride, const GL::Void* pointer);
     }
 }
 #include "../External/Undefines.hpp"
