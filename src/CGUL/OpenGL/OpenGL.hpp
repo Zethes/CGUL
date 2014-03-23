@@ -118,7 +118,7 @@ namespace CGUL
         _CGUL_EXPORT void PixelStoref(GL::Enum pname, GL::Float param);
         _CGUL_EXPORT void PixelStorei(GL::Enum pname, GL::Int param);
 
-        _CGUL_EXPORT void ShaderSource(GL::UInt shader, SignedSize count, const char** string, const SInt* length);
+        _CGUL_EXPORT void ShaderSource(GL::UInt shader, GL::SizeI count, const char** string, const GL::Int* length);
         _CGUL_EXPORT void ShaderSource(GL::UInt shader, const GL::Char* string);
         _CGUL_EXPORT void ShaderSource(GL::UInt shader, const String& string);
         _CGUL_EXPORT void SwapInterval(GL::Boolean enable);
@@ -166,7 +166,7 @@ namespace CGUL
         _CGUL_EXPORT void ValidateProgram(GL::UInt program);
         _CGUL_EXPORT void VertexAttribIPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer);
         _CGUL_EXPORT void VertexAttribLPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer);
-        _CGUL_EXPORT void VertexAttribPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::Boolean normalized, SignedSize stride, const GL::Void* pointer);
+        _CGUL_EXPORT void VertexAttribPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::Boolean normalized, GL::SizeI stride, const GL::Void* pointer);
     }
 }
 #include "../External/Undefines.hpp"
