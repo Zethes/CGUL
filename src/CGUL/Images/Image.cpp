@@ -22,7 +22,7 @@ _CGUL_EXPORT CGUL::Image* CGUL::Image::AdjustBrightness(Image* img, Float32 amt)
         {
             if (j < 4) //Ignore alpha channel
             {
-                ((Byte*)out->data)[i+j] = Math::Max(Math::Min(data[i+j] * amt, 255.0f), 0.0f);
+                ((Byte*)out->data)[i+j] = (Byte)Math::Max(Math::Min(data[i+j] * amt, 255.0f), 0.0f);
             }
         }
     }
@@ -43,7 +43,7 @@ _CGUL_EXPORT CGUL::Image* CGUL::Image::GetNegative(Image* img)
         {
             if (j < 4) //Ignore alpha channel
             {
-                ((Byte*)out->data)[i+j] = Math::Max(Math::Min(255.0f - data[i+j], 255.0f), 0.0f);
+                ((Byte*)out->data)[i+j] = (Byte)Math::Max(Math::Min(255.0f - data[i+j], 255.0f), 0.0f);
             }
         }
     }
@@ -164,7 +164,7 @@ _CGUL_EXPORT CGUL::Image* CGUL::Image::Mix(Image* one, Image* two, UInt32 method
                         res = Math::Min(x + y, 255);
                     break;
                     case ImageMixMethods::AMPLITUDE:
-                        res = Math::Floor(Math::Sqrt(Float32(x * x + x * x)) / (Float32)Math::Sqrt2);
+                        res = (Byte)Math::Floor(Math::Sqrt(Float32(x * x + x * x)) / (Float32)Math::Sqrt2);
                     break;
                     case ImageMixMethods::AND:
                         res = x & y;
@@ -173,10 +173,10 @@ _CGUL_EXPORT CGUL::Image* CGUL::Image::Mix(Image* one, Image* two, UInt32 method
                         res = (x + y) / 2;
                     break;
                     case ImageMixMethods::CROSS_FADING:
-                        res = Math::Floor(Float32(x) * 0.75f + Float32(y) * 0.25f);
+                        res = (Byte)Math::Floor(Float32(x) * 0.75f + Float32(y) * 0.25f);
                     break;
                     case ImageMixMethods::DIFF:
-                        res = Math::Abs(Float32(x) - Float32(y));
+                        res = (Byte)Math::Abs(Float32(x) - Float32(y));
                     break;
                     case ImageMixMethods::MAX:
                         res = Math::Max(x, y);
@@ -185,13 +185,13 @@ _CGUL_EXPORT CGUL::Image* CGUL::Image::Mix(Image* one, Image* two, UInt32 method
                         res = Math::Min(x, y);
                     break;
                     case ImageMixMethods::MULTIPLY:
-                        res = Math::Floor(255.0f * (Float32(x) / 255.0f * Float32(y) / 255.0f));
+                        res = (Byte)Math::Floor(255.0f * (Float32(x) / 255.0f * Float32(y) / 255.0f));
                     break;
                     case ImageMixMethods::OR:
                         res = x | y;
                     break;
                     case ImageMixMethods::SUBTRACT:
-                        res = Math::Max(Float32(x) - Float32(y), 0.0f);
+                        res = (Byte)Math::Max(Float32(x) - Float32(y), 0.0f);
                     break;
                     case ImageMixMethods::XOR:
                         res = x ^ y;

@@ -63,7 +63,7 @@ CGUL::Angle::Angle(CGUL::Float32 radians)
     SetRadians(radians);
 }
 
-CGUL::Angle::Angle(const Vector2& direction)
+CGUL::Angle::Angle(const Vector2F& direction)
 {
     SetDirection(direction);
 }
@@ -105,7 +105,7 @@ CGUL::Float32 CGUL::Angle::GetDegreesPositive() const
     return Math::RadToDeg(GetRadiansPositive());
 }
 
-void CGUL::Angle::SetDirection(const Vector2& direction)
+void CGUL::Angle::SetDirection(const Vector2F& direction)
 {
     if (direction.GetSquaredMagnitude() == 1)
     {
@@ -113,14 +113,14 @@ void CGUL::Angle::SetDirection(const Vector2& direction)
     }
     else
     {
-        Vector2 dir = Vector2::Normalized(direction);
+        Vector2F dir = Vector2F::Normalized(direction);
         radians = Math::ATan2(dir.y, dir.x);
     }
 }
 
-CGUL::Vector2 CGUL::Angle::GetDirection() const
+CGUL::Vector2F CGUL::Angle::GetDirection() const
 {
-    return Vector2(Math::Cos(radians), Math::Sin(radians));
+    return Vector2F(Math::Cos(radians), Math::Sin(radians));
 }
 
 void CGUL::Angle::Constrain(Angle from, Angle to)

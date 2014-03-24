@@ -366,7 +366,7 @@ void CGUL::Network::HTTPRequest::ParseResponseHead()
         }
         else if (parts[0] == "Content-Length:")
         {
-            header.contentLength = parts[1].To<UInt>(0);
+            header.contentLength = parts[1].To<UIntN>(0);
 
             header.contentLengthString = "";
             for (unsigned int j = 1; j < parts.size(); j++)
@@ -722,7 +722,7 @@ void CGUL::Network::HTTPRequest::ParseResponseHead()
     }
 }
 
-CGUL::String CGUL::Network::HTTPRequest::EncodeString(const char* buffer, UInt len)
+CGUL::String CGUL::Network::HTTPRequest::EncodeString(const char* buffer, UIntN len)
 {
     String ret = "";
 

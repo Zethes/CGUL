@@ -174,14 +174,24 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
-    typedef Vector4T< Float32 > Vector4;
-    typedef Vector4T< Float32 > Vector4D;
-    typedef Vector4T< SInt16  > SRect16;
-    typedef Vector4T< SInt32  > SRect32;
-    typedef Vector4T< SInt64  > SRect64;
-    typedef Vector4T< UInt16  > URect16;
-    typedef Vector4T< UInt32  > URect32;
-    typedef Vector4T< UInt64  > URect64;
+    typedef Vector4T< Float32  > Vector4F;
+    typedef Vector4T< Float64  > Vector4D;
+    typedef Vector4T< SInt8    > SRect8;
+    typedef Vector4T< UInt8    > URect8;
+    typedef Vector4T< SInt16   > SRect16;
+    typedef Vector4T< UInt16   > URect16;
+    typedef Vector4T< SInt32   > SRect32;
+    typedef Vector4T< UInt32   > URect32;
+    typedef Vector4T< SInt64   > SRect64;
+    typedef Vector4T< UInt64   > URect64;
+    typedef Vector4T< SIntF8   > SRectF8;
+    typedef Vector4T< UIntF8   > URectF8;
+    typedef Vector4T< SIntF16  > SRectF16;
+    typedef Vector4T< UIntF16  > URectF16;
+    typedef Vector4T< SIntF32  > SRectF32;
+    typedef Vector4T< UIntF32  > URectF32;
+    typedef Vector4T< SIntF64  > SRectF64;
+    typedef Vector4T< UIntF64  > URectF64;
 }
 
 #include "../External/Undefines.hpp"

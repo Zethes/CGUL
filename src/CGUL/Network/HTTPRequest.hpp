@@ -23,23 +23,23 @@ namespace CGUL
         {
             String accessControlAllowOrigin;
             String acceptRanges;
-            SInt age;
+            SIntN age;
             String ageString;
             String allow;
             String cacheControl;
-            SInt charset;
+            SIntN charset;
             String charsetString;
-            SInt connection;
+            SIntN connection;
             String connectionString;
             String contentDisposition;
-            SInt contentEncoding;
+            SIntN contentEncoding;
             String contentEncodingString;
             String contentLanguage;
-            UInt contentLength;
+            UIntN contentLength;
             String contentLengthString;
             String contentLocation;
             String contentMD5;
-            SInt contentRangeMin, contentRangeMax;
+            SIntN contentRangeMin, contentRangeMax;
             String contentRangeString;
             String contentType;
             String date;
@@ -52,21 +52,21 @@ namespace CGUL
             String p3p;
             String pragma;
             String proxyAuthenticate;
-            SInt refresh;
+            SIntN refresh;
             String refreshString;
             String refreshUrl;
-            SInt retryAfter;
+            SIntN retryAfter;
             String retryAfterString;
             String server;
             String setCookie;
             String setCookieID;
-            SInt setCookieValue;
-            SInt setCookieVersion;
-            SInt status;
+            SIntN setCookieValue;
+            SIntN setCookieVersion;
+            SIntN status;
             String statusString;
             String strictTransportSecurity;
             String trailer;
-            SInt transferEncoding;
+            SIntN transferEncoding;
             String transferEncodingString;
             String vary;
             String via;
@@ -90,7 +90,7 @@ namespace CGUL
 
             bool PerformRequest(UInt32 timeout);
             void ParseResponseHead();
-            String EncodeString(const char* buffer, UInt len);
+            String EncodeString(const char* buffer, UIntN len);
         public:
             HTTPRequest();
             ~HTTPRequest();

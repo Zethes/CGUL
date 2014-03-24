@@ -367,7 +367,7 @@ _CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(GL::UInt program, GL::SizeI maxLen
 _CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(GL::UInt program, String* infoLog)
 {
     GLCLEAR();
-    SInt maxLength;
+    GL::Int maxLength;
     GLVERIFY(glGetProgramiv);
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
     // TODO: length could be 0 if there is no log info, need to handle that case
@@ -399,7 +399,7 @@ _CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(GL::UInt shader, GL::SizeI maxLengt
 _CGUL_EXPORT void CGUL::GL::GetShaderInfoLog(GL::UInt shader, String* infoLog)
 {
     GLCLEAR();
-    SInt maxLength;
+    GL::Int maxLength;
     GLVERIFY(glGetShaderiv);
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
     // TODO: length could be 0 if there is no log info, need to handle that case
@@ -474,7 +474,7 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, const GL::Char* string
 {
     GLCLEAR();
     const char** data = &string;
-    SInt length = (SInt)strlen(string);
+    GL::Int length = (GL::Int)strlen(string);
     GLVERIFY(glShaderSource);
     glShaderSource(shader, 1, data, &length);
     GLCHECK("Failed to set the shader source.", glShaderSource);
@@ -485,7 +485,7 @@ _CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, const CGUL::String& st
     GLCLEAR();
     const char* cstr = string.GetCString();
     const char** data = &cstr;
-    SInt length = (SInt)string.GetLength();
+    GL::Int length = (GL::Int)string.GetLength();
     GLVERIFY(glShaderSource);
     glShaderSource(shader, 1, data, &length);
     GLCHECK("Failed to set the shader source.", glShaderSource);

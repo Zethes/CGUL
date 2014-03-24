@@ -159,7 +159,7 @@ namespace CGUL
 
     /** @brief A 4x4 matrix with 32 bit float data types.
      */
-    typedef MatrixT<Float32> Matrix;
+    typedef MatrixT<Float32> MatrixF;
     /** @brief A 4x4 matrix with 64 bit float data types.
      */
     typedef MatrixT<Float64> MatrixD;
