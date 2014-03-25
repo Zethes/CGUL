@@ -659,7 +659,7 @@ _CGUL_EXPORT CGUL::JSON::Value CGUL::JSON::ParseString(String str)
                             charCode += (copy[j]-'0')*place;
                             place *= 16;
                         }
-                        else if (copy[j] >= 'a' || copy[j] <= 'f' )
+                        else if (copy[j] >= 'a' && copy[j] <= 'f' )
                         {
                             charCode += (copy[j] - 'a' + 10) * place;
                             place *= 16;
