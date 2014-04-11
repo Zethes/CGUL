@@ -188,7 +188,7 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
-    typedef Vector3T< Float32 > Vector3;
+    typedef Vector3T< Float32 > Vector3F;
     typedef Vector3T< Float64 > Vector3D;
 }
 

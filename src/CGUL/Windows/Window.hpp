@@ -66,7 +66,7 @@ namespace CGUL
 #       ifdef CGUL_WINDOWS
         _CGUL_HWND handle;
 
-        char className[20];
+        wchar_t className[20];
 
         _CGUL_HGDIOBJ backgroundBrush;
 

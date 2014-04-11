@@ -96,6 +96,7 @@
 
 #include "CGUL/Images/Color.hpp"
 #include "CGUL/Images/Colors.hpp"
+#include "CGUL/Images/Filter.hpp"
 #include "CGUL/Images/Format.hpp"
 #include "CGUL/Images/Image.hpp"
 #include "CGUL/Images/ImageHandler.hpp"
@@ -106,6 +107,7 @@
 #ifdef PNG_FOUND
 #   include "CGUL/Images/PNG.hpp"
 #endif
+#include "CGUL/Images/PPM.hpp"
 
 #include "CGUL/Math/Angle.hpp"
 #include "CGUL/Math/Constants.hpp"
@@ -128,17 +130,9 @@
 #endif
 
 #ifdef CGUL_USE_OPENGL
-#   include "CGUL/OpenGL/Buffer.hpp"
 #   include "CGUL/OpenGL/Context.hpp"
-#   include "CGUL/OpenGL/FrameBuffer.hpp"
 #   include "CGUL/OpenGL/GL.hpp"
 #   include "CGUL/OpenGL/OpenGL.hpp"
-#   include "CGUL/OpenGL/Program.hpp"
-#   include "CGUL/OpenGL/RawGL.hpp"
-#   include "CGUL/OpenGL/RenderBuffer.hpp"
-#   include "CGUL/OpenGL/Shader.hpp"
-#   include "CGUL/OpenGL/Texture.hpp"
-#   include "CGUL/OpenGL/VertexArray.hpp"
 #endif
 
 #ifdef PortAudio_FOUND
@@ -154,6 +148,7 @@
 #endif
 
 #include "CGUL/Utility/AutoRelease.hpp"
+#include "CGUL/Utility/ConditionVariable.hpp"
 #include "CGUL/Utility/Encryption.hpp"
 #include "CGUL/Utility/Endian.hpp"
 #include "CGUL/Utility/Event.hpp"
@@ -163,6 +158,7 @@
 #include "CGUL/Utility/Logger.hpp"
 #include "CGUL/Utility/Memory.hpp"
 #include "CGUL/Utility/Move.hpp"
+#include "CGUL/Utility/Mutex.hpp"
 #include "CGUL/Utility/Regex.hpp"
 #include "CGUL/Utility/String.hpp"
 #include "CGUL/Utility/Timer.hpp"

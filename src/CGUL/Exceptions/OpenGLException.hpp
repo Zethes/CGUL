@@ -35,10 +35,10 @@ namespace CGUL
     }
     struct OpenGLException : public Exception
     {
-        OpenGLException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT OpenGLException(UInt8 code, UInt8 reason);
 
-        String GetString() const;
-        String GetReason() const;
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
     };
 }
 

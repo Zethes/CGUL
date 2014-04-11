@@ -23,14 +23,17 @@ namespace CGUL
         enum
         {
             UNKNOWN,
-            GENERATE_MIPMAPS,
-            GET_MIPMAP,
+            MIX_IMAGES,
+            TRANSFORM,
             BMP,
             PNG,
             JPEG,
             BMP_WRITE,
             PNG_WRITE,
-            JPEG_WRITE
+            JPEG_WRITE,
+            PPM,
+            PPM_WRITE,
+            PPM_READ
         };
     }
     namespace ImageExceptionReason
@@ -55,15 +58,16 @@ namespace CGUL
             JPEG_FAILED_TO_START_DECOMPRESSOR,
             NULL_POINTER,
             FAILED_WRITE_HEADER,
-            FAILED_WRITE_IMAGE
+            FAILED_WRITE_IMAGE,
+            INVALID_MIXING_METHOD
         };
     }
     struct ImageException : public Exception
     {
-        ImageException(UInt8 code, UInt8 reason);
+        _CGUL_EXPORT ImageException(UInt8 code, UInt8 reason);
 
-        String GetString() const;
-        String GetReason() const;
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
     };
 }
 

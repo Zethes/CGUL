@@ -6,17 +6,28 @@
  */
 
 #pragma once
+
+// Configuration
 #include <CGUL/Config.hpp>
+
+// Defines
 #include "../External/Defines.hpp"
 
-#ifdef CPP_HAS_STD_THREAD
+#if defined(CPP_HAS_WINTHREAD) || defined(CPP_HAS_STD_THREAD) || defined(CPP_HAS_PTHREAD)
 
 namespace CGUL
 {
     class Thread
     {
     private:
+#       if defined(CPP_HAS_WINTHREAD)
+        _CGUL_HANDLE thread;
+#       elif defined(CPP_HAS_STD_THREAD)
         std::thread* thread;
+#       elif defined(CPP_HAS_PTHREAD)
+        bool created;
+        _CGUL_PTHREAD_T thread;
+#       endif
     public:
         _CGUL_EXPORT Thread();
         _CGUL_EXPORT virtual ~Thread();
@@ -32,4 +43,5 @@ namespace CGUL
 
 #endif
 
+// Undefines
 #include "../External/Undefines.hpp"

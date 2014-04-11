@@ -17,6 +17,9 @@
 
 #ifdef CGUL_WINDOWS
 #   define _CGUL_HWND void*
+#   define _CGUL_HANDLE void*
+#   define _CGUL_CRITICAL_SECTION CGUL::_CGUL_CRITICAL_SECTION
+#   define _CGUL_CONDITION_VARIABLE void*
 #   define _CGUL_DWORD long
 #   define _CGUL_PIXELFORMATDESCRIPTOR CGUL::_CGUL_PIXELFORMATDESCRIPTOR
 #   define _CGUL_HDC int
@@ -30,46 +33,65 @@
 #   define _CGUL_GLXCONTEXT void*
 #endif
 
-#define _CGUL_FT_FACE void*
-#define _CGUL_AISCENE void*
-#define _CGUL_AIMESH void*
-#define _CGUL_AITEXTURE void*
-#define _CGUL_AIMATERIAL void*
-#define _CGUL_AICAMERA void*
-#define _CGUL_AIBONE void*
-#define _CGUL_AIVERTEXWEIGHT void*
-#define _CGUL_AIANIMATION void*
-#define _CGUL_AIMESHANIM void*
-#define _CGUL_AINODEANIM void*
-#define _CGUL_AIFACE void*
-#define _CGUL_AILIGHT void*
-#define _CGUL_AINODE void*
-#define _CGUL_AIUVTRANSFORM void*
-#define _CGUL_AIMATERIALPROPERTY void*
-#define _CGUL_AIBASEPROCESS void*
-#define _CGUL_AIBASEIMPORTER void*
-#define _CGUL_AIIOHANDLER void*
-#define _CGUL_AIPROGRESHANDLER void*
-#define _CGUL_AIIMPORTERDESC void*
-#define _CGUL_AIMEMORYINFO void*
-#define _CGUL_AIIMPORTER void*
-#define _CGUL_AIEXPORTER void*
-#define _CGUL_AIEXPORTFORMATDESC void*
-#define _CGUL_AIEXPORTDATABLOB void*
-#define _CGUL_AIEXPORTFORMATENTRY void*
-#define _CGUL_PASTREAM void*
-#define _CGUL_PASTREAM_CALLBACK_TIMEINFO void*
-#define _CGUL_PASTREAM_CALLBACK_FLAGS unsigned long
-#define _CGUL_PADEVICE_INFO void*
-#define _CGUL_PAHOSTAPI_INFO void*
-#define _CGUL_PASTREAM_INFO void*
-#define _CGUL_PAHOSTERROR_INFO void*
-#define _CGUL_PCRE void*
-#define _CGUL_PCRE_EXTRA void*
-#define _CGUL_SSL void*
-#define _CGUL_SSL_CTX void*
-#define _CGUL_SSL_BIO void*
+#ifdef FreeType_FOUND
+#   define _CGUL_FT_FACE void*
+#endif
 
+#ifdef Assimp_FOUND
+#   define _CGUL_AISCENE void*
+#   define _CGUL_AIMESH void*
+#   define _CGUL_AITEXTURE void*
+#   define _CGUL_AIMATERIAL void*
+#   define _CGUL_AICAMERA void*
+#   define _CGUL_AIBONE void*
+#   define _CGUL_AIVERTEXWEIGHT void*
+#   define _CGUL_AIANIMATION void*
+#   define _CGUL_AIMESHANIM void*
+#   define _CGUL_AINODEANIM void*
+#   define _CGUL_AIFACE void*
+#   define _CGUL_AILIGHT void*
+#   define _CGUL_AINODE void*
+#   define _CGUL_AIUVTRANSFORM void*
+#   define _CGUL_AIMATERIALPROPERTY void*
+#   define _CGUL_AIBASEPROCESS void*
+#   define _CGUL_AIBASEIMPORTER void*
+#   define _CGUL_AIIOHANDLER void*
+#   define _CGUL_AIPROGRESHANDLER void*
+#   define _CGUL_AIIMPORTERDESC void*
+#   define _CGUL_AIMEMORYINFO void*
+#   define _CGUL_AIIMPORTER void*
+#   define _CGUL_AIEXPORTER void*
+#   define _CGUL_AIEXPORTFORMATDESC void*
+#   define _CGUL_AIEXPORTDATABLOB void*
+#   define _CGUL_AIEXPORTFORMATENTRY void*
+#endif
+
+#ifdef PortAudio_FOUND
+#   define _CGUL_PASTREAM void*
+#   define _CGUL_PASTREAM_CALLBACK_TIMEINFO void*
+#   define _CGUL_PASTREAM_CALLBACK_FLAGS unsigned long
+#   define _CGUL_PADEVICE_INFO void*
+#   define _CGUL_PAHOSTAPI_INFO void*
+#   define _CGUL_PASTREAM_INFO void*
+#   define _CGUL_PAHOSTERROR_INFO void*
+#endif
+
+#ifdef PCRE_FOUND
+#   define _CGUL_PCRE void*
+#   define _CGUL_PCRE_EXTRA void*
+#endif
+
+#ifdef OpenSSL_FOUND
+#   define _CGUL_SSL void*
+#   define _CGUL_SSL_CTX void*
+#   define _CGUL_SSL_BIO void*
+#endif
+
+#ifdef pthread_FOUND
+#   define _CGUL_PTHREAD_T void*
+#   define _CGUL_PTHREAD_MUTEX_T CGUL::_CGUL_PTHREAD_MUTEX_T
+#   define _CGUL_PTHREAD_COND_T CGUL::_CGUL_PTHREAD_COND_T
+#endif
 
 #if defined(CGUL_INCLUDES)
 #   ifdef CPP_HAS_STATIC_ASSERT
@@ -79,6 +101,9 @@
 #   endif
 #   ifdef CGUL_WINDOWS
 CHECK(::HWND, _CGUL_HWND)
+CHECK(::HANDLE, _CGUL_HANDLE)
+CHECK(::CRITICAL_SECTION, _CGUL_CRITICAL_SECTION)
+CHECK(::CONDITION_VARIABLE, _CGUL_CONDITION_VARIABLE)
 CHECK(::DWORD, _CGUL_DWORD)
 CHECK(::PIXELFORMATDESCRIPTOR, _CGUL_PIXELFORMATDESCRIPTOR)
 CHECK(::HDC, _CGUL_HDC)
@@ -107,10 +132,18 @@ CHECK(::PaHostApiInfo*, _CGUL_PAHOSTAPI_INFO)
 CHECK(::pcre*, _CGUL_PCRE)
 CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA)
 #   endif
+#   ifdef pthread_FOUND
+CHECK(::pthread_t, _CGUL_PTHREAD_T)
+CHECK(::pthread_mutex_t, _CGUL_PTHREAD_MUTEX_T)
+CHECK(::pthread_cond_t, _CGUL_PTHREAD_COND_T)
+#   endif
 #   undef CHECK
 #   include "Undefines.hpp"
 #   ifdef CGUL_WINDOWS
 #       define _CGUL_HWND ::HWND
+#       define _CGUL_HANDLE ::HANDLE
+#       define _CGUL_CRITICAL_SECTION ::CRITICAL_SECTION
+#       define _CGUL_CONDITION_VARIABLE ::CONDITION_VARIABLE
 #       define _CGUL_DWORD ::DWORD
 #       define _CGUL_PIXELFORMATDESCRIPTOR ::PIXELFORMATDESCRIPTOR
 #       define _CGUL_HDC ::HDC
@@ -172,6 +205,11 @@ CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA)
 #       define _CGUL_SSL ::SSL*
 #       define _CGUL_SSL_CTX ::SSL_CTX*
 #       define _CGUL_SSL_BIO ::BIO*
+#   endif
+#   ifdef pthread_FOUND
+#       define _CGUL_PTHREAD_T ::pthread_t
+#       define _CGUL_PTHREAD_MUTEX_T ::pthread_mutex_t
+#       define _CGUL_PTHREAD_COND_T ::pthread_cond_t
 #   endif
 #endif
 

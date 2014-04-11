@@ -95,54 +95,6 @@ _CGUL_EXPORT void CGUL::ImageLoaders::PNG::Load(const String& file, Image* image
     //Get format information
     ImageFormat format = ImageFormats::RGBA8;
     int pixelSize = 0;
-    /*switch (colorType)
-    {
-        case PNG_COLOR_TYPE_RGB_ALPHA:
-        {
-            if (bitDepth == 8)
-            {
-                format = ImageFormats::RGBA;
-            }
-            else if (bitDepth == 16)
-            {
-                format = ImageFormats::RGBA4;
-            }
-            else
-            {
-                fclose(fp);
-                throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::UNSUPPORTED_FORMAT);
-            }
-
-            pixelSize = 4;
-            break;
-        }
-        case PNG_COLOR_TYPE_RGB:
-        {
-            if (bitDepth == 8)
-            {
-                format = ImageFormats::R3_G3_B2;
-            }
-            else if (bitDepth == 16)
-            {
-                format = ImageFormats::RGB4;
-            }
-            else
-            {
-                fclose(fp);
-                throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::UNSUPPORTED_FORMAT);
-            }
-
-            pixelSize = 3;
-            break;
-        }
-        default:
-        {
-            //TODO: Support more formats.
-            //See http://refspecs.linuxbase.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libpng12.png.set.ihdr.1.html for a full list.
-            fclose(fp);
-            throw ImageException(ImageExceptionCode::PNG, ImageExceptionReason::UNSUPPORTED_FORMAT);
-        }
-    }*/
     if (colorType & PNG_COLOR_MASK_ALPHA)
     {
         format = ImageFormats::RGBA;

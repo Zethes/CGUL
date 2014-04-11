@@ -29,21 +29,20 @@ namespace CGUL
 
 /** @brief Makes the socket a non-blocking socket.
  *  @details This happens to all sockets created.  This class does not supported blocking sockets.
+ *  @returns True if successful, false otherwise.
  */
 bool CGUL::Network::SocketTCP::MakeNonBlocking()
 {
 #   ifdef CGUL_WINDOWS
     u_long uNonBlocking = 1;
-    ioctlsocket(sock, FIONBIO, &uNonBlocking);
+    return (ioctlsocket(sock, FIONBIO, &uNonBlocking) == 0);
 #   else
-    fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK);
+    return (fcntl(sock, F_SETFL, fcntl(sock, F_GETFL) | O_NONBLOCK) != -1);
 #   endif
-
-    // TODO: error checking?
-    return true;
 }
 
 /** @brief Turns off the Nagle Algorithm which removes a small delay in sending and receiving.
+ *  @returns True if successful, false otherwise.
  */
 bool CGUL::Network::SocketTCP::MakeNoDelay()
 {
@@ -109,10 +108,11 @@ void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
 #   endif
 
     // Get the address info using the hints.
+    int status;
     addrinfo* result;
-    if (getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result) != 0)
+    if ((status = getaddrinfo(ip.ToString().GetCString(), portString, &hints, &result)) != 0)
     {
-        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::NO_NETWORK_INTERFACE);
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::UNKNOWN, SystemCode::UseAddrInfo(status));
     }
 
     // Create the socket.  Because our hints are so strict, we don't have to worry about looping
@@ -121,7 +121,7 @@ void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CREATE_SOCKET);
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CREATE_SOCKET, SystemCode::CheckNetwork());
     }
 
     // Make the connection.
@@ -129,7 +129,7 @@ void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CONNECT_CALL);
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_CONNECT_CALL, SystemCode::CheckNetwork());
     }
 
     // Make a non-blocking socket.
@@ -137,7 +137,8 @@ void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NONBLOCKING);
+
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NONBLOCKING, SystemCode::CheckNetwork());
     }
 
     // Turn off the Nagle Algorithm to increase speed.
@@ -145,7 +146,8 @@ void CGUL::Network::SocketTCP::Connect(const IPAddress& ip, unsigned short port)
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NO_DELAY);
+
+        throw NetworkException(NetworkExceptionCode::FAILED_CONNECT, NetworkExceptionReason::FAILED_NO_DELAY, SystemCode::CheckNetwork());
     }
 
     // Free up the address info linked list.
@@ -190,10 +192,11 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     hints.ai_flags = AI_PASSIVE;
 
     // Get the address info using the hints.
+    int status;
     addrinfo* result;
-    if (getaddrinfo(NULL, portString, &hints, &result) != 0)
+    if ((status = getaddrinfo(NULL, portString, &hints, &result)) != 0)
     {
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::NO_NETWORK_INTERFACE);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::NO_NETWORK_INTERFACE, SystemCode::UseAddrInfo(status));
     }
 
     // Create the socket.
@@ -201,7 +204,7 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     if (sock == INVALID_SOCKET)
     {
         freeaddrinfo(result);
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_CREATE_SOCKET);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_CREATE_SOCKET, SystemCode::CheckNetwork());
     }
 
     // Bind the socket to the port.
@@ -209,7 +212,7 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_BIND_PORT);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_BIND_PORT, SystemCode::CheckNetwork());
     }
 
     // Start listening like the champ that we are.
@@ -217,7 +220,7 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_LISTEN_CALL, SystemCode::CheckNetwork());
     }
 
     // Make a non-blocking socket.
@@ -225,7 +228,7 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NONBLOCKING);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NONBLOCKING, SystemCode::CheckNetwork());
     }
 
     // Turn off the Nagle Algorithm to increase speed.
@@ -233,7 +236,7 @@ void CGUL::Network::SocketTCP::Listen(unsigned short port, bool ipv4, int backlo
     {
         freeaddrinfo(result);
         Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NO_DELAY);
+        throw NetworkException(NetworkExceptionCode::FAILED_LISTEN, NetworkExceptionReason::FAILED_NO_DELAY, SystemCode::CheckNetwork());
     }
 
     // Free up the address info linked list.
@@ -263,7 +266,7 @@ bool CGUL::Network::SocketTCP::Accept(SocketTCP* socket)
         }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::UNKNOWN, error);
+            throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::UNKNOWN, SystemCode::UseNetwork(error));
         }
     }
 
@@ -271,14 +274,14 @@ bool CGUL::Network::SocketTCP::Accept(SocketTCP* socket)
     if (!socket->MakeNonBlocking())
     {
         socket->Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NONBLOCKING);
+        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NONBLOCKING, SystemCode::CheckNetwork());
     }
 
     // Turn off the Nagle Algorithm to increase speed.
     if (!socket->MakeNoDelay())
     {
         socket->Close();
-        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NO_DELAY);
+        throw NetworkException(NetworkExceptionCode::FAILED_ACCEPT, NetworkExceptionReason::FAILED_NO_DELAY, SystemCode::CheckNetwork());
     }
 
     return true;
@@ -418,14 +421,32 @@ bool CGUL::Network::SocketTCP::IsConnected()
     }
 
     // Check if recv is returning 0.  In that case, the remote host has disconnected gracefully.
-    // TODO: receive could return non-zero and still fail, certain winsock errors indicate this
-    // add a check for those for a more accurate isConnected() method
     char data;
-    if (recv(sock, &data, 1, MSG_PEEK) == 0)
+
+    int result = recv(sock, &data, 1, MSG_PEEK);
+
+    if (result == 0)
     {
         sock = INVALID_SOCKET;
         return false;
     }
+
+    if (result == -1)
+    {
+        // May get a "would block" error, meaning there wasn't actually a problem, the call would
+        // normally block. In this case the socket is still connected.
+#       ifdef CGUL_WINDOWS
+        int error = WSAGetLastError();
+        if (error != WSAEWOULDBLOCK)
+#       else
+        int error = errno;
+        if (error != EWOULDBLOCK)
+#       endif
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -482,7 +503,7 @@ int CGUL::Network::SocketTCP::Send(const void* data, unsigned int size)
         throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    //Send normally
+    // Send normally
     int amount;
     if ((amount = ::send(sock, (const char*)data, size, 0)) == SOCKET_ERROR)
     {
@@ -490,16 +511,16 @@ int CGUL::Network::SocketTCP::Send(const void* data, unsigned int size)
         int error = WSAGetLastError();
         if (error == WSAENOTCONN)
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, error);
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, SystemCode::UseNetwork(error));
         }
 #       else
         int error = errno;
         if (error == ENOTCONN)
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, error);
+            throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::SOCKET_NOT_CONNECTED, SystemCode::UseNetwork(error));
         }
 #       endif
-        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN, error);
+        throw NetworkException(NetworkExceptionCode::FAILED_SEND, NetworkExceptionReason::UNKNOWN, SystemCode::UseNetwork(error));
     }
     return amount;
 }
@@ -543,7 +564,7 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
             }
             else
             {
-                throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN, error);
+                throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::UNKNOWN, SystemCode::UseSSL(error));
             }
         }
     }
@@ -555,7 +576,7 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
         throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, NetworkExceptionReason::SOCKET_INVALID);
     }
 
-    //Receive normally.
+    // Receive normally.
     int amount;
     if ((amount = ::recv(sock, (char*)data, size, 0)) == SOCKET_ERROR)
     {
@@ -586,11 +607,11 @@ int CGUL::Network::SocketTCP::Receive(void* data, unsigned int size)
                     break;
                 }
             }
-            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, errorReason, error);
+            throw NetworkException(NetworkExceptionCode::FAILED_RECEIVE, errorReason, SystemCode::UseNetwork(error));
         }
     }
 
-    // Check if recv returned 0, if so, the remove socket disconnected gracefully.
+    // Check if recv returned 0, if so, the remote socket disconnected gracefully.
     if (amount == 0)
     {
         Close();
@@ -636,7 +657,7 @@ int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
             }
             else
             {
-                throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, error);
+                throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, SystemCode::UseSSL(error));
             }
         }
     }
@@ -665,11 +686,11 @@ int CGUL::Network::SocketTCP::Peek(void* data, unsigned int size)
         }
         else
         {
-            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, error);
+            throw NetworkException(NetworkExceptionCode::FAILED_PEEK, NetworkExceptionReason::UNKNOWN, SystemCode::UseNetwork(error));
         }
     }
 
-    // Check if recv returned 0, if so, the remove socket disconnected gracefully.
+    // Check if recv returned 0, if so, the remote socket disconnected gracefully.
     if (amount == 0)
     {
         Close();

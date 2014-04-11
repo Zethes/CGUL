@@ -218,6 +218,13 @@ if(Crypto_ENABLED)
 
 endif()
 
+# pthread
+if(pthread_ENABLED)
+
+    use_library(pthread OFF)
+
+endif()
+
 list(APPEND ACKNOWLEDGEMENTS
     "\n\n"
     "The libraries above are released under absolutely no warranty."

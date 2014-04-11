@@ -9,6 +9,7 @@
 #include <CGUL/Config.hpp>
 #include "../Network/IPAddress.hpp"
 #include "../Utility/String.hpp"
+#include "../Exceptions/NetworkException.hpp"
 #include "../External/Defines.hpp"
 
 namespace CGUL
@@ -29,7 +30,7 @@ namespace CGUL
 #           endif
 
             //! @brief Makes the socket a non-blocking socket.
-            void MakeNonBlocking();
+            bool MakeNonBlocking();
         public:
             //! @brief Default constructor.
             SocketUDP();

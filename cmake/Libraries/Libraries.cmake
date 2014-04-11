@@ -46,6 +46,10 @@ if("${System_TYPE_LOWER}" STREQUAL "linux")
     set(ALSA_NAMES asound)
 endif()
 
+# pthread
+list(APPEND CGUL_LIBRARY_LIST pthread)
+set(pthread_NAMES pthread)
+
 # Try to find each library
 foreach(__LIBRARY ${CGUL_LIBRARY_LIST})
 

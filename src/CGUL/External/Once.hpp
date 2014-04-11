@@ -20,15 +20,28 @@
 #   endif
 #endif
 
-#ifdef CGUL_WINDOWS
 namespace CGUL
 {
+    // TODO: absolute TERRIBLE solution here, need to automate these values with CMake ASAP!
     struct _CGUL_PIXELFORMATDESCRIPTOR
     {
         char padding[40];
     };
+#   ifdef CGUL_SIZEOF_CRITICAL_SECTION
+    struct _CGUL_CRITICAL_SECTION
+    {
+        char padding[CGUL_SIZEOF_CRITICAL_SECTION];
+    };
+#   endif
+    struct _CGUL_PTHREAD_MUTEX_T
+    {
+        char padding[40];
+    };
+    struct _CGUL_PTHREAD_COND_T
+    {
+        char padding[48];
+    };
 }
-#endif
 
 // Standard Template Library Includes
 #ifdef CPP_HEADER_ALGORITHM
@@ -39,6 +52,9 @@ namespace CGUL
 #endif
 #ifdef CPP_HEADER_FSTREAM
 #   include <fstream>
+#endif
+#ifdef CPP_HEADER_LIMITS
+#   include <limits>
 #endif
 #ifdef CPP_HEADER_LIST
 #   include <list>
@@ -71,6 +87,8 @@ namespace CGUL
 #   include <cstdint>
 #elif defined(CPP_HEADER_STDINT_H)
 #   include <stdint.h>
+#else
+#    error CGUL requires stdint.h or cstdint
 #endif
 #if defined(CPP_HEADER_CSTDDEF)
 #   include <cstddef>
@@ -98,95 +116,55 @@ namespace CGUL
 
     /** @brief An 8 bit (1 byte) signed integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(int8_t, SInt8, 1);
-#   else
-    TYPE(char, SInt8, 1);
-#   endif
+    typedef int8_t SInt8;
 
     /** @brief An 8 bit (1 byte) unsigned integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(uint8_t, UInt8, 1);
-#   else
-    TYPE(unsigned char, UInt8, 1);
-#   endif
+    typedef uint8_t UInt8;
 
     /** @brief A 16 bit (2 bytes) signed integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(int16_t, SInt16, 2);
-#   else
-    TYPE(short, SInt16, 2);
-#   endif
+    typedef int16_t SInt16;
 
     /** @brief A 16 bit (2 bytes) unsigned integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(uint16_t, UInt16, 2);
-#   else
-    TYPE(unsigned short, UInt16, 2);
-#   endif
+    typedef uint16_t UInt16;
 
     /** @brief A 32 bit (4 bytes) signed integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(int32_t, SInt32, 4);
-#   else
-    TYPE(int, SInt32, 4);
-#   endif
+    typedef int32_t SInt32;
 
     /** @brief A 32 bit (4 bytes) unsigned integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(uint32_t, UInt32, 4);
-#   else
-    TYPE(unsigned int, UInt32, 4);
-#   endif
+    typedef uint32_t UInt32;
 
     /** @brief A 64 bit (8 bytes) signed integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(int64_t, SInt64, 8);
-#   else
-    TYPE(long long, SInt64, 8);
-#   endif
+    typedef int64_t SInt64;
 
     /** @brief A 64 bit (8 bytes) unsigned integer number.
      */
-#   ifdef _STDINT_H
-    TYPE(uint64_t, UInt64, 8);
-#   else
-    TYPE(unsigned long long, UInt64, 8);
-#   endif
+    typedef uint64_t UInt64;
 
-    /** @brief A 8 bit (1 byte) boolean value (true or false).
+    /** @brief A boolean value (true or false).
      */
-    TYPE(bool, Boolean, 1);
+    typedef bool Boolean;
 
     /** @brief Alias for UInt8, an unsigned byte.
      */
-    TYPE(UInt8, Byte, 1);
+    typedef UInt8 Byte;
 
     /** @brief Alias for SInt8, a signed byte.
      */
-    TYPE(SInt8, SignedByte, 1);
+    typedef SInt8 SignedByte;
 
     /** @brief A system-dependent sized integer capable of holding addresses in memory.
      */
-#   ifdef _STDINT_H
-    TYPE(uintptr_t, Size, sizeof(void*));
-#   else
-    TYPE(unsigned long, Size, sizeof(void*));
-#   endif
+    typedef uintptr_t Size;
 
     /** @brief A system-dependent sized signed integer capable of holding addresses in memory.
      */
-#   ifdef _STDINT_H
-    TYPE(intptr_t, SignedSize, sizeof(void*));
-#   else
-    TYPE(unsigned long, SignedSize, sizeof(void*));
-#   endif
+    typedef intptr_t SignedSize;
 
     const SInt8 SInt8Min = 127;
     const SInt8 SInt8Max = -(127) - 1;
@@ -210,15 +188,24 @@ namespace CGUL
     const UInt64 UInt64Max = 18446744073709551615ULL;
 #   endif
 
+    typedef int_fast8_t SIntF8;
+    typedef uint_fast8_t UIntF8;
+    typedef int_fast16_t SIntF16;
+    typedef uint_fast16_t UIntF16;
+    typedef int_fast32_t SIntF32;
+    typedef uint_fast32_t UIntF32;
+    typedef int_fast64_t SIntF64;
+    typedef uint_fast64_t UIntF64;
+
     /** @brief System dependent signed short integer.
      *  @see SInt
      */
-    typedef short SShort;
+    typedef short SShortN;
 
     /** @brief System dependent unsigned short integer.
      *  @see SInt
      */
-    typedef unsigned short UShort;
+    typedef unsigned short UShortN;
 
     /** @brief System dependent signed integer.
      *  @details CGUL redefines some of the standard integers in C and C++ for explicitness.  It is
@@ -237,29 +224,29 @@ namespace CGUL
      *  @see SLong
      *  @see ULong
      */
-    typedef int SInt;
+    typedef int SIntN;
 
     /** @brief System dependent unsigned integer.
      *  @see SInt
      */
-    typedef unsigned int UInt;
+    typedef unsigned int UIntN;
 
     /** @brief System dependent signed long integer.
      *  @see SInt
      */
-    typedef long SLong;
+    typedef long SLongN;
 
     /** @brief System dependent unsigned long integer.
      *  @see SInt
      */
-    typedef unsigned long ULong;
+    typedef unsigned long ULongN;
 
     /** @brief A type capable of holding an enumeration.
      *  @details Enumerations are iffy in C++.  Older compilers hate typed enumerations.  It's
      *  best, for portability, to reference all enumerations as system-specific sized integer.
      *  (and hope that you never need more than 65535 enumerations)
      */
-    typedef SInt Enum;
+    typedef SIntN Enum;
 
     /** @brief A type capable of holding the difference between two pointers.
      */
@@ -284,18 +271,36 @@ namespace CGUL
 #   define _CGUL_EXPORT
 #endif
 
+#if 0
+#   if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
+#       define _WIN32_WINNT 0x0600
+#   endif
+#   if defined(CGUL_WINDOWS) && !defined(WINVER)
+#       define WINVER 0x0600
+#   endif
+#else // UTTER BOLLOCKS
+#   if defined(_WIN32_WINNT)
+#       undef _WIN32_WINNT
+#   endif
+#   if defined(WINVER)
+#       undef WINVER
+#   endif
+#   define _WIN32_WINNT 0x0600
+#   define WINVER 0x0600
+#endif
+
 #if defined(CGUL_INCLUDES)
 #   ifdef CGUL_WINDOWS
 #       define UNICODE
 #       define _UNICODE
 #       ifdef CGUL_USE_NETWORK
-#           define _WIN32_WINNT 0x501
 #           include <winsock2.h>
 #           include <ws2tcpip.h>
 #       endif
 #       include <windows.h>
 #       ifdef CGUL_USE_OPENGL
 #           include <GL/glew.h>
+#           include <GL/wglew.h>
 #       endif
 #   endif
 #   ifdef CGUL_LINUX
@@ -358,10 +363,6 @@ namespace CGUL
 #       define INVALID_SOCKET ~0
 #       define SOCKET_ERROR -1
 #   endif
-#endif
-
-#if defined(CGUL_WINDOWS) && !defined(_WIN32_WINNT)
-#   define _WIN32_WINNT 0x0501
 #endif
 
 // Regex support

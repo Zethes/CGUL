@@ -11,6 +11,7 @@
 #include <CGUL/Config.hpp>
 
 // CGUL Includes
+#include "../Exceptions/SystemCode.hpp"
 #include "../Utility/String.hpp"
 
 // Defines
@@ -27,7 +28,9 @@ namespace CGUL
             IMAGE,
             NETWORK,
             FILE,
-            OPENGL
+            OPENGL,
+            WINDOW,
+            STRING
         };
     }
     struct Exception : public std::exception
@@ -43,14 +46,19 @@ namespace CGUL
             UInt64 unique;
         };
 
-        ~Exception() throw();
+        SystemCode systemCode;
 
-        virtual String GetString() const = 0;
-        virtual String GetReason() const = 0;
+        _CGUL_EXPORT ~Exception() throw();
 
-        virtual const char* what() const throw();
+        _CGUL_EXPORT virtual String GetString() const = 0;
+        _CGUL_EXPORT virtual String GetReason() const = 0;
+
+        _CGUL_EXPORT virtual const char* what() const throw();
     protected:
-        Exception(UInt16 code, UInt16 reason, UInt32 type = ExceptionType::USER);
+        _CGUL_EXPORT Exception(UInt16 code, UInt16 reason);
+        _CGUL_EXPORT Exception(UInt16 code, UInt16 reason, const SystemCode& systemCode);
+        _CGUL_EXPORT Exception(UInt16 code, UInt16 reason, UInt32 type);
+        _CGUL_EXPORT Exception(UInt16 code, UInt16 reason, const SystemCode& systemCode, UInt32 type);
     };
 }
 

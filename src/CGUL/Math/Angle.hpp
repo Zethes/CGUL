@@ -21,7 +21,7 @@ public:
 
         Angle();
         Angle(CGUL::Float32 radians);
-        Angle(const Vector2& direction);
+        Angle(const Vector2F& direction);
 
         void SetRadians(CGUL::Float32 radians);
         CGUL::Float32 GetRadians() const;
@@ -31,8 +31,8 @@ public:
         CGUL::Float32 GetDegrees() const;
         CGUL::Float32 GetDegreesPositive() const;
 
-        void SetDirection(const Vector2& direction);
-        Vector2 GetDirection() const;
+        void SetDirection(const Vector2F& direction);
+        Vector2F GetDirection() const;
 
         void Constrain(Angle from, Angle to);
     };

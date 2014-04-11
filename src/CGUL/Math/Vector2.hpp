@@ -183,14 +183,24 @@ namespace CGUL
         _CGUL_INLINE_DEFINE Type IsNaN() const;
     };
 
-    typedef Vector2T< Float32 > Vector2;
-    typedef Vector2T< Float64 > Vector2D;
-    typedef Vector2T< SInt16  > SCoord16;
-    typedef Vector2T< SInt32  > SCoord32;
-    typedef Vector2T< SInt64  > SCoord64;
-    typedef Vector2T< UInt16  > UCoord16;
-    typedef Vector2T< UInt32  > UCoord32;
-    typedef Vector2T< UInt64  > UCoord64;
+    typedef Vector2T< Float32  > Vector2F;
+    typedef Vector2T< Float64  > Vector2D;
+    typedef Vector2T< SInt8    > SCoord8;
+    typedef Vector2T< UInt8    > UCoord8;
+    typedef Vector2T< SInt16   > SCoord16;
+    typedef Vector2T< UInt16   > UCoord16;
+    typedef Vector2T< SInt32   > SCoord32;
+    typedef Vector2T< UInt32   > UCoord32;
+    typedef Vector2T< SInt64   > SCoord64;
+    typedef Vector2T< UInt64   > UCoord64;
+    typedef Vector2T< SIntF8   > SCoordF8;
+    typedef Vector2T< UIntF8   > UCoordF8;
+    typedef Vector2T< SIntF16  > SCoordF16;
+    typedef Vector2T< UIntF16  > UCoordF16;
+    typedef Vector2T< SIntF32  > SCoordF32;
+    typedef Vector2T< UIntF32  > UCoordF32;
+    typedef Vector2T< SIntF64  > SCoordF64;
+    typedef Vector2T< UIntF64  > UCoordF64;
 }
 
 // Undefines

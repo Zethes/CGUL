@@ -13,7 +13,7 @@ include(cmake/InstallPath.cmake)
 
 # Setup CMake
 set(CMAKE_CONFIGURATION_TYPES "Release;Debug" CACHE STRING "A list of build configurations.")
-project(${CGUL_OUTPUT_NAME} CXX)
+project(${CGUL_OUTPUT_NAME} C CXX)
 
 # Support configuration postfixes
 foreach(__CONFIGURATION ${CMAKE_CONFIGURATION_TYPES})

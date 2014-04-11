@@ -33,7 +33,9 @@ namespace CGUL
             FAILED_CALCULATE_ADDRESS,
             FAILED_DNS_LOOKUP,
             FAILED_SSL_SETUP,
-            FAILED_HTTP_REQUEST
+            FAILED_HTTP_REQUEST,
+            FAILED_BIND,
+            FAILED_RECEIVE_FROM
         };
     }
     namespace NetworkExceptionReason
@@ -64,19 +66,16 @@ namespace CGUL
             UNKNOWN_TRANSFER_ENCODING,
             CONNECTION_ABORTED,
             CONNECTION_RESET,
-            TIMEOUT
+            TIMEOUT,
+            NODE_SERVICE_UNKNOWN
         };
     }
     struct NetworkException : public Exception
     {
-        NetworkException(UInt8 code, UInt8 reason, SInt networkCode = 99999);
+        _CGUL_EXPORT NetworkException(UInt8 code, UInt8 reason, const SystemCode& systemCode = SystemCode());
 
-        SInt networkCode;
-
-        String GetString() const;
-        String GetReason() const;
-
-        virtual const char* what() const throw();
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
     };
 }
 

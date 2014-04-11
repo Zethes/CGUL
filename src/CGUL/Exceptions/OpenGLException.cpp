@@ -8,11 +8,11 @@
 // Header
 #include "OpenGLException.hpp"
 
-CGUL::OpenGLException::OpenGLException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::OPENGL)
+_CGUL_EXPORT CGUL::OpenGLException::OpenGLException(UInt8 code, UInt8 reason) : Exception(code, reason, ExceptionType::OPENGL)
 {
 }
 
-CGUL::String CGUL::OpenGLException::GetString() const
+_CGUL_EXPORT CGUL::String CGUL::OpenGLException::GetString() const
 {
     switch (info.code)
     {
@@ -22,7 +22,7 @@ CGUL::String CGUL::OpenGLException::GetString() const
     }
 }
 
-CGUL::String CGUL::OpenGLException::GetReason() const
+_CGUL_EXPORT CGUL::String CGUL::OpenGLException::GetReason() const
 {
     switch (info.reason)
     {

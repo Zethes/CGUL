@@ -7,17 +7,17 @@
 
 #include "FileException.hpp"
 
-CGUL::FileException::FileException(const CGUL::String& fileName, UInt8 code, UInt8 reason) :
+_CGUL_EXPORT CGUL::FileException::FileException(const CGUL::String& fileName, UInt8 code, UInt8 reason) :
     Exception(code, reason, ExceptionType::FILE),
     fileName(fileName)
 {
 }
 
-CGUL::FileException::~FileException() throw()
+_CGUL_EXPORT CGUL::FileException::~FileException() throw()
 {
 }
 
-CGUL::String CGUL::FileException::GetString() const
+_CGUL_EXPORT CGUL::String CGUL::FileException::GetString() const
 {
     switch (info.code)
     {
@@ -29,7 +29,7 @@ CGUL::String CGUL::FileException::GetString() const
     }
 }
 
-CGUL::String CGUL::FileException::GetReason() const
+_CGUL_EXPORT CGUL::String CGUL::FileException::GetReason() const
 {
     switch (info.reason)
     {

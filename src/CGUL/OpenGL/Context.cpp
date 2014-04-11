@@ -230,6 +230,7 @@ _CGUL_EXPORT void CGUL::OpenGL::Context::Enable(Enum capability)
 {
     glEnable(capability);
 }
+
 _CGUL_EXPORT void CGUL::OpenGL::Context::Disable(Enum capability)
 {
     glDisable(capability);
@@ -239,10 +240,12 @@ _CGUL_EXPORT void CGUL::OpenGL::Context::DepthMask(bool enabled)
 {
     glDepthMask(enabled ? GL_TRUE : GL_FALSE);
 }
+
 _CGUL_EXPORT void CGUL::OpenGL::Context::StencilMask(bool enabled)
 {
     glStencilMask(enabled ? GL_TRUE : GL_FALSE);
 }
+
 _CGUL_EXPORT void CGUL::OpenGL::Context::StencilMask(UInt32 mask)
 {
     glStencilMask(mask);

@@ -76,7 +76,8 @@ namespace CGUL
         RGBA8,
         RGBA10_A2,
         RGBA12,
-        RGBA16;
+        RGBA16,
+        GRAYSCALE;
     }
 }
 

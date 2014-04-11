@@ -28,10 +28,12 @@ endif()
 
 set(CGUL_SOURCES
     ${CGUL_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Filter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Loader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PPM.cpp
     PARENT_SCOPE
 )
 
@@ -40,10 +42,12 @@ set(CGUL_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Color_Implement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Colors.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Filter.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Format.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Image.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageHandler.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Loader.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PPM.hpp
     PARENT_SCOPE
 )
 

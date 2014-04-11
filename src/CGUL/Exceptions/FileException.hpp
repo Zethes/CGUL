@@ -33,11 +33,11 @@ namespace CGUL
     {
         String fileName;
 
-        FileException(const String& fileName, UInt8 code, UInt8 reason);
-        ~FileException() throw();
+        _CGUL_EXPORT FileException(const String& fileName, UInt8 code, UInt8 reason);
+        _CGUL_EXPORT ~FileException() throw();
 
-        String GetString() const;
-        String GetReason() const;
+        _CGUL_EXPORT String GetString() const;
+        _CGUL_EXPORT String GetReason() const;
     };
 }
 

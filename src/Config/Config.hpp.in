@@ -16,6 +16,7 @@
 #cmakedefine PortAudio_FOUND
 #cmakedefine zlib_FOUND
 #cmakedefine OpenSSL_FOUND
+#cmakedefine pthread_FOUND
 
 #cmakedefine CGUL_STATIC
 #cmakedefine CGUL_USE_NETWORK
@@ -24,6 +25,7 @@
 #cmakedefine CPP_HEADER_ALGORITHM
 #cmakedefine CPP_HEADER_CCTYPE
 #cmakedefine CPP_HEADER_FSTREAM
+#cmakedefine CPP_HEADER_LIMITS
 #cmakedefine CPP_HEADER_LIST
 #cmakedefine CPP_HEADER_MAP
 #cmakedefine CPP_HEADER_MEMORY
@@ -53,12 +55,15 @@
 #cmakedefine CPP_HAS_STD_REGEX
 #cmakedefine CPP_HAS_STD_THREAD
 #cmakedefine CPP_HAS_U8
+#cmakedefine CPP_HAS_WINTHREAD
 
 #cmakedefine PCRE_HAS_FREE_STUDY
 
 #cmakedefine CPP_DEPRECATED_GCC_MESSAGE
 #cmakedefine CPP_DEPRECATED_GCC
 #cmakedefine CPP_DEPRECATED_MSVC
+
+#cmakedefine CGUL_SIZEOF_CRITICAL_SECTION @CGUL_SIZEOF_CRITICAL_SECTION@
 
 #define _CGUL_INLINE_DEFINE @CGUL_INLINE_DEFINE@
 #define _CGUL_INLINE_IMPLEMENT @CGUL_INLINE_IMPLEMENT@

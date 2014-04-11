@@ -7,6 +7,7 @@
 
 #include "Window.hpp"
 #include "../Utility/Memory.hpp"
+#include "../Exceptions/WindowException.hpp"
 #include <cstdio>
 #include <sstream>
 
@@ -267,9 +268,12 @@ _CGUL_EXPORT void CGUL::Window::Update()
 #   endif
 
     // Update each window
-    for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+    if (__windows)
     {
-        (*itr)->InternalUpdate();
+        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+        {
+            (*itr)->InternalUpdate();
+        }
     }
 }
 
@@ -285,7 +289,6 @@ _CGUL_EXPORT CGUL::Window::Window()
     if (!initialized)
     {
         XSetErrorHandler(__jatta_windows_error_handler);
-        display = XOpenDisplay(NULL);
         initialized = true;
     }
 #   endif
@@ -293,35 +296,12 @@ _CGUL_EXPORT CGUL::Window::Window()
 #   ifdef CGUL_MACOS
     handle = [WindowDelegate alloc];
 #   endif
-
-    if (__windows == NULL)
-    {
-        __windows = new CGUL::Vector< CGUL::Window* >;
-    }
-    __windows->push_back(this);
 }
 
 /**
  */
 _CGUL_EXPORT CGUL::Window::~Window()
 {
-    if (__windows)
-    {
-        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
-        {
-            if (*itr == this)
-            {
-                __windows->erase(itr);
-                break;
-            }
-        }
-        if (__windows->size() == 0)
-        {
-            delete __windows;
-            __windows = NULL;
-        }
-    }
-
     Close();
 #   ifdef CGUL_MACOS
     //[handle release];
@@ -360,11 +340,9 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 {
 #   ifdef CGUL_WINDOWS
     // Generate a unique class name for this window
-    std::wostringstream ss;
     static int windowCounter = 0;
-    strcpy(className, "CGUL_");
-    sprintf(className + 6, "%d", windowCounter++);
-    ss << className;
+    wcscpy(className, L"CGUL_");
+    wsprintf(className + 5, L"%d", windowCounter++);
 
     // Create the window class
     WNDCLASSEX wc;
@@ -378,8 +356,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     //wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = new wchar_t[ss.str().length() + 1];
-    memcpy((void*)wc.lpszClassName, ss.str().c_str(), sizeof(wchar_t) * (ss.str().length() + 1));
+    wc.lpszClassName = className;
     wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
     backgroundBrush = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
@@ -388,7 +365,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     // Register the window class
     if (!RegisterClassEx(&wc))
     {
-        throw std::runtime_error("Failed to register the window class.");
+        throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_REGISTER_CLASS);
     }
 
     // Setup the window style
@@ -436,7 +413,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     // Check for errors
     if (handle == NULL)
     {
-        throw std::runtime_error("Failed to create the window!");
+        throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_CREATE_WINDOW_CALL);
     }
 
     // Set the window's user-data to a pointer to this object
@@ -447,6 +424,15 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 #   endif
 
 #   ifdef CGUL_LINUX
+    if (!display)
+    {
+        display = XOpenDisplay(NULL);
+        if (!display)
+        {
+            throw WindowException(WindowExceptionCode::FAILED_CREATE_WINDOW, WindowExceptionReason::FAILED_OPEN_X_DISPLAY);
+        }
+    }
+
     int screen = DefaultScreen(display);
     Visual* visual = DefaultVisual(display, screen);
     int depth = DefaultDepth(display, screen);
@@ -493,6 +479,12 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
 #   endif
 
     SetStyle(style);
+
+    if (__windows == NULL)
+    {
+        __windows = new CGUL::Vector< CGUL::Window* >;
+    }
+    __windows->push_back(this);
 }
 
 /**
@@ -506,6 +498,29 @@ _CGUL_EXPORT void CGUL::Window::Close()
     }
 #   endif
 
+    if (__windows)
+    {
+        for (Vector< Window* >::iterator itr = __windows->begin(), itrEnd = __windows->end(); itr != itrEnd; itr++)
+        {
+            if (*itr == this)
+            {
+                __windows->erase(itr);
+                break;
+            }
+        }
+        if (__windows->size() == 0)
+        {
+            delete __windows;
+            __windows = NULL;
+
+#           ifdef CGUL_LINUX
+            XDestroyWindow(display, handle);
+            XCloseDisplay(display);
+            display = NULL;
+#           endif
+        }
+    }
+
 #   ifdef CGUL_WINDOWS
     if (IsWindow(handle))
     {
@@ -515,13 +530,7 @@ _CGUL_EXPORT void CGUL::Window::Close()
 #   endif
 
 #   ifdef CGUL_LINUX
-    if (IsOpen())
-    {
-        XDestroyWindow(display, handle);
-        XCloseDisplay(display);
-    }
     handle = 0;
-    display = NULL;
 #   endif
 
 #   ifdef CGUL_MACOS
