@@ -45,7 +45,7 @@ const CGUL::Vector2T< Type > CGUL::Vector2T< Type >::nan(Math::Nan, Math::Nan);
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type > CGUL::Vector2T< Type >::FromAngle(Type angle, Type magnitude)
 {
-    return CGUL::Vector2(Math::Cos(angle) * magnitude, Math::Sin(angle) * magnitude);
+    return CGUL::Vector2T< Type >(Math::Cos(angle) * magnitude, Math::Sin(angle) * magnitude);
 }
 
 template< typename Type >

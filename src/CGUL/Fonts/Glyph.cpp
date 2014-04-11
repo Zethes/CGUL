@@ -44,8 +44,8 @@ _CGUL_EXPORT CGUL::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
     character = utf8Character;
     width = face->glyph->bitmap.width;
     height = face->glyph->bitmap.rows;
-    advance = Vector2(2,0);//Vector2(face->glyph->advance.x/64.0, face->glyph->advance.y/64.0);
-    offset = Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top);
+    advance = Vector2F(2,0);//Vector2(face->glyph->advance.x/64.0, face->glyph->advance.y/64.0);
+    offset = Vector2F(face->glyph->bitmap_left, face->glyph->bitmap_top);
     data = (Byte*)new unsigned char[width*height];
     memcpy(data, face->glyph->bitmap.buffer, width*height);
 }
@@ -62,11 +62,11 @@ _CGUL_EXPORT CGUL::UInt32 CGUL::Glyph::GetHeight()
 {
     return height;
 }
-_CGUL_EXPORT CGUL::Vector2 CGUL::Glyph::GetAdvance()
+_CGUL_EXPORT CGUL::Vector2F CGUL::Glyph::GetAdvance()
 {
     return advance;
 }
-_CGUL_EXPORT CGUL::Vector2 CGUL::Glyph::GetOffset()
+_CGUL_EXPORT CGUL::Vector2F CGUL::Glyph::GetOffset()
 {
     return offset;
 }

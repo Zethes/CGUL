@@ -9,6 +9,7 @@
 #ifdef CGUL_INCLUDES
 
 #pragma once
+#include <CGUL/Config.hpp>
 #include "../../External/Defines.hpp"
 
 @interface OpenGLView : NSOpenGLView

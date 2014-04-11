@@ -69,7 +69,7 @@ namespace CGUL
 - (void) setAlwaysOnTop: (CGUL::Boolean) alwaysOnTop;
 - (CGUL::Boolean) getAlwaysOnTop;
 
-- (CGUL::Vector4) getFrameSize;
+- (CGUL::Vector4F) getFrameSize;
 - (CGUL::Boolean) isFocused;
 
 @end

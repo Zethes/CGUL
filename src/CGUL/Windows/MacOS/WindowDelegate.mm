@@ -277,7 +277,7 @@
     return ([window level] == NSFloatingWindowLevel);
 }
 
-- (CGUL::Vector4) getFrameSize
+- (CGUL::Vector4F) getFrameSize
 {
     // Define the size of the window
     NSRect frame = NSMakeRect(0, 0, 0, 0);
@@ -287,7 +287,7 @@
 
     NSRect rect = [MacWindow frameRectForContentRect: frame styleMask: styleMask];
 
-    return CGUL::Vector4(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
+    return CGUL::Vector4F(rect.origin.x, rect.size.height, rect.size.width, rect.origin.y);
 }
 
 - (CGUL::Boolean) isFocused

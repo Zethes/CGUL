@@ -11,6 +11,11 @@
 // CGUL Includes
 #include "../Utility/Mutex.hpp"
 
+// System Includes
+#ifdef CGUL_MACOS
+#   include <sys/time.h>
+#endif
+
 #if defined(CPP_HAS_WINTHREAD) || defined(CPP_HAS_STD_THREAD) || defined(CPP_HAS_PTHREAD)
 
 CGUL::ConditionVariable::ConditionVariable()

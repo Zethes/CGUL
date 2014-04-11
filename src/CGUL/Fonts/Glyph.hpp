@@ -54,8 +54,8 @@ namespace CGUL
         UInt32 character;
         UInt32 width;
         UInt32 height;
-        Vector2 offset;
-        Vector2 advance;
+        Vector2F offset;
+        Vector2F advance;
         Byte* data;
     public:
         _CGUL_EXPORT Glyph(_CGUL_FT_FACE face, UInt32 utf8Character);
@@ -63,8 +63,8 @@ namespace CGUL
 
         _CGUL_EXPORT UInt32 GetWidth();
         _CGUL_EXPORT UInt32 GetHeight();
-        _CGUL_EXPORT Vector2 GetAdvance();
-        _CGUL_EXPORT Vector2 GetOffset();
+        _CGUL_EXPORT Vector2F GetAdvance();
+        _CGUL_EXPORT Vector2F GetOffset();
 
         _CGUL_EXPORT Byte* GetData();
 
