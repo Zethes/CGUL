@@ -126,24 +126,32 @@ _CGUL_EXPORT CGUL::String CGUL::OpenGL::GetOpenGLRenderer()
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFunc(Enum sfactor, Enum dfactor)
 {
+    GLCLEAR();
+    GLVERIFY(glBlendFunc);
     glBlendFunc(sfactor, dfactor);
     GLCHECK("Failed to set blend function.", glBlendFunc);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFunci(UInt32 buf, Enum sfactor, Enum dfactor)
 {
+    GLCLEAR();
+    GLVERIFY(glBlendFunci);
     glBlendFunci(buf, sfactor, dfactor);
     GLCHECK("Failed to set blend function.", glBlendFunci);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFuncSeparate(Enum srcrgb, Enum dstrgb, Enum srca, Enum dsta)
 {
+    GLCLEAR();
+    GLVERIFY(glBlendFuncSeparate);
     glBlendFuncSeparate(srcrgb, dstrgb, srca, dsta);
     GLCHECK("Failed to set blend function separate.", glBlendFuncSeparate);
 }
 
 _CGUL_EXPORT void CGUL::OpenGL::BlendFuncSeparatei(UInt32 buf, Enum srcrgb, Enum dstrgb, Enum srca, Enum dsta)
 {
+    GLCLEAR();
+    GLVERIFY(glBlendFuncSeparatei);
     glBlendFuncSeparatei(buf, srcrgb, dstrgb, srca, dsta);
     GLCHECK("Failed to set blend function separate.", glBlendFundSeparatei);
 }
@@ -158,12 +166,26 @@ _CGUL_EXPORT void CGUL::GL::ActiveTexture(GL::Enum target)
     GLCHECK("Failed to set active texture.", glActiveTexture);
 }
 
+_CGUL_EXPORT void CGUL::GL::AlphaFunc(GL::Enum func, GL::ClampF ref)
+{
+    GLCLEAR();
+    GLVERIFY(glAlphaFunc);
+    glAlphaFunc(func, ref);
+    GLCHECK("Failed to set alpha function.", glAlphaFunc);
+}
+
 _CGUL_EXPORT void CGUL::GL::AttachShader(GL::UInt program, GL::UInt shader)
 {
     GLCLEAR();
     GLVERIFY(glAttachShader);
     glAttachShader(program, shader);
     GLCHECK("Failed to attach shader.", glAttachShader);
+}
+
+_CGUL_EXPORT void CGUL::GL::Begin(GL::Enum mode)
+{
+    GLVERIFY(glBegin);
+    glBegin(mode);
 }
 
 _CGUL_EXPORT void CGUL::GL::BindAttribLocation(GL::UInt program, GL::UInt index, const GL::Char* name)
@@ -188,6 +210,14 @@ _CGUL_EXPORT void CGUL::GL::BindBuffer(GL::Enum target, GL::UInt buffer)
     GLVERIFY(glBindBuffer);
     glBindBuffer(target, buffer);
     GLCHECK("Failed to bind buffer.", glBindBuffer);
+}
+
+_CGUL_EXPORT void CGUL::GL::BindFramebuffer(GL::Enum target, GL::UInt framebuffer)
+{
+    GLCLEAR();
+    GLVERIFY(glBindFramebuffer);
+    glBindFramebuffer(target, framebuffer);
+    GLCHECK("Failed to bind framebuffer.", glBindFramebuffer);
 }
 
 _CGUL_EXPORT void CGUL::GL::BindTexture(GL::Enum target, GL::UInt texture)
@@ -236,6 +266,127 @@ _CGUL_EXPORT void CGUL::GL::BufferData(GL::Enum target, GL::SizeIPtr size, const
     GLCHECK("Failed to set buffer data.", glBufferData);
 }
 
+_CGUL_EXPORT CGUL::GL::Enum CGUL::GL::CheckFramebufferStatus(GL::Enum target)
+{
+    GLCLEAR();
+    GLVERIFY(glCheckFramebufferStatus);
+    GL::Enum ret = glCheckFramebufferStatus(target);
+    GLCHECK("Failed to check framebuffer status.", glCheckFramebufferStatus);
+    return ret;
+}
+
+_CGUL_EXPORT void CGUL::GL::Clear(GL::Bitfield mask)
+{
+    GLCLEAR();
+    GLVERIFY(glClear);
+    glClear(mask);
+    GLCHECK("Failed to clear buffer.", glClear);
+}
+
+_CGUL_EXPORT void CGUL::GL::ClearColor(GL::ClampF red, GL::ClampF green, GL::ClampF blue, GL::ClampF alpha)
+{
+    GLCLEAR();
+    GLVERIFY(glClearColor);
+    glClearColor(red, green, blue, alpha);
+    GLCHECK("Failed to set clear color.", glClearColor);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3b(GL::Byte red, GL::Byte green, GL::Byte blue)
+{
+    GLVERIFY(glColor3b);
+    glColor3b(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3s(GL::Short red, GL::Short green, GL::Short blue)
+{
+    GLVERIFY(glColor3s);
+    glColor3s(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3i(GL::Int red, GL::Int green, GL::Int blue)
+{
+    GLVERIFY(glColor3i);
+    glColor3i(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3f(GL::Float red, GL::Float green, GL::Float blue)
+{
+    GLVERIFY(glColor3f);
+    glColor3f(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3d(GL::Double red, GL::Double green, GL::Double blue)
+{
+    GLVERIFY(glColor3d);
+    glColor3d(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3ub(GL::UByte red, GL::UByte green, GL::UByte blue)
+{
+    GLVERIFY(glColor3ub);
+    glColor3ub(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3us(GL::UShort red, GL::UShort green, GL::UShort blue)
+{
+    GLVERIFY(glColor3us);
+    glColor3us(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color3ui(GL::UInt red, GL::UInt green, GL::UInt blue)
+{
+    GLVERIFY(glColor3ui);
+    glColor3ui(red, green, blue);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4b(GL::Byte red, GL::Byte green, GL::Byte blue, GL::Byte alpha)
+{
+    GLVERIFY(glColor4b);
+    glColor4b(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4s(GL::Short red, GL::Short green, GL::Short blue, GL::Short alpha)
+{
+    GLVERIFY(glColor4s);
+    glColor4s(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4i(GL::Int red, GL::Int green, GL::Int blue, GL::Int alpha)
+{
+    GLVERIFY(glColor4i);
+    glColor4i(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4f(GL::Float red, GL::Float green, GL::Float blue, GL::Float alpha)
+{
+    GLVERIFY(glColor4f);
+    glColor4f(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4d(GL::Double red, GL::Double green, GL::Double blue, GL::Double alpha)
+{
+    GLVERIFY(glColor4d);
+    glColor4d(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4ub(GL::UByte red, GL::UByte green, GL::UByte blue, GL::UByte alpha)
+{
+    GLVERIFY(glColor4ub);
+    glColor4ub(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4us(GL::UShort red, GL::UShort green, GL::UShort blue, GL::UShort alpha)
+{
+    GLVERIFY(glColor4us);
+    glColor4us(red, green, blue, alpha);
+}
+
+_CGUL_EXPORT void CGUL::GL::Color4ui(GL::UInt red, GL::UInt green, GL::UInt blue, GL::UInt alpha)
+{
+    GLVERIFY(glColor4ui);
+    glColor4ui(red, green, blue, alpha);
+}
+
 _CGUL_EXPORT void CGUL::GL::CompileShader(GL::UInt shader)
 {
     GLCLEAR();
@@ -268,6 +419,14 @@ _CGUL_EXPORT void CGUL::GL::DeleteBuffers(GL::SizeI n, const GL::UInt* buffers)
     GLVERIFY(glDeleteBuffers);
     glDeleteBuffers(n, buffers);
     GLCHECK("Failed to delete buffers.", glDeleteBuffers);
+}
+
+_CGUL_EXPORT void CGUL::GL::DeleteTextures(GL::SizeI n, const GL::UInt* textures)
+{
+    GLCLEAR();
+    GLVERIFY(glDeleteTextures);
+    glDeleteTextures(n, textures);
+    GLCHECK("Failed to delete textures.", glDeleteTextures);
 }
 
 _CGUL_EXPORT void CGUL::GL::DeleteVertexArrays(GL::SizeI n, const GL::UInt* arrays)
@@ -326,6 +485,21 @@ _CGUL_EXPORT void CGUL::GL::EnableVertexAttribArray(GL::UInt index)
     GLCHECK("Failed to enable vertex attribute array.", glEnableVertexAttribArray);
 }
 
+_CGUL_EXPORT void CGUL::GL::End()
+{
+    GLVERIFY(glEnd);
+    glEnd();
+    GLCHECK("Error in glBegin/glEnd().", glEnd);
+}
+
+_CGUL_EXPORT void CGUL::GL::FramebufferTexture2D(GL::Enum target, GL::Enum attachment, GL::Enum textarget, GL::UInt texture, GL::Int level)
+{
+    GLCLEAR();
+    GLVERIFY(glFramebufferTexture2D);
+    glFramebufferTexture2D(target, attachment, textarget, texture, level);
+    GLCHECK("Failed to attach texture image to framebuffer.", glFramebufferTexture2D);
+}
+
 _CGUL_EXPORT void CGUL::GL::GenBuffers(GL::SizeI n, GL::UInt* buffers)
 {
     GLCLEAR();
@@ -342,6 +516,14 @@ _CGUL_EXPORT void CGUL::GL::GenTextures(GL::SizeI n, GL::UInt* textures)
     GLCHECK("Failed to generate textures.", glGenTextures);
 }
 
+_CGUL_EXPORT void CGUL::GL::GenFramebuffers(GL::SizeI n, GL::UInt* ids)
+{
+    GLCLEAR();
+    GLVERIFY(glGenFramebuffers);
+    glGenFramebuffers(n, ids);
+    GLCHECK("Failed to generate framebuffers.", glGenFramebuffers);
+}
+
 _CGUL_EXPORT void CGUL::GL::GenVertexArrays(GL::SizeI n, GL::UInt* arrays)
 {
     GLCLEAR();
@@ -354,6 +536,30 @@ _CGUL_EXPORT void CGUL::GL::GenVertexArrays(GL::SizeI n, GL::UInt* arrays)
     glGenVertexArrays(n, arrays);
     GLCHECK("Failed to generate vertex arrays.", glGenVertexArrays);
 #   endif
+}
+
+_CGUL_EXPORT void CGUL::GL::GetBooleanv(GL::Enum pname, GL::Boolean* params)
+{
+    GLCLEAR();
+    GLVERIFY(glGetBooleanv);
+    glGetBooleanv(pname, params);
+    GLCHECK("Failed to get OpenGL boolean.", glGetBooleanv);
+}
+
+_CGUL_EXPORT void CGUL::GL::GetFloatv(GL::Enum pname, GL::Float* params)
+{
+    GLCLEAR();
+    GLVERIFY(glGetFloatv);
+    glGetFloatv(pname, params);
+    GLCHECK("Failed to get OpenGL float.", glGetFloatv);
+}
+
+_CGUL_EXPORT void CGUL::GL::GetIntegerv(GL::Enum pname, GL::Int* params)
+{
+    GLCLEAR();
+    GLVERIFY(glGetIntegerv);
+    glGetIntegerv(pname, params);
+    GLCHECK("Failed to get OpenGL integer.", glGetIntegerv);
 }
 
 _CGUL_EXPORT void CGUL::GL::GetProgramInfoLog(GL::UInt program, GL::SizeI maxLength, GL::SizeI* length, GL::Char* infoLog)
@@ -420,6 +626,15 @@ _CGUL_EXPORT void CGUL::GL::GetShaderiv(GL::UInt shader, GL::Enum pname, GL::Int
     GLCHECK("Failed to get shader parameter.", glGetShaderiv);
 }
 
+_CGUL_EXPORT const CGUL::GL::UByte* CGUL::GL::GetString(GL::Enum pname)
+{
+    GLCLEAR();
+    GLVERIFY(glGetString);
+    const GL::UByte* ret = glGetString(pname);
+    GLCHECK("Failed to get OpenGL string.", glGetString);
+    return ret;
+}
+
 _CGUL_EXPORT CGUL::GL::Int CGUL::GL::GetUniformLocation(GL::UInt program, const GL::Char* name)
 {
     GLCLEAR();
@@ -446,6 +661,30 @@ _CGUL_EXPORT void CGUL::GL::LinkProgram(GL::UInt program)
     GLCHECK("Failed to link program.", glLinkProgram);
 }
 
+_CGUL_EXPORT void CGUL::GL::LoadIdentity()
+{
+    GLCLEAR();
+    GLVERIFY(glLoadIdentity);
+    glLoadIdentity();
+    GLCHECK("Failed to load identity matrix.", glLoadIdentity);
+}
+
+_CGUL_EXPORT void CGUL::GL::MatrixMode(GL::Enum mode)
+{
+    GLCLEAR();
+    GLVERIFY(glMatrixMode);
+    glMatrixMode(mode);
+    GLCHECK("Failed to set matrix mode.", glMatrixMode);
+}
+
+_CGUL_EXPORT void CGUL::GL::Ortho(GL::Double left, GL::Double right, GL::Double bottom, GL::Double top, GL::Double nearVal, GL::Double farVal)
+{
+    GLCLEAR();
+    GLVERIFY(glOrtho);
+    glOrtho(left, right, bottom, top, nearVal, farVal);
+    GLCHECK("Failed to set ortho matrix.", glOrtho);
+}
+
 _CGUL_EXPORT void CGUL::GL::PixelStoref(GL::Enum pname, GL::Float param)
 {
     GLCLEAR();
@@ -460,6 +699,46 @@ _CGUL_EXPORT void CGUL::GL::PixelStorei(GL::Enum pname, GL::Int param)
     GLVERIFY(glPixelStorei);
     glPixelStorei(pname, param);
     GLCHECK("Failed to set pixel store.", glPixelStorei);
+}
+
+_CGUL_EXPORT void CGUL::GL::PopMatrix()
+{
+    GLCLEAR();
+    GLVERIFY(glPopMatrix);
+    glPopMatrix();
+    GLCHECK("Failed to pop matrix.", glPopMatrix);
+}
+
+_CGUL_EXPORT void CGUL::GL::PushMatrix()
+{
+    GLCLEAR();
+    GLVERIFY(glPushMatrix);
+    glPushMatrix();
+    GLCHECK("Failed to push matrix.", glPushMatrix);
+}
+
+_CGUL_EXPORT void CGUL::GL::Rotated(GL::Double angle, GL::Double x, GL::Double y, GL::Double z)
+{
+    GLCLEAR();
+    GLVERIFY(glRotated);
+    glRotated(angle, x, y, z);
+    GLCHECK("Failed to rotate.", glRotated);
+}
+
+_CGUL_EXPORT void CGUL::GL::Rotatef(GL::Float angle, GL::Float x, GL::Float y, GL::Float z)
+{
+    GLCLEAR();
+    GLVERIFY(glRotatef);
+    glRotatef(angle, x, y, z);
+    GLCHECK("Failed to rotate.", glRotatef);
+}
+
+_CGUL_EXPORT void CGUL::GL::ShadeModel(GL::Enum mode)
+{
+    GLCLEAR();
+    GLVERIFY(glShadeModel);
+    glShadeModel(mode);
+    GLCHECK("Failed to set the shade model.", glShadeModel);
 }
 
 _CGUL_EXPORT void CGUL::GL::ShaderSource(GL::UInt shader, GL::SizeI count, const GL::Char** string, const GL::Int* length)
@@ -509,6 +788,102 @@ _CGUL_EXPORT void CGUL::GL::SwapInterval(GL::Boolean enable)
 #   endif
 }
 
+_CGUL_EXPORT void CGUL::GL::TexCoord1s(GL::Short s)
+{
+    GLVERIFY(glTexCoord1s);
+    glTexCoord1s(s);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord1i(GL::Int s)
+{
+    GLVERIFY(glTexCoord1i);
+    glTexCoord1i(s);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord1f(GL::Float s)
+{
+    GLVERIFY(glTexCoord1f);
+    glTexCoord1f(s);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord1d(GL::Double s)
+{
+    GLVERIFY(glTexCoord1d);
+    glTexCoord1d(s);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord2s(GL::Short s, GL::Short t)
+{
+    GLVERIFY(glTexCoord2s);
+    glTexCoord2s(s, t);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord2i(GL::Int s, GL::Int t)
+{
+    GLVERIFY(glTexCoord2i);
+    glTexCoord2i(s, t);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord2f(GL::Float s, GL::Float t)
+{
+    GLVERIFY(glTexCoord2f);
+    glTexCoord2f(s, t);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord2d(GL::Double s, GL::Double t)
+{
+    GLVERIFY(glTexCoord2d);
+    glTexCoord2d(s, t);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord3s(GL::Short s, GL::Short t, GL::Short r)
+{
+    GLVERIFY(glTexCoord3s);
+    glTexCoord3s(s, t, r);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord3i(GL::Int s, GL::Int t, GL::Int r)
+{
+    GLVERIFY(glTexCoord3i);
+    glTexCoord3i(s, t, r);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord3f(GL::Float s, GL::Float t, GL::Float r)
+{
+    GLVERIFY(glTexCoord3f);
+    glTexCoord3f(s, t, r);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord3d(GL::Double s, GL::Double t, GL::Double r)
+{
+    GLVERIFY(glTexCoord3d);
+    glTexCoord3d(s, t, r);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord4s(GL::Short s, GL::Short t, GL::Short r, GL::Short q)
+{
+    GLVERIFY(glTexCoord4s);
+    glTexCoord4s(s, t, r, q);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord4i(GL::Int s, GL::Int t, GL::Int r, GL::Int q)
+{
+    GLVERIFY(glTexCoord4i);
+    glTexCoord4i(s, t, r, q);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord4f(GL::Float s, GL::Float t, GL::Float r, GL::Float q)
+{
+    GLVERIFY(glTexCoord4f);
+    glTexCoord4f(s, t, r, q);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexCoord4d(GL::Double s, GL::Double t, GL::Double r, GL::Double q)
+{
+    GLVERIFY(glTexCoord4d);
+    glTexCoord4d(s, t, r, q);
+}
+
 _CGUL_EXPORT void CGUL::GL::TexEnvf(GL::Enum target, GL::Enum pname, GL::Float param)
 {
     GLCLEAR();
@@ -547,6 +922,30 @@ _CGUL_EXPORT void CGUL::GL::TexParameteri(GL::Enum target, GL::Enum pname, GL::I
     GLVERIFY(glTexParameteri);
     glTexParameteri(target, pname, param);
     GLCHECK("Failed to set texture parameter.", glTexParameteri);
+}
+
+_CGUL_EXPORT void CGUL::GL::TexSubImage2D(GL::Enum target, GL::Int level, GL::Int xoffset, GL::Int yoffset, GL::SizeI width, GL::SizeI height, GL::Enum format, GL::Enum type, const GL::Void* data)
+{
+    GLCLEAR();
+    GLVERIFY(glTexSubImage2D);
+    glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, data);
+    GLCHECK("Failed to set texture subimage.", glTexSubImage2D);
+}
+
+_CGUL_EXPORT void CGUL::GL::Translated(GL::Double x, GL::Double y, GL::Double z)
+{
+    GLCLEAR();
+    GLVERIFY(glTranslated);
+    glTranslated(x, y, z);
+    GLCHECK("Failed to translate.", glTransated);
+}
+
+_CGUL_EXPORT void CGUL::GL::Translatef(GL::Float x, GL::Float y, GL::Float z)
+{
+    GLCLEAR();
+    GLVERIFY(glTranslatef);
+    glTranslatef(x, y, z);
+    GLCHECK("Failed to translate.", glTransatef);
 }
 
 _CGUL_EXPORT void CGUL::GL::Uniform1f(GL::Int location, GL::Float v0)
@@ -821,6 +1220,78 @@ _CGUL_EXPORT void CGUL::GL::ValidateProgram(GL::UInt program)
     GLCHECK("Failed to validate program.", glValidateProgram);
 }
 
+_CGUL_EXPORT void CGUL::GL::Vertex2s(GL::Short x, GL::Short y)
+{
+    GLVERIFY(glVertex2s);
+    glVertex2s(x, y);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex2i(GL::Int x, GL::Int y)
+{
+    GLVERIFY(glVertex2i);
+    glVertex2i(x, y);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex2f(GL::Float x, GL::Float y)
+{
+    GLVERIFY(glVertex2f);
+    glVertex2f(x, y);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex2d(GL::Double x, GL::Double y)
+{
+    GLVERIFY(glVertex2d);
+    glVertex2d(x, y);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex3s(GL::Short x, GL::Short y, GL::Short z)
+{
+    GLVERIFY(glVertex3s);
+    glVertex3s(x, y, z);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex3i(GL::Int x, GL::Int y, GL::Int z)
+{
+    GLVERIFY(glVertex3i);
+    glVertex3i(x, y, z);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex3f(GL::Float x, GL::Float y, GL::Float z)
+{
+    GLVERIFY(glVertex3f);
+    glVertex3f(x, y, z);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex3d(GL::Double x, GL::Double y, GL::Double z)
+{
+    GLVERIFY(glVertex3d);
+    glVertex3d(x, y, z);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex4s(GL::Short x, GL::Short y, GL::Short z, GL::Short w)
+{
+    GLVERIFY(glVertex4s);
+    glVertex4s(x, y, z, w);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex4i(GL::Int x, GL::Int y, GL::Int z, GL::Int w)
+{
+    GLVERIFY(glVertex4i);
+    glVertex4i(x, y, z, w);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex4f(GL::Float x, GL::Float y, GL::Float z, GL::Float w)
+{
+    GLVERIFY(glVertex4f);
+    glVertex4f(x, y, z, w);
+}
+
+_CGUL_EXPORT void CGUL::GL::Vertex4d(GL::Double x, GL::Double y, GL::Double z, GL::Double w)
+{
+    GLVERIFY(glVertex4d);
+    glVertex4d(x, y, z, w);
+}
+
 _CGUL_EXPORT void CGUL::GL::VertexAttribIPointer(GL::UInt index, GL::Int size, GL::Enum type, GL::SizeI stride, const GL::Void* pointer)
 {
     GLCLEAR();
@@ -843,4 +1314,12 @@ _CGUL_EXPORT void CGUL::GL::VertexAttribPointer(GL::UInt index, GL::Int size, GL
     GLVERIFY(glVertexAttribPointer);
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
     GLCHECK("Failed to set vertex attribute pointer.", glVertexAttribPointer);
+}
+
+_CGUL_EXPORT void CGUL::GL::Viewport(GL::Int x, GL::Int y, GL::SizeI width, GL::SizeI height)
+{
+    GLCLEAR();
+    GLVERIFY(glViewport);
+    glViewport(x, y, width, height);
+    GLCHECK("Failed to set viewport.", glViewport);
 }
