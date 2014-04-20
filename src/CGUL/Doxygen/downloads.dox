@@ -1,32 +1,3 @@
 /*!
 @page downloads Downloads
-While CGUL is in development we do not have binary releases and require that you build the
-library form source.  You can grab the source from Github: @n
-https://github.com/Zethes/CGUL
-
-You can grab the pre-built libraries that CGUL relies on below.
-
-<b>Windows (Visual Studio) 32bit</b> @n
-COMING EVENTUALLY
-
-<b>Windows (Visual Studio) @b 64bit</b> @n
-COMING EVENTUALLY
-
-<b>MinGW 32bit</b> @n
-<a href="http://sourceforge.net/projects/jatta/files/Dependencies/mingw32_dep.zip/download">mingw32_dep.zip</a>
-
-<b>MinGW 64bit</b> @n
-COMING EVENTUALLY
-
-<b>Linux 32bit</b> @n
-COMING EVENTUALLY
-
-<b>Linux 64bit</b> @n
-<a href="http://sourceforge.net/projects/jatta/files/Dependencies/linux64_dep.tar.gz/download">linux64_dep.tar.gz</a>
-
-<b>MacOS 32bit</b> @n
-COMING EVENTUALLY
-
-<b>MacOS 64bit</b> @n
-COMING EVENTUALLY
 */

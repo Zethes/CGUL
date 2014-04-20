@@ -10,11 +10,31 @@ All tools included can be used in any project for any purpose, including commerc
 the @ref license for more information.
 
 @page downloads Downloads
-While CGUL is in development we do not have binary releases and require that you build the
-library form source.  You can grab the source from Github: @n
+Note that CGUL is still under development and these binary releases may be out of date and
+we recommend building the latest source from Github: @n
 https://github.com/Zethes/CGUL
 
-You can grab the pre-built libraries that CGUL relies on below.
+<b>Windows</b>@n
+32bit Installer                 [COMING SOON]@n
+64bit Zip                       [COMING SOON]@n
+@n
+<b>MacOS</b>@n
+32bit Bundle                    [COMING SOON]@n
+32bit Zip                       [COMING SOON]@n
+64bit Bundle                    [COMING SOON]@n
+64bit Zip                       [COMING SOON]@n
+@n
+<b>Linux</b>@n
+32bit .deb (Debian/Ubuntu)      [COMING SOON]@n
+64bit .deb (Debian/Ubuntu)      [COMING SOON]@n
+32bit .rpm (Fedora/openSUSE)    [COMING SOON]@n
+<a href="https://github.com/Zethes/CGUL/releases/download/v0.1.8-alpha/CGUL-0.1.8-1.fc20.x86_64.rpm">64bit .rpm (Fedora/openSUSE)</a> @n
+32bit PKGBUILD (Arch Linux)     [COMING SOON]@n
+64bit PKGBUILD (Arch Linux)     [COMING SOON]@n
+32bit .tar.gz (All)             [COMING SOON]@n
+<a href="https://github.com/Zethes/CGUL/releases/download/v0.1.8-alpha/CGUL-0.1.8.x86_64.tar.xz">64bit .tar.gz (All)</a> @n
+@n
+You can also grab the pre-built libraries that CGUL relies on below.
 
 <b>Windows (Visual Studio) 32bit</b> @n
 COMING EVENTUALLY
