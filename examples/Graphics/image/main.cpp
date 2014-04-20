@@ -5,10 +5,10 @@ using namespace CGUL;
 
 #include <iostream>
 
-UInt LoadShader(const String& vertexFile, const String& fragmentFile)
+UIntN LoadShader(const String& vertexFile, const String& fragmentFile)
 {
     // Create the shaders
-    UInt vertexShader, fragmentShader;
+    UIntN vertexShader, fragmentShader;
     vertexShader = GL::CreateShader(GL_VERTEX_SHADER);
     fragmentShader = GL::CreateShader(GL_FRAGMENT_SHADER);
 
@@ -26,7 +26,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::CompileShader(fragmentShader);
 
     // Check if shaders compiled
-    SInt status;
+    SIntN status;
     GL::GetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
@@ -43,7 +43,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     }
 
     // Create the program
-    UInt program = GL::CreateProgram();
+    UIntN program = GL::CreateProgram();
 
     // Setup the attributes
     GL::BindAttribLocation(program, GL::POSITION1, "vertPosition");
@@ -72,30 +72,30 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     return program;
 }
 
-UInt MakeBox()
+UIntN MakeBox()
 {
     // Setup the buffer data
-    Vector2 boxPositions[] = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0) };
-    Vector2 boxTexCoords[] = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 1), Vector2(1, 0) };
+    Vector2F boxPositions[] = { Vector2F(0, 0), Vector2F(0, 1), Vector2F(1, 1), Vector2F(1, 0) };
+    Vector2F boxTexCoords[] = { Vector2F(0, 0), Vector2F(0, 1), Vector2F(1, 1), Vector2F(1, 0) };
 
     // Create the vertex array object
-    UInt vertexArray;
+    UIntN vertexArray;
     GL::GenVertexArrays(1, &vertexArray);
     GL::BindVertexArray(vertexArray);
 
     // Setup the position buffer and attach it to the vertex array
-    UInt buffer1;
+    UIntN buffer1;
     GL::GenBuffers(1, &buffer1);
     GL::BindBuffer(GL_ARRAY_BUFFER, buffer1);
-    GL::BufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2), boxPositions, GL_STATIC_DRAW);
+    GL::BufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2F), boxPositions, GL_STATIC_DRAW);
     GL::VertexAttribPointer(GL::POSITION1, 2, GL_FLOAT, false, 0, 0);
     GL::EnableVertexAttribArray(GL::POSITION1);
 
     // Setup the texcoord buffer and attach it to the vertex array
-    UInt buffer2;
+    UIntN buffer2;
     GL::GenBuffers(1, &buffer2);
     GL::BindBuffer(GL_ARRAY_BUFFER, buffer2);
-    GL::BufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2), boxTexCoords, GL_STATIC_DRAW);
+    GL::BufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vector2F), boxTexCoords, GL_STATIC_DRAW);
     GL::VertexAttribPointer(GL::TEXCOORD1, 2, GL_FLOAT, false, 0, 0);
     GL::EnableVertexAttribArray(GL::TEXCOORD1);
 
@@ -116,7 +116,7 @@ int main()
             std::cout << (i+1) << ". " << loaders[i]->GetName() << " (" << loaders[i]->GetExtension() << ")" << std::endl;
         }
 
-        String fileName = "resources/photo3.jpg";
+        String fileName = "resources/logo.png";
         Image* image = new Image();
         if (!image->CanLoad(fileName))
         {
@@ -147,11 +147,11 @@ int main()
         GL::Enable(GL_ALPHA_TEST);
         GL::Enable(GL_TEXTURE_2D);
 
-        UInt program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
+        UIntN program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
 
-        UInt box = MakeBox();
+        UIntN box = MakeBox();
 
-        UInt texture;
+        UIntN texture;
         GL::GenTextures(1, &texture);
         GL::BindTexture(GL_TEXTURE_2D, texture);
         GL::TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -175,8 +175,8 @@ int main()
             context.Viewport(0, 0, window.GetWidth(), window.GetHeight());
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
             GL::UseProgram(program);
-            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho2D(0, 1, 1, 0).GetData());
-            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "modelMatrix"), 1, false, Matrix::MakeIdentity().GetData());
+            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, MatrixF::MakeOrtho2D(0, 1, 1, 0).GetData());
+            GL::UniformMatrix4fv(GL::GetUniformLocation(program, "modelMatrix"), 1, false, MatrixF::MakeIdentity().GetData());
             GL::Uniform1i(GL::GetUniformLocation(program, "texture"), 0);
             GL::ActiveTexture(GL_TEXTURE0);
             GL::BindTexture(GL_TEXTURE_2D, texture);
