@@ -6,6 +6,7 @@ set(CGUL_SOURCES
     ${CGUL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/ConditionVariable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CRC32.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DateTime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FileFinder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/JSON.cpp
@@ -16,6 +17,7 @@ set(CGUL_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/String.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timezones.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Version.cpp
     PARENT_SCOPE
 )
@@ -25,6 +27,7 @@ set(CGUL_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AutoRelease_Implement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConditionVariable.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DateTime.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Encryption.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Endian.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Endian_Implement.hpp
@@ -44,6 +47,7 @@ set(CGUL_INSTALL
     ${CMAKE_CURRENT_SOURCE_DIR}/String.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Thread.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timezones.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Version.hpp
     PARENT_SCOPE
 )
