@@ -421,6 +421,14 @@ _CGUL_EXPORT void CGUL::GL::DeleteBuffers(GL::SizeI n, const GL::UInt* buffers)
     GLCHECK("Failed to delete buffers.", glDeleteBuffers);
 }
 
+_CGUL_EXPORT void CGUL::GL::DeleteShader(GL::UInt shader)
+{
+    GLCLEAR();
+    GLVERIFY(glDeleteShader);
+    glDeleteShader(shader);
+    GLCHECK("Failed to delete shader.", glDeleteShader);
+}
+
 _CGUL_EXPORT void CGUL::GL::DeleteTextures(GL::SizeI n, const GL::UInt* textures)
 {
     GLCLEAR();
