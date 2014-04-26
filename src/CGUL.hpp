@@ -149,6 +149,7 @@
 
 #include "CGUL/Utility/AutoRelease.hpp"
 #include "CGUL/Utility/ConditionVariable.hpp"
+#include "CGUL/Utility/DateTime.hpp"
 #include "CGUL/Utility/Encryption.hpp"
 #include "CGUL/Utility/Endian.hpp"
 #include "CGUL/Utility/Event.hpp"
@@ -162,6 +163,7 @@
 #include "CGUL/Utility/Regex.hpp"
 #include "CGUL/Utility/String.hpp"
 #include "CGUL/Utility/Timer.hpp"
+#include "CGUL/Utility/Timezones.hpp"
 #include "CGUL/Utility/Thread.hpp"
 #include "CGUL/Utility/Version.hpp"
 
