@@ -5,10 +5,10 @@ using namespace CGUL;
 
 #include <iostream>
 
-UInt LoadShader(const String& vertexFile, const String& fragmentFile)
+UIntN LoadShader(const String& vertexFile, const String& fragmentFile)
 {
     // Create the shaders
-    UInt vertexShader, fragmentShader;
+    UIntN vertexShader, fragmentShader;
     vertexShader = GL::CreateShader(GL_VERTEX_SHADER);
     fragmentShader = GL::CreateShader(GL_FRAGMENT_SHADER);
 
@@ -26,7 +26,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     GL::CompileShader(fragmentShader);
 
     // Check if shaders compiled
-    SInt status;
+    SIntN status;
     GL::GetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
     if (status != GL_TRUE)
     {
@@ -43,7 +43,7 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     }
 
     // Create the program
-    UInt program = GL::CreateProgram();
+    UIntN program = GL::CreateProgram();
 
     // Setup the attributes
     GL::BindAttribLocation(program, GL::POSITION1, "vertPosition");
@@ -72,41 +72,41 @@ UInt LoadShader(const String& vertexFile, const String& fragmentFile)
     return program;
 }
 
-UInt MakeBox()
+UIntN MakeBox()
 {
     // Setup the buffer data
-    Vector3 boxPositions[] = {Vector3(-0.5f, -0.5f, -0.5f), Vector3(-0.5f,  0.5f, -0.5f), Vector3( 0.5f,  0.5f, -0.5f), Vector3( 0.5f, -0.5f, -0.5f),
-                              Vector3( 0.5f, -0.5f,  0.5f), Vector3( 0.5f,  0.5f,  0.5f), Vector3(-0.5f,  0.5f,  0.5f), Vector3(-0.5f, -0.5f,  0.5f),
-                              Vector3(-0.5f, -0.5f,  0.5f), Vector3(-0.5f,  0.5f,  0.5f), Vector3(-0.5f,  0.5f, -0.5f), Vector3(-0.5f, -0.5f, -0.5f),
-                              Vector3( 0.5f, -0.5f, -0.5f), Vector3( 0.5f,  0.5f, -0.5f), Vector3( 0.5f,  0.5f,  0.5f), Vector3( 0.5f, -0.5f,  0.5f),
-                              Vector3(-0.5f, -0.5f, -0.5f), Vector3( 0.5f, -0.5f, -0.5f), Vector3( 0.5f, -0.5f,  0.5f), Vector3(-0.5f, -0.5f,  0.5f),
-                              Vector3(-0.5f,  0.5f, -0.5f), Vector3(-0.5f,  0.5f,  0.5f), Vector3( 0.5f,  0.5f,  0.5f), Vector3( 0.5f,  0.5f, -0.5f)};
+    Vector3F boxPositions[] = {Vector3F(-0.5f, -0.5f, -0.5f), Vector3F(-0.5f,  0.5f, -0.5f), Vector3F( 0.5f,  0.5f, -0.5f), Vector3F( 0.5f, -0.5f, -0.5f),
+                               Vector3F( 0.5f, -0.5f,  0.5f), Vector3F( 0.5f,  0.5f,  0.5f), Vector3F(-0.5f,  0.5f,  0.5f), Vector3F(-0.5f, -0.5f,  0.5f),
+                               Vector3F(-0.5f, -0.5f,  0.5f), Vector3F(-0.5f,  0.5f,  0.5f), Vector3F(-0.5f,  0.5f, -0.5f), Vector3F(-0.5f, -0.5f, -0.5f),
+                               Vector3F( 0.5f, -0.5f, -0.5f), Vector3F( 0.5f,  0.5f, -0.5f), Vector3F( 0.5f,  0.5f,  0.5f), Vector3F( 0.5f, -0.5f,  0.5f),
+                               Vector3F(-0.5f, -0.5f, -0.5f), Vector3F( 0.5f, -0.5f, -0.5f), Vector3F( 0.5f, -0.5f,  0.5f), Vector3F(-0.5f, -0.5f,  0.5f),
+                               Vector3F(-0.5f,  0.5f, -0.5f), Vector3F(-0.5f,  0.5f,  0.5f), Vector3F( 0.5f,  0.5f,  0.5f), Vector3F( 0.5f,  0.5f, -0.5f)};
 
-    Vector2 boxTexCoords[] = {Vector2(0.0f, 0.0f), Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f),
-                              Vector2(0.0f, 0.0f), Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f),
-                              Vector2(0.0f, 0.0f), Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f),
-                              Vector2(0.0f, 0.0f), Vector2(0.0f, 1.0f), Vector2(1.0f, 1.0f), Vector2(1.0f, 0.0f),
-                              Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f),
-                              Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f)};
+    Vector2F boxTexCoords[] = {Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f), Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f),
+                               Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f), Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f),
+                               Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f), Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f),
+                               Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f), Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f),
+                               Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f),
+                               Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f), Vector2F(0.5f, 0.5f)};
 
     // Create the vertex array object
-    UInt vertexArray;
+    UIntN vertexArray;
     GL::GenVertexArrays(1, &vertexArray);
     GL::BindVertexArray(vertexArray);
 
     // Setup the position buffer and attach it to the vertex array
-    UInt buffer1;
+    UIntN buffer1;
     GL::GenBuffers(1, &buffer1);
     GL::BindBuffer(GL_ARRAY_BUFFER, buffer1);
-    GL::BufferData(GL_ARRAY_BUFFER, 24 * sizeof(Vector3), boxPositions, GL_STATIC_DRAW);
+    GL::BufferData(GL_ARRAY_BUFFER, 24 * sizeof(Vector3F), boxPositions, GL_STATIC_DRAW);
     GL::VertexAttribPointer(GL::POSITION1, 3, GL_FLOAT, false, 0, 0);
     GL::EnableVertexAttribArray(GL::POSITION1);
 
     // Setup the texcoord buffer and attach it to the vertex array
-    UInt buffer2;
+    UIntN buffer2;
     GL::GenBuffers(1, &buffer2);
     GL::BindBuffer(GL_ARRAY_BUFFER, buffer2);
-    GL::BufferData(GL_ARRAY_BUFFER, 24 * sizeof(Vector2), boxTexCoords, GL_STATIC_DRAW);
+    GL::BufferData(GL_ARRAY_BUFFER, 24 * sizeof(Vector2F), boxTexCoords, GL_STATIC_DRAW);
     GL::VertexAttribPointer(GL::TEXCOORD1, 2, GL_FLOAT, false, 0, 0);
     GL::EnableVertexAttribArray(GL::TEXCOORD1);
 
@@ -142,11 +142,11 @@ int main()
         GL::Enable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
-        UInt program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
+        UIntN program = LoadShader(U8("resources/shader.vert"), U8("resources/shader.frag"));
 
-        UInt box = MakeBox();
+        UIntN box = MakeBox();
 
-        UInt texture;
+        UIntN texture;
         GL::GenTextures(1, &texture);
         GL::BindTexture(GL_TEXTURE_2D, texture);
         GL::TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -175,15 +175,15 @@ int main()
             context.Clear(GL::COLOR_BUFFER_BIT | GL::DEPTH_BUFFER_BIT);
             GL::UseProgram(program);
             //GL::UniformMatrix4fv(GL::GetUniformLocation(program, "orthoMatrix"), 1, false, Matrix::MakeOrtho2D(0, 1280, 768, 0).GetData());
-            Matrix view = Matrix::MakeLookAt(Vector3(Math::Cos(rot) * 50, Math::Cos(rot) * 50, Math::Sin(rot) * 50), Vector3(0, 0, 0), Vector3(0, -1, 0));
-            Matrix projection = Matrix::MakePerspective(45.0, window.GetWidth() / (Float32)window.GetHeight(), 1, 1000);
-            Matrix vp = view * projection;
+            MatrixF view = MatrixF::MakeLookAt(Vector3F(Math::Cos(rot) * 50, Math::Cos(rot) * 50, Math::Sin(rot) * 50), Vector3F(0, 0, 0), Vector3F(0, -1, 0));
+            MatrixF projection = MatrixF::MakePerspective(45.0, window.GetWidth() / (Float32)window.GetHeight(), 1, 1000);
+            MatrixF vp = view * projection;
 
-            Matrix model;
-            model = Matrix::MakeScaling(Vector3(20, 20, 20)) * model;
+            MatrixF model;
+            model = MatrixF::MakeScaling(Vector3F(20, 20, 20)) * model;
 
             //Matrix wvp = model * Matrix::MakeOrtho2D(0, 1280, 768, 0);
-            Matrix wvp = model * vp;
+            MatrixF wvp = model * vp;
             GL::UniformMatrix4fv(GL::GetUniformLocation(program, "matrix"), 1, false, wvp.GetData());
             GL::Uniform1i(GL::GetUniformLocation(program, "texture"), 0);
             GL::ActiveTexture(GL_TEXTURE0);
