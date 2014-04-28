@@ -114,6 +114,7 @@ namespace CGUL
         _CGUL_EXPORT GL::UInt CreateShader(GL::Enum shaderType);
 
         _CGUL_EXPORT void DeleteBuffers(GL::SizeI n, const GL::UInt* buffers);
+        _CGUL_EXPORT void DeleteShader(GL::UInt shader);
         _CGUL_EXPORT void DeleteTextures(GL::SizeI n, const GL::UInt* textures);
         _CGUL_EXPORT void DeleteVertexArrays(GL::SizeI n, const GL::UInt* arrays);
         _CGUL_EXPORT void Disable(GL::Enum cap);

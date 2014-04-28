@@ -25,4 +25,5 @@ CGUL::Timezone& CGUL::Timezone::operator=(const Timezone& tz)
     name = tz.name;
     daylight = tz.daylight;
     zoneOffset = tz.zoneOffset;
+    return *this;
 }
