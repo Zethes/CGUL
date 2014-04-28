@@ -21,6 +21,8 @@ namespace CGUL
 
         template< typename Type >
         _CGUL_INLINE_DEFINE void SwapBytes(Type* value);
+
+        _CGUL_INLINE_DEFINE void SwapBytes(void* value, Size size);
     }
 }
 

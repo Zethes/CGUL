@@ -36,6 +36,19 @@ _CGUL_INLINE_IMPLEMENT void CGUL::System::SwapBytes(Type* value)
     }
 }
 
+_CGUL_INLINE_IMPLEMENT void CGUL::System::SwapBytes(void* value, Size size)
+{
+    Size y;
+    unsigned char* data = (unsigned char*)value;
+    for (Size x = 0; x < size / 2; x++)
+    {
+        y = size - (x + 1);
+        data[x] = data[x] ^ data[y];
+        data[y] = data[x] ^ data[y];
+        data[x] = data[x] ^ data[y];
+    }
+}
+
 // There's probably a different way to do this...
 namespace CGUL
 {
