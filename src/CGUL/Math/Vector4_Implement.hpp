@@ -175,7 +175,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector4T< Type >::operator[](UInt32 index) con
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector4T< Type > CGUL::Vector4T< Type >::operator-() const
 {
-    return Vector4(-this->x, -this->y, -this->z, -this->w);
+    return Vector4T(-this->x, -this->y, -this->z, -this->w);
 }
 
 /** @details Due to floating point imprecision, vectors are rarely ever @em exactly equal.  Use

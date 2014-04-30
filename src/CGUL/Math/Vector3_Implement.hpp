@@ -190,7 +190,7 @@ _CGUL_INLINE_IMPLEMENT Type CGUL::Vector3T< Type >::operator[](UInt32 index) con
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type > CGUL::Vector3T< Type >::operator-() const
 {
-    return Vector3(-this->x, -this->y, -this->z);
+    return Vector3T(-this->x, -this->y, -this->z);
 }
 
 /** @details Due to floating point imprecision, vectors are rarely ever @em exactly equal.  Use
