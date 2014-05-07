@@ -7,123 +7,89 @@
 
 #include "Glyph.hpp"
 #include "../Images/Format.hpp"
-#include "../Math/Math.hpp"
+#include <string.h>
 
-_CGUL_EXPORT CGUL::Glyph::Glyph(::FT_Face face, UInt32 utf8Character)
+_CGUL_EXPORT bool CGUL::Font::Glyph::Setup(FT_Glyph glyph, void* glyphSlot)
 {
-    FT_Matrix matrix;
-    matrix.xx = (FT_Fixed)(1 * 0x10000L);
-    matrix.xy = (FT_Fixed)(0 * 0x10000L);
-    matrix.yx = (FT_Fixed)(0 * 0x10000L);
-    matrix.yy = (FT_Fixed)(1 * 0x10000L);
-    FT_Vector pen;
-    pen.x = 0;
-    pen.y = 0;
+    // Cleanup old glyph, if one exists
+    Free();
 
-    if (face->style_flags & FontStyles::OBLIQUE)
-    {
-        double pi = 3.1415926535;;
-        double rads = pi * 0.0f / 180.0;
-        double skew = pi * 35.0f/ 180.0;
+    // Get advance information from glyph slot
+    FT_GlyphSlot slot = (FT_GlyphSlot)glyphSlot;
+    this->advance.x = slot->advance.x >> 6;
+    this->advance.y = slot->advance.y >> 6;
 
-        // set up transform (a rotation here)
-        matrix.xx = (FT_Fixed)( Math::Cos(rads)*0x10000L);
-        matrix.xy = (FT_Fixed)( Math::Sin(rads + skew)*0x10000L);
-        matrix.yx = (FT_Fixed)( Math::Sin(rads)*0x10000L);
-        matrix.yy = (FT_Fixed)( Math::Cos(rads)*0x10000L);
-    }
-
-    FT_Set_Transform(face, &matrix, &pen);
-
-    FT_Error error = FT_Load_Char(face, utf8Character, FT_LOAD_RENDER);
+    // Get the bitmap data from the glyph
+    FT_Error error = FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, NULL, true);
     if (error)
     {
-        std::runtime_error("Failed to load glyph");
+        return false;
     }
+    FT_BitmapGlyph bitmapGlyph = (FT_BitmapGlyph)glyph;
+    FT_Bitmap& bitmap = bitmapGlyph->bitmap;
 
-    character = utf8Character;
-    width = face->glyph->bitmap.width;
-    height = face->glyph->bitmap.rows;
-    advance = Vector2F(2,0);//Vector2(face->glyph->advance.x/64.0, face->glyph->advance.y/64.0);
-    offset = Vector2F(face->glyph->bitmap_left, face->glyph->bitmap_top);
-    data = (Byte*)new unsigned char[width*height];
-    memcpy(data, face->glyph->bitmap.buffer, width*height);
-}
-_CGUL_EXPORT CGUL::Glyph::~Glyph()
-{
+    // Origin is left/top offsets
+    this->origin.x = bitmapGlyph->left;
+    this->origin.y = bitmapGlyph->top;
 
+    // Get size of bitmap data
+    this->size = UCoord32(bitmap.width, bitmap.rows);
+
+    // Save glyph
+    this->glyph = glyph;
+    return true;
 }
 
-_CGUL_EXPORT CGUL::UInt32 CGUL::Glyph::GetWidth()
+_CGUL_EXPORT CGUL::Font::Glyph::Glyph() :
+    glyph(NULL)
 {
-    return width;
 }
-_CGUL_EXPORT CGUL::UInt32 CGUL::Glyph::GetHeight()
+
+_CGUL_EXPORT CGUL::Font::Glyph::~Glyph()
 {
-    return height;
+    Free();
 }
-_CGUL_EXPORT CGUL::Vector2F CGUL::Glyph::GetAdvance()
+
+_CGUL_EXPORT void CGUL::Font::Glyph::Free()
+{
+    // If a glyph exists, clean it up
+    if (glyph)
+    {
+        FT_Done_Glyph(glyph);
+        glyph = NULL;
+    }
+}
+
+_CGUL_EXPORT CGUL::UInt32 CGUL::Font::Glyph::GetWidth() const
+{
+    return size.x;
+}
+
+_CGUL_EXPORT CGUL::UInt32 CGUL::Font::Glyph::GetHeight() const
+{
+    return size.y;
+}
+
+_CGUL_EXPORT CGUL::UCoord32 CGUL::Font::Glyph::GetSize() const
+{
+    return size;
+}
+
+_CGUL_EXPORT CGUL::SCoord32 CGUL::Font::Glyph::GetOrigin() const
+{
+    return origin;
+}
+
+_CGUL_EXPORT CGUL::SCoord32 CGUL::Font::Glyph::GetAdvance() const
 {
     return advance;
 }
-_CGUL_EXPORT CGUL::Vector2F CGUL::Glyph::GetOffset()
+
+_CGUL_EXPORT CGUL::Byte CGUL::Font::Glyph::Get(UInt32 x, UInt32 y) const
 {
-    return offset;
-}
+    // Read individual bitmap data
+    return ((FT_BitmapGlyph)glyph)->bitmap.buffer[y * size.x + x];
 
-_CGUL_EXPORT CGUL::Byte* CGUL::Glyph::GetData()
-{
-    return data;
-}
-
-_CGUL_EXPORT CGUL::Image CGUL::Glyph::GetImage(Color color, UInt32 styleFlags)
-{
-    //TODO: Speed this up.
-    Color* buffer = reinterpret_cast<Color*>(new char[width*height*sizeof(Color)]);
-    memset(buffer, 0, width*height*sizeof(Color));
-    for (unsigned int y = 0; y < height; y++)
-    {
-        for (unsigned int x = 0; x < width; x++)
-        {
-            buffer[y*width+x].r = color.r;
-            buffer[y*width+x].g = color.g;
-            buffer[y*width+x].b = color.b;
-
-            buffer[y*width+x].a |= (FT_Int)(data[y*width+x] * (color.a / 255.0f));
-        }
-    }
-
-    //Apply styling.
-    if (styleFlags & FontStyles::UNDERLINED)
-    {
-        for (unsigned int x = 0; x < width; x++)
-        {
-            buffer[(height-1)*width+x].r = color.r;
-            buffer[(height-1)*width+x].g = color.g;
-            buffer[(height-1)*width+x].b = color.b;
-            buffer[(height-1)*width+x].a = color.a;
-        }
-    }
-    if (styleFlags & FontStyles::STRIKED)
-    {
-        for (unsigned int x = 0; x < width; x++)
-        {
-            buffer[(height/2)*width+x].r = color.r;
-            buffer[(height/2)*width+x].g = color.g;
-            buffer[(height/2)*width+x].b = color.b;
-            buffer[(height/2)*width+x].a = color.a;
-        }
-    }
-    if (styleFlags & FontStyles::OVERLINED)
-    {
-        for (unsigned int x = 0; x < width; x++)
-        {
-            buffer[0*width+x].r = color.r;
-            buffer[0*width+x].g = color.g;
-            buffer[0*width+x].b = color.b;
-            buffer[0*width+x].a = color.a;
-        }
-    }
-
-    return Image(ImageFormats::RGBA8, UCoord32(width, height), buffer);
+    // TODO: add a different way to do this?
+    // maybe get raw pointer, or copy data to buffer?
 }

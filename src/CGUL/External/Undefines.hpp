@@ -29,6 +29,7 @@
 
 #ifdef FreeType_FOUND
 #   undef _CGUL_FT_FACE
+#   undef _CGUL_FT_GLYPH
 #endif
 
 #ifdef Assimp_FOUND

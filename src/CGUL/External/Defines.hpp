@@ -35,6 +35,7 @@
 
 #ifdef FreeType_FOUND
 #   define _CGUL_FT_FACE void*
+#   define _CGUL_FT_GLYPH void*
 #endif
 
 #ifdef Assimp_FOUND
@@ -115,8 +116,11 @@ CHECK(::Display*, _CGUL_DISPLAY)
 CHECK(::Window, _CGUL_WINDOW)
 CHECK(::GLXContext, _CGUL_GLXCONTEXT)
 #   endif
-#   ifdef Assimp_FOUND
+#    ifdef FreeType_FOUND
 CHECK(::FT_Face, _CGUL_FT_FACE)
+CHECK(::FT_Glyph, _CGUL_FT_GLYPH)
+#    endif
+#   ifdef Assimp_FOUND
 CHECK(::aiScene*, _CGUL_AISCENE)
 CHECK(::aiMesh*, _CGUL_AIMESH)
 CHECK(::aiTexture*, _CGUL_AITEXTURE)
@@ -159,6 +163,7 @@ CHECK(::pthread_cond_t, _CGUL_PTHREAD_COND_T)
 #   endif
 #   ifdef FreeType_FOUND
 #       define _CGUL_FT_FACE ::FT_Face
+#       define _CGUL_FT_GLYPH ::FT_Glyph
 #   endif
 #   ifdef Assimp_FOUND
 #       define _CGUL_AISCENE ::aiScene*

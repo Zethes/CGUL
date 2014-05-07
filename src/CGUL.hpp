@@ -89,8 +89,7 @@
 #include "CGUL/Exceptions/OpenGLException.hpp"
 
 #ifdef FreeType_FOUND
-#   include "CGUL/Fonts/Font.hpp"
-#   include "CGUL/Fonts/FontStyles.hpp"
+#   include "CGUL/Fonts/Face.hpp"
 #   include "CGUL/Fonts/Glyph.hpp"
 #endif
 

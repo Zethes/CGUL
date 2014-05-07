@@ -7,10 +7,9 @@
 
 #pragma once
 #include <CGUL/Config.hpp>
-#include "../Math/Vector2.hpp"
+#include "../Utility/String.hpp"
 #include "../Images/Image.hpp"
 #include "../Images/Color.hpp"
-#include "FontStyles.hpp"
 #include "../External/Defines.hpp"
 
 /*
@@ -46,30 +45,37 @@
  *              |------------- advance_x ---------->|
  */
 
+// TODO: should probably update the graphic above with the CGUL equivalents
+
 namespace CGUL
 {
-    class Glyph
+    namespace Font
     {
-    private:
-        UInt32 character;
-        UInt32 width;
-        UInt32 height;
-        Vector2F offset;
-        Vector2F advance;
-        Byte* data;
-    public:
-        _CGUL_EXPORT Glyph(_CGUL_FT_FACE face, UInt32 utf8Character);
-        _CGUL_EXPORT ~Glyph();
+        class Glyph
+        {
+            friend class Face;
 
-        _CGUL_EXPORT UInt32 GetWidth();
-        _CGUL_EXPORT UInt32 GetHeight();
-        _CGUL_EXPORT Vector2F GetAdvance();
-        _CGUL_EXPORT Vector2F GetOffset();
+            _CGUL_FT_GLYPH glyph;
+            UCoord32 size;
+            SCoord32 origin;
+            SCoord32 advance;
 
-        _CGUL_EXPORT Byte* GetData();
+            _CGUL_EXPORT bool Setup(_CGUL_FT_GLYPH glyph, void* glyphSlot);
+        public:
+            _CGUL_EXPORT Glyph();
+            _CGUL_EXPORT ~Glyph();
 
-        _CGUL_EXPORT Image GetImage(Color color, UInt32 styleFlags); //Generates RGBA8888 image.
-    };
+            _CGUL_EXPORT void Free();
+
+            _CGUL_EXPORT UInt32 GetWidth() const;
+            _CGUL_EXPORT UInt32 GetHeight() const;
+            _CGUL_EXPORT UCoord32 GetSize() const;
+            _CGUL_EXPORT SCoord32 GetOrigin() const;
+            _CGUL_EXPORT SCoord32 GetAdvance() const;
+
+            _CGUL_EXPORT Byte Get(UInt32 x, UInt32 y) const;
+        };
+    }
 }
 
 #include "../External/Undefines.hpp"
