@@ -353,6 +353,16 @@ _CGUL_INLINE_IMPLEMENT bool CGUL::Math::IsPowerOfTwo(UInt32 x)
     return (x != 0) && ((x & (x - 1)) == 0);
 }
 
+_CGUL_INLINE_IMPLEMENT CGUL::UInt32 CGUL::Math::NextPowerOfTwo(UInt32 x)
+{
+    UInt32 rval = 1;
+    while (rval < x)
+    {
+        rval <<= 1;
+    }
+    return rval;
+}
+
 template< typename Type >
 _CGUL_INLINE_IMPLEMENT Type CGUL::Math::StandardDeviation(const FixedList< Type >& values, Type* mean)
 {

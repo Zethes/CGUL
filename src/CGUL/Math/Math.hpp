@@ -146,6 +146,8 @@ namespace CGUL
 
         //! @brief Checks if the value is a power of two.
         _CGUL_INLINE_DEFINE bool IsPowerOfTwo(UInt32 x);
+        //! @brief Get the next power of two for a given number.
+        _CGUL_INLINE_DEFINE UInt32 NextPowerOfTwo(UInt32 x);
 
         template< typename Type _CGUL_DEFAULT_MATH_TYPE >
         _CGUL_INLINE_DEFINE Type StandardDeviation(const FixedList< Type >& values, Type* mean = NULL);

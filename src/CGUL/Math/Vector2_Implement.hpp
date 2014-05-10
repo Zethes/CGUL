@@ -503,6 +503,17 @@ _CGUL_INLINE_IMPLEMENT void CGUL::Vector2T< Type >::SetAngle(Type angle)
     y = Math::Sin(angle) * magnitude;
 }
 
+/** @details Set the angle and length of a 2D vector.
+ *  @param angle The new angle (in radians) for the vector.
+ *  @param angle The new length for the vector.
+ */
+template< typename Type >
+_CGUL_INLINE_IMPLEMENT void CGUL::Vector2T< Type >::SetAngle(Type angle, Type length)
+{
+    x = Math::Cos(angle) * length;
+    y = Math::Sin(angle) * length;
+}
+
 /** @details Gets an angle from the vector.
  *  @todo Check, does the vector have to be normalized for this to work?
  */

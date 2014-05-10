@@ -154,6 +154,8 @@ namespace CGUL
 
         //! @brief Sets the two dimensional angle of the vector.
         _CGUL_INLINE_DEFINE void SetAngle(Type angle);
+        //! @brief Sets the two dimensional angle of the vector with the specified length.
+        _CGUL_INLINE_DEFINE void SetAngle(Type angle, Type length);
         //! @brief Gets the two dimensional angle of the vector.
         _CGUL_INLINE_DEFINE Type GetAngle() const;
 
