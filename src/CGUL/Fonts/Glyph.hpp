@@ -26,7 +26,7 @@
  *              |         |  g:::::::::::::::::g    |     |        |
  *              |         | g::::::ggggg::::::gg    |     |        |
  *              |         | g:::::g     g:::::g     |     |        |
- *    offset_x -|-------->| g:::::g     g:::::g     |  offset_y    |
+ *    offset.x -|-------->| g:::::g     g:::::g     |  offset.y    |
  *              |         | g:::::g     g:::::g     |     |        |
  *              |         | g::::::g    g:::::g     |     |        |
  *              |         | g:::::::ggggg:::::g     |     |        |
@@ -42,10 +42,8 @@
  *              |         |         gggggg          |              v
  *              |         +-------------------------+----------------- ymin
  *              |                                   |
- *              |------------- advance_x ---------->|
+ *              |------------- advance.x ---------->|
  */
-
-// TODO: should probably update the graphic above with the CGUL equivalents
 
 namespace CGUL
 {
@@ -72,6 +70,7 @@ namespace CGUL
             _CGUL_EXPORT UCoord32 GetSize() const;
             _CGUL_EXPORT SCoord32 GetOrigin() const;
             _CGUL_EXPORT SCoord32 GetAdvance() const;
+            _CGUL_EXPORT SCoord32 GetOffset() const;
 
             _CGUL_EXPORT Byte Get(UInt32 x, UInt32 y) const;
         };

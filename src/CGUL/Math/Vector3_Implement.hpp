@@ -358,7 +358,7 @@ std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector3T< Type 
 
 template< typename Type >
 template< typename OtherType >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::operator CGUL::Vector3T< OtherType >()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector3T< Type >::operator CGUL::Vector3T< OtherType >() const
 {
     return Vector3T< OtherType >((OtherType)x, (OtherType)y, (OtherType)z);
 }

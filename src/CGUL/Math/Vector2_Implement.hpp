@@ -300,7 +300,7 @@ std::ostream& CGUL::operator<<(std::ostream& stream, const CGUL::Vector2T< Type 
 
 template< typename Type >
 template< typename OtherType >
-_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >::operator CGUL::Vector2T< OtherType >()
+_CGUL_INLINE_IMPLEMENT CGUL::Vector2T< Type >::operator CGUL::Vector2T< OtherType >() const
 {
     return Vector2T< OtherType >((OtherType)x, (OtherType)y);
 }

@@ -85,6 +85,11 @@ _CGUL_EXPORT CGUL::SCoord32 CGUL::Font::Glyph::GetAdvance() const
     return advance;
 }
 
+_CGUL_EXPORT CGUL::SCoord32 CGUL::Font::Glyph::GetOffset() const
+{
+    return size - origin;
+}
+
 _CGUL_EXPORT CGUL::Byte CGUL::Font::Glyph::Get(UInt32 x, UInt32 y) const
 {
     // Read individual bitmap data
