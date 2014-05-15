@@ -345,6 +345,16 @@ namespace CGUL
 #       include <openssl/ssl.h>
 #       include <openssl/err.h>
 #   endif
+#   ifdef Crypto_FOUND
+#       include <openssl/bn.h>
+#       include <openssl/sha.h>
+#       include <openssl/crypto.h>
+#       include <openssl/hmac.h>
+#       include <openssl/md2.h>
+#       include <openssl/md4.h>
+#       include <openssl/md5.h>
+#       include <openssl/ripemd.h>
+#   endif
 #   if defined(CGUL_LINUX) | defined(CGUL_MACOS)
 #       include <arpa/inet.h>
 #       include <errno.h>

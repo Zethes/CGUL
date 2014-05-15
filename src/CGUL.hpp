@@ -82,6 +82,16 @@
 #include "CGUL/Containers/List.hpp"
 #include "CGUL/Containers/Vector.hpp"
 
+#ifdef Crypto_FOUND
+#   include "CGUL/Cryptography/BigNumber.hpp"
+#   include "CGUL/Cryptography/HMAC.hpp"
+#   include "CGUL/Cryptography/MD2.hpp"
+#   include "CGUL/Cryptography/MD4.hpp"
+#   include "CGUL/Cryptography/MD5.hpp"
+#   include "CGUL/Cryptography/RIPEMD.hpp"
+#   include "CGUL/Cryptography/SHA.hpp"
+#endif
+
 #include "CGUL/Exceptions/Exception.hpp"
 #include "CGUL/Exceptions/FatalException.hpp"
 #include "CGUL/Exceptions/FileException.hpp"

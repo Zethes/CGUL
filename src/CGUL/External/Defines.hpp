@@ -88,6 +88,16 @@
 #   define _CGUL_SSL_BIO void*
 #endif
 
+#ifdef Crypto_FOUND
+#   define _CGUL_BIGNUM void*
+#   define _CGUL_SHA_CTX void*
+#   define _CGUL_HMAC_CTX void*
+#   define _CGUL_MD2_CTX void*
+#   define _CGUL_MD4_CTX void*
+#   define _CGUL_MD5_CTX void*
+#   define _CGUL_RIPEMD_CTX void*
+#endif
+
 #ifdef pthread_FOUND
 #   define _CGUL_PTHREAD_T void*
 #   define _CGUL_PTHREAD_MUTEX_T CGUL::_CGUL_PTHREAD_MUTEX_T
@@ -135,6 +145,20 @@ CHECK(::PaHostApiInfo*, _CGUL_PAHOSTAPI_INFO)
 #   ifdef PCRE_FOUND
 CHECK(::pcre*, _CGUL_PCRE)
 CHECK(::pcre_extra*, _CGUL_PCRE_EXTRA)
+#   endif
+#   ifdef OpenSSL_FOUND
+CHECK(::SSL*, _CGUL_SSL)
+CHECK(::SSL_CTX*, _CGUL_SSL_CTX)
+CHECK(::BIO*, _CGUL_SSL_BIO)
+#   endif
+#   ifdef Crypto_FOUND
+CHECK(::bignum_st*, _CGUL_BIGNUM)
+CHECK(::SHA_CTX*, _CGUL_SHA_CTX)
+CHECK(::HMAC_CTX*, _CGUL_HMAC_CTX)
+CHECK(::MD2_CTX*, _CGUL_MD2_CTX)
+CHECK(::MD4_CTX*, _CGUL_MD4_CTX)
+CHECK(::MD5_CTX*, _CGUL_MD5_CTX)
+CHECK(::RIPEMD160_CTX*, _CGUL_RIPEMD_CTX)
 #   endif
 #   ifdef pthread_FOUND
 CHECK(::pthread_t, _CGUL_PTHREAD_T)
@@ -210,6 +234,15 @@ CHECK(::pthread_cond_t, _CGUL_PTHREAD_COND_T)
 #       define _CGUL_SSL ::SSL*
 #       define _CGUL_SSL_CTX ::SSL_CTX*
 #       define _CGUL_SSL_BIO ::BIO*
+#   endif
+#   ifdef Crypto_FOUND
+#       define _CGUL_BIGNUM ::bignum_st*
+#       define _CGUL_SHA_CTX ::SHA_CTX*
+#       define _CGUL_HMAC_CTX ::HMAC_CTX*
+#       define _CGUL_MD2_CTX ::MD2_CTX*
+#       define _CGUL_MD4_CTX ::MD4_CTX*
+#       define _CGUL_MD5_CTX ::MD5_CTX*
+#       define _CGUL_RIPEMD_CTX ::RIPEMD160_CTX*
 #   endif
 #   ifdef pthread_FOUND
 #       define _CGUL_PTHREAD_T ::pthread_t

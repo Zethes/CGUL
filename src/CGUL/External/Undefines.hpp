@@ -82,6 +82,16 @@
 #   undef _CGUL_SSL_BIO
 #endif
 
+#ifdef Crypto_FOUND
+#   undef _CGUL_BIGNUM 
+#   undef _CGUL_SHA_CTX
+#   undef _CGUL_HMAC_CTX
+#   undef _CGUL_MD2_CTX
+#   undef _CGUL_MD4_CTX
+#   undef _CGUL_MD5_CTX
+#   undef _CGUL_RIPEMD_CTX
+#endif
+
 #ifdef pthread_FOUND
 #   undef _CGUL_PTHREAD_T
 #   undef _CGUL_PTHREAD_MUTEX_T
