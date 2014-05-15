@@ -12,7 +12,6 @@
 #include "../Containers/Vector.hpp"
 #include "../Exceptions/FatalException.hpp"
 #include "../Exceptions/FileException.hpp"
-#include "../Utility/Encryption.hpp"
 
 // System Includes
 #include <sys/stat.h>
@@ -377,7 +376,7 @@ _CGUL_EXPORT CGUL::Enum CGUL::File::GetAccess(const CGUL::String& fileName)
 #   endif
 }
 
-_CGUL_EXPORT CGUL::UInt32 CGUL::File::CRC32(const CGUL::String& fileName)
+/*_CGUL_EXPORT CGUL::UInt32 CGUL::File::CRC32(const CGUL::String& fileName)
 {
     CGUL::String str;
     ReadText(fileName, &str);
@@ -389,7 +388,7 @@ _CGUL_EXPORT CGUL::String CGUL::File::MD5(const CGUL::String& fileName)
     CGUL::String str;
     ReadText(fileName, &str);
     return Encryption::MD5::String(str);
-}
+}*/
 
 /** @param fileName The filename to check.
  *  @returns True if the filename is a directory, false otherwise.
