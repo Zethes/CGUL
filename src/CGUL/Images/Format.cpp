@@ -31,7 +31,7 @@ namespace CGUL
 
     namespace ImageFormats
     {
-#       ifdef CGUL_USE_OPENGL
+#       if defined(CGUL_USE_OPENGL) && defined(glew_FOUND)
 
         ImageFormat RGB         = CreateImageFormat("RGB", 8, 8, 8, 0, DataTypes::UNSIGNED_CHAR, GL_RGB);
         ImageFormat RGBA        = CreateImageFormat("RGBA", 8, 8, 8, 8, DataTypes::UNSIGNED_CHAR, GL_RGBA);
@@ -77,7 +77,7 @@ namespace CGUL
         ImageFormat RGBA10_A2   = CreateImageFormat("RGBA10_A2", 10, 10, 10, 2);
         ImageFormat RGBA12      = CreateImageFormat("RGBA12", 12, 12, 12, 12);
         ImageFormat RGBA16      = CreateImageFormat("RGBA16", 16, 16, 16, 16);
-        ImageFormat GRAYSCALE   = CreateImageFormat("GRAYSCALE", 1, 0, 0, 0, DataTypes::UNSIGNED_CHAR, GL_RGBA16); 
+        ImageFormat GRAYSCALE   = CreateImageFormat("GRAYSCALE", 1, 0, 0, 0); 
 
 #       endif
     }
