@@ -342,7 +342,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     // Generate a unique class name for this window
     static int windowCounter = 0;
     wcscpy(className, L"CGUL_");
-    wsprintf(className + 5, L"%d", windowCounter++);
+    wsprintf((LPSTR)(className + 5), (LPCSTR)(L"%d"), windowCounter++);
 
     // Create the window class
     WNDCLASSEX wc;
@@ -356,7 +356,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     //wc.hbrBackground = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = className;
+    wc.lpszClassName = (LPCSTR)className;
     wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
     backgroundBrush = CreateSolidBrush(RGB(style.backgroundColor.r, style.backgroundColor.g, style.backgroundColor.b)); // TODO: createsolidbrush leaks, needs to be deleted with DeleteObject
@@ -383,7 +383,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
         SCoord32 windowPos = screenMiddle - windowHalfSize + style.position;
         handle = CreateWindowEx(WS_EX_CLIENTEDGE,
                                 wc.lpszClassName,
-                                style.title._ToWideString().c_str(),
+                                (LPCSTR)style.title._ToWideString().c_str(),
                                 windowStyle,
                                 windowPos.x,
                                 windowPos.y,
@@ -398,7 +398,7 @@ _CGUL_EXPORT void CGUL::Window::Create(const WindowStyle& style)
     {
         handle = CreateWindowEx(WS_EX_CLIENTEDGE,
                                 wc.lpszClassName,
-                                style.title._ToWideString().c_str(),
+                                (LPCSTR)style.title._ToWideString().c_str(),
                                 windowStyle,
                                 style.position.x,
                                 style.position.y,
@@ -607,7 +607,7 @@ _CGUL_EXPORT void CGUL::Window::SetTitle(const String& title)
     }
 
 #   ifdef CGUL_WINDOWS
-    SetWindowText(handle, title._ToWideString().c_str());
+    SetWindowText(handle, (LPCSTR)title._ToWideString().c_str());
 #   endif
 
 #   ifdef CGUL_LINUX
@@ -631,7 +631,7 @@ _CGUL_EXPORT CGUL::String CGUL::Window::GetTitle() const
 #   ifdef CGUL_WINDOWS
     int size = GetWindowTextLength(this->handle) + 1;
     wchar_t* buffer = new wchar_t[size];
-    GetWindowText(this->handle, buffer, size);
+    GetWindowText(this->handle, (LPSTR)buffer, size);
     CGUL::String title;
     title._FromWideString(buffer);
     delete[] buffer;
